@@ -12,6 +12,5 @@ The perfect tool for users who want to save time and frustrating by uploading im
 * Theme/Plugin Developers - A great tool for developers who want to prototype and develop using real world imagery.
 * Easy to Use - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
 
-**[Visit Plugin Website](https://connekthq.com/plugins/instant-images/)**  OR  
-**[Download from WordPress](https://wordpress.org/plugins/instant-images/)**
+**[Visit Plugin Website](https://connekthq.com/plugins/instant-images/)**  OR  **[Download from WordPress](https://wordpress.org/plugins/instant-images/)**
 
