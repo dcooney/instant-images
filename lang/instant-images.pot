@@ -1,0 +1,313 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Instant Images\n"
+"POT-Creation-Date: 2016-11-01 09:14-0500\n"
+"PO-Revision-Date: 2016-11-01 09:14-0500\n"
+"Last-Translator: Darren Cooney <darren.cooney@gmail.com>\n"
+"Language-Team: \n"
+"Language: en_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.7\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin/admin.php:26
+msgid "Error accessing Unsplash API"
+msgstr ""
+
+#: ../admin/admin.php:27
+msgid "Please check your Application ID."
+msgstr ""
+
+#: ../admin/admin.php:28
+msgid "Unable to save image, please check your server permissions."
+msgstr ""
+
+#: ../admin/admin.php:29
+msgid "Photo by"
+msgstr ""
+
+#: ../admin/admin.php:30
+msgid "View all photos by"
+msgstr ""
+
+#: ../admin/admin.php:31
+msgid "click to upload"
+msgstr ""
+
+#: ../admin/admin.php:32
+msgid "View Full Size"
+msgstr ""
+
+#: ../admin/admin.php:33
+msgid "Like(s)"
+msgstr ""
+
+#: ../admin/admin.php:34
+msgid "Downloading photo"
+msgstr ""
+
+#: ../admin/admin.php:35
+msgid "Resizing photo"
+msgstr ""
+
+#: ../admin/admin.php:36
+msgid "Sorry, nothing matched your query"
+msgstr ""
+
+#: ../admin/admin.php:37
+msgid "Please try adjusting your search criteria"
+msgstr ""
+
+#: ../admin/admin.php:110
+msgid "Direct image upload to your media library"
+msgstr ""
+
+#: ../admin/admin.php:201
+msgid "Unable to save image, check your server permissions"
+msgstr ""
+
+#: ../admin/admin.php:240
+msgid "Image successfully saved to server."
+msgstr ""
+
+#: ../admin/admin.php:252
+msgid ""
+"Saved file not found, ensure you have proper permissions set on the uploads "
+"directory."
+msgstr ""
+
+#: ../admin/admin.php:263
+msgid ""
+"Unable to save image to uploads directory, check your server permissions."
+msgstr ""
+
+#: ../admin/admin.php:321
+msgid "Image successfully uploaded to media library!"
+msgstr ""
+
+#: ../admin/admin.php:328
+msgid ""
+"There was an error sending to image to the Media Library, check your server "
+"permissions."
+msgstr ""
+
+#: ../admin/includes/cta/permissions.php:12
+msgid "Permissions Error"
+msgstr ""
+
+#: ../admin/includes/cta/permissions.php:13
+msgid ""
+"Instant Images is unable to save downloads to your server. Please enable "
+"write access to the following directory"
+msgstr ""
+
+#: ../admin/includes/settings.php:21
+msgid "Unsplash Settings"
+msgstr ""
+
+#: ../admin/includes/settings.php:29
+msgid "Upload Image Width"
+msgstr ""
+
+#: ../admin/includes/settings.php:38
+msgid "Upload Image Height"
+msgstr ""
+
+#: ../admin/includes/settings.php:47
+msgid "Unplash Application ID"
+msgstr ""
+
+#: ../admin/includes/settings.php:64
+msgid ""
+"Manage the media upload settings for your <a href=\"https://unsplash.com\" "
+"target=\"_blank\">unsplash.com</a> photos"
+msgstr ""
+
+#: ../admin/includes/settings.php:93
+msgid "Max Image Upload Width:"
+msgstr ""
+
+#: ../admin/includes/settings.php:112
+msgid "Max Image Upload Height:"
+msgstr ""
+
+#: ../admin/includes/settings.php:136
+msgid "Unsplash App ID:"
+msgstr ""
+
+#: ../admin/includes/settings.php:136
+msgid "What's This?"
+msgstr ""
+
+#: ../admin/includes/warning.php:7
+msgid "Did you know"
+msgstr ""
+
+#: ../admin/includes/warning.php:10
+msgid "Learn More"
+msgstr ""
+
+#: ../admin/includes/warning.php:11
+msgid "No Thanks"
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:19
+msgid "Enter Search term"
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:20
+msgid "Search for Toronto, Computers, Coffee + Breakfast etc..."
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:21
+#, fuzzy
+msgid "Search"
+msgstr "Recherche"
+
+#: ../admin/views/unsplash-app.php:26
+msgid "Options"
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:28
+msgid "Order by:"
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:30 ../admin/views/unsplash-app.php:59
+msgid "Newest"
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:31 ../admin/views/unsplash-app.php:60
+msgid "Oldest"
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:32 ../admin/views/unsplash-app.php:61
+msgid "Most Popular"
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:35
+msgid "Note"
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:35
+msgid "Ordering is not supported with Unsplash search."
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:54
+msgid "Search Unsplash"
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:55
+msgid ""
+"Enter a search term above to begin searching images from <a href=\"https://"
+"unsplash.com\" target=\"_blank\">unsplash.com</a>. You can search for single "
+"terms or join terms using the [<i>+</i>] symbol."
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:58
+msgid "Not sure what to search for"
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:58
+msgid "You can browse Unsplash photos using the options below"
+msgstr ""
+
+#: ../admin/views/unsplash-app.php:74
+msgid "Load More Images"
+msgstr ""
+
+#: ../admin/views/unsplash.php:9
+msgid ""
+"One click uploads of <a href=\"https://unsplash.com/\" target=\"_blank"
+"\">unsplash.com</a> photos directly to your media library (formally "
+"UnsplashWP)"
+msgstr ""
+
+#: ../admin/views/unsplash.php:16
+msgid "Expand"
+msgstr ""
+
+#: ../admin/views/unsplash.php:32
+msgid "Save Settings"
+msgstr ""
+
+#: ../admin/views/unsplash.php:47
+msgid "Sorry, settings could not be saved."
+msgstr ""
+
+#, fuzzy
+#~ msgid "# Per Page:"
+#~ msgstr "Imprimer cette page"
+
+#~ msgid "404 Error"
+#~ msgstr "Erreur 404 "
+
+#~ msgid "Sorry, the page you have requested cannot be found."
+#~ msgstr "Désolé, la page que vous demandez est introuvable."
+
+#~ msgid ""
+#~ "Be sure to check your spelling. If all else fails, you can go back to the "
+#~ "page you came from, return to the <a href=\"/\">homepage</a>, or try "
+#~ "searching."
+#~ msgstr ""
+#~ "Veuillez vérifier l'orthographe. Si tout échoue, retournez à la page "
+#~ "précédente, retournez à la <a href=\"/\">page d'accueil</a>, ou essayez "
+#~ "une recherche."
+
+#~ msgid "Connect with Willow"
+#~ msgstr "Connectez-vous avec Willow"
+
+#~ msgid ""
+#~ "Sign up to stay in touch and receive Willow news, updates and event "
+#~ "information."
+#~ msgstr ""
+#~ "Inscrivez-vous pour rester en contact avec nous et recevoir des nouvelles "
+#~ "de Willow (Disponibles en anglais seulement)"
+
+#~ msgid "all our funders"
+#~ msgstr "tous nos donateurs"
+
+#~ msgid "call our helpline"
+#~ msgstr "Appelez notre ligne de soutien"
+
+#~ msgid "share"
+#~ msgstr "Partager"
+
+#~ msgid "Share on Twitter"
+#~ msgstr "Partager sur Twitter"
+
+#~ msgid "Share on Facebook"
+#~ msgstr "Partager sur Facebook"
+
+#~ msgid "Share via Email"
+#~ msgstr "Partager par courriel"
+
+#~ msgid "Your search returned <strong>%s</strong> result%s"
+#~ msgstr "Votre recherche a généré <strong>%s</strong>  résultat%s "
+
+#~ msgid "Showing"
+#~ msgstr "Montrant"
+
+#~ msgid "result(s) in"
+#~ msgstr "résultat(s) dans"
+
+#~ msgid "For more information please contact:"
+#~ msgstr "Pour de plus amples renseignements, veuillez contacter : "
+
+#~ msgid "filter support groups"
+#~ msgstr "Filtrer les groupes de soutien"
+
+#~ msgid "select a province and city to find a support group"
+#~ msgstr ""
+#~ "Sélectionnez votre province et votre ville pour trouver un groupe de "
+#~ "soutien"
+
+#~ msgid "-- Select Province --"
+#~ msgstr "Sélectionnez province"
+
+#~ msgid "Filter"
+#~ msgstr "Filtrer"
