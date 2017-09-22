@@ -12,7 +12,9 @@ One click uploads of Unsplash photos directly to your WordPress media library.
 
 == Description ==
 
-**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [unsplash.com](http://unsplash.com) directly to your media library — **all without ever leaving WordPress**!
+Instantly upload photos from Unsplash to your website all without leaving WordPress!
+
+**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [unsplash.com](http://unsplash.com) directly to your media library.
 
 [youtube https://www.youtube.com/watch?v=s6Q7Kfi2f1c]
 
