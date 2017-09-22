@@ -1,0 +1,88 @@
+
+.instant-images-settings{
+	display: none;
+	background-color: #efefef;
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
+	.cnkt-sidebar{
+		padding: 20px 25px;
+		overflow: hidden;
+		.cta{
+			float: left;
+			width: 50%;
+			@media screen and (max-width: $small){
+				float: none !important;
+				width: 100% !important;	
+			}
+			&.ii-settings{
+				width: 31.333%
+			}
+			&.ii-plugins{
+				width: 68.666%;
+				width: calc(68.666% - 25px);
+				float: right;
+			}
+	   	h2{
+	         border: none;
+	         padding: 15px 20px 3px;
+	         font-size: 16px;
+	      }
+	      h2 + p{
+	         padding: 0 20px 15px;
+	         margin: 0 !important;
+	         border-bottom: 1px solid #e7e7e7; 
+	      }
+	      h2,
+	      h2 + p{
+	         background: #f7f7f7;
+	         margin: 0;
+	      }
+	   }
+	   .cta{
+		   background: #fff;
+		   padding: 0 0 20px;
+		   margin: 0 0 20px;
+		   overflow: hidden;
+		   position: relative;	
+		   border: 1px solid #e7e7e7;
+			border-radius: 3px; 
+		}
+		.cta.padding-bottom{
+			padding-bottom: 66px;
+		}
+		.cnkt-sidebar h3,
+		.cnkt-sidebar h4{
+			margin-top: 0;
+		}	
+		.cta-wrap{
+	   	display: block;
+	   	padding: 0 20px;
+		}
+		.cnkt-plugin-installer .plugin{
+			width: 48%;
+			margin: 2% 1% 0;
+			@media screen and (max-width: 1170px){
+				width: 100%;
+				margin: 2% 0 0;	
+			}
+			h2{
+	         border: none;
+	         padding: 0;
+	         font-size: 16px;
+	      }
+	      h2 + p{
+	         padding: 0;
+	         margin: 0 !important;
+	         border-bottom: none; 
+	      }
+	      h2,
+	      h2 + p{
+	         background: none;
+	         margin: 0;
+	      }
+		}
+	}
+	table{
+		margin-top: 5px;
+	}
+}

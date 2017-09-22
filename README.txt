@@ -1,43 +1,47 @@
-=== Instant Images ===
-Contributors: dcooney
+=== Instant Images - One Click Unsplash Uploads ===
+Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
-Tags: stock photo, stock, unsplash, prototyping, photos, upload, media, media library, ajax, image upload, direct upload, free stock photos
+Tags: stock photo, stock, unsplash, prototyping, photos, upload, media, media library, image upload, free stock photos
 Requires at least: 3.6
-Tested up to: 4.6.1
-Stable tag: 2.0
+Tested up to: 4.8.2
+Stable tag: 3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-One click uploads of unsplash.com stock photos directly to your media library.
+One click uploads of Unsplash photos directly to your WordPress media library.
 
 == Description ==
 
-**Instant Images** is the fastest and easiest way to upload high quality stock photos from [unsplash.com](http://unsplash.com) directly to your media library — **all without ever leaving WordPress**! 
+**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [unsplash.com](http://unsplash.com) directly to your media library — **all without ever leaving WordPress**!
 
-The perfect tool for users who want to save time and frustrating by uploading images directly inside their WordPress installation and for developers who want to prototype and develop using real world imagery.
+[youtube https://www.youtube.com/watch?v=s6Q7Kfi2f1c]
+
+The perfect tool for users who want to save time and frustration by uploading images directly inside their WordPress installation and for developers who want to prototype and develop using real world imagery.
+
+**[Visit Plugin Website](https://connekthq.com/plugins/instant-images/)**
 
 = Features =
 
-* Image Search - The Instant Images search functionality let’s you quickly find and upload images for any subject in a matter of seconds!
-* Time Saver - Quickly upload amazing stock photos without leaving the comfort of your WordPress admin.
-* Theme/Plugin Developers - A great tool for developers who want to prototype and develop using real world imagery.
-* Easy to Use - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
+* **Image Search** - The Instant Images search functionality let’s you quickly find and upload images for any subject in a matter of seconds!
+* **Time Saver** - Quickly upload amazing stock photos without leaving the comfort of your WordPress admin.
+* **Theme/Plugin Developers** - A great tool for developers who want to prototype and develop using real world imagery.
+* **Easy to Use** - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
 
-**[Visit Plugin Website](https://connekthq.com/plugins/instant-images/)**
+
 
 ***
 
 = Tested Browsers =
 
-* Firefox (mac + pc)
-* Chrome (mac + pc)
-* Safari (mac)
-* IE Edge, 11 & 10
+* Firefox (Mac + PC)
+* Chrome (Mac + PC)
+* Safari (Mac)
+* IE 11 >
 
 ***
 
 = Website =
-https://connekthq.com/plugins/instant-images/
+[https://connekthq.com/plugins/instant-images/](https://connekthq.com/plugins/instant-images/)
 
 ***
 
@@ -49,20 +53,16 @@ All photos published on Unsplash are licensed under Creative Commons Zero which 
 [Learn More](http://creativecommons.org/publicdomain/zero/1.0/)
 
 
-= Can I legally use these photos on my website? =
-All photos published on Unsplash are licensed under Creative Commons Zero which means you can copy, modify, distribute and use the photos for free, including commercial purposes, without asking permission from or providing attribution to the photographer or Unsplash.
-[Learn More](http://creativecommons.org/publicdomain/zero/1.0/)
-
-
-= Is there an API limit for Unsplash photos with Instant Images? =
-Unsplash requires an Application ID for access to their API. Applications are capped at 5000 requests per hour. We have provided our Application key to get you started and recommend you sign up for Unsplash and create your own application to unlock additional API requests.
-** [Learn More](https://connekthq.com/plugins/instant-images/api-access/)
-
 = Are the images upload to the Media Library? =
-Yes, once clicked, the images are processed on the server then uploaded to the Media Library into the various sizes set in your functions.php file.
+Yes, once clicked, the images are processed on the server then uploaded to the Media Library into the various sizes set in your theme.
+
+
+= Are raw uploads stored on the server? =
+No, once an image has be uploaded and resized the raw download will be removed from your server.
+
 
 = Are there server requirements? =
-Yes, this plugin is required to write temporary images into an /instant-images directory within your WordPress uploads directory for image processing prior to being uploaded to the media library. 
+Yes, this plugin is required to write temporary images into an `/instant-images` directory within your WordPress `uploads` directory for image processing prior to being uploaded to the media library.
 
 Some hosts lock down their servers and you may be required to update your php.ini or .htaccess in order to use this plugin.
 
@@ -102,6 +102,29 @@ How to install Instant Images.
 
 
 == Changelog ==
+
+= 3.0 - September 21, 2017 =
+** NEW - Instant Images has been completely re-built using React and the WordPress REST API.
+
+
+= 2.1.1 - June 6, 2017 =
+** NEW - Added infinite scroll while viewing Instant Images on large screens.
+** FIX - Fixed missing js file error in browser console.
+** UPDATE - Updated Masonry/Imagesloaded image load functionality.
+
+
+= 2.1 - May 12, 2017 =
+** UPDATE - Remove App ID setting - Unsplash API is now open for everyone without API limit restrictions.
+** UPDATE - Updating default image upload from 'Full' to 'Raw'. Raw files are significantly smaller size and should make uploads quicker on slower connections and help to reduce upload errors.
+** UPDATE - UI/UX tweaks and updates.
+** FIX - Updating media_buttons hook. Was causing issues with other plugins.
+
+
+= 2.0.1 - January 12, 2017 =
+* FIX - Update to instant_img_resize_image function to remove unnecessary function arguments. These args were causing issues on some servers.
+* NEW - Refresh Media Library content when uploading images through the Instant Images uploader on edit screen for posts and pages.
+* UI Enhancements
+
 
 = 2.0 =
 * Initial Commit

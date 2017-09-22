@@ -1,0 +1,98 @@
+.onboarding {
+	position: relative;	
+	position: absolute;
+	z-index: 9999;
+	width: auto;
+	font-size: 14px;
+	line-height: 1.4;
+	color: #777;
+	
+	&.bottom{
+   	//margin-top: -40px;
+	}
+	   
+   .inner{
+      display: block;
+      position: relative;
+      padding: 0 55px 0 25px;
+      line-height: 46px;
+      height: 46px;      
+      border-radius: 4px;
+      background: #fff;
+      border: 1px solid #ccc;
+      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+      &:after, 
+   	&:before {
+      	bottom: 100%;
+      	left: 50%;
+      	border: solid transparent;
+      	content: " ";
+      	height: 0;
+      	width: 0;
+      	position: absolute;
+      	pointer-events: none;
+      }
+      &:after {
+      	border-color: rgba(136, 183, 213, 0);
+      	border-bottom-color: #fff;
+      	border-width: 10px;
+      	margin-left: -10px;
+      }
+      &:before {
+      	border-color: rgba(194, 225, 245, 0);
+      	border-bottom-color: #ccc;
+      	border-width: 11px;
+      	margin-left: -11px;
+      }
+   }
+   
+   &.bottom{
+      .inner{
+         &:after, 
+      	&:before {
+         	bottom: auto;
+         	top: 100%;
+         }
+         &:after {
+         	border-color: rgba(136, 183, 213, 0);
+         	border-bottom-color: transparent;
+         	border-top-color: #fff;
+         	border-width: 10px;
+         	margin-left: -10px;
+         }
+         &:before {
+         	border-color: rgba(194, 225, 245, 0);
+         	border-bottom-color: transparent;
+         	border-top-color: #ccc;
+         	border-width: 11px;
+         	margin-left: -11px;
+         }
+      }
+   }
+   
+   a{
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 0 !important;
+      margin: 0 !important;
+      font-size: 20px;
+      color: #222;
+      background: #f7f7f7;
+      border: 1px solid #efefef;
+      line-height: 28px !important;
+      height: 28px !important;
+      width: 28px !important;
+      border-radius: 3px;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      &:hover,
+      &:focus{
+         color: #fff !important;
+         background-color: #df3333 !important;
+         border-color: #df3333 !important;
+      }
+   }
+}
+

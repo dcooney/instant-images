@@ -1,0 +1,33 @@
+.instant-img-container.popup{
+   width: 100%;
+   width: calc(100% + 30px);
+   margin-left: -15px;
+   position: relative;
+   top: -15px;
+   
+	.header-wrap{
+		button{
+			display: none;
+		}
+	}
+	.instant-images-wrapper{
+		background: none;
+		min-height: 0;
+	}
+	.initialize-wrap{
+		text-align: center;
+		padding: 100px;
+		display: block;
+		button{
+			display: inline-block;
+		}
+	}
+	.load-more-wrap{
+		display: block;	
+	}
+	#photos{
+   	.photo{
+      	width: 32.333%; 
+      }
+   }
+}

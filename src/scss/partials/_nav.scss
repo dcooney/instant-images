@@ -1,0 +1,199 @@
+.instant-img-container{
+	.control-nav{ 
+		display: block;
+		margin: 0;
+		padding: 25px 0;
+		list-style: none;
+		overflow: hidden; 
+		li{
+			padding: 0;
+			margin: 0 3px 0 0;
+			float: left;
+			background: none;
+			font-size: 18px;
+			position: relative;
+			a{
+				padding: 0 24px 0 2px;
+				height: 48px;
+				line-height: 48px;
+				display: block;
+				color: #999;
+				text-decoration: none;
+				background-position: 96% center;
+				background-repeat: no-repeat;
+				&.active{
+					color: #111;
+					cursor: default;
+					font-weight: 600;
+				}
+				&:hover,
+				&:focus{
+					color: #111;
+					outline: none;
+					box-shadow: none;
+				}
+				&.loading{
+					background-image: url('../img/ajax-loader.gif');
+				}
+			}
+			@media screen and (max-width: $small){
+   			font-size: 16px;
+   			margin: 0;
+   			a{
+      			padding-left: 3px;
+   			}
+			}
+			
+			@media screen and (max-width: $xsmall){
+            width: 33.333%;            
+            text-align: center;
+            margin: 0;
+            padding-bottom: 15px;
+         }
+			&.search-field{
+				float: right;
+				width: 49%;
+				margin: 0;
+				max-width: 500px;
+				@media screen and (max-width: $xsmall){
+   			   width: 100%;
+   			   display: block;
+   			   position: static;   			   
+               padding-bottom: 15px;
+               text-align: left;
+               max-width: 100%;
+   			}
+   			.searchResults{
+      			position: absolute;
+      			right: 100.5%;
+      			top: 7px;
+      			width: auto;
+      			height: 34px;
+      			line-height: 34px;
+      			padding: 0 10px;
+      			background: #ffffbf;
+      			border: 1px solid #ebebae;
+      			border-radius: 3px;
+      			z-index: 99;
+      			font-size: 13px;
+      			font-weight: 600;
+      			transition: all 0.25s ease;
+      			color: #444;
+      			text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);  
+      			cursor: help; 
+      			box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);   			
+               &:after, 
+               &:before {
+                  left: 100%;
+                  top: 50%;
+                  border: solid transparent;
+                  content: " ";
+                  height: 0;
+                  width: 0;
+                  position: absolute;
+                  pointer-events: none;
+                  z-index: 100;
+               }               
+               &:after {
+                  border-color: rgba(223, 225, 173, 0);
+                  border-left-color: #ffffbf;
+                  border-width: 6px;
+                  margin-top: -6px;
+               }
+               &:before {
+                  border-color: rgba(0, 0, 0, 0);
+                  border-left-color: #ebebae;
+                  border-width: 7px;
+                  margin-top: -7px;
+               }
+      			&.hide{
+         			opacity: 0;
+         			visibility: hidden;
+      			}
+   			}
+				form{
+					padding: 0;
+					margin: 0;
+					border: 1px solid #e1e1e1;
+					background: #f7f7f7;
+					position: relative;
+					height: 48px;
+					display: block;
+					border-radius: 3px;
+				}
+				input{
+					width: 100%;
+					width: calc(100% - 46px);
+					padding: 0 10px;
+					border: none !important;
+					background-color: transparent !important;
+					height: 46px;
+					line-height: 46px;
+					box-shadow: none !important;
+					border-radius: 2px 0 0 2px;
+					font-size: 16px;
+					transition: padding 0.15s ease;
+					&.searching{ 
+   					padding-left: 34px;
+   					background-image: url('../img/ajax-loader.gif');
+   					background-position: 10px center;
+   					background-repeat: no-repeat;
+					}
+				}
+				button{
+					position: absolute;
+					right: -1px;
+					top: -1px;
+					width: 48px;
+					height: 48px;
+					z-index: 1;
+					border: none;
+					border: 1px solid #e1e1e1;
+					border-left: none !important;
+					background: #efefef;
+					cursor: pointer; 
+					color: #666;
+					border-radius: 0 3px 3px 0;
+					box-shadow: -1px 0 0 #e1e1e1; 
+					transition: all 0.25s ease;
+					&:hover{
+						outline: none;
+						color: #fff;
+                  border-color: #5d72c3;
+						background: #5d72c3;
+					}
+					&:focus{
+						outline: none;
+						color: #fff;
+                  border-color: #5367b3;
+						background: #5367b3;
+					}
+				}				
+         	input[type=search]::-webkit-input-placeholder {
+               color: #ccc;
+               font-weight: 300;
+               font-style: italic;
+         		font-size: 15px;
+            }   
+            input[type=search]:-moz-placeholder {
+               color: #ccc;
+               font-weight: 300;
+               font-style: italic;
+         		font-size: 15px;
+            }   
+            input[type=search]::-moz-placeholder {
+               color: #ccc;
+               font-weight: 300;
+               font-style: italic;
+         		font-size: 15px;
+            }   
+            input[type=search]:-ms-input-placeholder {  
+               color: #ccc;
+               font-weight: 300;
+               font-style: italic;
+         		font-size: 15px;
+            }
+			}
+		}
+	}
+}

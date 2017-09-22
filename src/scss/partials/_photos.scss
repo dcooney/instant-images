@@ -1,0 +1,296 @@
+#photos{
+   width: 101%;
+   margin: 0 -0.5%;
+   padding: 0;
+   position: relative;
+   @media screen and (max-width: $small){
+      width: 100%;
+      margin: 0;  
+   } 
+   .photo{   
+	   width: 19%;
+	   margin: 0 0.5% 1%;
+	   opacity: 0;
+	   transition: opacity 0.3s ease;
+	   &.in-view{
+		   opacity: 1;
+	   }
+	   &.in-progress{
+		   .fade{			   
+	         opacity: 0 !important;
+	         visibility: hidden !important;
+		   }
+	   }
+	   .img-wrap{ 
+		   display: block;
+		   overflow: hidden;
+		   position: relative;
+	   }
+	   @media screen and (min-width: 2000px){
+			width: 15.6666%; 
+		} 
+	   @media screen and (max-width: $xlarge){
+			width: 24%; 
+		} 
+	   @media screen and (max-width: $large){
+			width: 32.333%; 
+		}
+	   @media screen and (max-width: $small){
+			width: 49%; 
+		}
+	   @media screen and (max-width: $xsmall){
+			width: 100%;
+			margin: 0 0 2%;  
+		} 
+		a.upload{ 
+	      display: block;
+	      position: relative;
+	      background-color: #222;
+	      background-position: center center;
+	      background-repeat: no-repeat;
+	      background-image: url('../img/ajax-loader.gif');
+	      overflow: hidden;
+	      &.loaded{
+		      background-image: none;
+		   }
+		   &:focus,
+		   &:active{
+		      outline: none;
+		      border: none; 
+		      box-shadow: none;
+		   }
+	   	img{
+		      transition: all 0.45s ease;
+		      width: 100%;
+		      height: auto !important;
+		      padding: 0;
+		      vertical-align: top;
+		   }
+		   
+		   // Status		
+   		.status{
+      		visibility: hidden;
+      		opacity: 0;
+      		transition: all 0.2575s ease-in-out;
+      		width: 60px;
+      		height: 60px;
+         	line-height: 60px;
+      		border-radius: 100%;
+      		position: absolute;
+      		left: 50%;
+      		top: 50%;
+      		z-index: 5;
+      		transform: translate(-50%, -50%) scale(1.5);	
+      		box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+      		&:before{
+         		font-family: 'FontAwesome';
+         		display: block;
+         		color: #fff;
+         		font-size: 22px;
+               opacity: 0.8;
+      		}
+   		}
+   		
+   		&.uploading .status,
+   		&.resizing .status,
+   		&.success .status,
+   		&.errors .status{
+      		text-align: center;
+      		left: 50%;
+      		top: 50%;
+      		transform: translate(-50%, -50%) scale(1);	   		
+   		}
+   		
+   		
+   		// Uploading
+   		&.uploading{
+	   		cursor: default !important;
+      		.status{
+         		visibility: visible;
+         		opacity: 1;
+         		background-color: #5d72c3;
+         		&:before{
+	         		content: '\f019';
+         		}
+      		}
+   		}
+   		
+   		// Resizing
+   		&.resizing{
+	   		cursor: default !important;
+      		.status{
+         		visibility: visible;
+         		opacity: 1;
+         		background-color: #e4c452;
+         		&:before{
+	         		color: #fff;
+	         		content: '\f065';
+         		}
+      		}
+   		}
+   		
+   		// Success
+   		&.success{
+      		cursor: default !important;
+      		.status{
+         		visibility: visible;
+         		opacity: 1;
+         		width: 70px;
+         		height: 70px;
+         		line-height: 70px;
+         		background-color: #63d875;
+         		border-radius: 100%;
+         		&:before{
+	         		content: '\f00c';
+	         		color: #fff;
+         		}
+      		}
+   		}
+   		
+   		// Error
+   		&.errors{
+      		cursor: help !important;
+      		.status{
+         		visibility: visible;
+         		opacity: 1;
+         		width: 60px;
+         		height: 60px;
+            	line-height: 60px;
+         		background-color: #df3333;
+         		border-radius: 100%;
+         		&:before{
+	         		content: '\f12a';
+	         		color: #fff;
+	         		opacity: 0.8;
+         		}
+      		}
+   		}
+		}		
+		
+		// Upload Complete
+		&.uploaded{
+			a.upload {
+				img{
+      			opacity: 0.25 !important;
+      		}
+   		}
+		}
+		
+		// Hover and Progress
+		&:hover,
+		&.in-progress{
+   		a.upload img{
+      		opacity: 0.5;
+   		}
+   		.fade{
+            opacity: 1;
+            visibility: visible;
+            &.user{
+            	opacity: 0.7;
+            }
+         }
+		}
+		
+		&.in-progress{
+			.notice-msg{
+				top: 0;  
+				opacity: 1;
+			}
+		}
+		
+		
+		// Fading Components (likes, name, download)
+		.fade{
+         transition: all 0.3s ease;
+         color: #333;    
+         background: rgba(255, 255, 255, 0.7); 
+         border-radius: 3px; 
+         height: 28px;  
+         line-height: 28px;
+         font-size: 13px;  
+         opacity: 0;
+         visibility: hidden;
+         position: absolute; 
+         left: 10px;
+         bottom: 10px;
+         z-index: 6;   
+         &.likes{
+            padding: 0 10px;
+            width: auto;
+            display: inline-block;
+            width: auto;
+            left: auto;
+            top: 10px;
+            right: 10px;
+            i{
+   	         color: #d13714;
+   	         line-height: 29px;
+   	         margin-right: 1px;
+            }
+         }
+         &.download-photo{
+            padding: 0 10px;
+            width: auto;
+            display: inline-block;
+            width: auto;
+            left: auto;
+            right: 10px;
+            cursor: pointer;
+            i{
+   	         line-height: 29px;
+            }
+            &:hover{
+   	         background: rgba(255, 255, 255, 0.95);  
+            }
+         }
+         &.user{
+   	      background: none;
+   	      color: #fff;
+   	      text-decoration: none;
+   	      font-size: 14px;
+   	      max-width: 65%;
+   	      cursor: pointer;
+   	      &:hover{
+   		      opacity: 0.95;
+   	      }
+   	      .user-wrap{
+   		      position: relative;
+   		      padding-left: 34px;
+   		      display: block;
+   		      width: 100%;
+   		      overflow: hidden;
+   		      text-overflow: ellipsis;
+   		      white-space: nowrap;
+   	      }
+   	      img{
+   		      width: 28px;
+   		      max-width: 28px;
+   		      border-radius: 100%;
+   		      position: absolute;
+   		      left: 0;
+   		      top: 0;
+   	      }
+         }
+      }
+		
+		// Notice Msg
+		.notice-msg{
+         position: absolute;
+         z-index: 999;
+         top: -40px;
+         left: 0;
+         height: 40px;
+         line-height: 40px;
+         width: 100%;  
+         background: rgba(0, 0, 0, 0.6);
+         text-align: center;
+         color: #e0e4f5;
+         font-size: 13px;
+         margin: 0;
+         padding: 0; 
+         transition: all 0.25s ease-in-out;
+         opacity: 0;
+         z-index: 9999;
+      }			
+	}
+}
