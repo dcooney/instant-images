@@ -11,6 +11,4 @@ The perfect tool for users who want to save time and frustrating by uploading im
 * Time Saver - Quickly upload amazing stock photos without leaving the comfort of your WordPress admin.
 * Theme/Plugin Developers - A great tool for developers who want to prototype and develop using real world imagery.
 * Easy to Use - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
-g
-**[Visit Plugin Website](https://connekthq.com/plugins/instant-images/)**  or  **[Download from WordPress.or](https://wordpress.org/plugins/instant-images/)**
-
+**[Visit Plugin Website](https://connekthq.com/plugins/instant-images/)**  or  **[Download from WordPress.org](https://wordpress.org/plugins/instant-images/)**
