@@ -3,7 +3,7 @@ One click uploads of unsplash.com stock photos directly to your media library.
 
 **Instant Images** is the fastest and easiest way to upload high quality stock photos from [unsplash.com](http://unsplash.com) directly to your media library — **all without ever leaving WordPress**! 
 
-(Watch the Video)](https://www.youtube.com/watch?v=s6Q7Kfi2f1c "Instant Images WordPress Plugin")
+*[Watch the Video](https://www.youtube.com/watch?v=s6Q7Kfi2f1c)*
 
 The perfect tool for users who want to save time and frustrating by uploading images directly inside their WordPress installation and for developers who want to prototype and develop using real world imagery.
 
