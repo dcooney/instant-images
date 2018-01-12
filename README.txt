@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: stock photo, stock, unsplash, prototyping, photos, upload, media, media library, image upload, free stock photos
 Requires at least: 3.6
-Tested up to: 4.8.2
-Stable tag: 3.0
+Tested up to: 4.9.1
+Stable tag: 3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ One click uploads of Unsplash photos directly to your WordPress media library.
 
 == Description ==
 
-Instantly upload photos from Unsplash to your website all without leaving WordPress!
+Instantly upload photos from Unsplash to your website without leaving WordPress!
 
 **Instant Images** is the fastest and easiest way to upload high quality FREE photos from [unsplash.com](http://unsplash.com) directly to your media library.
 
@@ -24,7 +24,7 @@ The perfect tool for users who want to save time and frustration by uploading im
 
 = Features =
 
-* **Image Search** - The Instant Images search functionality let’s you quickly find and upload images for any subject in a matter of seconds!
+* **Image Search** - The Instant Images search let’s you quickly find and upload images for any subject in a matter of seconds!
 * **Time Saver** - Quickly upload amazing stock photos without leaving the comfort of your WordPress admin.
 * **Theme/Plugin Developers** - A great tool for developers who want to prototype and develop using real world imagery.
 * **Easy to Use** - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
@@ -53,6 +53,15 @@ The perfect tool for users who want to save time and frustration by uploading im
 = Can I legally use these photos on my website? =
 All photos published on Unsplash are licensed under Creative Commons Zero which means you can copy, modify, distribute and use the photos for free, including commercial purposes, without asking permission from or providing attribution to the photographer or Unsplash.
 [Learn More](http://creativecommons.org/publicdomain/zero/1.0/)
+
+
+= Can I search for individual photos by ID? =
+Yes! You can enter `id:{photo_id}` into the search box to return a single result.
+e.g. `id:YiUi00uqKk8`
+
+
+= I'm getting an unauthorized error message during the resize process, is there a fix? =
+If your site is using password protection you may need to disable the http authorization as there appears to be an issue with the `media_sideload_image` function in WP core.
 
 
 = Are the images upload to the Media Library? =
@@ -104,6 +113,14 @@ How to install Instant Images.
 
 
 == Changelog ==
+
+= 3.1 - January 2, 2018 =
+** NEW - Adding support for searching individual photos by ID. Prefix a search term with `id:` to search by Unsplash ID. e.g. `id:ixddk_CepZY`.
+** UPDATED - Updated to meet revised Unsplash API guidelines.
+** UPDATED - Better Error messaging for upload/resize errors.
+** NEW - Added `clear search` button to remove search results.
+** FIX - Fixed JS error that occured when `SCRIPT_DEBUG` was set to `true`.
+
 
 = 3.0 - September 21, 2017 =
 ** NEW - Instant Images has been completely re-built using React and the WordPress REST API.

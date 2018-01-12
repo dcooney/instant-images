@@ -70,7 +70,7 @@
       			width: auto;
       			height: 34px;
       			line-height: 34px;
-      			padding: 0 10px;
+      			padding: 0 27px 0 10px;
       			background: #ffffbf;
       			border: 1px solid #ebebae;
       			border-radius: 3px;
@@ -79,9 +79,22 @@
       			font-weight: 600;
       			transition: all 0.25s ease;
       			color: #444;
-      			text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);  
-      			cursor: help; 
-      			box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);   			
+      			text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);        			
+      			box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);   	
+      			span{
+         			cursor: help; 
+      			}
+      			span, a{      
+                  line-height: 34px;   			
+      			}
+      			a{
+                  padding: 0 10px;
+                  height: 34px;
+                  line-height: 33px;
+                  position: absolute;
+                  right: 0;    
+                  top: 0;     			
+      			}		
                &:after, 
                &:before {
                   left: 100%;

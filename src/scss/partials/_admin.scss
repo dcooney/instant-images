@@ -356,6 +356,9 @@ body.media_page_instant-images{
    overflow: hidden;
    clear: both;
    width: 100%;
+   &.sm{
+	   height: 20px;
+   }
 }				
 		
 input:-webkit-autofill {

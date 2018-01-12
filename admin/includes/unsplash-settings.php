@@ -1,7 +1,6 @@
 <section class="instant-images-settings">
 	
    <div class="cnkt-sidebar">
-	   <?php include( INSTANT_IMG_PATH . 'admin/includes/cta/permissions.php'); ?>
 
       <section class="cta ii-settings">
 	      <h2><?php _e('Unsplash Settings', 'instant-images'); ?></h2>
@@ -16,13 +15,19 @@
 					<div class="save-settings">
 		            <?php submit_button(__('Save Settings', 'instant-images')); ?>
 						<div class="loading"></div>
+						<div class="clear"></div>
 					</div>
-                <script type="text/javascript">
-                  jQuery(document).ready(function() {
-                     
-                  });
-                </script>
 	   		</form>
+	      </div>
+	      <div class="spacer sm"></div>
+	      <h2 class="w-border"><?php _e('What\'s New', 'instant-images'); ?></h2>
+	      <p><?php _e('The latest updates in', 'instant-images'); ?> <?php echo INSTANT_IMG_VERSION; ?></p>
+	      <div class="cta-wrap">
+		      <ul class="whats-new">
+			      <li>Updated to meet revised <a href="https://medium.com/unsplash/unsplash-api-guidelines-28e0216e6daa" target="_blank">Unsplash API guidelines</a>.</li>
+			      <li>Adding support for searching individual photos by Unsplash ID - searching <pre>id:{photo_id}</pre> will return a single result.<br/>e.g. <pre>id:YiUi00uqKk8</pre></li>
+			      <li>Better Error messaging for upload/resize errors.</li>
+		      </ul>
 	      </div>
       </section>
       

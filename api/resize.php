@@ -54,8 +54,7 @@ function resize_image( WP_REST_Request $request ) {
       $filename = sanitize_text_field($data->filename); // filename
       $desc = sanitize_text_field($data->desc); // Image description
       $url = sanitize_text_field($data->url); // Image URL      
-      
-      
+            
       // Resize image
       $image = wp_get_image_editor( $path.''.$filename );
       if ( ! is_wp_error( $image ) ) {
@@ -65,27 +64,48 @@ function resize_image( WP_REST_Request $request ) {
 
       // Send to media library
       $file = media_sideload_image($url.''.$filename, 0, $desc);
-
       
-      // Delete temporary image
-      if(file_exists($path.''.$filename)){
-         
-         unlink($path.''.$filename);
-         
-         // Send success response
-         $response = array(
-      		'success' => true,
-      		'msg' => __('Image successfully uploaded to your media library!', 'instant-images')
-   		);
-      }else{
-         
-         // Send error response
+      
+      // WP_ERROR
+      if ( is_wp_error( $file ) ) {
+         $error_string = $file->get_error_message();
+                  
+         // Build error response
          $response = array(
       		'success' => false,
-      		'msg' => __('There was an error sending the image to your media library. Please check your server permissions and confirm the upload_max_filesize setting (php.ini) is large enough for the downloaded image.', 'instant-images')
+      		'msg' => $error_string .' - '. __('There was an error sending image to your media library. Are you using password protection on the domain? If so, please read the Instant Images FAQ for instructions on how to fix this issue.', 'instant-images')
    		);
+         
+         
+      } else {      
+      
+         
+         if(file_exists($path.''.$filename)){ // If image was uploaded temporary image
+            
+            // Build success response
+            $response = array(
+         		'success' => true,
+         		'msg' => __('Image successfully uploaded to your media library!', 'instant-images')
+      		);
+      		
+         }else{ // Build error response            
+            
+            $response = array( 
+         		'success' => false,
+         		'msg' => __('There was an error sending the image to your media library. Please check your server permissions and confirm the upload_max_filesize setting (php.ini) is large enough for the downloaded image.', 'instant-images')
+      		);
+      		
+         }
       }
+      
+      
+      // Delete temporary image
+      if(file_exists($path.''.$filename)){      
+         unlink($path.''.$filename);
+      }
+      
 
+      // Send JSON response
       wp_send_json($response);
 		
    }

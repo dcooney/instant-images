@@ -1,29 +1,6 @@
 var instant_images = instant_images || {};
 
 jQuery(document).ready(function($) {
-<<<<<<< .mine
-	"use strict";
-
-
-
-	/*
-	 * Dropdowns
-	 *
-	 */
-
-	 instant.dropDown = function(e) {
-        var el = e.parent();
-        var dropdown = $('.dropdown', el);
-
-        if($(el).hasClass('active')){//If is currently active, hide it
-            el.removeClass('active');
-            $('.dropdown', el).removeClass('active');
-            return false;
-        }else if($('.dropdown').hasClass('active')){
-            $('.dropdown').each(function(i){
-                $(this).removeClass('active');
-                $(this).parent().removeClass('active');
-=======
 	"use strict"; 	
    
    var init = true;
@@ -53,36 +30,7 @@ jQuery(document).ready(function($) {
          success: function(){
             $('.save-settings .loading').fadeOut(250, function(){
                //window.location.reload();
->>>>>>> .r1797740
             });
-<<<<<<< .mine
-        }
-
-        $('.dropdown').removeClass('active');//remove active states from currently open dropdowns
-        el.addClass('active');
-        $('.dropdown', el).addClass('active');
-
-        $('#wpwrap').unbind('click').bind('click', instant.closeDropDown); // Bind click event to site container
-        dropdown.click(function(e){
-            e.stopPropagation();
-        });
-    };
-    instant.closeDropDown = function() {
-        $('.dropdown').each(function(i) {
-            $(this).removeClass('active');
-            $(this).parent().removeClass('active');
-        });
-    };
-
-	 // Click
-    $('.dropdown').each(function(i){
-        var el = $(this).parent('.btn');
-        $('> a', el).click(function(e){
-            var e = $(this);
-            instant.dropDown(e);
-            return false;
-        });
-=======
          },
          error: function(){
             $('.save-settings .loading').fadeOut();
@@ -90,22 +38,15 @@ jQuery(document).ready(function($) {
          }
       });
       return false;
->>>>>>> .r1797740
    });
-<<<<<<< .mine
-
-
-
-=======
    
    
->>>>>>> .r1797740
    
    /* 
     * Onboarding Modal Popups
     *
     */
-
+    
    // Function called from React App
    instant_images.initOnboarding = function(){        
       if($('.onboarding').length && init){   
@@ -149,24 +90,11 @@ jQuery(document).ready(function($) {
       if(el.hasClass('bottom')){
          posTop = posTop - el.height()*2 - 4;
       }
-<<<<<<< .mine
-      setTimeout(function(){
-         unsplash.photos.masonry();
-      }, 50);
-   });
-=======
       
       
       var posLeft = position.left - (el.width()/2) + ($(targetElement).width()/2);   
       el.css({'top': posTop + 'px', 'left': posLeft + 'px'});      
    };
->>>>>>> .r1797740
-<<<<<<< .mine
-
-
-
-});
-=======
    
    /*
    <div class="onboarding bottom" data-type="nav-target">
@@ -178,4 +106,4 @@ jQuery(document).ready(function($) {
    
    
 	
-});    >>>>>>> .r1797740
+});    

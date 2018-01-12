@@ -24,8 +24,11 @@
 			}
 	   	h2{
 	         border: none;
-	         padding: 15px 20px 3px;
+	         padding: 17px 20px 3px;
 	         font-size: 16px;
+	         &.w-border{
+		         border-top: 1px solid #e7e7e7; 
+	         }
 	      }
 	      h2 + p{
 	         padding: 0 20px 15px;
@@ -37,6 +40,21 @@
 	         background: #f7f7f7;
 	         margin: 0;
 	      }
+	      ul.whats-new{
+		      list-style: disc;
+		      padding: 0 0 10px 20px;
+		      li{
+			      margin: 10px 0 0;
+			      pre{
+				      display: inline-block;
+				      margin: 0;
+				      padding: 3px;
+				      background: #f7f7f7;
+				      border-radius: 2px;
+				      box-shadow: 0 0 0 1px #efefef;
+			      }
+		      }
+	      }
 	   }
 	   .cta{
 		   background: #fff;
@@ -45,7 +63,6 @@
 		   overflow: hidden;
 		   position: relative;	
 		   border: 1px solid #e7e7e7;
-			border-radius: 3px; 
 		}
 		.cta.padding-bottom{
 			padding-bottom: 66px;
@@ -56,7 +73,7 @@
 		}	
 		.cta-wrap{
 	   	display: block;
-	   	padding: 0 20px;
+	   	padding: 10px 20px;
 		}
 		.cnkt-plugin-installer .plugin{
 			width: 48%;

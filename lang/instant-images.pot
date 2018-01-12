@@ -1,131 +1,107 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Instant Images\n"
-"POT-Creation-Date: 2017-09-21 10:40-0500\n"
+"POT-Creation-Date: 2018-01-02 21:26-0500\n"
 "PO-Revision-Date: 2017-09-21 10:40-0500\n"
-"Last-Translator: Darren Cooney <dcooney@ecentricarts.com>\n"
+"Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
 "Language: en_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 2.0.5\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../admin/admin.php:77
+#: ../admin/admin.php:78
 msgid "Error accessing Unsplash API"
 msgstr ""
 
-#: ../admin/admin.php:78
+#: ../admin/admin.php:79
 msgid "Please check your Application ID."
 msgstr ""
 
-#: ../admin/admin.php:79 ../api/upload.php:113
+#: ../admin/admin.php:80 ../api/upload.php:113
 msgid ""
 "Unable to download image to server, please check your server permissions."
 msgstr ""
 
-#: ../admin/admin.php:80 ../api/resize.php:85
+#: ../admin/admin.php:81 ../api/resize.php:95
 msgid ""
 "There was an error sending the image to your media library. Please check "
 "your server permissions and confirm the upload_max_filesize setting (php."
 "ini) is large enough for the downloaded image."
 msgstr ""
 
-#: ../admin/admin.php:81
+#: ../admin/admin.php:82
 msgid "Photo by"
 msgstr ""
 
-#: ../admin/admin.php:82
+#: ../admin/admin.php:83
 msgid "View all photos by"
 msgstr ""
 
-#: ../admin/admin.php:83
+#: ../admin/admin.php:84
 msgid "Click Image to Upload"
 msgstr ""
 
-#: ../admin/admin.php:84
+#: ../admin/admin.php:85
 msgid "View Full Size"
 msgstr ""
 
-#: ../admin/admin.php:85
+#: ../admin/admin.php:86
 msgid "Like(s)"
 msgstr ""
 
-#: ../admin/admin.php:86
+#: ../admin/admin.php:87
 msgid "Downloading Image..."
 msgstr ""
 
-#: ../admin/admin.php:87
+#: ../admin/admin.php:88
 msgid "Resizing Image..."
 msgstr ""
 
-#: ../admin/admin.php:88
+#: ../admin/admin.php:89
 msgid "Sorry, nothing matched your query"
 msgstr ""
 
-#: ../admin/admin.php:89
+#: ../admin/admin.php:90
 msgid "Please try adjusting your search criteria"
 msgstr ""
 
-#: ../admin/admin.php:90
+#: ../admin/admin.php:91
 msgid "New"
 msgstr ""
 
-#: ../admin/admin.php:91
+#: ../admin/admin.php:92
 msgid "Oldest"
 msgstr ""
 
-#: ../admin/admin.php:92
+#: ../admin/admin.php:93
 msgid "Popular"
 msgstr ""
 
-#: ../admin/admin.php:93
+#: ../admin/admin.php:94
 msgid "Load More Images"
 msgstr ""
 
-#: ../admin/admin.php:94
+#: ../admin/admin.php:95
 msgid "Search for Toronto, Coffee + Breakfast etc..."
 msgstr ""
 
-#: ../admin/admin.php:95
+#: ../admin/admin.php:96
 msgid "images found for"
 msgstr ""
 
-#: ../admin/admin.php:135
+#: ../admin/admin.php:97
+msgid "Clear search results"
+msgstr ""
+
+#: ../admin/admin.php:142
 msgid "Initialize Instant Images"
-msgstr ""
-
-#: ../admin/admin.php:196 ../api/upload.php:49
-msgid "Unable to save image, check your server permissions"
-msgstr ""
-
-#: ../admin/admin.php:235
-msgid "Image successfully saved to server."
-msgstr ""
-
-#: ../admin/admin.php:247
-msgid ""
-"Saved file not found, ensure you have proper permissions set on the uploads "
-"directory."
-msgstr ""
-
-#: ../admin/admin.php:258
-msgid ""
-"Unable to save image to uploads directory, check your server permissions."
-msgstr ""
-
-#: ../admin/admin.php:316
-msgid "Image successfully uploaded to media library!"
-msgstr ""
-
-#: ../admin/admin.php:323
-msgid ""
-"There was an error sending to image to the Media Library, check your server "
-"permissions."
 msgstr ""
 
 #: ../admin/includes/cta/permissions.php:14
@@ -133,14 +109,14 @@ msgid "Permissions Error"
 msgstr ""
 
 #: ../admin/includes/cta/permissions.php:15
-msgid "Instant Images is unable to downloads images to your server."
+msgid "Instant Images is unable to download and process images on your server."
 msgstr ""
 
 #: ../admin/includes/cta/permissions.php:16
 msgid "Please enable read/write access to the following directory"
 msgstr ""
 
-#: ../admin/includes/settings.php:21 ../admin/includes/unsplash-settings.php:7
+#: ../admin/includes/settings.php:21 ../admin/includes/unsplash-settings.php:6
 msgid "Unsplash Settings"
 msgstr ""
 
@@ -152,7 +128,7 @@ msgstr ""
 msgid "Upload Image Height"
 msgstr ""
 
-#: ../admin/includes/settings.php:55 ../admin/includes/unsplash-settings.php:8
+#: ../admin/includes/settings.php:55 ../admin/includes/unsplash-settings.php:7
 msgid "Manage your media upload settings"
 msgstr ""
 
@@ -164,11 +140,19 @@ msgstr ""
 msgid "Max Image Upload Height:"
 msgstr ""
 
-#: ../admin/includes/unsplash-settings.php:17
+#: ../admin/includes/unsplash-settings.php:16
 msgid "Save Settings"
 msgstr ""
 
-#: ../admin/includes/unsplash-settings.php:46
+#: ../admin/includes/unsplash-settings.php:23
+msgid "What's New"
+msgstr ""
+
+#: ../admin/includes/unsplash-settings.php:24
+msgid "The latest updates in"
+msgstr ""
+
+#: ../admin/includes/unsplash-settings.php:51
 msgid "Our Plugins"
 msgstr ""
 
@@ -181,8 +165,19 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: ../api/resize.php:78
+#: ../api/resize.php:76
+msgid ""
+"There was an error sending image to your media library. Are you using "
+"password protection on the domain? If so, please read the Instant Images FAQ "
+"for instructions on how to fix this issue."
+msgstr ""
+
+#: ../api/resize.php:88
 msgid "Image successfully uploaded to your media library!"
+msgstr ""
+
+#: ../api/upload.php:49
+msgid "Unable to save image, check your server permissions"
 msgstr ""
 
 #: ../api/upload.php:91

@@ -2,7 +2,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 
 module.exports = {
-	entry: ['./src/js/index.js', './src/scss/style.scss'], 
+	entry: [
+		'./src/js/index.js', 
+		'./src/scss/style.scss'
+	], 
 	output: {
 		filename: './js/instant-images.js',
 		path: path.join(__dirname, 'dist'),

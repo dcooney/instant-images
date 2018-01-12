@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 <?php include( INSTANT_IMG_PATH . 'admin/includes/cta/permissions.php');	?>
 <?php include( INSTANT_IMG_PATH . 'admin/includes/unsplash-settings.php');	?>   
 <section class="instant-images-wrapper">
-   <div class="cnkt-main">
+   <div class="cnkt-main">	   
 		<div id="app"></div>
    </div>
 </section>

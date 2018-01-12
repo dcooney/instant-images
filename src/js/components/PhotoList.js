@@ -58,7 +58,7 @@ class PhotoList extends React.Component {
 		   input.focus();		   
 	   }
 	   
-   }
+   } 
    
    
    
@@ -66,30 +66,74 @@ class PhotoList extends React.Component {
 	 * doSearch
 	 * Run the search
 	 * 
-	 * @param term   string    the search term    
+	 * @param term   string    the search term  
+	 * @param type   string    the type of search, standard or by ID    
 	 * @since 3.0
+	 * @updated 3.1   
 	 */
    doSearch(term){
       
       let self = this;
+      let type = 'term';
       this.page = 1; // reset page num
-	   let url = `${API.search_api}${API.app_id}${API.posts_per_page}&page=${this.page}&query=${this.search_term}`;
+      
+	   let url = `${API.search_api}${API.app_id}${API.posts_per_page}&page=${this.page}&query=${this.search_term}`;	  
+	   
+	   // Search by ID
+	   // allow users to search by photo by prepending id:{photo_id} to search terms
+	   let search_type = term.substring(0, 3);	   
+	   if(search_type === 'id:'){		   
+		   type = 'id';
+		   term = term.replace('id:', '');
+   	   url = `${API.photo_api}/${term}${API.app_id}`;   	   
+	   }
+
       let input = document.querySelector('#photo-search');
       
 	   fetch(url)
 	      .then((data) => data.json())
-         .then(function(data) {
+         .then(function(data) {            
+            
+            // Term Search
+            if(type === 'term'){
 	         
-	         self.total_results = data.total;
+   	         self.total_results = data.total;
+   	         
+   	         // Check for returned data
+   	         self.checkTotalResults(data.results.length);
+   	         
+   	         // Update Props
+   	         self.results = data.results;
+   	         self.setState({ results: self.results });   	         
 	         
-	         // Check for returned data
-	         self.checkTotalResults(data.results.length);
+	         }
 	         
-	         // Update Props
-	         self.results = data.results;
-	         self.setState({ results: data.results });
+	         // Search by photo ID
+	         if(type === 'id' && data){
+   	         
+   	         // Convert return data to array   	         
+   	         let photoArray = [];   	         
+   	         
+   	         if(data.errors){ // If error was returned
+	   	         
+	   	         self.total_results = 0;        
+	   	         self.checkTotalResults('0');
+	   	         
+	   	      } else { // No errors, display results
+		   	      
+	   	         photoArray.push(data);
+	   	         
+	   	         self.total_results = 1;   	         
+	   	         self.checkTotalResults('1');
+	   	         
+   	         }
+   	         
+   	         self.results = photoArray;
+   	         self.setState({ results: self.results });
+            }
 	         
-	         input.classList.remove('searching');			      
+	         input.classList.remove('searching');	
+	         		      
 	      })
 	      .catch(function(error) {
             console.log(error);

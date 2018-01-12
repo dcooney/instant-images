@@ -1,4 +1,5 @@
 import React from 'react';
+import API from './API';
 
 class Photo extends React.Component {   
    
@@ -83,6 +84,8 @@ class Photo extends React.Component {
                } else { 
                   // Success
                   self.resizeImage(path, filename, desc, url, target, photo, notice);
+                  self.triggerUnsplashDownload(data.id);
+                  
                }
             }
             
@@ -147,11 +150,11 @@ class Photo extends React.Component {
             resizeMsg = response.msg;
             
             if(success){ 
-	            // Success              
+	            // Success
                self.uploadComplete(target, photo, resizeMsg);                  
             }else{
 	            // Error
-	            self.uploadError(target, photo, instant_img_localize.error_resize);
+	            self.uploadError(target, photo, resizeMsg);
             }
          } else {
 	         // Error
@@ -162,6 +165,30 @@ class Photo extends React.Component {
       requestResizeImg.onerror = function() {
          self.uploadError(target, photo, instant_img_localize.error_resize);
       };    
+   }
+   
+   
+   
+   /*
+	 * triggerUnsplashDownload
+	 * Function to trigger download action at unsplash.com
+	 * This is used to give authors download credits and nothing more
+	 * 
+	 * @param id       string    The ID of the image
+	 * @since 3.1
+	 */
+   triggerUnsplashDownload(id){
+      
+      let url = `${API.photo_api}/${id}/download/${API.app_id}`;
+      
+      fetch(url)
+	      .then((data) => data.json())
+	      .then(function(data) {  
+	         // Success, nothing else happens here          
+	      })
+	      .catch(function(error) {
+	         console.log(error);
+	      });
    }
    
    
@@ -258,7 +285,7 @@ class Photo extends React.Component {
                <i className="fa fa-download"></i>
             </a>
             
-            <a className="user fade" href={'https://unsplash.com/@'+this.user} target="_blank" title={this.view_all +' @'+ this.user}>
+            <a className="user fade" href={'https://unsplash.com/@'+this.user+'?utm_source=wordpress-instant-images&utm_medium=referral'} target="_blank" title={this.view_all +' @'+ this.user}>
 	            <div className="user-wrap">
 	               {this.user_photo.length > 0 &&
 	                  <img src={this.user_photo} /> 

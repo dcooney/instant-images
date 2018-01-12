@@ -57,6 +57,7 @@ function instant_img_scripts(){
    wp_enqueue_script('jquery');
    wp_enqueue_script('jquery-form', true);
    wp_enqueue_script('masonry', true);
+   
    wp_enqueue_script('instant-images-react', INSTANT_IMG_URL. 'dist/js/instant-images.js', '', INSTANT_IMG_VERSION, true);
    wp_enqueue_script('instant-images', INSTANT_IMG_ADMIN_URL. 'assets/js/admin.js', 'jquery', INSTANT_IMG_VERSION, true);
    
@@ -65,7 +66,7 @@ function instant_img_scripts(){
    $download_h = isset($options['unsplash_download_h']) ? $options['unsplash_download_h'] : 1200; // height of downloads
    
 	wp_localize_script( 
-		'instant-images', 'instant_img_localize', array(
+		'instant-images-react', 'instant_img_localize', array(
 			'root' => esc_url_raw( rest_url() ), 
 			'nonce' => wp_create_nonce( 'wp_rest' ),
 			'ajax_url' => admin_url('admin-ajax.php'),
@@ -92,7 +93,8 @@ function instant_img_scripts(){
 			'popular' => __('Popular', 'instant-images'),
 			'load_more' => __('Load More Images', 'instant-images'),
 			'search' => __('Search for Toronto, Coffee + Breakfast etc...', 'instant-images'),
-			'search_results' => __('images found for', 'instant-images')
+			'search_results' => __('images found for', 'instant-images'),
+			'clear_search' => __('Clear search results', 'instant-images')
 		)
 	);
 }
