@@ -24,9 +24,11 @@
 	      <p><?php _e('The latest updates in', 'instant-images'); ?> <?php echo INSTANT_IMG_VERSION; ?></p>
 	      <div class="cta-wrap">
 		      <ul class="whats-new">
+			      <li>Better image uploading and error handling.</li>
+			      <li>Added `instant_images_user_role` filter to allow for control over user capability.</li>
+			      <li>Fixing permission issues with uploads when using basic HTTP authentication on domain.</li>
 			      <li>Updated to meet revised <a href="https://medium.com/unsplash/unsplash-api-guidelines-28e0216e6daa" target="_blank">Unsplash API guidelines</a>.</li>
 			      <li>Adding support for searching individual photos by Unsplash ID - searching <pre>id:{photo_id}</pre> will return a single result.<br/>e.g. <pre>id:YiUi00uqKk8</pre></li>
-			      <li>Better Error messaging for upload/resize errors.</li>
 		      </ul>
 	      </div>
       </section>

@@ -7,7 +7,7 @@ Author: Darren Cooney
 Twitter: @connekthq
 Author URI: https://connekthq.com
 Text Domain: instant-images
-Version: 3.1
+Version: 3.1.1
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -26,7 +26,7 @@ function instant_images_activate() {
    $upload_dir = wp_upload_dir();
    $dir = $upload_dir['basedir'].'/instant-images';
    if(!is_dir($dir)){
-      mkdir($dir);
+      mkdir($dir, 755);
    }
 }
 register_activation_hook( __FILE__, 'instant_images_activate' );
@@ -71,8 +71,8 @@ class InstantImages {
 	*/
 
 	private function constants(){
-		define('INSTANT_IMG_VERSION', '3.1');
-		define('INSTANT_IMG_RELEASE', 'January 2, 2018');
+		define('INSTANT_IMG_VERSION', '3.1.1');
+		define('INSTANT_IMG_RELEASE', 'June 15, 2018');
 		define('INSTANT_IMG_TITLE', 'Instant Images');
 		$upload_dir = wp_upload_dir();
 		define('INSTANT_IMG_UPLOAD_PATH', $upload_dir['basedir'].'/instant-images');

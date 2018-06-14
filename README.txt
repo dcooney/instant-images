@@ -1,10 +1,10 @@
 === Instant Images - One Click Unsplash Uploads ===
 Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
-Tags: stock photo, stock, unsplash, prototyping, photos, upload, media, media library, image upload, free stock photos
-Requires at least: 3.6
-Tested up to: 4.9.1
-Stable tag: 3.1
+Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free stock photos
+Requires at least: 4.0
+Tested up to: 4.9.6
+Stable tag: 3.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,15 @@ How to install Instant Images.
 
 
 == Changelog ==
+
+
+= 3.1.1 - June 15, 2018 =
+** NEW - More stable image uploading 🎉.
+** NEW - Added `instant_images_user_role` filter to allow for control over user capability.
+** FIX - Fixing permission issues with uploads when using basic HTTP authentication on domain.
+** UPDATE - Better error handling
+** UPDATE - Added permission 755 to the uploads/instant-images directory created on activation.
+
 
 = 3.1 - January 2, 2018 =
 ** NEW - Adding support for searching individual photos by ID. Prefix a search term with `id:` to search by Unsplash ID. e.g. `id:ixddk_CepZY`.

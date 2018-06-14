@@ -10,7 +10,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 */
 
 function instant_img_admin_menu() {
-   $usplash_settings_page = add_submenu_page( 'upload.php', INSTANT_IMG_TITLE, INSTANT_IMG_TITLE, 'edit_theme_options', INSTANT_IMG_NAME, 'instant_img_settings_page');
+   $usplash_settings_page = add_submenu_page( 
+   	'upload.php', 
+   	INSTANT_IMG_TITLE, 
+   	INSTANT_IMG_TITLE, 
+   	apply_filters('instant_images_user_role', 'edit_theme_options'), 
+   	INSTANT_IMG_NAME, 
+   	'instant_img_settings_page'
+   );
    add_action( 'load-' . $usplash_settings_page, 'instant_img_load_scripts' ); //Add our admin scripts
 }
 add_action( 'admin_menu', 'instant_img_admin_menu' );

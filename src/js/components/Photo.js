@@ -264,40 +264,40 @@ class Photo extends React.Component {
    render(){
       
       return (
-      <article className='photo'>
-         <div className='img-wrap'>
-         
-            <a 
-            	className='upload loaded' 
-					href={this.full_size} 
-					data-id={this.id} 
-					data-url={this.full_size} 
-					data-desc={instant_img_localize.photo_by +' '+ this.author}
-					title={instant_img_localize.upload} 
-					onClick={(e) => this.uploadPhoto(e)}>
-               <img src={this.img} />
-               <div className="status" />                
-            </a>         
-                        
-            <div className="notice-msg"/>  
-            
-            <a className="download-photo fade" href={this.link} title={this.full_size} target="_blank">
-               <i className="fa fa-download"></i>
-            </a>
-            
-            <a className="user fade" href={'https://unsplash.com/@'+this.user+'?utm_source=wordpress-instant-images&utm_medium=referral'} target="_blank" title={this.view_all +' @'+ this.user}>
-	            <div className="user-wrap">
-	               {this.user_photo.length > 0 &&
-	                  <img src={this.user_photo} /> 
-	               }
-	               {this.user}
-	            </div>
-            </a>  
-                         
-            <span className="likes fade" title={this.likes +' ' + this.like_text}><i className="fa fa-heart"></i> {this.likes}</span>
-            
-         </div>
-      </article>
+	      <article className='photo'>
+	         <div className='img-wrap'>
+	         
+	            <a 
+	            	className='upload loaded' 
+						href={this.full_size} 
+						data-id={this.id} 
+						data-url={this.full_size} 
+						data-desc={instant_img_localize.photo_by +' '+ this.author}
+						title={instant_img_localize.upload} 
+						onClick={(e) => this.uploadPhoto(e)}>
+	               <img src={this.img} />
+	               <div className="status" />                
+	            </a>         
+	                        
+	            <div className="notice-msg"/>  
+	            
+	            <a className="download-photo fade" href={this.link} title={instant_img_localize.view_on_unsplash} target="_blank">
+	               <i className="fa fa-external-link"></i>
+	            </a>
+	            
+	            <a className="user fade" href={'https://unsplash.com/@'+this.user+'?utm_source=wordpress-instant-images&utm_medium=referral'} target="_blank" title={this.view_all +' @'+ this.user}>
+		            <div className="user-wrap">
+		               {this.user_photo.length > 0 &&
+		                  <img src={this.user_photo} /> 
+		               }
+		               {this.user}
+		            </div>
+	            </a>  
+	                         
+	            <span className="likes fade" title={this.likes +' ' + this.like_text}><i className="fa fa-heart"></i> {this.likes}</span>
+	            
+	         </div>
+	      </article>
       )
    }
 }

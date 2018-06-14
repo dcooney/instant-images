@@ -32,7 +32,7 @@ add_action( 'rest_api_init', function () {
 
 function upload_image( WP_REST_Request $request ) {
    
-	if (is_user_logged_in() && current_user_can( 'edit_theme_options' )){   	
+	if (is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'edit_theme_options') )){   	
 		error_reporting(E_ALL|E_STRICT);   	
    	
    	// Create /instant-images directory inside /uploads to temporarily store images
