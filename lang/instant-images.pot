@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Instant Images\n"
-"POT-Creation-Date: 2018-06-14 14:48-0400\n"
+"POT-Creation-Date: 2018-07-31 10:13-0400\n"
 "PO-Revision-Date: 2017-09-21 10:40-0500\n"
-"Last-Translator: Darren Cooney <dcooney@ecentricarts.com>\n"
+"Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
 "Language: en_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.9\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -24,12 +24,12 @@ msgstr ""
 msgid "Please check your Application ID."
 msgstr ""
 
-#: ../admin/admin.php:87 ../api/upload.php:113
+#: ../admin/admin.php:87
 msgid ""
 "Unable to download image to server, please check your server permissions."
 msgstr ""
 
-#: ../admin/admin.php:88 ../api/resize.php:115
+#: ../admin/admin.php:88
 msgid ""
 "There was an error sending the image to your media library. Please check "
 "your server permissions and confirm the upload_max_filesize setting (php."
@@ -37,70 +37,112 @@ msgid ""
 msgstr ""
 
 #: ../admin/admin.php:89
-msgid "Photo by"
+msgid ""
+"There was an error accessing the WP REST API - Instant Images requires "
+"access to the WP REST API to fetch and upload images to your media library."
 msgstr ""
 
 #: ../admin/admin.php:90
-msgid "View all photos by"
+msgid "Photo by"
 msgstr ""
 
 #: ../admin/admin.php:91
-msgid "Click Image to Upload"
+msgid "View All Photos by"
 msgstr ""
 
 #: ../admin/admin.php:92
-msgid "View Full Size"
+msgid "Click Image to Upload"
 msgstr ""
 
 #: ../admin/admin.php:93
-msgid "Like(s)"
+msgid "Click to Upload"
 msgstr ""
 
 #: ../admin/admin.php:94
-msgid "Downloading Image..."
+msgid "View Full Size"
 msgstr ""
 
 #: ../admin/admin.php:95
-msgid "Resizing Image..."
+msgid "Like(s)"
 msgstr ""
 
 #: ../admin/admin.php:96
-msgid "Sorry, nothing matched your query"
+msgid "Downloading Image..."
 msgstr ""
 
 #: ../admin/admin.php:97
-msgid "Please try adjusting your search criteria"
+msgid "Resizing Image..."
 msgstr ""
 
 #: ../admin/admin.php:98
-msgid "New"
+msgid "Sorry, nothing matched your query"
 msgstr ""
 
 #: ../admin/admin.php:99
-msgid "Oldest"
+msgid "Please try adjusting your search criteria"
 msgstr ""
 
 #: ../admin/admin.php:100
-msgid "Popular"
+msgid "New"
 msgstr ""
 
 #: ../admin/admin.php:101
-msgid "Load More Images"
+msgid "Oldest"
 msgstr ""
 
 #: ../admin/admin.php:102
-msgid "Search for Toronto, Coffee + Breakfast etc..."
+msgid "Popular"
 msgstr ""
 
 #: ../admin/admin.php:103
-msgid "images found for"
+msgid "Load More Images"
 msgstr ""
 
 #: ../admin/admin.php:104
-msgid "Clear search results"
+msgid "Search for Toronto, Coffee + Breakfast etc..."
 msgstr ""
 
-#: ../admin/admin.php:149
+#: ../admin/admin.php:105
+msgid "images found for"
+msgstr ""
+
+#: ../admin/admin.php:106
+msgid "Clear Search Results"
+msgstr ""
+
+#: ../admin/admin.php:107
+msgid "View Photo on Unsplash"
+msgstr ""
+
+#: ../admin/admin.php:108
+msgid "Filename"
+msgstr ""
+
+#: ../admin/admin.php:109
+msgid "Alt Text"
+msgstr ""
+
+#: ../admin/admin.php:110
+msgid "Caption"
+msgstr ""
+
+#: ../admin/admin.php:111
+msgid "Edit Image Details"
+msgstr ""
+
+#: ../admin/admin.php:112
+msgid "Update and save image details prior to uploading"
+msgstr ""
+
+#: ../admin/admin.php:113
+msgid "Cancel"
+msgstr ""
+
+#: ../admin/admin.php:114
+msgid "Save"
+msgstr ""
+
+#: ../admin/admin.php:159
 msgid "Initialize Instant Images"
 msgstr ""
 
@@ -149,10 +191,10 @@ msgid "What's New"
 msgstr ""
 
 #: ../admin/includes/unsplash-settings.php:24
-msgid "The latest updates in"
+msgid "The latest Instant Images updates"
 msgstr ""
 
-#: ../admin/includes/unsplash-settings.php:53
+#: ../admin/includes/unsplash-settings.php:59
 msgid "Our Plugins"
 msgstr ""
 
@@ -171,22 +213,41 @@ msgid ""
 "permissions."
 msgstr ""
 
-#: ../api/resize.php:107
+#: ../api/resize.php:109
 msgid "Image successfully uploaded to your media library!"
+msgstr ""
+
+#: ../api/resize.php:117
+msgid ""
+"There was an error sending the image to your media library. Please check "
+"your server permissions and confirm the upload_max_filesize setting (php."
+"ini) is large enough for the downloaded image (8mb minimum is recommended)."
 msgstr ""
 
 #: ../api/upload.php:49
 msgid "Unable to save image, check your server permissions"
 msgstr ""
 
-#: ../api/upload.php:91
+#: ../api/upload.php:83
+msgid ""
+"cURL error - Unable to download image to server, please contact your server "
+"administrator to enable cURL."
+msgstr ""
+
+#: ../api/upload.php:104
 msgid "Image successfully uploaded to server."
 msgstr ""
 
-#: ../api/upload.php:103
+#: ../api/upload.php:114
 msgid ""
 "Uploaded image not found, please ensure you have proper permissions set on "
 "the uploads directory."
+msgstr ""
+
+#: ../api/upload.php:126
+msgid ""
+"Unable to download image to server, please check your server permissions of "
+"the instant-images folder in your WP uploads directory."
 msgstr ""
 
 #: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:52
@@ -228,80 +289,3 @@ msgstr ""
 #: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:364
 msgid "Are you sure you want to install this plugin?"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Search"
-#~ msgstr "Recherche"
-
-#, fuzzy
-#~ msgid "# Per Page:"
-#~ msgstr "Imprimer cette page"
-
-#~ msgid "404 Error"
-#~ msgstr "Erreur 404 "
-
-#~ msgid "Sorry, the page you have requested cannot be found."
-#~ msgstr "Désolé, la page que vous demandez est introuvable."
-
-#~ msgid ""
-#~ "Be sure to check your spelling. If all else fails, you can go back to the "
-#~ "page you came from, return to the <a href=\"/\">homepage</a>, or try "
-#~ "searching."
-#~ msgstr ""
-#~ "Veuillez vérifier l'orthographe. Si tout échoue, retournez à la page "
-#~ "précédente, retournez à la <a href=\"/\">page d'accueil</a>, ou essayez "
-#~ "une recherche."
-
-#~ msgid "Connect with Willow"
-#~ msgstr "Connectez-vous avec Willow"
-
-#~ msgid ""
-#~ "Sign up to stay in touch and receive Willow news, updates and event "
-#~ "information."
-#~ msgstr ""
-#~ "Inscrivez-vous pour rester en contact avec nous et recevoir des nouvelles "
-#~ "de Willow (Disponibles en anglais seulement)"
-
-#~ msgid "all our funders"
-#~ msgstr "tous nos donateurs"
-
-#~ msgid "call our helpline"
-#~ msgstr "Appelez notre ligne de soutien"
-
-#~ msgid "share"
-#~ msgstr "Partager"
-
-#~ msgid "Share on Twitter"
-#~ msgstr "Partager sur Twitter"
-
-#~ msgid "Share on Facebook"
-#~ msgstr "Partager sur Facebook"
-
-#~ msgid "Share via Email"
-#~ msgstr "Partager par courriel"
-
-#~ msgid "Your search returned <strong>%s</strong> result%s"
-#~ msgstr "Votre recherche a généré <strong>%s</strong>  résultat%s "
-
-#~ msgid "Showing"
-#~ msgstr "Montrant"
-
-#~ msgid "result(s) in"
-#~ msgstr "résultat(s) dans"
-
-#~ msgid "For more information please contact:"
-#~ msgstr "Pour de plus amples renseignements, veuillez contacter : "
-
-#~ msgid "filter support groups"
-#~ msgstr "Filtrer les groupes de soutien"
-
-#~ msgid "select a province and city to find a support group"
-#~ msgstr ""
-#~ "Sélectionnez votre province et votre ville pour trouver un groupe de "
-#~ "soutien"
-
-#~ msgid "-- Select Province --"
-#~ msgstr "Sélectionnez province"
-
-#~ msgid "Filter"
-#~ msgstr "Filtrer"

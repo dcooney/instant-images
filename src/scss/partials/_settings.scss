@@ -74,6 +74,18 @@
 		.cta-wrap{
 	   	display: block;
 	   	padding: 10px 20px;
+	   	h4{
+		   	padding: 10px 0 7px;
+		   	margin: 0;
+		   	span{
+			   	display: inline-block;
+			   	line-height: 1;
+			   	padding: 8px 10px;
+			   	border-radius: 2px;
+			   	background: #ffffcc; 
+			   	color: #666;
+		   	}
+	   	}
 		}
 		.cnkt-plugin-installer .plugin{
 			width: 48%;

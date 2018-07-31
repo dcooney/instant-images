@@ -1,10 +1,10 @@
 === Instant Images - One Click Unsplash Uploads ===
 Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
-Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free stock photos
+Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
-Tested up to: 4.9.6
-Stable tag: 3.1.1
+Tested up to: 4.9.7
+Stable tag: 3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,7 @@ The perfect tool for users who want to save time and frustration by uploading im
 * **Image Search** - The Instant Images search let’s you quickly find and upload images for any subject in a matter of seconds!
 * **Time Saver** - Quickly upload amazing stock photos without leaving the comfort of your WordPress admin.
 * **Theme/Plugin Developers** - A great tool for developers who want to prototype and develop using real world imagery.
+* **Edit Image Metadata** - Easily edit image filename, alt text and caption prior to uploading to your media library.
 * **Easy to Use** - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
 
 
@@ -60,8 +61,8 @@ Yes! You can enter `id:{photo_id}` into the search box to return a single resu
 e.g. `id:YiUi00uqKk8`
 
 
-= I'm getting an unauthorized error message during the resize process, is there a fix? =
-If your site is using password protection you may need to disable the http authorization as there appears to be an issue with the `media_sideload_image` function in WP core.
+= I'm unable to download images, what is the cause of this? =
+Unfortunately, there are a number of reasons why Instant Images may not work in your current hosting/server environment. Please read through the [FAQ on our website](https://connekthq.com/plugins/instant-images/#faqs) to view some potential causes.
 
 
 = Are the images upload to the Media Library? =
@@ -113,6 +114,10 @@ How to install Instant Images.
 
 
 == Changelog ==
+
+= 3.2 - July 31, 2018
+** NEW - Added functionality to edit image details (filename, alt text and caption) prior to uploading - edit image detail by clicking the options icon in the top right corner of each image 👍.
+** UPDATE - Improved error handling and messaging for common REST API and cURL issues.
 
 
 = 3.1.1 - June 15, 2018 =

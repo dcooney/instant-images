@@ -86,9 +86,11 @@ function instant_img_scripts(){
 			'error_msg_desc' => __('Please check your Application ID.', 'instant-images'),
 			'error_upload' => __('Unable to download image to server, please check your server permissions.', 'instant-images'),
 			'error_resize' => __('There was an error sending the image to your media library. Please check your server permissions and confirm the upload_max_filesize setting (php.ini) is large enough for the downloaded image.', 'instant-images'),
+			'error_restapi' => __('There was an error accessing the WP REST API - Instant Images requires access to the WP REST API to fetch and upload images to your media library.', 'instant-images'),
 			'photo_by' => __('Photo by', 'instant-images'),
-			'view_all' => __('View all photos by', 'instant-images'),
+			'view_all' => __('View All Photos by', 'instant-images'),
 			'upload' => __('Click Image to Upload', 'instant-images'),
+			'upload_btn' => __('Click to Upload', 'instant-images'),
 			'full_size' => __('View Full Size', 'instant-images'),
 			'likes' => __('Like(s)', 'instant-images'),
 			'saving' => __('Downloading Image...', 'instant-images'),
@@ -101,7 +103,15 @@ function instant_img_scripts(){
 			'load_more' => __('Load More Images', 'instant-images'),
 			'search' => __('Search for Toronto, Coffee + Breakfast etc...', 'instant-images'),
 			'search_results' => __('images found for', 'instant-images'),
-			'clear_search' => __('Clear search results', 'instant-images')
+			'clear_search' => __('Clear Search Results', 'instant-images'),
+			'view_on_unsplash' => __('View Photo on Unsplash', 'instant-images'),
+			'edit_filename' => __('Filename', 'instant-images'),
+			'edit_alt' => __('Alt Text', 'instant-images'),
+			'edit_caption' => __('Caption', 'instant-images'),
+			'edit_details' => __('Edit Image Details', 'instant-images'),
+			'edit_details_intro' => __('Update and save image details prior to uploading', 'instant-images'),
+			'cancel' => __('Cancel', 'instant-images'),
+			'save' => __('Save', 'instant-images')
 		)
 	);
 }
@@ -185,7 +195,7 @@ function instant_img_filter_admin_footer_text( $text ) {
 	$screen = get_current_screen();
 	$base = 'media_page_'.INSTANT_IMG_NAME;
 	if($screen->base === $base){
-	   echo INSTANT_IMG_TITLE .' '.'is made with <span style="color: #e25555;">♥</span> by <a href="https://connekthq.com/?utm_source=WPAdmin&utm_medium=InstantImages&utm_campaign=Footer" target="_blank" style="font-weight: 500;">Connekt</a> - <a href="https://connekthq.com/plugins/instant-images/" target="_blank">Get Support</a>';
+	   echo INSTANT_IMG_TITLE .' '.'is made with <span style="color: #e25555;">♥</span> by <a href="https://connekthq.com/?utm_source=WPAdmin&utm_medium=InstantImages&utm_campaign=Footer" target="_blank" style="font-weight: 500;">Connekt</a> | <a href="https://wordpress.org/support/plugin/instant-images/reviews/#new-post" target="_blank" style="font-weight: 500;">Leave a Review</a> | <a href="https://connekthq.com/plugins/instant-images/#faqs" target="_blank" style="font-weight: 500;">FAQs</a>';
 	}
 }
 add_filter( 'admin_footer_text', 'instant_img_filter_admin_footer_text'); // Admin menu text

@@ -31,6 +31,56 @@ class PhotoList extends React.Component {
       this.container.classList.add('loading');
       this.wrapper = document.querySelector('.instant-images-wrapper');
       
+      
+   }
+   
+   
+   
+   /*
+	 * test()
+	 * Test access to the REST API
+	 * 
+	 * @since 3.2 
+	 */
+   test(){      
+      
+      let self = this;
+      
+      let target = document.querySelector('.error-messaging'); // Target element
+      
+      let testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route      
+      var restAPITest = new XMLHttpRequest();
+      restAPITest.open('GET', testURL, true);
+      restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
+      restAPITest.setRequestHeader('Content-Type', 'application/json');
+      restAPITest.send();
+      
+      restAPITest.onload = function() {
+         if (restAPITest.status >= 200 && restAPITest.status < 400) { // Success
+                        
+            let response = JSON.parse(restAPITest.response);                      
+            let success = response.success;
+            
+            if(!success){ 
+	            self.renderTestError(target); 
+            }
+            
+         } else {
+	         // Error
+	         self.renderTestError(target); 
+         }
+      }       
+      
+      restAPITest.onerror = function(errorMsg) {
+         console.log(errorMsg);
+         self.renderTestError(errorTarget);
+      };     
+      
+   }
+   
+   renderTestError(target){
+      target.classList.add('active');
+      target.innerHTML = instant_img_localize.error_restapi;
    }
    
    
@@ -324,7 +374,6 @@ class PhotoList extends React.Component {
    
    
    // Component Updated 
-   // https://facebook.github.io/react/docs/react-component.html
    componentDidUpdate() {
       this.renderLayout();
       this.setActiveState();
@@ -333,10 +382,10 @@ class PhotoList extends React.Component {
    
    
    // Component Init  
-   // https://facebook.github.io/react/docs/react-component.html
    componentDidMount() {   
       this.renderLayout();
       this.setActiveState(); 
+      this.test();
       this.container.classList.remove('loading');
       this.wrapper.classList.add('loaded');
       window.addEventListener('scroll', () => this.onScroll()); // Add scroll event
@@ -362,6 +411,8 @@ class PhotoList extends React.Component {
                   </form>                                    
 					</li>
 				</ul>
+				
+				<div className="error-messaging"></div>
 				
             <div id="photos">               
             	{this.state.results.map((result, iterator) =>

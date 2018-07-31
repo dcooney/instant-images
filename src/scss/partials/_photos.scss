@@ -12,6 +12,9 @@
 	   margin: 0 0.5% 1%;
 	   opacity: 0;
 	   transition: opacity 0.3s ease;
+	   &--wrap{
+   	   position: relative;
+	   }
 	   &.in-view{
 		   opacity: 1;
 	   }
@@ -27,7 +30,7 @@
 		   position: relative;
 	   }
 	   @media screen and (min-width: 2000px){
-			width: 15.6666%; 
+			width: 19%; 
 		} 
 	   @media screen and (max-width: $xlarge){
 			width: 24%; 
@@ -42,6 +45,18 @@
 			width: 100%;
 			margin: 0 0 2%;  
 		} 
+		&:focus{
+   		a.upload img{
+      		opacity: 0.6;
+   		}
+   		.fade{
+            opacity: 1;
+            visibility: visible;
+            &.user{
+            	opacity: 0.7;
+            }
+         }
+		}
 		a.upload{ 
 	      display: block;
 	      position: relative;
@@ -180,7 +195,7 @@
 		&:hover,
 		&.in-progress{
    		a.upload img{
-      		opacity: 0.5;
+      		opacity: 0.6;
    		}
    		.fade{
             opacity: 1;
@@ -203,7 +218,7 @@
 		.fade{
          transition: all 0.3s ease;
          color: #333;    
-         background: rgba(255, 255, 255, 0.7); 
+         background: rgba(255, 255, 255, 0.75); 
          border-radius: 3px; 
          height: 28px;  
          line-height: 28px;
@@ -213,23 +228,25 @@
          position: absolute; 
          left: 10px;
          bottom: 10px;
-         z-index: 6;   
+         z-index: 6;
+         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
          &.likes{
-            padding: 0 10px;
+            padding: 0 8px;
             width: auto;
             display: inline-block;
             width: auto;
             left: auto;
-            top: 10px;
-            right: 10px;
+            right: 45px;
+            cursor: default !important;
             i{
    	         color: #d13714;
    	         line-height: 29px;
    	         margin-right: 1px;
             }
          }
-         &.download-photo{
-            padding: 0 10px;
+         &.edit-photo,
+         &.external-photo{
+            padding: 0 8px;
             width: auto;
             display: inline-block;
             width: auto;
@@ -238,11 +255,26 @@
             cursor: pointer;
             i{
    	         line-height: 29px;
+   	         position: relative;
+   	         left: 1px;
             }
             &:hover{
    	         background: rgba(255, 255, 255, 0.95);  
             }
          }
+         &.external-photo{
+            i{
+               position: relative;
+               top: 1px;
+            }
+         }
+         &.edit-photo{
+            top: 10px;
+            i{
+               position: static;
+            }
+         }
+         
          &.user{
    	      background: none;
    	      color: #fff;
@@ -250,12 +282,17 @@
    	      font-size: 14px;
    	      max-width: 65%;
    	      cursor: pointer;
+   	      text-decoration: none;
+   	      border: none;
+   	      box-shadow: none !important;
+   	      line-height: 22px;
+   	      bottom: 5px;
    	      &:hover{
    		      opacity: 0.95;
    	      }
    	      .user-wrap{
    		      position: relative;
-   		      padding-left: 34px;
+   		      padding-left: 28px;
    		      display: block;
    		      width: 100%;
    		      overflow: hidden;
@@ -263,8 +300,8 @@
    		      white-space: nowrap;
    	      }
    	      img{
-   		      width: 28px;
-   		      max-width: 28px;
+   		      width: 22px;
+   		      max-width: 22px;
    		      border-radius: 100%;
    		      position: absolute;
    		      left: 0;
@@ -292,5 +329,99 @@
          opacity: 0;
          z-index: 9999;
       }			
+	}
+	
+	.edit-screen{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 999;
+		background: rgba(255, 255, 255, 0.9);
+		opacity: 0;
+		visibility: hidden;
+      transition: all 0.25s ease;
+      padding: 8px 8px 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid #e1e1e1;
+      transform: scale(1.025);
+		&.editing{
+   		visibility: visible;
+   		opacity: 1;
+   		transform: scale(1);
+		}
+		&--controls,
+		&--title{
+   		display: block;
+   		background: #f7f7f7;
+   		border: 1px solid #e1e1e1;		
+   		padding: 15px;
+   		border-radius: 2px 2px 0 0;
+   		.button-primary{
+      		float: right;
+   		}
+		}
+		&--controls{
+   		border-radius: 0 0 2px 2px;
+		}
+		&--title{
+   		border-bottom: none;
+   		p{
+      		font-size: 12px;
+      		line-height: 1.25;
+      		margin: 0;
+      		color: #999;
+      		&.heading{
+      		   color: #222;
+         		margin: 0 0 5px;
+         		font-weight: 600;
+         		text-transform: uppercase;
+      		}
+   		}
+		}
+		label{
+   		margin: 0;
+   		padding: 15px;
+   		display: block;
+   		background: #fff;
+   		border: 1px solid #e1e1e1;
+   		border-bottom: none;
+   		border-radius: 2px;
+   		position: relative;
+		}
+		span{
+   		display: block;
+   		font-size: 11px;
+   		text-transform: uppercase;
+   		font-weight: 600;
+   		margin: 0 0 5px;
+   		color: #222;
+   		line-height: 1;
+		}
+		textarea{
+			resize: none;
+		}
+		input{
+   		font-size: 12px;
+   		padding: 0 5px;
+   		margin: 0;
+   		height: 30px;
+   		line-height: 30px;
+		}
+		em{
+   		position: absolute;
+   		bottom: 15px;
+   		right: 15px;
+   		height: 30px;
+   		line-height: 30px;
+   		background: #777;
+   		border-radius: 0 2px 2px 0;
+   		color: #e1e1e1;
+   		font-style: normal;
+   		font-size: 11px;
+   		padding: 0 10px;
+		}
 	}
 }

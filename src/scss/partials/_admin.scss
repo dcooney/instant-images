@@ -69,7 +69,32 @@ body.media_page_instant-images{
 		.loading-block{
 			display: block;
 		} 
-	}    
+	}   
+	
+	.error-messaging{
+   	display: none;
+   	&.active{
+      	padding: 17px 17px 17px 57px;
+         border-radius: 3px;
+         background: #df3333;
+         color: #fff;
+         font-size: 13px;
+         margin-bottom: 25px;
+         display: block;
+         position: relative;
+         &:before{
+            font-family: 'FontAwesome';
+            content: '\f06a';
+            display: block;
+            left: 17px;
+            top: 50%;
+            transform: translateY(-50%);
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.75;
+         }
+   	}
+	} 
             
       
    /* 
@@ -333,7 +358,8 @@ body.media_page_instant-images{
    display: none;
 }
 .instant-img-container input[type=text],
-.instant-img-container input[type=number]{
+.instant-img-container input[type=number],
+.instant-img-container textarea{
    padding: 10px;
    line-height: 1;
    border: 1px solid #ccc;

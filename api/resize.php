@@ -37,36 +37,36 @@ function resize_image( WP_REST_Request $request ) {
 		error_reporting(E_ALL|E_STRICT);
 		
 		require_once( ABSPATH . 'wp-admin/includes/file.php' ); // download_url()
-		require_once( ABSPATH . 'wp-admin/includes/image.php' ); // wp_read_image_metadata()	
-		
+		require_once( ABSPATH . 'wp-admin/includes/image.php' ); // wp_read_image_metadata()			
 		
 		// WP Options
 		$options = get_option( 'instant_img_settings' );
       $download_w = isset($options['unsplash_download_w']) ? $options['unsplash_download_w'] : 1600; // width
-      $download_h = isset($options['unsplash_download_h']) ? $options['unsplash_download_h'] : 1200; // height
-			
+      $download_h = isset($options['unsplash_download_h']) ? $options['unsplash_download_h'] : 1200; // height			
             
       // Get JSON Data
-      $data = json_decode($request->get_body()); // Get contents of request     
+      $data = json_decode($request->get_body()); // Get contents of request  
+         
       $path = sanitize_text_field($data->path); // Path on server
       $name = sanitize_text_field($data->filename); // name
       $filename = $path . $name; // full filename
       $filetype = wp_check_filetype( basename( $filename ), null );
-      $desc = sanitize_text_field($data->desc); // Image description
-      $url = sanitize_text_field($data->url); // Image URL    
-
+      $title = sanitize_text_field($data->title); // Title
+      $alt = sanitize_text_field($data->alt); // Alt text
+      $caption = sanitize_text_field($data->caption); // Caption text
+      $custom_filename = sanitize_title($data->custom_filename); // Custom filename
+      
+      $name = (!empty($custom_filename)) ? $custom_filename .'.jpg' : $name;
 
 		// Resize image to max size (set in Settings)
       $image = wp_get_image_editor( $filename );
       if ( ! is_wp_error( $image ) ) {
          $image->resize( $download_w, $download_h, false );
          $image->save( $filename );
-      }
-      
+      }      
 
 		// Get upload directory
-      $wp_upload_dir = wp_upload_dir(); // ['path'] ['basedir']
-      
+      $wp_upload_dir = wp_upload_dir(); // ['path'] ['basedir']      
       
       // Copy file from uploads/instant-images to a media library directory.
       $new_filename = $wp_upload_dir['path'] .'/'. $name;
@@ -80,20 +80,22 @@ function resize_image( WP_REST_Request $request ) {
       		'msg' => __('Unable to copy image to the media library. Please check your server permissions.', 'instant-images')
    		);
 	      
-      } else {     
-      
+      } else {           
       
 	      // Build attachment array
 	      $attachment = array(
 		     'guid'=> $wp_upload_dir['url'] . basename( $new_filename ), 
 		     'post_mime_type' => $filetype['type'],
-		     'post_title' => $desc,
+		     'post_title' => $title,
+		     'post_excerpt' => $caption,
 		     'post_content' => '',
 		     'post_status' => 'inherit'
-	      );
-	            
+	      );	            
 	      
 	      $image_id = wp_insert_attachment($attachment, $new_filename, 0); // Insert as attachment
+	      
+         update_post_meta( $image_id, '_wp_attachment_image_alt', $alt ); // Add alt text
+
 	      $attach_data = wp_generate_attachment_metadata( $image_id, $new_filename ); // Generate metadata
 	      wp_update_attachment_metadata( $image_id, $attach_data ); // Add metadata
 	          
@@ -112,22 +114,18 @@ function resize_image( WP_REST_Request $request ) {
 		      // Error         
 	         $response = array( 
 	      		'success' => false,
-	      		'msg' => __('There was an error sending the image to your media library. Please check your server permissions and confirm the upload_max_filesize setting (php.ini) is large enough for the downloaded image.', 'instant-images')
-	   		);
-	   		
+	      		'msg' => __('There was an error sending the image to your media library. Please check your server permissions and confirm the upload_max_filesize setting (php.ini) is large enough for the downloaded image (8mb minimum is recommended).', 'instant-images')
+	   		);	   		
 	      }
-      }
-      
+      }      
       
       // Delete temporary image
       if(file_exists($filename)){      
          unlink($filename);
-      }
-      
+      }      
 
       // Send response as JSON
       wp_send_json($response);
 		
    }
-
 }
