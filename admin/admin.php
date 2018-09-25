@@ -68,104 +68,99 @@ function instant_img_scripts(){
    wp_enqueue_script('instant-images-react', INSTANT_IMG_URL. 'dist/js/instant-images.js', '', INSTANT_IMG_VERSION, true);
    wp_enqueue_script('instant-images', INSTANT_IMG_ADMIN_URL. 'assets/js/admin.js', 'jquery', INSTANT_IMG_VERSION, true);
    
-   $options = get_option( 'instant_img_settings' );
-   $download_w = isset($options['unsplash_download_w']) ? $options['unsplash_download_w'] : 1600; // width of download file
-   $download_h = isset($options['unsplash_download_h']) ? $options['unsplash_download_h'] : 1200; // height of downloads
-   
-	wp_localize_script( 
-		'instant-images-react', 'instant_img_localize', array(
-			'root' => esc_url_raw( rest_url() ), 
-			'nonce' => wp_create_nonce( 'wp_rest' ),
-			'ajax_url' => admin_url('admin-ajax.php'),
-			'admin_nonce' => wp_create_nonce('instant_img_nonce'),
-			'download_width' => $download_w,
-			'download_height' => $download_h,
-			'unsplash_default_app_id' => INSTANT_IMG_DEFAULT_APP_ID,
-			'unsplash_app_id' => INSTANT_IMG_DEFAULT_APP_ID,
-			'error_msg_title' => __('Error accessing Unsplash API', 'instant-images'),
-			'error_msg_desc' => __('Please check your Application ID.', 'instant-images'),
-			'error_upload' => __('Unable to download image to server, please check your server permissions.', 'instant-images'),
-			'error_resize' => __('There was an error sending the image to your media library. Please check your server permissions and confirm the upload_max_filesize setting (php.ini) is large enough for the downloaded image.', 'instant-images'),
-			'error_restapi' => __('There was an error accessing the WP REST API - Instant Images requires access to the WP REST API to fetch and upload images to your media library.', 'instant-images'),
-			'photo_by' => __('Photo by', 'instant-images'),
-			'view_all' => __('View All Photos by', 'instant-images'),
-			'upload' => __('Click Image to Upload', 'instant-images'),
-			'upload_btn' => __('Click to Upload', 'instant-images'),
-			'full_size' => __('View Full Size', 'instant-images'),
-			'likes' => __('Like(s)', 'instant-images'),
-			'saving' => __('Downloading Image...', 'instant-images'),
-			'resizing' => __('Resizing Image...', 'instant-images'),
-			'no_results' => __('Sorry, nothing matched your query', 'instant-images'),
-			'no_results_desc' => __('Please try adjusting your search criteria', 'instant-images'),
-			'latest' => __('New', 'instant-images'),
-			'oldest' => __('Oldest', 'instant-images'),
-			'popular' => __('Popular', 'instant-images'),
-			'load_more' => __('Load More Images', 'instant-images'),
-			'search' => __('Search for Toronto, Coffee + Breakfast etc...', 'instant-images'),
-			'search_results' => __('images found for', 'instant-images'),
-			'clear_search' => __('Clear Search Results', 'instant-images'),
-			'view_on_unsplash' => __('View Photo on Unsplash', 'instant-images'),
-			'edit_filename' => __('Filename', 'instant-images'),
-			'edit_alt' => __('Alt Text', 'instant-images'),
-			'edit_caption' => __('Caption', 'instant-images'),
-			'edit_details' => __('Edit Image Details', 'instant-images'),
-			'edit_details_intro' => __('Update and save image details prior to uploading', 'instant-images'),
-			'cancel' => __('Cancel', 'instant-images'),
-			'save' => __('Save', 'instant-images')
-		)
-	);
+   InstantImages::instant_img_localize();
+	
 }
 
 
 
 /**
-* instant_img_media_popup
-* Add pop up button to post/page editor
+* instant_img_show_tabs
+* Show tab to upload image on post edit screens
 *
-* @since 2.0
+* @return $show_tab boolean
+* @since 3.2.1
 */
-
-function instant_img_media_popup() {   
-   
-   $title_txt = INSTANT_IMG_TITLE; // popup title
-   $context = "<a href='#TB_inline?width=1000&height=600&inlineId=instant_images_modal' class='button thickbox instant-images' title='$title_txt'>&nbsp;".$title_txt."&nbsp;</a>";   
-   echo $context;
-
+function instant_img_show_tabs() {
+	$options = get_option( 'instant_img_settings' );	
+	$show_tab = true;
+	if(isset($options['instant_img_btn_display'])){
+		if($options['instant_img_btn_display'] == 1){			
+			$show_tab = false; // Hide the tab
+		} 
+	}
+	
+	return $show_tab;
+}  
+	
+	
+	
+	
+/**
+* instant_img_media_upload_tabs_handler
+* Add tab to media upload window
+*
+* @since 3.2.1
+*/
+function instant_img_media_upload_tabs_handler($tabs) {   
+	$options = get_option( 'instant_img_settings' );
+	$show_tab = instant_img_show_tabs();
+	
+	if($show_tab){
+		$newtab = array ( 'instant_img_tab' => __('Instant Images', 'instant-images') );	
+	   $tabs = array_merge( $tabs, $newtab );
+		return $tabs; 
+	}
 }
-add_action( 'media_buttons',  'instant_img_media_popup', 15 );
-
+add_filter('media_upload_tabs', 'instant_img_media_upload_tabs_handler');
 
 
 
 /**
-* instant_img_media_popup_content
+* instant_img_media_buttons_context_handler
+* Add pop up content to edit, new and post pages
+*
+* @since 3.2.1
+*/
+function instant_img_media_buttons_context_handler() { 
+	$show_tab = instant_img_show_tabs();
+	if($show_tab){
+		return '<a href="'.add_query_arg('tab', 'instant_img_tab', esc_url(get_upload_iframe_src())).'" class="thickbox button" title="'.esc_attr__('Instant Images', 'instant-images').'">&nbsp;'. __('Instant Images', 'instant-images') .'&nbsp;</a>'; 
+	}
+}
+add_filter('media_buttons_context', 'instant_img_media_buttons_context_handler');
+
+
+
+/**
+* media_upload_instant_images_handler
+* Add instant images to the iframe
+*
+* @since 3.2.1
+*/
+function media_upload_instant_images_handler() {
+	wp_iframe('media_instant_img_tab'); 
+}
+add_action('media_upload_instant_img_tab', 'media_upload_instant_images_handler');
+
+
+
+/**
+* media_instant_img_popup_content
 * Add pop up content to edit, new and post pages
 *
 * @since 2.0
 */
-
-function instant_img_media_popup_content() {
+function media_instant_img_tab() {
+	media_upload_header();
    instant_img_scripts();
-   ?>
-   <div id="instant_images_modal" style="display:none;">	   
-   <style>
-	  .instant-img-container li:before{
-		   display: none !important;
-	   }
-	</style>
-      <div class="instant-img-container popup">
-         <?php include( INSTANT_IMG_PATH . 'admin/views/unsplash.php'); ?>         
-         <div class="initialize-wrap"> 
-         	<button type="button" class="button init-btn button-large"><i class="fa fa-bolt" aria-hidden="true"></i> <?php _e('Initialize Instant Images', 'instant-images'); ?></button>
-         </div>
-      </div>
+   $show_settings = false;
+   ?> 
+   <div class="instant-img-container editor" data-media-popup="true">
+      <?php include( INSTANT_IMG_PATH . 'admin/views/unsplash.php'); ?>         
    </div>
 <?php
 }
-add_action( 'admin_head-post.php',  'instant_img_media_popup_content' );
-add_action( 'admin_head-post-new.php',  'instant_img_media_popup_content' );
-add_action( 'admin_head-edit.php',  'instant_img_media_popup_content' );
-
 
 
 
@@ -177,7 +172,8 @@ add_action( 'admin_head-edit.php',  'instant_img_media_popup_content' );
 */
 
 function instant_img_settings_page(){
-   echo '<div class="instant-img-container">';
+	$show_settings = true;
+   echo '<div class="instant-img-container" data-media-popup="false">';
       include( INSTANT_IMG_PATH . 'admin/views/unsplash.php');
    echo '</div>';
 }

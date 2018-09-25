@@ -23,8 +23,9 @@
 	      <h2 class="w-border"><?php _e('What\'s New', 'instant-images'); ?></h2>
 	      <p><?php _e('The latest Instant Images updates', 'instant-images'); ?>.</p>
 	      <div class="cta-wrap">
-		      <h4><span>3.2</span></h4>
+		      <h4><span>3.2+</span></h4>
 		      <ul class="whats-new">
+			      <li>Added Instant Images to media upload tabs. You can now upload a photo and insert it into a page or page immediately. Please note, this is currently not working with the Gutenberg editor.</li>
 			      <li>Added functionality to edit image details (filename, alt text and caption) prior to uploading - edit image detail by clicking the options icon in the top right corner of each image.</li>
 			      <li>Improved error handling and messaging for REST API and cURL issues.</li>
 		      </ul>

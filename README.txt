@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
-Tested up to: 4.9.7
-Stable tag: 3.2
+Tested up to: 4.9.8
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -110,10 +110,16 @@ How to install Instant Images.
 
 1. Dashboard - Browse, search and upload images to your WordPress media library
 2. Search - Find and upload images for any subject in a matter of seconds!
+2. Image Metadata - Easily edit image filename, alt text and caption prior to uploading to your media library.
 3. Post/Page Edit - Unsplash images in a lightbox on your post edit/new/post pages.
 
 
 == Changelog ==
+
+= 3.2.1 - September 25, 2018 =
+* NEW - Added Instant Images to media upload tabs. You can now upload a photo and insert it into a page or page immediately. Please note, this is currently not working with the Gutenberg editor.
+* UPDATE - Better cURL error handling (hopefully).
+
 
 = 3.2 - July 31, 2018
 ** NEW - Added functionality to edit image details (filename, alt text and caption) prior to uploading - edit image detail by clicking the options icon in the top right corner of each image 👍.

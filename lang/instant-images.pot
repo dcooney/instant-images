@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Instant Images\n"
-"POT-Creation-Date: 2018-07-31 10:13-0400\n"
+"POT-Creation-Date: 2018-09-25 12:55-0400\n"
 "PO-Revision-Date: 2017-09-21 10:40-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -16,134 +16,8 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../admin/admin.php:85
-msgid "Error accessing Unsplash API"
-msgstr ""
-
-#: ../admin/admin.php:86
-msgid "Please check your Application ID."
-msgstr ""
-
-#: ../admin/admin.php:87
-msgid ""
-"Unable to download image to server, please check your server permissions."
-msgstr ""
-
-#: ../admin/admin.php:88
-msgid ""
-"There was an error sending the image to your media library. Please check "
-"your server permissions and confirm the upload_max_filesize setting (php."
-"ini) is large enough for the downloaded image."
-msgstr ""
-
-#: ../admin/admin.php:89
-msgid ""
-"There was an error accessing the WP REST API - Instant Images requires "
-"access to the WP REST API to fetch and upload images to your media library."
-msgstr ""
-
-#: ../admin/admin.php:90
-msgid "Photo by"
-msgstr ""
-
-#: ../admin/admin.php:91
-msgid "View All Photos by"
-msgstr ""
-
-#: ../admin/admin.php:92
-msgid "Click Image to Upload"
-msgstr ""
-
-#: ../admin/admin.php:93
-msgid "Click to Upload"
-msgstr ""
-
-#: ../admin/admin.php:94
-msgid "View Full Size"
-msgstr ""
-
-#: ../admin/admin.php:95
-msgid "Like(s)"
-msgstr ""
-
-#: ../admin/admin.php:96
-msgid "Downloading Image..."
-msgstr ""
-
-#: ../admin/admin.php:97
-msgid "Resizing Image..."
-msgstr ""
-
-#: ../admin/admin.php:98
-msgid "Sorry, nothing matched your query"
-msgstr ""
-
-#: ../admin/admin.php:99
-msgid "Please try adjusting your search criteria"
-msgstr ""
-
-#: ../admin/admin.php:100
-msgid "New"
-msgstr ""
-
-#: ../admin/admin.php:101
-msgid "Oldest"
-msgstr ""
-
-#: ../admin/admin.php:102
-msgid "Popular"
-msgstr ""
-
-#: ../admin/admin.php:103
-msgid "Load More Images"
-msgstr ""
-
-#: ../admin/admin.php:104
-msgid "Search for Toronto, Coffee + Breakfast etc..."
-msgstr ""
-
-#: ../admin/admin.php:105
-msgid "images found for"
-msgstr ""
-
-#: ../admin/admin.php:106
-msgid "Clear Search Results"
-msgstr ""
-
-#: ../admin/admin.php:107
-msgid "View Photo on Unsplash"
-msgstr ""
-
-#: ../admin/admin.php:108
-msgid "Filename"
-msgstr ""
-
-#: ../admin/admin.php:109
-msgid "Alt Text"
-msgstr ""
-
-#: ../admin/admin.php:110
-msgid "Caption"
-msgstr ""
-
-#: ../admin/admin.php:111
-msgid "Edit Image Details"
-msgstr ""
-
-#: ../admin/admin.php:112
-msgid "Update and save image details prior to uploading"
-msgstr ""
-
-#: ../admin/admin.php:113
-msgid "Cancel"
-msgstr ""
-
-#: ../admin/admin.php:114
-msgid "Save"
-msgstr ""
-
-#: ../admin/admin.php:159
-msgid "Initialize Instant Images"
+#: ../admin/admin.php:110 ../admin/admin.php:128 ../instant-images.php:55
+msgid "Instant Images"
 msgstr ""
 
 #: ../admin/includes/cta/permissions.php:14
@@ -170,16 +44,28 @@ msgstr ""
 msgid "Upload Image Height"
 msgstr ""
 
-#: ../admin/includes/settings.php:55 ../admin/includes/unsplash-settings.php:7
+#: ../admin/includes/settings.php:47
+msgid "Button"
+msgstr ""
+
+#: ../admin/includes/settings.php:64 ../admin/includes/unsplash-settings.php:7
 msgid "Manage your media upload settings"
 msgstr ""
 
-#: ../admin/includes/settings.php:84
+#: ../admin/includes/settings.php:93
 msgid "Max Image Upload Width:"
 msgstr ""
 
-#: ../admin/includes/settings.php:103
+#: ../admin/includes/settings.php:112
 msgid "Max Image Upload Height:"
+msgstr ""
+
+#: ../admin/includes/settings.php:130
+msgid "Button:"
+msgstr ""
+
+#: ../admin/includes/settings.php:134
+msgid "Hide Instant Images button next to \"Add Media\" on post edit screens."
 msgstr ""
 
 #: ../admin/includes/unsplash-settings.php:16
@@ -194,16 +80,16 @@ msgstr ""
 msgid "The latest Instant Images updates"
 msgstr ""
 
-#: ../admin/includes/unsplash-settings.php:59
+#: ../admin/includes/unsplash-settings.php:60
 msgid "Our Plugins"
 msgstr ""
 
-#: ../admin/views/unsplash.php:9
+#: ../admin/views/unsplash.php:11
 #, php-format
 msgid "One click photo uploads from %s"
 msgstr ""
 
-#: ../admin/views/unsplash.php:14
+#: ../admin/views/unsplash.php:16
 msgid "Settings"
 msgstr ""
 
@@ -217,7 +103,7 @@ msgstr ""
 msgid "Image successfully uploaded to your media library!"
 msgstr ""
 
-#: ../api/resize.php:117
+#: ../api/resize.php:118
 msgid ""
 "There was an error sending the image to your media library. Please check "
 "your server permissions and confirm the upload_max_filesize setting (php."
@@ -229,9 +115,7 @@ msgid "Unable to save image, check your server permissions"
 msgstr ""
 
 #: ../api/upload.php:83
-msgid ""
-"cURL error - Unable to download image to server, please contact your server "
-"administrator to enable cURL."
+msgid "cURL Request Error:"
 msgstr ""
 
 #: ../api/upload.php:104
@@ -248,6 +132,137 @@ msgstr ""
 msgid ""
 "Unable to download image to server, please check your server permissions of "
 "the instant-images folder in your WP uploads directory."
+msgstr ""
+
+#: ../api/upload.php:143
+msgid ""
+"cURL is not enabled on your server. Please contact your server administrator."
+msgstr ""
+
+#: ../instant-images.php:64
+msgid "Error accessing Unsplash API"
+msgstr ""
+
+#: ../instant-images.php:65
+msgid "Please check your Application ID."
+msgstr ""
+
+#: ../instant-images.php:66
+msgid ""
+"Unable to download image to server, please check your server permissions."
+msgstr ""
+
+#: ../instant-images.php:67
+msgid ""
+"There was an error sending the image to your media library. Please check "
+"your server permissions and confirm the upload_max_filesize setting (php."
+"ini) is large enough for the downloaded image."
+msgstr ""
+
+#: ../instant-images.php:68
+msgid ""
+"There was an error accessing the WP REST API - Instant Images requires "
+"access to the WP REST API to fetch and upload images to your media library."
+msgstr ""
+
+#: ../instant-images.php:69
+msgid "Photo by"
+msgstr ""
+
+#: ../instant-images.php:70
+msgid "View All Photos by"
+msgstr ""
+
+#: ../instant-images.php:71
+msgid "Click Image to Upload"
+msgstr ""
+
+#: ../instant-images.php:72
+msgid "Click to Upload"
+msgstr ""
+
+#: ../instant-images.php:73
+msgid "View Full Size"
+msgstr ""
+
+#: ../instant-images.php:74
+msgid "Like(s)"
+msgstr ""
+
+#: ../instant-images.php:75
+msgid "Downloading Image..."
+msgstr ""
+
+#: ../instant-images.php:76
+msgid "Resizing Image..."
+msgstr ""
+
+#: ../instant-images.php:77
+msgid "Sorry, nothing matched your query"
+msgstr ""
+
+#: ../instant-images.php:78
+msgid "Please try adjusting your search criteria"
+msgstr ""
+
+#: ../instant-images.php:79
+msgid "New"
+msgstr ""
+
+#: ../instant-images.php:80
+msgid "Oldest"
+msgstr ""
+
+#: ../instant-images.php:81
+msgid "Popular"
+msgstr ""
+
+#: ../instant-images.php:82
+msgid "Load More Images"
+msgstr ""
+
+#: ../instant-images.php:83
+msgid "Search for Toronto, Coffee + Breakfast etc..."
+msgstr ""
+
+#: ../instant-images.php:84
+msgid "images found for"
+msgstr ""
+
+#: ../instant-images.php:85
+msgid "Clear Search Results"
+msgstr ""
+
+#: ../instant-images.php:86
+msgid "View Photo on Unsplash"
+msgstr ""
+
+#: ../instant-images.php:87
+msgid "Filename"
+msgstr ""
+
+#: ../instant-images.php:88
+msgid "Alt Text"
+msgstr ""
+
+#: ../instant-images.php:89
+msgid "Caption"
+msgstr ""
+
+#: ../instant-images.php:90
+msgid "Edit Image Details"
+msgstr ""
+
+#: ../instant-images.php:91
+msgid "Update and save image details prior to uploading"
+msgstr ""
+
+#: ../instant-images.php:92
+msgid "Cancel"
+msgstr ""
+
+#: ../instant-images.php:93
+msgid "Save"
 msgstr ""
 
 #: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:52

@@ -1,12 +1,70 @@
 var instant_images = instant_images || {};
 
 jQuery(document).ready(function($) {
-	"use strict"; 	
+	"use strict";   
+	
+	var init = true;    
    
-   var init = true;
-   var settingsDiv = $('.instant-images-settings');   
+   
+   
+   // Media Uploader	
+	instant_images.setEditor = function(frame){ 
+		  
+	   // vars
+	   var Parent = wp.media.view.Router;
+	
+	   wp.media.view.Router = Parent.extend({
+	   	
+	   	addNav: function(){	   		
+	   		
+	   		// Button
+	   		var $a = $('<a href="#" class="media-menu-item"><i class="fa fa-bolt" aria-hidden="true"></i> '+ instant_img_localize.instant_images +'</a>'); 
+	   		
+	   		// Click event
+	   		$a.on('click', function( e ){	      		
+	   			e.preventDefault();	    					
+					// Set active state of #instant_images_modal 
+					frame.addClass('active');       
+	   		});
+	   		
+	   		this.$el.append($a); // append
+	   	},
+	   	
+	   	initialize: function(){
+	   		Parent.prototype.initialize.apply( this, arguments );
+	   		this.addNav();	// add buttons   		
+	   		return this; // return
+	   	}
+	   });
+	   
+	   if(frame.length){
+		   $('.close-ii-modal').on('click', function(e){
+			   e.preventDefault();
+			   frame.removeClass('active');
+		   });
+	   }	   
+   };
+   
+   if(wp.media){
+	   var frame = $('#instant_images_modal');
+	   if(frame.length){
+	   	instant_images.setEditor(frame);
+	   }		   
+   }
+   
+   
+   
+   // CLose
+   $(document).on('click', '.media-modal-backdrop', function(e){
+      //alert("meow");
+	   e.preventDefault();
+	   frame.removeClass('active');
+   });
+   
+   
    
    // Show Settings
+   var settingsDiv = $('.instant-images-settings'); 
    $('.header-wrap button').on('click', function(){
 	   var el = $(this);
 	   if(settingsDiv.hasClass('active')){
@@ -21,6 +79,7 @@ jQuery(document).ready(function($) {
 		   });
 	   }
    });
+   
    
    
    // Save Form
@@ -38,72 +97,7 @@ jQuery(document).ready(function($) {
          }
       });
       return false;
-   });
-   
-   
-   
-   /* 
-    * Onboarding Modal Popups
-    *
-    */
-    
-   // Function called from React App
-   instant_images.initOnboarding = function(){        
-      if($('.onboarding').length && init){   
-         init = false;   
-         
-         // Get modals
-         var modals = $('.onboarding');
-         
-         // Move modals to closing body
-         modals.each(function() {
-            $(this).appendTo('body');
-         });
-         
-         // Position on resize
-         $(window).resize(function(){
-            setTimeout(function(){
-               instant_images.loopOnboarding(modals)
-            }, 200)
-         });
-         
-         instant_images.loopOnboarding(modals);     
-      }    
-   };
-   
-   
-   instant_images.loopOnboarding = function(el){
-      el.each(function( index ) {
-         instant_images.positionOnboarding($(this));
-      });
-   };
-   
-   
-   // Position onboarding modals
-   instant_images.positionOnboarding = function(el){       
-      var type = el.data('type');
-      var targetElement = document.querySelector('#'+type);
-      var position = targetElement.getBoundingClientRect();  
-      
-      var posTop = position.top + el.height() + 2;
-      
-      if(el.hasClass('bottom')){
-         posTop = posTop - el.height()*2 - 4;
-      }
-      
-      
-      var posLeft = position.left - (el.width()/2) + ($(targetElement).width()/2);   
-      el.css({'top': posTop + 'px', 'left': posLeft + 'px'});      
-   };
-   
-   /*
-   <div class="onboarding bottom" data-type="nav-target">
-      <div class="inner">
-         <?php _e('Browse by New, Popular and Oldest', 'instant-images'); ?> <a href="#">&times;</a>
-      </div>
-   </div>
-   */
-   
+   });   
    
 	
 });    

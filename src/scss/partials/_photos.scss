@@ -1,15 +1,13 @@
 #photos{
-   width: 101%;
-   margin: 0 -0.5%;
+   width: 100%;
+   width: calc(100% + 10px);
+   margin: 0 0 0 -5px;
    padding: 0;
    position: relative;
-   @media screen and (max-width: $small){
-      width: 100%;
-      margin: 0;  
-   } 
    .photo{   
-	   width: 19%;
-	   margin: 0 0.5% 1%;
+	   width: 20%;
+	   margin: 0;
+	   padding: 0 5px 10px;
 	   opacity: 0;
 	   transition: opacity 0.3s ease;
 	   &--wrap{
@@ -30,16 +28,16 @@
 		   position: relative;
 	   }
 	   @media screen and (min-width: 2000px){
-			width: 19%; 
+			width: 20%; 
 		} 
 	   @media screen and (max-width: $xlarge){
-			width: 24%; 
+			width: 25%; 
 		} 
 	   @media screen and (max-width: $large){
-			width: 32.333%; 
+			width: 33.333333%; 
 		}
 	   @media screen and (max-width: $small){
-			width: 49%; 
+			width: 50%; 
 		}
 	   @media screen and (max-width: $xsmall){
 			width: 100%;

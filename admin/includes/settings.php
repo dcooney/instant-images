@@ -40,6 +40,15 @@ function instant_img_admin_init(){
 		'instant-images',
 		'unsplash_general_settings'
 	);
+
+	// Button Display
+	add_settings_field(
+		'instant_img_btn_display',
+		__('Button', 'instant-images' ),
+		'instant_images_button_display_callback',
+		'instant-images',
+		'unsplash_general_settings'
+	);
 }
 
 
@@ -102,4 +111,28 @@ function unsplash_download_h_callback(){
 
 	echo '<label for="instant_img_settings[unsplash_download_h]"><strong>'.__('Max Image Upload Height:', 'instant-images').'</strong></label>';
 	echo '<input type="number" id="instant_img_settings[unsplash_download_h]" name="instant_img_settings[unsplash_download_h]" value="'.$options['unsplash_download_h'].'" class="sm" step="20" max="3200" /> ';
+}
+
+/*
+*  instant_images_button_display_callback
+*  Show the Instant Images button in media context
+*
+*  @since 3.2.1
+*/
+
+function instant_images_button_display_callback(){
+	$options = get_option( 'instant_img_settings' );
+	if(!isset($options['instant_img_btn_display']))
+	   $options['instant_img_btn_display'] = '0';	   
+	
+	$style = 'style="position: absolute; left: 0; top: 9px;"'; // CSS style
+	
+	$html =  '<label style="cursor: default;"><strong>'.__('Button:', 'instant-images').'</strong></label>';
+	$html .= '<label for="instant_img_btn_display" style="padding-left: 24px; position: relative;">';
+		$html .= '<input type="hidden" name="instant_img_settings[instant_img_btn_display]" value="0" />';
+		$html .= '<input '. $style .' type="checkbox" name="instant_img_settings[instant_img_btn_display]" id="instant_img_btn_display" value="1"'. (($options['instant_img_btn_display']) ? ' checked="checked"' : '') .' />';
+		$html .= __('Hide Instant Images button next to "Add Media" on post edit screens.', 'instant-images');
+	$html .= '</label>';
+
+	echo $html;
 }

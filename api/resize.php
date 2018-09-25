@@ -106,7 +106,8 @@ function resize_image( WP_REST_Request $request ) {
 	         // Success
 	         $response = array(
 	      		'success' => true,
-	      		'msg' => __('Image successfully uploaded to your media library!', 'instant-images')
+	      		'msg' => __('Image successfully uploaded to your media library!', 'instant-images'),
+	      		'id' => $image_id
 	   		);
 	   		
 	      }else{ 
@@ -114,7 +115,8 @@ function resize_image( WP_REST_Request $request ) {
 		      // Error         
 	         $response = array( 
 	      		'success' => false,
-	      		'msg' => __('There was an error sending the image to your media library. Please check your server permissions and confirm the upload_max_filesize setting (php.ini) is large enough for the downloaded image (8mb minimum is recommended).', 'instant-images')
+	      		'msg' => __('There was an error sending the image to your media library. Please check your server permissions and confirm the upload_max_filesize setting (php.ini) is large enough for the downloaded image (8mb minimum is recommended).', 'instant-images'),
+	      		'id' => ''
 	   		);	   		
 	      }
       }      

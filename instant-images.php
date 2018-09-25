@@ -7,7 +7,7 @@ Author: Darren Cooney
 Twitter: @connekthq
 Author URI: https://connekthq.com
 Text Domain: instant-images
-Version: 3.2
+Version: 3.2.1
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -36,11 +36,64 @@ register_activation_hook( __FILE__, 'instant_images_activate' );
 class InstantImages {
 
    function __construct() {
-		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array(&$this, 'instant_images_add_action_links') );
+		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array(&$this, 'instant_images_add_action_links') );      
 		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain
       $this->includes();
       $this->constants();
 	}
+   
+   
+   
+   public static function instant_img_localize($script = 'instant-images-react'){
+   
+      $options = get_option( 'instant_img_settings' );
+      $download_w = isset($options['unsplash_download_w']) ? $options['unsplash_download_w'] : 1600; // width of download file
+      $download_h = isset($options['unsplash_download_h']) ? $options['unsplash_download_h'] : 1200; // height of downloads
+      
+      wp_localize_script( 
+   		$script, 'instant_img_localize', array(
+   			'instant_images' => __('Instant Images', 'instant-images'), 
+   			'root' => esc_url_raw( rest_url() ), 
+   			'nonce' => wp_create_nonce( 'wp_rest' ),
+   			'ajax_url' => admin_url('admin-ajax.php'),
+   			'admin_nonce' => wp_create_nonce('instant_img_nonce'),
+   			'download_width' => $download_w,
+   			'download_height' => $download_h,
+   			'unsplash_default_app_id' => INSTANT_IMG_DEFAULT_APP_ID,
+   			'unsplash_app_id' => INSTANT_IMG_DEFAULT_APP_ID,
+   			'error_msg_title' => __('Error accessing Unsplash API', 'instant-images'),
+   			'error_msg_desc' => __('Please check your Application ID.', 'instant-images'),
+   			'error_upload' => __('Unable to download image to server, please check your server permissions.', 'instant-images'),
+   			'error_resize' => __('There was an error sending the image to your media library. Please check your server permissions and confirm the upload_max_filesize setting (php.ini) is large enough for the downloaded image.', 'instant-images'),
+   			'error_restapi' => __('There was an error accessing the WP REST API - Instant Images requires access to the WP REST API to fetch and upload images to your media library.', 'instant-images'),
+   			'photo_by' => __('Photo by', 'instant-images'),
+   			'view_all' => __('View All Photos by', 'instant-images'),
+   			'upload' => __('Click Image to Upload', 'instant-images'),
+   			'upload_btn' => __('Click to Upload', 'instant-images'),
+   			'full_size' => __('View Full Size', 'instant-images'),
+   			'likes' => __('Like(s)', 'instant-images'),
+   			'saving' => __('Downloading Image...', 'instant-images'),
+   			'resizing' => __('Resizing Image...', 'instant-images'),
+   			'no_results' => __('Sorry, nothing matched your query', 'instant-images'),
+   			'no_results_desc' => __('Please try adjusting your search criteria', 'instant-images'),
+   			'latest' => __('New', 'instant-images'),
+   			'oldest' => __('Oldest', 'instant-images'),
+   			'popular' => __('Popular', 'instant-images'),
+   			'load_more' => __('Load More Images', 'instant-images'),
+   			'search' => __('Search for Toronto, Coffee + Breakfast etc...', 'instant-images'),
+   			'search_results' => __('images found for', 'instant-images'),
+   			'clear_search' => __('Clear Search Results', 'instant-images'),
+   			'view_on_unsplash' => __('View Photo on Unsplash', 'instant-images'),
+   			'edit_filename' => __('Filename', 'instant-images'),
+   			'edit_alt' => __('Alt Text', 'instant-images'),
+   			'edit_caption' => __('Caption', 'instant-images'),
+   			'edit_details' => __('Edit Image Details', 'instant-images'),
+   			'edit_details_intro' => __('Update and save image details prior to uploading', 'instant-images'),
+   			'cancel' => __('Cancel', 'instant-images'),
+   			'save' => __('Save', 'instant-images')
+   		)
+   	);
+   }
 
 
 
@@ -74,7 +127,7 @@ class InstantImages {
 
 	private function constants(){
 		define('INSTANT_IMG_VERSION', '3.2');
-		define('INSTANT_IMG_RELEASE', 'July 31, 2018');
+		define('INSTANT_IMG_RELEASE', 'September 25, 2018');
 		define('INSTANT_IMG_TITLE', 'Instant Images');
 		$upload_dir = wp_upload_dir();
 		define('INSTANT_IMG_UPLOAD_PATH', $upload_dir['basedir'].'/instant-images');

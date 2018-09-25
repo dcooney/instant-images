@@ -22,7 +22,7 @@ class Photo extends React.Component {
       this.view_all = instant_img_localize.view_all;
       this.like_text = instant_img_localize.likes;
       this.inProgress = false;
-      this.container = document.querySelector('.instant-img-container');
+      this.container = document.querySelector('.instant-img-container');      
       
       this.state = { 
          filename: this.filename,
@@ -155,14 +155,24 @@ class Photo extends React.Component {
             let response = JSON.parse(requestResizeImg.response);
                       
             let success = response.success;
+            let attachment_id = response.id;
             resizeMsg = response.msg;
             
             if(success){ 
+               
 	            // Success
-               self.uploadComplete(target, photo, resizeMsg);                  
+               self.uploadComplete(target, photo, resizeMsg); 
+               
+               // If is media popup, redirect user to media-upload settings
+               if(self.container.dataset.mediaPopup === 'true'){
+	               window.location = 'media-upload.php?type=image&tab=library&attachment_id='+attachment_id;	               
+               }                  
+                             
             }else{
+               
 	            // Error
 	            self.uploadError(target, photo, resizeMsg);
+	            
             }
          } else {
 	         // Error
@@ -225,9 +235,10 @@ class Photo extends React.Component {
 	   this.inProgress = false;
 	   
 	   // Refresh Media Library contents on edit pages               
-      if(this.container.classList.contains('popup')){
+      if(this.container.classList.contains('editor')){
+	      //console.log(wp.media.frame.setState());
          if(typeof wp.media != 'undefined'){
-            if(wp.media.frame.content.get()!==null){
+            if(wp.media.frame.content.get() !== null){
 				   wp.media.frame.content.get().collection.props.set({ignore: (+ new Date())});
 				   wp.media.frame.content.get().options.selection.reset();
 				}else{
