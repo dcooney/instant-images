@@ -36,24 +36,24 @@ register_activation_hook( __FILE__, 'instant_images_activate' );
 class InstantImages {
 
    function __construct() {
-		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array(&$this, 'instant_images_add_action_links') );      
+		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array(&$this, 'instant_images_add_action_links') );
 		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain
       $this->includes();
       $this->constants();
 	}
-   
-   
-   
+
+
+
    public static function instant_img_localize($script = 'instant-images-react'){
-   
+
       $options = get_option( 'instant_img_settings' );
       $download_w = isset($options['unsplash_download_w']) ? $options['unsplash_download_w'] : 1600; // width of download file
       $download_h = isset($options['unsplash_download_h']) ? $options['unsplash_download_h'] : 1200; // height of downloads
-      
-      wp_localize_script( 
+
+      wp_localize_script(
    		$script, 'instant_img_localize', array(
-   			'instant_images' => __('Instant Images', 'instant-images'), 
-   			'root' => esc_url_raw( rest_url() ), 
+   			'instant_images' => __('Instant Images', 'instant-images'),
+   			'root' => esc_url_raw( rest_url() ),
    			'nonce' => wp_create_nonce( 'wp_rest' ),
    			'ajax_url' => admin_url('admin-ajax.php'),
    			'admin_nonce' => wp_create_nonce('instant_img_nonce'),
@@ -126,7 +126,7 @@ class InstantImages {
 	*/
 
 	private function constants(){
-		define('INSTANT_IMG_VERSION', '3.2');
+		define('INSTANT_IMG_VERSION', '3.2.1');
 		define('INSTANT_IMG_RELEASE', 'September 25, 2018');
 		define('INSTANT_IMG_TITLE', 'Instant Images');
 		$upload_dir = wp_upload_dir();
