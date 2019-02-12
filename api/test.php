@@ -13,7 +13,7 @@ add_action( 'rest_api_init', function () {
    register_rest_route( $my_namespace, $my_endpoint, 
       array(
          'methods' => 'GET',
-         'callback' => 'test',
+         'callback' => 'instant_images_test',
       )
    );
 });
@@ -30,7 +30,7 @@ add_action( 'rest_api_init', function () {
 
 */
 
-function test( WP_REST_Request $request ) {
+function instant_images_test( WP_REST_Request $request ) {
    
    if (is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'edit_theme_options') )){
    

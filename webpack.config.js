@@ -1,19 +1,20 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
+var dir = 'dist';
 
 module.exports = {
-	entry: [
-		'./src/js/index.js', 
-		'./src/scss/style.scss'
-	], 
+	entry: {
+      'instant-images': './src/js/index.js',
+      'instant-images-styles': './src/scss/style.scss',
+      'instant-images-block': './src/js/block/index.js',
+   },
 	output: {
-		filename: './js/instant-images.js',
-		path: path.join(__dirname, 'dist'),
-		publicPath: './dist/'
+   	path: path.join(__dirname, dir),
+      filename: "js/[name].js",
 	},
 	watch: true,
 	module: {
-		loaders: [
+		rules: [
 		{
 			test: /.jsx?$/,
 			loader: 'babel-loader',
@@ -35,21 +36,28 @@ module.exports = {
 			use: ExtractTextPlugin.extract({
 				fallback: "style-loader",
 				use: [
-               { loader: 'css-loader' },
-               { loader: 'postcss-loader' },
-               { loader: 'sass-loader', 
-                  options: {
-                     outputStyle: 'expanded'
-                  },
-               }
-             ]
+					{ loader: 'css-loader',
+						options: {
+							sourceMap: true
+						}
+					},
+					{ loader: 'postcss-loader',
+						options: {
+							sourceMap: true
+						}
+					},
+					{ loader: 'sass-loader',
+						options: {
+							sourceMap: true,
+							outputStyle: 'expanded'
+						},
+					}
+				]
 			}),
 			exclude: /node_modules/,
 		}
 	]},
 	
-	plugins: [
-		new ExtractTextPlugin({ filename: './css/instant-images.css' })
-	]
+	plugins: []
 	
 };

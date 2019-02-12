@@ -13,7 +13,7 @@ add_action( 'rest_api_init', function () {
    register_rest_route( $my_namespace, $my_endpoint, 
       array(
          'methods' => 'POST',
-         'callback' => 'upload_image',
+         'callback' => 'instant_images_upload_image',
       )
    );
 });
@@ -27,120 +27,110 @@ add_action( 'rest_api_init', function () {
 *  @param $request      $_POST
 *  @return $response    json
 *  @since 3.0
-
+*  @updated 3.3
 */
 
-function upload_image( WP_REST_Request $request ) {
+function instant_images_upload_image( WP_REST_Request $request ) {  	
    
-	if (is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'edit_theme_options') )){   	
-		error_reporting(E_ALL|E_STRICT);   	
+	if (is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'edit_theme_options') )){ 
+   	 	
+   	error_reporting(E_ALL|E_STRICT);   	
    	
    	// Create /instant-images directory inside /uploads to temporarily store images
-      $dir = INSTANT_IMG_UPLOAD_PATH;
-      if(!is_dir($dir)){
-        mkdir($dir);
+      if(!is_dir(INSTANT_IMG_UPLOAD_PATH)){
+   		wp_mkdir_p(INSTANT_IMG_UPLOAD_PATH);
       }
-
+   
       // Is directory writeable, if not exit with an error
       if (!is_writable(INSTANT_IMG_UPLOAD_PATH.'/')) {
-         $json = json_encode(
+         $response = json_encode(
          	array(
          		'error' => true,
-         		'msg' => __('Unable to save image, check your server permissions', 'instant-images')
+         		'msg' => __('Unable to save image, check your server permissions of `uploads/instant-instants`', 'instant-images')
       		)
          );
-      	wp_send_json($json);
-      }
-   	   	
-   	
-      $data = json_decode($request->get_body()); // Get contents of request     
-      $id = sanitize_key($data->id); // Image ID
-      $img = sanitize_text_field($data->image); // Image URL
-      
+      	wp_send_json($response);
+      }   	 
+         	
+      $body = json_decode($request->get_body(), true); // Get contents of request       
+      $data = json_decode($body['data']); // Info about image
       $path = INSTANT_IMG_UPLOAD_PATH.'/'; // Temp Image Path
-      $url = INSTANT_IMG_UPLOAD_URL; // Full url path for image upload
       
-      // Create temp. image variable
+      
+      // Get data params from the $body
+      if($data){
+         $id = sanitize_key($data->id); // Image ID
+         $img = sanitize_text_field($data->image); // Image URL
+      }
+      
+      
+      // If ID and IMG not set, exit
+      if(!isset($id) || !isset($img)){
+	      $response = array(
+      		'error' => true,
+      		'msg' => __('An issue occurred retrieving image info via the REST API.', 'instant-images'),
+      		'path' => $path,
+      		'filename' => $filename
+   		);
+   		wp_send_json($response);
+      }
+      
+      
+      // Create temp. image variables
       $filename = $id.'.jpg';
-      $tmp_img = $path .''.$filename;
+      $img_path = $path .''.$filename;
       
       
-      // Confirm cURL is enabled
-      if(in_array  ('curl', get_loaded_extensions())) {
-
-         // Generate temp image from URL and store it on server for upload
-         $ch = curl_init(); // Lets use cURL
-         curl_setopt($ch, CURLOPT_URL, $img);
-         curl_setopt($ch, CURLOPT_HEADER, 0);
-         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-         curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-         $picture = curl_exec($ch);            
-         
-         // cURL error
-         if (curl_error($ch)) {
-            $response = array(
-         		'error' => true,
-         		'msg' => __('cURL Request Error:', 'instant-images') .': '. curl_error($ch),
-         		'path' => '',
-         		'filename' => ''
-      		);
-         }  
-         
-         
-         // Success
-         else {      
+      if(function_exists('copy')){
+	          
+         // Save file to server using copy() function
+         $saved_file = @copy($img.'jpg', $img_path);
    
-            // Save file to server
-            $saved_file = file_put_contents($tmp_img, $picture);
-      
-            // Was the temporary image saved?
-            if ($saved_file) {
-      
-               if(file_exists($path.''.$filename)){
-                  
-                  //  SUCCESS - Image saved
-                  $response = array(
-               		'error' => false,
-               		'msg' => __('Image successfully uploaded to server.', 'instant-images'),
-               		'path' => $path,
-               		'filename' => $filename
-            		);
-            		
-               }else{
-                  
-                  // ERROR - File does NOT exist
-                  $response = array(
-               		'error' => true,
-               		'msg' => __('Uploaded image not found, please ensure you have proper permissions set on the uploads directory.', 'instant-images'),
-               		'path' => '',
-                     'filename' => ''
-            		);
-            		
-               }
-      
-            } else {
-      
-               // ERROR - Error on save
+         // Was the temporary image saved?
+         if ($saved_file) {
+   
+            if(file_exists($path.''.$filename)){
+               
+               //  SUCCESS - Image saved
+               $response = array(
+            		'error' => false,
+            		'msg' => __('Image successfully uploaded to server.', 'instant-images'),
+            		'path' => $path,
+            		'filename' => $filename
+         		);
+         		
+            }else{
+               
+               // ERROR - File does NOT exist
                $response = array(
             		'error' => true,
-            		'msg' => __('Unable to download image to server, please check your server permissions of the instant-images folder in your WP uploads directory.', 'instant-images'),
+            		'msg' => __('Uploaded image not found, please ensure you have proper permissions set on the uploads directory.', 'instant-images'),
             		'path' => '',
                   'filename' => ''
          		);
-      
+         		
             }
-            
+   
+         } else {
+   
+            // ERROR - Error on save
+            $response = array(
+         		'error' => true,
+         		'msg' => __('Unable to download image to server, please check the server permissions of the instant-images folder in your WP uploads directory.', 'instant-images'),
+         		'path' => '',
+               'filename' => ''
+      		);
+   
          }
          
-         curl_close($ch); // CLose cURL
       }
       
-      // cURL not enabled
+      // copy() not enabled
       else{
          
          $response = array(
       		'error' => true,
-      		'msg' => __('cURL is not enabled on your server. Please contact your server administrator.', 'instant-images'),
+      		'msg' => __('The core PHP copy() function is not available on your server. Please contact your server administrator to upgrade your PHP version.', 'instant-images'),
       		'path' => $path,
       		'filename' => $filename
    		);

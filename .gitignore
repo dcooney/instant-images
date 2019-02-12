@@ -1,0 +1,3 @@
+*.map
+/node_nodules
+.DS_Store

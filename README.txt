@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
-Tested up to: 4.9.8
-Stable tag: 3.2.1
+Tested up to: 5.0.3
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,7 @@ The perfect tool for users who want to save time and frustration by uploading im
 * **Image Search** - The Instant Images search let’s you quickly find and upload images for any subject in a matter of seconds!
 * **Time Saver** - Quickly upload amazing stock photos without leaving the comfort of your WordPress admin.
 * **Theme/Plugin Developers** - A great tool for developers who want to prototype and develop using real world imagery.
+* **Gutenberg** - Instant Images directly integrates with Gutenberg as a plugin sidebar.
 * **Edit Image Metadata** - Easily edit image filename, alt text and caption prior to uploading to your media library.
 * **Easy to Use** - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
 
@@ -115,6 +116,24 @@ How to install Instant Images.
 
 
 == Changelog ==
+
+= 4.0.0 - February 12, 2019 =
+
+* 4.0 adds Gutenberg support. You can now access instant images directly from inside the block editor.
+* NEW - Added Instant Images to Gutenberg as a Plugin Sidebar.
+* NEW - Added Gutenberg featured image support.
+* NEW - Added Gutenberg Create Image Block support.
+
+* UPDATE - Improved a11y (accessibility) of photo listing items.
+* UPDATE - Updated REST API methods to prefix function names.
+* UPDATE - Various other UI/UX enhancements.
+
+
+= 3.3.0 - January 10, 2019 =
+* UPDATE - Removed cURL usage for downloading images in place of core `copy()` PHP function.
+* NEW - Adding Axios for HTTP requests
+* NEW - Removing `/instant-images` folder in uploads directory on plugin de-activation.
+* FIX - Added fix for directory permission issue when creating `uploads/instant-images`.
 
 = 3.2.1 - September 25, 2018 =
 * NEW - Added Instant Images to media upload tabs. You can now upload a photo and insert it into a page or page immediately. Please note, this is currently not working with the Gutenberg editor.

@@ -3,7 +3,7 @@
    width: calc(100% + 10px);
    margin: 0 0 0 -5px;
    padding: 0;
-   position: relative;
+   position: relative; 
    .photo{   
 	   width: 20%;
 	   margin: 0;
@@ -55,6 +55,13 @@
             }
          }
 		}
+		
+	   &:focus-within{
+		   .user-controls{
+				opacity: 1;  
+			}
+	   }
+	   
 		a.upload{ 
 	      display: block;
 	      position: relative;
@@ -70,10 +77,9 @@
 		   &:active{
 		      outline: none;
 		      border: none; 
-		      box-shadow: none;
 		   }
 	   	img{
-		      transition: all 0.45s ease;
+		      transition: all 0.5s ease;
 		      width: 100%;
 		      height: auto !important;
 		      padding: 0;
@@ -194,14 +200,18 @@
 		&.in-progress{
    		a.upload img{
       		opacity: 0.6;
+      		transform: scale(1.075);
    		}
-   		.fade{
+   		.options{
             opacity: 1;
-            visibility: visible;
-            &.user{
-            	opacity: 0.7;
-            }
-         }
+            visibility: visible;  
+            i.heart-like{
+               transform: scale(1);
+            }    		
+   		}
+   		.user-controls{
+      		opacity: 1;
+   		}
 		}
 		
 		&.in-progress{
@@ -209,88 +219,155 @@
 				top: 0;  
 				opacity: 1;
 			}
+			.user-controls{
+   		   opacity: 0;	
+         }
 		}
 		
-		
-		// Fading Components (likes, name, download)
-		.fade{
+		.options{
+   		position: absolute;
+   		top: 5px;
+   		right: 5px;
+   		z-index: 6;
+         width: auto;
+         display: inline-block;
+         width: auto;
+         cursor: default !important;         
          transition: all 0.3s ease;
-         color: #333;    
-         background: rgba(255, 255, 255, 0.75); 
-         border-radius: 3px; 
-         height: 28px;  
-         line-height: 28px;
-         font-size: 13px;  
          opacity: 0;
          visibility: hidden;
-         position: absolute; 
-         left: 10px;
-         bottom: 10px;
-         z-index: 6;
-         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
-         &.likes{
-            padding: 0 8px;
-            width: auto;
-            display: inline-block;
-            width: auto;
-            left: auto;
-            right: 45px;
-            cursor: default !important;
-            i{
-   	         color: #d13714;
-   	         line-height: 29px;
-   	         margin-right: 1px;
-            }
+         font-size: 13px;
+         i{
+	         font-size: 14px;
          }
+         i.heart-like{
+            color: #d13714;
+            margin-right: 1px;    
+            transition: all 0.25s ease 0.05s;
+            transform: scale(0.55);   
+            margin-right: 1px;
+            position: relative;
+            left: -1px;
+            top: 0;
+            font-size: 14px;  
+            opacity: 0.9;      
+         }
+         a, span{
+	         display: inline-block;
+	         vertical-align: top;
+	         line-height: 30px;
+				padding: 0 10px;
+				padding-top: 1px;
+				background: rgba(255, 255, 255, 0.5); 
+				margin: 0;
+				border-radius: 2px 0 0 2px; 
+				color: #23282d;        
+				transition: all 0.3s ease;
+         }
+         span{
+	         cursor: default;
+				&:hover,
+				&:focus{
+					background-color: #fff;
+				}
+         }
+         a{
+	         margin-left: 1px;
+				border-radius: 0 2px 2px 0;
+				&:hover,
+				&:focus{
+					background-color: #fff;
+				}
+				i{
+					position: relative;
+					top: 1px;
+					left: 1px;
+				}
+         }
+		}		      
+   
+	   .user-controls{
+	      position: absolute;
+	      z-index: 6;
+	      width: 100%;
+	      bottom: 0;
+	      left: 0;
+	      width: 100%;
+	      background: rgba(0, 0, 0, 0.45);
+	      padding: 0;
+	      opacity: 0.4;        
+	      transition: all 0.3s ease;
+	   } 
+
+      .photo-options{
+         float: right;
+         text-align: right;
+         max-width: 50%;
+      }
+      
+		.fade{
+         transition: all 0.35s ease;
+         color: #fff;    
+         background: rgba(255, 255, 255, 0.75); 
+         background: transparent;
+         border-radius: 1px; 
+         height: 34px;  
+         line-height: 34px;
+         font-size: 17px;  
+         z-index: 6;
+         float: left;
+         margin: 1px 1px 1px 0;
+         padding: 0;
+         color: rgba(255, 255, 255, 0.75);
          &.edit-photo,
-         &.external-photo{
-            padding: 0 8px;
+         &.set-featured,
+         &.insert{
             width: auto;
             display: inline-block;
-            width: auto;
-            left: auto;
-            right: 10px;
-            cursor: pointer;
+            width: 34px;
+            text-align: center;
             i{
-   	         line-height: 29px;
+   	         line-height: 27px;
    	         position: relative;
    	         left: 1px;
+   	         top: 1px;
             }
-            &:hover{
+            &:hover,
+            &:focus{
+	            color: #222;
    	         background: rgba(255, 255, 255, 0.95);  
             }
-         }
-         &.external-photo{
+         }      
+         &.set-featured{
             i{
-               position: relative;
-               top: 1px;
+	            top: 0;
+               left: 0;
             }
          }
          &.edit-photo{
-            top: 10px;
             i{
-               position: static;
+               left: 0;
+   	         top: 0;
             }
-         }
-         
+         }         
          &.user{
    	      background: none;
-   	      color: #fff;
    	      text-decoration: none;
-   	      font-size: 14px;
-   	      max-width: 65%;
+   	      font-size: 13px;
+   	      max-width: 48%;
    	      cursor: pointer;
    	      text-decoration: none;
    	      border: none;
-   	      box-shadow: none !important;
-   	      line-height: 22px;
-   	      bottom: 5px;
-   	      &:hover{
-   		      opacity: 0.95;
+            line-height: 35px;
+            height: 36px;
+            margin: 0;
+   	      &:hover,
+   	      &:focus{
+   		      text-decoration: underline;
    	      }
    	      .user-wrap{
    		      position: relative;
-   		      padding-left: 28px;
+   		      padding-left: 35px;
    		      display: block;
    		      width: 100%;
    		      overflow: hidden;
@@ -298,12 +375,12 @@
    		      white-space: nowrap;
    	      }
    	      img{
-   		      width: 22px;
-   		      max-width: 22px;
+   		      width: 20px;
+   		      max-width: 20px;
    		      border-radius: 100%;
    		      position: absolute;
-   		      left: 0;
-   		      top: 0;
+   		      left: 8px;
+   		      top: 8px;
    	      }
          }
       }
@@ -327,7 +404,7 @@
          opacity: 0;
          z-index: 9999;
       }			
-	}
+	} 
 	
 	.edit-screen{
 		position: absolute;
@@ -340,7 +417,7 @@
 		opacity: 0;
 		visibility: hidden;
       transition: all 0.25s ease;
-      padding: 8px 8px 0;
+      padding: 8px;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       border: 1px solid #e1e1e1;

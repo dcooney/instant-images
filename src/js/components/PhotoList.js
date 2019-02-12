@@ -9,11 +9,12 @@ import API from './API';
 class PhotoList extends React.Component {
 	
 	constructor(props) {
-      super(props);
+		
+      super(props);            
       
-      this.state = { results: this.props.results }; 
-      
-      this.results = this.props.results;	   
+      this.results = (this.props.results) ? this.props.results : [];	      
+      this.state = { results: this.results }; 
+         
       this.service = this.props.service; // Unsplash, Pixabay, etc.
       this.orderby = this.props.orderby; // Orderby
       this.page = this.props.page; // Page
@@ -27,16 +28,29 @@ class PhotoList extends React.Component {
       
       this.errorMsg = '';
       this.msnry = '';
-      this.container = document.querySelector('.instant-img-container');
-      this.container.classList.add('loading');
-      this.wrapper = document.querySelector('.instant-images-wrapper');
       
+      this.editor = (this.props.editor) ? this.props.editor : 'classic';
+      this.is_block_editor = (this.props.editor === 'gutenberg') ? true : false;
+      this.SetFeaturedImage = (this.props.SetFeaturedImage) ? this.props.SetFeaturedImage.bind(this) : '';
+      this.InsertImage = (this.props.InsertImage) ? this.props.InsertImage.bind(this) : '';
+                  
+      if(this.is_block_editor){  // Gutenberg	   
+	      this.container = document.querySelector('body');
+		   this.container.classList.add('loading');
+			this.wrapper = document.querySelector('body');
+			
+      } else {  // Classic editor
+		   this.container = document.querySelector('.instant-img-container');
+		   this.container.classList.add('loading');
+			this.wrapper = document.querySelector('.instant-images-wrapper');
+			
+      }      
       
    }
    
    
    
-   /*
+   /**
 	 * test()
 	 * Test access to the REST API
 	 * 
@@ -85,7 +99,7 @@ class PhotoList extends React.Component {
    
    
    
-   /*
+   /**
 	 * search()
 	 * Trigger Unsplash Search
 	 * 
@@ -112,7 +126,7 @@ class PhotoList extends React.Component {
    
    
    
-   /*
+   /**
 	 * doSearch
 	 * Run the search
 	 * 
@@ -194,7 +208,7 @@ class PhotoList extends React.Component {
    
    
    
-   /*
+   /**
 	 * clearSearch
 	 * Reset search results and results view  
 	 * 
@@ -210,16 +224,16 @@ class PhotoList extends React.Component {
    
    
    
-   /*
-	 * loadMorePhotos
+   /**
+	 * getPhotos
 	 * Load next set of photos, infinite scroll style  
 	 *
 	 * @since 3.0
 	 */
-   loadMorePhotos(){
+   getPhotos(){
       
 		let self = this;
-	   this.page = this.page + 1;
+	   this.page = parseInt(this.page) + 1;
       this.container.classList.add('loading');
       this.isLoading = true;
 	      
@@ -257,7 +271,7 @@ class PhotoList extends React.Component {
    
    
    
-   /*
+   /**
 	 * togglePhotoList
 	 * Toogles the photo view (New/Popular/Old)
 	 * 
@@ -300,15 +314,18 @@ class PhotoList extends React.Component {
       
    
    
-   /*
+   /**
 	 * renderLayout
 	 * Renders the Masonry layout  
 	 * 
 	 * @since 3.0
 	 */
    renderLayout() {
+	   if(this.is_block_editor){
+			return false;  
+		}
 	   let self = this;	   
-	   let photoListWrapper = document.querySelector('#photos');	   
+	   let photoListWrapper = document.querySelector('#photos');	
       imagesLoaded(photoListWrapper,  function() {         	      
 			self.msnry = new Masonry( photoListWrapper, {
 				itemSelector: '.photo'
@@ -319,24 +336,25 @@ class PhotoList extends React.Component {
    
    
    
-   /*
+   /**
 	 * onScroll
 	 * Scrolling function 
 	 *  
 	 * @since 3.0
 	 */
-   onScroll(){      
+   onScroll(){   
       let wHeight = window.innerHeight;
       let scrollTop = window.pageYOffset;
       let scrollH = document.body.scrollHeight - 200;
       if ((wHeight + scrollTop) >= scrollH && !this.isLoading && !this.isDone) {
-		   this.loadMorePhotos();		
-		}      
+		   this.getPhotos();		
+		}  
+		
    }
    
    
    
-   /*
+   /**
 	 * checkTotalResults
 	 * A checker to determine is there are remaining search results.
 	 * 
@@ -349,7 +367,7 @@ class PhotoList extends React.Component {
    
    
    
-   /*
+   /**
 	 * setActiveState
 	 * Sets the main navigation active state  
 	 *
@@ -388,7 +406,16 @@ class PhotoList extends React.Component {
       this.test();
       this.container.classList.remove('loading');
       this.wrapper.classList.add('loaded');
-      window.addEventListener('scroll', () => this.onScroll()); // Add scroll event
+      
+      if(this.is_block_editor){ // Gutenberg
+         this.page = 0;
+         this.getPhotos();
+         
+      } else {         
+         // Add scroll event      
+         window.addEventListener('scroll', () => this.onScroll()); 
+         
+      }      
       
    }   
  
@@ -416,7 +443,7 @@ class PhotoList extends React.Component {
 				
             <div id="photos">               
             	{this.state.results.map((result, iterator) =>
-						<Photo result={result} key={result.id+iterator} />
+						<Photo result={result} key={result.id+iterator} blockEditor={this.is_block_editor} SetFeaturedImage={this.SetFeaturedImage} InsertImage={this.InsertImage} />
 					)}
 				</div>
 				
@@ -428,7 +455,7 @@ class PhotoList extends React.Component {
 				<div className="loading-block" />
 				
 				<div className="load-more-wrap">
-					<button type="button" className="button" onClick={() => this.loadMorePhotos()}>{ instant_img_localize.load_more }</button>
+					<button type="button" className="button" onClick={() => this.getPhotos()}>{ instant_img_localize.load_more }</button>
 				</div>
 				
          </div>

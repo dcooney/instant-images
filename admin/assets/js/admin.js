@@ -3,7 +3,8 @@ var instant_images = instant_images || {};
 jQuery(document).ready(function($) {
 	"use strict";   
 	
-	var init = true;    
+	var init = true; 
+	var speed = 350;   
    
    
    
@@ -68,12 +69,12 @@ jQuery(document).ready(function($) {
    $('.header-wrap button').on('click', function(){
 	   var el = $(this);
 	   if(settingsDiv.hasClass('active')){
-		   settingsDiv.slideUp(200, function(){
+		   settingsDiv.slideUp(speed, function(){
 			   el.find('i').removeClass('fa-close').addClass('fa-cog');
 			   settingsDiv.removeClass('active');
 		   });
 	   }else{
-		   settingsDiv.slideDown(200, function(){
+		   settingsDiv.slideDown(speed, function(){
 			   el.find('i').addClass('fa-close').removeClass('fa-cog');
 			   settingsDiv.addClass('active');
 		   });
@@ -87,7 +88,7 @@ jQuery(document).ready(function($) {
       $('.save-settings .loading').fadeIn();
       $(this).ajaxSubmit({
          success: function(){
-            $('.save-settings .loading').fadeOut(250, function(){
+            $('.save-settings .loading').fadeOut(speed, function(){
                //window.location.reload();
             });
          },

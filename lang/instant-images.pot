@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Instant Images\n"
-"POT-Creation-Date: 2018-09-25 12:55-0400\n"
+"POT-Creation-Date: 2019-02-12 09:42-0500\n"
 "PO-Revision-Date: 2017-09-21 10:40-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -10,297 +10,315 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.9\n"
-"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-SearchPath-0: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: dist\n"
+"X-Poedit-SearchPathExcluded-1: src\n"
+"X-Poedit-SearchPathExcluded-2: webpack\n"
 
-#: ../admin/admin.php:110 ../admin/admin.php:128 ../instant-images.php:55
+#: admin/admin.php:112 admin/admin.php:130 instant-images.php:104
 msgid "Instant Images"
 msgstr ""
 
-#: ../admin/includes/cta/permissions.php:14
+#: admin/includes/cta/permissions.php:14
 msgid "Permissions Error"
 msgstr ""
 
-#: ../admin/includes/cta/permissions.php:15
+#: admin/includes/cta/permissions.php:15
 msgid "Instant Images is unable to download and process images on your server."
 msgstr ""
 
-#: ../admin/includes/cta/permissions.php:16
+#: admin/includes/cta/permissions.php:16
 msgid "Please enable read/write access to the following directory"
 msgstr ""
 
-#: ../admin/includes/settings.php:21 ../admin/includes/unsplash-settings.php:6
+#: admin/includes/settings.php:21 admin/includes/unsplash-settings.php:6
 msgid "Unsplash Settings"
 msgstr ""
 
-#: ../admin/includes/settings.php:29
+#: admin/includes/settings.php:29
 msgid "Upload Image Width"
 msgstr ""
 
-#: ../admin/includes/settings.php:38
+#: admin/includes/settings.php:38
 msgid "Upload Image Height"
 msgstr ""
 
-#: ../admin/includes/settings.php:47
+#: admin/includes/settings.php:47
 msgid "Button"
 msgstr ""
 
-#: ../admin/includes/settings.php:64 ../admin/includes/unsplash-settings.php:7
+#: admin/includes/settings.php:64 admin/includes/unsplash-settings.php:7
 msgid "Manage your media upload settings"
 msgstr ""
 
-#: ../admin/includes/settings.php:93
+#: admin/includes/settings.php:93
 msgid "Max Image Upload Width:"
 msgstr ""
 
-#: ../admin/includes/settings.php:112
+#: admin/includes/settings.php:112
 msgid "Max Image Upload Height:"
 msgstr ""
 
-#: ../admin/includes/settings.php:130
+#: admin/includes/settings.php:130
 msgid "Button:"
 msgstr ""
 
-#: ../admin/includes/settings.php:134
+#: admin/includes/settings.php:134
 msgid "Hide Instant Images button next to \"Add Media\" on post edit screens."
 msgstr ""
 
-#: ../admin/includes/unsplash-settings.php:16
+#: admin/includes/unsplash-settings.php:16
 msgid "Save Settings"
 msgstr ""
 
-#: ../admin/includes/unsplash-settings.php:23
+#: admin/includes/unsplash-settings.php:23
 msgid "What's New"
 msgstr ""
 
-#: ../admin/includes/unsplash-settings.php:24
+#: admin/includes/unsplash-settings.php:24
 msgid "The latest Instant Images updates"
 msgstr ""
 
-#: ../admin/includes/unsplash-settings.php:60
+#: admin/includes/unsplash-settings.php:60
 msgid "Our Plugins"
 msgstr ""
 
-#: ../admin/views/unsplash.php:11
+#: admin/views/unsplash.php:11
 #, php-format
 msgid "One click photo uploads from %s"
 msgstr ""
 
-#: ../admin/views/unsplash.php:16
+#: admin/views/unsplash.php:16
 msgid "Settings"
 msgstr ""
 
-#: ../api/resize.php:80
+#: api/resize.php:82
 msgid ""
 "Unable to copy image to the media library. Please check your server "
 "permissions."
 msgstr ""
 
-#: ../api/resize.php:109
+#: api/resize.php:111
 msgid "Image successfully uploaded to your media library!"
 msgstr ""
 
-#: ../api/resize.php:118
+#: api/resize.php:121
 msgid ""
 "There was an error sending the image to your media library. Please check "
 "your server permissions and confirm the upload_max_filesize setting (php."
 "ini) is large enough for the downloaded image (8mb minimum is recommended)."
 msgstr ""
 
-#: ../api/upload.php:49
-msgid "Unable to save image, check your server permissions"
+#: api/resize.php:139
+msgid "There was an error resizing the image, please try again."
 msgstr ""
 
-#: ../api/upload.php:83
-msgid "cURL Request Error:"
+#: api/upload.php:49
+msgid ""
+"Unable to save image, check your server permissions of `uploads/instant-"
+"instants`"
 msgstr ""
 
-#: ../api/upload.php:104
+#: api/upload.php:71
+msgid "An issue occurred retrieving image info via the REST API."
+msgstr ""
+
+#: api/upload.php:97
 msgid "Image successfully uploaded to server."
 msgstr ""
 
-#: ../api/upload.php:114
+#: api/upload.php:107
 msgid ""
 "Uploaded image not found, please ensure you have proper permissions set on "
 "the uploads directory."
 msgstr ""
 
-#: ../api/upload.php:126
+#: api/upload.php:119
 msgid ""
-"Unable to download image to server, please check your server permissions of "
+"Unable to download image to server, please check the server permissions of "
 "the instant-images folder in your WP uploads directory."
 msgstr ""
 
-#: ../api/upload.php:143
+#: api/upload.php:133
 msgid ""
-"cURL is not enabled on your server. Please contact your server administrator."
+"The core PHP copy() function is not available on your server. Please contact "
+"your server administrator to upgrade your PHP version."
 msgstr ""
 
-#: ../instant-images.php:64
+#: instant-images.php:113
 msgid "Error accessing Unsplash API"
 msgstr ""
 
-#: ../instant-images.php:65
+#: instant-images.php:114
 msgid "Please check your Application ID."
 msgstr ""
 
-#: ../instant-images.php:66
+#: instant-images.php:115
 msgid ""
 "Unable to download image to server, please check your server permissions."
 msgstr ""
 
-#: ../instant-images.php:67
+#: instant-images.php:116
 msgid ""
 "There was an error sending the image to your media library. Please check "
 "your server permissions and confirm the upload_max_filesize setting (php."
 "ini) is large enough for the downloaded image."
 msgstr ""
 
-#: ../instant-images.php:68
+#: instant-images.php:117
 msgid ""
 "There was an error accessing the WP REST API - Instant Images requires "
 "access to the WP REST API to fetch and upload images to your media library."
 msgstr ""
 
-#: ../instant-images.php:69
+#: instant-images.php:118
 msgid "Photo by"
 msgstr ""
 
-#: ../instant-images.php:70
+#: instant-images.php:119
 msgid "View All Photos by"
 msgstr ""
 
-#: ../instant-images.php:71
+#: instant-images.php:120
 msgid "Click Image to Upload"
 msgstr ""
 
-#: ../instant-images.php:72
+#: instant-images.php:121
 msgid "Click to Upload"
 msgstr ""
 
-#: ../instant-images.php:73
+#: instant-images.php:122
 msgid "View Full Size"
 msgstr ""
 
-#: ../instant-images.php:74
+#: instant-images.php:123
 msgid "Like(s)"
 msgstr ""
 
-#: ../instant-images.php:75
+#: instant-images.php:124
 msgid "Downloading Image..."
 msgstr ""
 
-#: ../instant-images.php:76
+#: instant-images.php:125
 msgid "Resizing Image..."
 msgstr ""
 
-#: ../instant-images.php:77
+#: instant-images.php:126
 msgid "Sorry, nothing matched your query"
 msgstr ""
 
-#: ../instant-images.php:78
+#: instant-images.php:127
 msgid "Please try adjusting your search criteria"
 msgstr ""
 
-#: ../instant-images.php:79
+#: instant-images.php:128
 msgid "New"
 msgstr ""
 
-#: ../instant-images.php:80
+#: instant-images.php:129
 msgid "Oldest"
 msgstr ""
 
-#: ../instant-images.php:81
+#: instant-images.php:130
 msgid "Popular"
 msgstr ""
 
-#: ../instant-images.php:82
+#: instant-images.php:131
 msgid "Load More Images"
 msgstr ""
 
-#: ../instant-images.php:83
+#: instant-images.php:132
 msgid "Search for Toronto, Coffee + Breakfast etc..."
 msgstr ""
 
-#: ../instant-images.php:84
+#: instant-images.php:133
 msgid "images found for"
 msgstr ""
 
-#: ../instant-images.php:85
+#: instant-images.php:134
 msgid "Clear Search Results"
 msgstr ""
 
-#: ../instant-images.php:86
+#: instant-images.php:135
 msgid "View Photo on Unsplash"
 msgstr ""
 
-#: ../instant-images.php:87
+#: instant-images.php:136
+msgid "Set as Featured Image"
+msgstr ""
+
+#: instant-images.php:137
+msgid "Insert Into Post"
+msgstr ""
+
+#: instant-images.php:138
 msgid "Filename"
 msgstr ""
 
-#: ../instant-images.php:88
+#: instant-images.php:139
 msgid "Alt Text"
 msgstr ""
 
-#: ../instant-images.php:89
+#: instant-images.php:140
 msgid "Caption"
 msgstr ""
 
-#: ../instant-images.php:90
+#: instant-images.php:141
 msgid "Edit Image Details"
 msgstr ""
 
-#: ../instant-images.php:91
+#: instant-images.php:142
 msgid "Update and save image details prior to uploading"
 msgstr ""
 
-#: ../instant-images.php:92
+#: instant-images.php:143
 msgid "Cancel"
 msgstr ""
 
-#: ../instant-images.php:93
+#: instant-images.php:144
 msgid "Save"
 msgstr ""
 
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:52
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:365
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:52
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:365
 msgid "Install Now"
 msgstr ""
 
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:87
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:367
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:87
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:367
 msgid "Activated"
 msgstr ""
 
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:91
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:366
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:91
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:366
 msgid "Activate"
 msgstr ""
 
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:129
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:129
 msgid "By"
 msgstr ""
 
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:142
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:142
 msgid "More Details"
 msgstr ""
 
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:164
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:164
 msgid "Sorry, you are not allowed to install plugins on this site."
 msgstr ""
 
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:171
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:242
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:171
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:242
 msgid "Error - unable to verify nonce, please try again."
 msgstr ""
 
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:235
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:235
 msgid "Sorry, you are not allowed to activate plugins on this site."
 msgstr ""
 
-#: ../vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:364
+#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:364
 msgid "Are you sure you want to install this plugin?"
 msgstr ""

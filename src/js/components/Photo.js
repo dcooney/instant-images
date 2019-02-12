@@ -1,5 +1,6 @@
 import React from 'react';
 import API from './API';
+import axios from 'axios'; 
 
 class Photo extends React.Component {   
    
@@ -13,6 +14,7 @@ class Photo extends React.Component {
       this.author = this.props.result.user.name;
       this.img_title = `${instant_img_localize.photo_by} ${this.author}`;      
       this.filename = this.props.result.id;    
+      
       this.alt = '';
       this.caption = '';
       this.user = this.props.result.user.username;
@@ -22,13 +24,25 @@ class Photo extends React.Component {
       this.view_all = instant_img_localize.view_all;
       this.like_text = instant_img_localize.likes;
       this.inProgress = false;
-      this.container = document.querySelector('.instant-img-container');      
+      this.container = document.querySelector('.instant-img-container'); 
+          
+      this.setAsFeaturedImage = false;      
+      this.insertIntoPost = false;   
       
+      
+      // Gutenberg Editor
+      this.is_block_editor = this.props.blockEditor;
+      this.SetFeaturedImage = this.props.SetFeaturedImage;
+      this.InsertImage = this.props.InsertImage;
+         
+         
+      // Photo state
       this.state = { 
          filename: this.filename,
          alt: this.alt,
          caption: this.caption
       }
+      
    }
     
    
@@ -62,50 +76,56 @@ class Photo extends React.Component {
 	     
 	   // Create Data Array  
 	   let data = {
-	      'id' : target.getAttribute('data-id'),
-         'image' : target.getAttribute('data-url')
+	      id : target.getAttribute('data-id'),
+         image : target.getAttribute('data-url')
       }      
       
       // REST API URL
-      let uploadURL = instant_img_localize.root + 'instant-images/upload/';
-
+      let url = instant_img_localize.root + 'instant-images/upload/';
       
-      var requestUploadImg = new XMLHttpRequest();
-      requestUploadImg.open('POST', uploadURL, true);
-      requestUploadImg.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
-      requestUploadImg.setRequestHeader('Content-Type', 'application/json');
-      requestUploadImg.send(JSON.stringify(data));
-      
-      requestUploadImg.onload = function() {
-         if (requestUploadImg.status >= 200 && requestUploadImg.status < 400) { // Success
-                        
-            let response = JSON.parse(requestUploadImg.response);
+      axios({
+         method: 'POST', 
+         url: url, 
+         headers: {
+            'X-WP-Nonce': instant_img_localize.nonce,
+            'Content-Type': 'application/json'
+         },
+         data: {
+            'data': JSON.stringify(data)
+         }
+      })
+      .then(function (res) {
+         
+         //console.log(res);
+         
+         let response = res.data;
             
-            if(response){
-                              
-               let hasError = response.error;
-               let path = response.path;
-               let filename = response.filename;
-                   
-               if(hasError){ // Error
-                  self.uploadError(target, photo, response.msg);
-                  
-               } else { // Success
-                  self.resizeImage(path, filename, target, photo, notice);
-                  self.triggerUnsplashDownload(data.id);
-                  
-               }
+         if(response && res.status == 200){
+            
+            // Successful response from server   
+            let hasError = response.error;
+            let path = response.path;
+            let filename = response.filename;
+                
+            if(hasError){ // Upload Error
+               self.uploadError(target, photo, response.msg);
+               
+            } else { // Upload Success
+               self.resizeImage(path, filename, target, photo, notice);
+               self.triggerUnsplashDownload(data.id);
+               
             }
             
          } else {
-	         // Error
-            self.uploadError(target, photo, instant_img_localize.error_upload);      
+            
+            // Error
+            self.uploadError(target, photo, instant_img_localize.error_upload); 
          }
-      };      
-      
-      requestUploadImg.onerror = function() {
-         self.uploadError(target, photo, instant_img_localize.error_upload);
-      }; 
+   		
+   	})
+   	.catch(function (error) {
+   		console.log(error);
+   	});
 
    }
    
@@ -122,7 +142,8 @@ class Photo extends React.Component {
 	 * @param notice     string    Text to be display
 	 * @since 3.0
 	 */
-   resizeImage(path, filename, target, photo, notice){        
+   resizeImage(path, filename, target, photo, notice){ 
+          
       let self = this;
       
       target.classList.remove('uploading');
@@ -140,49 +161,80 @@ class Photo extends React.Component {
       }      
       
       // REST API URL
-      let resizeURL= instant_img_localize.root + 'instant-images/resize/';
-      let resizeMsg = '';
-            
-      var requestResizeImg = new XMLHttpRequest();
-      requestResizeImg.open('POST', resizeURL, true);
-      requestResizeImg.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
-      requestResizeImg.setRequestHeader('Content-Type', 'application/json');
-      requestResizeImg.send(JSON.stringify(data));
+      let url= instant_img_localize.root + 'instant-images/resize/';
+      let msg = '';
       
-      requestResizeImg.onload = function() {
-         if (requestResizeImg.status >= 200 && requestResizeImg.status < 400) { // Success
-                        
-            let response = JSON.parse(requestResizeImg.response);
-                      
+      axios({
+         method: 'POST', 
+         url: url, 
+         headers: {
+            'X-WP-Nonce': instant_img_localize.nonce,
+            'Content-Type': 'application/json'
+         },
+         data: {
+            'data': JSON.stringify(data)
+         }
+      })
+      .then(function (res) {
+         
+         //console.log(res);
+         
+         let response = res.data;
+            
+         if(response && res.status == 200){
+            
+            // Successful response from server   
             let success = response.success;
             let attachment_id = response.id;
-            resizeMsg = response.msg;
-            
-            if(success){ 
+            let attachment_url = response.url;
+            msg = response.msg;
+                
+             if(success){ 
                
-	            // Success
-               self.uploadComplete(target, photo, resizeMsg); 
+	            // Success/Upload Complete
+               self.uploadComplete(target, photo, msg); 
+               
+               
+               // Set as featured Image in Gutenberg
+               if(self.is_block_editor && self.setAsFeaturedImage){
+                  self.SetFeaturedImage(attachment_id);
+                  self.setAsFeaturedImage = false;
+               }
+               
+               
+               // Insrt Image into block editor
+               if(self.is_block_editor && self.insertIntoPost){
+                  if(attachment_url){
+                     self.InsertImage(attachment_url, data.caption, data.alt);
+                  }
+                  self.insertIntoPost = false;                  
+               }               
+               
                
                // If is media popup, redirect user to media-upload settings
-               if(self.container.dataset.mediaPopup === 'true'){
+               if(self.container.dataset.mediaPopup === 'true' && !self.is_block_editor){
 	               window.location = 'media-upload.php?type=image&tab=library&attachment_id='+attachment_id;	               
-               }                  
+               }   
+                              
                              
             }else{
                
 	            // Error
-	            self.uploadError(target, photo, resizeMsg);
+	            self.uploadError(target, photo, msg);
 	            
             }
+            
          } else {
-	         // Error
-	         self.uploadError(target, photo, instant_img_localize.error_resize);
+            
+            // Error
+            self.uploadError(target, photo, instant_img_localize.error_upload); 
          }
-      }       
-      
-      requestResizeImg.onerror = function() {
-         self.uploadError(target, photo, instant_img_localize.error_resize);
-      };    
+   		
+   	})
+   	.catch(function (error) {
+   		console.log(error);
+   	});
+   	    
    }
    
    
@@ -212,6 +264,50 @@ class Photo extends React.Component {
    
    
    /*
+	 * setFeaturedImageClick
+	 * Function used to trigger a download and then set as featured image
+	 * 
+	 * @since 4.0
+	 */
+   setFeaturedImageClick(e){
+      let target = e.currentTarget;
+      if(!target){
+         return false;
+      }
+      
+      let parent = target.parentNode.parentNode.parentNode;
+      let photo = parent.querySelector('a.upload');
+      if(photo){
+         this.setAsFeaturedImage = true;
+         photo.click();
+      }
+   }
+   
+   
+   
+   /*
+	 * insertImageIntoPost
+	 * Function used to insert an image directly into the block (Gutenberg) editor.
+	 * 
+	 * @since 4.0
+	 */
+   insertImageIntoPost(e){
+      let target = e.currentTarget;
+      if(!target){
+         return false;
+      }
+      
+      let parent = target.parentNode.parentNode.parentNode;
+      let photo = parent.querySelector('a.upload');
+      if(photo){
+         this.insertIntoPost = true;
+         photo.click();
+      }
+   }
+   
+   
+   
+   /*
 	 * uploadComplete
 	 * Function runs when upload has completed
 	 * 
@@ -226,8 +322,14 @@ class Photo extends React.Component {
 	   
 	   photo.classList.remove('in-progress');
 	   photo.classList.add('uploaded');
-	   photo.querySelector('.edit-photo').remove(); // Hide edit-photo button
 	   
+	   photo.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
+	   
+	   if(this.is_block_editor){
+		   photo.querySelector('.insert').style.display = 'none'; // Hide insert button
+		   photo.querySelector('.set-featured').style.display = 'none'; // Hide set-featured button
+	   }
+
 	   target.classList.remove('uploading');
 	   target.classList.remove('resizing');
       target.classList.add('success'); 
@@ -372,16 +474,19 @@ class Photo extends React.Component {
       
       let el = e.currentTarget;
       let photo = el.closest('.photo'); 
-      
-      let filename = photo.querySelector('input[name="filename"]');
-      filename.value = this.filename;
-      let alt = photo.querySelector('input[name="alt"]');
-      alt.value = this.alt;
-      let caption = photo.querySelector('textarea[name="caption"]');
-      caption.value = this.caption;
-      
-      photo.querySelector('.edit-screen').classList.remove('editing'); // Hide edit screen      
-      photo.focus();
+      if(photo){
+         let target = photo.querySelector('a.upload');
+         
+         let filename = photo.querySelector('input[name="filename"]');
+         filename.value = this.filename;
+         let alt = photo.querySelector('input[name="alt"]');
+         alt.value = this.alt;
+         let caption = photo.querySelector('textarea[name="caption"]');
+         caption.value = this.caption;
+         
+         photo.querySelector('.edit-screen').classList.remove('editing'); // Hide edit screen      
+         target.focus();
+      }
    }   
    
    
@@ -390,10 +495,9 @@ class Photo extends React.Component {
    render(){
       
       return (
-	      <article className='photo' tabIndex="0">
+	      <article className='photo'>
 	         <div className="photo--wrap">
-   	         <div className='img-wrap'>
-   	         
+   	         <div className='img-wrap'>   	         
    	            <a 
    	            	className='upload loaded' 
    						href={this.full_size} 
@@ -411,21 +515,7 @@ class Photo extends React.Component {
    	                        
    	            <div className="notice-msg"/>  
    	            
-   	            <div className="user-controls">
-      	            <a 
-      	               className="edit-photo fade"
-      	               href="#" 
-      	               title={instant_img_localize.edit_details} 
-      						onClick={(e) => this.showEditScreen(e)}	               
-      	               >
-      	               <i className="fa fa-cog"></i>
-      	            </a>      	            
-      	            <a className="external-photo fade" 
-      	               href={this.link} 
-      	               title={instant_img_localize.view_on_unsplash} 
-      	               target="_blank">
-      	               <i className="fa fa-external-link"></i>
-      	            </a>       	            
+   	            <div className="user-controls">      	            
       	            <a className="user fade" href={'https://unsplash.com/@'+this.user+'?utm_source=wordpress-instant-images&utm_medium=referral'} target="_blank" title={this.view_all +' @'+ this.user}>
       		            <div className="user-wrap">
       		               {this.user_photo.length > 0 &&
@@ -433,9 +523,58 @@ class Photo extends React.Component {
       		               }
       		               {this.user}
       		            </div>
-      	            </a>        	                         
-      	            <span className="likes fade" title={this.likes +' ' + this.like_text}><i className="fa fa-heart"></i> {this.likes}</span>
+      	            </a> 
+      	            <div className="photo-options">
+      	            
+         	            {
+            	            this.is_block_editor && (
+               	            <a className="set-featured fade" 
+               	               href='#'                	                
+                                 onClick={(e) => this.setFeaturedImageClick(e)}
+               	               title={instant_img_localize.set_as_featured}
+               	               >
+               	               <i className="fa fa-picture-o" aria-hidden="true"></i>
+               	               <span className="offscreen">{instant_img_localize.set_as_featured}</span>
+               	            </a>
+            	            )
+         	            }
+         	            {
+            	            this.is_block_editor && (
+               	            <a className="insert fade" 
+               	               href='#'                	                
+                                 onClick={(e) => this.insertImageIntoPost(e)}
+               	               title={instant_img_localize.insert_into_post}
+               	               >
+               	               <i className="fa fa-plus" aria-hidden="true"></i>
+               	               <span className="offscreen">{instant_img_localize.insert_into_post}</span>
+               	            </a>
+            	            )
+         	            }
+         	            <a 
+         	               className="edit-photo fade"
+         	               href="#" 
+         	               title={instant_img_localize.edit_details} 
+         						onClick={(e) => this.showEditScreen(e)}	               
+         	               >
+         	               <i className="fa fa-cog" aria-hidden="true"></i>
+                           <span className="offscreen">{instant_img_localize.edit_details}</span>
+         	            </a> 
+      	            </div>    	                         
    	            </div>
+   	            
+   	            <div className="options" title={this.likes +' ' + this.like_text}>
+   	            	<span className="likes">
+   	            		<i className="fa fa-heart heart-like" aria-hidden="true"></i> {this.likes}
+   	            	</span>
+   	            	<a 
+      	               href={this.link} 
+      	               title={instant_img_localize.view_on_unsplash} 
+      	               target="_blank">
+      	               <i className="fa fa-external-link" aria-hidden="true"></i>
+                        <span className="offscreen">{instant_img_localize.view_on_unsplash}</span>
+      	            </a> 
+         	      </div>
+         	      
                </div>            
    	            
 	            <div className="edit-screen" tabIndex="0">

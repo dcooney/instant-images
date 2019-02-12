@@ -23,18 +23,18 @@ const GetPhotos = (page = 1, orderby = 'latest', service = 'unsplash') => {
       
       // Get Data from API
 	   fetch(url)
-	      .then((data) => data.json())
-	      .then(function(data) {  
-	                           
-	         ReactDOM.render( 
-	           <PhotoList results={data} page={page} orderby={orderby} service={service}/>,
-	           document.getElementById('app')
-	         ); 
-	                    
-	      })
-	      .catch(function(error) {
-	         console.log(error);
-	      });
+      .then((data) => data.json())
+      .then(function(data) {  
+                           
+         ReactDOM.render( 
+           <PhotoList editor='classic' results={data} page={page} orderby={orderby} service={service}/>,
+           document.getElementById('app')
+         ); 
+                    
+      })
+      .catch(function(error) {
+         console.log(error);
+      });
    }
 	initialize();
       

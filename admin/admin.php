@@ -60,12 +60,14 @@ function instant_img_enqueue_scripts(){
 * @since 3.0
 */
 function instant_img_scripts(){
-	wp_enqueue_style('admin-instant-images', INSTANT_IMG_URL. 'dist/css/instant-images.css', '', INSTANT_IMG_VERSION);
+   $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off
+   
+	wp_enqueue_style('admin-instant-images', INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css', '', INSTANT_IMG_VERSION);
    wp_enqueue_script('jquery');
    wp_enqueue_script('jquery-form', true);
    wp_enqueue_script('masonry', true);
    
-   wp_enqueue_script('instant-images-react', INSTANT_IMG_URL. 'dist/js/instant-images.js', '', INSTANT_IMG_VERSION, true);
+   wp_enqueue_script('instant-images-react', INSTANT_IMG_URL. 'dist/js/instant-images'. $suffix .'.js', '', INSTANT_IMG_VERSION, true);
    wp_enqueue_script('instant-images', INSTANT_IMG_ADMIN_URL. 'assets/js/admin.js', 'jquery', INSTANT_IMG_VERSION, true);
    
    InstantImages::instant_img_localize();
@@ -152,7 +154,7 @@ add_action('media_upload_instant_img_tab', 'media_upload_instant_images_handler'
 * @since 2.0
 */
 function media_instant_img_tab() {
-	media_upload_header();
+	//media_upload_header();
    instant_img_scripts();
    $show_settings = false;
    ?> 
