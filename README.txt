@@ -44,6 +44,12 @@ The perfect tool for users who want to save time and frustration by uploading im
 
 ***
 
+= How Can You Contribute? =
+Pull requests can be submitted via [GitHub](https://github.com/dcooney/instant-images).
+
+***
+
+
 = Website =
 [https://connekthq.com/plugins/instant-images/](https://connekthq.com/plugins/instant-images/)
 
@@ -111,8 +117,9 @@ How to install Instant Images.
 
 1. Dashboard - Browse, search and upload images to your WordPress media library
 2. Search - Find and upload images for any subject in a matter of seconds!
-2. Image Metadata - Easily edit image filename, alt text and caption prior to uploading to your media library.
-3. Post/Page Edit - Unsplash images in a lightbox on your post edit/new/post pages.
+3. Image Metadata - Easily edit image filename, alt text and caption prior to uploading to your media library.
+4. Post/Page Edit - Unsplash images in a lightbox on your post edit/new/post pages.
+5. Gutenberg post edit screens. Add as featured image, insert into post or just upload photo.
 
 
 == Changelog ==
