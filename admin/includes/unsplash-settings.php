@@ -23,17 +23,11 @@
 	      <h2 class="w-border"><?php _e('What\'s New', 'instant-images'); ?></h2>
 	      <p><?php _e('The latest Instant Images updates', 'instant-images'); ?>.</p>
 	      <div class="cta-wrap">
-		      <h4><span>3.2+</span></h4>
+		      <h4><span>4.0</span></h4>
 		      <ul class="whats-new">
-			      <li>Added Instant Images to media upload tabs. You can now upload a photo and insert it into a page or page immediately. Please note, this is currently not working with the Gutenberg editor.</li>
-			      <li>Added functionality to edit image details (filename, alt text and caption) prior to uploading - edit image detail by clicking the options icon in the top right corner of each image.</li>
-			      <li>Improved error handling and messaging for REST API and cURL issues.</li>
-		      </ul>
-		      <h4><span>3.1</span></h4>
-		      <ul class="whats-new">
+			      <li>Gutenberg Support - Instant Images directly integrates with Gutenberg as a plugin sidebar..</li>
 			      <li>Better image uploading and error handling.</li>
 			      <li>Added `instant_images_user_role` filter to allow for control over user capability.</li>
-			      <li>Fixing permission issues with uploads when using basic HTTP authentication on domain.</li>
 			      <li>Updated to meet revised <a href="https://medium.com/unsplash/unsplash-api-guidelines-28e0216e6daa" target="_blank">Unsplash API guidelines</a>.</li>
 			      <li>Adding support for searching individual photos by Unsplash ID - searching <pre>id:{photo_id}</pre> will return a single result.<br/>e.g. <pre>id:YiUi00uqKk8</pre></li>
 		      </ul>
@@ -44,9 +38,6 @@
       $plugin_array = array(
          array(
             'slug' => 'ajax-load-more',
-         ),
-         array(
-            'slug' => 'broadcast-call-to-actions'
          ),
          array(
             'slug' => 'easy-query'

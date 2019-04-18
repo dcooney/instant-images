@@ -25471,7 +25471,7 @@ var Unsplash = function Unsplash() {
 		PluginSidebar,
 		{
 			icon: React.createElement(_icon2.default, { borderless: true, color: "unsplash" }),
-			name: "dropit-sidebar",
+			name: "instant-images-sidebar",
 			title: "Instant Images"
 		},
 		React.createElement(
@@ -25552,10 +25552,6 @@ var _menu = __webpack_require__(/*! ./components/unsplash/menu */ "./src/js/bloc
 var _menu2 = _interopRequireDefault(_menu);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//const { createBlock } = wp.blocks;
-//const { dispatch } = wp.data;
-
 
 var Fragment = wp.element.Fragment;
 var _wp$editPost = wp.editPost,

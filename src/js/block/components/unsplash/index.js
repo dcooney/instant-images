@@ -7,10 +7,11 @@ import PhotoList from "../../../components/PhotoList";
 const { Component } = wp.element;
 const { PluginSidebar, PluginSidebarMoreMenuItem } = wp.editPost;
 
+
 const Unsplash = () => (
 	<PluginSidebar
 		icon={<Icon borderless color="unsplash" />}
-		name="dropit-sidebar"
+		name="instant-images-sidebar"
 		title="Instant Images"
 	>
 		<div className="instant-img-container">

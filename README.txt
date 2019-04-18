@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
-Tested up to: 5.0.3
-Stable tag: 4.0.0
+Tested up to: 5.1.1
+Stable tag: 4.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,6 +123,10 @@ How to install Instant Images.
 
 
 == Changelog ==
+
+= 4.0.1 - April 18, 2019 =
+* FIX - Fixed issue where Instant Images sidebar plugin would not appear in Gutenberg if removed as a pinned item.
+
 
 = 4.0.0 - February 12, 2019 =
 

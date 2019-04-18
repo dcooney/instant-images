@@ -2,29 +2,19 @@ import Icon from "./components/icon";
 import Unsplash from './components/unsplash/index'; 
 import UnsplashMenu from './components/unsplash/menu';   
 
-
-//const { createBlock } = wp.blocks;
-//const { dispatch } = wp.data;
-
-
 const { Fragment } = wp.element;
 const { PluginSidebar, PluginSidebarMoreMenuItem } = wp.editPost;
 const { registerPlugin } = wp.plugins;
 
-
-const InstantImages = () => (
-    
+const InstantImages = () => (    
     <Fragment>        
         <UnsplashMenu />        
         <Unsplash />        
-    </Fragment>
-    
+    </Fragment>    
 );
 
-
 // Register the sidebar plugin
-registerPlugin( 
-   'instant-images', {
+registerPlugin( 'instant-images', {
       render: InstantImages
    } 
 );
