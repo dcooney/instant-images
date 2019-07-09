@@ -94,12 +94,19 @@ function instant_images_resize_image( WP_REST_Request $request ) {
    		     'post_status' => 'inherit'
    	      );	            
    	      
-   	      $image_id = wp_insert_attachment($attachment, $new_filename, 0); // Insert as attachment
-   	      
+            // filter values before inserting attachment
+            $attachment = apply_filters( 'instant_images_pre_insert_attachment', $attachment, $data );
+            $new_filename = apply_filters( 'instant_images_filename', $new_filename, $data );
+
+            $image_id = wp_insert_attachment($attachment, $new_filename, 0); // Insert as attachment
+
             update_post_meta( $image_id, '_wp_attachment_image_alt', $alt ); // Add alt text
-   
-   	      $attach_data = wp_generate_attachment_metadata( $image_id, $new_filename ); // Generate metadata
-   	      wp_update_attachment_metadata( $image_id, $attach_data ); // Add metadata
+
+            $attach_data = wp_generate_attachment_metadata( $image_id, $new_filename ); // Generate metadata
+            wp_update_attachment_metadata( $image_id, $attach_data ); // Add metadata
+
+            // let other plugins do something after inserting image
+            do_action( 'instant_images_insert_image', $image_id, $data );
    	          
    	      
    	      // Response   
