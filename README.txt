@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
-Tested up to: 5.1.1
-Stable tag: 4.0.1
+Tested up to: 5.2.2
+Stable tag: 4.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,10 @@ e.g. `id:YiUi00uqKk8`
 Unfortunately, there are a number of reasons why Instant Images may not work in your current hosting/server environment. Please read through the [FAQ on our website](https://connekthq.com/plugins/instant-images/#faqs) to view some potential causes.
 
 
+= Can I update the filename or metadata prior to upload? =
+Yes, click the `cog` (options) icon in the bottom corner of the image to bring up an edit screen where you can modify the filename, title, alt and caption before the image is uploaded.
+
+
 = Are the images upload to the Media Library? =
 Yes, once clicked, the images are processed on the server then uploaded to the Media Library into the various sizes set in your theme.
 
@@ -123,6 +127,12 @@ How to install Instant Images.
 
 
 == Changelog ==
+
+= 4.1.0 - July 23, 2019 =
+* NEW - Added support for updating image title prior to upload.
+* NEW - Added link to edit image after upload process completes.
+* UPDATE - Updated functionality to trigger photo upload immediately after triggering a `Save` when editing image metadata.
+
 
 = 4.0.1 - April 18, 2019 =
 * FIX - Fixed issue where Instant Images sidebar plugin would not appear in Gutenberg if removed as a pinned item.

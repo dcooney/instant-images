@@ -13,8 +13,8 @@ class Photo extends React.Component {
       this.full_size = this.props.result.urls.raw;
       this.author = this.props.result.user.name;
       this.img_title = `${instant_img_localize.photo_by} ${this.author}`;      
-      this.filename = this.props.result.id;    
-      
+      this.filename = this.props.result.id;          
+      this.title = this.img_title;
       this.alt = '';
       this.caption = '';
       this.user = this.props.result.user.username;
@@ -39,6 +39,7 @@ class Photo extends React.Component {
       // Photo state
       this.state = { 
          filename: this.filename,
+         title: this.title,
          alt: this.alt,
          caption: this.caption
       }
@@ -96,8 +97,6 @@ class Photo extends React.Component {
       })
       .then(function (res) {
          
-         //console.log(res);
-         
          let response = res.data;
             
          if(response && res.status == 200){
@@ -154,8 +153,8 @@ class Photo extends React.Component {
 	   let data = { // store data in JSON to pass to XMLHttpRequest
 	      'path' : path,
          'filename' : filename,
-         'title' : target.getAttribute('data-title'),
          'custom_filename' : target.getAttribute('data-filename'),
+         'title' : target.getAttribute('data-title'),
          'alt' : target.getAttribute('data-alt'),
          'caption' : target.getAttribute('data-caption'),
       }      
@@ -177,8 +176,6 @@ class Photo extends React.Component {
       })
       .then(function (res) {
          
-         //console.log(res);
-         
          let response = res.data;
             
          if(response && res.status == 200){
@@ -187,12 +184,16 @@ class Photo extends React.Component {
             let success = response.success;
             let attachment_id = response.id;
             let attachment_url = response.url;
+            let admin_url = response.admin_url;
             msg = response.msg;
                 
              if(success){ 
+                
+               // Edit URL
+               let edit_url = `${admin_url}post.php?post=${attachment_id}&action=edit`
                
 	            // Success/Upload Complete
-               self.uploadComplete(target, photo, msg); 
+               self.uploadComplete(target, photo, msg, edit_url); 
                
                
                // Set as featured Image in Gutenberg
@@ -314,16 +315,23 @@ class Photo extends React.Component {
 	 * @param target   element    clicked item  
 	 * @param photo    element    Nearest parent .photo
 	 * @param msg      string     Success Msg
+	 * @param url      string     The attachment edit link
 	 * @since 3.0
 	 */
-   uploadComplete(target, photo, msg){
+   uploadComplete(target, photo, msg, url){
       
 	   this.setImageTitle(target, msg);
 	   
 	   photo.classList.remove('in-progress');
 	   photo.classList.add('uploaded');
 	   
+	   //window.location = url;
+	   
 	   photo.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
+	   
+	   photo.querySelector('.edit-photo-admin').style.display = 'inline-block'; // Show edit-photo-admin button
+	   photo.querySelector('.edit-photo-admin').href = url; // Add admin edit link
+	   photo.querySelector('.edit-photo-admin').target = '_balnk'; // Add new window
 	   
 	   if(this.is_block_editor){
 		   photo.querySelector('.insert').style.display = 'none'; // Hide insert button
@@ -333,7 +341,7 @@ class Photo extends React.Component {
 	   target.classList.remove('uploading');
 	   target.classList.remove('resizing');
       target.classList.add('success'); 
-      	   
+            	   
 	   this.inProgress = false;
 	   
 	   // Refresh Media Library contents on edit pages               
@@ -424,6 +432,11 @@ class Photo extends React.Component {
          this.setState({
             filename: e.target.value
          });
+      }      
+      if(target === 'title'){
+         this.setState({
+            title: e.target.value
+         });
       }
       if(target === 'alt'){
          this.setState({
@@ -450,15 +463,25 @@ class Photo extends React.Component {
       let el = e.currentTarget;
       let photo = el.closest('.photo'); 
       
+      // Filename
       let filename = photo.querySelector('input[name="filename"]');
       this.filename = filename.value;
+      
+      // Title
+      let title = photo.querySelector('input[name="title"]');
+      this.title = title.value;
+      
+      // Alt
       let alt = photo.querySelector('input[name="alt"]');
       this.alt = alt.value;
+      
+      // Caption
       let caption = photo.querySelector('textarea[name="caption"]');
       this.caption = caption.value;
       
       photo.querySelector('.edit-screen').classList.remove('editing'); // Hide edit screen
-      photo.querySelector('a.upload').focus();      
+      photo.querySelector('a.upload').click();  
+          
    }   
    
    
@@ -477,12 +500,33 @@ class Photo extends React.Component {
       if(photo){
          let target = photo.querySelector('a.upload');
          
+         // Filename
          let filename = photo.querySelector('input[name="filename"]');
-         filename.value = this.filename;
+         filename.value = filename.dataset.original;
+         this.setState({
+            filename: filename.value
+         });
+         
+         // Title
+         let title = photo.querySelector('input[name="title"]');
+         title.value = title.dataset.original;
+         this.setState({
+            title: title.value
+         });
+         
+         // Alt
          let alt = photo.querySelector('input[name="alt"]');
-         alt.value = this.alt;
+         alt.value = alt.dataset.original;
+         this.setState({
+            alt: alt.value
+         });
+         
+         // Caption
          let caption = photo.querySelector('textarea[name="caption"]');
-         caption.value = this.caption;
+         caption.value = caption.dataset.original;
+         this.setState({
+            caption: caption.value
+         });
          
          photo.querySelector('.edit-screen').classList.remove('editing'); // Hide edit screen      
          target.focus();
@@ -503,8 +547,8 @@ class Photo extends React.Component {
    						href={this.full_size} 
    						data-id={this.id} 
    						data-url={this.full_size} 
-   						data-title={this.img_title}
    						data-filename={this.state.filename}
+   						data-title={this.state.title}
    						data-alt={this.state.alt}
    						data-caption={this.state.caption}
    						title={instant_img_localize.upload} 
@@ -550,6 +594,16 @@ class Photo extends React.Component {
                	            </a>
             	            )
          	            }
+         	            
+         	            <a 
+         	               className="edit-photo-admin fade"
+         	               href="#" 
+         	               title={instant_img_localize.edit_upload}               
+         	               >
+         	               <i className="fa fa-pencil" aria-hidden="true"></i>
+                           <span className="offscreen">{instant_img_localize.edit_upload}</span>
+         	            </a> 
+         	            
          	            <a 
          	               className="edit-photo fade"
          	               href="#" 
@@ -584,20 +638,24 @@ class Photo extends React.Component {
 	               </div>
 	               <label>
 	                  <span>{instant_img_localize.edit_filename}:</span>
-	                  <input type="text" name="filename" placeholder={this.filename} value={this.state.filename} onChange={(e) => this.handleEditChange(e)} />
+	                  <input type="text" name="filename" data-original={this.filename} placeholder={this.filename} value={this.state.filename} onChange={(e) => this.handleEditChange(e)} />
 	                  <em>.jpg</em>
 	               </label>
 	               <label>
+	                  <span>{instant_img_localize.edit_title}:</span>
+	                  <input type="text" name="title" data-original={this.title} placeholder={this.title} value={this.state.title} onChange={(e) => this.handleEditChange(e)} />
+	               </label>
+	               <label>
 	                  <span>{instant_img_localize.edit_alt}:</span>
-	                  <input type="text" name="alt" value={this.state.alt} onChange={(e) => this.handleEditChange(e)} />
+	                  <input type="text" name="alt" data-original="" value={this.state.alt} onChange={(e) => this.handleEditChange(e)} />
 	               </label>
 	               <label>
 	                  <span>{instant_img_localize.edit_caption}:</span>
-	                  <textarea rows="3" name="caption" onChange={(e) => this.handleEditChange(e)} value={this.state.caption}></textarea>
+	                  <textarea rows="3" name="caption" data-original="" onChange={(e) => this.handleEditChange(e)} value={this.state.caption}></textarea>
 	               </label>
 	               <div className="edit-screen--controls">
 	                  <button type="button" className="button" onClick={(e) => this.cancelEditChange(e)}>{instant_img_localize.cancel}</button> &nbsp; 
-	                  <button type="button" className="button button-primary" onClick={(e) => this.saveEditChange(e)}>{instant_img_localize.save}</button>
+	                  <button type="button" className="button button-primary" onClick={(e) => this.saveEditChange(e)}>{instant_img_localize.upload_now}</button>
 	               </div>
 	            </div>
 	            

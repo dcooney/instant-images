@@ -25646,7 +25646,7 @@ var Photo = function (_React$Component) {
       _this.author = _this.props.result.user.name;
       _this.img_title = instant_img_localize.photo_by + ' ' + _this.author;
       _this.filename = _this.props.result.id;
-
+      _this.title = _this.img_title;
       _this.alt = '';
       _this.caption = '';
       _this.user = _this.props.result.user.username;
@@ -25669,6 +25669,7 @@ var Photo = function (_React$Component) {
       // Photo state
       _this.state = {
          filename: _this.filename,
+         title: _this.title,
          alt: _this.alt,
          caption: _this.caption
       };
@@ -25727,8 +25728,6 @@ var Photo = function (_React$Component) {
             }
          }).then(function (res) {
 
-            //console.log(res);
-
             var response = res.data;
 
             if (response && res.status == 200) {
@@ -25782,8 +25781,8 @@ var Photo = function (_React$Component) {
          var data = { // store data in JSON to pass to XMLHttpRequest
             'path': path,
             'filename': filename,
-            'title': target.getAttribute('data-title'),
             'custom_filename': target.getAttribute('data-filename'),
+            'title': target.getAttribute('data-title'),
             'alt': target.getAttribute('data-alt'),
             'caption': target.getAttribute('data-caption')
 
@@ -25803,8 +25802,6 @@ var Photo = function (_React$Component) {
             }
          }).then(function (res) {
 
-            //console.log(res);
-
             var response = res.data;
 
             if (response && res.status == 200) {
@@ -25813,12 +25810,16 @@ var Photo = function (_React$Component) {
                var success = response.success;
                var attachment_id = response.id;
                var attachment_url = response.url;
+               var admin_url = response.admin_url;
                msg = response.msg;
 
                if (success) {
 
+                  // Edit URL
+                  var edit_url = admin_url + 'post.php?post=' + attachment_id + '&action=edit';
+
                   // Success/Upload Complete
-                  self.uploadComplete(target, photo, msg);
+                  self.uploadComplete(target, photo, msg, edit_url);
 
                   // Set as featured Image in Gutenberg
                   if (self.is_block_editor && self.setAsFeaturedImage) {
@@ -25930,19 +25931,26 @@ var Photo = function (_React$Component) {
       * @param target   element    clicked item  
       * @param photo    element    Nearest parent .photo
       * @param msg      string     Success Msg
+      * @param url      string     The attachment edit link
       * @since 3.0
       */
 
    }, {
       key: 'uploadComplete',
-      value: function uploadComplete(target, photo, msg) {
+      value: function uploadComplete(target, photo, msg, url) {
 
          this.setImageTitle(target, msg);
 
          photo.classList.remove('in-progress');
          photo.classList.add('uploaded');
 
+         //window.location = url;
+
          photo.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
+
+         photo.querySelector('.edit-photo-admin').style.display = 'inline-block'; // Show edit-photo-admin button
+         photo.querySelector('.edit-photo-admin').href = url; // Add admin edit link
+         photo.querySelector('.edit-photo-admin').target = '_balnk'; // Add new window
 
          if (this.is_block_editor) {
             photo.querySelector('.insert').style.display = 'none'; // Hide insert button
@@ -26046,6 +26054,11 @@ var Photo = function (_React$Component) {
                filename: e.target.value
             });
          }
+         if (target === 'title') {
+            this.setState({
+               title: e.target.value
+            });
+         }
          if (target === 'alt') {
             this.setState({
                alt: e.target.value
@@ -26072,15 +26085,24 @@ var Photo = function (_React$Component) {
          var el = e.currentTarget;
          var photo = el.closest('.photo');
 
+         // Filename
          var filename = photo.querySelector('input[name="filename"]');
          this.filename = filename.value;
+
+         // Title
+         var title = photo.querySelector('input[name="title"]');
+         this.title = title.value;
+
+         // Alt
          var alt = photo.querySelector('input[name="alt"]');
          this.alt = alt.value;
+
+         // Caption
          var caption = photo.querySelector('textarea[name="caption"]');
          this.caption = caption.value;
 
          photo.querySelector('.edit-screen').classList.remove('editing'); // Hide edit screen
-         photo.querySelector('a.upload').focus();
+         photo.querySelector('a.upload').click();
       }
 
       /*
@@ -26099,12 +26121,33 @@ var Photo = function (_React$Component) {
          if (photo) {
             var target = photo.querySelector('a.upload');
 
+            // Filename
             var filename = photo.querySelector('input[name="filename"]');
-            filename.value = this.filename;
+            filename.value = filename.dataset.original;
+            this.setState({
+               filename: filename.value
+            });
+
+            // Title
+            var title = photo.querySelector('input[name="title"]');
+            title.value = title.dataset.original;
+            this.setState({
+               title: title.value
+            });
+
+            // Alt
             var alt = photo.querySelector('input[name="alt"]');
-            alt.value = this.alt;
+            alt.value = alt.dataset.original;
+            this.setState({
+               alt: alt.value
+            });
+
+            // Caption
             var caption = photo.querySelector('textarea[name="caption"]');
-            caption.value = this.caption;
+            caption.value = caption.dataset.original;
+            this.setState({
+               caption: caption.value
+            });
 
             photo.querySelector('.edit-screen').classList.remove('editing'); // Hide edit screen      
             target.focus();
@@ -26131,8 +26174,8 @@ var Photo = function (_React$Component) {
                         href: this.full_size,
                         'data-id': this.id,
                         'data-url': this.full_size,
-                        'data-title': this.img_title,
                         'data-filename': this.state.filename,
+                        'data-title': this.state.title,
                         'data-alt': this.state.alt,
                         'data-caption': this.state.caption,
                         title: instant_img_localize.upload,
@@ -26189,6 +26232,20 @@ var Photo = function (_React$Component) {
                               'span',
                               { className: 'offscreen' },
                               instant_img_localize.insert_into_post
+                           )
+                        ),
+                        _react2.default.createElement(
+                           'a',
+                           {
+                              className: 'edit-photo-admin fade',
+                              href: '#',
+                              title: instant_img_localize.edit_upload
+                           },
+                           _react2.default.createElement('i', { className: 'fa fa-pencil', 'aria-hidden': 'true' }),
+                           _react2.default.createElement(
+                              'span',
+                              { className: 'offscreen' },
+                              instant_img_localize.edit_upload
                            )
                         ),
                         _react2.default.createElement(
@@ -26262,7 +26319,7 @@ var Photo = function (_React$Component) {
                         instant_img_localize.edit_filename,
                         ':'
                      ),
-                     _react2.default.createElement('input', { type: 'text', name: 'filename', placeholder: this.filename, value: this.state.filename, onChange: function onChange(e) {
+                     _react2.default.createElement('input', { type: 'text', name: 'filename', 'data-original': this.filename, placeholder: this.filename, value: this.state.filename, onChange: function onChange(e) {
                            return _this2.handleEditChange(e);
                         } }),
                      _react2.default.createElement(
@@ -26277,10 +26334,23 @@ var Photo = function (_React$Component) {
                      _react2.default.createElement(
                         'span',
                         null,
+                        instant_img_localize.edit_title,
+                        ':'
+                     ),
+                     _react2.default.createElement('input', { type: 'text', name: 'title', 'data-original': this.title, placeholder: this.title, value: this.state.title, onChange: function onChange(e) {
+                           return _this2.handleEditChange(e);
+                        } })
+                  ),
+                  _react2.default.createElement(
+                     'label',
+                     null,
+                     _react2.default.createElement(
+                        'span',
+                        null,
                         instant_img_localize.edit_alt,
                         ':'
                      ),
-                     _react2.default.createElement('input', { type: 'text', name: 'alt', value: this.state.alt, onChange: function onChange(e) {
+                     _react2.default.createElement('input', { type: 'text', name: 'alt', 'data-original': '', value: this.state.alt, onChange: function onChange(e) {
                            return _this2.handleEditChange(e);
                         } })
                   ),
@@ -26293,7 +26363,7 @@ var Photo = function (_React$Component) {
                         instant_img_localize.edit_caption,
                         ':'
                      ),
-                     _react2.default.createElement('textarea', { rows: '3', name: 'caption', onChange: function onChange(e) {
+                     _react2.default.createElement('textarea', { rows: '3', name: 'caption', 'data-original': '', onChange: function onChange(e) {
                            return _this2.handleEditChange(e);
                         }, value: this.state.caption })
                   ),
@@ -26313,7 +26383,7 @@ var Photo = function (_React$Component) {
                         { type: 'button', className: 'button button-primary', onClick: function onClick(e) {
                               return _this2.saveEditChange(e);
                            } },
-                        instant_img_localize.save
+                        instant_img_localize.upload_now
                      )
                   )
                )

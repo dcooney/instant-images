@@ -108,6 +108,9 @@
          		font-size: 22px;
                opacity: 0.8;
       		}
+      		a{
+         		color: #fff;
+      		}
    		}
    		
    		&.uploading .status,
@@ -163,6 +166,9 @@
 	         		content: '\f00c';
 	         		color: #fff;
          		}
+      		}
+      		img{
+      		   transform: scale(1) !important;
       		}
    		}
    		
@@ -320,6 +326,7 @@
          padding: 0;
          color: rgba(255, 255, 255, 0.75);
          &.edit-photo,
+         &.edit-photo-admin,
          &.set-featured,
          &.insert{
             width: auto;
@@ -344,7 +351,11 @@
                left: 0;
             }
          }
-         &.edit-photo{
+         &.edit-photo-admin{
+            display: none;
+         }
+         &.edit-photo,
+         &.edit-photo-admin{
             i{
                left: 0;
    	         top: 0;

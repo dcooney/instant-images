@@ -7,16 +7,22 @@ Author: Darren Cooney
 Twitter: @connekthq
 Author URI: https://connekthq.com
 Text Domain: instant-images
-Version: 4.0.1
+Version: 4.1.0
 License: GPL
 Copyright: Darren Cooney & Connekt Media
+
+
+TO DO
+- Started work on !ini_get('allow_url_fopen') in api/upload.php
+- Create diagnostic test to determine issues for users. `Run Diasgnositcs` will step through the process.
+
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 
-define('INSTANT_IMAGES_VERSION', '4.0.1');
-define('INSTANT_IMAGES_RELEASE', 'April 18, 2019');
+define('INSTANT_IMAGES_VERSION', '4.1.0');
+define('INSTANT_IMAGES_RELEASE', 'July 23, 2019');
 
 
 /*
@@ -139,12 +145,15 @@ class InstantImages {
    			'set_as_featured' => __('Set as Featured Image', 'instant-images'),
    			'insert_into_post' => __('Insert Into Post', 'instant-images'),
    			'edit_filename' => __('Filename', 'instant-images'),
+   			'edit_title' => __('Title', 'instant-images'),
    			'edit_alt' => __('Alt Text', 'instant-images'),
    			'edit_caption' => __('Caption', 'instant-images'),
+   			'edit_upload' => __('Edit Upload', 'instant-images'),
    			'edit_details' => __('Edit Image Details', 'instant-images'),
    			'edit_details_intro' => __('Update and save image details prior to uploading', 'instant-images'),
    			'cancel' => __('Cancel', 'instant-images'),
-   			'save' => __('Save', 'instant-images')
+   			'save' => __('Save', 'instant-images'),
+   			'upload_now' => __('Upload', 'instant-images')
    		)
    	);
    }

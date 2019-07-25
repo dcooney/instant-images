@@ -110,7 +110,8 @@ function instant_images_resize_image( WP_REST_Request $request ) {
    	      		'success' => true,
    	      		'msg' => __('Image successfully uploaded to your media library!', 'instant-images'),
    	      		'id' => $image_id,
-   	      		'url' => wp_get_attachment_url( $image_id )
+   	      		'url' => wp_get_attachment_url( $image_id ),
+   	      		'admin_url' => admin_url(),
    	   		);
    	   		
    	      }else{ 

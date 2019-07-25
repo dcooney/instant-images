@@ -81,6 +81,22 @@ function instant_images_upload_image( WP_REST_Request $request ) {
       $img_path = $path .''.$filename;
       
       
+      // allow_url_fopen
+      // Confirm the server has allow_url_fopen set to `on`
+/*
+      if( !ini_get('allow_url_fopen') ) {
+			$response = array(
+				'error' => true,
+				'msg' => __('Instant Images requires `allow_url_fopen` to be on for downloading images from the remote server to yours. Please check your server php.ini file and confirm it is set to on and not off.', 'instant-images'),
+				'path' => $path,
+				'filename' => $filename
+			);
+			wp_send_json($response); 
+	   }
+*/
+      
+      
+      // PHP Copy()       
       if(function_exists('copy')){
 	          
          // Save file to server using copy() function

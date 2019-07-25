@@ -848,6 +848,10 @@ input:-webkit-autofill {
   opacity: 0.8;
 }
 
+#photos .photo a.upload .status a {
+  color: #fff;
+}
+
 #photos .photo a.upload.uploading .status,
 #photos .photo a.upload.resizing .status,
 #photos .photo a.upload.success .status,
@@ -907,6 +911,12 @@ input:-webkit-autofill {
 #photos .photo a.upload.success .status:before {
   content: '\F00C';
   color: #fff;
+}
+
+#photos .photo a.upload.success img {
+  -webkit-transform: scale(1) !important;
+      -ms-transform: scale(1) !important;
+          transform: scale(1) !important;
 }
 
 #photos .photo a.upload.errors {
@@ -1083,21 +1093,21 @@ input:-webkit-autofill {
   color: rgba(255, 255, 255, 0.75);
 }
 
-#photos .photo .fade.edit-photo, #photos .photo .fade.set-featured, #photos .photo .fade.insert {
+#photos .photo .fade.edit-photo, #photos .photo .fade.edit-photo-admin, #photos .photo .fade.set-featured, #photos .photo .fade.insert {
   width: auto;
   display: inline-block;
   width: 34px;
   text-align: center;
 }
 
-#photos .photo .fade.edit-photo i, #photos .photo .fade.set-featured i, #photos .photo .fade.insert i {
+#photos .photo .fade.edit-photo i, #photos .photo .fade.edit-photo-admin i, #photos .photo .fade.set-featured i, #photos .photo .fade.insert i {
   line-height: 27px;
   position: relative;
   left: 1px;
   top: 1px;
 }
 
-#photos .photo .fade.edit-photo:hover, #photos .photo .fade.edit-photo:focus, #photos .photo .fade.set-featured:hover, #photos .photo .fade.set-featured:focus, #photos .photo .fade.insert:hover, #photos .photo .fade.insert:focus {
+#photos .photo .fade.edit-photo:hover, #photos .photo .fade.edit-photo:focus, #photos .photo .fade.edit-photo-admin:hover, #photos .photo .fade.edit-photo-admin:focus, #photos .photo .fade.set-featured:hover, #photos .photo .fade.set-featured:focus, #photos .photo .fade.insert:hover, #photos .photo .fade.insert:focus {
   color: #222;
   background: rgba(255, 255, 255, 0.95);
 }
@@ -1107,7 +1117,11 @@ input:-webkit-autofill {
   left: 0;
 }
 
-#photos .photo .fade.edit-photo i {
+#photos .photo .fade.edit-photo-admin {
+  display: none;
+}
+
+#photos .photo .fade.edit-photo i, #photos .photo .fade.edit-photo-admin i {
   left: 0;
   top: 0;
 }
