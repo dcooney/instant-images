@@ -622,7 +622,7 @@ input:-webkit-autofill {
 
 .instant-img-container .control-nav li.search-field input {
   width: 100%;
-  padding: 0 45px 0 10px;
+  padding: 0 10px 0 42px;
   border: 1px solid #e1e1e1;
   background-color: #f7f7f7 !important;
   height: 46px;
@@ -640,15 +640,15 @@ input:-webkit-autofill {
 }
 
 .instant-img-container .control-nav li.search-field input.searching {
-  padding-left: 34px;
+  padding-left: 62px;
   background-image: url(../img/ajax-loader.gif);
-  background-position: 10px center;
+  background-position: 37px center;
   background-repeat: no-repeat;
 }
 
 .instant-img-container .control-nav li.search-field button {
   position: absolute;
-  right: -2px;
+  left: -2px;
   top: -1px;
   width: 48px;
   height: 48px;
@@ -663,6 +663,7 @@ input:-webkit-autofill {
   -o-transition: all 0.25s ease;
   transition: all 0.25s ease;
   opacity: 0.5;
+  margin: 0;
 }
 
 .instant-img-container .control-nav li.search-field button:hover {
@@ -1550,28 +1551,37 @@ input:-webkit-autofill {
 }
 
 .components-panel .control-nav li.search-field input {
-  line-height: 34px;
-  height: 34px;
-  padding-right: 30px;
-  padding-left: 8px;
+  line-height: 36px;
+  height: 36px;
+  padding-right: 8px;
+  padding-left: 30px;
   -webkit-border-radius: 0;
           border-radius: 0;
   border-color: #e2e4e7;
   font-size: 13px;
+  -webkit-border-radius: 3px !important;
+          border-radius: 3px !important;
+}
+
+.components-panel .control-nav li.search-field input.searching {
+  padding-left: 30px;
+  background-position: 95% center;
 }
 
 .components-panel .control-nav li.search-field button {
   position: absolute;
-  right: -2px;
-  top: 0px;
-  width: 34px;
-  height: 34px;
+  right: auto;
+  top: 0;
+  width: 40px;
+  height: 36px;
+  padding: 0;
+  margin: 0;
 }
 
 .components-panel .control-nav li.search-field .searchResults {
-  right: auto;
-  left: -5px;
-  top: 85%;
+  right: 1px;
+  left: auto;
+  top: 1px;
 }
 
 .components-panel .control-nav li.search-field .searchResults:before, .components-panel .control-nav li.search-field .searchResults:after {
@@ -1603,6 +1613,100 @@ input:-webkit-autofill {
   .no-results {
     padding: 50px;
   }
+}
+
+.orientation-list {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  padding: 7px 0;
+  margin: 0 0 10px;
+  border-top: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
+  position: relative;
+  top: -7px;
+}
+
+.orientation-list span {
+  opacity: 0.5;
+  margin: 0 10px 0 0;
+  font-size: 13px;
+}
+
+.orientation-list ul {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.orientation-list ul li {
+  margin: 0 1px 0 0;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  cursor: pointer;
+  padding: 4px 6px;
+  -webkit-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+  color: #999;
+  font-size: 13px;
+}
+
+.orientation-list ul li:hover {
+  color: #111;
+}
+
+.orientation-list ul li:focus {
+  border-color: #5d72c3;
+  color: #111;
+  outline: none;
+}
+
+.orientation-list ul li.active {
+  background-color: #5d72c3;
+  border-color: #5d72c3;
+  color: #fff;
+  outline: none;
+}
+
+.components-panel .orientation-list {
+  position: static;
+  text-align: center;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-top: none;
+  background: #f7f7f7;
+  margin-bottom: 10px;
+}
+
+.components-panel .orientation-list span {
+  display: none;
+}
+
+.components-panel .orientation-list ul {
+  padding: 0;
+  width: 100%;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 /*# sourceMappingURL=instant-images.css.map*/

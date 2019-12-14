@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
-Tested up to: 5.2.2
-Stable tag: 4.1.0
+Tested up to: 5.3.1
+Stable tag: 4.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,7 @@ The perfect tool for users who want to save time and frustration by uploading im
 = Features =
 
 * **Image Search** - The Instant Images search let’s you quickly find and upload images for any subject in a matter of seconds!
+* **Image Orientation** - Filter search results by landscape, portrait or square images.
 * **Time Saver** - Quickly upload amazing stock photos without leaving the comfort of your WordPress admin.
 * **Theme/Plugin Developers** - A great tool for developers who want to prototype and develop using real world imagery.
 * **Gutenberg** - Instant Images directly integrates with Gutenberg as a plugin sidebar.
@@ -128,6 +129,12 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 4.2.0 - December 14, 2019 =
+* NEW - Added image orientation search filter
+* FIX - Fixed issue with instant images being rendered in Gutenberg editor for users without permissions.
+* UPDATE - Updated WordPress role requirement from `edit_theme_options` to [`upload_files`](https://wordpress.org/support/article/roles-and-capabilities/#upload_files).
+
+
 = 4.1.0 - July 23, 2019 =
 * NEW - Added support for updating image title prior to upload.
 * NEW - Added link to edit image after upload process completes.
@@ -179,7 +186,7 @@ How to install Instant Images.
 ** UPDATED - Updated to meet revised Unsplash API guidelines.
 ** UPDATED - Better Error messaging for upload/resize errors.
 ** NEW - Added `clear search` button to remove search results.
-** FIX - Fixed JS error that occured when `SCRIPT_DEBUG` was set to `true`.
+** FIX - Fixed JS error that occurred when `SCRIPT_DEBUG` was set to `true`.
 
 
 = 3.0 - September 21, 2017 =
@@ -200,7 +207,7 @@ How to install Instant Images.
 
 
 = 2.0.1 - January 12, 2017 =
-* FIX - Update to instant_img_resize_image function to remove unnecessary function arguments. These args were causing issues on some servers.
+* FIX - Update to `instant_img_resize_image` function to remove unnecessary function arguments. These args were causing issues on some servers.
 * NEW - Refresh Media Library content when uploading images through the Instant Images uploader on edit screen for posts and pages.
 * UI Enhancements
 

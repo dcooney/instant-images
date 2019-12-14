@@ -14,7 +14,7 @@ function instant_img_admin_menu() {
    	'upload.php', 
    	INSTANT_IMG_TITLE, 
    	INSTANT_IMG_TITLE, 
-   	apply_filters('instant_images_user_role', 'edit_theme_options'), 
+   	apply_filters('instant_images_user_role', 'upload_files'), 
    	INSTANT_IMG_NAME, 
    	'instant_img_settings_page'
    );

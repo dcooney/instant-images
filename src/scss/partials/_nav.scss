@@ -142,7 +142,7 @@
 				}
 				input{
 					width: 100%;
-					padding: 0 45px 0 10px;
+					padding: 0 10px 0 42px;
 					border: 1px solid #e1e1e1;
 					background-color: #f7f7f7 !important;
 					height: 46px;
@@ -154,15 +154,15 @@
    					border-color: #999;
 					}
 					&.searching{ 
-   					padding-left: 34px;
+   					padding-left: 62px;
    					background-image: url('../img/ajax-loader.gif');
-   					background-position: 10px center;
+   					background-position: 37px center;
    					background-repeat: no-repeat;
 					}
 				}
 				button{
 					position: absolute;
-					right: -2px;
+					left: -2px;
 					top: -1px;
 					width: 48px;
 					height: 48px;
@@ -174,6 +174,7 @@
 					box-shadow: none !important; 
 					transition: all 0.25s ease;
 					opacity: 0.5;
+					margin: 0;
 					&:hover{
 						outline: none;
 						color: #5d72c3;

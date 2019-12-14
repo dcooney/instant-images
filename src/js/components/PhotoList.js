@@ -22,6 +22,7 @@ class PhotoList extends React.Component {
       this.is_search = false;
       this.search_term = '';
       this.total_results = 0;
+      this.orientation = '';
       
       this.isLoading = false; // loading flag
       this.isDone = false; // Done flag - no photos remain
@@ -126,6 +127,59 @@ class PhotoList extends React.Component {
    
    
    
+   setOrientation(orientation, e){
+	   
+	   if(e && e.target){		   
+		   let target = e.target;
+		   
+		   if(target.classList.contains('active')){
+			   // Clear orientation
+			   target.classList.remove('active');
+			   this.orientation = '';
+			   
+		   } else {
+			   // Set orientation	   
+			   let siblings = target.parentNode.querySelectorAll('li');
+			   [...siblings].forEach(el => el.classList.remove('active')); // remove active classes
+			   
+			   target.classList.add('active');
+			   this.orientation = orientation;
+		   }
+		   
+		   if(this.search_term !== ''){
+			   this.doSearch(this.search_term);
+		   }
+	   }
+   }
+   
+   
+   
+   /**
+	 * hasOrientation
+	 * Is their an orientation set
+	 *    
+	 * @since 4.2  
+	 */
+   hasOrientation(){
+	   return (this.orientation === '') ? false : true;
+   }
+   
+   
+   
+   /**
+	 * clearOrientation
+	 * Clear the orientation
+	 *    
+	 * @since 4.2  
+	 */
+   clearOrientation(){
+	   const items = document.querySelectorAll('.orientation-list li');
+	   [...items].forEach(el => el.classList.remove('active')); // remove active classes
+	   this.orientation = '';
+   }
+   
+   
+   
    /**
 	 * doSearch
 	 * Run the search
@@ -141,7 +195,12 @@ class PhotoList extends React.Component {
       let type = 'term';
       this.page = 1; // reset page num
       
-	   let url = `${API.search_api}${API.app_id}${API.posts_per_page}&page=${this.page}&query=${this.search_term}`;	  
+	   let url = `${API.search_api}${API.app_id}${API.posts_per_page}&page=${this.page}&query=${this.search_term}`;
+	   
+	   if(this.hasOrientation()){
+		   // Set orientation
+		   url = `${url}&orientation=${this.orientation}`;
+	   }
 	   
 	   // Search by ID
 	   // allow users to search by photo by prepending id:{photo_id} to search terms
@@ -220,6 +279,7 @@ class PhotoList extends React.Component {
       this.total_results = 0;
       this.is_search = false;
       this.search_term = '';
+      this.clearOrientation();
    }
    
    
@@ -238,8 +298,13 @@ class PhotoList extends React.Component {
       this.isLoading = true;
 	      
 	   let url = `${API.photo_api}${API.app_id}${API.posts_per_page}&page=${this.page}&order_by=${this.orderby}`;
+	   
 	   if(this.is_search){
 		   url = `${API.search_api}${API.app_id}${API.posts_per_page}&page=${this.page}&query=${this.search_term}`;
+		   if(this.hasOrientation()){
+			   // Set orientation
+			   url = `${url}&orientation=${this.orientation}`;
+		   }
 	   }
 	   
 		fetch(url)
@@ -422,6 +487,9 @@ class PhotoList extends React.Component {
  
    
    render(){	
+	   
+	   // Show/Hide orientation listing
+	   let orientationStyle = (this.is_search) ? {display: 'flex'} : {display: 'none'};
        
       return (
          <div id="photo-listing" className={this.service}>
@@ -439,7 +507,16 @@ class PhotoList extends React.Component {
 					</li>
 				</ul>
 				
-				<div className="error-messaging"></div>
+				<div className="error-messaging"></div>	
+				
+				<div className="orientation-list" style={orientationStyle}>
+					<span><i className="fa fa-filter" aria-hidden="true"></i> {instant_img_localize.orientation}:</span>
+					<ul>
+						<li tabIndex="0" onClick={(e) => this.setOrientation('landscape', e)} onKeyPress={(e) => this.setOrientation('landscape', e)}>{instant_img_localize.landscape}</li>
+						<li tabIndex="0" onClick={(e) => this.setOrientation('portrait', e)} onKeyPress={(e) => this.setOrientation('portrait', e)}>{instant_img_localize.portrait}</li>
+						<li tabIndex="0" onClick={(e) => this.setOrientation('squarish', e)} onKeyPress={(e) => this.setOrientation('squarish', e)}>{instant_img_localize.squarish}</li>
+					</ul>
+				</div>
 				
             <div id="photos">               
             	{this.state.results.map((result, iterator) =>

@@ -32,7 +32,7 @@ add_action( 'rest_api_init', function () {
 
 function instant_images_upload_image( WP_REST_Request $request ) {  	
    
-	if (is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'edit_theme_options') )){ 
+	if (is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'upload_files') )){ 
    	 	
    	error_reporting(E_ALL|E_STRICT);   	
    	
@@ -81,9 +81,9 @@ function instant_images_upload_image( WP_REST_Request $request ) {
       $img_path = $path .''.$filename;
       
       
-      // allow_url_fopen
+      // Test allow_url_fopen
       // Confirm the server has allow_url_fopen set to `on`
-/*
+      /*
       if( !ini_get('allow_url_fopen') ) {
 			$response = array(
 				'error' => true,
@@ -93,7 +93,7 @@ function instant_images_upload_image( WP_REST_Request $request ) {
 			);
 			wp_send_json($response); 
 	   }
-*/
+	   */
       
       
       // PHP Copy()       

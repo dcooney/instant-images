@@ -12,6 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			echo sprintf($tagline, '<a href="https://unsplash.com/" target="_blank">unsplash.com</a>');
 		?>
    </h1>
+   <?php
+	   $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+		$escaped_url = htmlspecialchars( $url, ENT_QUOTES, 'UTF-8' );		
+		?>
+<!--    <a href="https://unsplash.com/oauth/authorize?client_id=<?php echo INSTANT_IMG_DEFAULT_APP_ID; ?>&redirect_uri=https://connekthq.com/?unsplash&response_type=code&scope=public">Login</a> -->
    <button type="button" class="button button-secondary button-large">
    	<i class="fa fa-cog" aria-hidden="true"></i> <?php _e('Settings', 'instant-images'); ?>
    </button>

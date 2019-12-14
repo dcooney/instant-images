@@ -7,22 +7,16 @@ Author: Darren Cooney
 Twitter: @connekthq
 Author URI: https://connekthq.com
 Text Domain: instant-images
-Version: 4.1.0
+Version: 4.2.0
 License: GPL
 Copyright: Darren Cooney & Connekt Media
-
-
-TO DO
-- Started work on !ini_get('allow_url_fopen') in api/upload.php
-- Create diagnostic test to determine issues for users. `Run Diasgnositcs` will step through the process.
-
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 
-define('INSTANT_IMAGES_VERSION', '4.1.0');
-define('INSTANT_IMAGES_RELEASE', 'July 23, 2019');
+define('INSTANT_IMAGES_VERSION', '4.2.0');
+define('INSTANT_IMAGES_RELEASE', 'December 14, 2019');
 
 
 /*
@@ -88,10 +82,12 @@ class InstantImages {
 	 *  @since 4.0
     */
    function instant_img_block_enqueue() {      
-      $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off
-   	wp_enqueue_script('instant-images-block', INSTANT_IMG_URL. 'dist/js/instant-images-block'. $suffix .'.js', '', INSTANT_IMG_VERSION, true);
-      wp_enqueue_style('admin-instant-images', INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css', '', INSTANT_IMG_VERSION);
-      InstantImages::instant_img_localize( 'instant-images-block' );
+	   $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off
+	   if (is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'upload_files') )){
+	   	wp_enqueue_script('instant-images-block', INSTANT_IMG_URL. 'dist/js/instant-images-block'. $suffix .'.js', '', INSTANT_IMG_VERSION, true);
+	      wp_enqueue_style('admin-instant-images', INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css', '', INSTANT_IMG_VERSION);
+	      InstantImages::instant_img_localize( 'instant-images-block' );
+      }
    }
 
 
@@ -138,7 +134,7 @@ class InstantImages {
    			'oldest' => __('Oldest', 'instant-images'),
    			'popular' => __('Popular', 'instant-images'),
    			'load_more' => __('Load More Images', 'instant-images'),
-   			'search' => __('Search for Toronto, Coffee + Breakfast etc...', 'instant-images'),
+   			'search' => __('Search for Toronto + Coffee etc...', 'instant-images'),
    			'search_results' => __('images found for', 'instant-images'),
    			'clear_search' => __('Clear Search Results', 'instant-images'),
    			'view_on_unsplash' => __('View Photo on Unsplash', 'instant-images'),
@@ -153,7 +149,11 @@ class InstantImages {
    			'edit_details_intro' => __('Update and save image details prior to uploading', 'instant-images'),
    			'cancel' => __('Cancel', 'instant-images'),
    			'save' => __('Save', 'instant-images'),
-   			'upload_now' => __('Upload', 'instant-images')
+   			'upload_now' => __('Upload', 'instant-images'),
+   			'orientation' => __('Image Orientation', 'instant-images'),
+   			'landscape' => __('Landscape', 'instant-images'),
+   			'portrait' => __('Portrait', 'instant-images'),
+   			'squarish' => __('Squarish', 'instant-images')
    		)
    	);
    }

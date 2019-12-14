@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Instant Images\n"
-"POT-Creation-Date: 2019-07-23 09:19-0400\n"
+"POT-Creation-Date: 2019-12-14 10:57-0500\n"
 "PO-Revision-Date: 2017-09-21 10:40-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: src\n"
 "X-Poedit-SearchPathExcluded-2: webpack\n"
 
-#: admin/admin.php:112 admin/admin.php:130 instant-images.php:107
+#: admin/admin.php:112 admin/admin.php:130 instant-images.php:109
 msgid "Instant Images"
 msgstr ""
 
@@ -92,7 +92,7 @@ msgstr ""
 msgid "One click photo uploads from %s"
 msgstr ""
 
-#: admin/views/unsplash.php:16
+#: admin/views/unsplash.php:21
 msgid "Settings"
 msgstr ""
 
@@ -127,172 +127,188 @@ msgstr ""
 msgid "An issue occurred retrieving image info via the REST API."
 msgstr ""
 
-#: api/upload.php:97
+#: api/upload.php:113
 msgid "Image successfully uploaded to server."
 msgstr ""
 
-#: api/upload.php:107
+#: api/upload.php:123
 msgid ""
 "Uploaded image not found, please ensure you have proper permissions set on "
 "the uploads directory."
 msgstr ""
 
-#: api/upload.php:119
+#: api/upload.php:135
 msgid ""
 "Unable to download image to server, please check the server permissions of "
 "the instant-images folder in your WP uploads directory."
 msgstr ""
 
-#: api/upload.php:133
+#: api/upload.php:149
 msgid ""
 "The core PHP copy() function is not available on your server. Please contact "
 "your server administrator to upgrade your PHP version."
 msgstr ""
 
-#: instant-images.php:116
+#: instant-images.php:118
 msgid "Error accessing Unsplash API"
 msgstr ""
 
-#: instant-images.php:117
+#: instant-images.php:119
 msgid "Please check your Application ID."
 msgstr ""
 
-#: instant-images.php:118
+#: instant-images.php:120
 msgid ""
 "Unable to download image to server, please check your server permissions."
 msgstr ""
 
-#: instant-images.php:119
+#: instant-images.php:121
 msgid ""
 "There was an error sending the image to your media library. Please check "
 "your server permissions and confirm the upload_max_filesize setting (php."
 "ini) is large enough for the downloaded image."
 msgstr ""
 
-#: instant-images.php:120
+#: instant-images.php:122
 msgid ""
 "There was an error accessing the WP REST API - Instant Images requires "
 "access to the WP REST API to fetch and upload images to your media library."
 msgstr ""
 
-#: instant-images.php:121
+#: instant-images.php:123
 msgid "Photo by"
 msgstr ""
 
-#: instant-images.php:122
+#: instant-images.php:124
 msgid "View All Photos by"
 msgstr ""
 
-#: instant-images.php:123
+#: instant-images.php:125
 msgid "Click Image to Upload"
 msgstr ""
 
-#: instant-images.php:124
+#: instant-images.php:126
 msgid "Click to Upload"
 msgstr ""
 
-#: instant-images.php:125
+#: instant-images.php:127
 msgid "View Full Size"
 msgstr ""
 
-#: instant-images.php:126
+#: instant-images.php:128
 msgid "Like(s)"
 msgstr ""
 
-#: instant-images.php:127
+#: instant-images.php:129
 msgid "Downloading Image..."
 msgstr ""
 
-#: instant-images.php:128
+#: instant-images.php:130
 msgid "Resizing Image..."
 msgstr ""
 
-#: instant-images.php:129
+#: instant-images.php:131
 msgid "Sorry, nothing matched your query"
 msgstr ""
 
-#: instant-images.php:130
+#: instant-images.php:132
 msgid "Please try adjusting your search criteria"
 msgstr ""
 
-#: instant-images.php:131
+#: instant-images.php:133
 msgid "New"
 msgstr ""
 
-#: instant-images.php:132
+#: instant-images.php:134
 msgid "Oldest"
 msgstr ""
 
-#: instant-images.php:133
+#: instant-images.php:135
 msgid "Popular"
 msgstr ""
 
-#: instant-images.php:134
+#: instant-images.php:136
 msgid "Load More Images"
 msgstr ""
 
-#: instant-images.php:135
-msgid "Search for Toronto, Coffee + Breakfast etc..."
-msgstr ""
-
-#: instant-images.php:136
-msgid "images found for"
-msgstr ""
-
 #: instant-images.php:137
-msgid "Clear Search Results"
+msgid "Search for Toronto + Coffee etc..."
 msgstr ""
 
 #: instant-images.php:138
-msgid "View Photo on Unsplash"
+msgid "images found for"
 msgstr ""
 
 #: instant-images.php:139
-msgid "Set as Featured Image"
+msgid "Clear Search Results"
 msgstr ""
 
 #: instant-images.php:140
-msgid "Insert Into Post"
+msgid "View Photo on Unsplash"
 msgstr ""
 
 #: instant-images.php:141
-msgid "Filename"
+msgid "Set as Featured Image"
 msgstr ""
 
 #: instant-images.php:142
-msgid "Title"
+msgid "Insert Into Post"
 msgstr ""
 
 #: instant-images.php:143
-msgid "Alt Text"
+msgid "Filename"
 msgstr ""
 
 #: instant-images.php:144
-msgid "Caption"
+msgid "Title"
 msgstr ""
 
 #: instant-images.php:145
-msgid "Edit Upload"
+msgid "Alt Text"
 msgstr ""
 
 #: instant-images.php:146
-msgid "Edit Image Details"
+msgid "Caption"
 msgstr ""
 
 #: instant-images.php:147
-msgid "Update and save image details prior to uploading"
+msgid "Edit Upload"
 msgstr ""
 
 #: instant-images.php:148
-msgid "Cancel"
+msgid "Edit Image Details"
 msgstr ""
 
 #: instant-images.php:149
-msgid "Save"
+msgid "Update and save image details prior to uploading"
 msgstr ""
 
 #: instant-images.php:150
+msgid "Cancel"
+msgstr ""
+
+#: instant-images.php:151
+msgid "Save"
+msgstr ""
+
+#: instant-images.php:152
 msgid "Upload"
+msgstr ""
+
+#: instant-images.php:153
+msgid "Image Orientation"
+msgstr ""
+
+#: instant-images.php:154
+msgid "Landscape"
+msgstr ""
+
+#: instant-images.php:155
+msgid "Portrait"
+msgstr ""
+
+#: instant-images.php:156
+msgid "Squarish"
 msgstr ""
 
 #: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:52

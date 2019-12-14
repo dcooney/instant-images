@@ -27873,7 +27873,7 @@ exports.default = Photo;
 
 
 Object.defineProperty(exports, "__esModule", {
-   value: true
+	value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -27917,532 +27917,647 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var PhotoList = function (_React$Component) {
-   _inherits(PhotoList, _React$Component);
-
-   function PhotoList(props) {
-      _classCallCheck(this, PhotoList);
-
-      var _this = _possibleConstructorReturn(this, (PhotoList.__proto__ || Object.getPrototypeOf(PhotoList)).call(this, props));
-
-      _this.results = _this.props.results ? _this.props.results : [];
-      _this.state = { results: _this.results };
-
-      _this.service = _this.props.service; // Unsplash, Pixabay, etc.
-      _this.orderby = _this.props.orderby; // Orderby
-      _this.page = _this.props.page; // Page
-
-      _this.is_search = false;
-      _this.search_term = '';
-      _this.total_results = 0;
-
-      _this.isLoading = false; // loading flag
-      _this.isDone = false; // Done flag - no photos remain
-
-      _this.errorMsg = '';
-      _this.msnry = '';
-
-      _this.editor = _this.props.editor ? _this.props.editor : 'classic';
-      _this.is_block_editor = _this.props.editor === 'gutenberg' ? true : false;
-      _this.SetFeaturedImage = _this.props.SetFeaturedImage ? _this.props.SetFeaturedImage.bind(_this) : '';
-      _this.InsertImage = _this.props.InsertImage ? _this.props.InsertImage.bind(_this) : '';
-
-      if (_this.is_block_editor) {
-         // Gutenberg	   
-         _this.container = document.querySelector('body');
-         _this.container.classList.add('loading');
-         _this.wrapper = document.querySelector('body');
-      } else {
-         // Classic editor
-         _this.container = document.querySelector('.instant-img-container');
-         _this.container.classList.add('loading');
-         _this.wrapper = document.querySelector('.instant-images-wrapper');
-      }
-
-      return _this;
-   }
-
-   /**
-   * test()
-   * Test access to the REST API
-   * 
-   * @since 3.2 
-   */
-
-
-   _createClass(PhotoList, [{
-      key: 'test',
-      value: function test() {
-
-         var self = this;
-
-         var target = document.querySelector('.error-messaging'); // Target element
-
-         var testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route      
-         var restAPITest = new XMLHttpRequest();
-         restAPITest.open('GET', testURL, true);
-         restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
-         restAPITest.setRequestHeader('Content-Type', 'application/json');
-         restAPITest.send();
-
-         restAPITest.onload = function () {
-            if (restAPITest.status >= 200 && restAPITest.status < 400) {
-               // Success
-
-               var response = JSON.parse(restAPITest.response);
-               var success = response.success;
-
-               if (!success) {
-                  self.renderTestError(target);
-               }
-            } else {
-               // Error
-               self.renderTestError(target);
-            }
-         };
-
-         restAPITest.onerror = function (errorMsg) {
-            console.log(errorMsg);
-            self.renderTestError(errorTarget);
-         };
-      }
-   }, {
-      key: 'renderTestError',
-      value: function renderTestError(target) {
-         target.classList.add('active');
-         target.innerHTML = instant_img_localize.error_restapi;
-      }
-
-      /**
-      * search()
-      * Trigger Unsplash Search
-      * 
-      * @param e   element    the search form  
-      * @since 3.0 
-      */
-
-   }, {
-      key: 'search',
-      value: function search(e) {
-
-         e.preventDefault();
-         var input = document.querySelector('#photo-search');
-         var term = input.value;
-
-         if (term.length > 2) {
-            input.classList.add('searching');
-            this.container.classList.add('loading');
-            this.search_term = term;
-            this.is_search = true;
-            this.doSearch(this.search_term);
-         } else {
-            input.focus();
-         }
-      }
-
-      /**
-      * doSearch
-      * Run the search
-      * 
-      * @param term   string    the search term  
-      * @param type   string    the type of search, standard or by ID    
-      * @since 3.0
-      * @updated 3.1   
-      */
-
-   }, {
-      key: 'doSearch',
-      value: function doSearch(term) {
-
-         var self = this;
-         var type = 'term';
-         this.page = 1; // reset page num
-
-         var url = '' + _API2.default.search_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&query=' + this.search_term;
-
-         // Search by ID
-         // allow users to search by photo by prepending id:{photo_id} to search terms
-         var search_type = term.substring(0, 3);
-         if (search_type === 'id:') {
-            type = 'id';
-            term = term.replace('id:', '');
-            url = _API2.default.photo_api + '/' + term + _API2.default.app_id;
-         }
-
-         var input = document.querySelector('#photo-search');
-
-         fetch(url).then(function (data) {
-            return data.json();
-         }).then(function (data) {
-
-            // Term Search
-            if (type === 'term') {
-
-               self.total_results = data.total;
-
-               // Check for returned data
-               self.checkTotalResults(data.results.length);
-
-               // Update Props
-               self.results = data.results;
-               self.setState({ results: self.results });
-            }
-
-            // Search by photo ID
-            if (type === 'id' && data) {
-
-               // Convert return data to array   	         
-               var photoArray = [];
-
-               if (data.errors) {
-                  // If error was returned
-
-                  self.total_results = 0;
-                  self.checkTotalResults('0');
-               } else {
-                  // No errors, display results
-
-                  photoArray.push(data);
-
-                  self.total_results = 1;
-                  self.checkTotalResults('1');
-               }
-
-               self.results = photoArray;
-               self.setState({ results: self.results });
-            }
-
-            input.classList.remove('searching');
-         }).catch(function (error) {
-            console.log(error);
-            self.isLoading = false;
-         });
-      }
-
-      /**
-      * clearSearch
-      * Reset search results and results view  
-      * 
-      * @since 3.0
-      */
-
-   }, {
-      key: 'clearSearch',
-      value: function clearSearch() {
-         var input = document.querySelector('#photo-search');
-         input.value = '';
-         this.total_results = 0;
-         this.is_search = false;
-         this.search_term = '';
-      }
-
-      /**
-      * getPhotos
-      * Load next set of photos, infinite scroll style  
-      *
-      * @since 3.0
-      */
-
-   }, {
-      key: 'getPhotos',
-      value: function getPhotos() {
-
-         var self = this;
-         this.page = parseInt(this.page) + 1;
-         this.container.classList.add('loading');
-         this.isLoading = true;
-
-         var url = '' + _API2.default.photo_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&order_by=' + this.orderby;
-         if (this.is_search) {
-            url = '' + _API2.default.search_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&query=' + this.search_term;
-         }
-
-         fetch(url).then(function (data) {
-            return data.json();
-         }).then(function (data) {
-
-            if (self.is_search) {
-               data = data.results; // Search results are recieved in different JSON format
-            }
-
-            // Loop results, push items into array
-            data.map(function (data) {
-               self.results.push(data);
-            });
-
-            // Check for returned data
-            self.checkTotalResults(data.length);
-
-            // Update Props
-            self.setState({ results: self.results });
-         }).catch(function (error) {
-            console.log(error);
-            self.isLoading = false;
-         });
-      }
-
-      /**
-      * togglePhotoList
-      * Toogles the photo view (New/Popular/Old)
-      * 
-      * @param view   string    Current view  
-      * @param e      element   Clicked element    
-      * @since 3.0
-      */
-
-   }, {
-      key: 'togglePhotoList',
-      value: function togglePhotoList(view, e) {
-
-         var el = e.target;
-         if (el.classList.contains('active')) return false; // exit if active
-
-         el.classList.add('loading'); // Add class to nav btn	
-         this.isLoading = true;
-         var self = this;
-         this.page = 1;
-         this.orderby = view;
-         this.results = [];
-         this.clearSearch();
-
-         var url = '' + _API2.default.photo_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&order_by=' + this.orderby;
-         fetch(url).then(function (data) {
-            return data.json();
-         }).then(function (data) {
-
-            // Check for returned data
-            self.checkTotalResults(data.length);
-
-            // Update Props
-            self.results = data;
-            self.setState({ results: data });
-
-            el.classList.remove('loading'); // Remove class from nav btn
-         }).catch(function (error) {
-            console.log(error);
-            self.isLoading = false;
-         });
-      }
-
-      /**
-      * renderLayout
-      * Renders the Masonry layout  
-      * 
-      * @since 3.0
-      */
-
-   }, {
-      key: 'renderLayout',
-      value: function renderLayout() {
-         if (this.is_block_editor) {
-            return false;
-         }
-         var self = this;
-         var photoListWrapper = document.querySelector('#photos');
-         imagesLoaded(photoListWrapper, function () {
-            self.msnry = new Masonry(photoListWrapper, {
-               itemSelector: '.photo'
-            });
-            [].concat(_toConsumableArray(document.querySelectorAll('#photos .photo'))).forEach(function (el) {
-               return el.classList.add('in-view');
-            });
-         });
-      }
-
-      /**
-      * onScroll
-      * Scrolling function 
-      *  
-      * @since 3.0
-      */
-
-   }, {
-      key: 'onScroll',
-      value: function onScroll() {
-         var wHeight = window.innerHeight;
-         var scrollTop = window.pageYOffset;
-         var scrollH = document.body.scrollHeight - 200;
-         if (wHeight + scrollTop >= scrollH && !this.isLoading && !this.isDone) {
-            this.getPhotos();
-         }
-      }
-
-      /**
-      * checkTotalResults
-      * A checker to determine is there are remaining search results.
-      * 
-      * @param num   int    Total search results    
-      * @since 3.0
-      */
-
-   }, {
-      key: 'checkTotalResults',
-      value: function checkTotalResults(num) {
-         this.isDone = num == 0 ? true : false;
-      }
-
-      /**
-      * setActiveState
-      * Sets the main navigation active state  
-      *
-      * @since 3.0
-      */
-
-   }, {
-      key: 'setActiveState',
-      value: function setActiveState() {
-         var self = this;
-         // Remove .active class
-         [].concat(_toConsumableArray(document.querySelectorAll('.control-nav a'))).forEach(function (el) {
-            return el.classList.remove('active');
-         });
-
-         // Set active item, if not search
-         if (!this.is_search) {
-            var active = document.querySelector('.control-nav li a.' + this.orderby);
-            active.classList.add('active');
-         }
-         setTimeout(function () {
-            self.isLoading = false;
-            self.container.classList.remove('loading');
-         }, 1000);
-      }
-
-      // Component Updated 
-
-   }, {
-      key: 'componentDidUpdate',
-      value: function componentDidUpdate() {
-         this.renderLayout();
-         this.setActiveState();
-      }
-
-      // Component Init  
-
-   }, {
-      key: 'componentDidMount',
-      value: function componentDidMount() {
-         var _this2 = this;
-
-         this.renderLayout();
-         this.setActiveState();
-         this.test();
-         this.container.classList.remove('loading');
-         this.wrapper.classList.add('loaded');
-
-         if (this.is_block_editor) {
-            // Gutenberg
-            this.page = 0;
-            this.getPhotos();
-         } else {
-            // Add scroll event      
-            window.addEventListener('scroll', function () {
-               return _this2.onScroll();
-            });
-         }
-      }
-   }, {
-      key: 'render',
-      value: function render() {
-         var _this3 = this;
-
-         return _react2.default.createElement(
-            'div',
-            { id: 'photo-listing', className: this.service },
-            _react2.default.createElement(
-               'ul',
-               { className: 'control-nav' },
-               _react2.default.createElement(
-                  'li',
-                  null,
-                  _react2.default.createElement(
-                     'a',
-                     { className: 'latest', href: 'javascript:void(0);', onClick: function onClick(e) {
-                           return _this3.togglePhotoList('latest', e);
-                        } },
-                     instant_img_localize.latest
-                  )
-               ),
-               _react2.default.createElement(
-                  'li',
-                  { id: 'nav-target' },
-                  _react2.default.createElement(
-                     'a',
-                     { className: 'popular', href: 'javascript:void(0);', onClick: function onClick(e) {
-                           return _this3.togglePhotoList('popular', e);
-                        } },
-                     instant_img_localize.popular
-                  )
-               ),
-               _react2.default.createElement(
-                  'li',
-                  null,
-                  _react2.default.createElement(
-                     'a',
-                     { className: 'oldest', href: 'javascript:void(0);', onClick: function onClick(e) {
-                           return _this3.togglePhotoList('oldest', e);
-                        } },
-                     instant_img_localize.oldest
-                  )
-               ),
-               _react2.default.createElement(
-                  'li',
-                  { className: 'search-field', id: 'search-bar' },
-                  _react2.default.createElement(
-                     'form',
-                     { onSubmit: function onSubmit(e) {
-                           return _this3.search(e);
-                        }, autoComplete: 'off' },
-                     _react2.default.createElement('input', { type: 'search', id: 'photo-search', placeholder: instant_img_localize.search }),
-                     _react2.default.createElement(
-                        'button',
-                        { type: 'submit', id: 'photo-search-submit' },
-                        _react2.default.createElement('i', { className: 'fa fa-search' })
-                     ),
-                     _react2.default.createElement(_ResultsToolTip2.default, { isSearch: this.is_search, total: this.total_results, title: this.total_results + ' ' + instant_img_localize.search_results + ' ' + this.search_term })
-                  )
-               )
-            ),
-            _react2.default.createElement('div', { className: 'error-messaging' }),
-            _react2.default.createElement(
-               'div',
-               { id: 'photos' },
-               this.state.results.map(function (result, iterator) {
-                  return _react2.default.createElement(_Photo2.default, { result: result, key: result.id + iterator, blockEditor: _this3.is_block_editor, SetFeaturedImage: _this3.SetFeaturedImage, InsertImage: _this3.InsertImage });
-               })
-            ),
-            _react2.default.createElement(
-               'div',
-               { className: this.total_results == 0 && this.is_search === true ? 'no-results show' : 'no-results', title: this.props.title },
-               _react2.default.createElement(
-                  'h3',
-                  null,
-                  instant_img_localize.no_results,
-                  ' '
-               ),
-               _react2.default.createElement(
-                  'p',
-                  null,
-                  instant_img_localize.no_results_desc,
-                  ' '
-               )
-            ),
-            _react2.default.createElement('div', { className: 'loading-block' }),
-            _react2.default.createElement(
-               'div',
-               { className: 'load-more-wrap' },
-               _react2.default.createElement(
-                  'button',
-                  { type: 'button', className: 'button', onClick: function onClick() {
-                        return _this3.getPhotos();
-                     } },
-                  instant_img_localize.load_more
-               )
-            )
-         );
-      }
-   }]);
-
-   return PhotoList;
+	_inherits(PhotoList, _React$Component);
+
+	function PhotoList(props) {
+		_classCallCheck(this, PhotoList);
+
+		var _this = _possibleConstructorReturn(this, (PhotoList.__proto__ || Object.getPrototypeOf(PhotoList)).call(this, props));
+
+		_this.results = _this.props.results ? _this.props.results : [];
+		_this.state = { results: _this.results };
+
+		_this.service = _this.props.service; // Unsplash, Pixabay, etc.
+		_this.orderby = _this.props.orderby; // Orderby
+		_this.page = _this.props.page; // Page
+
+		_this.is_search = false;
+		_this.search_term = '';
+		_this.total_results = 0;
+		_this.orientation = '';
+
+		_this.isLoading = false; // loading flag
+		_this.isDone = false; // Done flag - no photos remain
+
+		_this.errorMsg = '';
+		_this.msnry = '';
+
+		_this.editor = _this.props.editor ? _this.props.editor : 'classic';
+		_this.is_block_editor = _this.props.editor === 'gutenberg' ? true : false;
+		_this.SetFeaturedImage = _this.props.SetFeaturedImage ? _this.props.SetFeaturedImage.bind(_this) : '';
+		_this.InsertImage = _this.props.InsertImage ? _this.props.InsertImage.bind(_this) : '';
+
+		if (_this.is_block_editor) {
+			// Gutenberg	   
+			_this.container = document.querySelector('body');
+			_this.container.classList.add('loading');
+			_this.wrapper = document.querySelector('body');
+		} else {
+			// Classic editor
+			_this.container = document.querySelector('.instant-img-container');
+			_this.container.classList.add('loading');
+			_this.wrapper = document.querySelector('.instant-images-wrapper');
+		}
+
+		return _this;
+	}
+
+	/**
+ * test()
+ * Test access to the REST API
+ * 
+ * @since 3.2 
+ */
+
+
+	_createClass(PhotoList, [{
+		key: 'test',
+		value: function test() {
+
+			var self = this;
+
+			var target = document.querySelector('.error-messaging'); // Target element
+
+			var testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route      
+			var restAPITest = new XMLHttpRequest();
+			restAPITest.open('GET', testURL, true);
+			restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
+			restAPITest.setRequestHeader('Content-Type', 'application/json');
+			restAPITest.send();
+
+			restAPITest.onload = function () {
+				if (restAPITest.status >= 200 && restAPITest.status < 400) {
+					// Success
+
+					var response = JSON.parse(restAPITest.response);
+					var success = response.success;
+
+					if (!success) {
+						self.renderTestError(target);
+					}
+				} else {
+					// Error
+					self.renderTestError(target);
+				}
+			};
+
+			restAPITest.onerror = function (errorMsg) {
+				console.log(errorMsg);
+				self.renderTestError(errorTarget);
+			};
+		}
+	}, {
+		key: 'renderTestError',
+		value: function renderTestError(target) {
+			target.classList.add('active');
+			target.innerHTML = instant_img_localize.error_restapi;
+		}
+
+		/**
+  * search()
+  * Trigger Unsplash Search
+  * 
+  * @param e   element    the search form  
+  * @since 3.0 
+  */
+
+	}, {
+		key: 'search',
+		value: function search(e) {
+
+			e.preventDefault();
+			var input = document.querySelector('#photo-search');
+			var term = input.value;
+
+			if (term.length > 2) {
+				input.classList.add('searching');
+				this.container.classList.add('loading');
+				this.search_term = term;
+				this.is_search = true;
+				this.doSearch(this.search_term);
+			} else {
+				input.focus();
+			}
+		}
+	}, {
+		key: 'setOrientation',
+		value: function setOrientation(orientation, e) {
+
+			if (e && e.target) {
+				var target = e.target;
+
+				if (target.classList.contains('active')) {
+					// Clear orientation
+					target.classList.remove('active');
+					this.orientation = '';
+				} else {
+					// Set orientation	   
+					var siblings = target.parentNode.querySelectorAll('li');
+					[].concat(_toConsumableArray(siblings)).forEach(function (el) {
+						return el.classList.remove('active');
+					}); // remove active classes
+
+					target.classList.add('active');
+					this.orientation = orientation;
+				}
+
+				if (this.search_term !== '') {
+					this.doSearch(this.search_term);
+				}
+			}
+		}
+
+		/**
+  * hasOrientation
+  * Is their an orientation set
+  *    
+  * @since 4.2  
+  */
+
+	}, {
+		key: 'hasOrientation',
+		value: function hasOrientation() {
+			return this.orientation === '' ? false : true;
+		}
+
+		/**
+  * clearOrientation
+  * Clear the orientation
+  *    
+  * @since 4.2  
+  */
+
+	}, {
+		key: 'clearOrientation',
+		value: function clearOrientation() {
+			var items = document.querySelectorAll('.orientation-list li');
+			[].concat(_toConsumableArray(items)).forEach(function (el) {
+				return el.classList.remove('active');
+			}); // remove active classes
+			this.orientation = '';
+		}
+
+		/**
+  * doSearch
+  * Run the search
+  * 
+  * @param term   string    the search term  
+  * @param type   string    the type of search, standard or by ID    
+  * @since 3.0
+  * @updated 3.1   
+  */
+
+	}, {
+		key: 'doSearch',
+		value: function doSearch(term) {
+
+			var self = this;
+			var type = 'term';
+			this.page = 1; // reset page num
+
+			var url = '' + _API2.default.search_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&query=' + this.search_term;
+
+			if (this.hasOrientation()) {
+				// Set orientation
+				url = url + '&orientation=' + this.orientation;
+			}
+
+			// Search by ID
+			// allow users to search by photo by prepending id:{photo_id} to search terms
+			var search_type = term.substring(0, 3);
+			if (search_type === 'id:') {
+				type = 'id';
+				term = term.replace('id:', '');
+				url = _API2.default.photo_api + '/' + term + _API2.default.app_id;
+			}
+
+			var input = document.querySelector('#photo-search');
+
+			fetch(url).then(function (data) {
+				return data.json();
+			}).then(function (data) {
+
+				// Term Search
+				if (type === 'term') {
+
+					self.total_results = data.total;
+
+					// Check for returned data
+					self.checkTotalResults(data.results.length);
+
+					// Update Props
+					self.results = data.results;
+					self.setState({ results: self.results });
+				}
+
+				// Search by photo ID
+				if (type === 'id' && data) {
+
+					// Convert return data to array   	         
+					var photoArray = [];
+
+					if (data.errors) {
+						// If error was returned
+
+						self.total_results = 0;
+						self.checkTotalResults('0');
+					} else {
+						// No errors, display results
+
+						photoArray.push(data);
+
+						self.total_results = 1;
+						self.checkTotalResults('1');
+					}
+
+					self.results = photoArray;
+					self.setState({ results: self.results });
+				}
+
+				input.classList.remove('searching');
+			}).catch(function (error) {
+				console.log(error);
+				self.isLoading = false;
+			});
+		}
+
+		/**
+  * clearSearch
+  * Reset search results and results view  
+  * 
+  * @since 3.0
+  */
+
+	}, {
+		key: 'clearSearch',
+		value: function clearSearch() {
+			var input = document.querySelector('#photo-search');
+			input.value = '';
+			this.total_results = 0;
+			this.is_search = false;
+			this.search_term = '';
+			this.clearOrientation();
+		}
+
+		/**
+  * getPhotos
+  * Load next set of photos, infinite scroll style  
+  *
+  * @since 3.0
+  */
+
+	}, {
+		key: 'getPhotos',
+		value: function getPhotos() {
+
+			var self = this;
+			this.page = parseInt(this.page) + 1;
+			this.container.classList.add('loading');
+			this.isLoading = true;
+
+			var url = '' + _API2.default.photo_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&order_by=' + this.orderby;
+
+			if (this.is_search) {
+				url = '' + _API2.default.search_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&query=' + this.search_term;
+				if (this.hasOrientation()) {
+					// Set orientation
+					url = url + '&orientation=' + this.orientation;
+				}
+			}
+
+			fetch(url).then(function (data) {
+				return data.json();
+			}).then(function (data) {
+
+				if (self.is_search) {
+					data = data.results; // Search results are recieved in different JSON format
+				}
+
+				// Loop results, push items into array
+				data.map(function (data) {
+					self.results.push(data);
+				});
+
+				// Check for returned data
+				self.checkTotalResults(data.length);
+
+				// Update Props
+				self.setState({ results: self.results });
+			}).catch(function (error) {
+				console.log(error);
+				self.isLoading = false;
+			});
+		}
+
+		/**
+  * togglePhotoList
+  * Toogles the photo view (New/Popular/Old)
+  * 
+  * @param view   string    Current view  
+  * @param e      element   Clicked element    
+  * @since 3.0
+  */
+
+	}, {
+		key: 'togglePhotoList',
+		value: function togglePhotoList(view, e) {
+
+			var el = e.target;
+			if (el.classList.contains('active')) return false; // exit if active
+
+			el.classList.add('loading'); // Add class to nav btn	
+			this.isLoading = true;
+			var self = this;
+			this.page = 1;
+			this.orderby = view;
+			this.results = [];
+			this.clearSearch();
+
+			var url = '' + _API2.default.photo_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&order_by=' + this.orderby;
+			fetch(url).then(function (data) {
+				return data.json();
+			}).then(function (data) {
+
+				// Check for returned data
+				self.checkTotalResults(data.length);
+
+				// Update Props
+				self.results = data;
+				self.setState({ results: data });
+
+				el.classList.remove('loading'); // Remove class from nav btn
+			}).catch(function (error) {
+				console.log(error);
+				self.isLoading = false;
+			});
+		}
+
+		/**
+  * renderLayout
+  * Renders the Masonry layout  
+  * 
+  * @since 3.0
+  */
+
+	}, {
+		key: 'renderLayout',
+		value: function renderLayout() {
+			if (this.is_block_editor) {
+				return false;
+			}
+			var self = this;
+			var photoListWrapper = document.querySelector('#photos');
+			imagesLoaded(photoListWrapper, function () {
+				self.msnry = new Masonry(photoListWrapper, {
+					itemSelector: '.photo'
+				});
+				[].concat(_toConsumableArray(document.querySelectorAll('#photos .photo'))).forEach(function (el) {
+					return el.classList.add('in-view');
+				});
+			});
+		}
+
+		/**
+  * onScroll
+  * Scrolling function 
+  *  
+  * @since 3.0
+  */
+
+	}, {
+		key: 'onScroll',
+		value: function onScroll() {
+			var wHeight = window.innerHeight;
+			var scrollTop = window.pageYOffset;
+			var scrollH = document.body.scrollHeight - 200;
+			if (wHeight + scrollTop >= scrollH && !this.isLoading && !this.isDone) {
+				this.getPhotos();
+			}
+		}
+
+		/**
+  * checkTotalResults
+  * A checker to determine is there are remaining search results.
+  * 
+  * @param num   int    Total search results    
+  * @since 3.0
+  */
+
+	}, {
+		key: 'checkTotalResults',
+		value: function checkTotalResults(num) {
+			this.isDone = num == 0 ? true : false;
+		}
+
+		/**
+  * setActiveState
+  * Sets the main navigation active state  
+  *
+  * @since 3.0
+  */
+
+	}, {
+		key: 'setActiveState',
+		value: function setActiveState() {
+			var self = this;
+			// Remove .active class
+			[].concat(_toConsumableArray(document.querySelectorAll('.control-nav a'))).forEach(function (el) {
+				return el.classList.remove('active');
+			});
+
+			// Set active item, if not search
+			if (!this.is_search) {
+				var active = document.querySelector('.control-nav li a.' + this.orderby);
+				active.classList.add('active');
+			}
+			setTimeout(function () {
+				self.isLoading = false;
+				self.container.classList.remove('loading');
+			}, 1000);
+		}
+
+		// Component Updated 
+
+	}, {
+		key: 'componentDidUpdate',
+		value: function componentDidUpdate() {
+			this.renderLayout();
+			this.setActiveState();
+		}
+
+		// Component Init  
+
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			this.renderLayout();
+			this.setActiveState();
+			this.test();
+			this.container.classList.remove('loading');
+			this.wrapper.classList.add('loaded');
+
+			if (this.is_block_editor) {
+				// Gutenberg
+				this.page = 0;
+				this.getPhotos();
+			} else {
+				// Add scroll event      
+				window.addEventListener('scroll', function () {
+					return _this2.onScroll();
+				});
+			}
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var _this3 = this;
+
+			// Show/Hide orientation listing
+			var orientationStyle = this.is_search ? { display: 'flex' } : { display: 'none' };
+
+			return _react2.default.createElement(
+				'div',
+				{ id: 'photo-listing', className: this.service },
+				_react2.default.createElement(
+					'ul',
+					{ className: 'control-nav' },
+					_react2.default.createElement(
+						'li',
+						null,
+						_react2.default.createElement(
+							'a',
+							{ className: 'latest', href: 'javascript:void(0);', onClick: function onClick(e) {
+									return _this3.togglePhotoList('latest', e);
+								} },
+							instant_img_localize.latest
+						)
+					),
+					_react2.default.createElement(
+						'li',
+						{ id: 'nav-target' },
+						_react2.default.createElement(
+							'a',
+							{ className: 'popular', href: 'javascript:void(0);', onClick: function onClick(e) {
+									return _this3.togglePhotoList('popular', e);
+								} },
+							instant_img_localize.popular
+						)
+					),
+					_react2.default.createElement(
+						'li',
+						null,
+						_react2.default.createElement(
+							'a',
+							{ className: 'oldest', href: 'javascript:void(0);', onClick: function onClick(e) {
+									return _this3.togglePhotoList('oldest', e);
+								} },
+							instant_img_localize.oldest
+						)
+					),
+					_react2.default.createElement(
+						'li',
+						{ className: 'search-field', id: 'search-bar' },
+						_react2.default.createElement(
+							'form',
+							{ onSubmit: function onSubmit(e) {
+									return _this3.search(e);
+								}, autoComplete: 'off' },
+							_react2.default.createElement('input', { type: 'search', id: 'photo-search', placeholder: instant_img_localize.search }),
+							_react2.default.createElement(
+								'button',
+								{ type: 'submit', id: 'photo-search-submit' },
+								_react2.default.createElement('i', { className: 'fa fa-search' })
+							),
+							_react2.default.createElement(_ResultsToolTip2.default, { isSearch: this.is_search, total: this.total_results, title: this.total_results + ' ' + instant_img_localize.search_results + ' ' + this.search_term })
+						)
+					)
+				),
+				_react2.default.createElement('div', { className: 'error-messaging' }),
+				_react2.default.createElement(
+					'div',
+					{ className: 'orientation-list', style: orientationStyle },
+					_react2.default.createElement(
+						'span',
+						null,
+						_react2.default.createElement('i', { className: 'fa fa-filter', 'aria-hidden': 'true' }),
+						' ',
+						instant_img_localize.orientation,
+						':'
+					),
+					_react2.default.createElement(
+						'ul',
+						null,
+						_react2.default.createElement(
+							'li',
+							{ tabIndex: '0', onClick: function onClick(e) {
+									return _this3.setOrientation('landscape', e);
+								}, onKeyPress: function onKeyPress(e) {
+									return _this3.setOrientation('landscape', e);
+								} },
+							instant_img_localize.landscape
+						),
+						_react2.default.createElement(
+							'li',
+							{ tabIndex: '0', onClick: function onClick(e) {
+									return _this3.setOrientation('portrait', e);
+								}, onKeyPress: function onKeyPress(e) {
+									return _this3.setOrientation('portrait', e);
+								} },
+							instant_img_localize.portrait
+						),
+						_react2.default.createElement(
+							'li',
+							{ tabIndex: '0', onClick: function onClick(e) {
+									return _this3.setOrientation('squarish', e);
+								}, onKeyPress: function onKeyPress(e) {
+									return _this3.setOrientation('squarish', e);
+								} },
+							instant_img_localize.squarish
+						)
+					)
+				),
+				_react2.default.createElement(
+					'div',
+					{ id: 'photos' },
+					this.state.results.map(function (result, iterator) {
+						return _react2.default.createElement(_Photo2.default, { result: result, key: result.id + iterator, blockEditor: _this3.is_block_editor, SetFeaturedImage: _this3.SetFeaturedImage, InsertImage: _this3.InsertImage });
+					})
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: this.total_results == 0 && this.is_search === true ? 'no-results show' : 'no-results', title: this.props.title },
+					_react2.default.createElement(
+						'h3',
+						null,
+						instant_img_localize.no_results,
+						' '
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						instant_img_localize.no_results_desc,
+						' '
+					)
+				),
+				_react2.default.createElement('div', { className: 'loading-block' }),
+				_react2.default.createElement(
+					'div',
+					{ className: 'load-more-wrap' },
+					_react2.default.createElement(
+						'button',
+						{ type: 'button', className: 'button', onClick: function onClick() {
+								return _this3.getPhotos();
+							} },
+						instant_img_localize.load_more
+					)
+				)
+			);
+		}
+	}]);
+
+	return PhotoList;
 }(_react2.default.Component);
 
 exports.default = PhotoList;
