@@ -31245,7 +31245,7 @@ jQuery(document).ready(function ($) {
 
 		// Open
 		wp.media.view.Modal.prototype.on("open", function () {
-			console.log(wp.media.frame);
+			//console.log(wp.media.frame);
 			if (!activeFrame) {
 				return false;
 			}
