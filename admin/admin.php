@@ -10,12 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 */
 
 function instant_img_admin_menu() {
-   $usplash_settings_page = add_submenu_page( 
-   	'upload.php', 
-   	INSTANT_IMG_TITLE, 
-   	INSTANT_IMG_TITLE, 
-   	apply_filters('instant_images_user_role', 'upload_files'), 
-   	INSTANT_IMG_NAME, 
+   $usplash_settings_page = add_submenu_page(
+   	'upload.php',
+   	INSTANT_IMG_TITLE,
+   	INSTANT_IMG_TITLE,
+   	apply_filters('instant_images_user_role', 'upload_files'),
+   	INSTANT_IMG_NAME,
    	'instant_img_settings_page'
    );
    add_action( 'load-' . $usplash_settings_page, 'instant_img_load_scripts' ); //Add our admin scripts
@@ -34,22 +34,22 @@ function instant_img_post_admin_scripts( $hook ) {
 
 	global $post;
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off
-	
+
 	if ( $hook === 'post-new.php' || $hook === 'post.php' ) {
-		
+
 		// CSS
-		wp_enqueue_style( 'admin-instant-images', INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css', '', INSTANT_IMG_VERSION );
-		
+		wp_enqueue_style( 'admin-instant-images', INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css', '', INSTANT_IMAGES_VERSION );
+
 		// JS
 		wp_enqueue_script(
-			'instant-images-media-router', 
-			INSTANT_IMG_URL. 'dist/js/instant-images-media'. $suffix .'.js', 
-			array( 'wp-edit-post'), 
-			INSTANT_IMG_VERSION, 
+			'instant-images-media-router',
+			INSTANT_IMG_URL. 'dist/js/instant-images-media'. $suffix .'.js',
+			array( 'wp-edit-post'),
+			INSTANT_IMAGES_VERSION,
 			true
 		);
 		InstantImages::instant_img_localize( 'instant-images-media-router' );
-		
+
 	}
 }
 add_action( 'admin_enqueue_scripts', 'instant_img_post_admin_scripts', 10, 1 );
@@ -93,16 +93,16 @@ function instant_img_enqueue_scripts(){
 */
 function instant_img_scripts(){
    $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off
-   
-	wp_enqueue_style('admin-instant-images', INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css', '', INSTANT_IMG_VERSION);
+
+	wp_enqueue_style('admin-instant-images', INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css', '', INSTANT_IMAGES_VERSION);
    wp_enqueue_script('jquery');
    wp_enqueue_script('jquery-form', true);
-   
-   wp_enqueue_script('instant-images-react', INSTANT_IMG_URL. 'dist/js/instant-images'. $suffix .'.js', '', INSTANT_IMG_VERSION, true);
-   wp_enqueue_script('instant-images', INSTANT_IMG_ADMIN_URL. 'assets/js/admin.js', 'jquery', INSTANT_IMG_VERSION, true);
-   
+
+   wp_enqueue_script('instant-images-react', INSTANT_IMG_URL. 'dist/js/instant-images'. $suffix .'.js', '', INSTANT_IMAGES_VERSION, true);
+   wp_enqueue_script('instant-images', INSTANT_IMG_ADMIN_URL. 'assets/js/admin.js', 'jquery', INSTANT_IMAGES_VERSION, true);
+
    InstantImages::instant_img_localize();
-	
+
 }
 
 
@@ -152,20 +152,20 @@ add_filter( 'admin_footer_text', 'instant_img_filter_admin_footer_text'); // Adm
 * @since 3.2.1
 */
 function instant_img_show_tabs() {
-	$options = get_option( 'instant_img_settings' );	
+	$options = get_option( 'instant_img_settings' );
 	$show_tab = true;
 	if(isset($options['instant_img_btn_display'])){
-		if($options['instant_img_btn_display'] == 1){			
+		if($options['instant_img_btn_display'] == 1){
 			$show_tab = false; // Hide the tab
-		} 
+		}
 	}
-	
+
 	return $show_tab;
-}  
-	
-	
-	
-	
+}
+
+
+
+
 /**
 * instant_img_media_upload_tabs_handler
 * Add tab to media upload window
@@ -173,14 +173,14 @@ function instant_img_show_tabs() {
 * @deprecated 4.3
 * @since 3.2.1
 */
-function instant_img_media_upload_tabs_handler($tabs) {   
+function instant_img_media_upload_tabs_handler($tabs) {
 	$options = get_option( 'instant_img_settings' );
 	$show_tab = instant_img_show_tabs();
-	
+
 	if($show_tab){
-		$newtab = array ( 'instant_img_tab' => __('Instant Images', 'instant-images') );	
+		$newtab = array ( 'instant_img_tab' => __('Instant Images', 'instant-images') );
 	   $tabs = array_merge( $tabs, $newtab );
-		return $tabs; 
+		return $tabs;
 	}
 }
 //add_filter('media_upload_tabs', 'instant_img_media_upload_tabs_handler');
@@ -194,10 +194,10 @@ function instant_img_media_upload_tabs_handler($tabs) {
 * @deprecated 4.3
 * @since 3.2.1
 */
-function instant_img_media_buttons_handler() { 
+function instant_img_media_buttons_handler() {
 	$show_tab = instant_img_show_tabs();
 	if($show_tab){
-		echo '<a href="'.add_query_arg('tab', 'instant_img_tab', esc_url(get_upload_iframe_src())).'" class="thickbox button" title="'.esc_attr__('Instant Images', 'instant-images').'">&nbsp;'. __('Instant Images', 'instant-images') .'</a>'; 
+		echo '<a href="'.add_query_arg('tab', 'instant_img_tab', esc_url(get_upload_iframe_src())).'" class="thickbox button" title="'.esc_attr__('Instant Images', 'instant-images').'">&nbsp;'. __('Instant Images', 'instant-images') .'</a>';
 	}
 }
 //add_filter('media_buttons', 'instant_img_media_buttons_handler');
@@ -212,7 +212,7 @@ function instant_img_media_buttons_handler() {
 * @since 3.2.1
 */
 function media_upload_instant_images_handler() {
-	wp_iframe('media_instant_img_tab'); 
+	wp_iframe('media_instant_img_tab');
 }
 //add_action('media_upload_instant_img_tab', 'media_upload_instant_images_handler');
 
@@ -229,9 +229,9 @@ function media_instant_img_tab() {
 	//media_upload_header();
    instant_img_scripts();
    $show_settings = false;
-   ?> 
+   ?>
    <div class="instant-img-container editor" data-media-popup="true">
-      <?php include( INSTANT_IMG_PATH . 'admin/views/unsplash.php'); ?>         
+      <?php include( INSTANT_IMG_PATH . 'admin/views/unsplash.php'); ?>
    </div>
 <?php
 }
