@@ -4,6 +4,7 @@
    margin: 0 0 0 -5px;
    padding: 0;
    position: relative; 
+   
    .photo{   
 	   width: 20%;
 	   margin: 0;
@@ -69,7 +70,7 @@
 	      background-position: center center;
 	      background-repeat: no-repeat;
 	      background-image: url('../img/ajax-loader.gif');
-	      overflow: hidden;
+		   overflow: hidden;
 	      &.loaded{
 		      background-image: none;
 		   }
@@ -90,22 +91,24 @@
    		.status{
       		visibility: hidden;
       		opacity: 0;
-      		transition: all 0.2575s ease-in-out;
+      		transition: all 0.25s ease-in-out;
       		width: 60px;
       		height: 60px;
          	line-height: 60px;
-      		border-radius: 100%;
+      		border-radius: 4px;
       		position: absolute;
       		left: 50%;
       		top: 50%;
       		z-index: 5;
-      		transform: translate(-50%, -50%) scale(1.5);	
-      		box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+      		transform: translate(-50%, -50%) scale(1.2);	
+      		box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+      		background-position: center center;
+      		background-repeat: no-repeat;
       		&:before{
          		font-family: 'FontAwesome';
          		display: block;
          		color: #fff;
-         		font-size: 22px;
+         		font-size: 24px;
                opacity: 0.8;
       		}
       		a{
@@ -114,7 +117,6 @@
    		}
    		
    		&.uploading .status,
-   		&.resizing .status,
    		&.success .status,
    		&.errors .status{
       		text-align: center;
@@ -130,23 +132,10 @@
       		.status{
          		visibility: visible;
          		opacity: 1;
-         		background-color: #5d72c3;
+         		background: rgba(255, 255, 255, 0.95) url('../img/ajax-loader-lg.gif') no-repeat center center;
+         		background-size: 24px 24px;
          		&:before{
-	         		content: '\f019';
-         		}
-      		}
-   		}
-   		
-   		// Resizing
-   		&.resizing{
-	   		cursor: default !important;
-      		.status{
-         		visibility: visible;
-         		opacity: 1;
-         		background-color: #e4c452;
-         		&:before{
-	         		color: #fff;
-	         		content: '\f065';
+	         		display: none;
          		}
       		}
    		}
@@ -157,11 +146,7 @@
       		.status{
          		visibility: visible;
          		opacity: 1;
-         		width: 70px;
-         		height: 70px;
-         		line-height: 70px;
          		background-color: #63d875;
-         		border-radius: 100%;
          		&:before{
 	         		content: '\f00c';
 	         		color: #fff;
@@ -178,11 +163,7 @@
       		.status{
          		visibility: visible;
          		opacity: 1;
-         		width: 60px;
-         		height: 60px;
-            	line-height: 60px;
          		background-color: #df3333;
-         		border-radius: 100%;
          		&:before{
 	         		content: '\f12a';
 	         		color: #fff;
@@ -199,13 +180,16 @@
       			opacity: 0.25 !important;
       		}
    		}
+   		.user-controls{
+	   		opacity: 0.5; 
+   		}
 		}
 		
 		// Hover and Progress
 		&:hover,
 		&.in-progress{
    		a.upload img{
-      		opacity: 0.6;
+      		opacity: 0.7;
       		transform: scale(1.075);
    		}
    		.options{
@@ -226,8 +210,11 @@
 				opacity: 1;
 			}
 			.user-controls{
-   		   opacity: 0;	
+   		   opacity: 0 !important;	
          }
+         .options{
+            opacity: 0 !important;
+   		}
 		}
 		
 		.options{
@@ -247,13 +234,11 @@
 	         font-size: 14px;
          }
          i.heart-like{
-            color: #d13714;
-            margin-right: 1px;    
+            color: #d13714;  
             transition: all 0.25s ease 0.05s;
             transform: scale(0.55);   
-            margin-right: 1px;
+            margin-right: 2px;
             position: relative;
-            left: -1px;
             top: 0;
             font-size: 14px;  
             opacity: 0.9;      
@@ -263,10 +248,11 @@
 	         vertical-align: top;
 	         line-height: 30px;
 				padding: 0 10px;
+            margin: 0;  
 				padding-top: 1px;
 				background: rgba(255, 255, 255, 0.5); 
 				margin: 0;
-				border-radius: 2px 0 0 2px; 
+				border-radius: 2px; 
 				color: #23282d;        
 				transition: all 0.3s ease;
          }
@@ -278,8 +264,7 @@
 				}
          }
          a{
-	         margin-left: 1px;
-				border-radius: 0 2px 2px 0;
+	         margin-left: 2px;
 				&:hover,
 				&:focus{
 					background-color: #fff;
@@ -299,9 +284,9 @@
 	      bottom: 0;
 	      left: 0;
 	      width: 100%;
-	      background: rgba(0, 0, 0, 0.45);
+	      background: rgba(0, 0, 0, 0.4);
 	      padding: 0;
-	      opacity: 0.4;        
+	      opacity: 0.35;        
 	      transition: all 0.3s ease;
 	   } 
 
@@ -316,7 +301,7 @@
          color: #fff;    
          background: rgba(255, 255, 255, 0.75); 
          background: transparent;
-         border-radius: 1px; 
+         border-radius: 2px; 
          height: 34px;  
          line-height: 34px;
          font-size: 17px;  
@@ -325,42 +310,34 @@
          margin: 1px 1px 1px 0;
          padding: 0;
          color: rgba(255, 255, 255, 0.75);
+         border: none !important;
+         outline: none;
+         cursor: pointer;
          &.edit-photo,
          &.edit-photo-admin,
          &.set-featured,
          &.insert{
-            width: auto;
+            width: 34px;
             display: inline-block;
             width: 34px;
             text-align: center;
+            position: relative;
             i{
    	         line-height: 27px;
-   	         position: relative;
-   	         left: 1px;
-   	         top: 1px;
+   	         position: absolute;
+   	         left: 50%;
+   	         top: 50%;
+   	         transform: translate(-50%, -50%);
             }
             &:hover,
             &:focus{
 	            color: #222;
    	         background: rgba(255, 255, 255, 0.95);  
             }
-         }      
-         &.set-featured{
-            i{
-	            top: 0;
-               left: 0;
-            }
-         }
+         }     
          &.edit-photo-admin{
             display: none;
-         }
-         &.edit-photo,
-         &.edit-photo-admin{
-            i{
-               left: 0;
-   	         top: 0;
-            }
-         }         
+         }        
          &.user{
    	      background: none;
    	      text-decoration: none;
@@ -407,13 +384,18 @@
          width: 100%;  
          background: rgba(0, 0, 0, 0.6);
          text-align: center;
-         color: #e0e4f5;
-         font-size: 13px;
+         color: rgba(255, 255, 255, 0.9);
+         font-size: 12px;
          margin: 0;
          padding: 0; 
          transition: all 0.25s ease-in-out;
          opacity: 0;
+         //visibility: hidden;
          z-index: 9999;
+         &.has-error{
+	         top: -40px;
+	         opacity: 0;
+         }
       }			
 	} 
 	

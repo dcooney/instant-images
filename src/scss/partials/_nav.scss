@@ -16,25 +16,32 @@
 			background: none;
 			font-size: 18px;
 			position: relative;
-			a{
+			button{
 				padding: 0 24px 0 2px;
 				height: 48px;
 				line-height: 48px;
 				display: block;
 				color: #999;
 				text-decoration: none;
+				box-shadow: none;
+				background-color: transparent;
 				background-position: 96% center;
 				background-repeat: no-repeat;
-				&.active{
-					color: #111;
-					cursor: default;
-					font-weight: 600;
-				}
+				border: none;
+				cursor: pointer;
 				&:hover,
 				&:focus{
 					color: #111;
 					outline: none;
 					box-shadow: none;
+				}
+				&:focus{
+					text-decoration: underline;
+				}
+				&.active{
+					color: #333;
+					cursor: default;
+					font-weight: 600;
 				}
 				&.loading{
 					background-image: url('../img/ajax-loader.gif');
@@ -43,7 +50,7 @@
 			@media screen and (max-width: $small){
    			font-size: 16px;
    			margin: 0;
-   			a{
+   			button{
       			padding-left: 3px;
    			}
 			}
@@ -74,7 +81,7 @@
       			width: auto;
       			height: 34px;
       			line-height: 34px;
-      			padding: 0 27px 0 10px;
+      			padding: 0 30px 0 10px;
       			background: #ffffbf;
       			border: 1px solid #ebebae;
       			border-radius: 3px;
@@ -91,11 +98,13 @@
       			span, a{      
                   line-height: 34px;   			
       			}
-      			a{
+      			button{
                   padding: 0 10px;
-                  height: 34px;
-                  line-height: 33px;
+                  height: 32px;
+                  line-height: 32px;
+                  width: 30px;
                   position: absolute;
+                  left: auto;
                   right: 0;    
                   top: 0;     			
       			}		
@@ -147,11 +156,12 @@
 					background-color: #f7f7f7 !important;
 					height: 46px;
 					line-height: 46px;
-					border-radius: 5px;
+					border-radius: 3px;
 					font-size: 16px;
 					transition: padding 0.15s ease;
 					&:focus{
    					border-color: #999;
+   					box-shadow: 0 0 0 4px rgba(#000, 0.075);
 					}
 					&.searching{ 
    					padding-left: 62px;
@@ -175,6 +185,7 @@
 					transition: all 0.25s ease;
 					opacity: 0.5;
 					margin: 0;
+					padding: 0;
 					&:hover{
 						outline: none;
 						color: #5d72c3;

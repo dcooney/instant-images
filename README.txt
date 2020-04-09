@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
-Tested up to: 5.3.1
-Stable tag: 4.2.0
+Tested up to: 5.4.0
+Stable tag: 4.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,7 @@ The perfect tool for users who want to save time and frustration by uploading im
 * **Time Saver** - Quickly upload amazing stock photos without leaving the comfort of your WordPress admin.
 * **Theme/Plugin Developers** - A great tool for developers who want to prototype and develop using real world imagery.
 * **Gutenberg** - Instant Images directly integrates with Gutenberg as a plugin sidebar.
+* **Media Modal** - Instant Images is available as a tab in the WordPress media Modal.
 * **Edit Image Metadata** - Easily edit image filename, alt text and caption prior to uploading to your media library.
 * **Easy to Use** - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
 
@@ -128,6 +129,15 @@ How to install Instant Images.
 
 
 == Changelog ==
+
+= 4.3.0 - April 9, 2020 =
+* NEW - Adding `Instant Images` tab to the WordPress Media Modal.
+* NEW - When images are uploaded directly to a post the current Post ID is attached to the upload as the parent post.
+* NEW - Adding default alt text directly from Unsplash API.
+* UPDATE - Updated image uploader API to _hopefully_ improve stability of the upload and resize process. The new process uses core WordPress functions for the upload.
+* UPDATE - Switching tab navigation from `<a/> to `<button/>` for better accessibility.
+* FIX - Added a fix for JS error regarding `PluginSidebar` registration on non-gutenberg editor pages.
+
 
 = 4.2.0 - December 14, 2019 =
 * NEW - Added image orientation search filter

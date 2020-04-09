@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
-import imagesloaded from 'imagesloaded';
+import Masonry from 'masonry-layout'
+const imagesLoaded = require('imagesloaded');
 import Photo from './Photo'; 
 import ResultsToolTip from './ResultsToolTip'; 
 import API from './API';
@@ -10,7 +11,7 @@ class PhotoList extends React.Component {
 	
 	constructor(props) {
 		
-      super(props);            
+      super(props);          
       
       this.results = (this.props.results) ? this.props.results : [];	      
       this.state = { results: this.results }; 
@@ -29,23 +30,26 @@ class PhotoList extends React.Component {
       
       this.errorMsg = '';
       this.msnry = '';
+      this.tooltipInterval = '';
       
       this.editor = (this.props.editor) ? this.props.editor : 'classic';
       this.is_block_editor = (this.props.editor === 'gutenberg') ? true : false;
+      this.is_media_router = (this.props.editor === 'media-router') ? true : false;
       this.SetFeaturedImage = (this.props.SetFeaturedImage) ? this.props.SetFeaturedImage.bind(this) : '';
       this.InsertImage = (this.props.InsertImage) ? this.props.InsertImage.bind(this) : '';
                   
-      if(this.is_block_editor){  // Gutenberg	   
+      if(this.is_block_editor){  
+	      // Gutenberg Sidebar Only
 	      this.container = document.querySelector('body');
 		   this.container.classList.add('loading');
 			this.wrapper = document.querySelector('body');
 			
-      } else {  // Classic editor
-		   this.container = document.querySelector('.instant-img-container');
+      } else {
+		   this.container = this.props.element.closest('.instant-img-container');
 		   this.container.classList.add('loading');
-			this.wrapper = document.querySelector('.instant-images-wrapper');
+			this.wrapper = this.props.element.closest('.instant-images-wrapper');
 			
-      }      
+      }   
       
    }
    
@@ -215,7 +219,7 @@ class PhotoList extends React.Component {
       
 	   fetch(url)
 	      .then((data) => data.json())
-         .then(function(data) {            
+         .then(function(data) {       
             
             // Term Search
             if(type === 'term'){
@@ -390,12 +394,12 @@ class PhotoList extends React.Component {
 			return false;  
 		}
 	   let self = this;	   
-	   let photoListWrapper = document.querySelector('#photos');	
+	   let photoListWrapper = self.container.querySelector('.photo-target');	
       imagesLoaded(photoListWrapper,  function() {         	      
 			self.msnry = new Masonry( photoListWrapper, {
 				itemSelector: '.photo'
 			});         
-			[...document.querySelectorAll('#photos .photo')].forEach(el => el.classList.add('in-view'));
+			[...self.container.querySelectorAll('.photo-target .photo')].forEach(el => el.classList.add('in-view'));
       });
    }
    
@@ -441,17 +445,76 @@ class PhotoList extends React.Component {
    setActiveState(){
       let self = this;
 	   // Remove .active class
-		[...document.querySelectorAll('.control-nav a')].forEach(el => el.classList.remove('active'));
+		[...document.querySelectorAll('.control-nav button')].forEach(el => el.classList.remove('active'));
 
 	   // Set active item, if not search
 	   if(!this.is_search){
-	   	let active = document.querySelector(`.control-nav li a.${this.orderby}`);
+	   	let active = document.querySelector(`.control-nav li button.${this.orderby}`);
 	   	active.classList.add('active');
    	}
    	setTimeout(function(){
       	self.isLoading = false;
       	self.container.classList.remove('loading');
       }, 1000);
+   }
+   
+   
+   
+   /**
+	 * showTooltip
+	 * Show the tooltip  
+	 *
+	 * @since 4.3.0
+	 */ 
+   showTooltip(e){
+	   let self = this;
+	   let target = e.currentTarget;
+	   let rect = target.getBoundingClientRect();
+	   let left = Math.round(rect.left);
+	   let top = Math.round(rect.top);
+	   let tooltip = document.querySelector('#tooltip');
+		tooltip.classList.remove('over'); 
+		
+	   if(target.classList.contains('tooltip--above')){
+			tooltip.classList.add('above');
+	   } else {
+		   tooltip.classList.remove('above');
+	   }
+		
+		// Get Content
+	   let title = target.dataset.title;
+	   
+	   // Delay reveal
+	   this.tooltipInterval = setInterval(function() {
+		   
+			clearInterval(self.tooltipInterval);
+			tooltip.innerHTML = title;
+			
+			// Position Tooltip
+			left = left - tooltip.offsetWidth + target.offsetWidth + 5;
+			tooltip.style.left = `${left}px`;
+			tooltip.style.top = `${top}px`;
+			
+			setTimeout(function(){
+				tooltip.classList.add('over');
+			}, 150);
+			
+		}, 500);
+		
+   }
+   
+   
+   
+   /**
+	 * hideTooltip
+	 * Hide the tooltip  
+	 *
+	 * @since 4.3.0
+	 */
+   hideTooltip(e){
+	   clearInterval(this.tooltipInterval);
+	   let tooltip = document.querySelector('#tooltip');
+		tooltip.classList.remove('over');
    }
    
    
@@ -472,7 +535,7 @@ class PhotoList extends React.Component {
       this.container.classList.remove('loading');
       this.wrapper.classList.add('loaded');
       
-      if(this.is_block_editor){ // Gutenberg
+      if(this.is_block_editor || this.is_media_router){ // Gutenberg || Media Popup
          this.page = 0;
          this.getPhotos();
          
@@ -495,9 +558,9 @@ class PhotoList extends React.Component {
          <div id="photo-listing" className={this.service}>
          	
 				<ul className="control-nav">
-					<li><a className="latest" href="javascript:void(0);" onClick={(e) => this.togglePhotoList('latest', e)}>{ instant_img_localize.latest }</a></li>
-					<li id="nav-target"><a className="popular" href="javascript:void(0);" onClick={(e) => this.togglePhotoList('popular', e)}>{ instant_img_localize.popular }</a></li>
-					<li><a className="oldest" href="javascript:void(0);" onClick={(e) => this.togglePhotoList('oldest', e)}>{ instant_img_localize.oldest }</a></li>
+					<li><button type="button" className="latest" onClick={(e) => this.togglePhotoList('latest', e)}>{ instant_img_localize.latest }</button></li>
+					<li id="nav-target"><button type="button" className="popular" onClick={(e) => this.togglePhotoList('popular', e)}>{ instant_img_localize.popular }</button></li>
+					<li><button type="button" className="oldest" onClick={(e) => this.togglePhotoList('oldest', e)}>{ instant_img_localize.oldest }</button></li>
 					<li className="search-field" id="search-bar">
    					<form onSubmit={(e) => this.search(e)} autoComplete="off">
    						<input type="search" id="photo-search" placeholder={ instant_img_localize.search } />
@@ -518,9 +581,9 @@ class PhotoList extends React.Component {
 					</ul>
 				</div>
 				
-            <div id="photos">               
+            <div id="photos" className="photo-target">               
             	{this.state.results.map((result, iterator) =>
-						<Photo result={result} key={result.id+iterator} blockEditor={this.is_block_editor} SetFeaturedImage={this.SetFeaturedImage} InsertImage={this.InsertImage} />
+						<Photo result={result} key={result.id+iterator} editor={this.editor} mediaRouter={this.is_media_router} blockEditor={this.is_block_editor} SetFeaturedImage={this.SetFeaturedImage} InsertImage={this.InsertImage} showTooltip={this.showTooltip} hideTooltip={this.hideTooltip} />
 					)}
 				</div>
 				
@@ -534,6 +597,8 @@ class PhotoList extends React.Component {
 				<div className="load-more-wrap">
 					<button type="button" className="button" onClick={() => this.getPhotos()}>{ instant_img_localize.load_more }</button>
 				</div>
+				
+				<div id="tooltip">Meow</div>
 				
          </div>
       )

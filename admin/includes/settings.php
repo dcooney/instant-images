@@ -42,13 +42,15 @@ function instant_img_admin_init(){
 	);
 
 	// Button Display
-	add_settings_field(
-		'instant_img_btn_display',
-		__('Button', 'instant-images' ),
-		'instant_images_button_display_callback',
-		'instant-images',
-		'unsplash_general_settings'
-	);
+	/*
+		add_settings_field(
+			'instant_img_btn_display',
+			__('Button', 'instant-images' ),
+			'instant_images_button_display_callback',
+			'instant-images',
+			'unsplash_general_settings'
+		);
+	*/
 }
 
 

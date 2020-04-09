@@ -25,10 +25,10 @@ const GetPhotos = (page = 1, orderby = 'latest', service = 'unsplash') => {
 	   fetch(url)
       .then((data) => data.json())
       .then(function(data) {  
-                           
+         let element = document.getElementById('app');                  
          ReactDOM.render( 
-           <PhotoList editor='classic' results={data} page={page} orderby={orderby} service={service}/>,
-           document.getElementById('app')
+           <PhotoList element={element} editor='classic' results={data} page={page} orderby={orderby} service={service}/>,
+           element
          ); 
                     
       })

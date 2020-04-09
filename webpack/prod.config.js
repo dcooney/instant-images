@@ -5,6 +5,7 @@ var config = require('../webpack.config.js');
 config.watch = false;
 config.entry = {	
    'instant-images.min': './src/js/index.js',
+   'instant-images-media.min': './src/js/media-router.js',
    'instant-images-styles.min': './src/scss/style.scss',
    'instant-images-block.min': './src/js/block/index.js',
 };

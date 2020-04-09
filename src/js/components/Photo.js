@@ -6,36 +6,43 @@ class Photo extends React.Component {
    
    constructor(props) {
       super(props);
-      
+      //console.log(this.props.result);
+ 
       this.id = this.props.result.id;
       this.thumb = this.props.result.urls.thumb;     
       this.img = this.props.result.urls.small;                                     
-      this.full_size = this.props.result.urls.raw;
+      //this.full_size = this.props.result.urls.raw;                                
+      this.full_size = this.props.result.urls.full;
       this.author = this.props.result.user.name;
       this.img_title = `${instant_img_localize.photo_by} ${this.author}`;      
       this.filename = this.props.result.id;          
       this.title = this.img_title;
-      this.alt = '';
+      this.alt = this.props.result.alt_description;
       this.caption = '';
       this.user = this.props.result.user.username;
       this.user_photo = this.props.result.user.profile_image.small;
       this.link = this.props.result.links.html;
       this.likes = this.props.result.likes;
       this.view_all = instant_img_localize.view_all;
-      this.like_text = instant_img_localize.likes;
       this.inProgress = false;
       this.container = document.querySelector('.instant-img-container'); 
-          
+      this.showTooltip = this.props.showTooltip;
+      this.hideTooltip = this.props.hideTooltip;
+      
+      
+      // Gutenberg Sidebar
       this.setAsFeaturedImage = false;      
-      this.insertIntoPost = false;   
-      
-      
-      // Gutenberg Editor
+      this.insertIntoPost = false;  
+      this.is_media_router = this.props.mediaRouter;
       this.is_block_editor = this.props.blockEditor;
       this.SetFeaturedImage = this.props.SetFeaturedImage;
       this.InsertImage = this.props.InsertImage;
-         
-         
+      
+      
+      // Display controls in Gutenberg Sidebar Only
+      this.displayGutenbergControl = (this.is_block_editor) ? true : false;
+      
+      
       // Photo state
       this.state = { 
          filename: this.filename,
@@ -45,20 +52,19 @@ class Photo extends React.Component {
       }
       
    }
-    
    
    
    /*
-	 * uploadPhoto
-	 * Function to trigger image upload 
+	 * download
+	 * Function to trigger the image download 
 	 * 
-	 * @param target   element    clicked item
-	 * @since 3.0
+	 * @since 4.3
 	 */
-   uploadPhoto(e){      
-	   e.preventDefault();
-	   
+   download(e){ 
+          
+      e.preventDefault();
 	   let self = this;
+	   
 	   let target = e.currentTarget; // get current <a/>	 
 	   let photo = target.parentElement.parentElement.parentElement; // Get parent .photo el 
 	   let notice = photo.querySelector('.notice-msg'); // Locate .notice-msg div 
@@ -67,146 +73,93 @@ class Photo extends React.Component {
          target = photo.querySelector('a.upload');
       }	   	   
 	   
-	   if(target.classList.contains('success') || this.inProgress)
+	   if(target.classList.contains('success') || this.inProgress){
 	      return false; // Exit if already uploaded or in progress.
+	   }
+	   this.inProgress = true;
 	   
 	   target.classList.add('uploading');
 	   photo.classList.add('in-progress');
+	   
+	   
+	   // Status messaging
 	   notice.innerHTML = instant_img_localize.saving;
-	   this.inProgress = true;	   	     
-	     
-	   // Create Data Array  
+	   setTimeout(function(){
+		   // Change notice after 3 seconds
+		   notice.innerHTML = instant_img_localize.resizing;
+		   setTimeout(function(){
+			  // Change notice again after 5 seconds (Still resizing...)
+			  notice.innerHTML = instant_img_localize.resizing_still;
+		   }, 5000);
+		}, 3000);
+	   
+ 
+      // API URL
+      let api = instant_img_localize.root + 'instant-images/download/';
+      
+      
+      // Data Params	 
 	   let data = {
-	      id : target.getAttribute('data-id'),
-         image : target.getAttribute('data-url')
+		   id : target.getAttribute('data-id'),
+         image_url : target.getAttribute('data-url'),
+         filename : target.getAttribute('data-id') +'.jpg',
+         custom_filename : target.getAttribute('data-filename'),
+         title : target.getAttribute('data-title'),
+         alt : target.getAttribute('data-alt'),
+         caption : target.getAttribute('data-caption'),
+         parent_id : instant_img_localize.parent_id
       }      
       
-      // REST API URL
-      let url = instant_img_localize.root + 'instant-images/upload/';
       
-      axios({
-         method: 'POST', 
-         url: url, 
-         headers: {
+      // Config Params
+      const config = {
+	      headers: {
             'X-WP-Nonce': instant_img_localize.nonce,
             'Content-Type': 'application/json'
-         },
-         data: {
-            'data': JSON.stringify(data)
          }
-      })
+	  	}
+      
+      axios.put(api, JSON.stringify(data), config)
       .then(function (res) {
          
          let response = res.data;
-            
-         if(response && res.status == 200){
-            
-            // Successful response from server   
-            let hasError = response.error;
-            let path = response.path;
-            let filename = response.filename;
-                
-            if(hasError){ // Upload Error
-               self.uploadError(target, photo, response.msg);
-               
-            } else { // Upload Success
-               self.resizeImage(path, filename, target, photo, notice);
-               self.triggerUnsplashDownload(data.id);
-               
-            }
-            
-         } else {
-            
-            // Error
-            self.uploadError(target, photo, instant_img_localize.error_upload); 
-         }
-   		
-   	})
-   	.catch(function (error) {
-   		console.log(error);
-   	});
-
-   }
-   
-   
-   
-   /*
-	 * resizeImage
-	 * Function to trigger image resize 
-	 * 
-	 * @param path       string    full server path to image
-	 * @param filename   string    clicked item  
-	 * @param target     element   clicked item 
-	 * @param photo      element   Nearest parent .photo  
-	 * @param notice     string    Text to be display
-	 * @since 3.0
-	 */
-   resizeImage(path, filename, target, photo, notice){ 
-          
-      let self = this;
-      
-      target.classList.remove('uploading');
-      target.classList.add('resizing');
-      notice.innerHTML = instant_img_localize.resizing;
-      
-      // Create Data Array	     
-	   let data = { // store data in JSON to pass to XMLHttpRequest
-	      'path' : path,
-         'filename' : filename,
-         'custom_filename' : target.getAttribute('data-filename'),
-         'title' : target.getAttribute('data-title'),
-         'alt' : target.getAttribute('data-alt'),
-         'caption' : target.getAttribute('data-caption'),
-      }      
-      
-      // REST API URL
-      let url= instant_img_localize.root + 'instant-images/resize/';
-      let msg = '';
-      
-      axios({
-         method: 'POST', 
-         url: url, 
-         headers: {
-            'X-WP-Nonce': instant_img_localize.nonce,
-            'Content-Type': 'application/json'
-         },
-         data: {
-            'data': JSON.stringify(data)
-         }
-      })
-      .then(function (res) {
          
-         let response = res.data;
-            
-         if(response && res.status == 200){
+         if(response){
             
             // Successful response from server   
             let success = response.success;
-            let attachment_id = response.id;
-            let attachment_url = response.url;
+            let id = response.id;
+            let attachment = response.attachment;
             let admin_url = response.admin_url;
-            msg = response.msg;
-                
-             if(success){ 
+            let msg = response.msg;
+            
+            if(success){ 
                 
                // Edit URL
-               let edit_url = `${admin_url}post.php?post=${attachment_id}&action=edit`
+               let edit_url = `${admin_url}post.php?post=${attachment.id}&action=edit`
+               
                
 	            // Success/Upload Complete
-               self.uploadComplete(target, photo, msg, edit_url); 
+               self.uploadComplete(target, photo, msg, edit_url, attachment.id);
                
                
-               // Set as featured Image in Gutenberg
-               if(self.is_block_editor && self.setAsFeaturedImage){
-                  self.SetFeaturedImage(attachment_id);
+               // Trigger Download Counter at Unsplash
+               self.triggerUnsplashDownload(id); 
+               
+               
+               // Set Featured Image [Gutenberg Sidebar]
+               if( (self.displayGutenbergControl) && self.setAsFeaturedImage){
+                  self.SetFeaturedImage(attachment.id);
                   self.setAsFeaturedImage = false;
+                  self.closeMediaModal();
                }
                
                
-               // Insrt Image into block editor
-               if(self.is_block_editor && self.insertIntoPost){
-                  if(attachment_url){
-                     self.InsertImage(attachment_url, data.caption, data.alt);
+               // Insert Image [Gutenberg Sidebar]
+               if( (self.displayGutenbergControl) && self.insertIntoPost){
+                  if(attachment.url){
+                     self.InsertImage(attachment.url, attachment.caption, attachment.alt);
+                     self.closeMediaModal();
                   }
                   self.insertIntoPost = false;                  
                }               
@@ -214,21 +167,19 @@ class Photo extends React.Component {
                
                // If is media popup, redirect user to media-upload settings
                if(self.container.dataset.mediaPopup === 'true' && !self.is_block_editor){
-	               window.location = 'media-upload.php?type=image&tab=library&attachment_id='+attachment_id;	               
+	               window.location = 'media-upload.php?type=image&tab=library&attachment_id='+attachment.id;	               
                }   
-                              
+                                             
                              
             }else{
-               
 	            // Error
-	            self.uploadError(target, photo, msg);
+	            self.uploadError(target, photo, notice, msg);
 	            
             }
             
          } else {
-            
             // Error
-            self.uploadError(target, photo, instant_img_localize.error_upload); 
+            self.uploadError(target, photo, notice, instant_img_localize.error_upload); 
          }
    		
    	})
@@ -276,6 +227,7 @@ class Photo extends React.Component {
          return false;
       }
       
+      this.hideTooltip(e);
       let parent = target.parentNode.parentNode.parentNode;
       let photo = parent.querySelector('a.upload');
       if(photo){
@@ -298,6 +250,7 @@ class Photo extends React.Component {
          return false;
       }
       
+      this.hideTooltip(e);
       let parent = target.parentNode.parentNode.parentNode;
       let photo = parent.querySelector('a.upload');
       if(photo){
@@ -316,37 +269,40 @@ class Photo extends React.Component {
 	 * @param photo    element    Nearest parent .photo
 	 * @param msg      string     Success Msg
 	 * @param url      string     The attachment edit link
+	 * @param id       string     The attachment id
 	 * @since 3.0
 	 */
-   uploadComplete(target, photo, msg, url){
+   uploadComplete(target, photo, msg, url, id){
       
 	   this.setImageTitle(target, msg);
 	   
 	   photo.classList.remove('in-progress');
 	   photo.classList.add('uploaded');
 	   
-	   //window.location = url;
-	   
 	   photo.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
-	   
 	   photo.querySelector('.edit-photo-admin').style.display = 'inline-block'; // Show edit-photo-admin button
 	   photo.querySelector('.edit-photo-admin').href = url; // Add admin edit link
 	   photo.querySelector('.edit-photo-admin').target = '_balnk'; // Add new window
 	   
+	   target.classList.remove('uploading');
+	   target.classList.remove('resizing');
+      target.classList.add('success'); 
+	   this.inProgress = false;
+	   
+	   // Gutenberg Sidebar
 	   if(this.is_block_editor){
 		   photo.querySelector('.insert').style.display = 'none'; // Hide insert button
 		   photo.querySelector('.set-featured').style.display = 'none'; // Hide set-featured button
 	   }
-
-	   target.classList.remove('uploading');
-	   target.classList.remove('resizing');
-      target.classList.add('success'); 
-            	   
-	   this.inProgress = false;
 	   
+	   // Media Router
+      this.mediaRouter(id);
+            	   
+	   
+	   // Deprecated in 4.3
+	   // Was previously used in the Media Popup Context.
 	   // Refresh Media Library contents on edit pages               
       if(this.container.classList.contains('editor')){
-	      //console.log(wp.media.frame.setState());
          if(typeof wp.media != 'undefined'){
             if(wp.media.frame.content.get() !== null){
 				   wp.media.frame.content.get().collection.props.set({ignore: (+ new Date())});
@@ -356,7 +312,45 @@ class Photo extends React.Component {
 				}
 			}
 		}
+   }
+   
+   
+   
+   /**
+	 * mediaRouter
+	 * Refresh Media Modal and select item after it's been uploaded
+	 *
+	 * @since 4.3
+	 */
+   mediaRouter(id){
 	   
+	   if(this.is_media_router && wp.media && wp.media.frame && wp.media.frame.el){
+		   
+		   let mediaModal = wp.media.frame.el;
+		   let mediaTab = mediaModal.querySelector('#menu-item-browse');
+		   if(mediaTab){
+			   // Open the 'Media Library' tab
+			   mediaTab.click();
+		   }
+		   
+		   // Delay to allow for tab switching
+	      setTimeout(function(){
+		      if (wp.media.frame.content.get() !== null) {          
+					//this forces a refresh of the content
+					wp.media.frame.content.get().collection._requery(true);
+					
+					//optional: reset selection
+					//wp.media.frame.content.get().options.selection.reset();
+				}
+				
+				// Select the attached that was just uploaded.
+		      var selection = wp.media.frame.state().get( 'selection' );
+		      var selected = parseInt(id);
+		      selection.reset( selected ? [ wp.media.attachment( selected ) ] : [] );
+		      
+	      }, 150);
+	      
+      }
    }
    
    
@@ -367,15 +361,17 @@ class Photo extends React.Component {
 	 * 
 	 * @param target   element    Current clicked item
 	 * @param photo    element    Nearest parent .photo
+	 * @param notice   element    The message area
 	 * @param msg      string     Error Msg
 	 * @since 3.0
 	 */
-   uploadError(target, photo, msg){
+   uploadError(target, photo, notice, msg){
 	   target.classList.remove('uploading');
 	   target.classList.remove('resizing');
 	   target.classList.add('errors');
 	   this.setImageTitle(target, msg);
       this.inProgress = false;
+      notice.classList.add('has-error');
       console.warn(msg);
    }
    
@@ -404,6 +400,7 @@ class Photo extends React.Component {
    showEditScreen(e){
       e.preventDefault();
       let el = e.currentTarget;
+      this.hideTooltip(e);
       let photo = el.closest('.photo'); 
       let filename = photo.querySelector('input[name="filename"]');
       let editScreen = photo.querySelector('.edit-screen');
@@ -486,7 +483,6 @@ class Photo extends React.Component {
    
    
    
-   
    /*
 	 * cancelEditChange
 	 * Handles the cancel event for the edit screen 
@@ -531,12 +527,32 @@ class Photo extends React.Component {
          photo.querySelector('.edit-screen').classList.remove('editing'); // Hide edit screen      
          target.focus();
       }
-   }   
+   }
    
+   
+   
+   /*
+	 * closeMediaModal
+	 * Close the media modal after an action
+	 * 
+	 * @since 4.3
+	 */
+   closeMediaModal(){
+	   let mediaModal = document.querySelector('.media-modal');
+	   if(mediaModal){
+		   let closeBtn = mediaModal.querySelector('button.media-modal-close');
+		   if(!closeBtn){
+			   return false;
+		   }
+		   closeBtn.click();
+		}
+   }
    
    
    
    render(){
+	   
+	   let likeTxt = (parseInt(this.likes) > 1) ? instant_img_localize.likes_plural : instant_img_localize.likes;
       
       return (
 	      <article className='photo'>
@@ -552,7 +568,7 @@ class Photo extends React.Component {
    						data-alt={this.state.alt}
    						data-caption={this.state.caption}
    						title={instant_img_localize.upload} 
-   						onClick={(e) => this.uploadPhoto(e)}>
+   						onClick={(e) => this.download(e)}>
    	               <img src={this.img} alt="" />
    	               <div className="status" />                
    	            </a>         
@@ -571,58 +587,69 @@ class Photo extends React.Component {
       	            <div className="photo-options">
       	            
          	            {
-            	            this.is_block_editor && (
-               	            <a className="set-featured fade" 
-               	               href='#'                	                
+            	            this.displayGutenbergControl && (
+               	            <button type="button" className="set-featured fade"  
+               	               data-title={instant_img_localize.set_as_featured}
+		         	               onMouseEnter={(e) => this.showTooltip(e)}
+		         	               onMouseLeave={(e) => this.hideTooltip(e)}             	                
                                  onClick={(e) => this.setFeaturedImageClick(e)}
-               	               title={instant_img_localize.set_as_featured}
                	               >
                	               <i className="fa fa-picture-o" aria-hidden="true"></i>
                	               <span className="offscreen">{instant_img_localize.set_as_featured}</span>
-               	            </a>
+               	            </button>
             	            )
          	            }
          	            {
-            	            this.is_block_editor && (
-               	            <a className="insert fade" 
-               	               href='#'                	                
+            	            this.displayGutenbergControl && (
+               	            <button type="button" className="insert fade"  
+               	               data-title={instant_img_localize.insert_into_post}
+		         	               onMouseEnter={(e) => this.showTooltip(e)}
+		         	               onMouseLeave={(e) => this.hideTooltip(e)}            	                
                                  onClick={(e) => this.insertImageIntoPost(e)}
-               	               title={instant_img_localize.insert_into_post}
                	               >
                	               <i className="fa fa-plus" aria-hidden="true"></i>
                	               <span className="offscreen">{instant_img_localize.insert_into_post}</span>
-               	            </a>
+               	            </button>
             	            )
          	            }
          	            
-         	            <a 
-         	               className="edit-photo-admin fade"
-         	               href="#" 
-         	               title={instant_img_localize.edit_upload}               
+         	            <a href="#"
+         	               className="edit-photo-admin fade" 
+         	               data-title={instant_img_localize.edit_upload} 
+         	               onMouseEnter={(e) => this.showTooltip(e)}
+         	               onMouseLeave={(e) => this.hideTooltip(e)}              
          	               >
          	               <i className="fa fa-pencil" aria-hidden="true"></i>
                            <span className="offscreen">{instant_img_localize.edit_upload}</span>
          	            </a> 
          	            
-         	            <a 
+         	            <button type="button"
          	               className="edit-photo fade"
-         	               href="#" 
-         	               title={instant_img_localize.edit_details} 
+         	               data-title={instant_img_localize.edit_details} 
+         	               onMouseEnter={(e) => this.showTooltip(e)}
+         	               onMouseLeave={(e) => this.hideTooltip(e)}
          						onClick={(e) => this.showEditScreen(e)}	               
          	               >
          	               <i className="fa fa-cog" aria-hidden="true"></i>
                            <span className="offscreen">{instant_img_localize.edit_details}</span>
-         	            </a> 
+         	            </button> 
       	            </div>    	                         
    	            </div>
    	            
-   	            <div className="options" title={this.likes +' ' + this.like_text}>
-   	            	<span className="likes">
+   	            <div className="options">
+   	            	<span 
+   	            		className="likes tooltip--above"
+   	            		data-title={this.likes + ' ' +likeTxt} 
+								onMouseEnter={(e) => this.showTooltip(e)} 
+								onMouseLeave={(e) => this.hideTooltip(e)}>
    	            		<i className="fa fa-heart heart-like" aria-hidden="true"></i> {this.likes}
    	            	</span>
    	            	<a 
+   	            		className="tooltip--above"
       	               href={this.link} 
-      	               title={instant_img_localize.view_on_unsplash} 
+      	               data-title={instant_img_localize.view_on_unsplash} 
+	   	            	onMouseEnter={(e) => this.showTooltip(e)} 
+	   	            	onMouseLeave={(e) => this.hideTooltip(e)}
       	               target="_blank">
       	               <i className="fa fa-external-link" aria-hidden="true"></i>
                         <span className="offscreen">{instant_img_localize.view_on_unsplash}</span>
@@ -643,15 +670,15 @@ class Photo extends React.Component {
 	               </label>
 	               <label>
 	                  <span>{instant_img_localize.edit_title}:</span>
-	                  <input type="text" name="title" data-original={this.title} placeholder={this.title} value={this.state.title} onChange={(e) => this.handleEditChange(e)} />
+	                  <input type="text" name="title" data-original={this.title} placeholder={this.title} value={this.state.title || ''} onChange={(e) => this.handleEditChange(e)} />
 	               </label>
 	               <label>
 	                  <span>{instant_img_localize.edit_alt}:</span>
-	                  <input type="text" name="alt" data-original="" value={this.state.alt} onChange={(e) => this.handleEditChange(e)} />
+	                  <input type="text" name="alt" data-original={this.alt} value={this.state.alt || ''} onChange={(e) => this.handleEditChange(e)} />
 	               </label>
 	               <label>
 	                  <span>{instant_img_localize.edit_caption}:</span>
-	                  <textarea rows="3" name="caption" data-original="" onChange={(e) => this.handleEditChange(e)} value={this.state.caption}></textarea>
+	                  <textarea rows="3" name="caption" data-original="" onChange={(e) => this.handleEditChange(e)} value={this.state.caption || ''}></textarea>
 	               </label>
 	               <div className="edit-screen--controls">
 	                  <button type="button" className="button" onClick={(e) => this.cancelEditChange(e)}>{instant_img_localize.cancel}</button> &nbsp; 

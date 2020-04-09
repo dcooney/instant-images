@@ -5,8 +5,9 @@ var dir = 'dist';
 module.exports = {
 	entry: {
       'instant-images': './src/js/index.js',
+      'instant-images-media': './src/js/media-router.js',
       'instant-images-styles': './src/scss/style.scss',
-      'instant-images-block': './src/js/block/index.js',
+      'instant-images-block': './src/js/block/index.js'
    },
 	output: {
    	path: path.join(__dirname, dir),

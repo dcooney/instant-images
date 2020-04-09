@@ -8,7 +8,7 @@ class ResultsToolTip extends React.Component {
    
    resetSearch(){
       let nav = document.querySelector('.control-nav');
-      let navItem = nav.querySelector('li a.latest');
+      let navItem = nav.querySelector('li button.latest');
       navItem.click();
    }
    
@@ -19,7 +19,7 @@ class ResultsToolTip extends React.Component {
       	   <span title={ this.props.title }>
       	      { this.props.total } 
       	   </span>
-      	   <a href="javascript:void(0)" title={instant_img_localize.clear_search} onClick={(e) =>this.resetSearch()}>x</a>
+      	   <button type="button" title={instant_img_localize.clear_search} onClick={(e) =>this.resetSearch()}>x</button>
          </div>      
       )
    }
