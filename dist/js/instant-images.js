@@ -30254,9 +30254,10 @@ var PhotoList = function (_React$Component) {
 			_this.container.classList.add('loading');
 			_this.wrapper = document.querySelector('body');
 		} else {
-			_this.container = _this.props.element.closest('.instant-img-container');
+			// Post Edit Screens and Plugin Screen
+			_this.container = _this.props.container.closest('.instant-img-container');
+			_this.wrapper = _this.props.container.closest('.instant-images-wrapper');
 			_this.container.classList.add('loading');
-			_this.wrapper = _this.props.element.closest('.instant-images-wrapper');
 		}
 
 		return _this;
@@ -30276,7 +30277,7 @@ var PhotoList = function (_React$Component) {
 
 			var self = this;
 
-			var target = document.querySelector('.error-messaging'); // Target element
+			var target = this.container.querySelector('.error-messaging'); // Target element
 
 			var testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route      
 			var restAPITest = new XMLHttpRequest();
@@ -30326,7 +30327,7 @@ var PhotoList = function (_React$Component) {
 		value: function search(e) {
 
 			e.preventDefault();
-			var input = document.querySelector('#photo-search');
+			var input = this.container.querySelector('#photo-search');
 			var term = input.value;
 
 			if (term.length > 2) {
@@ -30339,6 +30340,14 @@ var PhotoList = function (_React$Component) {
 				input.focus();
 			}
 		}
+
+		/**
+  * setOrientation
+  * Orientation filter. Availlable during a search only.
+  *    
+  * @since 4.2  
+  */
+
 	}, {
 		key: 'setOrientation',
 		value: function setOrientation(orientation, e) {
@@ -30390,7 +30399,7 @@ var PhotoList = function (_React$Component) {
 	}, {
 		key: 'clearOrientation',
 		value: function clearOrientation() {
-			var items = document.querySelectorAll('.orientation-list li');
+			var items = this.container.querySelectorAll('.orientation-list li');
 			[].concat(_toConsumableArray(items)).forEach(function (el) {
 				return el.classList.remove('active');
 			}); // remove active classes
@@ -30431,7 +30440,7 @@ var PhotoList = function (_React$Component) {
 				url = _API2.default.photo_api + '/' + term + _API2.default.app_id;
 			}
 
-			var input = document.querySelector('#photo-search');
+			var input = this.container.querySelector('#photo-search');
 
 			fetch(url).then(function (data) {
 				return data.json();
@@ -30491,7 +30500,7 @@ var PhotoList = function (_React$Component) {
 	}, {
 		key: 'clearSearch',
 		value: function clearSearch() {
-			var input = document.querySelector('#photo-search');
+			var input = this.container.querySelector('#photo-search');
 			input.value = '';
 			this.total_results = 0;
 			this.is_search = false;
@@ -30629,7 +30638,7 @@ var PhotoList = function (_React$Component) {
 		value: function onScroll() {
 			var wHeight = window.innerHeight;
 			var scrollTop = window.pageYOffset;
-			var scrollH = document.body.scrollHeight - 200;
+			var scrollH = document.body.scrollHeight - 400;
 			if (wHeight + scrollTop >= scrollH && !this.isLoading && !this.isDone) {
 				this.getPhotos();
 			}
@@ -30661,13 +30670,13 @@ var PhotoList = function (_React$Component) {
 		value: function setActiveState() {
 			var self = this;
 			// Remove .active class
-			[].concat(_toConsumableArray(document.querySelectorAll('.control-nav button'))).forEach(function (el) {
+			[].concat(_toConsumableArray(this.container.querySelectorAll('.control-nav button'))).forEach(function (el) {
 				return el.classList.remove('active');
 			});
 
 			// Set active item, if not search
 			if (!this.is_search) {
-				var active = document.querySelector('.control-nav li button.' + this.orderby);
+				var active = this.container.querySelector('.control-nav li button.' + this.orderby);
 				active.classList.add('active');
 			}
 			setTimeout(function () {
@@ -30691,7 +30700,7 @@ var PhotoList = function (_React$Component) {
 			var rect = target.getBoundingClientRect();
 			var left = Math.round(rect.left);
 			var top = Math.round(rect.top);
-			var tooltip = document.querySelector('#tooltip');
+			var tooltip = this.container.querySelector('#tooltip');
 			tooltip.classList.remove('over');
 
 			if (target.classList.contains('tooltip--above')) {
@@ -30731,7 +30740,7 @@ var PhotoList = function (_React$Component) {
 		key: 'hideTooltip',
 		value: function hideTooltip(e) {
 			clearInterval(this.tooltipInterval);
-			var tooltip = document.querySelector('#tooltip');
+			var tooltip = this.container.querySelector('#tooltip');
 			tooltip.classList.remove('over');
 		}
 
@@ -30829,7 +30838,7 @@ var PhotoList = function (_React$Component) {
 								{ type: 'submit', id: 'photo-search-submit' },
 								_react2.default.createElement('i', { className: 'fa fa-search' })
 							),
-							_react2.default.createElement(_ResultsToolTip2.default, { isSearch: this.is_search, total: this.total_results, title: this.total_results + ' ' + instant_img_localize.search_results + ' ' + this.search_term })
+							_react2.default.createElement(_ResultsToolTip2.default, { container: this.container, isSearch: this.is_search, total: this.total_results, title: this.total_results + ' ' + instant_img_localize.search_results + ' ' + this.search_term })
 						)
 					)
 				),
@@ -30968,7 +30977,7 @@ var ResultsToolTip = function (_React$Component) {
    _createClass(ResultsToolTip, [{
       key: 'resetSearch',
       value: function resetSearch() {
-         var nav = document.querySelector('.control-nav');
+         var nav = this.props.container.querySelector('.control-nav');
          var navItem = nav.querySelector('li button.latest');
          navItem.click();
       }
@@ -30990,7 +30999,12 @@ var ResultsToolTip = function (_React$Component) {
                { type: 'button', title: instant_img_localize.clear_search, onClick: function onClick(e) {
                      return _this2.resetSearch();
                   } },
-               'x'
+               'x',
+               _react2.default.createElement(
+                  'span',
+                  { className: 'offscreen' },
+                  instant_img_localize.clear_search
+               )
             )
          );
       }
@@ -31057,7 +31071,7 @@ var GetPhotos = function GetPhotos() {
          return data.json();
       }).then(function (data) {
          var element = document.getElementById('app');
-         _reactDom2.default.render(_react2.default.createElement(_PhotoList2.default, { element: element, editor: 'classic', results: data, page: page, orderby: orderby, service: service }), element);
+         _reactDom2.default.render(_react2.default.createElement(_PhotoList2.default, { container: element, editor: 'classic', results: data, page: page, orderby: orderby, service: service }), element);
       }).catch(function (error) {
          console.log(error);
       });

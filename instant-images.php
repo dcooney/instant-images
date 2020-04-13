@@ -7,17 +7,21 @@ Author: Darren Cooney
 Twitter: @connekthq
 Author URI: https://connekthq.com
 Text Domain: instant-images
-Version: 4.3.0
+Version: 4.3.1
 License: GPL
 Copyright: Darren Cooney & Connekt Media
+
+* FIX - Fixed issue with Instant Images causing Yoast SEO metabox to not show correctly in the classic editor. Not really sure why, but the Instant Images JS dependencies seemed to interfere with Yoast.
+* FIX - Added user privedges checks to the new Media Modal functionality.
+
 */
 
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 
-define('INSTANT_IMAGES_VERSION', '4.3.0');
-define('INSTANT_IMAGES_RELEASE', 'April 9, 2019');
+define('INSTANT_IMAGES_VERSION', '4.3.1');
+define('INSTANT_IMAGES_RELEASE', 'April 13, 2019');
 
 
 /*

@@ -4,7 +4,7 @@ Donate link: https://connekthq.com/donate/
 Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
 Tested up to: 5.4.0
-Stable tag: 4.3.0
+Stable tag: 4.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,11 @@ How to install Instant Images.
 
 
 == Changelog ==
+
+= 4.3.1 - April 13, 2020 =
+* FIX - Fixed issue with Instant Images causing Yoast SEO metabox to not show correctly in the classic WordPress editor. Not really sure why, but the Instant Images JS dependencies seemed to interfere with Yoast.
+* FIX - Added user privileges checks to the new Media Modal functionality.
+
 
 = 4.3.0 - April 9, 2020 =
 * NEW - Adding `Instant Images` tab to the WordPress Media Modal.

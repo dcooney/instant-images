@@ -2,15 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import API from './components/API';
 import PhotoList from './components/PhotoList'; 
-
-// Gutenberg Support
-import SetFeaturedImage from "./block/components/setFeaturedImage"; // Featured Image
-import InsertImage from "./block/components/insertImage"; // Insert Image
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 require('./components/Helpers'); 
 
-
+ 
 // Global vars
 let activeFrameId = '';
 let activeFrame = '';
@@ -30,7 +26,7 @@ wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend( {
 		routerView.set( {
 			instantimages: {
 				text: instant_img_localize.instant_images,
-				priority: 99,
+				priority: 120,
 			},
 		} );
 	},
@@ -70,7 +66,7 @@ wp.media.view.MediaFrame.Post = oldMediaFrame.extend( {
 		routerView.set( {
 			instantimages: {
 				text: instant_img_localize.instant_images,
-				priority: 60,
+				priority: 120,
 			},
 		} );
 	},
@@ -125,7 +121,7 @@ const instantImagesMediaTab = () => {
 	}
 	
 	ReactDOM.render( 
-     <PhotoList element={element} editor='media-router' results='' page='1' orderby='latest' service='unsplash' SetFeaturedImage={SetFeaturedImage} InsertImage={InsertImage} />,
+     <PhotoList container={element} editor='media-router' results='' page='1' orderby='latest' service='unsplash' />,
      element
    ); 
 	
@@ -155,7 +151,7 @@ jQuery(document).ready(function($){
 		
 		// Open
 		wp.media.view.Modal.prototype.on( "open", function() {
-			console.log(wp.media.frame);
+			//console.log(wp.media.frame);
 			if(!activeFrame){
 				return false;
 			}

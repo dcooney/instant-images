@@ -45,9 +45,10 @@ class PhotoList extends React.Component {
 			this.wrapper = document.querySelector('body');
 			
       } else {
-		   this.container = this.props.element.closest('.instant-img-container');
+	      // Post Edit Screens and Plugin Screen
+		   this.container = this.props.container.closest('.instant-img-container');
+			this.wrapper = this.props.container.closest('.instant-images-wrapper');
 		   this.container.classList.add('loading');
-			this.wrapper = this.props.element.closest('.instant-images-wrapper');
 			
       }   
       
@@ -65,7 +66,7 @@ class PhotoList extends React.Component {
       
       let self = this;
       
-      let target = document.querySelector('.error-messaging'); // Target element
+      let target = this.container.querySelector('.error-messaging'); // Target element
       
       let testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route      
       var restAPITest = new XMLHttpRequest();
@@ -114,7 +115,7 @@ class PhotoList extends React.Component {
    search(e){
       
 	   e.preventDefault();
-	   let input = document.querySelector('#photo-search');
+	   let input = this.container.querySelector('#photo-search');
 	   let term = input.value;
 	   
 	   if(term.length > 2){		   
@@ -131,6 +132,12 @@ class PhotoList extends React.Component {
    
    
    
+   /**
+	 * setOrientation
+	 * Orientation filter. Availlable during a search only.
+	 *    
+	 * @since 4.2  
+	 */
    setOrientation(orientation, e){
 	   
 	   if(e && e.target){		   
@@ -177,7 +184,7 @@ class PhotoList extends React.Component {
 	 * @since 4.2  
 	 */
    clearOrientation(){
-	   const items = document.querySelectorAll('.orientation-list li');
+	   const items = this.container.querySelectorAll('.orientation-list li');
 	   [...items].forEach(el => el.classList.remove('active')); // remove active classes
 	   this.orientation = '';
    }
@@ -215,7 +222,7 @@ class PhotoList extends React.Component {
    	   url = `${API.photo_api}/${term}${API.app_id}`;   	   
 	   }
 
-      let input = document.querySelector('#photo-search');
+      let input = this.container.querySelector('#photo-search');
       
 	   fetch(url)
 	      .then((data) => data.json())
@@ -278,7 +285,7 @@ class PhotoList extends React.Component {
 	 * @since 3.0
 	 */
    clearSearch(){
-      let input = document.querySelector('#photo-search');
+      let input = this.container.querySelector('#photo-search');
 		input.value = '';
       this.total_results = 0;
       this.is_search = false;
@@ -414,7 +421,7 @@ class PhotoList extends React.Component {
    onScroll(){   
       let wHeight = window.innerHeight;
       let scrollTop = window.pageYOffset;
-      let scrollH = document.body.scrollHeight - 200;
+      let scrollH = document.body.scrollHeight - 400;
       if ((wHeight + scrollTop) >= scrollH && !this.isLoading && !this.isDone) {
 		   this.getPhotos();		
 		}  
@@ -445,11 +452,11 @@ class PhotoList extends React.Component {
    setActiveState(){
       let self = this;
 	   // Remove .active class
-		[...document.querySelectorAll('.control-nav button')].forEach(el => el.classList.remove('active'));
+		[...this.container.querySelectorAll('.control-nav button')].forEach(el => el.classList.remove('active'));
 
 	   // Set active item, if not search
 	   if(!this.is_search){
-	   	let active = document.querySelector(`.control-nav li button.${this.orderby}`);
+	   	let active = this.container.querySelector(`.control-nav li button.${this.orderby}`);
 	   	active.classList.add('active');
    	}
    	setTimeout(function(){
@@ -472,7 +479,7 @@ class PhotoList extends React.Component {
 	   let rect = target.getBoundingClientRect();
 	   let left = Math.round(rect.left);
 	   let top = Math.round(rect.top);
-	   let tooltip = document.querySelector('#tooltip');
+	   let tooltip = this.container.querySelector('#tooltip');
 		tooltip.classList.remove('over'); 
 		
 	   if(target.classList.contains('tooltip--above')){
@@ -513,7 +520,7 @@ class PhotoList extends React.Component {
 	 */
    hideTooltip(e){
 	   clearInterval(this.tooltipInterval);
-	   let tooltip = document.querySelector('#tooltip');
+	   let tooltip = this.container.querySelector('#tooltip');
 		tooltip.classList.remove('over');
    }
    
@@ -565,7 +572,7 @@ class PhotoList extends React.Component {
    					<form onSubmit={(e) => this.search(e)} autoComplete="off">
    						<input type="search" id="photo-search" placeholder={ instant_img_localize.search } />
    						<button type="submit" id="photo-search-submit"><i className="fa fa-search"></i></button>	
-   						<ResultsToolTip isSearch={ this.is_search } total={ this.total_results } title={ this.total_results + ' ' + instant_img_localize.search_results + ' ' + this.search_term } />			
+   						<ResultsToolTip container={this.container} isSearch={ this.is_search } total={ this.total_results } title={ this.total_results + ' ' + instant_img_localize.search_results + ' ' + this.search_term } />			
                   </form>                                    
 					</li>
 				</ul>
