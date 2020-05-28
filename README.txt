@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
-Tested up to: 5.4.0
-Stable tag: 4.3.1
+Tested up to: 5.4.1
+Stable tag: 4.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,11 @@ How to install Instant Images.
 
 
 == Changelog ==
+
+= 4.3.2 - May 28, 2020 =
+* UPDATE - Switched REST API methods to `POST` requests from `PUT`. This will hopefully reduce issues users are having with `PUT` being disabled on their servers.
+* UPDATE - Added Instant Images media button back to Classic Editor post screen.
+
 
 = 4.3.1 - April 13, 2020 =
 * FIX - Fixed issue with Instant Images causing Yoast SEO metabox to not show correctly in the classic WordPress editor. Not really sure why, but the Instant Images JS dependencies seemed to interfere with Yoast.

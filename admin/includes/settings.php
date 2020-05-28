@@ -42,15 +42,14 @@ function instant_img_admin_init(){
 	);
 
 	// Button Display
-	/*
 		add_settings_field(
-			'instant_img_btn_display',
-			__('Button', 'instant-images' ),
-			'instant_images_button_display_callback',
-			'instant-images',
-			'unsplash_general_settings'
-		);
-	*/
+		'instant_img_btn_display',
+		__('Button', 'instant-images' ),
+		'instant_images_button_display_callback',
+		'instant-images',
+		'unsplash_general_settings'
+	);
+	
 }
 
 
@@ -133,7 +132,7 @@ function instant_images_button_display_callback(){
 	$html .= '<label for="instant_img_btn_display" style="padding-left: 24px; position: relative;">';
 		$html .= '<input type="hidden" name="instant_img_settings[instant_img_btn_display]" value="0" />';
 		$html .= '<input '. $style .' type="checkbox" name="instant_img_settings[instant_img_btn_display]" id="instant_img_btn_display" value="1"'. (($options['instant_img_btn_display']) ? ' checked="checked"' : '') .' />';
-		$html .= __('Hide Instant Images button next to "Add Media" on post edit screens.', 'instant-images');
+		$html .= __('Hide Instant Images button next to "Add Media" on classic editor screens.', 'instant-images');
 	$html .= '</label>';
 
 	echo $html;

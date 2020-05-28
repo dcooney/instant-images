@@ -107,6 +107,92 @@ function instant_img_scripts(){
    InstantImages::instant_img_localize();
 
 }
+/**
+* instant_img_show_tabs
+* Show tab to upload image on post edit screens
+*
+* @return $show_tab boolean
+* @since 3.2.1
+*/
+function instant_img_show_tabs() {
+	$options = get_option( 'instant_img_settings' );	
+	$show_tab = true;
+	if(isset($options['instant_img_btn_display'])){
+		if($options['instant_img_btn_display'] == 1){			
+			$show_tab = false; // Hide the tab
+		} 
+	}
+	
+	return $show_tab;
+}  
+	
+	
+	
+/**
+* instant_img_media_upload_tabs_handler
+* Add tab to media upload window
+*
+* @since 3.2.1
+*/
+function instant_img_media_upload_tabs_handler($tabs) {   
+	$options = get_option( 'instant_img_settings' );
+	$show_tab = instant_img_show_tabs();
+	
+	if($show_tab){
+		$newtab = array ( 'instant_img_tab' => __('Instant Images', 'instant-images') );	
+	   $tabs = array_merge( $tabs, $newtab );
+		return $tabs; 
+	}
+}
+add_filter('media_upload_tabs', 'instant_img_media_upload_tabs_handler');
+
+
+
+/**
+* instant_img_media_buttons_context_handler
+* Add pop up content to edit, new and post pages
+*
+* @since 3.2.1
+*/
+function instant_img_media_buttons() { 
+	$show_tab = instant_img_show_tabs();
+	if($show_tab){
+		echo '<a href="'.add_query_arg('tab', 'instant_img_tab', esc_url(get_upload_iframe_src())).'" class="thickbox button" title="'.esc_attr__('Instant Images', 'instant-images').'">&nbsp;'. __('Instant Images', 'instant-images') .'&nbsp;</a>'; 
+	}
+}
+add_filter('media_buttons', 'instant_img_media_buttons');
+
+
+
+/**
+* media_upload_instant_images_handler
+* Add instant images to the iframe
+*
+* @since 3.2.1
+*/
+function media_upload_instant_images_handler() {
+	wp_iframe('media_instant_img_tab'); 
+}
+add_action('media_upload_instant_img_tab', 'media_upload_instant_images_handler');
+
+
+
+/**
+* media_instant_img_popup_content
+* Add pop up content to edit, new and post pages
+*
+* @since 2.0
+*/
+function media_instant_img_tab() {
+	//media_upload_header();
+   instant_img_scripts();
+   $show_settings = false;
+   ?> 
+   <div class="instant-img-container editor" data-media-popup="true">
+      <?php include( INSTANT_IMG_PATH . 'admin/views/unsplash.php'); ?>         
+   </div>
+<?php
+}
 
 
 

@@ -7,21 +7,17 @@ Author: Darren Cooney
 Twitter: @connekthq
 Author URI: https://connekthq.com
 Text Domain: instant-images
-Version: 4.3.1
+Version: 4.3.2
 License: GPL
 Copyright: Darren Cooney & Connekt Media
-
-* FIX - Fixed issue with Instant Images causing Yoast SEO metabox to not show correctly in the classic editor. Not really sure why, but the Instant Images JS dependencies seemed to interfere with Yoast.
-* FIX - Added user privedges checks to the new Media Modal functionality.
-
 */
 
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 
-define('INSTANT_IMAGES_VERSION', '4.3.1');
-define('INSTANT_IMAGES_RELEASE', 'April 13, 2019');
+define('INSTANT_IMAGES_VERSION', '4.3.2');
+define('INSTANT_IMAGES_RELEASE', 'May 28, 2020');
 
 
 /*
@@ -147,7 +143,8 @@ class InstantImages {
    			'error_msg_title' => __('Error accessing Unsplash API', 'instant-images'),
    			'error_msg_desc' => __('Please check your Application ID.', 'instant-images'),
    			'error_upload' => __('There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images'),
-   			'error_restapi' => __('There was an error accessing the WP REST API - Instant Images requires access to the WP REST API to fetch and upload images to your media library.', 'instant-images'),
+   			'error_restapi' => '<strong>'. __('There was an error accessing the WP REST API.', 'instant-images') .'</strong><br/>', 
+   			'error_restapi_desc' => __('Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images'),
    			'photo_by' => __('Photo by', 'instant-images'),
    			'view_all' => __('View All Photos by', 'instant-images'),
    			'upload' => __('Click Image to Upload', 'instant-images'),

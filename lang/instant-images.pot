@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Instant Images\n"
-"POT-Creation-Date: 2020-04-09 11:06-0400\n"
+"POT-Creation-Date: 2020-05-28 06:22-0400\n"
 "PO-Revision-Date: 2017-09-21 10:40-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: src\n"
 "X-Poedit-SearchPathExcluded-2: webpack\n"
 
-#: admin/admin.php:181 admin/admin.php:200 instant-images.php:133
+#: admin/admin.php:142 admin/admin.php:160 instant-images.php:133
 msgid "Instant Images"
 msgstr ""
 
@@ -47,24 +47,29 @@ msgstr ""
 msgid "Upload Image Height"
 msgstr ""
 
-#: admin/includes/settings.php:66 admin/includes/unsplash-settings.php:7
+#: admin/includes/settings.php:47
+msgid "Button"
+msgstr ""
+
+#: admin/includes/settings.php:65 admin/includes/unsplash-settings.php:7
 msgid "Manage your media upload settings"
 msgstr ""
 
-#: admin/includes/settings.php:95
+#: admin/includes/settings.php:94
 msgid "Max Image Upload Width:"
 msgstr ""
 
-#: admin/includes/settings.php:114
+#: admin/includes/settings.php:113
 msgid "Max Image Upload Height:"
 msgstr ""
 
-#: admin/includes/settings.php:132
+#: admin/includes/settings.php:131
 msgid "Button:"
 msgstr ""
 
-#: admin/includes/settings.php:136
-msgid "Hide Instant Images button next to \"Add Media\" on post edit screens."
+#: admin/includes/settings.php:135
+msgid ""
+"Hide Instant Images button next to \"Add Media\" on classic editor screens."
 msgstr ""
 
 #: admin/includes/unsplash-settings.php:16
@@ -128,152 +133,156 @@ msgid ""
 msgstr ""
 
 #: instant-images.php:146
-msgid ""
-"There was an error accessing the WP REST API - Instant Images requires "
-"access to the WP REST API to fetch and upload images to your media library."
+msgid "There was an error accessing the WP REST API."
 msgstr ""
 
 #: instant-images.php:147
-msgid "Photo by"
+msgid ""
+"Instant Images requires access to the WP REST API via <u>POST</u> request to "
+"fetch and upload images to your media library."
 msgstr ""
 
 #: instant-images.php:148
-msgid "View All Photos by"
+msgid "Photo by"
 msgstr ""
 
 #: instant-images.php:149
-msgid "Click Image to Upload"
+msgid "View All Photos by"
 msgstr ""
 
 #: instant-images.php:150
-msgid "Click to Upload"
+msgid "Click Image to Upload"
 msgstr ""
 
 #: instant-images.php:151
-msgid "View Full Size"
+msgid "Click to Upload"
 msgstr ""
 
 #: instant-images.php:152
-msgid "Like"
+msgid "View Full Size"
 msgstr ""
 
 #: instant-images.php:153
-msgid "Likes"
+msgid "Like"
 msgstr ""
 
 #: instant-images.php:154
-msgid "Downloading image..."
+msgid "Likes"
 msgstr ""
 
 #: instant-images.php:155
-msgid "Creating image sizes..."
+msgid "Downloading image..."
 msgstr ""
 
 #: instant-images.php:156
-msgid "Still resizing..."
+msgid "Creating image sizes..."
 msgstr ""
 
 #: instant-images.php:157
-msgid "Sorry, nothing matched your query"
+msgid "Still resizing..."
 msgstr ""
 
 #: instant-images.php:158
-msgid "Please try adjusting your search criteria"
+msgid "Sorry, nothing matched your query"
 msgstr ""
 
 #: instant-images.php:159
-msgid "New"
+msgid "Please try adjusting your search criteria"
 msgstr ""
 
 #: instant-images.php:160
-msgid "Oldest"
+msgid "New"
 msgstr ""
 
 #: instant-images.php:161
-msgid "Popular"
+msgid "Oldest"
 msgstr ""
 
 #: instant-images.php:162
-msgid "Load More Images"
+msgid "Popular"
 msgstr ""
 
 #: instant-images.php:163
-msgid "Search for Toronto + Coffee etc..."
+msgid "Load More Images"
 msgstr ""
 
 #: instant-images.php:164
-msgid "images found for"
+msgid "Search for Toronto + Coffee etc..."
 msgstr ""
 
 #: instant-images.php:165
-msgid "Clear Search Results"
+msgid "images found for"
 msgstr ""
 
 #: instant-images.php:166
-msgid "View on Unsplash"
+msgid "Clear Search Results"
 msgstr ""
 
 #: instant-images.php:167
-msgid "Set as Featured Image"
+msgid "View on Unsplash"
 msgstr ""
 
 #: instant-images.php:168
-msgid "Insert Into Post"
+msgid "Set as Featured Image"
 msgstr ""
 
 #: instant-images.php:169
-msgid "Filename"
+msgid "Insert Into Post"
 msgstr ""
 
 #: instant-images.php:170
-msgid "Title"
+msgid "Filename"
 msgstr ""
 
 #: instant-images.php:171
-msgid "Alt Text"
+msgid "Title"
 msgstr ""
 
 #: instant-images.php:172
-msgid "Caption"
+msgid "Alt Text"
 msgstr ""
 
 #: instant-images.php:173
-msgid "Edit Attachment Details"
+msgid "Caption"
 msgstr ""
 
 #: instant-images.php:174
-msgid "Edit Image Details"
+msgid "Edit Attachment Details"
 msgstr ""
 
 #: instant-images.php:175
-msgid "Update and save image details prior to uploading"
+msgid "Edit Image Details"
 msgstr ""
 
 #: instant-images.php:176
-msgid "Cancel"
+msgid "Update and save image details prior to uploading"
 msgstr ""
 
 #: instant-images.php:177
-msgid "Save"
+msgid "Cancel"
 msgstr ""
 
 #: instant-images.php:178
-msgid "Upload"
+msgid "Save"
 msgstr ""
 
 #: instant-images.php:179
-msgid "Image Orientation"
+msgid "Upload"
 msgstr ""
 
 #: instant-images.php:180
-msgid "Landscape"
+msgid "Image Orientation"
 msgstr ""
 
 #: instant-images.php:181
-msgid "Portrait"
+msgid "Landscape"
 msgstr ""
 
 #: instant-images.php:182
+msgid "Portrait"
+msgstr ""
+
+#: instant-images.php:183
 msgid "Squarish"
 msgstr ""
 

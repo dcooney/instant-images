@@ -119,7 +119,7 @@ class Photo extends React.Component {
          }
 	  	}
       
-      axios.put(api, JSON.stringify(data), config)
+      axios.post(api, JSON.stringify(data), config)
       .then(function (res) {
          
          let response = res.data;
@@ -171,13 +171,15 @@ class Photo extends React.Component {
                }   
                                              
                              
-            }else{
+            }
+            else{
 	            // Error
 	            self.uploadError(target, photo, notice, msg);
 	            
             }
             
-         } else {
+         } 
+         else {
             // Error
             self.uploadError(target, photo, notice, instant_img_localize.error_upload); 
          }

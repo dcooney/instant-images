@@ -70,10 +70,10 @@ class PhotoList extends React.Component {
       
       let testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route      
       var restAPITest = new XMLHttpRequest();
-      restAPITest.open('GET', testURL, true);
+      restAPITest.open('POST', testURL, true);
       restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
       restAPITest.setRequestHeader('Content-Type', 'application/json');
-      restAPITest.send();
+      restAPITest.send(); 
       
       restAPITest.onload = function() {
          if (restAPITest.status >= 200 && restAPITest.status < 400) { // Success
@@ -100,7 +100,7 @@ class PhotoList extends React.Component {
    
    renderTestError(target){
       target.classList.add('active');
-      target.innerHTML = instant_img_localize.error_restapi;
+      target.innerHTML = instant_img_localize.error_restapi + instant_img_localize.error_restapi_desc;
    }
    
    

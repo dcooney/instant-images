@@ -29455,7 +29455,7 @@ var Photo = function (_React$Component) {
             }
          };
 
-         _axios2.default.put(api, JSON.stringify(data), config).then(function (res) {
+         _axios2.default.post(api, JSON.stringify(data), config).then(function (res) {
 
             var response = res.data;
 
@@ -30281,7 +30281,7 @@ var PhotoList = function (_React$Component) {
 
 			var testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route      
 			var restAPITest = new XMLHttpRequest();
-			restAPITest.open('GET', testURL, true);
+			restAPITest.open('POST', testURL, true);
 			restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
 			restAPITest.setRequestHeader('Content-Type', 'application/json');
 			restAPITest.send();
@@ -30311,7 +30311,7 @@ var PhotoList = function (_React$Component) {
 		key: 'renderTestError',
 		value: function renderTestError(target) {
 			target.classList.add('active');
-			target.innerHTML = instant_img_localize.error_restapi;
+			target.innerHTML = instant_img_localize.error_restapi + instant_img_localize.error_restapi_desc;
 		}
 
 		/**

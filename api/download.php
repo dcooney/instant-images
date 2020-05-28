@@ -12,7 +12,7 @@ add_action( 'rest_api_init', function () {
    $my_endpoint = '/download';
    register_rest_route( $my_namespace, $my_endpoint, 
       array(
-         'methods' => 'PUT',
+         'methods' => 'POST',
          'callback' => 'instant_images_download',
       )
    );

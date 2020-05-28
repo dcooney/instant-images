@@ -12,7 +12,7 @@ add_action( 'rest_api_init', function () {
    $my_endpoint = '/test';
    register_rest_route( $my_namespace, $my_endpoint, 
       array(
-         'methods' => 'GET',
+         'methods' => 'POST',
          'callback' => 'instant_images_test',
       )
    );
@@ -24,7 +24,7 @@ add_action( 'rest_api_init', function () {
 *  test
 *  Test REST API access
 *
-*  @param $request      $_POST
+*  @param $request      $_PUT
 *  @return $response    json
 *  @since 3.2
 
