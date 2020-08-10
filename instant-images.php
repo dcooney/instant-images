@@ -7,7 +7,7 @@ Author: Darren Cooney
 Twitter: @connekthq
 Author URI: https://connekthq.com
 Text Domain: instant-images
-Version: 4.3.2
+Version: 4.3.3
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -16,8 +16,8 @@ Copyright: Darren Cooney & Connekt Media
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 
-define('INSTANT_IMAGES_VERSION', '4.3.2');
-define('INSTANT_IMAGES_RELEASE', 'May 28, 2020');
+define('INSTANT_IMAGES_VERSION', '4.3.3');
+define('INSTANT_IMAGES_RELEASE', 'August 10, 2020');
 
 
 /*
@@ -62,31 +62,30 @@ function instant_images_deactivate() {
 register_deactivation_hook( __FILE__, 'instant_images_deactivate' );
 
 
-
 class InstantImages {
 
    function __construct() {
-		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array(&$this, 'instant_images_add_action_links') );
-		add_action( 'enqueue_block_editor_assets', array(&$this, 'instant_img_block_enqueue') ); // Blocks
-		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain
 
+		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array(&$this, 'instant_images_add_action_links') );
+		//add_action( 'enqueue_block_editor_assets', array(&$this, 'instant_img_block_enqueue') );
+		add_action( 'wp_enqueue_media', array(&$this, 'instant_img_block_enqueue') );
+		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain
       $this->includes();
       $this->constants();
 	}
 
 
-
-   /**
-    * instant_img_block_enqueue
-    * Enqueue script for Gutenberg Blocks
-    *
-	 *  @since 4.0
-    */
+	/**
+	 * Enqueue script for Media Modal and Blocks sidebar
+	 * @since 4.0
+	 */
    function instant_img_block_enqueue() {
-	   $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off
-	   if (is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'upload_files') )){
 
-	   	// Plugin Sidebar
+	   $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off
+
+		if (is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'upload_files') )){
+
+	   	// Block Sidebar (Gutenberg Plugin)
 	   	wp_enqueue_script(
 	   		'instant-images-block',
 	   		INSTANT_IMG_URL. 'dist/js/instant-images-block'. $suffix .'.js',
@@ -95,38 +94,41 @@ class InstantImages {
 	   		true
 	   	);
 
-	   	// Media Router
-	   	wp_enqueue_script(
-	   		'instant-images-media-router',
-	   		INSTANT_IMG_URL. 'dist/js/instant-images-media'. $suffix .'.js',
-	   		array( 'wp-edit-post'),
-	   		INSTANT_IMAGES_VERSION,
-	   		true
-	   	);
+			$show_media_tab = $this::instant_img_show_tab('media_modal_display');  // Show Tab Setting
+			if($show_media_tab){
+				// Media Router
+				wp_enqueue_script(
+					'instant-images-media-router',
+					INSTANT_IMG_URL. 'dist/js/instant-images-media'. $suffix .'.js',
+					array( 'wp-edit-post'),
+					INSTANT_IMAGES_VERSION,
+					true
+				);
+			}
 
 	   	// CSS
-	      wp_enqueue_style( 'admin-instant-images', INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css', '', INSTANT_IMAGES_VERSION );
+	      wp_enqueue_style(
+				'admin-instant-images',
+				INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css',
+				'',
+				INSTANT_IMAGES_VERSION
+			);
 
-	      InstantImages::instant_img_localize( 'instant-images-block' );
+	      $this::instant_img_localize( 'instant-images-block' );
 
       }
    }
 
-
-
-   /**
-    * instant_img_localize
-    * Localization strings
-    *
-	 *  @since 2.0
-    */
+	/**
+	 * Localization strings and settings
+	 * @since 2.0
+	 */
    public static function instant_img_localize($script = 'instant-images-react'){
 
 		global $post;
       $options = get_option( 'instant_img_settings' );
       $download_w = isset($options['unsplash_download_w']) ? $options['unsplash_download_w'] : 1600; // width of download file
       $download_h = isset($options['unsplash_download_h']) ? $options['unsplash_download_h'] : 1200; // height of downloads
-
 
       wp_localize_script(
    		$script, 'instant_img_localize', array(
@@ -143,7 +145,7 @@ class InstantImages {
    			'error_msg_title' => __('Error accessing Unsplash API', 'instant-images'),
    			'error_msg_desc' => __('Please check your Application ID.', 'instant-images'),
    			'error_upload' => __('There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images'),
-   			'error_restapi' => '<strong>'. __('There was an error accessing the WP REST API.', 'instant-images') .'</strong><br/>', 
+   			'error_restapi' => '<strong>'. __('There was an error accessing the WP REST API.', 'instant-images') .'</strong><br/>',
    			'error_restapi_desc' => __('Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images'),
    			'photo_by' => __('Photo by', 'instant-images'),
    			'view_all' => __('View All Photos by', 'instant-images'),
@@ -186,33 +188,47 @@ class InstantImages {
    }
 
 
-
 	/**
-	 *  includes
 	 *  Include these files in the admin
-	 *
 	 *  @since 2.0
 	 */
 	private function includes(){
 		if( is_admin()){
-			include_once('admin/admin.php');
-			include_once('admin/includes/settings.php');
-			include_once('vendor/connekt-plugin-installer/class-connekt-plugin-installer.php');
+			require_once __DIR__ . '/admin/admin.php';
+			require_once __DIR__ . '/admin/includes/settings.php';
+			require_once __DIR__ . '/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php';
 		}
 		// REST API Routes
 		include_once('api/test.php');
 		include_once('api/download.php');
-   }
+	}
 
 
+	/**
+	 * Show tab to upload image on post edit screens
+	 * @return $show boolean
+	 * @since 3.2.1
+	 */
+	public static function instant_img_show_tab($option) {
+		if(!$option){
+			return true;
+		}
+		$options = get_option( 'instant_img_settings' );
+		$show = true;
+		if(isset($options[ $option ])){
+			if($options[ $option ] == 1){
+				$show = false;
+			}
+		}
 
-	/*
-	*  constants
-	*  Include these files in the admin
-	*
-	*  @since 2.0
-	*/
+		return $show;
+	}
 
+
+	/**
+	 * Set plugin constants
+	 * @since 2.0
+	 */
 	private function constants(){
 		define('INSTANT_IMG_TITLE', 'Instant Images');
 		$upload_dir = wp_upload_dir();
@@ -224,16 +240,13 @@ class InstantImages {
 		define('INSTANT_IMG_WPADMIN_URL', admin_url( 'upload.php?page=instant-images' ));
 		define('INSTANT_IMG_NAME', 'instant-images');
 		define('INSTANT_IMG_DEFAULT_APP_ID', '5746b12f75e91c251bddf6f83bd2ad0d658122676e9bd2444e110951f9a04af8');
-   }
+	}
 
 
-
-   /*
-	*  instant_images_add_action_links
-	*  Add custom links to plugins.php
-	*
-	*  @since 2.0
-	*/
+	/**
+	 * Add custom links to plugins.php
+	 * @since 2.0
+	 */
    function instant_images_add_action_links ( $links ) {
       $mylinks = array(
          '<a href="' . INSTANT_IMG_WPADMIN_URL . '">Upload Photos</a>',

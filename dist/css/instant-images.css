@@ -46,7 +46,7 @@ body.media_page_instant-images #wpfooter p {
   font-size: 14px;
   color: #666;
   position: relative;
-  /* 
+  /*
       Admin Screens - Setting page
       wp-admin/upload.php?page=instant-images
    */
@@ -117,8 +117,8 @@ body.media_page_instant-images #wpfooter p {
 }
 
 .instant-img-container .error-messaging.active:before {
-  font-family: 'FontAwesome';
-  content: '\F06A';
+  font-family: "FontAwesome";
+  content: "\F06A";
   display: block;
   left: 17px;
   top: 50%;
@@ -163,9 +163,26 @@ body.media_page_instant-images #wpfooter p {
   }
 }
 
+.instant-img-container .header-wrap h1 em {
+  font-weight: 400;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.055);
+  color: rgba(0, 0, 0, 0.5);
+  display: inline-block;
+  -webkit-border-radius: 2px;
+          border-radius: 2px;
+  padding: 3px 3px;
+  position: relative;
+  top: -2px;
+  left: 2px;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
+  font-style: normal;
+  line-height: 1;
+}
+
 .instant-img-container .header-wrap h1 span {
   display: block;
-  padding: 8px 0 0;
+  padding: 3px 0 0;
   color: #888;
   font-size: 15px;
   font-weight: 400;
@@ -281,8 +298,8 @@ body.media_page_instant-images #wpfooter p {
   margin-top: 0;
 }
 
-/* 
- * Settings 
+/*
+ * Settings
  */
 .instant-img-container .save-settings p.submit {
   float: left;
@@ -298,7 +315,7 @@ body.media_page_instant-images #wpfooter p {
   background: #fff url(../img/ajax-loader.gif) no-repeat center center;
 }
 
-/* 
+/*
  * Thickbox styles
  */
 #TB_ajaxContent {
@@ -342,7 +359,7 @@ body.media_page_instant-images #wpfooter p {
 
 .instant-img-container .form-table td {
   border-top: 0;
-  padding: 5px 0 20px;
+  padding: 0 0 15px;
   float: left;
   width: 100%;
   margin: 0;
@@ -411,8 +428,8 @@ body.media_page_instant-images #wpfooter p {
   display: none;
 }
 
-.instant-img-container input[type=text],
-.instant-img-container input[type=number],
+.instant-img-container input[type="text"],
+.instant-img-container input[type="number"],
 .instant-img-container textarea {
   padding: 10px;
   line-height: 1;
@@ -424,7 +441,7 @@ body.media_page_instant-images #wpfooter p {
   height: auto;
 }
 
-.instant-img-container input[type=text]:focus,
+.instant-img-container input[type="text"]:focus,
 .instant-img-container textarea:focus {
   border-color: #999;
   -webkit-box-shadow: 0 0 3px #ccc;
@@ -608,7 +625,7 @@ input:-webkit-autofill {
 }
 
 .instant-img-container .control-nav li.search-field .searchResults:before {
-  border-color: transparent;
+  border-color: rgba(0, 0, 0, 0);
   border-left-color: #ebebae;
   border-width: 7px;
   margin-top: -7px;
