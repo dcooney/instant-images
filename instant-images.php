@@ -7,7 +7,7 @@ Author: Darren Cooney
 Twitter: @connekthq
 Author URI: https://connekthq.com
 Text Domain: instant-images
-Version: 4.3.3
+Version: 4.3.4
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -16,8 +16,8 @@ Copyright: Darren Cooney & Connekt Media
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 
-define('INSTANT_IMAGES_VERSION', '4.3.3');
-define('INSTANT_IMAGES_RELEASE', 'August 10, 2020');
+define('INSTANT_IMAGES_VERSION', '4.3.4');
+define('INSTANT_IMAGES_RELEASE', 'August 11, 2020');
 
 
 /*
@@ -67,8 +67,8 @@ class InstantImages {
    function __construct() {
 
 		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array(&$this, 'instant_images_add_action_links') );
-		//add_action( 'enqueue_block_editor_assets', array(&$this, 'instant_img_block_enqueue') );
-		add_action( 'wp_enqueue_media', array(&$this, 'instant_img_block_enqueue') );
+		add_action( 'enqueue_block_editor_assets', array(&$this, 'instant_img_block_plugin_enqueue') );
+		add_action( 'wp_enqueue_media', array(&$this, 'instant_img_wp_media_enqueue') );
 		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain
       $this->includes();
       $this->constants();
@@ -76,47 +76,67 @@ class InstantImages {
 
 
 	/**
-	 * Enqueue script for Media Modal and Blocks sidebar
-	 * @since 4.0
+	 * Enqueue Gutenberg Block sidebar plugin
 	 */
-   function instant_img_block_enqueue() {
+	function instant_img_block_plugin_enqueue(){
 
-	   $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off
-
-		if (is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'upload_files') )){
+		if ( $this::instant_img_has_access() ){
 
 	   	// Block Sidebar (Gutenberg Plugin)
 	   	wp_enqueue_script(
 	   		'instant-images-block',
 	   		INSTANT_IMG_URL. 'dist/js/instant-images-block'. $suffix .'.js',
-	   		array( 'wp-edit-post'),
+	   		'',
 	   		INSTANT_IMAGES_VERSION,
 	   		true
-	   	);
+			);
 
-			$show_media_tab = $this::instant_img_show_tab('media_modal_display');  // Show Tab Setting
-			if($show_media_tab){
-				// Media Router
-				wp_enqueue_script(
-					'instant-images-media-router',
-					INSTANT_IMG_URL. 'dist/js/instant-images-media'. $suffix .'.js',
-					array( 'wp-edit-post'),
-					INSTANT_IMAGES_VERSION,
-					true
-				);
-			}
-
-	   	// CSS
+			// CSS
 	      wp_enqueue_style(
+				'admin-instant-images',
+				INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css',
+				array( 'wp-edit-post'),
+				INSTANT_IMAGES_VERSION
+			);
+
+			$this::instant_img_localize( 'instant-images-block' );
+
+		}
+	}
+
+
+	/**
+	 * Enqueue script for Media Modal and Blocks sidebar
+	 * @since 4.0
+	 */
+   function instant_img_wp_media_enqueue() {
+
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries for SCRIPT_DEBUG
+		$show_media_tab = $this::instant_img_show_tab('media_modal_display');  // Show Tab Setting
+
+		if ( $this::instant_img_has_access() && $show_media_tab ){
+
+			// Media Router
+			wp_enqueue_script(
+				'instant-images-media-router',
+				INSTANT_IMG_URL. 'dist/js/instant-images-media'. $suffix .'.js',
+				'',
+				INSTANT_IMAGES_VERSION,
+				true
+			);
+
+			// CSS
+			wp_enqueue_style(
 				'admin-instant-images',
 				INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css',
 				'',
 				INSTANT_IMAGES_VERSION
 			);
 
-	      $this::instant_img_localize( 'instant-images-block' );
+			$this::instant_img_localize( 'instant-images-media-router' );
 
-      }
+		}
+
    }
 
 	/**
@@ -222,6 +242,20 @@ class InstantImages {
 		}
 
 		return $show;
+	}
+
+
+	/**
+	 * Confirm user has access to instant images
+	 * @since 4.3.3.1
+	 * @return {Boolean}
+	 */
+	public static function instant_img_has_access(){
+		$access = false;
+		if( is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'upload_files') ) ){
+			$access = true;
+		}
+		return $access;
 	}
 
 

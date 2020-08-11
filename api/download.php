@@ -10,7 +10,7 @@
 add_action( 'rest_api_init', function () {
    $my_namespace = 'instant-images';
    $my_endpoint = '/download';
-   register_rest_route( $my_namespace, $my_endpoint, 
+   register_rest_route( $my_namespace, $my_endpoint,
       array(
          'methods' => 'POST',
          'callback' => 'instant_images_download',
@@ -30,19 +30,19 @@ add_action( 'rest_api_init', function () {
 */
 
 function instant_images_download( WP_REST_Request $request ) {
-   
-	if (is_user_logged_in() && current_user_can( apply_filters('instant_images_user_role', 'upload_files') )){
-   	   	
+
+	if ( InstantImages::instant_img_has_access() ){
+
 		error_reporting(E_ALL|E_STRICT);
-		
+
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
-		require_once( ABSPATH . 'wp-admin/includes/image.php' );				
-            
+		require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
       // Get JSON Data
       $data = json_decode($request->get_body(), true); // Get contents of request body
-      
+
       if($data){
-	      
+
          $id = $data['id']; // ID
          $image_url = $data['image_url']; // Image URL
          $filename = sanitize_text_field($data['filename']); // $filename
@@ -51,11 +51,11 @@ function instant_images_download( WP_REST_Request $request ) {
          $caption = sanitize_text_field($data['caption']); // Caption text
          $custom_filename = sanitize_title($data['custom_filename']); // Custom filename
          $parent_id = ($data['parent_id']) ? sanitize_title($data['parent_id']) : 0; // Parent Post
-         
+
          // Actual filename
          $name = (!empty($custom_filename)) ? $custom_filename .'.jpg' : $filename;
-   		
-   		
+
+
    		// Check if remote file exists
    		if( !instant_images_remote_file_exists( $image_url ) ){
 	   		// Error
@@ -65,25 +65,25 @@ function instant_images_download( WP_REST_Request $request ) {
 	      		'id' => $id,
 	      		'attachment' => '',
 	      		'admin_url' => admin_url(),
-	   		);  
+	   		);
 	         wp_send_json($response);
 			}
-			
-   		
-   		// Send request to `wp_remote_get`	
+
+
+   		// Send request to `wp_remote_get`
 			$response = wp_remote_get( $image_url );
 			if ( is_wp_error( $response ) ) {
 			   return new WP_Error( 100, __( 'Image download failed, please try again. Errors:', 'instant-images' ) . PHP_EOL . $response->get_error_message() );
 			}
-			
+
 			// Get Headers
 			$type = wp_remote_retrieve_header( $response, 'content-type' );
 			if (!$type) {
 			   return new WP_Error( 100, __( 'Image type could not be determined', 'instant-images' ) );
-			}    
-			
+			}
+
 			// Upload remote file
-	      $mirror = wp_upload_bits( $name, '', wp_remote_retrieve_body( $response ) );   
+	      $mirror = wp_upload_bits( $name, '', wp_remote_retrieve_body( $response ) );
 
 
 	      // Build Attachment Data Array
@@ -93,25 +93,25 @@ function instant_images_download( WP_REST_Request $request ) {
 		     'post_content' 		=> '',
 		     'post_status' 		=> 'inherit',
 		     'post_mime_type' 	=> $type
-	      );	           
-   	      
-   	      
+	      );
+
+
    	   // Insert as attachment
    	   $image_id = wp_insert_attachment($attachment, $mirror['file'], $parent_id);
-   	      
-   	      
+
+
    	   // Add Alt Text as Post Meta
-         update_post_meta( $image_id, '_wp_attachment_image_alt', $alt ); 
-         
-         
+         update_post_meta( $image_id, '_wp_attachment_image_alt', $alt );
+
+
          // Generate Metadata
 	      $attach_data = wp_generate_attachment_metadata( $image_id, $mirror['file'] );
 	      wp_update_attachment_metadata( $image_id, $attach_data );
-	          
-   	   
+
+
    	   // Resize original image to max size (set in Instant Images settings)
    	   instant_images_resize_download($name);
-   	         
+
          // Success
          $response = array(
       		'success' => true,
@@ -124,21 +124,21 @@ function instant_images_download( WP_REST_Request $request ) {
 	      		'caption' => $caption
       		),
       		'admin_url' => admin_url(),
-   		);       
-         
+   		);
+
          wp_send_json($response);
-         
+
       } else {
-         
+
          $response = array(
       		'success' => false,
       		'msg' => __('There was an error getting image details from the request, please try again.', 'instant-images'),
       		'id' => '',
       		'attachment' => '',
       		'url' => ''
-   		);         
+   		);
          wp_send_json($response);
-         
+
       }
    }
 }
@@ -162,22 +162,22 @@ function instant_images_remote_file_exists( $url ) {
  * Resize original image to max size (set in Instant Images settings)
  *
  */
-  
+
 function instant_images_resize_download($filename){
-		
+
 	// WP Options
 	$options = get_option( 'instant_img_settings' );
    $download_w = isset($options['unsplash_download_w']) ? $options['unsplash_download_w'] : 1600; // width
-   $download_h = isset($options['unsplash_download_h']) ? $options['unsplash_download_h'] : 1200; // height	
-   
+   $download_h = isset($options['unsplash_download_h']) ? $options['unsplash_download_h'] : 1200; // height
+
 	require_once( ABSPATH . 'wp-admin/includes/file.php' );
 	require_once( ABSPATH . 'wp-admin/includes/image.php' );
-	
+
 	$uploads_dir = wp_upload_dir();
    $original_image = wp_get_image_editor( $uploads_dir['path']. '/'. $filename );
    if ( !is_wp_error( $original_image ) ) {
       $original_image->resize( $download_w, $download_h, false );
       $original_image->save( $uploads_dir['path']. '/'. $filename );
-   }  
-	
+   }
+
 }

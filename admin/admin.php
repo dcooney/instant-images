@@ -21,41 +21,15 @@ add_action( 'admin_menu', 'instant_img_create_page' );
 
 
 /**
- * Classic Editor Only - Add Instant Images scripts to post edit screens
- * @since 4.3
+ * Settings page callback
+ * @since 2.0
  */
-function instant_img_post_enqueue_scripts($hook) {
-
-	// Confirm User Privileges
-	if ( !current_user_can( apply_filters('instant_images_user_role', 'upload_files') ) ){
-		return false;
-	}
-
-	$show_media_tab = InstantImages::instant_img_show_tab('media_modal_display'); // Show Tab Setting
-	if( !$show_media_tab ){
-		return false;
-	}
-
-	// Exit if not post or edit screen
-	if ( $hook !== 'post-new.php' && $hook !== 'post.php' ) {
-		return false;
-	}
-
-	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
-	wp_enqueue_style( 'admin-instant-images', INSTANT_IMG_URL. 'dist/css/instant-images'. $suffix .'.css', '', INSTANT_IMAGES_VERSION );
-
-	wp_enqueue_script(
-		'instant-images-media-router',
-		INSTANT_IMG_URL. 'dist/js/instant-images-media'. $suffix .'.js',
-		array( 'jquery'),
-		INSTANT_IMAGES_VERSION,
-		true
-	);
-	InstantImages::instant_img_localize( 'instant-images-media-router' );
-
+function instant_img_settings_page(){
+	$show_settings = true;
+   echo '<div class="instant-img-container" data-media-popup="false">';
+      include( INSTANT_IMG_PATH . 'admin/views/unsplash.php');
+   echo '</div>';
 }
-add_action( 'admin_enqueue_scripts', 'instant_img_post_enqueue_scripts' );
 
 
 /**
@@ -100,21 +74,18 @@ function instant_img_scripts(){
  * @since 3.2.1
  */
 function instant_img_media_upload_tabs_handler($tabs) {
-
 	$show_media_tab = InstantImages::instant_img_show_tab('media_modal_display');
-
 	if($show_media_tab){
 		$newtab = array ( 'instant_img_tab' => __('Instant Images', 'instant-images') );
 	   $tabs = array_merge( $tabs, $newtab );
 		return $tabs;
 	}
-
 }
 add_filter('media_upload_tabs', 'instant_img_media_upload_tabs_handler');
 
 
 /**
- * Add pop up content to edit, new and post pages
+ * Add Instant Images media button to classic editor screens
  * @since 3.2.1
  */
 function instant_img_media_buttons() {
@@ -127,7 +98,7 @@ add_filter('media_buttons', 'instant_img_media_buttons');
 
 
 /**
- * Add instant images to the iframe
+ * Add instant images iframe to classic editor screens
  * @since 3.2.1
 */
 function media_upload_instant_images_handler() {
@@ -137,7 +108,7 @@ add_action('media_upload_instant_img_tab', 'media_upload_instant_images_handler'
 
 
 /**
- * Add pop up content to edit, new and post pages
+ * Add pop up content to edit, new and post pages on classic editor screens
  * @since 2.0
  */
 function media_instant_img_tab() {
@@ -148,18 +119,6 @@ function media_instant_img_tab() {
       <?php include( INSTANT_IMG_PATH . 'admin/views/unsplash.php'); ?>
    </div>
 <?php
-}
-
-
-/**
- * Settings page
- * @since 2.0
- */
-function instant_img_settings_page(){
-	$show_settings = true;
-   echo '<div class="instant-img-container" data-media-popup="false">';
-      include( INSTANT_IMG_PATH . 'admin/views/unsplash.php');
-   echo '</div>';
 }
 
 /**
