@@ -1,48 +1,44 @@
 <?php
-
-/*
-*  rest_api_init
-*  Custom /resize route
-*
-*  @since 3.0
-*/
+/**
+ * Custom /resize route
+ *
+ * @since 3.0
+ * @author dcooney
+ * @package instant-images
+ */
 
 add_action( 'rest_api_init', function () {
-   $my_namespace = 'instant-images';
-   $my_endpoint = '/test';
-   register_rest_route( $my_namespace, $my_endpoint,
-      array(
-         'methods' => 'POST',
-         'callback' => 'instant_images_test',
-      )
-   );
+	$my_namespace = 'instant-images';
+	$my_endpoint  = '/test';
+	register_rest_route(
+		$my_namespace,
+		$my_endpoint,
+		array(
+			'methods'             => 'POST',
+			'callback'            => 'instant_images_test',
+			'permission_callback' => function () {
+				return InstantImages::instant_img_has_access();
+			},
+		)
+	);
 });
 
-
-
-/*
-*  test
-*  Test REST API access
-*
-*  @param $request      $_PUT
-*  @return $response    json
-*  @since 3.2
-
-*/
-
+/**
+ * Test REST API access
+ *
+ * @param WP_REST_Request $request API request.
+ * @since 3.2
+ * @author dcooney
+ * @package instant-images
+ */
 function instant_images_test( WP_REST_Request $request ) {
 
-   if ( InstantImages::instant_img_has_access() ){
+	if ( InstantImages::instant_img_has_access() ) {
 
-      error_reporting(E_ALL|E_STRICT);
+		// Access is enable, send the response.
+		$response = array( 'success' => true );
 
-      // Access is enable, send the response
-      $response = array(
-         'success' => true
-      );
-
-      // Send response as JSON
-      wp_send_json($response);
-
-   }
+		// Send response as JSON.
+		wp_send_json( $response );
+	}
 }

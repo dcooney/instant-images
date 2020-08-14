@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
-Tested up to: 5.4.2
-Stable tag: 4.3.4
+Tested up to: 5.5
+Stable tag: 4.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,10 @@ How to install Instant Images.
 5. Gutenberg post edit screens. Add as featured image, insert into post or just upload photo.
 
 == Changelog ==
+
+= 4.3.5 - August 14, 2020 =
+* FIX - Fixed issue with WP 5.5 and REST API warning messages when `WP_DEBUG` is `true`.
+* FIX - Fixed issue with undefined `$suffix` variable when `WP_DEBUG` is `true`.
 
 = 4.3.4 - August 11, 2020 =
 * FIX - Fixed issue with Yoast SEO meta boxes not appearing in Classic Editor.
