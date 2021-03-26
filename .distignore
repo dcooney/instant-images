@@ -1,0 +1,15 @@
+/.wordpress-org
+/.git
+/.github
+/node_modules
+/src
+/webpack
+.distignore
+.babelrc
+.jshintrc
+.editorconfig
+package-lock.json
+package.json
+postcss.config.js
+webpack.config.js
+README.md

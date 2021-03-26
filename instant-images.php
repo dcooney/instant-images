@@ -7,7 +7,7 @@ Author: Darren Cooney
 Twitter: @connekthq
 Author URI: https://connekthq.com
 Text Domain: instant-images
-Version: 4.3.5
+Version: 4.4.0
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'INSTANT_IMAGES_VERSION', '4.3.5' );
-define( 'INSTANT_IMAGES_RELEASE', 'August 14, 2020' );
+define( 'INSTANT_IMAGES_VERSION', '4.4.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'March 26, 2021' );
 
 /**
  * Activation hook

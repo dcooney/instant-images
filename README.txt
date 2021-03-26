@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
-Tested up to: 5.5
-Stable tag: 4.3.5
+Tested up to: 5.7
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,7 @@ The perfect tool for users who want to save time and frustration by uploading im
 - **Theme/Plugin Developers** - A great tool for developers who want to prototype and develop using real world imagery.
 - **Gutenberg** - Instant Images directly integrates with Gutenberg as a plugin sidebar.
 - **Media Modal** - Instant Images is available as a tab in the WordPress Media Modal.
+- **Page Builders** - Instant Images integrates with page builders such as Elementor, Beaver Builder, Brizy and Divi.
 - **Edit Image Metadata** - Easily edit image filename, alt text and caption prior to uploading to your media library.
 - **Accessibility** - Automatically include a relevant alt description for screen readers, visually reduced users, and SEO.
 - **Easy to Use** - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
@@ -120,33 +121,43 @@ How to install Instant Images.
 3. Image Metadata - Easily edit image filename, alt text and caption prior to uploading to your media library.
 4. Post/Page Edit - Unsplash images in a lightbox on your post edit/new/post pages.
 5. Gutenberg post edit screens. Add as featured image, insert into post or just upload photo.
+6. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 4.4.0 - March 26, 2021 =
+* UPDATE - 🎉 Massive improvement to image download speeds by [dynamically resizing](https://unsplash.com/documentation#dynamically-resizable-images) the initial download before sending image to media library.
+  * Intitial testing revealed up to 4x faster download speeds than previous version of Instant Images 🤯.
+* NEW - Added `instant_images_after_upload` hook that is dispatch after a successful upload allowing users to hook into the attachment and run custom functionality.
+* UPDATE - Upgraded Axios JS libray to `0.21.1`.
+
 
 = 4.3.5 - August 14, 2020 =
 * FIX - Fixed issue with WP 5.5 and REST API warning messages when `WP_DEBUG` is `true`.
 * FIX - Fixed issue with undefined `$suffix` variable when `WP_DEBUG` is `true`.
 
+
 = 4.3.4 - August 11, 2020 =
 * FIX - Fixed issue with Yoast SEO meta boxes not appearing in Classic Editor.
 * UPDATE - Code cleanup and some refactoring of media enqueue scripts.
+
 
 = 4.3.3 - August 10, 2020 =
 * NEW - Adding Instant Images tab to Media Modal windows everywhere, including page builders and taxonomy terms pages.
 * NEW - Added new plugin setting to hide the Instant Images tab in the Media Modals
 
-= 4.3.2 - May 28, 2020 =
 
+= 4.3.2 - May 28, 2020 =
 - UPDATE - Switched REST API methods to `POST` requests from `PUT`. This will hopefully reduce issues users are having with `PUT` being disabled on their servers.
 - UPDATE - Added Instant Images media button back to Classic Editor post screen.
 
-= 4.3.1 - April 13, 2020 =
 
+= 4.3.1 - April 13, 2020 =
 - FIX - Fixed issue with Instant Images causing Yoast SEO metabox to not show correctly in the classic WordPress editor. Not really sure why, but the Instant Images JS dependencies seemed to interfere with Yoast.
 - FIX - Added user privileges checks to the new Media Modal functionality.
 
-= 4.3.0 - April 9, 2020 =
 
+= 4.3.0 - April 9, 2020 =
 - NEW - Adding `Instant Images` tab to the WordPress Media Modal.
 - NEW - When images are uploaded directly to a post the current Post ID is attached to the upload as the parent post.
 - NEW - Adding default alt text directly from Unsplash API.
@@ -154,24 +165,24 @@ How to install Instant Images.
 - UPDATE - Switching tab navigation from `<a/> to`<button/>` for better accessibility.
 - FIX - Added a fix for JS error regarding `PluginSidebar` registration on non-gutenberg editor pages.
 
-= 4.2.0 - December 14, 2019 =
 
+= 4.2.0 - December 14, 2019 =
 - NEW - Added image orientation search filter
 - FIX - Fixed issue with instant images being rendered in Gutenberg editor for users without permissions.
 - UPDATE - Updated WordPress role requirement from `edit_theme_options` to [`upload_files`](https://wordpress.org/support/article/roles-and-capabilities/#upload_files).
 
-= 4.1.0 - July 23, 2019 =
 
+= 4.1.0 - July 23, 2019 =
 - NEW - Added support for updating image title prior to upload.
 - NEW - Added link to edit image after upload process completes.
 - UPDATE - Updated functionality to trigger photo upload immediately after triggering a `Save` when editing image metadata.
 
-= 4.0.1 - April 18, 2019 =
 
+= 4.0.1 - April 18, 2019 =
 - FIX - Fixed issue where Instant Images sidebar plugin would not appear in Gutenberg if removed as a pinned item.
 
-= 4.0.0 - February 12, 2019 =
 
+= 4.0.0 - February 12, 2019 =
 - 4.0 adds Gutenberg support. You can now access instant images directly from inside the block editor.
 - NEW - Added Instant Images to Gutenberg as a Plugin Sidebar.
 - NEW - Added Gutenberg featured image support.
@@ -181,57 +192,10 @@ How to install Instant Images.
 - UPDATE - Updated REST API methods to prefix function names.
 - UPDATE - Various other UI/UX enhancements.
 
-= 3.3.0 - January 10, 2019 =
-
-- UPDATE - Removed cURL usage for downloading images in place of core `copy()` PHP function.
-- NEW - Adding Axios for HTTP requests
-- NEW - Removing `/instant-images` folder in uploads directory on plugin de-activation.
-- FIX - Added fix for directory permission issue when creating `uploads/instant-images`.
-
-= 3.2.1 - September 25, 2018 =
-
-- NEW - Added Instant Images to media upload tabs. You can now upload a photo and insert it into a page or page immediately. Please note, this is currently not working with the Gutenberg editor.
-- UPDATE - Better cURL error handling (hopefully).
-
-= 3.2 - July 31, 2018
-** NEW - Added functionality to edit image details (filename, alt text and caption) prior to uploading - edit image detail by clicking the options icon in the top right corner of each image 👍.
-** UPDATE - Improved error handling and messaging for common REST API and cURL issues.
-
-= 3.1.1 - June 15, 2018 =
-** NEW - More stable image uploading 🎉.
-** NEW - Added `instant_images_user_role` filter to allow for control over user capability.
-** FIX - Fixing permission issues with uploads when using basic HTTP authentication on domain.
-** UPDATE - Better error handling
-** UPDATE - Added permission 755 to the uploads/instant-images directory created on activation.
-
-= 3.1 - January 2, 2018 =
-** NEW - Adding support for searching individual photos by ID. Prefix a search term with `id:` to search by Unsplash ID. e.g. `id:ixddk_CepZY`.
-** UPDATED - Updated to meet revised Unsplash API guidelines.
-** UPDATED - Better Error messaging for upload/resize errors.
-** NEW - Added `clear search` button to remove search results.
-** FIX - Fixed JS error that occurred when `SCRIPT_DEBUG` was set to `true`.
-
 = 3.0 - September 21, 2017 =
 ** NEW - Instant Images has been completely re-built using React and the WordPress REST API.
 
-= 2.1.1 - June 6, 2017 =
-** NEW - Added infinite scroll while viewing Instant Images on large screens.
-** FIX - Fixed missing js file error in browser console.
-** UPDATE - Updated Masonry/Imagesloaded image load functionality.
-
-= 2.1 - May 12, 2017 =
-** UPDATE - Remove App ID setting - Unsplash API is now open for everyone without API limit restrictions.
-** UPDATE - Updating default image upload from 'Full' to 'Raw'. Raw files are significantly smaller size and should make uploads quicker on slower connections and help to reduce upload errors.
-** UPDATE - UI/UX tweaks and updates.
-** FIX - Updating media_buttons hook. Was causing issues with other plugins.
-
-= 2.0.1 - January 12, 2017 =
-
-- FIX - Update to `instant_img_resize_image` function to remove unnecessary function arguments. These args were causing issues on some servers.
-- NEW - Refresh Media Library content when uploading images through the Instant Images uploader on edit screen for posts and pages.
-- UI Enhancements
-
-= 2.0 =
+= 2.0 - January 12, 2017 =
 
 - Initial Commit
 - Updating plugin from UnsplashWP to Instant Images

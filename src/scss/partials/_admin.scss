@@ -393,17 +393,18 @@ body.media_page_instant-images {
 }
 
 /* Helpers */
-.spacer {
-	display: block;
-	height: 40px;
-	overflow: hidden;
-	clear: both;
-	width: 100%;
-	&.sm {
-		height: 20px;
+.instant-img-container {
+	.spacer {
+		display: block;
+		height: 40px;
+		overflow: hidden;
+		clear: both;
+		width: 100%;
+		&.sm {
+			height: 20px;
+		}
 	}
-}
-
-input:-webkit-autofill {
-	-webkit-box-shadow: 0 0 0px 1000px white inset;
+	input:-webkit-autofill {
+		-webkit-box-shadow: 0 0 0px 1000px white inset;
+	}
 }

@@ -57,8 +57,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * test()
-	 * Test access to the REST API
+	 * Test access to the REST API.
 	 *
 	 * @since 3.2
 	 */
@@ -104,8 +103,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * search()
-	 * Trigger Unsplash Search
+	 * Trigger Unsplash Search.
 	 *
 	 * @param e   element    the search form
 	 * @since 3.0
@@ -127,7 +125,6 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * setOrientation
 	 * Orientation filter. Availlable during a search only.
 	 *
 	 * @since 4.2
@@ -156,8 +153,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * hasOrientation
-	 * Is their an orientation set
+	 * Is their an orientation set.
 	 *
 	 * @since 4.2
 	 */
@@ -166,8 +162,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * clearOrientation
-	 * Clear the orientation
+	 * Clear the orientation.
 	 *
 	 * @since 4.2
 	 */
@@ -178,8 +173,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * doSearch
-	 * Run the search
+	 * Run the search.
 	 *
 	 * @param term   string    the search term
 	 * @param type   string    the type of search, standard or by ID
@@ -256,8 +250,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * clearSearch
-	 * Reset search results and results view
+	 * Reset search results and results view.
 	 *
 	 * @since 3.0
 	 */
@@ -271,8 +264,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * getPhotos
-	 * Load next set of photos, infinite scroll style
+	 * Load next set of photos, infinite scroll style.
 	 *
 	 * @since 3.0
 	 */
@@ -317,8 +309,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * togglePhotoList
-	 * Toogles the photo view (New/Popular/Old)
+	 * Toogles the photo view (New/Popular/Old).
 	 *
 	 * @param view   string    Current view
 	 * @param e      element   Clicked element
@@ -356,8 +347,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * renderLayout
-	 * Renders the Masonry layout
+	 * Renders the Masonry layout.
 	 *
 	 * @since 3.0
 	 */
@@ -378,8 +368,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * onScroll
-	 * Scrolling function
+	 * Scrolling function.
 	 *
 	 * @since 3.0
 	 */
@@ -393,7 +382,6 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * checkTotalResults
 	 * A checker to determine is there are remaining search results.
 	 *
 	 * @param num   int    Total search results
@@ -404,8 +392,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * setActiveState
-	 * Sets the main navigation active state
+	 * Sets the main navigation active state.
 	 *
 	 * @since 3.0
 	 */
@@ -430,8 +417,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * showTooltip
-	 * Show the tooltip
+	 * Show the tooltip.
 	 *
 	 * @since 4.3.0
 	 */
@@ -470,8 +456,7 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * hideTooltip
-	 * Hide the tooltip
+	 * Hide the tooltip.
 	 *
 	 * @since 4.3.0
 	 */

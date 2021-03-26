@@ -109,11 +109,12 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/axios/li
 
 var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
 var settle = __webpack_require__(/*! ./../core/settle */ "./node_modules/axios/lib/core/settle.js");
+var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/axios/lib/helpers/cookies.js");
 var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/axios/lib/helpers/buildURL.js");
+var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "./node_modules/axios/lib/core/buildFullPath.js");
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "./node_modules/axios/lib/helpers/btoa.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -125,38 +126,23 @@ module.exports = function xhrAdapter(config) {
     }
 
     var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if ( true &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
 
     // HTTP basic authentication
     if (config.auth) {
       var username = config.auth.username || '';
-      var password = config.auth.password || '';
+      var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
       requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
     }
 
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+    var fullPath = buildFullPath(config.baseURL, config.url);
+    request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
 
     // Set the request timeout in MS
     request.timeout = config.timeout;
 
     // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
         return;
       }
 
@@ -173,15 +159,26 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        status: request.status,
+        statusText: request.statusText,
         headers: responseHeaders,
         config: config,
         request: request
       };
 
       settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle browser request cancellation (as opposed to a manual cancellation)
+    request.onabort = function handleAbort() {
+      if (!request) {
+        return;
+      }
+
+      reject(createError('Request aborted', config, 'ECONNABORTED', request));
 
       // Clean up request
       request = null;
@@ -199,7 +196,11 @@ module.exports = function xhrAdapter(config) {
 
     // Handle timeout
     request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+      var timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
+      if (config.timeoutErrorMessage) {
+        timeoutErrorMessage = config.timeoutErrorMessage;
+      }
+      reject(createError(timeoutErrorMessage, config, 'ECONNABORTED',
         request));
 
       // Clean up request
@@ -210,12 +211,10 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/axios/lib/helpers/cookies.js");
-
       // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
+        cookies.read(config.xsrfCookieName) :
+        undefined;
 
       if (xsrfValue) {
         requestHeaders[config.xsrfHeaderName] = xsrfValue;
@@ -236,8 +235,8 @@ module.exports = function xhrAdapter(config) {
     }
 
     // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
+    if (!utils.isUndefined(config.withCredentials)) {
+      request.withCredentials = !!config.withCredentials;
     }
 
     // Add responseType to request if needed
@@ -277,7 +276,7 @@ module.exports = function xhrAdapter(config) {
       });
     }
 
-    if (requestData === undefined) {
+    if (!requestData) {
       requestData = null;
     }
 
@@ -302,6 +301,7 @@ module.exports = function xhrAdapter(config) {
 var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios/lib/utils.js");
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
 var Axios = __webpack_require__(/*! ./core/Axios */ "./node_modules/axios/lib/core/Axios.js");
+var mergeConfig = __webpack_require__(/*! ./core/mergeConfig */ "./node_modules/axios/lib/core/mergeConfig.js");
 var defaults = __webpack_require__(/*! ./defaults */ "./node_modules/axios/lib/defaults.js");
 
 /**
@@ -331,7 +331,7 @@ axios.Axios = Axios;
 
 // Factory for creating new instances
 axios.create = function create(instanceConfig) {
-  return createInstance(utils.merge(defaults, instanceConfig));
+  return createInstance(mergeConfig(axios.defaults, instanceConfig));
 };
 
 // Expose Cancel & CancelToken
@@ -344,6 +344,9 @@ axios.all = function all(promises) {
   return Promise.all(promises);
 };
 axios.spread = __webpack_require__(/*! ./helpers/spread */ "./node_modules/axios/lib/helpers/spread.js");
+
+// Expose isAxiosError
+axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "./node_modules/axios/lib/helpers/isAxiosError.js");
 
 module.exports = axios;
 
@@ -480,10 +483,11 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var defaults = __webpack_require__(/*! ./../defaults */ "./node_modules/axios/lib/defaults.js");
 var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "./node_modules/axios/lib/helpers/buildURL.js");
 var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "./node_modules/axios/lib/core/InterceptorManager.js");
 var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "./node_modules/axios/lib/core/dispatchRequest.js");
+var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "./node_modules/axios/lib/core/mergeConfig.js");
 
 /**
  * Create a new instance of Axios
@@ -507,13 +511,22 @@ Axios.prototype.request = function request(config) {
   /*eslint no-param-reassign:0*/
   // Allow for axios('example/url'[, config]) a la fetch API
   if (typeof config === 'string') {
-    config = utils.merge({
-      url: arguments[0]
-    }, arguments[1]);
+    config = arguments[1] || {};
+    config.url = arguments[0];
+  } else {
+    config = config || {};
   }
 
-  config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
-  config.method = config.method.toLowerCase();
+  config = mergeConfig(this.defaults, config);
+
+  // Set config.method
+  if (config.method) {
+    config.method = config.method.toLowerCase();
+  } else if (this.defaults.method) {
+    config.method = this.defaults.method.toLowerCase();
+  } else {
+    config.method = 'get';
+  }
 
   // Hook up interceptors middleware
   var chain = [dispatchRequest, undefined];
@@ -534,13 +547,19 @@ Axios.prototype.request = function request(config) {
   return promise;
 };
 
+Axios.prototype.getUri = function getUri(config) {
+  config = mergeConfig(this.defaults, config);
+  return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
+};
+
 // Provide aliases for supported request methods
 utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
   /*eslint func-names:0*/
   Axios.prototype[method] = function(url, config) {
-    return this.request(utils.merge(config || {}, {
+    return this.request(mergeConfig(config || {}, {
       method: method,
-      url: url
+      url: url,
+      data: (config || {}).data
     }));
   };
 });
@@ -548,7 +567,7 @@ utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData
 utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   /*eslint func-names:0*/
   Axios.prototype[method] = function(url, data, config) {
-    return this.request(utils.merge(config || {}, {
+    return this.request(mergeConfig(config || {}, {
       method: method,
       url: url,
       data: data
@@ -625,6 +644,38 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
+/***/ "./node_modules/axios/lib/core/buildFullPath.js":
+/*!******************************************************!*\
+  !*** ./node_modules/axios/lib/core/buildFullPath.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isAbsoluteURL = __webpack_require__(/*! ../helpers/isAbsoluteURL */ "./node_modules/axios/lib/helpers/isAbsoluteURL.js");
+var combineURLs = __webpack_require__(/*! ../helpers/combineURLs */ "./node_modules/axios/lib/helpers/combineURLs.js");
+
+/**
+ * Creates a new URL by combining the baseURL with the requestedURL,
+ * only when the requestedURL is not already an absolute URL.
+ * If the requestURL is absolute, this function returns the requestedURL untouched.
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} requestedURL Absolute or relative URL to combine
+ * @returns {string} The combined full path
+ */
+module.exports = function buildFullPath(baseURL, requestedURL) {
+  if (baseURL && !isAbsoluteURL(requestedURL)) {
+    return combineURLs(baseURL, requestedURL);
+  }
+  return requestedURL;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/lib/core/createError.js":
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/core/createError.js ***!
@@ -669,8 +720,6 @@ var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/util
 var transformData = __webpack_require__(/*! ./transformData */ "./node_modules/axios/lib/core/transformData.js");
 var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "./node_modules/axios/lib/cancel/isCancel.js");
 var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/axios/lib/defaults.js");
-var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ "./node_modules/axios/lib/helpers/isAbsoluteURL.js");
-var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ "./node_modules/axios/lib/helpers/combineURLs.js");
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -690,11 +739,6 @@ function throwIfCancellationRequested(config) {
 module.exports = function dispatchRequest(config) {
   throwIfCancellationRequested(config);
 
-  // Support baseURL config
-  if (config.baseURL && !isAbsoluteURL(config.url)) {
-    config.url = combineURLs(config.baseURL, config.url);
-  }
-
   // Ensure headers exist
   config.headers = config.headers || {};
 
@@ -709,7 +753,7 @@ module.exports = function dispatchRequest(config) {
   config.headers = utils.merge(
     config.headers.common || {},
     config.headers[config.method] || {},
-    config.headers || {}
+    config.headers
   );
 
   utils.forEach(
@@ -778,9 +822,129 @@ module.exports = function enhanceError(error, config, code, request, response) {
   if (code) {
     error.code = code;
   }
+
   error.request = request;
   error.response = response;
+  error.isAxiosError = true;
+
+  error.toJSON = function toJSON() {
+    return {
+      // Standard
+      message: this.message,
+      name: this.name,
+      // Microsoft
+      description: this.description,
+      number: this.number,
+      // Mozilla
+      fileName: this.fileName,
+      lineNumber: this.lineNumber,
+      columnNumber: this.columnNumber,
+      stack: this.stack,
+      // Axios
+      config: this.config,
+      code: this.code
+    };
+  };
   return error;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/mergeConfig.js":
+/*!****************************************************!*\
+  !*** ./node_modules/axios/lib/core/mergeConfig.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/axios/lib/utils.js");
+
+/**
+ * Config-specific merge-function which creates a new config-object
+ * by merging two configuration objects together.
+ *
+ * @param {Object} config1
+ * @param {Object} config2
+ * @returns {Object} New object resulting from merging config2 to config1
+ */
+module.exports = function mergeConfig(config1, config2) {
+  // eslint-disable-next-line no-param-reassign
+  config2 = config2 || {};
+  var config = {};
+
+  var valueFromConfig2Keys = ['url', 'method', 'data'];
+  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy', 'params'];
+  var defaultToConfig2Keys = [
+    'baseURL', 'transformRequest', 'transformResponse', 'paramsSerializer',
+    'timeout', 'timeoutMessage', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
+    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress', 'decompress',
+    'maxContentLength', 'maxBodyLength', 'maxRedirects', 'transport', 'httpAgent',
+    'httpsAgent', 'cancelToken', 'socketPath', 'responseEncoding'
+  ];
+  var directMergeKeys = ['validateStatus'];
+
+  function getMergedValue(target, source) {
+    if (utils.isPlainObject(target) && utils.isPlainObject(source)) {
+      return utils.merge(target, source);
+    } else if (utils.isPlainObject(source)) {
+      return utils.merge({}, source);
+    } else if (utils.isArray(source)) {
+      return source.slice();
+    }
+    return source;
+  }
+
+  function mergeDeepProperties(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  }
+
+  utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(undefined, config2[prop]);
+    }
+  });
+
+  utils.forEach(mergeDeepPropertiesKeys, mergeDeepProperties);
+
+  utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(undefined, config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  });
+
+  utils.forEach(directMergeKeys, function merge(prop) {
+    if (prop in config2) {
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
+    } else if (prop in config1) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  });
+
+  var axiosKeys = valueFromConfig2Keys
+    .concat(mergeDeepPropertiesKeys)
+    .concat(defaultToConfig2Keys)
+    .concat(directMergeKeys);
+
+  var otherKeys = Object
+    .keys(config1)
+    .concat(Object.keys(config2))
+    .filter(function filterAxiosKeys(key) {
+      return axiosKeys.indexOf(key) === -1;
+    });
+
+  utils.forEach(otherKeys, mergeDeepProperties);
+
+  return config;
 };
 
 
@@ -807,7 +971,6 @@ var createError = __webpack_require__(/*! ./createError */ "./node_modules/axios
  */
 module.exports = function settle(resolve, reject, response) {
   var validateStatus = response.config.validateStatus;
-  // Note: status is not exposed by XDomainRequest
   if (!response.status || !validateStatus || validateStatus(response.status)) {
     resolve(response);
   } else {
@@ -884,7 +1047,7 @@ function getDefaultAdapter() {
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
     adapter = __webpack_require__(/*! ./adapters/xhr */ "./node_modules/axios/lib/adapters/xhr.js");
-  } else if (typeof process !== 'undefined') {
+  } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
     // For node use HTTP adapter
     adapter = __webpack_require__(/*! ./adapters/http */ "./node_modules/axios/lib/adapters/xhr.js");
   }
@@ -895,6 +1058,7 @@ var defaults = {
   adapter: getDefaultAdapter(),
 
   transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Accept');
     normalizeHeaderName(headers, 'Content-Type');
     if (utils.isFormData(data) ||
       utils.isArrayBuffer(data) ||
@@ -939,6 +1103,7 @@ var defaults = {
   xsrfHeaderName: 'X-XSRF-TOKEN',
 
   maxContentLength: -1,
+  maxBodyLength: -1,
 
   validateStatus: function validateStatus(status) {
     return status >= 200 && status < 300;
@@ -988,54 +1153,6 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/btoa.js":
-/*!************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/btoa.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
-
-var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-function E() {
-  this.message = 'String contains an invalid character';
-}
-E.prototype = new Error;
-E.prototype.code = 5;
-E.prototype.name = 'InvalidCharacterError';
-
-function btoa(input) {
-  var str = String(input);
-  var output = '';
-  for (
-    // initialize result and counter
-    var block, charCode, idx = 0, map = chars;
-    // if the next str index does not exist:
-    //   change the mapping table to "="
-    //   check if d has no fractional digits
-    str.charAt(idx | 0) || (map = '=', idx % 1);
-    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-  ) {
-    charCode = str.charCodeAt(idx += 3 / 4);
-    if (charCode > 0xFF) {
-      throw new E();
-    }
-    block = block << 8 | charCode;
-  }
-  return output;
-}
-
-module.exports = btoa;
-
-
-/***/ }),
-
 /***/ "./node_modules/axios/lib/helpers/buildURL.js":
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
@@ -1050,7 +1167,6 @@ var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/util
 
 function encode(val) {
   return encodeURIComponent(val).
-    replace(/%40/gi, '@').
     replace(/%3A/gi, ':').
     replace(/%24/g, '$').
     replace(/%2C/gi, ',').
@@ -1105,6 +1221,11 @@ module.exports = function buildURL(url, params, paramsSerializer) {
   }
 
   if (serializedParams) {
+    var hashmarkIndex = url.indexOf('#');
+    if (hashmarkIndex !== -1) {
+      url = url.slice(0, hashmarkIndex);
+    }
+
     url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
   }
 
@@ -1156,50 +1277,50 @@ module.exports = (
   utils.isStandardBrowserEnv() ?
 
   // Standard browser envs support document.cookie
-  (function standardBrowserEnv() {
-    return {
-      write: function write(name, value, expires, path, domain, secure) {
-        var cookie = [];
-        cookie.push(name + '=' + encodeURIComponent(value));
+    (function standardBrowserEnv() {
+      return {
+        write: function write(name, value, expires, path, domain, secure) {
+          var cookie = [];
+          cookie.push(name + '=' + encodeURIComponent(value));
 
-        if (utils.isNumber(expires)) {
-          cookie.push('expires=' + new Date(expires).toGMTString());
+          if (utils.isNumber(expires)) {
+            cookie.push('expires=' + new Date(expires).toGMTString());
+          }
+
+          if (utils.isString(path)) {
+            cookie.push('path=' + path);
+          }
+
+          if (utils.isString(domain)) {
+            cookie.push('domain=' + domain);
+          }
+
+          if (secure === true) {
+            cookie.push('secure');
+          }
+
+          document.cookie = cookie.join('; ');
+        },
+
+        read: function read(name) {
+          var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+          return (match ? decodeURIComponent(match[3]) : null);
+        },
+
+        remove: function remove(name) {
+          this.write(name, '', Date.now() - 86400000);
         }
-
-        if (utils.isString(path)) {
-          cookie.push('path=' + path);
-        }
-
-        if (utils.isString(domain)) {
-          cookie.push('domain=' + domain);
-        }
-
-        if (secure === true) {
-          cookie.push('secure');
-        }
-
-        document.cookie = cookie.join('; ');
-      },
-
-      read: function read(name) {
-        var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-        return (match ? decodeURIComponent(match[3]) : null);
-      },
-
-      remove: function remove(name) {
-        this.write(name, '', Date.now() - 86400000);
-      }
-    };
-  })() :
+      };
+    })() :
 
   // Non standard browser env (web workers, react-native) lack needed support.
-  (function nonStandardBrowserEnv() {
-    return {
-      write: function write() {},
-      read: function read() { return null; },
-      remove: function remove() {}
-    };
-  })()
+    (function nonStandardBrowserEnv() {
+      return {
+        write: function write() {},
+        read: function read() { return null; },
+        remove: function remove() {}
+      };
+    })()
 );
 
 
@@ -1231,6 +1352,29 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
+/***/ "./node_modules/axios/lib/helpers/isAxiosError.js":
+/*!********************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/isAxiosError.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Determines whether the payload is an error thrown by Axios
+ *
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */
+module.exports = function isAxiosError(payload) {
+  return (typeof payload === 'object') && (payload.isAxiosError === true);
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/lib/helpers/isURLSameOrigin.js":
 /*!***********************************************************!*\
   !*** ./node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
@@ -1248,64 +1392,64 @@ module.exports = (
 
   // Standard browser envs have full support of the APIs needed to test
   // whether the request URL is of the same origin as current location.
-  (function standardBrowserEnv() {
-    var msie = /(msie|trident)/i.test(navigator.userAgent);
-    var urlParsingNode = document.createElement('a');
-    var originURL;
+    (function standardBrowserEnv() {
+      var msie = /(msie|trident)/i.test(navigator.userAgent);
+      var urlParsingNode = document.createElement('a');
+      var originURL;
 
-    /**
+      /**
     * Parse a URL to discover it's components
     *
     * @param {String} url The URL to be parsed
     * @returns {Object}
     */
-    function resolveURL(url) {
-      var href = url;
+      function resolveURL(url) {
+        var href = url;
 
-      if (msie) {
+        if (msie) {
         // IE needs attribute set twice to normalize properties
+          urlParsingNode.setAttribute('href', href);
+          href = urlParsingNode.href;
+        }
+
         urlParsingNode.setAttribute('href', href);
-        href = urlParsingNode.href;
+
+        // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+        return {
+          href: urlParsingNode.href,
+          protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+          host: urlParsingNode.host,
+          search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+          hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+          hostname: urlParsingNode.hostname,
+          port: urlParsingNode.port,
+          pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
+            urlParsingNode.pathname :
+            '/' + urlParsingNode.pathname
+        };
       }
 
-      urlParsingNode.setAttribute('href', href);
+      originURL = resolveURL(window.location.href);
 
-      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
-      return {
-        href: urlParsingNode.href,
-        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
-        host: urlParsingNode.host,
-        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
-        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
-        hostname: urlParsingNode.hostname,
-        port: urlParsingNode.port,
-        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
-                  urlParsingNode.pathname :
-                  '/' + urlParsingNode.pathname
-      };
-    }
-
-    originURL = resolveURL(window.location.href);
-
-    /**
+      /**
     * Determine if a URL shares the same origin as the current location
     *
     * @param {String} requestURL The URL to test
     * @returns {boolean} True if URL shares the same origin, otherwise false
     */
-    return function isURLSameOrigin(requestURL) {
-      var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
-      return (parsed.protocol === originURL.protocol &&
+      return function isURLSameOrigin(requestURL) {
+        var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+        return (parsed.protocol === originURL.protocol &&
             parsed.host === originURL.host);
-    };
-  })() :
+      };
+    })() :
 
   // Non standard browser envs (web workers, react-native) lack needed support.
-  (function nonStandardBrowserEnv() {
-    return function isURLSameOrigin() {
-      return true;
-    };
-  })()
+    (function nonStandardBrowserEnv() {
+      return function isURLSameOrigin() {
+        return true;
+      };
+    })()
 );
 
 
@@ -1450,7 +1594,6 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1466,6 +1609,27 @@ var toString = Object.prototype.toString;
  */
 function isArray(val) {
   return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is a Buffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Buffer, otherwise false
+ */
+function isBuffer(val) {
+  return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor)
+    && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
 }
 
 /**
@@ -1525,16 +1689,6 @@ function isNumber(val) {
 }
 
 /**
- * Determine if a value is undefined
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if the value is undefined, otherwise false
- */
-function isUndefined(val) {
-  return typeof val === 'undefined';
-}
-
-/**
  * Determine if a value is an Object
  *
  * @param {Object} val The value to test
@@ -1542,6 +1696,21 @@ function isUndefined(val) {
  */
 function isObject(val) {
   return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a plain Object
+ *
+ * @param {Object} val The value to test
+ * @return {boolean} True if value is a plain Object, otherwise false
+ */
+function isPlainObject(val) {
+  if (toString.call(val) !== '[object Object]') {
+    return false;
+  }
+
+  var prototype = Object.getPrototypeOf(val);
+  return prototype === null || prototype === Object.prototype;
 }
 
 /**
@@ -1626,9 +1795,13 @@ function trim(str) {
  *
  * react-native:
  *  navigator.product -> 'ReactNative'
+ * nativescript
+ *  navigator.product -> 'NativeScript' or 'NS'
  */
 function isStandardBrowserEnv() {
-  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+  if (typeof navigator !== 'undefined' && (navigator.product === 'ReactNative' ||
+                                           navigator.product === 'NativeScript' ||
+                                           navigator.product === 'NS')) {
     return false;
   }
   return (
@@ -1696,8 +1869,12 @@ function forEach(obj, fn) {
 function merge(/* obj1, obj2, obj3, ... */) {
   var result = {};
   function assignValue(val, key) {
-    if (typeof result[key] === 'object' && typeof val === 'object') {
+    if (isPlainObject(result[key]) && isPlainObject(val)) {
       result[key] = merge(result[key], val);
+    } else if (isPlainObject(val)) {
+      result[key] = merge({}, val);
+    } else if (isArray(val)) {
+      result[key] = val.slice();
     } else {
       result[key] = val;
     }
@@ -1728,6 +1905,19 @@ function extend(a, b, thisArg) {
   return a;
 }
 
+/**
+ * Remove byte order marker. This catches EF BB BF (the UTF-8 BOM)
+ *
+ * @param {string} content with BOM
+ * @return {string} content value without BOM
+ */
+function stripBOM(content) {
+  if (content.charCodeAt(0) === 0xFEFF) {
+    content = content.slice(1);
+  }
+  return content;
+}
+
 module.exports = {
   isArray: isArray,
   isArrayBuffer: isArrayBuffer,
@@ -1737,6 +1927,7 @@ module.exports = {
   isString: isString,
   isNumber: isNumber,
   isObject: isObject,
+  isPlainObject: isPlainObject,
   isUndefined: isUndefined,
   isDate: isDate,
   isFile: isFile,
@@ -1748,7 +1939,8 @@ module.exports = {
   forEach: forEach,
   merge: merge,
   extend: extend,
-  trim: trim
+  trim: trim,
+  stripBOM: stripBOM
 };
 
 
@@ -6085,38 +6277,6 @@ ImagesLoaded.makeJQueryPlugin();
 return ImagesLoaded;
 
 });
-
-
-/***/ }),
-
-/***/ "./node_modules/is-buffer/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
-}
 
 
 /***/ }),
@@ -29313,7 +29473,7 @@ if (!Array.from) {
 
 
 Object.defineProperty(exports, "__esModule", {
-   value: true
+	value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -29339,821 +29499,864 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Photo = function (_React$Component) {
-   _inherits(Photo, _React$Component);
+	_inherits(Photo, _React$Component);
 
-   function Photo(props) {
-      _classCallCheck(this, Photo);
+	function Photo(props) {
+		_classCallCheck(this, Photo);
 
-      //console.log(this.props.result);
+		var _this = _possibleConstructorReturn(this, (Photo.__proto__ || Object.getPrototypeOf(Photo)).call(this, props));
 
-      var _this = _possibleConstructorReturn(this, (Photo.__proto__ || Object.getPrototypeOf(Photo)).call(this, props));
+		_this.id = _this.props.result.id;
+		_this.thumb = _this.props.result.urls.thumb;
+		_this.img = _this.props.result.urls.small;
+		//this.full_size = this.props.result.urls.raw;
+		_this.full_size = _this.props.result.urls.full;
+		_this.author = _this.props.result.user.name;
+		_this.img_title = instant_img_localize.photo_by + " " + _this.author;
+		_this.filename = _this.props.result.id;
+		_this.title = _this.img_title;
+		_this.alt = _this.props.result.alt_description;
+		_this.caption = "";
+		_this.user = _this.props.result.user.username;
+		_this.user_photo = _this.props.result.user.profile_image.small;
+		_this.link = _this.props.result.links.html;
+		_this.likes = _this.props.result.likes;
+		_this.view_all = instant_img_localize.view_all;
+		_this.inProgress = false;
+		_this.container = document.querySelector(".instant-img-container");
+		_this.showTooltip = _this.props.showTooltip;
+		_this.hideTooltip = _this.props.hideTooltip;
 
-      _this.id = _this.props.result.id;
-      _this.thumb = _this.props.result.urls.thumb;
-      _this.img = _this.props.result.urls.small;
-      //this.full_size = this.props.result.urls.raw;                                
-      _this.full_size = _this.props.result.urls.full;
-      _this.author = _this.props.result.user.name;
-      _this.img_title = instant_img_localize.photo_by + ' ' + _this.author;
-      _this.filename = _this.props.result.id;
-      _this.title = _this.img_title;
-      _this.alt = _this.props.result.alt_description;
-      _this.caption = '';
-      _this.user = _this.props.result.user.username;
-      _this.user_photo = _this.props.result.user.profile_image.small;
-      _this.link = _this.props.result.links.html;
-      _this.likes = _this.props.result.likes;
-      _this.view_all = instant_img_localize.view_all;
-      _this.inProgress = false;
-      _this.container = document.querySelector('.instant-img-container');
-      _this.showTooltip = _this.props.showTooltip;
-      _this.hideTooltip = _this.props.hideTooltip;
+		// Gutenberg Sidebar
+		_this.setAsFeaturedImage = false;
+		_this.insertIntoPost = false;
+		_this.is_media_router = _this.props.mediaRouter;
+		_this.is_block_editor = _this.props.blockEditor;
+		_this.SetFeaturedImage = _this.props.SetFeaturedImage;
+		_this.InsertImage = _this.props.InsertImage;
 
-      // Gutenberg Sidebar
-      _this.setAsFeaturedImage = false;
-      _this.insertIntoPost = false;
-      _this.is_media_router = _this.props.mediaRouter;
-      _this.is_block_editor = _this.props.blockEditor;
-      _this.SetFeaturedImage = _this.props.SetFeaturedImage;
-      _this.InsertImage = _this.props.InsertImage;
+		// Display controls in Gutenberg Sidebar Only
+		_this.displayGutenbergControl = _this.is_block_editor ? true : false;
 
-      // Display controls in Gutenberg Sidebar Only
-      _this.displayGutenbergControl = _this.is_block_editor ? true : false;
+		// Photo state
+		_this.state = {
+			filename: _this.filename,
+			title: _this.title,
+			alt: _this.alt,
+			caption: _this.caption
+		};
+		return _this;
+	}
 
-      // Photo state
-      _this.state = {
-         filename: _this.filename,
-         title: _this.title,
-         alt: _this.alt,
-         caption: _this.caption
-      };
+	/**
+  * Function to trigger the image download
+  *
+  * @since 4.3
+  */
 
-      return _this;
-   }
 
-   /*
-   * download
-   * Function to trigger the image download 
-   * 
+	_createClass(Photo, [{
+		key: "download",
+		value: function download(e) {
+			e.preventDefault();
+			var self = this;
+
+			var target = e.currentTarget; // get current <a/>
+			var photo = target.parentElement.parentElement.parentElement; // Get parent .photo el
+			var notice = photo.querySelector(".notice-msg"); // Locate .notice-msg div
+
+			if (!target.classList.contains("upload")) {
+				// If target is .download-photo, switch target definition
+				target = photo.querySelector("a.upload");
+			}
+
+			if (target.classList.contains("success") || this.inProgress) {
+				return false; // Exit if already uploaded or in progress.
+			}
+			this.inProgress = true;
+
+			target.classList.add("uploading");
+			photo.classList.add("in-progress");
+
+			// Status messaging
+			notice.innerHTML = instant_img_localize.saving;
+			setTimeout(function () {
+				// Change notice after 3 seconds
+				notice.innerHTML = instant_img_localize.resizing;
+				setTimeout(function () {
+					// Change notice again after 5 seconds (Still resizing...)
+					notice.innerHTML = instant_img_localize.resizing_still;
+				}, 5000);
+			}, 3000);
+
+			// API URL
+			var api = instant_img_localize.root + "instant-images/download/";
+
+			// Data Params
+			var data = {
+				id: target.getAttribute("data-id"),
+				image_url: target.getAttribute("data-url"),
+				filename: target.getAttribute("data-id") + ".jpg",
+				custom_filename: target.getAttribute("data-filename"),
+				title: target.getAttribute("data-title"),
+				alt: target.getAttribute("data-alt"),
+				caption: target.getAttribute("data-caption"),
+				parent_id: instant_img_localize.parent_id
+			};
+
+			// Config Params
+			var config = {
+				headers: {
+					"X-WP-Nonce": instant_img_localize.nonce,
+					"Content-Type": "application/json"
+				}
+			};
+
+			_axios2.default.post(api, JSON.stringify(data), config).then(function (res) {
+				var response = res.data;
+
+				if (response) {
+					// Successful response from server
+					var success = response.success;
+					var id = response.id;
+					var attachment = response.attachment;
+					var admin_url = response.admin_url;
+					var msg = response.msg;
+
+					if (success) {
+						// Edit URL
+						var edit_url = admin_url + "post.php?post=" + attachment.id + "&action=edit";
+
+						// Success/Upload Complete
+						self.uploadComplete(target, photo, msg, edit_url, attachment.id);
+
+						// Trigger Download Counter at Unsplash
+						self.triggerUnsplashDownload(id);
+
+						// Set Featured Image [Gutenberg Sidebar]
+						if (self.displayGutenbergControl && self.setAsFeaturedImage) {
+							self.SetFeaturedImage(attachment.id);
+							self.setAsFeaturedImage = false;
+							self.closeMediaModal();
+						}
+
+						// Insert Image [Gutenberg Sidebar]
+						if (self.displayGutenbergControl && self.insertIntoPost) {
+							if (attachment.url) {
+								self.InsertImage(attachment.url, attachment.caption, attachment.alt);
+								self.closeMediaModal();
+							}
+							self.insertIntoPost = false;
+						}
+
+						// If is media popup, redirect user to media-upload settings
+						if (self.container.dataset.mediaPopup === "true" && !self.is_block_editor) {
+							window.location = "media-upload.php?type=image&tab=library&attachment_id=" + attachment.id;
+						}
+					} else {
+						// Error
+						self.uploadError(target, photo, notice, msg);
+					}
+				} else {
+					// Error
+					self.uploadError(target, photo, notice, instant_img_localize.error_upload);
+				}
+			}).catch(function (error) {
+				console.log(error);
+			});
+		}
+
+		/**
+   * Function to trigger download action at unsplash.com
+   * This is used to give authors download credits and nothing more
+   *
+   * @param id       string    The ID of the image
+   * @since 3.1
+   */
+
+	}, {
+		key: "triggerUnsplashDownload",
+		value: function triggerUnsplashDownload(id) {
+			var url = _API2.default.photo_api + "/" + id + "/download/" + _API2.default.app_id;
+
+			fetch(url).then(function (data) {
+				return data.json();
+			}).then(function (data) {
+				// Success, nothing else happens here
+			}).catch(function (error) {
+				console.log(error);
+			});
+		}
+
+		/*
+   * setFeaturedImageClick
+   * Function used to trigger a download and then set as featured image
+   *
+   * @since 4.0
+   */
+
+	}, {
+		key: "setFeaturedImageClick",
+		value: function setFeaturedImageClick(e) {
+			var target = e.currentTarget;
+			if (!target) {
+				return false;
+			}
+
+			this.hideTooltip(e);
+			var parent = target.parentNode.parentNode.parentNode;
+			var photo = parent.querySelector("a.upload");
+			if (photo) {
+				this.setAsFeaturedImage = true;
+				photo.click();
+			}
+		}
+
+		/*
+   * insertImageIntoPost
+   * Function used to insert an image directly into the block (Gutenberg) editor.
+   *
+   * @since 4.0
+   */
+
+	}, {
+		key: "insertImageIntoPost",
+		value: function insertImageIntoPost(e) {
+			var target = e.currentTarget;
+			if (!target) {
+				return false;
+			}
+
+			this.hideTooltip(e);
+			var parent = target.parentNode.parentNode.parentNode;
+			var photo = parent.querySelector("a.upload");
+			if (photo) {
+				this.insertIntoPost = true;
+				photo.click();
+			}
+		}
+
+		/*
+   * uploadComplete
+   * Function runs when upload has completed
+   *
+   * @param target   element    clicked item
+   * @param photo    element    Nearest parent .photo
+   * @param msg      string     Success Msg
+   * @param url      string     The attachment edit link
+   * @param id       string     The attachment id
+   * @since 3.0
+   */
+
+	}, {
+		key: "uploadComplete",
+		value: function uploadComplete(target, photo, msg, url, id) {
+			this.setImageTitle(target, msg);
+
+			photo.classList.remove("in-progress");
+			photo.classList.add("uploaded");
+
+			photo.querySelector(".edit-photo").style.display = "none"; // Hide edit-photo button
+			photo.querySelector(".edit-photo-admin").style.display = "inline-block"; // Show edit-photo-admin button
+			photo.querySelector(".edit-photo-admin").href = url; // Add admin edit link
+			photo.querySelector(".edit-photo-admin").target = "_balnk"; // Add new window
+
+			target.classList.remove("uploading");
+			target.classList.remove("resizing");
+			target.classList.add("success");
+			this.inProgress = false;
+
+			// Remove uploaded and success states after 7.5 seconds.
+			setTimeout(function () {
+				photo.classList.remove("uploaded");
+				target.classList.remove("success");
+			}, 7500);
+
+			// Gutenberg Sidebar
+			if (this.is_block_editor) {
+				photo.querySelector(".insert").style.display = "none"; // Hide insert button
+				photo.querySelector(".set-featured").style.display = "none"; // Hide set-featured button
+			}
+
+			// Media Router
+			this.mediaRouter(id);
+
+			// Deprecated in 4.3
+			// Was previously used in the Media Popup Context.
+			// Refresh Media Library contents on edit pages
+			if (this.container.classList.contains("editor")) {
+				if (typeof wp.media != "undefined") {
+					if (wp.media.frame.content.get() !== null) {
+						wp.media.frame.content.get().collection.props.set({ ignore: +new Date() });
+						wp.media.frame.content.get().options.selection.reset();
+					} else {
+						wp.media.frame.library.props.set({ ignore: +new Date() });
+					}
+				}
+			}
+		}
+
+		/**
+   * mediaRouter
+   * Refresh Media Modal and select item after it's been uploaded
+   *
    * @since 4.3
    */
 
-
-   _createClass(Photo, [{
-      key: 'download',
-      value: function download(e) {
-
-         e.preventDefault();
-         var self = this;
-
-         var target = e.currentTarget; // get current <a/>	 
-         var photo = target.parentElement.parentElement.parentElement; // Get parent .photo el 
-         var notice = photo.querySelector('.notice-msg'); // Locate .notice-msg div 
-
-         if (!target.classList.contains('upload')) {
-            // If target is .download-photo, switch target definition
-            target = photo.querySelector('a.upload');
-         }
-
-         if (target.classList.contains('success') || this.inProgress) {
-            return false; // Exit if already uploaded or in progress.
-         }
-         this.inProgress = true;
-
-         target.classList.add('uploading');
-         photo.classList.add('in-progress');
-
-         // Status messaging
-         notice.innerHTML = instant_img_localize.saving;
-         setTimeout(function () {
-            // Change notice after 3 seconds
-            notice.innerHTML = instant_img_localize.resizing;
-            setTimeout(function () {
-               // Change notice again after 5 seconds (Still resizing...)
-               notice.innerHTML = instant_img_localize.resizing_still;
-            }, 5000);
-         }, 3000);
-
-         // API URL
-         var api = instant_img_localize.root + 'instant-images/download/';
-
-         // Data Params	 
-         var data = {
-            id: target.getAttribute('data-id'),
-            image_url: target.getAttribute('data-url'),
-            filename: target.getAttribute('data-id') + '.jpg',
-            custom_filename: target.getAttribute('data-filename'),
-            title: target.getAttribute('data-title'),
-            alt: target.getAttribute('data-alt'),
-            caption: target.getAttribute('data-caption'),
-            parent_id: instant_img_localize.parent_id
-
-            // Config Params
-         };var config = {
-            headers: {
-               'X-WP-Nonce': instant_img_localize.nonce,
-               'Content-Type': 'application/json'
-            }
-         };
-
-         _axios2.default.post(api, JSON.stringify(data), config).then(function (res) {
-
-            var response = res.data;
-
-            if (response) {
-
-               // Successful response from server   
-               var success = response.success;
-               var id = response.id;
-               var attachment = response.attachment;
-               var admin_url = response.admin_url;
-               var msg = response.msg;
-
-               if (success) {
-
-                  // Edit URL
-                  var edit_url = admin_url + 'post.php?post=' + attachment.id + '&action=edit';
-
-                  // Success/Upload Complete
-                  self.uploadComplete(target, photo, msg, edit_url, attachment.id);
-
-                  // Trigger Download Counter at Unsplash
-                  self.triggerUnsplashDownload(id);
-
-                  // Set Featured Image [Gutenberg Sidebar]
-                  if (self.displayGutenbergControl && self.setAsFeaturedImage) {
-                     self.SetFeaturedImage(attachment.id);
-                     self.setAsFeaturedImage = false;
-                     self.closeMediaModal();
-                  }
-
-                  // Insert Image [Gutenberg Sidebar]
-                  if (self.displayGutenbergControl && self.insertIntoPost) {
-                     if (attachment.url) {
-                        self.InsertImage(attachment.url, attachment.caption, attachment.alt);
-                        self.closeMediaModal();
-                     }
-                     self.insertIntoPost = false;
-                  }
-
-                  // If is media popup, redirect user to media-upload settings
-                  if (self.container.dataset.mediaPopup === 'true' && !self.is_block_editor) {
-                     window.location = 'media-upload.php?type=image&tab=library&attachment_id=' + attachment.id;
-                  }
-               } else {
-                  // Error
-                  self.uploadError(target, photo, notice, msg);
-               }
-            } else {
-               // Error
-               self.uploadError(target, photo, notice, instant_img_localize.error_upload);
-            }
-         }).catch(function (error) {
-            console.log(error);
-         });
-      }
-
-      /*
-      * triggerUnsplashDownload
-      * Function to trigger download action at unsplash.com
-      * This is used to give authors download credits and nothing more
-      * 
-      * @param id       string    The ID of the image
-      * @since 3.1
-      */
-
-   }, {
-      key: 'triggerUnsplashDownload',
-      value: function triggerUnsplashDownload(id) {
-
-         var url = _API2.default.photo_api + '/' + id + '/download/' + _API2.default.app_id;
-
-         fetch(url).then(function (data) {
-            return data.json();
-         }).then(function (data) {
-            // Success, nothing else happens here          
-         }).catch(function (error) {
-            console.log(error);
-         });
-      }
-
-      /*
-      * setFeaturedImageClick
-      * Function used to trigger a download and then set as featured image
-      * 
-      * @since 4.0
-      */
-
-   }, {
-      key: 'setFeaturedImageClick',
-      value: function setFeaturedImageClick(e) {
-         var target = e.currentTarget;
-         if (!target) {
-            return false;
-         }
-
-         this.hideTooltip(e);
-         var parent = target.parentNode.parentNode.parentNode;
-         var photo = parent.querySelector('a.upload');
-         if (photo) {
-            this.setAsFeaturedImage = true;
-            photo.click();
-         }
-      }
-
-      /*
-      * insertImageIntoPost
-      * Function used to insert an image directly into the block (Gutenberg) editor.
-      * 
-      * @since 4.0
-      */
-
-   }, {
-      key: 'insertImageIntoPost',
-      value: function insertImageIntoPost(e) {
-         var target = e.currentTarget;
-         if (!target) {
-            return false;
-         }
-
-         this.hideTooltip(e);
-         var parent = target.parentNode.parentNode.parentNode;
-         var photo = parent.querySelector('a.upload');
-         if (photo) {
-            this.insertIntoPost = true;
-            photo.click();
-         }
-      }
-
-      /*
-      * uploadComplete
-      * Function runs when upload has completed
-      * 
-      * @param target   element    clicked item  
-      * @param photo    element    Nearest parent .photo
-      * @param msg      string     Success Msg
-      * @param url      string     The attachment edit link
-      * @param id       string     The attachment id
-      * @since 3.0
-      */
-
-   }, {
-      key: 'uploadComplete',
-      value: function uploadComplete(target, photo, msg, url, id) {
-
-         this.setImageTitle(target, msg);
-
-         photo.classList.remove('in-progress');
-         photo.classList.add('uploaded');
-
-         photo.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
-         photo.querySelector('.edit-photo-admin').style.display = 'inline-block'; // Show edit-photo-admin button
-         photo.querySelector('.edit-photo-admin').href = url; // Add admin edit link
-         photo.querySelector('.edit-photo-admin').target = '_balnk'; // Add new window
-
-         target.classList.remove('uploading');
-         target.classList.remove('resizing');
-         target.classList.add('success');
-         this.inProgress = false;
-
-         // Gutenberg Sidebar
-         if (this.is_block_editor) {
-            photo.querySelector('.insert').style.display = 'none'; // Hide insert button
-            photo.querySelector('.set-featured').style.display = 'none'; // Hide set-featured button
-         }
-
-         // Media Router
-         this.mediaRouter(id);
-
-         // Deprecated in 4.3
-         // Was previously used in the Media Popup Context.
-         // Refresh Media Library contents on edit pages               
-         if (this.container.classList.contains('editor')) {
-            if (typeof wp.media != 'undefined') {
-               if (wp.media.frame.content.get() !== null) {
-                  wp.media.frame.content.get().collection.props.set({ ignore: +new Date() });
-                  wp.media.frame.content.get().options.selection.reset();
-               } else {
-                  wp.media.frame.library.props.set({ ignore: +new Date() });
-               }
-            }
-         }
-      }
-
-      /**
-      * mediaRouter
-      * Refresh Media Modal and select item after it's been uploaded
-      *
-      * @since 4.3
-      */
-
-   }, {
-      key: 'mediaRouter',
-      value: function mediaRouter(id) {
-
-         if (this.is_media_router && wp.media && wp.media.frame && wp.media.frame.el) {
-
-            var mediaModal = wp.media.frame.el;
-            var mediaTab = mediaModal.querySelector('#menu-item-browse');
-            if (mediaTab) {
-               // Open the 'Media Library' tab
-               mediaTab.click();
-            }
-
-            // Delay to allow for tab switching
-            setTimeout(function () {
-               if (wp.media.frame.content.get() !== null) {
-                  //this forces a refresh of the content
-                  wp.media.frame.content.get().collection._requery(true);
-
-                  //optional: reset selection
-                  //wp.media.frame.content.get().options.selection.reset();
-               }
-
-               // Select the attached that was just uploaded.
-               var selection = wp.media.frame.state().get('selection');
-               var selected = parseInt(id);
-               selection.reset(selected ? [wp.media.attachment(selected)] : []);
-            }, 150);
-         }
-      }
-
-      /*
-      * uploadError
-      * Function runs when error occurs on upload or resize
-      * 
-      * @param target   element    Current clicked item
-      * @param photo    element    Nearest parent .photo
-      * @param notice   element    The message area
-      * @param msg      string     Error Msg
-      * @since 3.0
-      */
-
-   }, {
-      key: 'uploadError',
-      value: function uploadError(target, photo, notice, msg) {
-         target.classList.remove('uploading');
-         target.classList.remove('resizing');
-         target.classList.add('errors');
-         this.setImageTitle(target, msg);
-         this.inProgress = false;
-         notice.classList.add('has-error');
-         console.warn(msg);
-      }
-
-      /*
-      * setImageTitle
-      * Set the title attribute of target
-      * 
-      * @param target   element    Current clicked item
-      * @param msg      string     Title Msg from JSON
-      * @since 3.0
-      */
-
-   }, {
-      key: 'setImageTitle',
-      value: function setImageTitle(target, msg) {
-         target.setAttribute("title", msg); // Remove 'Click to upload...', set new value
-      }
-
-      /*
-      * showEditScreen
-      * Displays the edit screen 
-      * 
-      * @since 3.2
-      */
-
-   }, {
-      key: 'showEditScreen',
-      value: function showEditScreen(e) {
-         e.preventDefault();
-         var el = e.currentTarget;
-         this.hideTooltip(e);
-         var photo = el.closest('.photo');
-         var filename = photo.querySelector('input[name="filename"]');
-         var editScreen = photo.querySelector('.edit-screen');
-
-         editScreen.classList.add('editing'); // Show edit screen
-
-         // Set focus on edit screen
-         setTimeout(function () {
-            editScreen.focus();
-         }, 150);
-      }
-
-      /*
-      * handleEditChange
-      * Handles the change event for the edit screen 
-      * 
-      * @since 3.2
-      */
-
-   }, {
-      key: 'handleEditChange',
-      value: function handleEditChange(e) {
-         var target = e.target.name;
-
-         if (target === 'filename') {
-            this.setState({
-               filename: e.target.value
-            });
-         }
-         if (target === 'title') {
-            this.setState({
-               title: e.target.value
-            });
-         }
-         if (target === 'alt') {
-            this.setState({
-               alt: e.target.value
-            });
-         }
-         if (target === 'caption') {
-            this.setState({
-               caption: e.target.value
-            });
-         }
-      }
-
-      /*
-      * saveEditChange
-      * Handles the save event for the edit screen 
-      * 
-      * @since 3.2
-      */
-
-   }, {
-      key: 'saveEditChange',
-      value: function saveEditChange(e) {
-
-         var el = e.currentTarget;
-         var photo = el.closest('.photo');
-
-         // Filename
-         var filename = photo.querySelector('input[name="filename"]');
-         this.filename = filename.value;
-
-         // Title
-         var title = photo.querySelector('input[name="title"]');
-         this.title = title.value;
-
-         // Alt
-         var alt = photo.querySelector('input[name="alt"]');
-         this.alt = alt.value;
-
-         // Caption
-         var caption = photo.querySelector('textarea[name="caption"]');
-         this.caption = caption.value;
-
-         photo.querySelector('.edit-screen').classList.remove('editing'); // Hide edit screen
-         photo.querySelector('a.upload').click();
-      }
-
-      /*
-      * cancelEditChange
-      * Handles the cancel event for the edit screen 
-      * 
-      * @since 3.2
-      */
-
-   }, {
-      key: 'cancelEditChange',
-      value: function cancelEditChange(e) {
-
-         var el = e.currentTarget;
-         var photo = el.closest('.photo');
-         if (photo) {
-            var target = photo.querySelector('a.upload');
-
-            // Filename
-            var filename = photo.querySelector('input[name="filename"]');
-            filename.value = filename.dataset.original;
-            this.setState({
-               filename: filename.value
-            });
-
-            // Title
-            var title = photo.querySelector('input[name="title"]');
-            title.value = title.dataset.original;
-            this.setState({
-               title: title.value
-            });
-
-            // Alt
-            var alt = photo.querySelector('input[name="alt"]');
-            alt.value = alt.dataset.original;
-            this.setState({
-               alt: alt.value
-            });
-
-            // Caption
-            var caption = photo.querySelector('textarea[name="caption"]');
-            caption.value = caption.dataset.original;
-            this.setState({
-               caption: caption.value
-            });
-
-            photo.querySelector('.edit-screen').classList.remove('editing'); // Hide edit screen      
-            target.focus();
-         }
-      }
-
-      /*
-      * closeMediaModal
-      * Close the media modal after an action
-      * 
-      * @since 4.3
-      */
-
-   }, {
-      key: 'closeMediaModal',
-      value: function closeMediaModal() {
-         var mediaModal = document.querySelector('.media-modal');
-         if (mediaModal) {
-            var closeBtn = mediaModal.querySelector('button.media-modal-close');
-            if (!closeBtn) {
-               return false;
-            }
-            closeBtn.click();
-         }
-      }
-   }, {
-      key: 'render',
-      value: function render() {
-         var _this2 = this;
-
-         var likeTxt = parseInt(this.likes) > 1 ? instant_img_localize.likes_plural : instant_img_localize.likes;
-
-         return _react2.default.createElement(
-            'article',
-            { className: 'photo' },
-            _react2.default.createElement(
-               'div',
-               { className: 'photo--wrap' },
-               _react2.default.createElement(
-                  'div',
-                  { className: 'img-wrap' },
-                  _react2.default.createElement(
-                     'a',
-                     {
-                        className: 'upload loaded',
-                        href: this.full_size,
-                        'data-id': this.id,
-                        'data-url': this.full_size,
-                        'data-filename': this.state.filename,
-                        'data-title': this.state.title,
-                        'data-alt': this.state.alt,
-                        'data-caption': this.state.caption,
-                        title: instant_img_localize.upload,
-                        onClick: function onClick(e) {
-                           return _this2.download(e);
-                        } },
-                     _react2.default.createElement('img', { src: this.img, alt: '' }),
-                     _react2.default.createElement('div', { className: 'status' })
-                  ),
-                  _react2.default.createElement('div', { className: 'notice-msg' }),
-                  _react2.default.createElement(
-                     'div',
-                     { className: 'user-controls' },
-                     _react2.default.createElement(
-                        'a',
-                        { className: 'user fade', href: 'https://unsplash.com/@' + this.user + '?utm_source=wordpress-instant-images&utm_medium=referral', target: '_blank', title: this.view_all + ' @' + this.user },
-                        _react2.default.createElement(
-                           'div',
-                           { className: 'user-wrap' },
-                           this.user_photo.length > 0 && _react2.default.createElement('img', { src: this.user_photo }),
-                           this.user
-                        )
-                     ),
-                     _react2.default.createElement(
-                        'div',
-                        { className: 'photo-options' },
-                        this.displayGutenbergControl && _react2.default.createElement(
-                           'button',
-                           { type: 'button', className: 'set-featured fade',
-                              'data-title': instant_img_localize.set_as_featured,
-                              onMouseEnter: function onMouseEnter(e) {
-                                 return _this2.showTooltip(e);
-                              },
-                              onMouseLeave: function onMouseLeave(e) {
-                                 return _this2.hideTooltip(e);
-                              },
-                              onClick: function onClick(e) {
-                                 return _this2.setFeaturedImageClick(e);
-                              }
-                           },
-                           _react2.default.createElement('i', { className: 'fa fa-picture-o', 'aria-hidden': 'true' }),
-                           _react2.default.createElement(
-                              'span',
-                              { className: 'offscreen' },
-                              instant_img_localize.set_as_featured
-                           )
-                        ),
-                        this.displayGutenbergControl && _react2.default.createElement(
-                           'button',
-                           { type: 'button', className: 'insert fade',
-                              'data-title': instant_img_localize.insert_into_post,
-                              onMouseEnter: function onMouseEnter(e) {
-                                 return _this2.showTooltip(e);
-                              },
-                              onMouseLeave: function onMouseLeave(e) {
-                                 return _this2.hideTooltip(e);
-                              },
-                              onClick: function onClick(e) {
-                                 return _this2.insertImageIntoPost(e);
-                              }
-                           },
-                           _react2.default.createElement('i', { className: 'fa fa-plus', 'aria-hidden': 'true' }),
-                           _react2.default.createElement(
-                              'span',
-                              { className: 'offscreen' },
-                              instant_img_localize.insert_into_post
-                           )
-                        ),
-                        _react2.default.createElement(
-                           'a',
-                           { href: '#',
-                              className: 'edit-photo-admin fade',
-                              'data-title': instant_img_localize.edit_upload,
-                              onMouseEnter: function onMouseEnter(e) {
-                                 return _this2.showTooltip(e);
-                              },
-                              onMouseLeave: function onMouseLeave(e) {
-                                 return _this2.hideTooltip(e);
-                              }
-                           },
-                           _react2.default.createElement('i', { className: 'fa fa-pencil', 'aria-hidden': 'true' }),
-                           _react2.default.createElement(
-                              'span',
-                              { className: 'offscreen' },
-                              instant_img_localize.edit_upload
-                           )
-                        ),
-                        _react2.default.createElement(
-                           'button',
-                           { type: 'button',
-                              className: 'edit-photo fade',
-                              'data-title': instant_img_localize.edit_details,
-                              onMouseEnter: function onMouseEnter(e) {
-                                 return _this2.showTooltip(e);
-                              },
-                              onMouseLeave: function onMouseLeave(e) {
-                                 return _this2.hideTooltip(e);
-                              },
-                              onClick: function onClick(e) {
-                                 return _this2.showEditScreen(e);
-                              }
-                           },
-                           _react2.default.createElement('i', { className: 'fa fa-cog', 'aria-hidden': 'true' }),
-                           _react2.default.createElement(
-                              'span',
-                              { className: 'offscreen' },
-                              instant_img_localize.edit_details
-                           )
-                        )
-                     )
-                  ),
-                  _react2.default.createElement(
-                     'div',
-                     { className: 'options' },
-                     _react2.default.createElement(
-                        'span',
-                        {
-                           className: 'likes tooltip--above',
-                           'data-title': this.likes + ' ' + likeTxt,
-                           onMouseEnter: function onMouseEnter(e) {
-                              return _this2.showTooltip(e);
-                           },
-                           onMouseLeave: function onMouseLeave(e) {
-                              return _this2.hideTooltip(e);
-                           } },
-                        _react2.default.createElement('i', { className: 'fa fa-heart heart-like', 'aria-hidden': 'true' }),
-                        ' ',
-                        this.likes
-                     ),
-                     _react2.default.createElement(
-                        'a',
-                        {
-                           className: 'tooltip--above',
-                           href: this.link,
-                           'data-title': instant_img_localize.view_on_unsplash,
-                           onMouseEnter: function onMouseEnter(e) {
-                              return _this2.showTooltip(e);
-                           },
-                           onMouseLeave: function onMouseLeave(e) {
-                              return _this2.hideTooltip(e);
-                           },
-                           target: '_blank' },
-                        _react2.default.createElement('i', { className: 'fa fa-external-link', 'aria-hidden': 'true' }),
-                        _react2.default.createElement(
-                           'span',
-                           { className: 'offscreen' },
-                           instant_img_localize.view_on_unsplash
-                        )
-                     )
-                  )
-               ),
-               _react2.default.createElement(
-                  'div',
-                  { className: 'edit-screen', tabIndex: '0' },
-                  _react2.default.createElement(
-                     'div',
-                     { className: 'edit-screen--title' },
-                     _react2.default.createElement(
-                        'p',
-                        { className: 'heading' },
-                        instant_img_localize.edit_details
-                     ),
-                     _react2.default.createElement(
-                        'p',
-                        null,
-                        instant_img_localize.edit_details_intro,
-                        '.'
-                     )
-                  ),
-                  _react2.default.createElement(
-                     'label',
-                     null,
-                     _react2.default.createElement(
-                        'span',
-                        null,
-                        instant_img_localize.edit_filename,
-                        ':'
-                     ),
-                     _react2.default.createElement('input', { type: 'text', name: 'filename', 'data-original': this.filename, placeholder: this.filename, value: this.state.filename, onChange: function onChange(e) {
-                           return _this2.handleEditChange(e);
-                        } }),
-                     _react2.default.createElement(
-                        'em',
-                        null,
-                        '.jpg'
-                     )
-                  ),
-                  _react2.default.createElement(
-                     'label',
-                     null,
-                     _react2.default.createElement(
-                        'span',
-                        null,
-                        instant_img_localize.edit_title,
-                        ':'
-                     ),
-                     _react2.default.createElement('input', { type: 'text', name: 'title', 'data-original': this.title, placeholder: this.title, value: this.state.title || '', onChange: function onChange(e) {
-                           return _this2.handleEditChange(e);
-                        } })
-                  ),
-                  _react2.default.createElement(
-                     'label',
-                     null,
-                     _react2.default.createElement(
-                        'span',
-                        null,
-                        instant_img_localize.edit_alt,
-                        ':'
-                     ),
-                     _react2.default.createElement('input', { type: 'text', name: 'alt', 'data-original': this.alt, value: this.state.alt || '', onChange: function onChange(e) {
-                           return _this2.handleEditChange(e);
-                        } })
-                  ),
-                  _react2.default.createElement(
-                     'label',
-                     null,
-                     _react2.default.createElement(
-                        'span',
-                        null,
-                        instant_img_localize.edit_caption,
-                        ':'
-                     ),
-                     _react2.default.createElement('textarea', { rows: '3', name: 'caption', 'data-original': '', onChange: function onChange(e) {
-                           return _this2.handleEditChange(e);
-                        }, value: this.state.caption || '' })
-                  ),
-                  _react2.default.createElement(
-                     'div',
-                     { className: 'edit-screen--controls' },
-                     _react2.default.createElement(
-                        'button',
-                        { type: 'button', className: 'button', onClick: function onClick(e) {
-                              return _this2.cancelEditChange(e);
-                           } },
-                        instant_img_localize.cancel
-                     ),
-                     ' \xA0',
-                     _react2.default.createElement(
-                        'button',
-                        { type: 'button', className: 'button button-primary', onClick: function onClick(e) {
-                              return _this2.saveEditChange(e);
-                           } },
-                        instant_img_localize.upload_now
-                     )
-                  )
-               )
-            )
-         );
-      }
-   }]);
-
-   return Photo;
+	}, {
+		key: "mediaRouter",
+		value: function mediaRouter(id) {
+			if (this.is_media_router && wp.media && wp.media.frame && wp.media.frame.el) {
+				var mediaModal = wp.media.frame.el;
+				var mediaTab = mediaModal.querySelector("#menu-item-browse");
+				if (mediaTab) {
+					// Open the 'Media Library' tab
+					mediaTab.click();
+				}
+
+				// Delay to allow for tab switching
+				setTimeout(function () {
+					if (wp.media.frame.content.get() !== null) {
+						//this forces a refresh of the content
+						wp.media.frame.content.get().collection._requery(true);
+
+						//optional: reset selection
+						//wp.media.frame.content.get().options.selection.reset();
+					}
+
+					// Select the attached that was just uploaded.
+					var selection = wp.media.frame.state().get("selection");
+					var selected = parseInt(id);
+					selection.reset(selected ? [wp.media.attachment(selected)] : []);
+				}, 150);
+			}
+		}
+
+		/*
+   * Function runs when error occurs on upload or resize.
+   *
+   * @param target   element    Current clicked item
+   * @param photo    element    Nearest parent .photo
+   * @param notice   element    The message area
+   * @param msg      string     Error Msg
+   * @since 3.0
+   */
+
+	}, {
+		key: "uploadError",
+		value: function uploadError(target, photo, notice, msg) {
+			target.classList.remove("uploading");
+			target.classList.remove("resizing");
+			target.classList.add("errors");
+			this.setImageTitle(target, msg);
+			this.inProgress = false;
+			notice.classList.add("has-error");
+			console.warn(msg);
+		}
+
+		/*
+   * Set the title attribute of target.
+   *
+   * @param target   element    Current clicked item
+   * @param msg      string     Title Msg from JSON
+   * @since 3.0
+   */
+
+	}, {
+		key: "setImageTitle",
+		value: function setImageTitle(target, msg) {
+			target.setAttribute("title", msg); // Remove 'Click to upload...', set new value
+		}
+
+		/*
+   * Displays the edit screen
+   *
+   * @since 3.2
+   */
+
+	}, {
+		key: "showEditScreen",
+		value: function showEditScreen(e) {
+			e.preventDefault();
+			var el = e.currentTarget;
+			this.hideTooltip(e);
+			var photo = el.closest(".photo");
+			var filename = photo.querySelector('input[name="filename"]');
+			var editScreen = photo.querySelector(".edit-screen");
+
+			editScreen.classList.add("editing"); // Show edit screen
+
+			// Set focus on edit screen
+			setTimeout(function () {
+				editScreen.focus();
+			}, 150);
+		}
+
+		/*
+   * Handles the change event for the edit screen
+   *
+   * @since 3.2
+   */
+
+	}, {
+		key: "handleEditChange",
+		value: function handleEditChange(e) {
+			var target = e.target.name;
+
+			if (target === "filename") {
+				this.setState({
+					filename: e.target.value
+				});
+			}
+			if (target === "title") {
+				this.setState({
+					title: e.target.value
+				});
+			}
+			if (target === "alt") {
+				this.setState({
+					alt: e.target.value
+				});
+			}
+			if (target === "caption") {
+				this.setState({
+					caption: e.target.value
+				});
+			}
+		}
+
+		/**
+   * Handles the save event for the edit screen
+   *
+   * @since 3.2
+   */
+
+	}, {
+		key: "saveEditChange",
+		value: function saveEditChange(e) {
+			var el = e.currentTarget;
+			var photo = el.closest(".photo");
+
+			// Filename
+			var filename = photo.querySelector('input[name="filename"]');
+			this.filename = filename.value;
+
+			// Title
+			var title = photo.querySelector('input[name="title"]');
+			this.title = title.value;
+
+			// Alt
+			var alt = photo.querySelector('input[name="alt"]');
+			this.alt = alt.value;
+
+			// Caption
+			var caption = photo.querySelector('textarea[name="caption"]');
+			this.caption = caption.value;
+
+			photo.querySelector(".edit-screen").classList.remove("editing"); // Hide edit screen
+			photo.querySelector("a.upload").click();
+		}
+
+		/**
+   * Handles the cancel event for the edit screen.
+   *
+   * @since 3.2
+   */
+
+	}, {
+		key: "cancelEditChange",
+		value: function cancelEditChange(e) {
+			var el = e.currentTarget;
+			var photo = el.closest(".photo");
+			if (photo) {
+				var target = photo.querySelector("a.upload");
+
+				// Filename
+				var filename = photo.querySelector('input[name="filename"]');
+				filename.value = filename.dataset.original;
+				this.setState({
+					filename: filename.value
+				});
+
+				// Title
+				var title = photo.querySelector('input[name="title"]');
+				title.value = title.dataset.original;
+				this.setState({
+					title: title.value
+				});
+
+				// Alt
+				var alt = photo.querySelector('input[name="alt"]');
+				alt.value = alt.dataset.original;
+				this.setState({
+					alt: alt.value
+				});
+
+				// Caption
+				var caption = photo.querySelector('textarea[name="caption"]');
+				caption.value = caption.dataset.original;
+				this.setState({
+					caption: caption.value
+				});
+
+				photo.querySelector(".edit-screen").classList.remove("editing"); // Hide edit screen
+				target.focus();
+			}
+		}
+
+		/**
+   * Close the media modal after an action
+   *
+   * @since 4.3
+   */
+
+	}, {
+		key: "closeMediaModal",
+		value: function closeMediaModal() {
+			var mediaModal = document.querySelector(".media-modal");
+			if (mediaModal) {
+				var closeBtn = mediaModal.querySelector("button.media-modal-close");
+				if (!closeBtn) {
+					return false;
+				}
+				closeBtn.click();
+			}
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			var _this2 = this;
+
+			var likeTxt = parseInt(this.likes) > 1 ? instant_img_localize.likes_plural : instant_img_localize.likes;
+
+			return _react2.default.createElement(
+				"article",
+				{ className: "photo" },
+				_react2.default.createElement(
+					"div",
+					{ className: "photo--wrap" },
+					_react2.default.createElement(
+						"div",
+						{ className: "img-wrap" },
+						_react2.default.createElement(
+							"a",
+							{
+								className: "upload loaded",
+								href: this.full_size,
+								"data-id": this.id,
+								"data-url": this.full_size,
+								"data-filename": this.state.filename,
+								"data-title": this.state.title,
+								"data-alt": this.state.alt,
+								"data-caption": this.state.caption,
+								title: instant_img_localize.upload,
+								onClick: function onClick(e) {
+									return _this2.download(e);
+								}
+							},
+							_react2.default.createElement("img", { src: this.img, alt: "" }),
+							_react2.default.createElement("div", { className: "status" })
+						),
+						_react2.default.createElement("div", { className: "notice-msg" }),
+						_react2.default.createElement(
+							"div",
+							{ className: "user-controls" },
+							_react2.default.createElement(
+								"a",
+								{
+									className: "user fade",
+									href: "https://unsplash.com/@" + this.user + "?utm_source=wordpress-instant-images&utm_medium=referral",
+									target: "_blank",
+									title: this.view_all + " @" + this.user
+								},
+								_react2.default.createElement(
+									"div",
+									{ className: "user-wrap" },
+									this.user_photo.length > 0 && _react2.default.createElement("img", { src: this.user_photo }),
+									this.user
+								)
+							),
+							_react2.default.createElement(
+								"div",
+								{ className: "photo-options" },
+								this.displayGutenbergControl && _react2.default.createElement(
+									"button",
+									{
+										type: "button",
+										className: "set-featured fade",
+										"data-title": instant_img_localize.set_as_featured,
+										onMouseEnter: function onMouseEnter(e) {
+											return _this2.showTooltip(e);
+										},
+										onMouseLeave: function onMouseLeave(e) {
+											return _this2.hideTooltip(e);
+										},
+										onClick: function onClick(e) {
+											return _this2.setFeaturedImageClick(e);
+										}
+									},
+									_react2.default.createElement("i", {
+										className: "fa fa-picture-o",
+										"aria-hidden": "true"
+									}),
+									_react2.default.createElement(
+										"span",
+										{ className: "offscreen" },
+										instant_img_localize.set_as_featured
+									)
+								),
+								this.displayGutenbergControl && _react2.default.createElement(
+									"button",
+									{
+										type: "button",
+										className: "insert fade",
+										"data-title": instant_img_localize.insert_into_post,
+										onMouseEnter: function onMouseEnter(e) {
+											return _this2.showTooltip(e);
+										},
+										onMouseLeave: function onMouseLeave(e) {
+											return _this2.hideTooltip(e);
+										},
+										onClick: function onClick(e) {
+											return _this2.insertImageIntoPost(e);
+										}
+									},
+									_react2.default.createElement("i", { className: "fa fa-plus", "aria-hidden": "true" }),
+									_react2.default.createElement(
+										"span",
+										{ className: "offscreen" },
+										instant_img_localize.insert_into_post
+									)
+								),
+								_react2.default.createElement(
+									"a",
+									{
+										href: "#",
+										className: "edit-photo-admin fade",
+										"data-title": instant_img_localize.edit_upload,
+										onMouseEnter: function onMouseEnter(e) {
+											return _this2.showTooltip(e);
+										},
+										onMouseLeave: function onMouseLeave(e) {
+											return _this2.hideTooltip(e);
+										}
+									},
+									_react2.default.createElement("i", { className: "fa fa-pencil", "aria-hidden": "true" }),
+									_react2.default.createElement(
+										"span",
+										{ className: "offscreen" },
+										instant_img_localize.edit_upload
+									)
+								),
+								_react2.default.createElement(
+									"button",
+									{
+										type: "button",
+										className: "edit-photo fade",
+										"data-title": instant_img_localize.edit_details,
+										onMouseEnter: function onMouseEnter(e) {
+											return _this2.showTooltip(e);
+										},
+										onMouseLeave: function onMouseLeave(e) {
+											return _this2.hideTooltip(e);
+										},
+										onClick: function onClick(e) {
+											return _this2.showEditScreen(e);
+										}
+									},
+									_react2.default.createElement("i", { className: "fa fa-cog", "aria-hidden": "true" }),
+									_react2.default.createElement(
+										"span",
+										{ className: "offscreen" },
+										instant_img_localize.edit_details
+									)
+								)
+							)
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "options" },
+							_react2.default.createElement(
+								"span",
+								{
+									className: "likes tooltip--above",
+									"data-title": this.likes + " " + likeTxt,
+									onMouseEnter: function onMouseEnter(e) {
+										return _this2.showTooltip(e);
+									},
+									onMouseLeave: function onMouseLeave(e) {
+										return _this2.hideTooltip(e);
+									}
+								},
+								_react2.default.createElement("i", {
+									className: "fa fa-heart heart-like",
+									"aria-hidden": "true"
+								}),
+								" ",
+								this.likes
+							),
+							_react2.default.createElement(
+								"a",
+								{
+									className: "tooltip--above",
+									href: this.link,
+									"data-title": instant_img_localize.view_on_unsplash,
+									onMouseEnter: function onMouseEnter(e) {
+										return _this2.showTooltip(e);
+									},
+									onMouseLeave: function onMouseLeave(e) {
+										return _this2.hideTooltip(e);
+									},
+									target: "_blank"
+								},
+								_react2.default.createElement("i", {
+									className: "fa fa-external-link",
+									"aria-hidden": "true"
+								}),
+								_react2.default.createElement(
+									"span",
+									{ className: "offscreen" },
+									instant_img_localize.view_on_unsplash
+								)
+							)
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "edit-screen", tabIndex: "0" },
+						_react2.default.createElement(
+							"div",
+							{ className: "edit-screen--title" },
+							_react2.default.createElement(
+								"p",
+								{ className: "heading" },
+								instant_img_localize.edit_details
+							),
+							_react2.default.createElement(
+								"p",
+								null,
+								instant_img_localize.edit_details_intro,
+								"."
+							)
+						),
+						_react2.default.createElement(
+							"label",
+							null,
+							_react2.default.createElement(
+								"span",
+								null,
+								instant_img_localize.edit_filename,
+								":"
+							),
+							_react2.default.createElement("input", {
+								type: "text",
+								name: "filename",
+								"data-original": this.filename,
+								placeholder: this.filename,
+								value: this.state.filename,
+								onChange: function onChange(e) {
+									return _this2.handleEditChange(e);
+								}
+							}),
+							_react2.default.createElement(
+								"em",
+								null,
+								".jpg"
+							)
+						),
+						_react2.default.createElement(
+							"label",
+							null,
+							_react2.default.createElement(
+								"span",
+								null,
+								instant_img_localize.edit_title,
+								":"
+							),
+							_react2.default.createElement("input", {
+								type: "text",
+								name: "title",
+								"data-original": this.title,
+								placeholder: this.title,
+								value: this.state.title || "",
+								onChange: function onChange(e) {
+									return _this2.handleEditChange(e);
+								}
+							})
+						),
+						_react2.default.createElement(
+							"label",
+							null,
+							_react2.default.createElement(
+								"span",
+								null,
+								instant_img_localize.edit_alt,
+								":"
+							),
+							_react2.default.createElement("input", {
+								type: "text",
+								name: "alt",
+								"data-original": this.alt,
+								value: this.state.alt || "",
+								onChange: function onChange(e) {
+									return _this2.handleEditChange(e);
+								}
+							})
+						),
+						_react2.default.createElement(
+							"label",
+							null,
+							_react2.default.createElement(
+								"span",
+								null,
+								instant_img_localize.edit_caption,
+								":"
+							),
+							_react2.default.createElement("textarea", {
+								rows: "3",
+								name: "caption",
+								"data-original": "",
+								onChange: function onChange(e) {
+									return _this2.handleEditChange(e);
+								},
+								value: this.state.caption || ""
+							})
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "edit-screen--controls" },
+							_react2.default.createElement(
+								"button",
+								{
+									type: "button",
+									className: "button",
+									onClick: function onClick(e) {
+										return _this2.cancelEditChange(e);
+									}
+								},
+								instant_img_localize.cancel
+							),
+							" ",
+							"\xA0",
+							_react2.default.createElement(
+								"button",
+								{
+									type: "button",
+									className: "button button-primary",
+									onClick: function onClick(e) {
+										return _this2.saveEditChange(e);
+									}
+								},
+								instant_img_localize.upload_now
+							)
+						)
+					)
+				)
+			);
+		}
+	}]);
+
+	return Photo;
 }(_react2.default.Component);
 
 exports.default = Photo;
@@ -30264,8 +30467,7 @@ var PhotoList = function (_React$Component) {
 	}
 
 	/**
-  * test()
-  * Test access to the REST API
+  * Test access to the REST API.
   *
   * @since 3.2
   */
@@ -30314,8 +30516,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * search()
-   * Trigger Unsplash Search
+   * Trigger Unsplash Search.
    *
    * @param e   element    the search form
    * @since 3.0
@@ -30340,7 +30541,6 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * setOrientation
    * Orientation filter. Availlable during a search only.
    *
    * @since 4.2
@@ -30374,8 +30574,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * hasOrientation
-   * Is their an orientation set
+   * Is their an orientation set.
    *
    * @since 4.2
    */
@@ -30387,8 +30586,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * clearOrientation
-   * Clear the orientation
+   * Clear the orientation.
    *
    * @since 4.2
    */
@@ -30404,8 +30602,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * doSearch
-   * Run the search
+   * Run the search.
    *
    * @param term   string    the search term
    * @param type   string    the type of search, standard or by ID
@@ -30484,8 +30681,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * clearSearch
-   * Reset search results and results view
+   * Reset search results and results view.
    *
    * @since 3.0
    */
@@ -30502,8 +30698,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * getPhotos
-   * Load next set of photos, infinite scroll style
+   * Load next set of photos, infinite scroll style.
    *
    * @since 3.0
    */
@@ -30550,8 +30745,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * togglePhotoList
-   * Toogles the photo view (New/Popular/Old)
+   * Toogles the photo view (New/Popular/Old).
    *
    * @param view   string    Current view
    * @param e      element   Clicked element
@@ -30591,8 +30785,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * renderLayout
-   * Renders the Masonry layout
+   * Renders the Masonry layout.
    *
    * @since 3.0
    */
@@ -30616,8 +30809,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * onScroll
-   * Scrolling function
+   * Scrolling function.
    *
    * @since 3.0
    */
@@ -30634,7 +30826,6 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * checkTotalResults
    * A checker to determine is there are remaining search results.
    *
    * @param num   int    Total search results
@@ -30648,8 +30839,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * setActiveState
-   * Sets the main navigation active state
+   * Sets the main navigation active state.
    *
    * @since 3.0
    */
@@ -30675,8 +30865,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * showTooltip
-   * Show the tooltip
+   * Show the tooltip.
    *
    * @since 4.3.0
    */
@@ -30718,8 +30907,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * hideTooltip
-   * Hide the tooltip
+   * Hide the tooltip.
    *
    * @since 4.3.0
    */
@@ -30986,7 +31174,7 @@ exports.default = PhotoList;
 
 
 Object.defineProperty(exports, "__esModule", {
-   value: true
+	value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -31004,51 +31192,57 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var ResultsToolTip = function (_React$Component) {
-   _inherits(ResultsToolTip, _React$Component);
+	_inherits(ResultsToolTip, _React$Component);
 
-   function ResultsToolTip(props) {
-      _classCallCheck(this, ResultsToolTip);
+	function ResultsToolTip(props) {
+		_classCallCheck(this, ResultsToolTip);
 
-      return _possibleConstructorReturn(this, (ResultsToolTip.__proto__ || Object.getPrototypeOf(ResultsToolTip)).call(this, props));
-   }
+		return _possibleConstructorReturn(this, (ResultsToolTip.__proto__ || Object.getPrototypeOf(ResultsToolTip)).call(this, props));
+	}
 
-   _createClass(ResultsToolTip, [{
-      key: 'resetSearch',
-      value: function resetSearch() {
-         var nav = this.props.container.querySelector('.control-nav');
-         var navItem = nav.querySelector('li button.latest');
-         navItem.click();
-      }
-   }, {
-      key: 'render',
-      value: function render() {
-         var _this2 = this;
+	_createClass(ResultsToolTip, [{
+		key: "resetSearch",
+		value: function resetSearch() {
+			var nav = this.props.container.querySelector(".control-nav");
+			var navItem = nav.querySelector("li button.latest");
+			navItem.click();
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			var _this2 = this;
 
-         return _react2.default.createElement(
-            'div',
-            { className: this.props.isSearch ? 'searchResults' : 'searchResults hide' },
-            _react2.default.createElement(
-               'span',
-               { title: this.props.title },
-               this.props.total
-            ),
-            _react2.default.createElement(
-               'button',
-               { type: 'button', title: instant_img_localize.clear_search, onClick: function onClick(e) {
-                     return _this2.resetSearch();
-                  } },
-               'x',
-               _react2.default.createElement(
-                  'span',
-                  { className: 'offscreen' },
-                  instant_img_localize.clear_search
-               )
-            )
-         );
-      }
-   }]);
+			return _react2.default.createElement(
+				"div",
+				{
+					className: this.props.isSearch ? "searchResults" : "searchResults hide"
+				},
+				_react2.default.createElement(
+					"span",
+					{ title: this.props.title },
+					this.props.total
+				),
+				_react2.default.createElement(
+					"button",
+					{
+						type: "button",
+						title: instant_img_localize.clear_search,
+						onClick: function onClick(e) {
+							return _this2.resetSearch();
+						}
+					},
+					"x",
+					_react2.default.createElement(
+						"span",
+						{ className: "offscreen" },
+						instant_img_localize.clear_search
+					)
+				)
+			);
+		}
+	}]);
 
-   return ResultsToolTip;
+	return ResultsToolTip;
 }(_react2.default.Component);
 
 exports.default = ResultsToolTip;
@@ -31088,8 +31282,8 @@ __webpack_require__(/*! isomorphic-fetch */ "./node_modules/isomorphic-fetch/fet
 __webpack_require__(/*! ./components/Helpers */ "./src/js/components/Helpers.js");
 
 // Global vars
-var activeFrameId = '';
-var activeFrame = '';
+var activeFrameId = "";
+var activeFrame = "";
 
 // Load MediaFrame deps
 var oldMediaFrame = wp.media.view.MediaFrame.Post;
@@ -31097,7 +31291,6 @@ var oldMediaFrameSelect = wp.media.view.MediaFrame.Select;
 
 // Create Instant Images Tabs
 wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend({
-
 	// Tab / Router
 	browseRouter: function browseRouter(routerView) {
 		oldMediaFrameSelect.prototype.browseRouter.apply(this, arguments);
@@ -31113,7 +31306,7 @@ wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend({
 	// Handlers
 	bindHandlers: function bindHandlers() {
 		oldMediaFrameSelect.prototype.bindHandlers.apply(this, arguments);
-		this.on('content:create:instantimages', this.frameContent, this);
+		this.on("content:create:instantimages", this.frameContent, this);
 	},
 
 
@@ -31136,7 +31329,6 @@ wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend({
 });
 
 wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
-
 	// Tab / Router
 	browseRouter: function browseRouter(routerView) {
 		oldMediaFrameSelect.prototype.browseRouter.apply(this, arguments);
@@ -31152,7 +31344,7 @@ wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
 	// Handlers
 	bindHandlers: function bindHandlers() {
 		oldMediaFrame.prototype.bindHandlers.apply(this, arguments);
-		this.on('content:create:instantimages', this.frameContent, this);
+		this.on("content:create:instantimages", this.frameContent, this);
 	},
 
 
@@ -31176,39 +31368,45 @@ wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
 
 // Render Instant Images
 var instantImagesMediaTab = function instantImagesMediaTab() {
-
 	var html = createMediaWrapper(); // Create HTML wrapper
 
 	if (!activeFrame) {
 		return false;
 	}
 
-	var modal = activeFrame.querySelector('.media-frame-content'); // Get all media modals   
+	var modal = activeFrame.querySelector(".media-frame-content"); // Get all media modals
 	if (!modal) {
 		// Exit if not modal
 		return false;
 	}
 
-	modal.innerHTML = ''; // Clear Modal
+	modal.innerHTML = ""; // Clear Modal
 	modal.appendChild(html); // Append Instant Images
 
-	var element = modal.querySelector('#instant-images-media-router-' + activeFrameId);
+	var element = modal.querySelector("#instant-images-media-router-" + activeFrameId);
 	if (!element) {
 		// Exit if not element
 		return false;
 	}
 
-	_reactDom2.default.render(_react2.default.createElement(_PhotoList2.default, { container: element, editor: 'media-router', results: '', page: '1', orderby: 'latest', service: 'unsplash' }), element);
+	_reactDom2.default.render(_react2.default.createElement(_PhotoList2.default, {
+		container: element,
+		editor: "media-router",
+		results: "",
+		page: "1",
+		orderby: "latest",
+		service: "unsplash"
+	}), element);
 };
 
 // Create HTML markup
 var createMediaWrapper = function createMediaWrapper() {
-	var wrapper = document.createElement('div');
-	wrapper.classList.add('instant-img-container');
-	var container = document.createElement('div');
-	container.classList.add('instant-images-wrapper');
-	var frame = document.createElement('div');
-	frame.setAttribute('id', 'instant-images-media-router-' + activeFrameId);
+	var wrapper = document.createElement("div");
+	wrapper.classList.add("instant-img-container");
+	var container = document.createElement("div");
+	container.classList.add("instant-images-wrapper");
+	var frame = document.createElement("div");
+	frame.setAttribute("id", "instant-images-media-router-" + activeFrameId);
 
 	container.appendChild(frame);
 	wrapper.appendChild(container);
@@ -31218,25 +31416,23 @@ var createMediaWrapper = function createMediaWrapper() {
 
 // Document Ready
 jQuery(document).ready(function ($) {
-
 	if (wp.media) {
-
 		// Open
 		wp.media.view.Modal.prototype.on("open", function () {
 			//console.log(wp.media.frame);
 			if (!activeFrame) {
 				return false;
 			}
-			var selectedTab = activeFrame.querySelector('.media-router button.media-menu-item.active');
-			if (selectedTab.id === 'menu-item-instantimages') {
+			var selectedTab = activeFrame.querySelector(".media-router button.media-menu-item.active");
+			if (selectedTab.id === "menu-item-instantimages") {
 				instantImagesMediaTab();
 			}
 		});
 
 		// Live Click Handler
-		$(document).on('click', '.media-router button.media-menu-item', function (e) {
-			var selectedTab = activeFrame.querySelector('.media-router button.media-menu-item.active');
-			if (selectedTab.id === 'menu-item-instantimages') {
+		$(document).on("click", ".media-router button.media-menu-item", function (e) {
+			var selectedTab = activeFrame.querySelector(".media-router button.media-menu-item.active");
+			if (selectedTab.id === "menu-item-instantimages") {
 				instantImagesMediaTab();
 			}
 		});

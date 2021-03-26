@@ -23,13 +23,12 @@
 	      <h2 class="w-border"><?php _e('What\'s New', 'instant-images'); ?></h2>
 	      <p><?php _e('The latest Instant Images updates', 'instant-images'); ?>.</p>
 	      <div class="cta-wrap">
-		      <h4><span>4.3</span></h4>
 		      <ul class="whats-new">
-			      <li>Instant Images tab added to the WordPress Media Modal.</li>
-			      <li>Gutenberg Support - Instant Images directly integrates with Gutenberg as a plugin sidebar.</li>
-			      <li>Added `instant_images_user_role` filter to allow for control over user capability.</li>
-			      <li>Updated to meet revised <a href="https://medium.com/unsplash/unsplash-api-guidelines-28e0216e6daa" target="_blank">Unsplash API guidelines</a>.</li>
-			      <li>Adding support for searching individual photos by Unsplash ID - searching <pre>id:{photo_id}</pre> will return a single result.<br/>e.g. <pre>id:YiUi00uqKk8</pre></li>
+					<li><strong>Improved Download Speeds</strong>: Instant Images <em>v+</em> is now up to 4x faster than previous versions after a critical update in the initial image fetching process.</li>
+			      <li><strong>Media Modals</strong>: Instant Images tab added to all WordPress Media Modal windows.</li>
+			      <li><strong>Gutenberg Support</strong>: Instant Images directly integrates with Gutenberg as a plugin sidebar.</li>
+			      <li><strong>User Roles</strong>: Added <em>instant_images_user_role</em> filter to allow for control over user capability.</li>
+			      <li><strong>Image Search</strong>: Added support for searching individual photos by Unsplash ID - searching <pre>id:{photo_id}</pre> will return a single result.<br/>e.g. <pre>id:YiUi00uqKk8</pre></li>
 		      </ul>
 	      </div>
       </section>
