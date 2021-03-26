@@ -5,6 +5,7 @@
 /src
 /webpack
 .distignore
+.gitignore
 .babelrc
 .jshintrc
 .editorconfig
