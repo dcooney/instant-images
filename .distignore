@@ -4,6 +4,13 @@
 /node_modules
 /src
 /webpack
+/dist/css/instant-images.css.map
+/dist/js/instant-images-block.js.map
+/dist/js/instant-images-media.js.map
+/dist/js/instant-images-styles.js
+/dist/js/instant-images-styles.js.map
+/dist/js/instant-images-styles.min.js
+/dist/js/instant-images.js.map
 .distignore
 .gitignore
 .babelrc
