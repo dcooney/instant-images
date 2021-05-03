@@ -125,6 +125,10 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 4.4.0.1 - May 3, 2021 =
+* UPDATE - Updated Instant Images settings page to sanitize inputs before saving.
+
+
 = 4.4.0 - March 26, 2021 =
 * UPDATE - 🎉 Massive improvement to image download speeds by [dynamically resizing](https://unsplash.com/documentation#dynamically-resizable-images) the initial download before sending image to media library.
   * Intitial testing revealed up to 4x faster download speeds than previous version of Instant Images 🤯.

@@ -10,10 +10,10 @@
 				   <?php
 						settings_fields( 'instant-img-setting-group' );
 						do_settings_sections( 'instant-images' );
-						$options = get_option( 'instant_img_settings' ); //get the older values, wont work the first time
+						$options = get_option( 'instant_img_settings' ); // Get the older values, wont work the first time
 			      ?>
 					<div class="save-settings">
-		            <?php submit_button(__('Save Settings', 'instant-images')); ?>
+		            <?php submit_button( __( 'Save Settings', 'instant-images' ) ); ?>
 						<div class="loading"></div>
 						<div class="clear"></div>
 					</div>

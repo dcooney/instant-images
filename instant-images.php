@@ -1,4 +1,5 @@
 <?php
+
 /*
 Plugin Name: Instant Images
 Plugin URI: https://connekthq.com/plugins/instant-images/
@@ -7,7 +8,7 @@ Author: Darren Cooney
 Twitter: @connekthq
 Author URI: https://connekthq.com
 Text Domain: instant-images
-Version: 4.4.0
+Version: 4.4.0.1
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -16,14 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'INSTANT_IMAGES_VERSION', '4.4.0' );
-define( 'INSTANT_IMAGES_RELEASE', 'March 26, 2021' );
+define( 'INSTANT_IMAGES_VERSION', '4.4.0.1' );
+define( 'INSTANT_IMAGES_RELEASE', 'May 3, 2021' );
 
 /**
  * Activation hook
  *
  * @since 2.0
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  */
 function instant_images_activate() {
 	// Create /instant-images directory inside /uploads to temporarily store images.
@@ -37,10 +38,10 @@ register_activation_hook( __FILE__, 'instant_images_activate' );
 
 
 /**
- * De-activation hook
+ * Deactivation hook
  *
  * @since 3.2.2
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  */
 function instant_images_deactivate() {
 	// Delete /instant-images directory inside /uploads to temporarily store images.
@@ -49,7 +50,7 @@ function instant_images_deactivate() {
 
 	if ( is_dir( $dir ) ) {
 		// Check for files in dir.
-		foreach ( glob( $dir . "/*.*" ) as $filename ) {
+		foreach ( glob( $dir . '/*.*' ) as $filename ) {
 			if ( is_file( $filename ) ) {
 				unlink( $filename );
 			}
@@ -65,7 +66,7 @@ register_deactivation_hook( __FILE__, 'instant_images_deactivate' );
  * InstantImages class
  *
  * @since 2.0
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  */
 class InstantImages {
 
@@ -73,11 +74,11 @@ class InstantImages {
 	 * Set up plugin.
 	 *
 	 * @since 2.0
-	 * @author dcooney
+	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public function __construct() {
 
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( &$this, 'instant_images_add_action_links') );
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( &$this, 'instant_images_add_action_links' ) );
 		add_action( 'enqueue_block_editor_assets', array( &$this, 'instant_img_block_plugin_enqueue' ) );
 		add_action( 'wp_enqueue_media', array( &$this, 'instant_img_wp_media_enqueue' ) );
 		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain.
@@ -90,7 +91,7 @@ class InstantImages {
 	 * Enqueue Gutenberg Block sidebar plugin
 	 *
 	 * @since 3.0
-	 * @author dcooney
+	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public function instant_img_block_plugin_enqueue() {
 
@@ -123,7 +124,7 @@ class InstantImages {
 	 * Enqueue script for Media Modal and Blocks sidebar
 	 *
 	 * @since 4.0
-	 * @author dcooney
+	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public function instant_img_wp_media_enqueue() {
 
@@ -155,9 +156,9 @@ class InstantImages {
 	 *
 	 * @param string $script id.
 	 * @since 2.0
-	 * @author dcooney
+	 * @author ConnektMedia <support@connekthq.com>
 	 */
-	public static function instant_img_localize( $script = 'instant-images-react' ){
+	public static function instant_img_localize( $script = 'instant-images-react' ) {
 
 		global $post;
 		$options    = get_option( 'instant_img_settings' );
@@ -172,9 +173,9 @@ class InstantImages {
 				'nonce'                   => wp_create_nonce( 'wp_rest' ),
 				'ajax_url'                => admin_url( 'admin-ajax.php' ),
 				'admin_nonce'             => wp_create_nonce( 'instant_img_nonce' ),
-				'parent_id'               => ($post) ? $post->ID : 0,
-				'download_width'          => $download_w,
-				'download_height'         => $download_h,
+				'parent_id'               => ( $post ) ? $post->ID : 0,
+				'download_width'          => esc_html( $download_w ),
+				'download_height'         => esc_html( $download_h ),
 				'unsplash_default_app_id' => INSTANT_IMG_DEFAULT_APP_ID,
 				'unsplash_app_id'         => INSTANT_IMG_DEFAULT_APP_ID,
 				'error_msg_title'         => __( 'Error accessing Unsplash API', 'instant-images' ),
@@ -227,7 +228,7 @@ class InstantImages {
 	 * Include these files in the admin
 	 *
 	 * @since 2.0
-	 * @author dcooney
+	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	private function includes() {
 		if ( is_admin() ) {
@@ -247,7 +248,7 @@ class InstantImages {
 	 * @param string $option WP Option.
 	 * @return $show boolean
 	 * @since 3.2.1
-	 * @author dcooney
+	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public static function instant_img_show_tab( $option ) {
 		if ( ! $option ) {
@@ -270,7 +271,7 @@ class InstantImages {
 	 *
 	 * @since 4.3.3
 	 * @return {Boolean}
-	 * @author dcooney
+	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public static function instant_img_has_access() {
 		$access = false;
