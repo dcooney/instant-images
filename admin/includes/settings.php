@@ -1,4 +1,10 @@
 <?php
+/**
+ * Instant Images Settings.
+ *
+ * @package InstantImages
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -9,17 +15,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author ConnektMedia <support@connekthq.com>
  * @since 2.0
  */
-function instant_img_admin_init() {
+function instant_images_admin_init() {
 	register_setting(
 		'instant-img-setting-group',
 		'instant_img_settings',
-		'instant_img_sanitize'
+		'instant_images_sanitize'
 	);
 
 	add_settings_section(
 		'unsplash_general_settings',
 		__( 'Global Settings', 'instant-images' ),
-		'unsplash_general_settings_callback',
+		'instant_images_general_settings_callback',
 		'instant-images'
 	);
 
@@ -27,7 +33,7 @@ function instant_img_admin_init() {
 	add_settings_field(
 		'unsplash_download_w',
 		__( 'Upload Image Width', 'instant-images' ),
-		'unsplash_download_w_callback',
+		'instant_images_width_callback',
 		'instant-images',
 		'unsplash_general_settings'
 	);
@@ -36,7 +42,7 @@ function instant_img_admin_init() {
 	add_settings_field(
 		'unsplash_download_h',
 		__( 'Upload Image Height', 'instant-images' ),
-		'unsplash_download_h_callback',
+		'instant_images_height_callback',
 		'instant-images',
 		'unsplash_general_settings'
 	);
@@ -51,7 +57,7 @@ function instant_img_admin_init() {
 	);
 
 }
-add_action( 'admin_init', 'instant_img_admin_init' );
+add_action( 'admin_init', 'instant_images_admin_init' );
 
 /**
  * Some general settings text.
@@ -59,8 +65,8 @@ add_action( 'admin_init', 'instant_img_admin_init' );
  * @author ConnektMedia <support@connekthq.com>
  * @since 1.0
  */
-function unsplash_general_settings_callback() {
-	echo '<p class="desc">' . __( 'Manage your media upload settings.', 'instant-images' ) . '</p>';
+function instant_images_general_settings_callback() {
+	echo '<p class="desc">' . esc_attr__( 'Manage your media upload settings.', 'instant-images' ) . '</p>';
 }
 
 /**
@@ -71,7 +77,7 @@ function unsplash_general_settings_callback() {
  * @param array $input Array of field values.
  * @return array $output Sanitized field values.
  */
-function instant_img_sanitize( $input ) {
+function instant_images_sanitize( $input ) {
 
 	// Create our array for storing the validated options.
 	$output = array();
@@ -94,15 +100,15 @@ function instant_img_sanitize( $input ) {
  * @author ConnektMedia <support@connekthq.com>
  * @since 1.0
  */
-function unsplash_download_w_callback() {
+function instant_images_width_callback() {
 	$options = get_option( 'instant_img_settings' );
 
 	if ( ! isset( $options['unsplash_download_w'] ) ) {
 		$options['unsplash_download_w'] = '1600';
 	}
 
-	echo '<label for="instant_img_settings[unsplash_download_w]"><strong>' . __( 'Max Image Upload Width:', 'instant-images' ) . '</strong></label>';
-	echo '<input type="number" id="instant_img_settings[unsplash_download_w]" name="instant_img_settings[unsplash_download_w]" value="' . $options['unsplash_download_w'] . '" class="sm" step="20" max="4800" /> ';
+	echo '<label for="instant_img_settings[unsplash_download_w]"><strong>' . esc_attr__( 'Max Image Upload Width:', 'instant-images' ) . '</strong></label>';
+	echo '<input type="number" id="instant_img_settings[unsplash_download_w]" name="instant_img_settings[unsplash_download_w]" value="' . esc_attr( $options['unsplash_download_w'] ) . '" class="sm" step="20" max="4800" /> ';
 }
 
 /**
@@ -111,15 +117,15 @@ function unsplash_download_w_callback() {
  * @author ConnektMedia <support@connekthq.com>
  * @since 1.0
  */
-function unsplash_download_h_callback() {
+function instant_images_height_callback() {
 	$options = get_option( 'instant_img_settings' );
 
 	if ( ! isset( $options['unsplash_download_h'] ) ) {
 		$options['unsplash_download_h'] = '1200';
 	}
 
-	echo '<label for="instant_img_settings[unsplash_download_h]"><strong>' . __( 'Max Image Upload Height:', 'instant-images' ) . '</strong></label>';
-	echo '<input type="number" id="instant_img_settings[unsplash_download_h]" name="instant_img_settings[unsplash_download_h]" value="' . $options['unsplash_download_h'] . '" class="sm" step="20" max="4800" /> ';
+	echo '<label for="instant_img_settings[unsplash_download_h]"><strong>' . esc_attr__( 'Max Image Upload Height:', 'instant-images' ) . '</strong></label>';
+	echo '<input type="number" id="instant_img_settings[unsplash_download_h]" name="instant_img_settings[unsplash_download_h]" value="' . esc_attr( $options['unsplash_download_h'] ) . '" class="sm" step="20" max="4800" /> ';
 }
 
 /**
@@ -136,12 +142,14 @@ function instant_images_tab_display_callback() {
 
 	$style = 'style="position: absolute; left: 0; top: 9px;"';
 
-	$html  = '<label style="cursor: default;"><strong>' . __( 'Media Modal:', 'instant-images' ) . '</strong></label>';
+	$html  = '<label style="cursor: default;"><strong>' . esc_attr__( 'Media Modal:', 'instant-images' ) . '</strong></label>';
 	$html .= '<label for="media_modal_display" style="padding-left: 24px; position: relative;">';
 	$html .= '<input type="hidden" name="instant_img_settings[media_modal_display]" value="0" />';
 	$html .= '<input ' . $style . ' type="checkbox" name="instant_img_settings[media_modal_display]" id="media_modal_display" value="1"' . ( $options['media_modal_display'] ? ' checked="checked"' : '' ) . ' />';
 	$html .= __( 'Hide the <b>Instant Images</b> tab in admin Media Modal windows.', 'instant-images' );
 	$html .= '</label>';
 
+	// @codingStandardsIgnoreStart
 	echo $html;
+	// @codingStandardsIgnoreEnd
 }

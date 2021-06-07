@@ -1,3 +1,4 @@
 *.map
 /node_nodules
+/vendor
 .DS_Store

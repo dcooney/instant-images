@@ -125,6 +125,11 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 4.4.0.2 - June 7, 2021 =
+ * Fix: Added fix for CSS conflict causing issues in the WordPress menus section.
+ * Fix: Removed browser console error with regards `activeFrame.querySelector is not a function` that could appear when creating a gallery.
+ * Updated: Improved coding standard and overall code quality.
+
 = 4.4.0.1 - May 3, 2021 =
 * UPDATE - Updated Instant Images settings page to sanitize inputs before saving.
 

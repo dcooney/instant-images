@@ -5,7 +5,7 @@ import PhotoList from "./components/PhotoList";
 
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
-require("./components/Helpers");
+require("./functions/helpers");
 
 const GetPhotos = (page = 1, orderby = "latest", service = "unsplash") => {
 	let container = document.querySelector(".instant-img-container");

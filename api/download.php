@@ -4,24 +4,27 @@
  *
  * @since 3.0
  * @author dcooney
- * @package instant-images
+ * @package InstantImages
  */
 
-add_action( 'rest_api_init', function () {
-	$my_namespace = 'instant-images';
-	$my_endpoint  = '/download';
-	register_rest_route(
-		$my_namespace,
-		$my_endpoint,
-		array(
-			'methods'             => 'POST',
-			'callback'            => 'instant_images_download',
-			'permission_callback' => function () {
-				return InstantImages::instant_img_has_access();
-			},
-		)
-	);
-});
+add_action(
+	'rest_api_init',
+	function () {
+		$my_namespace = 'instant-images';
+		$my_endpoint  = '/download';
+		register_rest_route(
+			$my_namespace,
+			$my_endpoint,
+			array(
+				'methods'             => 'POST',
+				'callback'            => 'instant_images_download',
+				'permission_callback' => function () {
+					return InstantImages::instant_img_has_access();
+				},
+			)
+		);
+	}
+);
 
 /**
  * Resize Image and run through media uploader process.
@@ -30,7 +33,7 @@ add_action( 'rest_api_init', function () {
  * @return $response
  * @since 3.0
  * @author dcooney
- * @package instant-images
+ * @package InstantImages
  */
 function instant_images_download( WP_REST_Request $request ) {
 
@@ -124,12 +127,15 @@ function instant_images_download( WP_REST_Request $request ) {
 		 *
 		 * @since 4.4.0
 		 */
-		do_action( 'instant_images_after_upload', array(
-			'filename'       => $name,
-			'unsplash_id'    => $id,
-			'attachment_id'  => $image_id,
-			'attachment_url' => wp_get_attachment_url( $image_id ),
-		) );
+		do_action(
+			'instant_images_after_upload',
+			array(
+				'filename'       => $name,
+				'unsplash_id'    => $id,
+				'attachment_id'  => $image_id,
+				'attachment_url' => wp_get_attachment_url( $image_id ),
+			)
+		);
 
 		// Resize original image to max size (set in Instant Images settings).
 		// @deprecated in .
@@ -174,7 +180,7 @@ function instant_images_download( WP_REST_Request $request ) {
  * @return bool Whether the remote image exists.
  * @since 3.0
  * @author dcooney
- * @package instant-images
+ * @package InstantImages
  */
 function instant_images_remote_file_exists( $url ) {
 	$response = wp_remote_head( $url );
@@ -189,7 +195,7 @@ function instant_images_remote_file_exists( $url ) {
  * @param string $filename the image filename.
  * @since 3.0
  * @author dcooney
- * @package instant-images
+ * @package InstantImages
  */
 function instant_images_resize_download( $filename ) {
 

@@ -4,7 +4,7 @@ import API from "./components/API";
 import PhotoList from "./components/PhotoList";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
-require("./components/Helpers");
+require("./functions/helpers");
 
 // Global vars
 let activeFrameId = "";
@@ -147,28 +147,29 @@ jQuery(document).ready(function ($) {
 	if (wp.media) {
 		// Open
 		wp.media.view.Modal.prototype.on("open", function () {
-			//console.log(wp.media.frame);
 			if (!activeFrame) {
 				return false;
 			}
 			let selectedTab = activeFrame.querySelector(
 				".media-router button.media-menu-item.active"
 			);
-			if (selectedTab.id === "menu-item-instantimages") {
+			if (selectedTab && selectedTab.id === "menu-item-instantimages") {
 				instantImagesMediaTab();
 			}
 		});
 
-		// Live Click Handler
-		$(document).on("click", ".media-router button.media-menu-item", function (
-			e
-		) {
-			let selectedTab = activeFrame.querySelector(
-				".media-router button.media-menu-item.active"
-			);
-			if (selectedTab.id === "menu-item-instantimages") {
-				instantImagesMediaTab();
+		// Click Handler
+		$(document).on(
+			"click",
+			".media-router button.media-menu-item",
+			function (e) {
+				let selectedTab = activeFrame.querySelector(
+					".media-router button.media-menu-item.active"
+				);
+				if (selectedTab && selectedTab.id === "menu-item-instantimages") {
+					instantImagesMediaTab();
+				}
 			}
-		});
+		);
 	}
 });

@@ -1,8 +1,4 @@
-@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);html {
-  overflow-y: scroll;
-}
-
-body.media_page_instant-images {
+@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);body.media_page_instant-images {
   background: #fff;
 }
 
@@ -464,6 +460,7 @@ body.media_page_instant-images #wpfooter p {
 
 .instant-img-container input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
+          box-shadow: 0 0 0px 1000px white inset;
 }
 
 .instant-img-container .control-nav {

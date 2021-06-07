@@ -29044,16 +29044,16 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * Trigger Unsplash Search.
+   * Trigger Search.
    *
-   * @param e   element    the search form
+   * @param {Event} event The dispatched submit event.
    * @since 3.0
    */
 
 	}, {
 		key: "search",
-		value: function search(e) {
-			e.preventDefault();
+		value: function search(event) {
+			event.preventDefault();
 			var input = this.container.querySelector("#photo-search");
 			var term = input.value;
 
@@ -29071,14 +29071,16 @@ var PhotoList = function (_React$Component) {
 		/**
    * Orientation filter. Availlable during a search only.
    *
+   * @param {string} orientation The orientation of the photos.
+   * @param {MouseEvent} event The dispatched orientation setter event.
    * @since 4.2
    */
 
 	}, {
 		key: "setOrientation",
-		value: function setOrientation(orientation, e) {
-			if (e && e.target) {
-				var target = e.target;
+		value: function setOrientation(orientation, event) {
+			if (event && event.target) {
+				var target = event.target;
 
 				if (target.classList.contains("active")) {
 					// Clear orientation
@@ -29132,8 +29134,7 @@ var PhotoList = function (_React$Component) {
 		/**
    * Run the search.
    *
-   * @param term   string    the search term
-   * @param type   string    the type of search, standard or by ID
+   * @param {string} term The search term.
    * @since 3.0
    * @updated 3.1
    */
@@ -29548,6 +29549,11 @@ var PhotoList = function (_React$Component) {
 							{ onSubmit: function onSubmit(e) {
 									return _this3.search(e);
 								}, autoComplete: "off" },
+							_react2.default.createElement(
+								"label",
+								{ htmlFor: "photo-search", className: "offscreen" },
+								instant_img_localize.search_label
+							),
 							_react2.default.createElement("input", {
 								type: "search",
 								id: "photo-search",

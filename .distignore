@@ -4,6 +4,7 @@
 /node_modules
 /src
 /webpack
+/vendor
 /dist/css/instant-images.css.map
 /dist/js/instant-images-block.js.map
 /dist/js/instant-images-media.js.map
@@ -16,8 +17,11 @@
 .babelrc
 .jshintrc
 .editorconfig
+.phpcs.xml
 package-lock.json
 package.json
+composer.json
+composer.lock
 postcss.config.js
 webpack.config.js
 README.md

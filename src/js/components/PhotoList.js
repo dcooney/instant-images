@@ -103,13 +103,13 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * Trigger Unsplash Search.
+	 * Trigger Search.
 	 *
-	 * @param e   element    the search form
+	 * @param {Event} event The dispatched submit event.
 	 * @since 3.0
 	 */
-	search(e) {
-		e.preventDefault();
+	search(event) {
+		event.preventDefault();
 		let input = this.container.querySelector("#photo-search");
 		let term = input.value;
 
@@ -127,11 +127,13 @@ class PhotoList extends React.Component {
 	/**
 	 * Orientation filter. Availlable during a search only.
 	 *
+	 * @param {string} orientation The orientation of the photos.
+	 * @param {MouseEvent} event The dispatched orientation setter event.
 	 * @since 4.2
 	 */
-	setOrientation(orientation, e) {
-		if (e && e.target) {
-			let target = e.target;
+	setOrientation(orientation, event) {
+		if (event && event.target) {
+			let target = event.target;
 
 			if (target.classList.contains("active")) {
 				// Clear orientation
@@ -175,8 +177,7 @@ class PhotoList extends React.Component {
 	/**
 	 * Run the search.
 	 *
-	 * @param term   string    the search term
-	 * @param type   string    the type of search, standard or by ID
+	 * @param {string} term The search term.
 	 * @since 3.0
 	 * @updated 3.1
 	 */
@@ -361,9 +362,9 @@ class PhotoList extends React.Component {
 			self.msnry = new Masonry(photoListWrapper, {
 				itemSelector: ".photo",
 			});
-			[
-				...self.container.querySelectorAll(".photo-target .photo"),
-			].forEach((el) => el.classList.add("in-view"));
+			[...self.container.querySelectorAll(".photo-target .photo")].forEach(
+				(el) => el.classList.add("in-view")
+			);
 		});
 	}
 
@@ -399,9 +400,9 @@ class PhotoList extends React.Component {
 	setActiveState() {
 		let self = this;
 		// Remove .active class
-		[
-			...this.container.querySelectorAll(".control-nav button"),
-		].forEach((el) => el.classList.remove("active"));
+		[...this.container.querySelectorAll(".control-nav button")].forEach(
+			(el) => el.classList.remove("active")
+		);
 
 		// Set active item, if not search
 		if (!this.is_search) {
@@ -528,6 +529,9 @@ class PhotoList extends React.Component {
 					</li>
 					<li className="search-field" id="search-bar">
 						<form onSubmit={(e) => this.search(e)} autoComplete="off">
+							<label htmlFor="photo-search" className="offscreen">
+								{instant_img_localize.search_label}
+							</label>
 							<input
 								type="search"
 								id="photo-search"

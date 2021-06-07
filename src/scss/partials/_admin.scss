@@ -5,10 +5,6 @@ $small: 800px;
 $wp_small: 640px;
 $xsmall: 600px;
 
-html {
-	overflow-y: scroll;
-}
-
 body.media_page_instant-images {
 	background: #fff;
 	#wpcontent {
@@ -405,6 +401,6 @@ body.media_page_instant-images {
 		}
 	}
 	input:-webkit-autofill {
-		-webkit-box-shadow: 0 0 0px 1000px white inset;
+		box-shadow: 0 0 0px 1000px white inset;
 	}
 }

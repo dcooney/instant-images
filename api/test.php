@@ -4,24 +4,27 @@
  *
  * @since 3.0
  * @author dcooney
- * @package instant-images
+ * @package InstantImages
  */
 
-add_action( 'rest_api_init', function () {
-	$my_namespace = 'instant-images';
-	$my_endpoint  = '/test';
-	register_rest_route(
-		$my_namespace,
-		$my_endpoint,
-		array(
-			'methods'             => 'POST',
-			'callback'            => 'instant_images_test',
-			'permission_callback' => function () {
-				return InstantImages::instant_img_has_access();
-			},
-		)
-	);
-});
+add_action(
+	'rest_api_init',
+	function () {
+		$my_namespace = 'instant-images';
+		$my_endpoint  = '/test';
+		register_rest_route(
+			$my_namespace,
+			$my_endpoint,
+			array(
+				'methods'             => 'POST',
+				'callback'            => 'instant_images_test',
+				'permission_callback' => function () {
+					return InstantImages::instant_img_has_access();
+				},
+			)
+		);
+	}
+);
 
 /**
  * Test REST API access
@@ -29,7 +32,7 @@ add_action( 'rest_api_init', function () {
  * @param WP_REST_Request $request API request.
  * @since 3.2
  * @author dcooney
- * @package instant-images
+ * @package InstantImages
  */
 function instant_images_test( WP_REST_Request $request ) {
 

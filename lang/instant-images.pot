@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Instant Images\n"
-"POT-Creation-Date: 2021-03-26 14:56-0400\n"
+"POT-Creation-Date: 2020-08-10 08:14-0400\n"
 "PO-Revision-Date: 2017-09-21 10:40-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.3.1\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-2: webpack\n"
 "X-Poedit-SearchPathExcluded-3: node_modules\n"
 
-#: admin/admin.php:79 admin/admin.php:94 instant-images.php:170
+#: admin/admin.php:107 admin/admin.php:123 instant-images.php:135
 msgid "Instant Images"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 msgid "The latest Instant Images updates"
 msgstr ""
 
-#: admin/includes/unsplash-settings.php:53
+#: admin/includes/unsplash-settings.php:54
 msgid "Our Plugins"
 msgstr ""
 
@@ -101,196 +101,192 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: api/download.php:41
-msgid "You do not have sufficient access to upload images with Instant Images."
-msgstr ""
-
-#: api/download.php:79
+#: api/download.php:64
 msgid "Image does not exist or there was an error accessing the remote file."
 msgstr ""
 
-#: api/download.php:90
+#: api/download.php:76
 msgid "Image download failed, please try again. Errors:"
 msgstr ""
 
-#: api/download.php:96
+#: api/download.php:82
 msgid "Image type could not be determined"
 msgstr ""
 
-#: api/download.php:141
+#: api/download.php:118
 msgid "Image successfully uploaded to the media library!"
 msgstr ""
 
-#: api/download.php:158
+#: api/download.php:135
 msgid ""
 "There was an error getting image details from the request, please try again."
 msgstr ""
 
-#: instant-images.php:180
+#: instant-images.php:145
 msgid "Error accessing Unsplash API"
 msgstr ""
 
-#: instant-images.php:181
+#: instant-images.php:146
 msgid "Please check your Application ID."
 msgstr ""
 
-#: instant-images.php:182
+#: instant-images.php:147
 msgid ""
 "There was no response while attempting to the download image to your server. "
 "Check your server permission and max file upload size or try again"
 msgstr ""
 
-#: instant-images.php:183
+#: instant-images.php:148
 msgid "There was an error accessing the WP REST API."
 msgstr ""
 
-#: instant-images.php:184
+#: instant-images.php:149
 msgid ""
 "Instant Images requires access to the WP REST API via <u>POST</u> request to "
 "fetch and upload images to your media library."
 msgstr ""
 
-#: instant-images.php:185
+#: instant-images.php:150
 msgid "Photo by"
 msgstr ""
 
-#: instant-images.php:186
+#: instant-images.php:151
 msgid "View All Photos by"
 msgstr ""
 
-#: instant-images.php:187
+#: instant-images.php:152
 msgid "Click Image to Upload"
 msgstr ""
 
-#: instant-images.php:188
+#: instant-images.php:153
 msgid "Click to Upload"
 msgstr ""
 
-#: instant-images.php:189
+#: instant-images.php:154
 msgid "View Full Size"
 msgstr ""
 
-#: instant-images.php:190
+#: instant-images.php:155
 msgid "Like"
 msgstr ""
 
-#: instant-images.php:191
+#: instant-images.php:156
 msgid "Likes"
 msgstr ""
 
-#: instant-images.php:192
+#: instant-images.php:157
 msgid "Downloading image..."
 msgstr ""
 
-#: instant-images.php:193
+#: instant-images.php:158
 msgid "Creating image sizes..."
 msgstr ""
 
-#: instant-images.php:194
+#: instant-images.php:159
 msgid "Still resizing..."
 msgstr ""
 
-#: instant-images.php:195
+#: instant-images.php:160
 msgid "Sorry, nothing matched your query"
 msgstr ""
 
-#: instant-images.php:196
+#: instant-images.php:161
 msgid "Please try adjusting your search criteria"
 msgstr ""
 
-#: instant-images.php:197
+#: instant-images.php:162
 msgid "New"
 msgstr ""
 
-#: instant-images.php:198
+#: instant-images.php:163
 msgid "Oldest"
 msgstr ""
 
-#: instant-images.php:199
+#: instant-images.php:164
 msgid "Popular"
 msgstr ""
 
-#: instant-images.php:200
+#: instant-images.php:165
 msgid "Load More Images"
 msgstr ""
 
-#: instant-images.php:201
+#: instant-images.php:166
 msgid "Search for Toronto + Coffee etc..."
 msgstr ""
 
-#: instant-images.php:202
+#: instant-images.php:167
 msgid "images found for"
 msgstr ""
 
-#: instant-images.php:203
+#: instant-images.php:168
 msgid "Clear Search Results"
 msgstr ""
 
-#: instant-images.php:204
+#: instant-images.php:169
 msgid "View on Unsplash"
 msgstr ""
 
-#: instant-images.php:205
+#: instant-images.php:170
 msgid "Set as Featured Image"
 msgstr ""
 
-#: instant-images.php:206
+#: instant-images.php:171
 msgid "Insert Into Post"
 msgstr ""
 
-#: instant-images.php:207
+#: instant-images.php:172
 msgid "Filename"
 msgstr ""
 
-#: instant-images.php:208
+#: instant-images.php:173
 msgid "Title"
 msgstr ""
 
-#: instant-images.php:209
+#: instant-images.php:174
 msgid "Alt Text"
 msgstr ""
 
-#: instant-images.php:210
+#: instant-images.php:175
 msgid "Caption"
 msgstr ""
 
-#: instant-images.php:211
+#: instant-images.php:176
 msgid "Edit Attachment Details"
 msgstr ""
 
-#: instant-images.php:212
+#: instant-images.php:177
 msgid "Edit Image Details"
 msgstr ""
 
-#: instant-images.php:213
+#: instant-images.php:178
 msgid "Update and save image details prior to uploading"
 msgstr ""
 
-#: instant-images.php:214
+#: instant-images.php:179
 msgid "Cancel"
 msgstr ""
 
-#: instant-images.php:215
+#: instant-images.php:180
 msgid "Save"
 msgstr ""
 
-#: instant-images.php:216
+#: instant-images.php:181
 msgid "Upload"
 msgstr ""
 
-#: instant-images.php:217
+#: instant-images.php:182
 msgid "Image Orientation"
 msgstr ""
 
-#: instant-images.php:218
+#: instant-images.php:183
 msgid "Landscape"
 msgstr ""
 
-#: instant-images.php:219
+#: instant-images.php:184
 msgid "Portrait"
 msgstr ""
 
-#: instant-images.php:220
+#: instant-images.php:185
 msgid "Squarish"
 msgstr ""
 
