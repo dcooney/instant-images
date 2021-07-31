@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 4.4.0.2
+ * Version: 4.4.0.3
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'INSTANT_IMAGES_VERSION', '4.4.0.2' );
-define( 'INSTANT_IMAGES_RELEASE', 'June 7, 2021' );
+define( 'INSTANT_IMAGES_VERSION', '4.4.0.3' );
+define( 'INSTANT_IMAGES_RELEASE', 'July 30, 2021' );
 
 /**
  * Activation hook
@@ -280,7 +280,7 @@ class InstantImages {
 	/**
 	 * Block Instant Images from loading on some screens.
 	 *
-	 * @since 4.4.1
+	 * @since 4.4.0.3
 	 * @param array $array An array of screen IDs.
 	 * @return boolean
 	 * @author ConnektMedia <support@connekthq.com>

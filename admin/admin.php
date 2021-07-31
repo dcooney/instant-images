@@ -28,7 +28,6 @@ function instant_images_create_page() {
 }
 add_action( 'admin_menu', 'instant_images_create_page' );
 
-
 /**
  * Settings page callback.
  *
@@ -99,7 +98,6 @@ function instant_images_media_upload_tabs_handler( $tabs ) {
 }
 add_filter( 'media_upload_tabs', 'instant_images_media_upload_tabs_handler' );
 
-
 /**
  * Add Instant Images media button to classic editor screens.
  *
@@ -122,8 +120,8 @@ add_filter( 'media_buttons', 'instant_images_media_buttons' );
  * @see https://developer.wordpress.org/reference/hooks/media_upload_tab/
  * @since 3.2.1
  * @author ConnektMedia <support@connekthq.com>
- * @codingStandardsIgnoreStart
  */
+// @codingStandardsIgnoreStart
 function media_upload_instant_images_handler() {
 	wp_iframe( 'instant_images_media_tab' );
 }
