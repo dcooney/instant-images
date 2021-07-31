@@ -25,3 +25,5 @@ composer.lock
 postcss.config.js
 webpack.config.js
 README.md
+CONTRIBUTING.md
+
