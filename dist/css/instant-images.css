@@ -735,7 +735,6 @@ body.media_page_instant-images #wpfooter p {
 
 #photos {
   width: 100%;
-  width: -webkit-calc(100% + 10px);
   width: calc(100% + 10px);
   margin: 0 0 0 -5px;
   padding: 0;
@@ -1348,7 +1347,6 @@ body.media_page_instant-images #wpfooter p {
 
 .instant-images-settings .cnkt-sidebar .cta.ii-plugins {
   width: 68.666%;
-  width: -webkit-calc(68.666% - 25px);
   width: calc(68.666% - 25px);
   float: right;
 }
@@ -1482,11 +1480,9 @@ body.media_page_instant-images #wpfooter p {
 .instant-images-sidebar-icon,
 .instant-images-sidebar-icon svg {
   display: -webkit-inline-box;
-  display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-flex: 0;
-  -webkit-flex: 0 0 auto;
       -ms-flex: 0 0 auto;
           flex: 0 0 auto;
 }
@@ -1556,7 +1552,6 @@ body.media_page_instant-images #wpfooter p {
 
 .components-panel .control-nav li.search-field form {
   height: auto;
-  width: -webkit-calc(100% + 16px);
   width: calc(100% + 16px);
   margin-left: -8px;
 }
@@ -1694,11 +1689,9 @@ body.media_page_instant-images #wpfooter p {
 
 .orientation-list {
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
@@ -1718,11 +1711,9 @@ body.media_page_instant-images #wpfooter p {
 
 .orientation-list ul {
   -webkit-box-flex: 1;
-  -webkit-flex: 1;
       -ms-flex: 1;
           flex: 1;
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
@@ -1761,11 +1752,9 @@ body.media_page_instant-images #wpfooter p {
 .components-panel .orientation-list {
   position: static;
   text-align: center;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: center;
-  -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
   border-top: none;
@@ -1781,7 +1770,6 @@ body.media_page_instant-images #wpfooter p {
   padding: 0;
   width: 100%;
   -webkit-box-pack: center;
-  -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
 }
