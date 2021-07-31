@@ -24,8 +24,8 @@ module.exports = {
 				presets: ['es2015', 'react']
 			}
 		},
-		{ 
-   		test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/, 
+		{
+   		test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
    		loader: "file-loader",
    		options: {
             name: 'img/[name].[ext]',
@@ -58,7 +58,7 @@ module.exports = {
 			exclude: /node_modules/,
 		}
 	]},
-	
+
 	plugins: []
-	
+
 };

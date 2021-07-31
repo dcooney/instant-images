@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import Icon from "../icon";
 const { PluginSidebarMoreMenuItem } = wp.editPost;
 

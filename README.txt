@@ -3,7 +3,7 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
 Requires at least: 4.0
-Tested up to: 5.7
+Tested up to: 5.8
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -125,10 +125,16 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 4.4.0.3 - July 30, 2021 =
+* Fix: WP 5.8 issue resolved - added fix for Instant Images causing the Widget Block Editor to fail due to JS error.
+* Update: Code clean up.
+
+
 = 4.4.0.2 - June 7, 2021 =
  * Fix: Added fix for CSS conflict causing issues in the WordPress menus section.
  * Fix: Removed browser console error with regards `activeFrame.querySelector is not a function` that could appear when creating a gallery.
  * Updated: Improved coding standard and overall code quality.
+
 
 = 4.4.0.1 - May 3, 2021 =
 * UPDATE - Updated Instant Images settings page to sanitize inputs before saving.

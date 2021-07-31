@@ -1,5 +1,5 @@
 *.map
 /node_modules
 /vendor
-package-lock.json
 .DS_Store
+
