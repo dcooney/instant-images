@@ -37,7 +37,6 @@ function instant_images_activate() {
 }
 register_activation_hook( __FILE__, 'instant_images_activate' );
 
-
 /**
  * Deactivation hook
  *
@@ -86,7 +85,6 @@ class InstantImages {
 		$this->constants();
 	}
 
-
 	/**
 	 * Enqueue Gutenberg Block sidebar plugin
 	 *
@@ -95,7 +93,7 @@ class InstantImages {
 	 */
 	public function instant_img_block_plugin_enqueue() {
 
-		if ( $this::instant_img_has_access() ) {
+		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets' ] ) ) {
 
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries for SCRIPT_DEBUG.
 
@@ -118,7 +116,6 @@ class InstantImages {
 
 		}
 	}
-
 
 	/**
 	 * Enqueue script for Media Modal and Blocks sidebar
@@ -225,7 +222,6 @@ class InstantImages {
 		);
 	}
 
-
 	/**
 	 * Include these files in the admin
 	 *
@@ -242,7 +238,6 @@ class InstantImages {
 		require_once 'api/test.php';
 		require_once 'api/download.php';
 	}
-
 
 	/**
 	 * Show tab to upload image on post edit screens
@@ -267,12 +262,11 @@ class InstantImages {
 		return $show;
 	}
 
-
 	/**
 	 * Confirm user has access to instant images.
 	 *
 	 * @since 4.3.3
-	 * @return {Boolean}
+	 * @return boolean
 	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public static function instant_img_has_access() {
@@ -283,6 +277,22 @@ class InstantImages {
 		return $access;
 	}
 
+	/**
+	 * Block Instant Images from loading on some screens.
+	 *
+	 * @since 4.4.1
+	 * @param array $array An array of screen IDs.
+	 * @return boolean
+	 * @author ConnektMedia <support@connekthq.com>
+	 */
+	public static function instant_img_not_current_screen( $array = [] ) {
+		$access       = true;
+		$admin_screen = get_current_screen();
+		if ( $admin_screen && in_array( $admin_screen->id, $array, true ) ) {
+			$access = false;
+		}
+		return $access;
+	}
 
 	/**
 	 * Set up plugin constants
