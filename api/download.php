@@ -102,6 +102,8 @@ function instant_images_download( WP_REST_Request $request ) {
 		// Upload remote file.
 		$mirror = wp_upload_bits( $name, null, wp_remote_retrieve_body( $response ) );
 
+		alm_pretty_print( wp_remote_retrieve_body( $response ) );
+
 		// Build Attachment Data Array.
 		$attachment = array(
 			'post_title'     => $title,
@@ -138,7 +140,7 @@ function instant_images_download( WP_REST_Request $request ) {
 		);
 
 		// Resize original image to max size (set in Instant Images settings).
-		// @deprecated in .
+		// @deprecated in 4.4.0.
 		// instant_images_resize_download( $name ); .
 
 		// Success.

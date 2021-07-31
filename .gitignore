@@ -1,4 +1,6 @@
 *.map
-/node_nodules
+/node_modules
 /vendor
 .DS_Store
+package-lock.json
+

@@ -119,7 +119,6 @@ class InstantImages {
 		}
 	}
 
-
 	/**
 	 * Enqueue script for Media Modal and Blocks sidebar
 	 *
@@ -225,7 +224,6 @@ class InstantImages {
 		);
 	}
 
-
 	/**
 	 * Include these files in the admin
 	 *
@@ -243,9 +241,8 @@ class InstantImages {
 		require_once 'api/download.php';
 	}
 
-
 	/**
-	 * Show tab to upload image on post edit screens
+	 * Show tab to upload image on post edit screens.
 	 *
 	 * @param string $option WP Option.
 	 * @return $show boolean
@@ -267,7 +264,6 @@ class InstantImages {
 		return $show;
 	}
 
-
 	/**
 	 * Confirm user has access to instant images.
 	 *
@@ -282,7 +278,6 @@ class InstantImages {
 		}
 		return $access;
 	}
-
 
 	/**
 	 * Set up plugin constants
@@ -303,7 +298,6 @@ class InstantImages {
 		define( 'INSTANT_IMAGES_DEFAULT_APP_ID', '5746b12f75e91c251bddf6f83bd2ad0d658122676e9bd2444e110951f9a04af8' );
 	}
 
-
 	/**
 	 * Add custom links to plugins.php
 	 *
@@ -316,7 +310,6 @@ class InstantImages {
 		$mylinks = array( '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">Upload Photos</a>' );
 		return array_merge( $mylinks, $links );
 	}
-
 }
 
 /**

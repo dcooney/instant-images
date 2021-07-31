@@ -17011,40 +17011,6 @@ module.exports = ReactDOMSelection;
 
 /***/ }),
 
-/***/ "./node_modules/react-dom/lib/ReactDOMServer.js":
-/*!******************************************************!*\
-  !*** ./node_modules/react-dom/lib/ReactDOMServer.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-var ReactDefaultInjection = __webpack_require__(/*! ./ReactDefaultInjection */ "./node_modules/react-dom/lib/ReactDefaultInjection.js");
-var ReactServerRendering = __webpack_require__(/*! ./ReactServerRendering */ "./node_modules/react-dom/lib/ReactServerRendering.js");
-var ReactVersion = __webpack_require__(/*! ./ReactVersion */ "./node_modules/react-dom/lib/ReactVersion.js");
-
-ReactDefaultInjection.inject();
-
-var ReactDOMServer = {
-  renderToString: ReactServerRendering.renderToString,
-  renderToStaticMarkup: ReactServerRendering.renderToStaticMarkup,
-  version: ReactVersion
-};
-
-module.exports = ReactDOMServer;
-
-/***/ }),
-
 /***/ "./node_modules/react-dom/lib/ReactDOMTextComponent.js":
 /*!*************************************************************!*\
   !*** ./node_modules/react-dom/lib/ReactDOMTextComponent.js ***!
@@ -20712,134 +20678,6 @@ ReactRef.detachRefs = function (instance, element) {
 };
 
 module.exports = ReactRef;
-
-/***/ }),
-
-/***/ "./node_modules/react-dom/lib/ReactServerBatchingStrategy.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/react-dom/lib/ReactServerBatchingStrategy.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-var ReactServerBatchingStrategy = {
-  isBatchingUpdates: false,
-  batchedUpdates: function (callback) {
-    // Don't do anything here. During the server rendering we don't want to
-    // schedule any updates. We will simply ignore them.
-  }
-};
-
-module.exports = ReactServerBatchingStrategy;
-
-/***/ }),
-
-/***/ "./node_modules/react-dom/lib/ReactServerRendering.js":
-/*!************************************************************!*\
-  !*** ./node_modules/react-dom/lib/ReactServerRendering.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ "./node_modules/react-dom/lib/reactProdInvariant.js");
-
-var React = __webpack_require__(/*! react/lib/React */ "./node_modules/react/lib/React.js");
-var ReactDOMContainerInfo = __webpack_require__(/*! ./ReactDOMContainerInfo */ "./node_modules/react-dom/lib/ReactDOMContainerInfo.js");
-var ReactDefaultBatchingStrategy = __webpack_require__(/*! ./ReactDefaultBatchingStrategy */ "./node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js");
-var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ "./node_modules/react-dom/lib/ReactInstrumentation.js");
-var ReactMarkupChecksum = __webpack_require__(/*! ./ReactMarkupChecksum */ "./node_modules/react-dom/lib/ReactMarkupChecksum.js");
-var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ "./node_modules/react-dom/lib/ReactReconciler.js");
-var ReactServerBatchingStrategy = __webpack_require__(/*! ./ReactServerBatchingStrategy */ "./node_modules/react-dom/lib/ReactServerBatchingStrategy.js");
-var ReactServerRenderingTransaction = __webpack_require__(/*! ./ReactServerRenderingTransaction */ "./node_modules/react-dom/lib/ReactServerRenderingTransaction.js");
-var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ "./node_modules/react-dom/lib/ReactUpdates.js");
-
-var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ "./node_modules/fbjs/lib/emptyObject.js");
-var instantiateReactComponent = __webpack_require__(/*! ./instantiateReactComponent */ "./node_modules/react-dom/lib/instantiateReactComponent.js");
-var invariant = __webpack_require__(/*! fbjs/lib/invariant */ "./node_modules/fbjs/lib/invariant.js");
-
-var pendingTransactions = 0;
-
-/**
- * @param {ReactElement} element
- * @return {string} the HTML markup
- */
-function renderToStringImpl(element, makeStaticMarkup) {
-  var transaction;
-  try {
-    ReactUpdates.injection.injectBatchingStrategy(ReactServerBatchingStrategy);
-
-    transaction = ReactServerRenderingTransaction.getPooled(makeStaticMarkup);
-
-    pendingTransactions++;
-
-    return transaction.perform(function () {
-      var componentInstance = instantiateReactComponent(element, true);
-      var markup = ReactReconciler.mountComponent(componentInstance, transaction, null, ReactDOMContainerInfo(), emptyObject, 0 /* parentDebugID */
-      );
-      if (true) {
-        ReactInstrumentation.debugTool.onUnmountComponent(componentInstance._debugID);
-      }
-      if (!makeStaticMarkup) {
-        markup = ReactMarkupChecksum.addChecksumToMarkup(markup);
-      }
-      return markup;
-    }, null);
-  } finally {
-    pendingTransactions--;
-    ReactServerRenderingTransaction.release(transaction);
-    // Revert to the DOM batching strategy since these two renderers
-    // currently share these stateful modules.
-    if (!pendingTransactions) {
-      ReactUpdates.injection.injectBatchingStrategy(ReactDefaultBatchingStrategy);
-    }
-  }
-}
-
-/**
- * Render a ReactElement to its initial HTML. This should only be used on the
- * server.
- * See https://facebook.github.io/react/docs/top-level-api.html#reactdomserver.rendertostring
- */
-function renderToString(element) {
-  !React.isValidElement(element) ?  true ? invariant(false, 'renderToString(): You must pass a valid ReactElement.') : undefined : void 0;
-  return renderToStringImpl(element, false);
-}
-
-/**
- * Similar to renderToString, except this doesn't create extra DOM attributes
- * such as data-react-id that React uses internally.
- * See https://facebook.github.io/react/docs/top-level-api.html#reactdomserver.rendertostaticmarkup
- */
-function renderToStaticMarkup(element) {
-  !React.isValidElement(element) ?  true ? invariant(false, 'renderToStaticMarkup(): You must pass a valid ReactElement.') : undefined : void 0;
-  return renderToStringImpl(element, true);
-}
-
-module.exports = {
-  renderToString: renderToString,
-  renderToStaticMarkup: renderToStaticMarkup
-};
 
 /***/ }),
 
@@ -26096,21 +25934,6 @@ module.exports = validateDOMNesting;
 
 /***/ }),
 
-/***/ "./node_modules/react-dom/server.js":
-/*!******************************************!*\
-  !*** ./node_modules/react-dom/server.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(/*! ./lib/ReactDOMServer */ "./node_modules/react-dom/lib/ReactDOMServer.js");
-
-
-/***/ }),
-
 /***/ "./node_modules/react/lib/KeyEscapeUtils.js":
 /*!**************************************************!*\
   !*** ./node_modules/react/lib/KeyEscapeUtils.js ***!
@@ -29382,6 +29205,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
@@ -29389,10 +29216,6 @@ var _react2 = _interopRequireDefault(_react);
 var _API = __webpack_require__(/*! ./API */ "./src/js/components/API.js");
 
 var _API2 = _interopRequireDefault(_API);
-
-var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29416,18 +29239,18 @@ var Photo = function (_React$Component) {
 		//this.full_size = this.props.result.urls.raw;
 		_this.full_size = _this.props.result.urls.full;
 		_this.author = _this.props.result.user.name;
-		_this.img_title = instant_img_localize.photo_by + " " + _this.author;
+		_this.img_title = instant_img_localize.photo_by + ' ' + _this.author;
 		_this.filename = _this.props.result.id;
 		_this.title = _this.img_title;
 		_this.alt = _this.props.result.alt_description;
-		_this.caption = "";
+		_this.caption = '';
 		_this.user = _this.props.result.user.username;
 		_this.user_photo = _this.props.result.user.profile_image.small;
 		_this.link = _this.props.result.links.html;
 		_this.likes = _this.props.result.likes;
 		_this.view_all = instant_img_localize.view_all;
 		_this.inProgress = false;
-		_this.container = document.querySelector(".instant-img-container");
+		_this.container = document.querySelector('.instant-img-container');
 		_this.showTooltip = _this.props.showTooltip;
 		_this.hideTooltip = _this.props.hideTooltip;
 
@@ -29460,27 +29283,27 @@ var Photo = function (_React$Component) {
 
 
 	_createClass(Photo, [{
-		key: "download",
+		key: 'download',
 		value: function download(e) {
 			e.preventDefault();
 			var self = this;
 
 			var target = e.currentTarget; // get current <a/>
 			var photo = target.parentElement.parentElement.parentElement; // Get parent .photo el
-			var notice = photo.querySelector(".notice-msg"); // Locate .notice-msg div
+			var notice = photo.querySelector('.notice-msg'); // Locate .notice-msg div
 
-			if (!target.classList.contains("upload")) {
+			if (!target.classList.contains('upload')) {
 				// If target is .download-photo, switch target definition
-				target = photo.querySelector("a.upload");
+				target = photo.querySelector('a.upload');
 			}
 
-			if (target.classList.contains("success") || this.inProgress) {
+			if (target.classList.contains('success') || this.inProgress) {
 				return false; // Exit if already uploaded or in progress.
 			}
 			this.inProgress = true;
 
-			target.classList.add("uploading");
-			photo.classList.add("in-progress");
+			target.classList.add('uploading');
+			photo.classList.add('in-progress');
 
 			// Status messaging
 			notice.innerHTML = instant_img_localize.saving;
@@ -29494,25 +29317,25 @@ var Photo = function (_React$Component) {
 			}, 3000);
 
 			// API URL
-			var api = instant_img_localize.root + "instant-images/download/";
+			var api = instant_img_localize.root + 'instant-images/download/';
 
 			// Data Params
 			var data = {
-				id: target.getAttribute("data-id"),
-				image_url: target.getAttribute("data-url"),
-				filename: target.getAttribute("data-id") + ".jpg",
-				custom_filename: target.getAttribute("data-filename"),
-				title: target.getAttribute("data-title"),
-				alt: target.getAttribute("data-alt"),
-				caption: target.getAttribute("data-caption"),
+				id: target.getAttribute('data-id'),
+				image_url: target.getAttribute('data-url'),
+				filename: target.getAttribute('data-id') + '.jpg',
+				custom_filename: target.getAttribute('data-filename'),
+				title: target.getAttribute('data-title'),
+				alt: target.getAttribute('data-alt'),
+				caption: target.getAttribute('data-caption'),
 				parent_id: instant_img_localize.parent_id
 			};
 
 			// Config Params
 			var config = {
 				headers: {
-					"X-WP-Nonce": instant_img_localize.nonce,
-					"Content-Type": "application/json"
+					'X-WP-Nonce': instant_img_localize.nonce,
+					'Content-Type': 'application/json'
 				}
 			};
 
@@ -29529,7 +29352,7 @@ var Photo = function (_React$Component) {
 
 					if (success) {
 						// Edit URL
-						var edit_url = admin_url + "post.php?post=" + attachment.id + "&action=edit";
+						var edit_url = admin_url + 'post.php?post=' + attachment.id + '&action=edit';
 
 						// Success/Upload Complete
 						self.uploadComplete(target, photo, msg, edit_url, attachment.id);
@@ -29554,8 +29377,8 @@ var Photo = function (_React$Component) {
 						}
 
 						// If is media popup, redirect user to media-upload settings
-						if (self.container.dataset.mediaPopup === "true" && !self.is_block_editor) {
-							window.location = "media-upload.php?type=image&tab=library&attachment_id=" + attachment.id;
+						if (self.container.dataset.mediaPopup === 'true' && !self.is_block_editor) {
+							window.location = 'media-upload.php?type=image&tab=library&attachment_id=' + attachment.id;
 						}
 					} else {
 						// Error
@@ -29579,9 +29402,9 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "triggerUnsplashDownload",
+		key: 'triggerUnsplashDownload',
 		value: function triggerUnsplashDownload(id) {
-			var url = _API2.default.photo_api + "/" + id + "/download/" + _API2.default.app_id;
+			var url = _API2.default.photo_api + '/' + id + '/download/' + _API2.default.app_id;
 
 			fetch(url).then(function (data) {
 				return data.json();
@@ -29600,7 +29423,7 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "setFeaturedImageClick",
+		key: 'setFeaturedImageClick',
 		value: function setFeaturedImageClick(e) {
 			var target = e.currentTarget;
 			if (!target) {
@@ -29609,7 +29432,7 @@ var Photo = function (_React$Component) {
 
 			this.hideTooltip(e);
 			var parent = target.parentNode.parentNode.parentNode;
-			var photo = parent.querySelector("a.upload");
+			var photo = parent.querySelector('a.upload');
 			if (photo) {
 				this.setAsFeaturedImage = true;
 				photo.click();
@@ -29624,7 +29447,7 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "insertImageIntoPost",
+		key: 'insertImageIntoPost',
 		value: function insertImageIntoPost(e) {
 			var target = e.currentTarget;
 			if (!target) {
@@ -29633,7 +29456,7 @@ var Photo = function (_React$Component) {
 
 			this.hideTooltip(e);
 			var parent = target.parentNode.parentNode.parentNode;
-			var photo = parent.querySelector("a.upload");
+			var photo = parent.querySelector('a.upload');
 			if (photo) {
 				this.insertIntoPost = true;
 				photo.click();
@@ -29653,33 +29476,33 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "uploadComplete",
+		key: 'uploadComplete',
 		value: function uploadComplete(target, photo, msg, url, id) {
 			this.setImageTitle(target, msg);
 
-			photo.classList.remove("in-progress");
-			photo.classList.add("uploaded");
+			photo.classList.remove('in-progress');
+			photo.classList.add('uploaded');
 
-			photo.querySelector(".edit-photo").style.display = "none"; // Hide edit-photo button
-			photo.querySelector(".edit-photo-admin").style.display = "inline-block"; // Show edit-photo-admin button
-			photo.querySelector(".edit-photo-admin").href = url; // Add admin edit link
-			photo.querySelector(".edit-photo-admin").target = "_balnk"; // Add new window
+			photo.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
+			photo.querySelector('.edit-photo-admin').style.display = 'inline-block'; // Show edit-photo-admin button
+			photo.querySelector('.edit-photo-admin').href = url; // Add admin edit link
+			photo.querySelector('.edit-photo-admin').target = '_balnk'; // Add new window
 
-			target.classList.remove("uploading");
-			target.classList.remove("resizing");
-			target.classList.add("success");
+			target.classList.remove('uploading');
+			target.classList.remove('resizing');
+			target.classList.add('success');
 			this.inProgress = false;
 
 			// Remove uploaded and success states after 7.5 seconds.
 			setTimeout(function () {
-				photo.classList.remove("uploaded");
-				target.classList.remove("success");
+				photo.classList.remove('uploaded');
+				target.classList.remove('success');
 			}, 7500);
 
 			// Gutenberg Sidebar
 			if (this.is_block_editor) {
-				photo.querySelector(".insert").style.display = "none"; // Hide insert button
-				photo.querySelector(".set-featured").style.display = "none"; // Hide set-featured button
+				photo.querySelector('.insert').style.display = 'none'; // Hide insert button
+				photo.querySelector('.set-featured').style.display = 'none'; // Hide set-featured button
 			}
 
 			// Media Router
@@ -29688,8 +29511,8 @@ var Photo = function (_React$Component) {
 			// Deprecated in 4.3
 			// Was previously used in the Media Popup Context.
 			// Refresh Media Library contents on edit pages
-			if (this.container.classList.contains("editor")) {
-				if (typeof wp.media != "undefined") {
+			if (this.container.classList.contains('editor')) {
+				if (typeof wp.media != 'undefined') {
 					if (wp.media.frame.content.get() !== null) {
 						wp.media.frame.content.get().collection.props.set({ ignore: +new Date() });
 						wp.media.frame.content.get().options.selection.reset();
@@ -29708,11 +29531,11 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "mediaRouter",
+		key: 'mediaRouter',
 		value: function mediaRouter(id) {
 			if (this.is_media_router && wp.media && wp.media.frame && wp.media.frame.el) {
 				var mediaModal = wp.media.frame.el;
-				var mediaTab = mediaModal.querySelector("#menu-item-browse");
+				var mediaTab = mediaModal.querySelector('#menu-item-browse');
 				if (mediaTab) {
 					// Open the 'Media Library' tab
 					mediaTab.click();
@@ -29729,7 +29552,7 @@ var Photo = function (_React$Component) {
 					}
 
 					// Select the attached that was just uploaded.
-					var selection = wp.media.frame.state().get("selection");
+					var selection = wp.media.frame.state().get('selection');
 					var selected = parseInt(id);
 					selection.reset(selected ? [wp.media.attachment(selected)] : []);
 				}, 150);
@@ -29747,14 +29570,14 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "uploadError",
+		key: 'uploadError',
 		value: function uploadError(target, photo, notice, msg) {
-			target.classList.remove("uploading");
-			target.classList.remove("resizing");
-			target.classList.add("errors");
+			target.classList.remove('uploading');
+			target.classList.remove('resizing');
+			target.classList.add('errors');
 			this.setImageTitle(target, msg);
 			this.inProgress = false;
-			notice.classList.add("has-error");
+			notice.classList.add('has-error');
 			console.warn(msg);
 		}
 
@@ -29767,9 +29590,9 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "setImageTitle",
+		key: 'setImageTitle',
 		value: function setImageTitle(target, msg) {
-			target.setAttribute("title", msg); // Remove 'Click to upload...', set new value
+			target.setAttribute('title', msg); // Remove 'Click to upload...', set new value
 		}
 
 		/*
@@ -29779,16 +29602,16 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "showEditScreen",
+		key: 'showEditScreen',
 		value: function showEditScreen(e) {
 			e.preventDefault();
 			var el = e.currentTarget;
 			this.hideTooltip(e);
-			var photo = el.closest(".photo");
+			var photo = el.closest('.photo');
 			var filename = photo.querySelector('input[name="filename"]');
-			var editScreen = photo.querySelector(".edit-screen");
+			var editScreen = photo.querySelector('.edit-screen');
 
-			editScreen.classList.add("editing"); // Show edit screen
+			editScreen.classList.add('editing'); // Show edit screen
 
 			// Set focus on edit screen
 			setTimeout(function () {
@@ -29803,26 +29626,26 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "handleEditChange",
+		key: 'handleEditChange',
 		value: function handleEditChange(e) {
 			var target = e.target.name;
 
-			if (target === "filename") {
+			if (target === 'filename') {
 				this.setState({
 					filename: e.target.value
 				});
 			}
-			if (target === "title") {
+			if (target === 'title') {
 				this.setState({
 					title: e.target.value
 				});
 			}
-			if (target === "alt") {
+			if (target === 'alt') {
 				this.setState({
 					alt: e.target.value
 				});
 			}
-			if (target === "caption") {
+			if (target === 'caption') {
 				this.setState({
 					caption: e.target.value
 				});
@@ -29836,10 +29659,10 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "saveEditChange",
+		key: 'saveEditChange',
 		value: function saveEditChange(e) {
 			var el = e.currentTarget;
-			var photo = el.closest(".photo");
+			var photo = el.closest('.photo');
 
 			// Filename
 			var filename = photo.querySelector('input[name="filename"]');
@@ -29857,8 +29680,8 @@ var Photo = function (_React$Component) {
 			var caption = photo.querySelector('textarea[name="caption"]');
 			this.caption = caption.value;
 
-			photo.querySelector(".edit-screen").classList.remove("editing"); // Hide edit screen
-			photo.querySelector("a.upload").click();
+			photo.querySelector('.edit-screen').classList.remove('editing'); // Hide edit screen
+			photo.querySelector('a.upload').click();
 		}
 
 		/**
@@ -29868,12 +29691,12 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "cancelEditChange",
+		key: 'cancelEditChange',
 		value: function cancelEditChange(e) {
 			var el = e.currentTarget;
-			var photo = el.closest(".photo");
+			var photo = el.closest('.photo');
 			if (photo) {
-				var target = photo.querySelector("a.upload");
+				var target = photo.querySelector('a.upload');
 
 				// Filename
 				var filename = photo.querySelector('input[name="filename"]');
@@ -29903,7 +29726,7 @@ var Photo = function (_React$Component) {
 					caption: caption.value
 				});
 
-				photo.querySelector(".edit-screen").classList.remove("editing"); // Hide edit screen
+				photo.querySelector('.edit-screen').classList.remove('editing'); // Hide edit screen
 				target.focus();
 			}
 		}
@@ -29915,80 +29738,102 @@ var Photo = function (_React$Component) {
    */
 
 	}, {
-		key: "closeMediaModal",
+		key: 'closeMediaModal',
 		value: function closeMediaModal() {
-			var mediaModal = document.querySelector(".media-modal");
+			var mediaModal = document.querySelector('.media-modal');
 			if (mediaModal) {
-				var closeBtn = mediaModal.querySelector("button.media-modal-close");
+				var closeBtn = mediaModal.querySelector('button.media-modal-close');
 				if (!closeBtn) {
 					return false;
 				}
 				closeBtn.click();
 			}
 		}
+
+		/**
+   *
+   * @since NEXT
+   * @param {*} e
+   */
+
 	}, {
-		key: "render",
+		key: 'createImage',
+		value: function createImage(e) {
+			var target = e.currentTarget;
+			var url = target.dataset.url;
+			var fullsize = target.dataset.fullsize;
+			var id = target.dataset.id;
+			document.querySelector('#instant-images-generator').classList.add('active');
+			window.setImages({
+				id: id,
+				title: 'This is the title',
+				img: url,
+				fullsize: fullsize
+			});
+		}
+	}, {
+		key: 'render',
 		value: function render() {
 			var _this2 = this;
 
-			var likeTxt = parseInt(this.likes) > 1 ? instant_img_localize.likes_plural : instant_img_localize.likes;
+			var likeTxt = parseInt(this.likes) > 1 || parseInt(this.likes) === 0 ? instant_img_localize.likes_plural : instant_img_localize.likes;
 
 			return _react2.default.createElement(
-				"article",
-				{ className: "photo" },
+				'article',
+				{ className: 'photo' },
 				_react2.default.createElement(
-					"div",
-					{ className: "photo--wrap" },
+					'div',
+					{ className: 'photo--wrap' },
 					_react2.default.createElement(
-						"div",
-						{ className: "img-wrap" },
+						'div',
+						{ className: 'img-wrap' },
 						_react2.default.createElement(
-							"a",
+							'a',
 							{
-								className: "upload loaded",
+								className: 'upload loaded',
 								href: this.full_size,
-								"data-id": this.id,
-								"data-url": this.full_size,
-								"data-filename": this.state.filename,
-								"data-title": this.state.title,
-								"data-alt": this.state.alt,
-								"data-caption": this.state.caption,
+								'data-id': this.id,
+								'data-url': this.full_size,
+								'data-filename': this.state.filename,
+								'data-title': this.state.title,
+								'data-alt': this.state.alt,
+								'data-caption': this.state.caption,
 								title: instant_img_localize.upload,
 								onClick: function onClick(e) {
 									return _this2.download(e);
 								}
 							},
-							_react2.default.createElement("img", { src: this.img, alt: "" }),
-							_react2.default.createElement("div", { className: "status" })
+							_react2.default.createElement('img', { src: this.img, alt: '' }),
+							_react2.default.createElement('div', { className: 'status' })
 						),
-						_react2.default.createElement("div", { className: "notice-msg" }),
+						_react2.default.createElement('div', { className: 'notice-msg' }),
 						_react2.default.createElement(
-							"div",
-							{ className: "user-controls" },
+							'div',
+							{ className: 'user-controls' },
 							_react2.default.createElement(
-								"a",
+								'a',
 								{
-									className: "user fade",
-									href: "https://unsplash.com/@" + this.user + "?utm_source=wordpress-instant-images&utm_medium=referral",
-									target: "_blank",
-									title: this.view_all + " @" + this.user
+									className: 'user fade',
+									href: 'https://unsplash.com/@' + this.user + '?utm_source=wordpress-instant-images&utm_medium=referral',
+									target: '_blank',
+									title: this.view_all + ' @' + this.user
 								},
 								_react2.default.createElement(
-									"div",
-									{ className: "user-wrap" },
-									this.user_photo.length > 0 && _react2.default.createElement("img", { src: this.user_photo }),
+									'div',
+									{ className: 'user-wrap' },
+									this.user_photo.length > 0 && _react2.default.createElement('img', { src: this.user_photo }),
 									this.user
 								)
 							),
 							_react2.default.createElement(
-								"div",
-								{ className: "photo-options" },
+								'div',
+								{ className: 'photo-options' },
 								this.displayGutenbergControl && _react2.default.createElement(
-									"button",
+									'button',
 									{
-										type: "button",
-										className: "set-featured fade",
-										"data-title": instant_img_localize.set_as_featured,
+										type: 'button',
+										className: 'set-featured fade',
+										'data-title': instant_img_localize.set_as_featured,
 										onMouseEnter: function onMouseEnter(e) {
 											return _this2.showTooltip(e);
 										},
@@ -29999,22 +29844,19 @@ var Photo = function (_React$Component) {
 											return _this2.setFeaturedImageClick(e);
 										}
 									},
-									_react2.default.createElement("i", {
-										className: "fa fa-picture-o",
-										"aria-hidden": "true"
-									}),
+									_react2.default.createElement('i', { className: 'fa fa-picture-o', 'aria-hidden': 'true' }),
 									_react2.default.createElement(
-										"span",
-										{ className: "offscreen" },
+										'span',
+										{ className: 'offscreen' },
 										instant_img_localize.set_as_featured
 									)
 								),
 								this.displayGutenbergControl && _react2.default.createElement(
-									"button",
+									'button',
 									{
-										type: "button",
-										className: "insert fade",
-										"data-title": instant_img_localize.insert_into_post,
+										type: 'button',
+										className: 'insert fade',
+										'data-title': instant_img_localize.insert_into_post,
 										onMouseEnter: function onMouseEnter(e) {
 											return _this2.showTooltip(e);
 										},
@@ -30025,19 +29867,19 @@ var Photo = function (_React$Component) {
 											return _this2.insertImageIntoPost(e);
 										}
 									},
-									_react2.default.createElement("i", { className: "fa fa-plus", "aria-hidden": "true" }),
+									_react2.default.createElement('i', { className: 'fa fa-plus', 'aria-hidden': 'true' }),
 									_react2.default.createElement(
-										"span",
-										{ className: "offscreen" },
+										'span',
+										{ className: 'offscreen' },
 										instant_img_localize.insert_into_post
 									)
 								),
 								_react2.default.createElement(
-									"a",
+									'a',
 									{
-										href: "#",
-										className: "edit-photo-admin fade",
-										"data-title": instant_img_localize.edit_upload,
+										href: '#',
+										className: 'edit-photo-admin fade',
+										'data-title': instant_img_localize.edit_upload,
 										onMouseEnter: function onMouseEnter(e) {
 											return _this2.showTooltip(e);
 										},
@@ -30045,19 +29887,19 @@ var Photo = function (_React$Component) {
 											return _this2.hideTooltip(e);
 										}
 									},
-									_react2.default.createElement("i", { className: "fa fa-pencil", "aria-hidden": "true" }),
+									_react2.default.createElement('i', { className: 'fa fa-pencil', 'aria-hidden': 'true' }),
 									_react2.default.createElement(
-										"span",
-										{ className: "offscreen" },
+										'span',
+										{ className: 'offscreen' },
 										instant_img_localize.edit_upload
 									)
 								),
 								_react2.default.createElement(
-									"button",
+									'button',
 									{
-										type: "button",
-										className: "edit-photo fade",
-										"data-title": instant_img_localize.edit_details,
+										type: 'button',
+										className: 'edit-photo fade',
+										'data-title': instant_img_localize.edit_details,
 										onMouseEnter: function onMouseEnter(e) {
 											return _this2.showTooltip(e);
 										},
@@ -30068,23 +29910,23 @@ var Photo = function (_React$Component) {
 											return _this2.showEditScreen(e);
 										}
 									},
-									_react2.default.createElement("i", { className: "fa fa-cog", "aria-hidden": "true" }),
+									_react2.default.createElement('i', { className: 'fa fa-cog', 'aria-hidden': 'true' }),
 									_react2.default.createElement(
-										"span",
-										{ className: "offscreen" },
+										'span',
+										{ className: 'offscreen' },
 										instant_img_localize.edit_details
 									)
 								)
 							)
 						),
 						_react2.default.createElement(
-							"div",
-							{ className: "options" },
+							'div',
+							{ className: 'options' },
 							_react2.default.createElement(
-								"span",
+								'span',
 								{
-									className: "likes tooltip--above",
-									"data-title": this.likes + " " + likeTxt,
+									className: 'likes tooltip--above',
+									'data-title': this.likes + ' ' + likeTxt,
 									onMouseEnter: function onMouseEnter(e) {
 										return _this2.showTooltip(e);
 									},
@@ -30092,70 +29934,64 @@ var Photo = function (_React$Component) {
 										return _this2.hideTooltip(e);
 									}
 								},
-								_react2.default.createElement("i", {
-									className: "fa fa-heart heart-like",
-									"aria-hidden": "true"
-								}),
-								" ",
+								_react2.default.createElement('i', { className: 'fa fa-heart heart-like', 'aria-hidden': 'true' }),
+								' ',
 								this.likes
 							),
 							_react2.default.createElement(
-								"a",
+								'a',
 								{
-									className: "tooltip--above",
+									className: 'tooltip--above',
 									href: this.link,
-									"data-title": instant_img_localize.view_on_unsplash,
+									'data-title': instant_img_localize.view_on_unsplash,
 									onMouseEnter: function onMouseEnter(e) {
 										return _this2.showTooltip(e);
 									},
 									onMouseLeave: function onMouseLeave(e) {
 										return _this2.hideTooltip(e);
 									},
-									target: "_blank"
+									target: '_blank'
 								},
-								_react2.default.createElement("i", {
-									className: "fa fa-external-link",
-									"aria-hidden": "true"
-								}),
+								_react2.default.createElement('i', { className: 'fa fa-external-link', 'aria-hidden': 'true' }),
 								_react2.default.createElement(
-									"span",
-									{ className: "offscreen" },
+									'span',
+									{ className: 'offscreen' },
 									instant_img_localize.view_on_unsplash
 								)
 							)
 						)
 					),
 					_react2.default.createElement(
-						"div",
-						{ className: "edit-screen", tabIndex: "0" },
+						'div',
+						{ className: 'edit-screen', tabIndex: '0' },
 						_react2.default.createElement(
-							"div",
-							{ className: "edit-screen--title" },
+							'div',
+							{ className: 'edit-screen--title' },
 							_react2.default.createElement(
-								"p",
-								{ className: "heading" },
+								'p',
+								{ className: 'heading' },
 								instant_img_localize.edit_details
 							),
 							_react2.default.createElement(
-								"p",
+								'p',
 								null,
 								instant_img_localize.edit_details_intro,
-								"."
+								'.'
 							)
 						),
 						_react2.default.createElement(
-							"label",
+							'label',
 							null,
 							_react2.default.createElement(
-								"span",
+								'span',
 								null,
 								instant_img_localize.edit_filename,
-								":"
+								':'
 							),
-							_react2.default.createElement("input", {
-								type: "text",
-								name: "filename",
-								"data-original": this.filename,
+							_react2.default.createElement('input', {
+								type: 'text',
+								name: 'filename',
+								'data-original': this.filename,
 								placeholder: this.filename,
 								value: this.state.filename,
 								onChange: function onChange(e) {
@@ -30163,98 +29999,92 @@ var Photo = function (_React$Component) {
 								}
 							}),
 							_react2.default.createElement(
-								"em",
+								'em',
 								null,
-								".jpg"
+								'.jpg'
 							)
 						),
 						_react2.default.createElement(
-							"label",
+							'label',
 							null,
 							_react2.default.createElement(
-								"span",
+								'span',
 								null,
 								instant_img_localize.edit_title,
-								":"
+								':'
 							),
-							_react2.default.createElement("input", {
-								type: "text",
-								name: "title",
-								"data-original": this.title,
+							_react2.default.createElement('input', {
+								type: 'text',
+								name: 'title',
+								'data-original': this.title,
 								placeholder: this.title,
-								value: this.state.title || "",
+								value: this.state.title || '',
 								onChange: function onChange(e) {
 									return _this2.handleEditChange(e);
 								}
 							})
 						),
 						_react2.default.createElement(
-							"label",
+							'label',
 							null,
 							_react2.default.createElement(
-								"span",
+								'span',
 								null,
 								instant_img_localize.edit_alt,
-								":"
+								':'
 							),
-							_react2.default.createElement("input", {
-								type: "text",
-								name: "alt",
-								"data-original": this.alt,
-								value: this.state.alt || "",
-								onChange: function onChange(e) {
+							_react2.default.createElement('input', { type: 'text', name: 'alt', 'data-original': this.alt, value: this.state.alt || '', onChange: function onChange(e) {
 									return _this2.handleEditChange(e);
-								}
-							})
+								} })
 						),
 						_react2.default.createElement(
-							"label",
+							'label',
 							null,
 							_react2.default.createElement(
-								"span",
+								'span',
 								null,
 								instant_img_localize.edit_caption,
-								":"
+								':'
 							),
-							_react2.default.createElement("textarea", {
-								rows: "3",
-								name: "caption",
-								"data-original": "",
-								onChange: function onChange(e) {
+							_react2.default.createElement('textarea', { rows: '3', name: 'caption', 'data-original': '', onChange: function onChange(e) {
 									return _this2.handleEditChange(e);
-								},
-								value: this.state.caption || ""
-							})
+								}, value: this.state.caption || '' })
 						),
 						_react2.default.createElement(
-							"div",
-							{ className: "edit-screen--controls" },
+							'div',
+							{ className: 'edit-screen--controls' },
 							_react2.default.createElement(
-								"button",
-								{
-									type: "button",
-									className: "button",
-									onClick: function onClick(e) {
+								'button',
+								{ type: 'button', className: 'button', onClick: function onClick(e) {
 										return _this2.cancelEditChange(e);
-									}
-								},
+									} },
 								instant_img_localize.cancel
 							),
-							" ",
-							"\xA0",
+							' ',
+							'\xA0',
 							_react2.default.createElement(
-								"button",
-								{
-									type: "button",
-									className: "button button-primary",
-									onClick: function onClick(e) {
+								'button',
+								{ type: 'button', className: 'button button-primary', onClick: function onClick(e) {
 										return _this2.saveEditChange(e);
-									}
-								},
+									} },
 								instant_img_localize.upload_now
 							)
 						)
 					)
+				),
+				_react2.default.createElement(
+					'button',
+					{
+						type: 'button',
+						className: 'button button-primary',
+						onClick: function onClick(e) {
+							return _this2.createImage(e);
+						},
+						'data-url': this.img,
+						'data-fullsize': this.full_size,
+						'data-id': this.id
+					},
+					'Create Image'
 				)
 			);
 		}
@@ -30283,21 +30113,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _masonryLayout = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
+
+var _masonryLayout2 = _interopRequireDefault(_masonryLayout);
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+var _API = __webpack_require__(/*! ./API */ "./src/js/components/API.js");
 
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _server = __webpack_require__(/*! react-dom/server */ "./node_modules/react-dom/server.js");
-
-var _server2 = _interopRequireDefault(_server);
-
-var _masonryLayout = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
-
-var _masonryLayout2 = _interopRequireDefault(_masonryLayout);
+var _API2 = _interopRequireDefault(_API);
 
 var _Photo = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
 
@@ -30306,10 +30132,6 @@ var _Photo2 = _interopRequireDefault(_Photo);
 var _ResultsToolTip = __webpack_require__(/*! ./ResultsToolTip */ "./src/js/components/ResultsToolTip.js");
 
 var _ResultsToolTip2 = _interopRequireDefault(_ResultsToolTip);
-
-var _API = __webpack_require__(/*! ./API */ "./src/js/components/API.js");
-
-var _API2 = _interopRequireDefault(_API);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30339,33 +30161,33 @@ var PhotoList = function (_React$Component) {
 		_this.page = _this.props.page; // Page
 
 		_this.is_search = false;
-		_this.search_term = "";
+		_this.search_term = '';
 		_this.total_results = 0;
-		_this.orientation = "";
+		_this.orientation = '';
 
 		_this.isLoading = false; // loading flag
 		_this.isDone = false; // Done flag - no photos remain
 
-		_this.errorMsg = "";
-		_this.msnry = "";
-		_this.tooltipInterval = "";
+		_this.errorMsg = '';
+		_this.msnry = '';
+		_this.tooltipInterval = '';
 
-		_this.editor = _this.props.editor ? _this.props.editor : "classic";
-		_this.is_block_editor = _this.props.editor === "gutenberg" ? true : false;
-		_this.is_media_router = _this.props.editor === "media-router" ? true : false;
-		_this.SetFeaturedImage = _this.props.SetFeaturedImage ? _this.props.SetFeaturedImage.bind(_this) : "";
-		_this.InsertImage = _this.props.InsertImage ? _this.props.InsertImage.bind(_this) : "";
+		_this.editor = _this.props.editor ? _this.props.editor : 'classic';
+		_this.is_block_editor = _this.props.editor === 'gutenberg' ? true : false;
+		_this.is_media_router = _this.props.editor === 'media-router' ? true : false;
+		_this.SetFeaturedImage = _this.props.SetFeaturedImage ? _this.props.SetFeaturedImage.bind(_this) : '';
+		_this.InsertImage = _this.props.InsertImage ? _this.props.InsertImage.bind(_this) : '';
 
 		if (_this.is_block_editor) {
 			// Gutenberg Sidebar Only
-			_this.container = document.querySelector("body");
-			_this.container.classList.add("loading");
-			_this.wrapper = document.querySelector("body");
+			_this.container = document.querySelector('body');
+			_this.container.classList.add('loading');
+			_this.wrapper = document.querySelector('body');
 		} else {
 			// Post Edit Screens and Plugin Screen
-			_this.container = _this.props.container.closest(".instant-img-container");
-			_this.wrapper = _this.props.container.closest(".instant-images-wrapper");
-			_this.container.classList.add("loading");
+			_this.container = _this.props.container.closest('.instant-img-container');
+			_this.wrapper = _this.props.container.closest('.instant-images-wrapper');
+			_this.container.classList.add('loading');
 		}
 		return _this;
 	}
@@ -30378,17 +30200,17 @@ var PhotoList = function (_React$Component) {
 
 
 	_createClass(PhotoList, [{
-		key: "test",
+		key: 'test',
 		value: function test() {
 			var self = this;
 
-			var target = this.container.querySelector(".error-messaging"); // Target element
+			var target = this.container.querySelector('.error-messaging'); // Target element
 
-			var testURL = instant_img_localize.root + "instant-images/test/"; // REST Route
+			var testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route
 			var restAPITest = new XMLHttpRequest();
-			restAPITest.open("POST", testURL, true);
-			restAPITest.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
-			restAPITest.setRequestHeader("Content-Type", "application/json");
+			restAPITest.open('POST', testURL, true);
+			restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
+			restAPITest.setRequestHeader('Content-Type', 'application/json');
 			restAPITest.send();
 
 			restAPITest.onload = function () {
@@ -30413,9 +30235,9 @@ var PhotoList = function (_React$Component) {
 			};
 		}
 	}, {
-		key: "renderTestError",
+		key: 'renderTestError',
 		value: function renderTestError(target) {
-			target.classList.add("active");
+			target.classList.add('active');
 			target.innerHTML = instant_img_localize.error_restapi + instant_img_localize.error_restapi_desc;
 		}
 
@@ -30427,15 +30249,15 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "search",
+		key: 'search',
 		value: function search(event) {
 			event.preventDefault();
-			var input = this.container.querySelector("#photo-search");
+			var input = this.container.querySelector('#photo-search');
 			var term = input.value;
 
 			if (term.length > 2) {
-				input.classList.add("searching");
-				this.container.classList.add("loading");
+				input.classList.add('searching');
+				this.container.classList.add('loading');
 				this.search_term = term;
 				this.is_search = true;
 				this.doSearch(this.search_term);
@@ -30453,27 +30275,27 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "setOrientation",
+		key: 'setOrientation',
 		value: function setOrientation(orientation, event) {
 			if (event && event.target) {
 				var target = event.target;
 
-				if (target.classList.contains("active")) {
+				if (target.classList.contains('active')) {
 					// Clear orientation
-					target.classList.remove("active");
-					this.orientation = "";
+					target.classList.remove('active');
+					this.orientation = '';
 				} else {
 					// Set orientation
-					var siblings = target.parentNode.querySelectorAll("li");
+					var siblings = target.parentNode.querySelectorAll('li');
 					[].concat(_toConsumableArray(siblings)).forEach(function (el) {
-						return el.classList.remove("active");
+						return el.classList.remove('active');
 					}); // remove active classes
 
-					target.classList.add("active");
+					target.classList.add('active');
 					this.orientation = orientation;
 				}
 
-				if (this.search_term !== "") {
+				if (this.search_term !== '') {
 					this.doSearch(this.search_term);
 				}
 			}
@@ -30486,9 +30308,9 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "hasOrientation",
+		key: 'hasOrientation',
 		value: function hasOrientation() {
-			return this.orientation === "" ? false : true;
+			return this.orientation === '' ? false : true;
 		}
 
 		/**
@@ -30498,13 +30320,13 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "clearOrientation",
+		key: 'clearOrientation',
 		value: function clearOrientation() {
-			var items = this.container.querySelectorAll(".orientation-list li");
+			var items = this.container.querySelectorAll('.orientation-list li');
 			[].concat(_toConsumableArray(items)).forEach(function (el) {
-				return el.classList.remove("active");
+				return el.classList.remove('active');
 			}); // remove active classes
-			this.orientation = "";
+			this.orientation = '';
 		}
 
 		/**
@@ -30516,35 +30338,35 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "doSearch",
+		key: 'doSearch',
 		value: function doSearch(term) {
 			var self = this;
-			var type = "term";
+			var type = 'term';
 			this.page = 1; // reset page num
 
-			var url = "" + _API2.default.search_api + _API2.default.app_id + _API2.default.posts_per_page + "&page=" + this.page + "&query=" + this.search_term;
+			var url = '' + _API2.default.search_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&query=' + this.search_term;
 
 			if (this.hasOrientation()) {
 				// Set orientation
-				url = url + "&orientation=" + this.orientation;
+				url = url + '&orientation=' + this.orientation;
 			}
 
 			// Search by ID
 			// allow users to search by photo by prepending id:{photo_id} to search terms
 			var search_type = term.substring(0, 3);
-			if (search_type === "id:") {
-				type = "id";
-				term = term.replace("id:", "");
-				url = _API2.default.photo_api + "/" + term + _API2.default.app_id;
+			if (search_type === 'id:') {
+				type = 'id';
+				term = term.replace('id:', '');
+				url = _API2.default.photo_api + '/' + term + _API2.default.app_id;
 			}
 
-			var input = this.container.querySelector("#photo-search");
+			var input = this.container.querySelector('#photo-search');
 
 			fetch(url).then(function (data) {
 				return data.json();
 			}).then(function (data) {
 				// Term Search
-				if (type === "term") {
+				if (type === 'term') {
 					self.total_results = data.total;
 
 					// Check for returned data
@@ -30556,7 +30378,7 @@ var PhotoList = function (_React$Component) {
 				}
 
 				// Search by photo ID
-				if (type === "id" && data) {
+				if (type === 'id' && data) {
 					// Convert return data to array
 					var photoArray = [];
 
@@ -30564,21 +30386,21 @@ var PhotoList = function (_React$Component) {
 						// If error was returned
 
 						self.total_results = 0;
-						self.checkTotalResults("0");
+						self.checkTotalResults('0');
 					} else {
 						// No errors, display results
 
 						photoArray.push(data);
 
 						self.total_results = 1;
-						self.checkTotalResults("1");
+						self.checkTotalResults('1');
 					}
 
 					self.results = photoArray;
 					self.setState({ results: self.results });
 				}
 
-				input.classList.remove("searching");
+				input.classList.remove('searching');
 			}).catch(function (error) {
 				console.log(error);
 				self.isLoading = false;
@@ -30592,13 +30414,13 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "clearSearch",
+		key: 'clearSearch',
 		value: function clearSearch() {
-			var input = this.container.querySelector("#photo-search");
-			input.value = "";
+			var input = this.container.querySelector('#photo-search');
+			input.value = '';
 			this.total_results = 0;
 			this.is_search = false;
-			this.search_term = "";
+			this.search_term = '';
 			this.clearOrientation();
 		}
 
@@ -30609,20 +30431,20 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "getPhotos",
+		key: 'getPhotos',
 		value: function getPhotos() {
 			var self = this;
 			this.page = parseInt(this.page) + 1;
-			this.container.classList.add("loading");
+			this.container.classList.add('loading');
 			this.isLoading = true;
 
-			var url = "" + _API2.default.photo_api + _API2.default.app_id + _API2.default.posts_per_page + "&page=" + this.page + "&order_by=" + this.orderby;
+			var url = '' + _API2.default.photo_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&order_by=' + this.orderby;
 
 			if (this.is_search) {
-				url = "" + _API2.default.search_api + _API2.default.app_id + _API2.default.posts_per_page + "&page=" + this.page + "&query=" + this.search_term;
+				url = '' + _API2.default.search_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&query=' + this.search_term;
 				if (this.hasOrientation()) {
 					// Set orientation
-					url = url + "&orientation=" + this.orientation;
+					url = url + '&orientation=' + this.orientation;
 				}
 			}
 
@@ -30658,12 +30480,12 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "togglePhotoList",
+		key: 'togglePhotoList',
 		value: function togglePhotoList(view, e) {
 			var el = e.target;
-			if (el.classList.contains("active")) return false; // exit if active
+			if (el.classList.contains('active')) return false; // exit if active
 
-			el.classList.add("loading"); // Add class to nav btn
+			el.classList.add('loading'); // Add class to nav btn
 			this.isLoading = true;
 			var self = this;
 			this.page = 1;
@@ -30671,7 +30493,7 @@ var PhotoList = function (_React$Component) {
 			this.results = [];
 			this.clearSearch();
 
-			var url = "" + _API2.default.photo_api + _API2.default.app_id + _API2.default.posts_per_page + "&page=" + this.page + "&order_by=" + this.orderby;
+			var url = '' + _API2.default.photo_api + _API2.default.app_id + _API2.default.posts_per_page + '&page=' + this.page + '&order_by=' + this.orderby;
 			fetch(url).then(function (data) {
 				return data.json();
 			}).then(function (data) {
@@ -30682,7 +30504,7 @@ var PhotoList = function (_React$Component) {
 				self.results = data;
 				self.setState({ results: data });
 
-				el.classList.remove("loading"); // Remove class from nav btn
+				el.classList.remove('loading'); // Remove class from nav btn
 			}).catch(function (error) {
 				console.log(error);
 				self.isLoading = false;
@@ -30696,19 +30518,19 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "renderLayout",
+		key: 'renderLayout',
 		value: function renderLayout() {
 			if (this.is_block_editor) {
 				return false;
 			}
 			var self = this;
-			var photoListWrapper = self.container.querySelector(".photo-target");
+			var photoListWrapper = self.container.querySelector('.photo-target');
 			imagesLoaded(photoListWrapper, function () {
 				self.msnry = new _masonryLayout2.default(photoListWrapper, {
-					itemSelector: ".photo"
+					itemSelector: '.photo'
 				});
-				[].concat(_toConsumableArray(self.container.querySelectorAll(".photo-target .photo"))).forEach(function (el) {
-					return el.classList.add("in-view");
+				[].concat(_toConsumableArray(self.container.querySelectorAll('.photo-target .photo'))).forEach(function (el) {
+					return el.classList.add('in-view');
 				});
 			});
 		}
@@ -30720,7 +30542,7 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "onScroll",
+		key: 'onScroll',
 		value: function onScroll() {
 			var wHeight = window.innerHeight;
 			var scrollTop = window.pageYOffset;
@@ -30738,7 +30560,7 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "checkTotalResults",
+		key: 'checkTotalResults',
 		value: function checkTotalResults(num) {
 			this.isDone = num == 0 ? true : false;
 		}
@@ -30750,22 +30572,22 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "setActiveState",
+		key: 'setActiveState',
 		value: function setActiveState() {
 			var self = this;
 			// Remove .active class
-			[].concat(_toConsumableArray(this.container.querySelectorAll(".control-nav button"))).forEach(function (el) {
-				return el.classList.remove("active");
+			[].concat(_toConsumableArray(this.container.querySelectorAll('.control-nav button'))).forEach(function (el) {
+				return el.classList.remove('active');
 			});
 
 			// Set active item, if not search
 			if (!this.is_search) {
-				var active = this.container.querySelector(".control-nav li button." + this.orderby);
-				active.classList.add("active");
+				var active = this.container.querySelector('.control-nav li button.' + this.orderby);
+				active.classList.add('active');
 			}
 			setTimeout(function () {
 				self.isLoading = false;
-				self.container.classList.remove("loading");
+				self.container.classList.remove('loading');
 			}, 1000);
 		}
 
@@ -30776,20 +30598,20 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "showTooltip",
+		key: 'showTooltip',
 		value: function showTooltip(e) {
 			var self = this;
 			var target = e.currentTarget;
 			var rect = target.getBoundingClientRect();
 			var left = Math.round(rect.left);
 			var top = Math.round(rect.top);
-			var tooltip = this.container.querySelector("#tooltip");
-			tooltip.classList.remove("over");
+			var tooltip = this.container.querySelector('#tooltip');
+			tooltip.classList.remove('over');
 
-			if (target.classList.contains("tooltip--above")) {
-				tooltip.classList.add("above");
+			if (target.classList.contains('tooltip--above')) {
+				tooltip.classList.add('above');
 			} else {
-				tooltip.classList.remove("above");
+				tooltip.classList.remove('above');
 			}
 
 			// Get Content
@@ -30802,11 +30624,11 @@ var PhotoList = function (_React$Component) {
 
 				// Position Tooltip
 				left = left - tooltip.offsetWidth + target.offsetWidth + 5;
-				tooltip.style.left = left + "px";
-				tooltip.style.top = top + "px";
+				tooltip.style.left = left + 'px';
+				tooltip.style.top = top + 'px';
 
 				setTimeout(function () {
-					tooltip.classList.add("over");
+					tooltip.classList.add('over');
 				}, 150);
 			}, 500);
 		}
@@ -30818,17 +30640,17 @@ var PhotoList = function (_React$Component) {
    */
 
 	}, {
-		key: "hideTooltip",
+		key: 'hideTooltip',
 		value: function hideTooltip(e) {
 			clearInterval(this.tooltipInterval);
-			var tooltip = this.container.querySelector("#tooltip");
-			tooltip.classList.remove("over");
+			var tooltip = this.container.querySelector('#tooltip');
+			tooltip.classList.remove('over');
 		}
 
 		// Component Updated
 
 	}, {
-		key: "componentDidUpdate",
+		key: 'componentDidUpdate',
 		value: function componentDidUpdate() {
 			this.renderLayout();
 			this.setActiveState();
@@ -30837,15 +30659,15 @@ var PhotoList = function (_React$Component) {
 		// Component Init
 
 	}, {
-		key: "componentDidMount",
+		key: 'componentDidMount',
 		value: function componentDidMount() {
 			var _this2 = this;
 
 			this.renderLayout();
 			this.setActiveState();
 			this.test();
-			this.container.classList.remove("loading");
-			this.wrapper.classList.add("loaded");
+			this.container.classList.remove('loading');
+			this.wrapper.classList.add('loaded');
 
 			if (this.is_block_editor || this.is_media_router) {
 				// Gutenberg || Media Popup
@@ -30853,161 +30675,133 @@ var PhotoList = function (_React$Component) {
 				this.getPhotos();
 			} else {
 				// Add scroll event
-				window.addEventListener("scroll", function () {
+				window.addEventListener('scroll', function () {
 					return _this2.onScroll();
 				});
 			}
 		}
 	}, {
-		key: "render",
+		key: 'render',
 		value: function render() {
 			var _this3 = this;
 
 			// Show/Hide orientation listing
-			var orientationStyle = this.is_search ? { display: "flex" } : { display: "none" };
+			var orientationStyle = this.is_search ? { display: 'flex' } : { display: 'none' };
 
 			return _react2.default.createElement(
-				"div",
-				{ id: "photo-listing", className: this.service },
+				'div',
+				{ id: 'photo-listing', className: this.service },
 				_react2.default.createElement(
-					"ul",
-					{ className: "control-nav" },
+					'ul',
+					{ className: 'control-nav' },
 					_react2.default.createElement(
-						"li",
+						'li',
 						null,
 						_react2.default.createElement(
-							"button",
-							{
-								type: "button",
-								className: "latest",
-								onClick: function onClick(e) {
-									return _this3.togglePhotoList("latest", e);
-								}
-							},
+							'button',
+							{ type: 'button', className: 'latest', onClick: function onClick(e) {
+									return _this3.togglePhotoList('latest', e);
+								} },
 							instant_img_localize.latest
 						)
 					),
 					_react2.default.createElement(
-						"li",
-						{ id: "nav-target" },
+						'li',
+						{ id: 'nav-target' },
 						_react2.default.createElement(
-							"button",
-							{
-								type: "button",
-								className: "popular",
-								onClick: function onClick(e) {
-									return _this3.togglePhotoList("popular", e);
-								}
-							},
+							'button',
+							{ type: 'button', className: 'popular', onClick: function onClick(e) {
+									return _this3.togglePhotoList('popular', e);
+								} },
 							instant_img_localize.popular
 						)
 					),
 					_react2.default.createElement(
-						"li",
+						'li',
 						null,
 						_react2.default.createElement(
-							"button",
-							{
-								type: "button",
-								className: "oldest",
-								onClick: function onClick(e) {
-									return _this3.togglePhotoList("oldest", e);
-								}
-							},
+							'button',
+							{ type: 'button', className: 'oldest', onClick: function onClick(e) {
+									return _this3.togglePhotoList('oldest', e);
+								} },
 							instant_img_localize.oldest
 						)
 					),
 					_react2.default.createElement(
-						"li",
-						{ className: "search-field", id: "search-bar" },
+						'li',
+						{ className: 'search-field', id: 'search-bar' },
 						_react2.default.createElement(
-							"form",
+							'form',
 							{ onSubmit: function onSubmit(e) {
 									return _this3.search(e);
-								}, autoComplete: "off" },
+								}, autoComplete: 'off' },
 							_react2.default.createElement(
-								"label",
-								{ htmlFor: "photo-search", className: "offscreen" },
+								'label',
+								{ htmlFor: 'photo-search', className: 'offscreen' },
 								instant_img_localize.search_label
 							),
-							_react2.default.createElement("input", {
-								type: "search",
-								id: "photo-search",
-								placeholder: instant_img_localize.search
-							}),
+							_react2.default.createElement('input', { type: 'search', id: 'photo-search', placeholder: instant_img_localize.search }),
 							_react2.default.createElement(
-								"button",
-								{ type: "submit", id: "photo-search-submit" },
-								_react2.default.createElement("i", { className: "fa fa-search" })
+								'button',
+								{ type: 'submit', id: 'photo-search-submit' },
+								_react2.default.createElement('i', { className: 'fa fa-search' })
 							),
 							_react2.default.createElement(_ResultsToolTip2.default, {
 								container: this.container,
 								isSearch: this.is_search,
 								total: this.total_results,
-								title: this.total_results + " " + instant_img_localize.search_results + " " + this.search_term
+								title: this.total_results + ' ' + instant_img_localize.search_results + ' ' + this.search_term
 							})
 						)
 					)
 				),
-				_react2.default.createElement("div", { className: "error-messaging" }),
+				_react2.default.createElement('div', { className: 'error-messaging' }),
 				_react2.default.createElement(
-					"div",
-					{ className: "orientation-list", style: orientationStyle },
+					'div',
+					{ className: 'orientation-list', style: orientationStyle },
 					_react2.default.createElement(
-						"span",
+						'span',
 						null,
-						_react2.default.createElement("i", { className: "fa fa-filter", "aria-hidden": "true" }),
-						" ",
+						_react2.default.createElement('i', { className: 'fa fa-filter', 'aria-hidden': 'true' }),
+						' ',
 						instant_img_localize.orientation,
-						":"
+						':'
 					),
 					_react2.default.createElement(
-						"ul",
+						'ul',
 						null,
 						_react2.default.createElement(
-							"li",
-							{
-								tabIndex: "0",
-								onClick: function onClick(e) {
-									return _this3.setOrientation("landscape", e);
-								},
-								onKeyPress: function onKeyPress(e) {
-									return _this3.setOrientation("landscape", e);
-								}
-							},
+							'li',
+							{ tabIndex: '0', onClick: function onClick(e) {
+									return _this3.setOrientation('landscape', e);
+								}, onKeyPress: function onKeyPress(e) {
+									return _this3.setOrientation('landscape', e);
+								} },
 							instant_img_localize.landscape
 						),
 						_react2.default.createElement(
-							"li",
-							{
-								tabIndex: "0",
-								onClick: function onClick(e) {
-									return _this3.setOrientation("portrait", e);
-								},
-								onKeyPress: function onKeyPress(e) {
-									return _this3.setOrientation("portrait", e);
-								}
-							},
+							'li',
+							{ tabIndex: '0', onClick: function onClick(e) {
+									return _this3.setOrientation('portrait', e);
+								}, onKeyPress: function onKeyPress(e) {
+									return _this3.setOrientation('portrait', e);
+								} },
 							instant_img_localize.portrait
 						),
 						_react2.default.createElement(
-							"li",
-							{
-								tabIndex: "0",
-								onClick: function onClick(e) {
-									return _this3.setOrientation("squarish", e);
-								},
-								onKeyPress: function onKeyPress(e) {
-									return _this3.setOrientation("squarish", e);
-								}
-							},
+							'li',
+							{ tabIndex: '0', onClick: function onClick(e) {
+									return _this3.setOrientation('squarish', e);
+								}, onKeyPress: function onKeyPress(e) {
+									return _this3.setOrientation('squarish', e);
+								} },
 							instant_img_localize.squarish
 						)
 					)
 				),
 				_react2.default.createElement(
-					"div",
-					{ id: "photos", className: "photo-target" },
+					'div',
+					{ id: 'photos', className: 'photo-target' },
 					this.state.results.map(function (result, iterator) {
 						return _react2.default.createElement(_Photo2.default, {
 							result: result,
@@ -31023,44 +30817,37 @@ var PhotoList = function (_React$Component) {
 					})
 				),
 				_react2.default.createElement(
-					"div",
-					{
-						className: this.total_results == 0 && this.is_search === true ? "no-results show" : "no-results",
-						title: this.props.title
-					},
+					'div',
+					{ className: this.total_results == 0 && this.is_search === true ? 'no-results show' : 'no-results', title: this.props.title },
 					_react2.default.createElement(
-						"h3",
+						'h3',
 						null,
 						instant_img_localize.no_results,
-						" "
+						' '
 					),
 					_react2.default.createElement(
-						"p",
+						'p',
 						null,
 						instant_img_localize.no_results_desc,
-						" "
+						' '
 					)
 				),
-				_react2.default.createElement("div", { className: "loading-block" }),
+				_react2.default.createElement('div', { className: 'loading-block' }),
 				_react2.default.createElement(
-					"div",
-					{ className: "load-more-wrap" },
+					'div',
+					{ className: 'load-more-wrap' },
 					_react2.default.createElement(
-						"button",
-						{
-							type: "button",
-							className: "button",
-							onClick: function onClick() {
+						'button',
+						{ type: 'button', className: 'button', onClick: function onClick() {
 								return _this3.getPhotos();
-							}
-						},
+							} },
 						instant_img_localize.load_more
 					)
 				),
 				_react2.default.createElement(
-					"div",
-					{ id: "tooltip" },
-					"Meow"
+					'div',
+					{ id: 'tooltip' },
+					'Meow'
 				)
 			);
 		}

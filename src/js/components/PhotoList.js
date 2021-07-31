@@ -1,11 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import ReactDOMServer from "react-dom/server";
-import Masonry from "masonry-layout";
-const imagesLoaded = require("imagesloaded");
-import Photo from "./Photo";
-import ResultsToolTip from "./ResultsToolTip";
-import API from "./API";
+import Masonry from 'masonry-layout';
+import React from 'react';
+import API from './API';
+import Photo from './Photo';
+import ResultsToolTip from './ResultsToolTip';
+const imagesLoaded = require('imagesloaded');
 
 class PhotoList extends React.Component {
 	constructor(props) {
@@ -19,40 +17,33 @@ class PhotoList extends React.Component {
 		this.page = this.props.page; // Page
 
 		this.is_search = false;
-		this.search_term = "";
+		this.search_term = '';
 		this.total_results = 0;
-		this.orientation = "";
+		this.orientation = '';
 
 		this.isLoading = false; // loading flag
 		this.isDone = false; // Done flag - no photos remain
 
-		this.errorMsg = "";
-		this.msnry = "";
-		this.tooltipInterval = "";
+		this.errorMsg = '';
+		this.msnry = '';
+		this.tooltipInterval = '';
 
-		this.editor = this.props.editor ? this.props.editor : "classic";
-		this.is_block_editor = this.props.editor === "gutenberg" ? true : false;
-		this.is_media_router =
-			this.props.editor === "media-router" ? true : false;
-		this.SetFeaturedImage = this.props.SetFeaturedImage
-			? this.props.SetFeaturedImage.bind(this)
-			: "";
-		this.InsertImage = this.props.InsertImage
-			? this.props.InsertImage.bind(this)
-			: "";
+		this.editor = this.props.editor ? this.props.editor : 'classic';
+		this.is_block_editor = this.props.editor === 'gutenberg' ? true : false;
+		this.is_media_router = this.props.editor === 'media-router' ? true : false;
+		this.SetFeaturedImage = this.props.SetFeaturedImage ? this.props.SetFeaturedImage.bind(this) : '';
+		this.InsertImage = this.props.InsertImage ? this.props.InsertImage.bind(this) : '';
 
 		if (this.is_block_editor) {
 			// Gutenberg Sidebar Only
-			this.container = document.querySelector("body");
-			this.container.classList.add("loading");
-			this.wrapper = document.querySelector("body");
+			this.container = document.querySelector('body');
+			this.container.classList.add('loading');
+			this.wrapper = document.querySelector('body');
 		} else {
 			// Post Edit Screens and Plugin Screen
-			this.container = this.props.container.closest(
-				".instant-img-container"
-			);
-			this.wrapper = this.props.container.closest(".instant-images-wrapper");
-			this.container.classList.add("loading");
+			this.container = this.props.container.closest('.instant-img-container');
+			this.wrapper = this.props.container.closest('.instant-images-wrapper');
+			this.container.classList.add('loading');
 		}
 	}
 
@@ -64,13 +55,13 @@ class PhotoList extends React.Component {
 	test() {
 		let self = this;
 
-		let target = this.container.querySelector(".error-messaging"); // Target element
+		let target = this.container.querySelector('.error-messaging'); // Target element
 
-		let testURL = instant_img_localize.root + "instant-images/test/"; // REST Route
+		let testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route
 		var restAPITest = new XMLHttpRequest();
-		restAPITest.open("POST", testURL, true);
-		restAPITest.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
-		restAPITest.setRequestHeader("Content-Type", "application/json");
+		restAPITest.open('POST', testURL, true);
+		restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
+		restAPITest.setRequestHeader('Content-Type', 'application/json');
 		restAPITest.send();
 
 		restAPITest.onload = function () {
@@ -96,10 +87,8 @@ class PhotoList extends React.Component {
 	}
 
 	renderTestError(target) {
-		target.classList.add("active");
-		target.innerHTML =
-			instant_img_localize.error_restapi +
-			instant_img_localize.error_restapi_desc;
+		target.classList.add('active');
+		target.innerHTML = instant_img_localize.error_restapi + instant_img_localize.error_restapi_desc;
 	}
 
 	/**
@@ -110,12 +99,12 @@ class PhotoList extends React.Component {
 	 */
 	search(event) {
 		event.preventDefault();
-		let input = this.container.querySelector("#photo-search");
+		let input = this.container.querySelector('#photo-search');
 		let term = input.value;
 
 		if (term.length > 2) {
-			input.classList.add("searching");
-			this.container.classList.add("loading");
+			input.classList.add('searching');
+			this.container.classList.add('loading');
 			this.search_term = term;
 			this.is_search = true;
 			this.doSearch(this.search_term);
@@ -135,20 +124,20 @@ class PhotoList extends React.Component {
 		if (event && event.target) {
 			let target = event.target;
 
-			if (target.classList.contains("active")) {
+			if (target.classList.contains('active')) {
 				// Clear orientation
-				target.classList.remove("active");
-				this.orientation = "";
+				target.classList.remove('active');
+				this.orientation = '';
 			} else {
 				// Set orientation
-				let siblings = target.parentNode.querySelectorAll("li");
-				[...siblings].forEach((el) => el.classList.remove("active")); // remove active classes
+				let siblings = target.parentNode.querySelectorAll('li');
+				[...siblings].forEach((el) => el.classList.remove('active')); // remove active classes
 
-				target.classList.add("active");
+				target.classList.add('active');
 				this.orientation = orientation;
 			}
 
-			if (this.search_term !== "") {
+			if (this.search_term !== '') {
 				this.doSearch(this.search_term);
 			}
 		}
@@ -160,7 +149,7 @@ class PhotoList extends React.Component {
 	 * @since 4.2
 	 */
 	hasOrientation() {
-		return this.orientation === "" ? false : true;
+		return this.orientation === '' ? false : true;
 	}
 
 	/**
@@ -169,9 +158,9 @@ class PhotoList extends React.Component {
 	 * @since 4.2
 	 */
 	clearOrientation() {
-		const items = this.container.querySelectorAll(".orientation-list li");
-		[...items].forEach((el) => el.classList.remove("active")); // remove active classes
-		this.orientation = "";
+		const items = this.container.querySelectorAll('.orientation-list li');
+		[...items].forEach((el) => el.classList.remove('active')); // remove active classes
+		this.orientation = '';
 	}
 
 	/**
@@ -183,7 +172,7 @@ class PhotoList extends React.Component {
 	 */
 	doSearch(term) {
 		let self = this;
-		let type = "term";
+		let type = 'term';
 		this.page = 1; // reset page num
 
 		let url = `${API.search_api}${API.app_id}${API.posts_per_page}&page=${this.page}&query=${this.search_term}`;
@@ -196,19 +185,19 @@ class PhotoList extends React.Component {
 		// Search by ID
 		// allow users to search by photo by prepending id:{photo_id} to search terms
 		let search_type = term.substring(0, 3);
-		if (search_type === "id:") {
-			type = "id";
-			term = term.replace("id:", "");
+		if (search_type === 'id:') {
+			type = 'id';
+			term = term.replace('id:', '');
 			url = `${API.photo_api}/${term}${API.app_id}`;
 		}
 
-		let input = this.container.querySelector("#photo-search");
+		let input = this.container.querySelector('#photo-search');
 
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
 				// Term Search
-				if (type === "term") {
+				if (type === 'term') {
 					self.total_results = data.total;
 
 					// Check for returned data
@@ -220,7 +209,7 @@ class PhotoList extends React.Component {
 				}
 
 				// Search by photo ID
-				if (type === "id" && data) {
+				if (type === 'id' && data) {
 					// Convert return data to array
 					let photoArray = [];
 
@@ -228,21 +217,21 @@ class PhotoList extends React.Component {
 						// If error was returned
 
 						self.total_results = 0;
-						self.checkTotalResults("0");
+						self.checkTotalResults('0');
 					} else {
 						// No errors, display results
 
 						photoArray.push(data);
 
 						self.total_results = 1;
-						self.checkTotalResults("1");
+						self.checkTotalResults('1');
 					}
 
 					self.results = photoArray;
 					self.setState({ results: self.results });
 				}
 
-				input.classList.remove("searching");
+				input.classList.remove('searching');
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -256,11 +245,11 @@ class PhotoList extends React.Component {
 	 * @since 3.0
 	 */
 	clearSearch() {
-		let input = this.container.querySelector("#photo-search");
-		input.value = "";
+		let input = this.container.querySelector('#photo-search');
+		input.value = '';
 		this.total_results = 0;
 		this.is_search = false;
-		this.search_term = "";
+		this.search_term = '';
 		this.clearOrientation();
 	}
 
@@ -272,7 +261,7 @@ class PhotoList extends React.Component {
 	getPhotos() {
 		let self = this;
 		this.page = parseInt(this.page) + 1;
-		this.container.classList.add("loading");
+		this.container.classList.add('loading');
 		this.isLoading = true;
 
 		let url = `${API.photo_api}${API.app_id}${API.posts_per_page}&page=${this.page}&order_by=${this.orderby}`;
@@ -318,9 +307,9 @@ class PhotoList extends React.Component {
 	 */
 	togglePhotoList(view, e) {
 		let el = e.target;
-		if (el.classList.contains("active")) return false; // exit if active
+		if (el.classList.contains('active')) return false; // exit if active
 
-		el.classList.add("loading"); // Add class to nav btn
+		el.classList.add('loading'); // Add class to nav btn
 		this.isLoading = true;
 		let self = this;
 		this.page = 1;
@@ -339,7 +328,7 @@ class PhotoList extends React.Component {
 				self.results = data;
 				self.setState({ results: data });
 
-				el.classList.remove("loading"); // Remove class from nav btn
+				el.classList.remove('loading'); // Remove class from nav btn
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -357,14 +346,12 @@ class PhotoList extends React.Component {
 			return false;
 		}
 		let self = this;
-		let photoListWrapper = self.container.querySelector(".photo-target");
+		let photoListWrapper = self.container.querySelector('.photo-target');
 		imagesLoaded(photoListWrapper, function () {
 			self.msnry = new Masonry(photoListWrapper, {
-				itemSelector: ".photo",
+				itemSelector: '.photo',
 			});
-			[...self.container.querySelectorAll(".photo-target .photo")].forEach(
-				(el) => el.classList.add("in-view")
-			);
+			[...self.container.querySelectorAll('.photo-target .photo')].forEach((el) => el.classList.add('in-view'));
 		});
 	}
 
@@ -400,20 +387,16 @@ class PhotoList extends React.Component {
 	setActiveState() {
 		let self = this;
 		// Remove .active class
-		[...this.container.querySelectorAll(".control-nav button")].forEach(
-			(el) => el.classList.remove("active")
-		);
+		[...this.container.querySelectorAll('.control-nav button')].forEach((el) => el.classList.remove('active'));
 
 		// Set active item, if not search
 		if (!this.is_search) {
-			let active = this.container.querySelector(
-				`.control-nav li button.${this.orderby}`
-			);
-			active.classList.add("active");
+			let active = this.container.querySelector(`.control-nav li button.${this.orderby}`);
+			active.classList.add('active');
 		}
 		setTimeout(function () {
 			self.isLoading = false;
-			self.container.classList.remove("loading");
+			self.container.classList.remove('loading');
 		}, 1000);
 	}
 
@@ -428,13 +411,13 @@ class PhotoList extends React.Component {
 		let rect = target.getBoundingClientRect();
 		let left = Math.round(rect.left);
 		let top = Math.round(rect.top);
-		let tooltip = this.container.querySelector("#tooltip");
-		tooltip.classList.remove("over");
+		let tooltip = this.container.querySelector('#tooltip');
+		tooltip.classList.remove('over');
 
-		if (target.classList.contains("tooltip--above")) {
-			tooltip.classList.add("above");
+		if (target.classList.contains('tooltip--above')) {
+			tooltip.classList.add('above');
 		} else {
-			tooltip.classList.remove("above");
+			tooltip.classList.remove('above');
 		}
 
 		// Get Content
@@ -451,7 +434,7 @@ class PhotoList extends React.Component {
 			tooltip.style.top = `${top}px`;
 
 			setTimeout(function () {
-				tooltip.classList.add("over");
+				tooltip.classList.add('over');
 			}, 150);
 		}, 500);
 	}
@@ -463,8 +446,8 @@ class PhotoList extends React.Component {
 	 */
 	hideTooltip(e) {
 		clearInterval(this.tooltipInterval);
-		let tooltip = this.container.querySelector("#tooltip");
-		tooltip.classList.remove("over");
+		let tooltip = this.container.querySelector('#tooltip');
+		tooltip.classList.remove('over');
 	}
 
 	// Component Updated
@@ -478,8 +461,8 @@ class PhotoList extends React.Component {
 		this.renderLayout();
 		this.setActiveState();
 		this.test();
-		this.container.classList.remove("loading");
-		this.wrapper.classList.add("loaded");
+		this.container.classList.remove('loading');
+		this.wrapper.classList.add('loaded');
 
 		if (this.is_block_editor || this.is_media_router) {
 			// Gutenberg || Media Popup
@@ -487,43 +470,29 @@ class PhotoList extends React.Component {
 			this.getPhotos();
 		} else {
 			// Add scroll event
-			window.addEventListener("scroll", () => this.onScroll());
+			window.addEventListener('scroll', () => this.onScroll());
 		}
 	}
 
 	render() {
 		// Show/Hide orientation listing
-		let orientationStyle = this.is_search
-			? { display: "flex" }
-			: { display: "none" };
+		let orientationStyle = this.is_search ? { display: 'flex' } : { display: 'none' };
 
 		return (
 			<div id="photo-listing" className={this.service}>
 				<ul className="control-nav">
 					<li>
-						<button
-							type="button"
-							className="latest"
-							onClick={(e) => this.togglePhotoList("latest", e)}
-						>
+						<button type="button" className="latest" onClick={(e) => this.togglePhotoList('latest', e)}>
 							{instant_img_localize.latest}
 						</button>
 					</li>
 					<li id="nav-target">
-						<button
-							type="button"
-							className="popular"
-							onClick={(e) => this.togglePhotoList("popular", e)}
-						>
+						<button type="button" className="popular" onClick={(e) => this.togglePhotoList('popular', e)}>
 							{instant_img_localize.popular}
 						</button>
 					</li>
 					<li>
-						<button
-							type="button"
-							className="oldest"
-							onClick={(e) => this.togglePhotoList("oldest", e)}
-						>
+						<button type="button" className="oldest" onClick={(e) => this.togglePhotoList('oldest', e)}>
 							{instant_img_localize.oldest}
 						</button>
 					</li>
@@ -532,11 +501,7 @@ class PhotoList extends React.Component {
 							<label htmlFor="photo-search" className="offscreen">
 								{instant_img_localize.search_label}
 							</label>
-							<input
-								type="search"
-								id="photo-search"
-								placeholder={instant_img_localize.search}
-							/>
+							<input type="search" id="photo-search" placeholder={instant_img_localize.search} />
 							<button type="submit" id="photo-search-submit">
 								<i className="fa fa-search"></i>
 							</button>
@@ -544,13 +509,7 @@ class PhotoList extends React.Component {
 								container={this.container}
 								isSearch={this.is_search}
 								total={this.total_results}
-								title={
-									this.total_results +
-									" " +
-									instant_img_localize.search_results +
-									" " +
-									this.search_term
-								}
+								title={this.total_results + ' ' + instant_img_localize.search_results + ' ' + this.search_term}
 							/>
 						</form>
 					</li>
@@ -560,29 +519,16 @@ class PhotoList extends React.Component {
 
 				<div className="orientation-list" style={orientationStyle}>
 					<span>
-						<i className="fa fa-filter" aria-hidden="true"></i>{" "}
-						{instant_img_localize.orientation}:
+						<i className="fa fa-filter" aria-hidden="true"></i> {instant_img_localize.orientation}:
 					</span>
 					<ul>
-						<li
-							tabIndex="0"
-							onClick={(e) => this.setOrientation("landscape", e)}
-							onKeyPress={(e) => this.setOrientation("landscape", e)}
-						>
+						<li tabIndex="0" onClick={(e) => this.setOrientation('landscape', e)} onKeyPress={(e) => this.setOrientation('landscape', e)}>
 							{instant_img_localize.landscape}
 						</li>
-						<li
-							tabIndex="0"
-							onClick={(e) => this.setOrientation("portrait", e)}
-							onKeyPress={(e) => this.setOrientation("portrait", e)}
-						>
+						<li tabIndex="0" onClick={(e) => this.setOrientation('portrait', e)} onKeyPress={(e) => this.setOrientation('portrait', e)}>
 							{instant_img_localize.portrait}
 						</li>
-						<li
-							tabIndex="0"
-							onClick={(e) => this.setOrientation("squarish", e)}
-							onKeyPress={(e) => this.setOrientation("squarish", e)}
-						>
+						<li tabIndex="0" onClick={(e) => this.setOrientation('squarish', e)} onKeyPress={(e) => this.setOrientation('squarish', e)}>
 							{instant_img_localize.squarish}
 						</li>
 					</ul>
@@ -604,14 +550,7 @@ class PhotoList extends React.Component {
 					))}
 				</div>
 
-				<div
-					className={
-						this.total_results == 0 && this.is_search === true
-							? "no-results show"
-							: "no-results"
-					}
-					title={this.props.title}
-				>
+				<div className={this.total_results == 0 && this.is_search === true ? 'no-results show' : 'no-results'} title={this.props.title}>
 					<h3>{instant_img_localize.no_results} </h3>
 					<p>{instant_img_localize.no_results_desc} </p>
 				</div>
@@ -619,11 +558,7 @@ class PhotoList extends React.Component {
 				<div className="loading-block" />
 
 				<div className="load-more-wrap">
-					<button
-						type="button"
-						className="button"
-						onClick={() => this.getPhotos()}
-					>
+					<button type="button" className="button" onClick={() => this.getPhotos()}>
 						{instant_img_localize.load_more}
 					</button>
 				</div>

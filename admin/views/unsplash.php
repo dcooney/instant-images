@@ -9,24 +9,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 ?>
-
+<?php do_action( 'instant_images_html_before' ); ?>
 <?php if ( $show_settings ) { ?>
-<header class="header-wrap">
-	<h1>
-		<?php echo esc_attr( INSTANT_IMAGES_TITLE ); ?> <em><?php echo esc_attr( INSTANT_IMAGES_VERSION ); ?></em>
-		<span>
-		<?php
-			// translators: Instant Images tagline.
-			$instant_images_tagline = __( 'One click photo uploads from %s', 'instant-images' );
-			// @codingStandardsIgnoreStart
-			echo sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">unsplash.com</a>' );
-			// @codingStandardsIgnoreEnd
-		?>
-	</h1>
-	<button type="button" class="button button-secondary button-large">
-		<i class="fa fa-cog" aria-hidden="true"></i> <?php esc_attr_e( 'Settings', 'instant-images' ); ?>
-	</button>
-</header>
+	<?php do_action( 'instant_images_html_before_header' ); ?>
+	<header class="header-wrap">
+		<h1>
+			<?php echo esc_attr( INSTANT_IMAGES_TITLE ); ?> <em><?php echo esc_attr( INSTANT_IMAGES_VERSION ); ?></em>
+			<span>
+			<?php
+				// translators: Instant Images tagline.
+				$instant_images_tagline = __( 'One click photo uploads from %s', 'instant-images' );
+				// @codingStandardsIgnoreStart
+				echo sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">unsplash.com</a>' );
+				// @codingStandardsIgnoreEnd
+			?>
+		</h1>
+		<button type="button" class="button button-secondary button-large">
+			<i class="fa fa-cog" aria-hidden="true"></i> <?php esc_attr_e( 'Settings', 'instant-images' ); ?>
+		</button>
+	</header>
+	<?php do_action( 'instant_images_html_after_header' ); ?>
 <?php } ?>
 <?php require INSTANT_IMAGES_PATH . 'admin/includes/cta/permissions.php'; ?>
 <?php
@@ -37,3 +39,4 @@ if ( $show_settings ) {
 <section class="instant-images-wrapper">
 	<div id="app"></div>
 </section>
+<?php do_action( 'instant_images_html_after' ); ?>
