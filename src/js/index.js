@@ -2,14 +2,25 @@ import React from "react";
 import ReactDOM from "react-dom";
 import API from "./components/API";
 import PhotoList from "./components/PhotoList";
-
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 require("./functions/helpers");
 
-const GetPhotos = (page = 1, orderby = "latest", service = "unsplash") => {
-	let container = document.querySelector(".instant-img-container");
-	let url = `${API.photo_api}${API.app_id}${API.posts_per_page}&page=${page}&order_by=${orderby}`;
+const provider = 'unsplash';
+
+/**
+ * Get the initial set of photos.
+ *
+ * @param {Number} page     The start page.
+ * @param {string} orderby  The default order.
+ * @param {string} provider The current service provider.
+ */
+const GetPhotos = (page = 1, orderby = "latest", provider = "unsplash") => {
+
+	const container = document.querySelector(".instant-img-container");
+
+	const start = `${API[provider].photo_api}${API[provider].app_id}`;
+	const url = `${start}${API.posts_per_page}&page=${page}&${API[provider].order_key}=${orderby}`;
 
 	function initialize() {
 		// Remove init button
@@ -22,7 +33,8 @@ const GetPhotos = (page = 1, orderby = "latest", service = "unsplash") => {
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
-				let element = document.getElementById("app");
+
+				const element = document.getElementById("app");
 				ReactDOM.render(
 					<PhotoList
 						container={element}
@@ -30,7 +42,7 @@ const GetPhotos = (page = 1, orderby = "latest", service = "unsplash") => {
 						results={data}
 						page={page}
 						orderby={orderby}
-						service={service}
+						provider={provider}
 					/>,
 					element
 				);
@@ -42,4 +54,4 @@ const GetPhotos = (page = 1, orderby = "latest", service = "unsplash") => {
 	initialize();
 };
 
-GetPhotos(1, "latest", "unsplash");
+GetPhotos(1, "latest", provider);

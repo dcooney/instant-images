@@ -69,7 +69,7 @@ function instant_images_download( WP_REST_Request $request ) {
 		$filename  = sanitize_text_field( $data['filename'] ); // The filename.
 		$title     = sanitize_text_field( $data['title'] ); // Title.
 		$alt       = sanitize_text_field( $data['alt'] ); // Alt text.
-		$caption   = sanitize_text_field( $data['caption'] ); // Caption text.
+		$caption   = wp_kses_post( $data['caption'] ); // Caption text.
 		$cfilename = sanitize_title( $data['custom_filename'] ); // Custom filename.
 		$parent_id = ( $data['parent_id'] ) ? sanitize_title( $data['parent_id'] ) : 0; // Parent post ID.
 		$name      = ( ! empty( $cfilename ) ) ? $cfilename . '.jpg' : $filename; // Actual filename.

@@ -543,7 +543,7 @@ body.media_page_instant-images #wpfooter p {
 
 .instant-img-container .control-nav li.search-field {
   float: right;
-  width: 49%;
+  width: 40%;
   margin: 0;
   max-width: 500px;
 }
@@ -1166,7 +1166,17 @@ body.media_page_instant-images #wpfooter p {
   white-space: nowrap;
 }
 
-#photos .photo .fade.user img {
+#photos .photo .fade.user .user-wrap:before {
+  content: '';
+  display: block;
+  z-index: 0;
+  background-color: #fff;
+  height: 20px;
+  opacity: 0.25;
+}
+
+#photos .photo .fade.user img,
+#photos .photo .fade.user .user-wrap:before {
   width: 20px;
   max-width: 20px;
   -webkit-border-radius: 100%;
@@ -1174,6 +1184,10 @@ body.media_page_instant-images #wpfooter p {
   position: absolute;
   left: 8px;
   top: 8px;
+}
+
+#photos .photo .fade.user img {
+  z-index: 1;
 }
 
 #photos .photo .notice-msg {
@@ -1215,7 +1229,7 @@ body.media_page_instant-images #wpfooter p {
   -webkit-transition: all 0.25s ease;
   -o-transition: all 0.25s ease;
   transition: all 0.25s ease;
-  padding: 8px;
+  padding: 5px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   border: 1px solid #e1e1e1;
@@ -1236,7 +1250,7 @@ body.media_page_instant-images #wpfooter p {
   display: block;
   background: #f7f7f7;
   border: 1px solid #e1e1e1;
-  padding: 15px;
+  padding: 15px 10px;
   -webkit-border-radius: 2px 2px 0 0;
           border-radius: 2px 2px 0 0;
 }
@@ -1246,38 +1260,87 @@ body.media_page_instant-images #wpfooter p {
 }
 
 #photos .edit-screen--controls {
-  -webkit-border-radius: 0 0 2px 2px;
-          border-radius: 0 0 2px 2px;
+  -webkit-border-radius: 0 0 3px 3px;
+          border-radius: 0 0 3px 3px;
 }
 
 #photos .edit-screen--title {
   border-bottom: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  width: 100%;
+  padding: 10px;
+  -webkit-border-radius: 3px 3px 0 0;
+          border-radius: 3px 3px 0 0;
+}
+
+#photos .edit-screen--title > div {
+  padding: 5px 15px 5px 5px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+#photos .edit-screen--title > div.preview {
+  width: 30%;
+  padding: 0;
+  -webkit-background-size: cover;
+          background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-border-radius: 2px;
+          border-radius: 2px;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
 }
 
 #photos .edit-screen--title p {
   font-size: 12px;
-  line-height: 1.25;
+  line-height: 1.45;
   margin: 0;
   color: #999;
 }
 
 #photos .edit-screen--title p.heading {
   color: #222;
-  margin: 0 0 5px;
+  margin: 0 0 3px;
   font-weight: 600;
   text-transform: uppercase;
 }
 
-#photos .edit-screen label {
+#photos .edit-screen label,
+#photos .edit-screen .add-attribution-row {
   margin: 0;
   padding: 15px;
   display: block;
   background: #fff;
   border: 1px solid #e1e1e1;
   border-bottom: none;
-  -webkit-border-radius: 2px;
-          border-radius: 2px;
   position: relative;
+}
+
+#photos .edit-screen .add-attribution-row {
+  padding-top: 0;
+  margin-top: -15px;
+  border-top: none;
+}
+
+#photos .edit-screen .add-attribution-row button {
+  cursor: pointer;
+  font-size: 11px;
+  outline: none;
+  padding: 5px 0;
+  border: none;
+  background: none;
+  text-decoration: underline;
+}
+
+#photos .edit-screen .add-attribution-row button:hover, #photos .edit-screen .add-attribution-row button:focus {
+  text-decoration: none;
 }
 
 #photos .edit-screen span {
@@ -1292,23 +1355,25 @@ body.media_page_instant-images #wpfooter p {
 
 #photos .edit-screen textarea {
   resize: none;
+  font-size: 12px;
+  line-height: 1.35;
 }
 
 #photos .edit-screen input {
   font-size: 12px;
-  padding: 0 5px;
+  padding: 0 10px;
   margin: 0;
-  height: 30px;
-  line-height: 30px;
+  height: 35px;
+  line-height: 35px;
 }
 
 #photos .edit-screen em {
   position: absolute;
   bottom: 15px;
   right: 15px;
-  height: 30px;
-  line-height: 30px;
-  background: #777;
+  height: 35px;
+  line-height: 35px;
+  background: #858585;
   -webkit-border-radius: 0 2px 2px 0;
           border-radius: 0 2px 2px 0;
   color: #e1e1e1;

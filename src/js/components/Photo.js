@@ -1,26 +1,36 @@
 import React from "react";
 import API from "./API";
 import axios from "axios";
+import getProp from '../functions/getProp';
 
 class Photo extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.id = this.props.result.id;
-		this.thumb = this.props.result.urls.thumb;
-		this.img = this.props.result.urls.small;
-		//this.full_size = this.props.result.urls.raw;
-		this.full_size = this.props.result.urls.full;
-		this.author = this.props.result.user.name;
+		this.provider = this.props.provider;
+
+		const result = this.props.result;
+
+		this.id = result.id;
+		this.thumb = getProp(this.provider, result, 'thumb');
+		this.img = getProp(this.provider, result, 'img');
+		this.full_size = getProp(this.provider, result, 'full_size');
+		this.author = getProp(this.provider, result, 'author');
 		this.img_title = `${instant_img_localize.photo_by} ${this.author}`;
-		this.filename = this.props.result.id;
+		this.filename = result.id;
 		this.title = this.img_title;
-		this.alt = this.props.result.alt_description;
-		this.caption = "";
-		this.user = this.props.result.user.username;
-		this.user_photo = this.props.result.user.profile_image.small;
-		this.link = this.props.result.links.html;
-		this.likes = this.props.result.likes;
+		this.alt = result.alt_description ? result.alt_description : null;
+		this.alt = this.alt === null ? '' : this.alt;
+		this.caption = '';
+
+		this.user = getProp(this.provider, result, 'user');
+		this.name = getProp(this.provider, result, 'name');
+		this.user_photo = getProp(this.provider, result, 'user_photo');
+		this.user_url = getProp(this.provider, result, 'user_url');
+		this.link = getProp(this.provider, result, 'link');
+		this.likes = getProp(this.provider, result, 'likes');
+		this.attribution = `${instant_img_localize.photo_by} <a href="https://unsplash.com/@${this.user}?utm_source=wordpress-instant-images&utm_medium=referral">${this.name}</a> on <a href="https://unsplash.com/?utm_source=wordpress-instant-images&utm_medium=referral">Unsplash</a>`;
+
 		this.view_all = instant_img_localize.view_all;
 		this.inProgress = false;
 		this.container = document.querySelector(".instant-img-container");
@@ -45,20 +55,23 @@ class Photo extends React.Component {
 			alt: this.alt,
 			caption: this.caption,
 		};
+
+		this.captionRef = React.createRef();
 	}
 
 	/**
-	 * Function to trigger the image download
+	 * Function to trigger the image download.
 	 *
+	 * @param {Element} e The current download item.
 	 * @since 4.3
 	 */
 	download(e) {
 		e.preventDefault();
-		let self = this;
+		const self = this;
 
 		let target = e.currentTarget; // get current <a/>
-		let photo = target.parentElement.parentElement.parentElement; // Get parent .photo el
-		let notice = photo.querySelector(".notice-msg"); // Locate .notice-msg div
+		const photo = target.parentElement.parentElement.parentElement; // Get parent .photo el
+		const notice = photo.querySelector(".notice-msg"); // Locate .notice-msg div
 
 		if (!target.classList.contains("upload")) {
 			// If target is .download-photo, switch target definition
@@ -85,10 +98,10 @@ class Photo extends React.Component {
 		}, 3000);
 
 		// API URL
-		let api = instant_img_localize.root + "instant-images/download/";
+		const api = instant_img_localize.root + "instant-images/download/";
 
 		// Data Params
-		let data = {
+		const data = {
 			id: target.getAttribute("data-id"),
 			image_url: target.getAttribute("data-url"),
 			filename: target.getAttribute("data-id") + ".jpg",
@@ -188,12 +201,16 @@ class Photo extends React.Component {
 	 * Function to trigger download action at unsplash.com
 	 * This is used to give authors download credits and nothing more
 	 *
-	 * @param id       string    The ID of the image
+	 * @param {string} id The ID of the image
 	 * @since 3.1
 	 */
 	triggerUnsplashDownload(id) {
-		let url = `${API.photo_api}/${id}/download/${API.app_id}`;
 
+		if(!this.provider === 'unsplash'){
+			return;
+		}
+
+		const url = `${this.provider.photo_api}/${id}/download/${API.app_id}`;
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
@@ -204,31 +221,31 @@ class Photo extends React.Component {
 			});
 	}
 
-	/*
-	 * setFeaturedImageClick
+	/**
 	 * Function used to trigger a download and then set as featured image
 	 *
+	 * @param {Element} e The clicked element.
 	 * @since 4.0
 	 */
 	setFeaturedImageClick(e) {
-		let target = e.currentTarget;
+		const target = e.currentTarget;
 		if (!target) {
 			return false;
 		}
 
 		this.hideTooltip(e);
-		let parent = target.parentNode.parentNode.parentNode;
-		let photo = parent.querySelector("a.upload");
+		const parent = target.parentNode.parentNode.parentNode;
+		const photo = parent.querySelector("a.upload");
 		if (photo) {
 			this.setAsFeaturedImage = true;
 			photo.click();
 		}
 	}
 
-	/*
-	 * insertImageIntoPost
+	/**
 	 * Function used to insert an image directly into the block (Gutenberg) editor.
 	 *
+	 * @param {Element} e The clicked element.
 	 * @since 4.0
 	 */
 	insertImageIntoPost(e) {
@@ -246,15 +263,14 @@ class Photo extends React.Component {
 		}
 	}
 
-	/*
-	 * uploadComplete
-	 * Function runs when upload has completed
+	/**
+	 * Function runs when upload has completed.
 	 *
-	 * @param target   element    clicked item
-	 * @param photo    element    Nearest parent .photo
-	 * @param msg      string     Success Msg
-	 * @param url      string     The attachment edit link
-	 * @param id       string     The attachment id
+	 * @param {Element} target The clicked item.
+	 * @param {Element} photo  The `.photo` element.
+	 * @param {string}  msg    The Success Msg.
+	 * @param {string}  url    The attachment edit link.
+	 * @param {string}  id     The attachment id.
 	 * @since 3.0
 	 */
 	uploadComplete(target, photo, msg, url, id) {
@@ -306,9 +322,9 @@ class Photo extends React.Component {
 	}
 
 	/**
-	 * mediaRouter
 	 * Refresh Media Modal and select item after it's been uploaded
 	 *
+	 * @param {string} id The media modal ID.
 	 * @since 4.3
 	 */
 	mediaRouter(id) {
@@ -343,13 +359,13 @@ class Photo extends React.Component {
 		}
 	}
 
-	/*
+	/**
 	 * Function runs when error occurs on upload or resize.
 	 *
-	 * @param target   element    Current clicked item
-	 * @param photo    element    Nearest parent .photo
-	 * @param notice   element    The message area
-	 * @param msg      string     Error Msg
+	 * @param {Element} target Current clicked item/
+	 * @param {Element} photo  The `.photo` element.
+	 * @param {Element} notice The notice element.
+	 * @param {string}  msg    Error Msg.
 	 * @since 3.0
 	 */
 	uploadError(target, photo, notice, msg) {
@@ -362,29 +378,29 @@ class Photo extends React.Component {
 		console.warn(msg);
 	}
 
-	/*
+	/**
 	 * Set the title attribute of target.
 	 *
-	 * @param target   element    Current clicked item
-	 * @param msg      string     Title Msg from JSON
+	 * @param {Element} e   The current clicked element.
+	 * @param {string}  msg The title Msg from JSON.
 	 * @since 3.0
 	 */
 	setImageTitle(target, msg) {
 		target.setAttribute("title", msg); // Remove 'Click to upload...', set new value
 	}
 
-	/*
-	 * Displays the edit screen
+	/**
+	 * Displays the edit screen.
 	 *
+	 * @param {Element} e The target element.
 	 * @since 3.2
 	 */
 	showEditScreen(e) {
 		e.preventDefault();
-		let el = e.currentTarget;
+		const el = e.currentTarget;
 		this.hideTooltip(e);
-		let photo = el.closest(".photo");
-		let filename = photo.querySelector('input[name="filename"]');
-		let editScreen = photo.querySelector(".edit-screen");
+		const photo = el.closest(".photo");
+		const editScreen = photo.querySelector(".edit-screen");
 
 		editScreen.classList.add("editing"); // Show edit screen
 
@@ -394,13 +410,14 @@ class Photo extends React.Component {
 		}, 150);
 	}
 
-	/*
-	 * Handles the change event for the edit screen
+	/**
+	 * Handles the change event for the edit screen.
 	 *
+	 * @param {Element} e The target element.
 	 * @since 3.2
 	 */
 	handleEditChange(e) {
-		let target = e.target.name;
+		const target = e.target.name;
 
 		if (target === "filename") {
 			this.setState({
@@ -427,6 +444,7 @@ class Photo extends React.Component {
 	/**
 	 * Handles the save event for the edit screen
 	 *
+	 * @param {Element} e The target element.
 	 * @since 3.2
 	 */
 	saveEditChange(e) {
@@ -456,6 +474,7 @@ class Photo extends React.Component {
 	/**
 	 * Handles the cancel event for the edit screen.
 	 *
+	 * @param {Element} e The target element.
 	 * @since 3.2
 	 */
 	cancelEditChange(e) {
@@ -498,19 +517,34 @@ class Photo extends React.Component {
 	}
 
 	/**
-	 * Close the media modal after an action
+	 * Close the media modal after an action.
 	 *
 	 * @since 4.3
 	 */
 	closeMediaModal() {
-		let mediaModal = document.querySelector(".media-modal");
+		const mediaModal = document.querySelector(".media-modal");
 		if (mediaModal) {
-			let closeBtn = mediaModal.querySelector("button.media-modal-close");
+			const closeBtn = mediaModal.querySelector("button.media-modal-close");
 			if (!closeBtn) {
 				return false;
 			}
 			closeBtn.click();
 		}
+	}
+
+	/**
+	 * Handles adding attribution for images.
+	 *
+	 * @param {Element} e The target element.
+	 * @since 4.5
+	 */
+	addAttribution(e){
+		e.preventDefault();
+		const self = this;
+		this.captionRef.current.value = this.attribution;
+		this.setState({
+			caption: self.attribution,
+		});
 	}
 
 	render() {
@@ -544,19 +578,15 @@ class Photo extends React.Component {
 						<div className="user-controls">
 							<a
 								className="user fade"
-								href={
-									"https://unsplash.com/@" +
-									this.user +
-									"?utm_source=wordpress-instant-images&utm_medium=referral"
-								}
+								href={this.user_url}
 								target="_blank"
-								title={this.view_all + " @" + this.user}
+								title={this.provider === 'unsplash' ? `${this.view_all} @ ${this.user}` : `${this.view_all} ${this.name}`}
 							>
 								<div className="user-wrap">
 									{this.user_photo.length > 0 && (
 										<img src={this.user_photo} />
 									)}
-									{this.user}
+									{this.provider === 'unsplash' ? this.user : this.name}
 								</div>
 							</a>
 							<div className="photo-options">
@@ -639,7 +669,7 @@ class Photo extends React.Component {
 							<a
 								className="tooltip--above"
 								href={this.link}
-								data-title={instant_img_localize.view_on_unsplash}
+								data-title={this.provider === 'unsplash' ? instant_img_localize.view_on_unsplash : instant_img_localize.view_on_pixabay}
 								onMouseEnter={(e) => this.showTooltip(e)}
 								onMouseLeave={(e) => this.hideTooltip(e)}
 								target="_blank"
@@ -649,7 +679,7 @@ class Photo extends React.Component {
 									aria-hidden="true"
 								></i>
 								<span className="offscreen">
-									{instant_img_localize.view_on_unsplash}
+									{this.provider === 'unsplash' ? instant_img_localize.view_on_unsplash : instant_img_localize.view_on_pixabay}
 								</span>
 							</a>
 						</div>
@@ -657,10 +687,13 @@ class Photo extends React.Component {
 
 					<div className="edit-screen" tabIndex="0">
 						<div className="edit-screen--title">
-							<p className="heading">
-								{instant_img_localize.edit_details}
-							</p>
-							<p>{instant_img_localize.edit_details_intro}.</p>
+							<div>
+								<p className="heading">
+									{instant_img_localize.edit_details}
+								</p>
+								<p>{instant_img_localize.edit_details_intro}</p>
+							</div>
+							<div className="preview" style={{backgroundImage: `url(${this.thumb})`}}></div>
 						</div>
 						<label>
 							<span>{instant_img_localize.edit_filename}:</span>
@@ -698,13 +731,19 @@ class Photo extends React.Component {
 						<label>
 							<span>{instant_img_localize.edit_caption}:</span>
 							<textarea
-								rows="3"
+								rows="4"
 								name="caption"
 								data-original=""
 								onChange={(e) => this.handleEditChange(e)}
 								value={this.state.caption || ""}
+								ref={this.captionRef}
 							></textarea>
 						</label>
+						<div className="add-attribution-row">
+							<button onClick={(e) => this.addAttribution(e)} type="button">
+								{instant_img_localize.attribution}
+							</button>
+						</div>
 						<div className="edit-screen--controls">
 							<button
 								type="button"

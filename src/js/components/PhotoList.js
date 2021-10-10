@@ -1,20 +1,49 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import ReactDOMServer from "react-dom/server";
 import Masonry from "masonry-layout";
 const imagesLoaded = require("imagesloaded");
 import Photo from "./Photo";
 import ResultsToolTip from "./ResultsToolTip";
 import API from "./API";
 
+/**
+ * Access the results of different providers.
+ * Unsplash and Pixabay return results in different object formats.
+ *
+ * @param  {string}  provider  The current service provider.
+ * @param  {string}  key       The match key to access.
+ * @param  {Array}   data      The photo array.
+ * @param  {Boolean} is_search Is this a search request.
+ * @return {Array} 				 The photos as an array.
+ */
+function accessResults(provider, key, data, is_search){
+	if(provider === 'unsplash'){
+		if(is_search){
+			return data[key] || [];
+		} else {
+			return data || [];
+		}
+	}
+	if(provider === 'pixabay'){
+		return data[key] || [];
+	}
+}
+
 class PhotoList extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.results = this.props.results ? this.props.results : [];
+		// Get current provider settings.
+		this.provider = this.props.provider; // Unsplash, Pixabay, etc.
+		this.api_provider = API[this.provider]; // The API settings for the provider.
+		this.arr_key = this.api_provider.arr_key;
+		this.order_key = this.api_provider.order_key;
+
+		this.api_url = `${this.api_provider.photo_api}${this.api_provider.app_id}${API.posts_per_page}`;
+		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.app_id}${API.posts_per_page}`;
+
+		this.results = accessResults(this.provider, this.arr_key, this.props.results);
 		this.state = { results: this.results };
 
-		this.service = this.props.service; // Unsplash, Pixabay, etc.
 		this.orderby = this.props.orderby; // Orderby
 		this.page = this.props.page; // Page
 
@@ -29,6 +58,8 @@ class PhotoList extends React.Component {
 		this.errorMsg = "";
 		this.msnry = "";
 		this.tooltipInterval = "";
+		this.photoSearch = React.createRef();
+		this.buttonLatest = React.createRef();
 
 		this.editor = this.props.editor ? this.props.editor : "classic";
 		this.is_block_editor = this.props.editor === "gutenberg" ? true : false;
@@ -62,12 +93,12 @@ class PhotoList extends React.Component {
 	 * @since 3.2
 	 */
 	test() {
-		let self = this;
+		const self = this;
 
-		let target = this.container.querySelector(".error-messaging"); // Target element
+		const target = this.container.querySelector(".error-messaging"); // Target element
 
-		let testURL = instant_img_localize.root + "instant-images/test/"; // REST Route
-		var restAPITest = new XMLHttpRequest();
+		const testURL = instant_img_localize.root + "instant-images/test/"; // REST Route
+		const restAPITest = new XMLHttpRequest();
 		restAPITest.open("POST", testURL, true);
 		restAPITest.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
 		restAPITest.setRequestHeader("Content-Type", "application/json");
@@ -77,8 +108,8 @@ class PhotoList extends React.Component {
 			if (restAPITest.status >= 200 && restAPITest.status < 400) {
 				// Success
 
-				let response = JSON.parse(restAPITest.response);
-				let success = response.success;
+				const response = JSON.parse(restAPITest.response);
+				const success = response.success;
 
 				if (!success) {
 					self.renderTestError(target);
@@ -110,8 +141,9 @@ class PhotoList extends React.Component {
 	 */
 	search(event) {
 		event.preventDefault();
-		let input = this.container.querySelector("#photo-search");
-		let term = input.value;
+
+		const input = this.photoSearch.current;
+		const term = input.value;
 
 		if (term.length > 2) {
 			input.classList.add("searching");
@@ -182,58 +214,60 @@ class PhotoList extends React.Component {
 	 * @updated 3.1
 	 */
 	doSearch(term) {
-		let self = this;
+		const self = this;
+		const input = this.photoSearch.current;
 		let type = "term";
 		this.page = 1; // reset page num
 
-		let url = `${API.search_api}${API.app_id}${API.posts_per_page}&page=${this.page}&query=${this.search_term}`;
+		let url = `${this.search_api_url}&page=${this.page}&${this.api_provider.search_query_var}=${this.search_term}`;
 
 		if (this.hasOrientation()) {
 			// Set orientation
 			url = `${url}&orientation=${this.orientation}`;
 		}
 
-		// Search by ID
-		// allow users to search by photo by prepending id:{photo_id} to search terms
-		let search_type = term.substring(0, 3);
+		// Search by ID.
+		// Allow users to search by photo by prepending id:{photo_id} to search terms.
+		const search_type = term.substring(0, 3);
 		if (search_type === "id:") {
 			type = "id";
 			term = term.replace("id:", "");
-			url = `${API.photo_api}/${term}${API.app_id}`;
+			url = `${this.api_provider.photo_api}/${term}${API.app_id}`;
 		}
-
-		let input = this.container.querySelector("#photo-search");
 
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
-				// Term Search
+
+				const results = accessResults(self.provider, self.arr_key, data, true);
+
+				// Search term.
 				if (type === "term") {
+
 					self.total_results = data.total;
 
-					// Check for returned data
-					self.checkTotalResults(data.results.length);
+					// Check for returned data.
+					self.checkTotalResults(results.length);
 
-					// Update Props
-					self.results = data.results;
+					// Update Props.
+					self.results = results;
 					self.setState({ results: self.results });
+					console.log('results', self.results);
 				}
 
-				// Search by photo ID
+				// Search by photo ID.
 				if (type === "id" && data) {
-					// Convert return data to array
+					// Convert return data to array.
 					let photoArray = [];
 
 					if (data.errors) {
-						// If error was returned
-
+						// If error was returned.
 						self.total_results = 0;
 						self.checkTotalResults("0");
+
 					} else {
 						// No errors, display results
-
 						photoArray.push(data);
-
 						self.total_results = 1;
 						self.checkTotalResults("1");
 					}
@@ -256,7 +290,7 @@ class PhotoList extends React.Component {
 	 * @since 3.0
 	 */
 	clearSearch() {
-		let input = this.container.querySelector("#photo-search");
+		const input = this.photoSearch.current;
 		input.value = "";
 		this.total_results = 0;
 		this.is_search = false;
@@ -265,20 +299,21 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * Load next set of photos, infinite scroll style.
+	 * Load next set of photos in infinite scroll style.
 	 *
 	 * @since 3.0
 	 */
-	getPhotos() {
-		let self = this;
+	loadMorePhotos() {
+		const self = this;
 		this.page = parseInt(this.page) + 1;
 		this.container.classList.add("loading");
 		this.isLoading = true;
 
-		let url = `${API.photo_api}${API.app_id}${API.posts_per_page}&page=${this.page}&order_by=${this.orderby}`;
+		let url = `${this.api_url}&page=${this.page}&${this.order_key}=${this.orderby}`;
 
 		if (this.is_search) {
-			url = `${API.search_api}${API.app_id}${API.posts_per_page}&page=${this.page}&query=${this.search_term}`;
+			url = `${this.api_url}&page=${this.page}&${this.api_provider.search_query_var}=${this.search_term}`;
+
 			if (this.hasOrientation()) {
 				// Set orientation
 				url = `${url}&orientation=${this.orientation}`;
@@ -288,12 +323,18 @@ class PhotoList extends React.Component {
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
-				if (self.is_search) {
-					data = data.results; // Search results are recieved in different JSON format
+
+				console.log(data);
+
+				let moreResults = accessResults(self.provider, self.arr_key, data);
+
+				// Unsplash search results are recieved in different JSON format
+				if (self.is_search && self.provider === 'unsplash') {
+					moreResults = data.results;
 				}
 
 				// Loop results, push items into array
-				data.map((data) => {
+				moreResults && moreResults.map((data) => {
 					self.results.push(data);
 				});
 
@@ -312,39 +353,69 @@ class PhotoList extends React.Component {
 	/**
 	 * Toogles the photo view (New/Popular/Old).
 	 *
-	 * @param view   string    Current view
-	 * @param e      element   Clicked element
+	 * @param {string}  view  Current view.
+	 * @param {Element} e     The clicked element.
+	 * @param {Boolean} reset Is this an app reset.
 	 * @since 3.0
 	 */
-	togglePhotoList(view, e) {
-		let el = e.target;
-		if (el.classList.contains("active")) return false; // exit if active
+	togglePhotoList(view, e, reset = false) {
+		const self = this;
+		const el = e.target || e;
+
+		if (el.classList.contains("active") && !reset) {
+			return; // exit if active
+		}
 
 		el.classList.add("loading"); // Add class to nav btn
 		this.isLoading = true;
-		let self = this;
 		this.page = 1;
 		this.orderby = view;
 		this.results = [];
 		this.clearSearch();
 
-		let url = `${API.photo_api}${API.app_id}${API.posts_per_page}&page=${this.page}&order_by=${this.orderby}`;
+		const url = `${this.api_url}&page=${this.page}&${this.order_key}=${this.orderby}`;
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
+
+				const results = accessResults(self.provider, self.arr_key, data);
+
 				// Check for returned data
-				self.checkTotalResults(data.length);
+				self.checkTotalResults(results.length);
 
-				// Update Props
-				self.results = data;
-				self.setState({ results: data });
+				// Update Props.
+				self.results = results;
 
-				el.classList.remove("loading"); // Remove class from nav btn
+				// Set results state.
+				self.setState({ results: results });
+
+				// Remove class from nav btn.
+				el.classList.remove("loading");
 			})
 			.catch(function (error) {
 				console.log(error);
 				self.isLoading = false;
 			});
+	}
+
+
+	switchProvider () {
+		if(this.provider === 'pixabay'){
+			this.provider = 'unsplash';
+		} else {
+			this.provider = 'pixabay';
+		}
+
+		this.api_provider = API[this.provider]; // The API settings for the provider.
+		this.arr_key = this.api_provider.arr_key;
+		this.order_key = this.api_provider.order_key;
+
+		this.api_url = `${this.api_provider.photo_api}${this.api_provider.app_id}${API.posts_per_page}`;
+		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.app_id}${API.posts_per_page}`;
+		console.log(this.buttonLatest.current);
+
+		this.togglePhotoList('latest', this.buttonLatest.current, true);
+
 	}
 
 	/**
@@ -356,8 +427,8 @@ class PhotoList extends React.Component {
 		if (this.is_block_editor) {
 			return false;
 		}
-		let self = this;
-		let photoListWrapper = self.container.querySelector(".photo-target");
+		const self = this;
+		const photoListWrapper = self.container.querySelector(".photo-target");
 		imagesLoaded(photoListWrapper, function () {
 			self.msnry = new Masonry(photoListWrapper, {
 				itemSelector: ".photo",
@@ -378,7 +449,7 @@ class PhotoList extends React.Component {
 		let scrollTop = window.pageYOffset;
 		let scrollH = document.body.scrollHeight - 400;
 		if (wHeight + scrollTop >= scrollH && !this.isLoading && !this.isDone) {
-			this.getPhotos();
+			this.loadMorePhotos();
 		}
 	}
 
@@ -484,7 +555,7 @@ class PhotoList extends React.Component {
 		if (this.is_block_editor || this.is_media_router) {
 			// Gutenberg || Media Popup
 			this.page = 0;
-			this.getPhotos();
+			this.loadMorePhotos();
 		} else {
 			// Add scroll event
 			window.addEventListener("scroll", () => this.onScroll());
@@ -498,13 +569,17 @@ class PhotoList extends React.Component {
 			: { display: "none" };
 
 		return (
-			<div id="photo-listing" className={this.service}>
+			<div id="photo-listing" className={this.provider}>
+			<button onClick={(e)=> this.switchProvider('unsplash')}>Unsplash</button>
+			<button onClick={(e)=> this.switchProvider('pixabay')}>Pixabay</button>
+
 				<ul className="control-nav">
 					<li>
 						<button
 							type="button"
 							className="latest"
 							onClick={(e) => this.togglePhotoList("latest", e)}
+							ref={this.buttonLatest}
 						>
 							{instant_img_localize.latest}
 						</button>
@@ -518,15 +593,17 @@ class PhotoList extends React.Component {
 							{instant_img_localize.popular}
 						</button>
 					</li>
-					<li>
-						<button
-							type="button"
-							className="oldest"
-							onClick={(e) => this.togglePhotoList("oldest", e)}
-						>
-							{instant_img_localize.oldest}
-						</button>
-					</li>
+					{this.provider === 'unsplash' && (
+						<li>
+							<button
+								type="button"
+								className="oldest"
+								onClick={(e) => this.togglePhotoList("oldest", e)}
+							>
+								{instant_img_localize.oldest}
+							</button>
+						</li>
+					)}
 					<li className="search-field" id="search-bar">
 						<form onSubmit={(e) => this.search(e)} autoComplete="off">
 							<label htmlFor="photo-search" className="offscreen">
@@ -536,6 +613,7 @@ class PhotoList extends React.Component {
 								type="search"
 								id="photo-search"
 								placeholder={instant_img_localize.search}
+								ref={this.photoSearch}
 							/>
 							<button type="submit" id="photo-search-submit">
 								<i className="fa fa-search"></i>
@@ -591,6 +669,7 @@ class PhotoList extends React.Component {
 				<div id="photos" className="photo-target">
 					{this.state.results.map((result, iterator) => (
 						<Photo
+							provider={this.provider}
 							result={result}
 							key={result.id + iterator}
 							editor={this.editor}
@@ -622,7 +701,7 @@ class PhotoList extends React.Component {
 					<button
 						type="button"
 						className="button"
-						onClick={() => this.getPhotos()}
+						onClick={() => this.loadMorePhotos()}
 					>
 						{instant_img_localize.load_more}
 					</button>

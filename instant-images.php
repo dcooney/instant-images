@@ -14,6 +14,21 @@
  * @package InstantImages
  */
 
+/*
+
+NEW: Added button to auto-generate Photo attribution in image caption.
+UPDATE: Updated styling and fucntionality of photo detail editor.
+
+TODO:
+- Pixabay API Key Option
+- Add search [DONE]
+	- Search By ID
+
+- Fix reset (switchProvider) function.
+	- This is not working because of react state
+
+*/
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -196,12 +211,15 @@ class InstantImages {
 				'latest'                  => __( 'New', 'instant-images' ),
 				'oldest'                  => __( 'Oldest', 'instant-images' ),
 				'popular'                 => __( 'Popular', 'instant-images' ),
+				'views'                   => __( 'Views', 'instant-images' ),
+				'downloads'               => __( 'Downloads', 'instant-images' ),
 				'load_more'               => __( 'Load More Images', 'instant-images' ),
 				'search'                  => __( 'Search for Toronto + Coffee etc...', 'instant-images' ),
 				'search_label'            => __( 'Search', 'instant-images' ),
 				'search_results'          => __( 'images found for', 'instant-images' ),
 				'clear_search'            => __( 'Clear Search Results', 'instant-images' ),
 				'view_on_unsplash'        => __( 'View on Unsplash', 'instant-images' ),
+				'view_on_pixabay'         => __( 'View on Pixabay', 'instant-images' ),
 				'set_as_featured'         => __( 'Set as Featured Image', 'instant-images' ),
 				'insert_into_post'        => __( 'Insert Into Post', 'instant-images' ),
 				'edit_filename'           => __( 'Filename', 'instant-images' ),
@@ -210,7 +228,7 @@ class InstantImages {
 				'edit_caption'            => __( 'Caption', 'instant-images' ),
 				'edit_upload'             => __( 'Edit Attachment Details', 'instant-images' ),
 				'edit_details'            => __( 'Edit Image Details', 'instant-images' ),
-				'edit_details_intro'      => __( 'Update and save image details prior to uploading', 'instant-images' ),
+				'edit_details_intro'      => __( 'Update image details prior to uploading.', 'instant-images' ),
 				'cancel'                  => __( 'Cancel', 'instant-images' ),
 				'save'                    => __( 'Save', 'instant-images' ),
 				'upload_now'              => __( 'Upload', 'instant-images' ),
@@ -218,6 +236,7 @@ class InstantImages {
 				'landscape'               => __( 'Landscape', 'instant-images' ),
 				'portrait'                => __( 'Portrait', 'instant-images' ),
 				'squarish'                => __( 'Squarish', 'instant-images' ),
+				'attribution'             => __( 'Add Photo Attribution', 'instant-images' ),
 			)
 		);
 	}
