@@ -11,7 +11,7 @@
    "author": "",
    "license": "ISC",
    "dependencies": {
-      "axios": ">=0.21.2",
+      "axios": "^0.21.2",
       "classnames": "^2.2.6",
       "es6-promise": "^4.1.1",
       "imagesloaded": "^4.1.3",
