@@ -5,7 +5,6 @@ import API from "./constants/API";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 require("./functions/helpers");
-
 const provider = "unsplash";
 
 /**
@@ -15,9 +14,8 @@ const provider = "unsplash";
  * @param {string} orderby  The default order.
  * @param {string} provider The current service provider.
  */
-const GetPhotos = (page = 1, orderby = "latest", provider = "unsplash") => {
+function GetPhotos(page = 1, orderby = "latest", provider = "unsplash") {
 	const container = document.querySelector(".instant-img-container");
-
 	const start = `${API[provider].photo_api}${API[provider].app_id}`;
 	const url = `${start}${API.posts_per_page}&page=${page}&${API[provider].order_key}=${orderby}`;
 
@@ -33,6 +31,7 @@ const GetPhotos = (page = 1, orderby = "latest", provider = "unsplash") => {
 			.then((data) => data.json())
 			.then(function (data) {
 				const element = document.getElementById("app");
+				console.log(element);
 				ReactDOM.render(
 					<PhotoList
 						container={element}
@@ -50,6 +49,6 @@ const GetPhotos = (page = 1, orderby = "latest", provider = "unsplash") => {
 			});
 	}
 	initialize();
-};
+}
 
 GetPhotos(1, "latest", provider);

@@ -1,7 +1,7 @@
-import Icon from "../icon";
-import SetFeaturedImage from "../setFeaturedImage";
-import InsertImage from "../insertImage";
 import PhotoList from "../../../components/PhotoList";
+import Icon from "../icon";
+import InsertImage from "../insertImage";
+import SetFeaturedImage from "../setFeaturedImage";
 const { PluginSidebar } = wp.editPost;
 
 const Unsplash = () => (
@@ -15,7 +15,7 @@ const Unsplash = () => (
 				editor="gutenberg"
 				page="1"
 				orderby="latest"
-				service="unsplash"
+				provider="unsplash"
 				SetFeaturedImage={SetFeaturedImage}
 				InsertImage={InsertImage}
 			/>

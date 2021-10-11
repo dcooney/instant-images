@@ -23,12 +23,17 @@ TODO:
 - Add search [DONE]
 	- Search By ID
 
+- Search - Load More not working. [ DONE]
+
 - Fix reset (switchProvider) function.
 	- This is not working because of react state
 
 - Default Provider
   - Add setting for setting a default provider (Unsplash/Pixabay)
 
+- Gutenberg
+- Modals
+	- Confirm everything works in all instances.
 
 */
 

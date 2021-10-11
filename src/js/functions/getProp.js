@@ -1,105 +1,103 @@
 /**
- * Get props from API results.
+ * Get props per provider from API results.
  *
  * @param {string} provider  The current service provider.
  * @param {object} result    The photo object.
  * @param {string} attribute The attribute to match.
  * @return {string}          The value as a string.
  */
-export default function getProp(provider, result, attribute){
-	let value = ''
-	switch(attribute){
-
-		case 'thumb' :
-			if(provider === 'pixabay'){
+export default function getProp(provider, result, attribute) {
+	let value = "";
+	switch (attribute) {
+		case "thumb":
+			if (provider === "pixabay") {
 				value = result.previewURL;
 			}
-			if(provider === 'unsplash'){
+			if (provider === "unsplash") {
 				value = result.urls.thumb;
 			}
-		break;
+			break;
 
-		case 'img':
-			if(provider === 'pixabay'){
+		case "img":
+			if (provider === "pixabay") {
 				value = result.webformatURL;
 			}
-			if(provider === 'unsplash'){
+			if (provider === "unsplash") {
 				value = result.urls.small;
 			}
-		break;
+			break;
 
-		case 'full_size':
-			if(provider === 'pixabay'){
+		case "full_size":
+			if (provider === "pixabay") {
 				value = result.largeImageURL;
 			}
-			if(provider === 'unsplash'){
+			if (provider === "unsplash") {
 				value = result.urls.full;
 			}
-		break;
+			break;
 
-		case 'author':
-			if(provider === 'pixabay'){
+		case "author":
+			if (provider === "pixabay") {
 				value = result.user;
 			}
-			if(provider === 'unsplash'){
+			if (provider === "unsplash") {
 				value = result.user.name;
 			}
-		break;
+			break;
 
-		case 'user':
-			if(provider === 'pixabay'){
+		case "user":
+			if (provider === "pixabay") {
 				value = result.user_id;
 			}
-			if(provider === 'unsplash'){
+			if (provider === "unsplash") {
 				value = result.user.username;
 			}
-		break;
+			break;
 
-		case 'name':
-			if(provider === 'pixabay'){
+		case "name":
+			if (provider === "pixabay") {
 				value = result.user;
 			}
-			if(provider === 'unsplash'){
+			if (provider === "unsplash") {
 				value = result.user.name;
 			}
-		break;
+			break;
 
-		case 'user_photo':
-			if(provider === 'pixabay'){
+		case "user_photo":
+			if (provider === "pixabay") {
 				value = result.userImageURL;
 			}
-			if(provider === 'unsplash'){
+			if (provider === "unsplash") {
 				value = result.user.profile_image.small;
 			}
-		break;
+			break;
 
-		case 'user_url':
-			if(provider === 'pixabay'){
-				value = `https://pixabay.com/users/${result.user}-${result.user_id}/`
+		case "user_url":
+			if (provider === "pixabay") {
+				value = `https://pixabay.com/users/${result.user}-${result.user_id}/`;
 			}
-			if(provider === 'unsplash'){
-				value = `https://unsplash.com/@${result.user.username}?utm_source=wordpress-instant-images&utm_medium=referral`
+			if (provider === "unsplash") {
+				value = `https://unsplash.com/@${result.user.username}?utm_source=wordpress-instant-images&utm_medium=referral`;
 			}
-		break;
+			break;
 
-		case 'link':
-			if(provider === 'pixabay'){
+		case "link":
+			if (provider === "pixabay") {
 				value = result.pageURL;
 			}
-			if(provider === 'unsplash'){
-				value =result.links.html;
+			if (provider === "unsplash") {
+				value = result.links.html;
 			}
-		break;
+			break;
 
-		case 'likes':
-			if(provider === 'pixabay'){
+		case "likes":
+			if (provider === "pixabay") {
 				value = result.likes;
 			}
-			if(provider === 'unsplash'){
+			if (provider === "unsplash") {
 				value = result.likes;
 			}
-		break;
-
+			break;
 	}
 
 	return value;

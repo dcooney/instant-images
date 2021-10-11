@@ -1,7 +1,9 @@
 import Masonry from "masonry-layout";
 import React from "react";
 import API from "../constants/API";
-import getResults from "../functions/getResults";
+import getResults, { getResultById } from "../functions/getResults";
+import searchByID from "../functions/searchByID";
+import NoResults from "./NoResults";
 import Orientation from "./Orientation";
 import Photo from "./Photo";
 import ResultsToolTip from "./ResultsToolTip";
@@ -12,6 +14,7 @@ class PhotoList extends React.Component {
 		super(props);
 
 		// Get current provider settings.
+		this.providers = ["Unsplash", "Pixabay"];
 		this.provider = this.props.provider; // Unsplash, Pixabay, etc.
 		this.api_provider = API[this.provider]; // The API settings for the provider.
 		this.arr_key = this.api_provider.arr_key;
@@ -212,19 +215,29 @@ class PhotoList extends React.Component {
 		// Search by ID.
 		// Allow users to search by photo by prepending id:{photo_id} to search terms.
 		const search_type = term.substring(0, 3);
+
 		if (search_type === "id:") {
 			type = "id";
 			term = term.replace("id:", "");
-			url = `${this.api_provider.photo_api}/${term}${API.app_id}`;
+			url = searchByID(
+				this.provider,
+				term,
+				this.api_provider.photo_api,
+				this.api_provider.app_id
+			);
 		}
 
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
-				const results = getResults(self.provider, self.arr_key, data, true);
-
 				// Search term.
 				if (type === "term") {
+					const results = getResults(
+						self.provider,
+						self.arr_key,
+						data,
+						true
+					);
 					self.total_results = data.total;
 
 					// Check for returned data.
@@ -233,21 +246,30 @@ class PhotoList extends React.Component {
 					// Update Props.
 					self.results = results;
 					self.setState({ results: self.results });
-					console.log("results", self.results);
 				}
 
-				// Search by photo ID.
+				// Search by ID.
 				if (type === "id" && data) {
 					// Convert return data to array.
-					let photoArray = [];
+					const photoArray = [];
+
+					const result = getResultById(
+						self.provider,
+						self.arr_key,
+						data,
+						true
+					);
+
+					// Data comes back differently in a search by ID.
+					// Need to parse it for unsplash and pixabay separatly.
 
 					if (data.errors) {
-						// If error was returned.
+						// If error was returned (Unsplash Only).
 						self.total_results = 0;
 						self.checkTotalResults("0");
 					} else {
 						// No errors, display results
-						photoArray.push(data);
+						photoArray.push(result);
 						self.total_results = 1;
 						self.checkTotalResults("1");
 					}
@@ -260,7 +282,16 @@ class PhotoList extends React.Component {
 			})
 			.catch(function (error) {
 				console.log(error);
+
+				// Error, reset all search parameters.
+				input.classList.remove("searching");
 				self.isLoading = false;
+				self.total_results = 0;
+				self.isDone = true;
+
+				// Update Props.
+				self.results = [];
+				self.setState({ results: self.results });
 			});
 	}
 
@@ -292,7 +323,7 @@ class PhotoList extends React.Component {
 		let url = `${this.api_url}&page=${this.page}&${this.order_key}=${this.orderby}`;
 
 		if (this.is_search) {
-			url = `${this.api_url}&page=${this.page}&${this.api_provider.search_query_var}=${this.search_term}`;
+			url = `${this.search_api_url}&page=${this.page}&${this.api_provider.search_query_var}=${this.search_term}`;
 
 			if (this.hasOrientation()) {
 				// Set orientation
@@ -303,9 +334,12 @@ class PhotoList extends React.Component {
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
-				console.log(data);
-
-				let moreResults = getResults(self.provider, self.arr_key, data);
+				let moreResults = getResults(
+					self.provider,
+					self.arr_key,
+					data,
+					self.is_search
+				);
 
 				// Unsplash search results are recieved in different JSON format
 				if (self.is_search && self.provider === "unsplash") {
@@ -377,20 +411,37 @@ class PhotoList extends React.Component {
 			});
 	}
 
-	switchProvider() {
-		if (this.provider === "pixabay") {
-			this.provider = "unsplash";
-		} else {
-			this.provider = "pixabay";
+	/**
+	 * Toggle the service provider.
+	 *
+	 * @param {Event} e The clicked element event.
+	 */
+	switchProvider(e) {
+		const target = e.currentTarget;
+		const parent = target.parentNode;
+		const provider = target.dataset.provider;
+		if (provider === this.provider) {
+			return false;
 		}
 
-		this.api_provider = API[this.provider]; // The API settings for the provider.
+		console.log(provider);
+
+		this.provider = provider;
+
+		// Remove active from buttons.
+		parent.querySelectorAll("button").forEach((button) => {
+			button.classList.remove("active");
+		});
+
+		// Select active button.
+		target.classList.add("active");
+
+		this.api_provider = API[this.provider];
 		this.arr_key = this.api_provider.arr_key;
 		this.order_key = this.api_provider.order_key;
 
 		this.api_url = `${this.api_provider.photo_api}${this.api_provider.app_id}${API.posts_per_page}`;
 		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.app_id}${API.posts_per_page}`;
-		console.log(this.buttonLatest.current);
 
 		this.togglePhotoList("latest", this.buttonLatest.current, true);
 	}
@@ -446,7 +497,7 @@ class PhotoList extends React.Component {
 	 * @since 3.0
 	 */
 	setActiveState() {
-		let self = this;
+		const self = this;
 		// Remove .active class
 		[...this.container.querySelectorAll(".control-nav button")].forEach(
 			(el) => el.classList.remove("active")
@@ -454,10 +505,12 @@ class PhotoList extends React.Component {
 
 		// Set active item, if not search
 		if (!this.is_search) {
-			let active = this.container.querySelector(
-				`.control-nav li button.${this.orderby}`
+			const active = this.container.querySelector(
+				`.control-nav li button.instant-images-${this.orderby}`
 			);
-			active.classList.add("active");
+			if (active) {
+				active.classList.add("active");
+			}
 		}
 		setTimeout(function () {
 			self.isLoading = false;
@@ -542,73 +595,64 @@ class PhotoList extends React.Component {
 	render() {
 		return (
 			<div id="photo-listing" className={this.provider}>
-				<button onClick={(e) => this.switchProvider("unsplash")}>
-					Unsplash
-				</button>
-				<button onClick={(e) => this.switchProvider("pixabay")}>
-					Pixabay
-				</button>
-
-				<ul className="control-nav">
-					<li>
-						<button
-							type="button"
-							className="latest"
-							onClick={(e) => this.togglePhotoList("latest", e)}
-							ref={this.buttonLatest}
-						>
-							{instant_img_localize.latest}
-						</button>
-					</li>
-					<li id="nav-target">
-						<button
-							type="button"
-							className="popular"
-							onClick={(e) => this.togglePhotoList("popular", e)}
-						>
-							{instant_img_localize.popular}
-						</button>
-					</li>
-					{this.provider === "unsplash" && (
-						<li>
+				{this.providers && (
+					<nav className="provider-nav">
+						{this.providers.map((provider, iterator) => (
 							<button
-								type="button"
-								className="oldest"
-								onClick={(e) => this.togglePhotoList("oldest", e)}
+								key={`provider-${iterator}`}
+								data-provider={provider.toLowerCase()}
+								onClick={(e) => this.switchProvider(e)}
 							>
-								{instant_img_localize.oldest}
+								{provider}
 							</button>
+						))}
+					</nav>
+				)}
+				{this.api_provider.order && (
+					<ul className="control-nav">
+						{this.api_provider.order.map((order, iterator) => (
+							<li key={`${this.provider}-order-${iterator}`}>
+								<button
+									type="button"
+									className={`instant-images-${order}`}
+									onClick={(e) => this.togglePhotoList(order, e)}
+									ref={order === "latest" ? this.buttonLatest : null}
+								>
+									{instant_img_localize[order]}
+								</button>
+							</li>
+						))}
+						<li className="search-field" id="search-bar">
+							<form onSubmit={(e) => this.search(e)} autoComplete="off">
+								<label htmlFor="photo-search" className="offscreen">
+									{instant_img_localize.search_label}
+								</label>
+								<input
+									type="search"
+									id="photo-search"
+									placeholder={instant_img_localize.search}
+									ref={this.photoSearch}
+								/>
+								<button type="submit" id="photo-search-submit">
+									<i className="fa fa-search"></i>
+								</button>
+								<ResultsToolTip
+									container={this.container}
+									buttonLatest={this.buttonLatest}
+									isSearch={this.is_search}
+									total={this.total_results}
+									title={
+										this.total_results +
+										" " +
+										instant_img_localize.search_results +
+										" " +
+										this.search_term
+									}
+								/>
+							</form>
 						</li>
-					)}
-					<li className="search-field" id="search-bar">
-						<form onSubmit={(e) => this.search(e)} autoComplete="off">
-							<label htmlFor="photo-search" className="offscreen">
-								{instant_img_localize.search_label}
-							</label>
-							<input
-								type="search"
-								id="photo-search"
-								placeholder={instant_img_localize.search}
-								ref={this.photoSearch}
-							/>
-							<button type="submit" id="photo-search-submit">
-								<i className="fa fa-search"></i>
-							</button>
-							<ResultsToolTip
-								container={this.container}
-								isSearch={this.is_search}
-								total={this.total_results}
-								title={
-									this.total_results +
-									" " +
-									instant_img_localize.search_results +
-									" " +
-									this.search_term
-								}
-							/>
-						</form>
-					</li>
-				</ul>
+					</ul>
+				)}
 
 				<div className="error-messaging"></div>
 
@@ -636,17 +680,9 @@ class PhotoList extends React.Component {
 					))}
 				</div>
 
-				<div
-					className={
-						this.total_results == 0 && this.is_search === true
-							? "no-results show"
-							: "no-results"
-					}
-					title={this.props.title}
-				>
-					<h3>{instant_img_localize.no_results} </h3>
-					<p>{instant_img_localize.no_results_desc} </p>
-				</div>
+				{this.total_results == 0 && this.is_search === true && (
+					<NoResults />
+				)}
 
 				<div className="loading-block" />
 
@@ -660,7 +696,7 @@ class PhotoList extends React.Component {
 					</button>
 				</div>
 
-				<div id="tooltip">Meow</div>
+				<div id="tooltip"></div>
 			</div>
 		);
 	}

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import API from "../constants/API";
+import generateAttribution from "../functions/generateAttribution.js";
 import getProp from "../functions/getProp";
 
 class Photo extends React.Component {
@@ -29,7 +30,11 @@ class Photo extends React.Component {
 		this.user_url = getProp(this.provider, result, "user_url");
 		this.link = getProp(this.provider, result, "link");
 		this.likes = getProp(this.provider, result, "likes");
-		this.attribution = `${instant_img_localize.photo_by} <a href="https://unsplash.com/@${this.user}?utm_source=wordpress-instant-images&utm_medium=referral">${this.name}</a> on <a href="https://unsplash.com/?utm_source=wordpress-instant-images&utm_medium=referral">Unsplash</a>`;
+		this.attribution = generateAttribution(
+			this.provider,
+			this.user_url,
+			this.name
+		);
 
 		this.view_all = instant_img_localize.view_all;
 		this.inProgress = false;
@@ -586,7 +591,7 @@ class Photo extends React.Component {
 								}
 							>
 								<div className="user-wrap">
-									{this.user_photo.length > 0 && (
+									{this.user_photo && this.user_photo.length > 0 && (
 										<img src={this.user_photo} />
 									)}
 									{this.provider === "unsplash"

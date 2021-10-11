@@ -487,8 +487,8 @@ body.media_page_instant-images #wpfooter p {
 
 .instant-img-container .control-nav li button {
   padding: 0 24px 0 2px;
-  height: 48px;
-  line-height: 48px;
+  height: 42px;
+  line-height: 42px;
   display: block;
   color: #999;
   text-decoration: none;
@@ -562,7 +562,7 @@ body.media_page_instant-images #wpfooter p {
 .instant-img-container .control-nav li.search-field .searchResults {
   position: absolute;
   right: 100.5%;
-  top: 7px;
+  top: 4px;
   width: auto;
   height: 34px;
   line-height: 34px;
@@ -651,8 +651,8 @@ body.media_page_instant-images #wpfooter p {
   padding: 0 10px 0 42px;
   border: 1px solid #e1e1e1;
   background-color: #f7f7f7 !important;
-  height: 46px;
-  line-height: 46px;
+  height: 42px;
+  line-height: 42px;
   -webkit-border-radius: 3px;
           border-radius: 3px;
   font-size: 16px;
@@ -676,10 +676,11 @@ body.media_page_instant-images #wpfooter p {
 
 .instant-img-container .control-nav li.search-field button {
   position: absolute;
-  left: -2px;
-  top: -1px;
-  width: 48px;
-  height: 48px;
+  left: 0;
+  top: 0;
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
   z-index: 1;
   border: none !important;
   background: transparent !important;
@@ -1726,13 +1727,9 @@ body.media_page_instant-images #wpfooter p {
 }
 
 .no-results {
-  display: none;
+  display: block;
   padding: 150px 100px;
   text-align: center;
-}
-
-.no-results.show {
-  display: block;
 }
 
 .no-results h3 {
@@ -1775,7 +1772,7 @@ body.media_page_instant-images #wpfooter p {
 }
 
 .orientation-list span i {
-  margin-right: 3px;
+  margin-right: 2px;
 }
 
 .orientation-list ul {
@@ -1841,6 +1838,63 @@ body.media_page_instant-images #wpfooter p {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.provider-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  width: calc(100% + 50px);
+  margin-left: -25px;
+  padding: 5px 25px;
+  border-bottom: 1px solid #efefef;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
+  background-color: #f7f7f7;
+}
+
+.provider-nav button {
+  padding: 10px 10px 10px 35px;
+  border: 1px solid transparent;
+  background: transparent;
+  margin-right: 5px;
+  cursor: pointer;
+  position: relative;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  font-size: 14px;
+  color: #999;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.provider-nav button:hover, .provider-nav button:focus {
+  color: #333;
+  border-color: #e1e1e1;
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);
+          box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);
+}
+
+.provider-nav button[data-provider="unsplash"] {
+  background: #f7f7f7 url(../img/unsplash.svg) no-repeat 10px center;
+  -webkit-background-size: 18px 18px;
+          background-size: 18px 18px;
+}
+
+.provider-nav button[data-provider="pixabay"] {
+  background: #f7f7f7 url(../img/pixabay.png) no-repeat 10px center;
+  -webkit-background-size: 20px 20px;
+          background-size: 20px 20px;
+}
+
+.provider-nav button.active {
+  background-color: #fff;
+  border-color: #e1e1e1;
+  color: #333;
+  cursor: default;
 }
 
 /*# sourceMappingURL=instant-images.css.map*/

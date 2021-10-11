@@ -3,12 +3,7 @@ import React from "react";
 class ResultsToolTip extends React.Component {
 	constructor(props) {
 		super(props);
-	}
-
-	resetSearch() {
-		let nav = this.props.container.querySelector(".control-nav");
-		let navItem = nav.querySelector("li button.latest");
-		navItem.click();
+		this.buttonLatest = this.props.buttonLatest;
 	}
 
 	render() {
@@ -22,7 +17,7 @@ class ResultsToolTip extends React.Component {
 				<button
 					type="button"
 					title={instant_img_localize.clear_search}
-					onClick={(e) => this.resetSearch()}
+					onClick={() => this.buttonLatest.current.click()}
 				>
 					x
 					<span className="offscreen">

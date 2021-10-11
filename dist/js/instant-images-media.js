@@ -115,24 +115,12 @@ var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "./node_mod
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
-var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/axios/lib/defaults.js");
-var Cancel = __webpack_require__(/*! ../cancel/Cancel */ "./node_modules/axios/lib/cancel/Cancel.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
     var requestData = config.data;
     var requestHeaders = config.headers;
     var responseType = config.responseType;
-    var onCanceled;
-    function done() {
-      if (config.cancelToken) {
-        config.cancelToken.unsubscribe(onCanceled);
-      }
-
-      if (config.signal) {
-        config.signal.removeEventListener('abort', onCanceled);
-      }
-    }
 
     if (utils.isFormData(requestData)) {
       delete requestHeaders['Content-Type']; // Let the browser set it
@@ -170,13 +158,7 @@ module.exports = function xhrAdapter(config) {
         request: request
       };
 
-      settle(function _resolve(value) {
-        resolve(value);
-        done();
-      }, function _reject(err) {
-        reject(err);
-        done();
-      }, response);
+      settle(resolve, reject, response);
 
       // Clean up request
       request = null;
@@ -230,14 +212,13 @@ module.exports = function xhrAdapter(config) {
     // Handle timeout
     request.ontimeout = function handleTimeout() {
       var timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
-      var transitional = config.transitional || defaults.transitional;
       if (config.timeoutErrorMessage) {
         timeoutErrorMessage = config.timeoutErrorMessage;
       }
       reject(createError(
         timeoutErrorMessage,
         config,
-        transitional.clarifyTimeoutError ? 'ETIMEDOUT' : 'ECONNABORTED',
+        config.transitional && config.transitional.clarifyTimeoutError ? 'ETIMEDOUT' : 'ECONNABORTED',
         request));
 
       // Clean up request
@@ -291,22 +272,18 @@ module.exports = function xhrAdapter(config) {
       request.upload.addEventListener('progress', config.onUploadProgress);
     }
 
-    if (config.cancelToken || config.signal) {
+    if (config.cancelToken) {
       // Handle cancellation
-      // eslint-disable-next-line func-names
-      onCanceled = function(cancel) {
+      config.cancelToken.promise.then(function onCanceled(cancel) {
         if (!request) {
           return;
         }
-        reject(!cancel || (cancel && cancel.type) ? new Cancel('canceled') : cancel);
-        request.abort();
-        request = null;
-      };
 
-      config.cancelToken && config.cancelToken.subscribe(onCanceled);
-      if (config.signal) {
-        config.signal.aborted ? onCanceled() : config.signal.addEventListener('abort', onCanceled);
-      }
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
     }
 
     if (!requestData) {
@@ -353,11 +330,6 @@ function createInstance(defaultConfig) {
   // Copy context to instance
   utils.extend(instance, context);
 
-  // Factory for creating new instances
-  instance.create = function create(instanceConfig) {
-    return createInstance(mergeConfig(defaultConfig, instanceConfig));
-  };
-
   return instance;
 }
 
@@ -367,11 +339,15 @@ var axios = createInstance(defaults);
 // Expose Axios class to allow class inheritance
 axios.Axios = Axios;
 
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+  return createInstance(mergeConfig(axios.defaults, instanceConfig));
+};
+
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "./node_modules/axios/lib/cancel/Cancel.js");
 axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "./node_modules/axios/lib/cancel/CancelToken.js");
 axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "./node_modules/axios/lib/cancel/isCancel.js");
-axios.VERSION = __webpack_require__(/*! ./env/data */ "./node_modules/axios/lib/env/data.js").version;
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -445,42 +421,11 @@ function CancelToken(executor) {
   }
 
   var resolvePromise;
-
   this.promise = new Promise(function promiseExecutor(resolve) {
     resolvePromise = resolve;
   });
 
   var token = this;
-
-  // eslint-disable-next-line func-names
-  this.promise.then(function(cancel) {
-    if (!token._listeners) return;
-
-    var i;
-    var l = token._listeners.length;
-
-    for (i = 0; i < l; i++) {
-      token._listeners[i](cancel);
-    }
-    token._listeners = null;
-  });
-
-  // eslint-disable-next-line func-names
-  this.promise.then = function(onfulfilled) {
-    var _resolve;
-    // eslint-disable-next-line func-names
-    var promise = new Promise(function(resolve) {
-      token.subscribe(resolve);
-      _resolve = resolve;
-    }).then(onfulfilled);
-
-    promise.cancel = function reject() {
-      token.unsubscribe(_resolve);
-    };
-
-    return promise;
-  };
-
   executor(function cancel(message) {
     if (token.reason) {
       // Cancellation has already been requested
@@ -498,37 +443,6 @@ function CancelToken(executor) {
 CancelToken.prototype.throwIfRequested = function throwIfRequested() {
   if (this.reason) {
     throw this.reason;
-  }
-};
-
-/**
- * Subscribe to the cancel signal
- */
-
-CancelToken.prototype.subscribe = function subscribe(listener) {
-  if (this.reason) {
-    listener(this.reason);
-    return;
-  }
-
-  if (this._listeners) {
-    this._listeners.push(listener);
-  } else {
-    this._listeners = [listener];
-  }
-};
-
-/**
- * Unsubscribe from the cancel signal
- */
-
-CancelToken.prototype.unsubscribe = function unsubscribe(listener) {
-  if (!this._listeners) {
-    return;
-  }
-  var index = this._listeners.indexOf(listener);
-  if (index !== -1) {
-    this._listeners.splice(index, 1);
   }
 };
 
@@ -630,9 +544,9 @@ Axios.prototype.request = function request(config) {
 
   if (transitional !== undefined) {
     validator.assertOptions(transitional, {
-      silentJSONParsing: validators.transitional(validators.boolean),
-      forcedJSONParsing: validators.transitional(validators.boolean),
-      clarifyTimeoutError: validators.transitional(validators.boolean)
+      silentJSONParsing: validators.transitional(validators.boolean, '1.0.0'),
+      forcedJSONParsing: validators.transitional(validators.boolean, '1.0.0'),
+      clarifyTimeoutError: validators.transitional(validators.boolean, '1.0.0')
     }, false);
   }
 
@@ -871,7 +785,6 @@ var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/util
 var transformData = __webpack_require__(/*! ./transformData */ "./node_modules/axios/lib/core/transformData.js");
 var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "./node_modules/axios/lib/cancel/isCancel.js");
 var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/axios/lib/defaults.js");
-var Cancel = __webpack_require__(/*! ../cancel/Cancel */ "./node_modules/axios/lib/cancel/Cancel.js");
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -879,10 +792,6 @@ var Cancel = __webpack_require__(/*! ../cancel/Cancel */ "./node_modules/axios/l
 function throwIfCancellationRequested(config) {
   if (config.cancelToken) {
     config.cancelToken.throwIfRequested();
-  }
-
-  if (config.signal && config.signal.aborted) {
-    throw new Cancel('canceled');
   }
 }
 
@@ -1001,8 +910,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
       stack: this.stack,
       // Axios
       config: this.config,
-      code: this.code,
-      status: this.response && this.response.status ? this.response.status : null
+      code: this.code
     };
   };
   return error;
@@ -1036,6 +944,17 @@ module.exports = function mergeConfig(config1, config2) {
   config2 = config2 || {};
   var config = {};
 
+  var valueFromConfig2Keys = ['url', 'method', 'data'];
+  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy', 'params'];
+  var defaultToConfig2Keys = [
+    'baseURL', 'transformRequest', 'transformResponse', 'paramsSerializer',
+    'timeout', 'timeoutMessage', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
+    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress', 'decompress',
+    'maxContentLength', 'maxBodyLength', 'maxRedirects', 'transport', 'httpAgent',
+    'httpsAgent', 'cancelToken', 'socketPath', 'responseEncoding'
+  ];
+  var directMergeKeys = ['validateStatus'];
+
   function getMergedValue(target, source) {
     if (utils.isPlainObject(target) && utils.isPlainObject(source)) {
       return utils.merge(target, source);
@@ -1047,74 +966,51 @@ module.exports = function mergeConfig(config1, config2) {
     return source;
   }
 
-  // eslint-disable-next-line consistent-return
   function mergeDeepProperties(prop) {
     if (!utils.isUndefined(config2[prop])) {
-      return getMergedValue(config1[prop], config2[prop]);
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
     } else if (!utils.isUndefined(config1[prop])) {
-      return getMergedValue(undefined, config1[prop]);
+      config[prop] = getMergedValue(undefined, config1[prop]);
     }
   }
 
-  // eslint-disable-next-line consistent-return
-  function valueFromConfig2(prop) {
+  utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
     if (!utils.isUndefined(config2[prop])) {
-      return getMergedValue(undefined, config2[prop]);
+      config[prop] = getMergedValue(undefined, config2[prop]);
     }
-  }
-
-  // eslint-disable-next-line consistent-return
-  function defaultToConfig2(prop) {
-    if (!utils.isUndefined(config2[prop])) {
-      return getMergedValue(undefined, config2[prop]);
-    } else if (!utils.isUndefined(config1[prop])) {
-      return getMergedValue(undefined, config1[prop]);
-    }
-  }
-
-  // eslint-disable-next-line consistent-return
-  function mergeDirectKeys(prop) {
-    if (prop in config2) {
-      return getMergedValue(config1[prop], config2[prop]);
-    } else if (prop in config1) {
-      return getMergedValue(undefined, config1[prop]);
-    }
-  }
-
-  var mergeMap = {
-    'url': valueFromConfig2,
-    'method': valueFromConfig2,
-    'data': valueFromConfig2,
-    'baseURL': defaultToConfig2,
-    'transformRequest': defaultToConfig2,
-    'transformResponse': defaultToConfig2,
-    'paramsSerializer': defaultToConfig2,
-    'timeout': defaultToConfig2,
-    'timeoutMessage': defaultToConfig2,
-    'withCredentials': defaultToConfig2,
-    'adapter': defaultToConfig2,
-    'responseType': defaultToConfig2,
-    'xsrfCookieName': defaultToConfig2,
-    'xsrfHeaderName': defaultToConfig2,
-    'onUploadProgress': defaultToConfig2,
-    'onDownloadProgress': defaultToConfig2,
-    'decompress': defaultToConfig2,
-    'maxContentLength': defaultToConfig2,
-    'maxBodyLength': defaultToConfig2,
-    'transport': defaultToConfig2,
-    'httpAgent': defaultToConfig2,
-    'httpsAgent': defaultToConfig2,
-    'cancelToken': defaultToConfig2,
-    'socketPath': defaultToConfig2,
-    'responseEncoding': defaultToConfig2,
-    'validateStatus': mergeDirectKeys
-  };
-
-  utils.forEach(Object.keys(config1).concat(Object.keys(config2)), function computeConfigValue(prop) {
-    var merge = mergeMap[prop] || mergeDeepProperties;
-    var configValue = merge(prop);
-    (utils.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
   });
+
+  utils.forEach(mergeDeepPropertiesKeys, mergeDeepProperties);
+
+  utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(undefined, config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  });
+
+  utils.forEach(directMergeKeys, function merge(prop) {
+    if (prop in config2) {
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
+    } else if (prop in config1) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  });
+
+  var axiosKeys = valueFromConfig2Keys
+    .concat(mergeDeepPropertiesKeys)
+    .concat(defaultToConfig2Keys)
+    .concat(directMergeKeys);
+
+  var otherKeys = Object
+    .keys(config1)
+    .concat(Object.keys(config2))
+    .filter(function filterAxiosKeys(key) {
+      return axiosKeys.indexOf(key) === -1;
+    });
+
+  utils.forEach(otherKeys, mergeDeepProperties);
 
   return config;
 };
@@ -1282,7 +1178,7 @@ var defaults = {
   }],
 
   transformResponse: [function transformResponse(data) {
-    var transitional = this.transitional || defaults.transitional;
+    var transitional = this.transitional;
     var silentJSONParsing = transitional && transitional.silentJSONParsing;
     var forcedJSONParsing = transitional && transitional.forcedJSONParsing;
     var strictJSONParsing = !silentJSONParsing && this.responseType === 'json';
@@ -1317,12 +1213,12 @@ var defaults = {
 
   validateStatus: function validateStatus(status) {
     return status >= 200 && status < 300;
-  },
+  }
+};
 
-  headers: {
-    common: {
-      'Accept': 'application/json, text/plain, */*'
-    }
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
   }
 };
 
@@ -1337,19 +1233,6 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
-
-/***/ }),
-
-/***/ "./node_modules/axios/lib/env/data.js":
-/*!********************************************!*\
-  !*** ./node_modules/axios/lib/env/data.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "version": "0.22.0"
-};
 
 /***/ }),
 
@@ -1816,7 +1699,7 @@ module.exports = function spread(callback) {
 "use strict";
 
 
-var VERSION = __webpack_require__(/*! ../env/data */ "./node_modules/axios/lib/env/data.js").version;
+var pkg = __webpack_require__(/*! ./../../package.json */ "./node_modules/axios/package.json");
 
 var validators = {};
 
@@ -1828,26 +1711,48 @@ var validators = {};
 });
 
 var deprecatedWarnings = {};
+var currentVerArr = pkg.version.split('.');
+
+/**
+ * Compare package versions
+ * @param {string} version
+ * @param {string?} thanVersion
+ * @returns {boolean}
+ */
+function isOlderVersion(version, thanVersion) {
+  var pkgVersionArr = thanVersion ? thanVersion.split('.') : currentVerArr;
+  var destVer = version.split('.');
+  for (var i = 0; i < 3; i++) {
+    if (pkgVersionArr[i] > destVer[i]) {
+      return true;
+    } else if (pkgVersionArr[i] < destVer[i]) {
+      return false;
+    }
+  }
+  return false;
+}
 
 /**
  * Transitional option validator
- * @param {function|boolean?} validator - set to false if the transitional option has been removed
- * @param {string?} version - deprecated version / removed since version
- * @param {string?} message - some message with additional info
+ * @param {function|boolean?} validator
+ * @param {string?} version
+ * @param {string} message
  * @returns {function}
  */
 validators.transitional = function transitional(validator, version, message) {
+  var isDeprecated = version && isOlderVersion(version);
+
   function formatMessage(opt, desc) {
-    return '[Axios v' + VERSION + '] Transitional option \'' + opt + '\'' + desc + (message ? '. ' + message : '');
+    return '[Axios v' + pkg.version + '] Transitional option \'' + opt + '\'' + desc + (message ? '. ' + message : '');
   }
 
   // eslint-disable-next-line func-names
   return function(value, opt, opts) {
     if (validator === false) {
-      throw new Error(formatMessage(opt, ' has been removed' + (version ? ' in ' + version : '')));
+      throw new Error(formatMessage(opt, ' has been removed in ' + version));
     }
 
-    if (version && !deprecatedWarnings[opt]) {
+    if (isDeprecated && !deprecatedWarnings[opt]) {
       deprecatedWarnings[opt] = true;
       // eslint-disable-next-line no-console
       console.warn(
@@ -1893,6 +1798,7 @@ function assertOptions(options, schema, allowUnknown) {
 }
 
 module.exports = {
+  isOlderVersion: isOlderVersion,
   assertOptions: assertOptions,
   validators: validators
 };
@@ -2258,6 +2164,17 @@ module.exports = {
   stripBOM: stripBOM
 };
 
+
+/***/ }),
+
+/***/ "./node_modules/axios/package.json":
+/*!*****************************************!*\
+  !*** ./node_modules/axios/package.json ***!
+  \*****************************************/
+/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browser, bugs, bundleDependencies, bundlesize, dependencies, deprecated, description, devDependencies, homepage, jsdelivr, keywords, license, main, name, repository, scripts, typings, unpkg, version, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"_from\":\"axios@^0.21.2\",\"_id\":\"axios@0.21.4\",\"_inBundle\":false,\"_integrity\":\"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"axios@^0.21.2\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"^0.21.2\",\"saveSpec\":null,\"fetchSpec\":\"^0.21.2\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz\",\"_shasum\":\"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575\",\"_spec\":\"axios@^0.21.2\",\"_where\":\"/Users/darrencooney/Local Sites/instant-images/app/public/wp-content/plugins/instant-images\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.14.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.3.0\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^23.0.0\",\"grunt-karma\":\"^4.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^4.0.2\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^6.3.2\",\"karma-chrome-launcher\":\"^3.1.0\",\"karma-firefox-launcher\":\"^2.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^4.3.6\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.8\",\"karma-webpack\":\"^4.0.2\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^8.2.1\",\"sinon\":\"^4.5.0\",\"terser-webpack-plugin\":\"^4.2.3\",\"typescript\":\"^4.0.5\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^4.44.2\",\"webpack-dev-server\":\"^3.11.0\"},\"homepage\":\"https://axios-http.com\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.4\"}");
 
 /***/ }),
 
@@ -36882,6 +36799,72 @@ if (!global.fetch) {
 
 /***/ }),
 
+/***/ "./src/js/components/NoResults.js":
+/*!****************************************!*\
+  !*** ./src/js/components/NoResults.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NoResults = function (_React$Component) {
+	_inherits(NoResults, _React$Component);
+
+	function NoResults() {
+		_classCallCheck(this, NoResults);
+
+		return _possibleConstructorReturn(this, (NoResults.__proto__ || Object.getPrototypeOf(NoResults)).apply(this, arguments));
+	}
+
+	_createClass(NoResults, [{
+		key: "render",
+		value: function render() {
+			return _react2.default.createElement(
+				"div",
+				{ className: "no-results" },
+				_react2.default.createElement(
+					"h3",
+					null,
+					instant_img_localize.no_results,
+					" "
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					instant_img_localize.no_results_desc,
+					" "
+				)
+			);
+		}
+	}]);
+
+	return NoResults;
+}(_react2.default.Component);
+
+exports.default = NoResults;
+
+/***/ }),
+
 /***/ "./src/js/components/Orientation.js":
 /*!******************************************!*\
   !*** ./src/js/components/Orientation.js ***!
@@ -37003,6 +36986,10 @@ var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.j
 
 var _API2 = _interopRequireDefault(_API);
 
+var _generateAttribution = __webpack_require__(/*! ../functions/generateAttribution.js */ "./src/js/functions/generateAttribution.js.js");
+
+var _generateAttribution2 = _interopRequireDefault(_generateAttribution);
+
 var _getProp = __webpack_require__(/*! ../functions/getProp */ "./src/js/functions/getProp.js");
 
 var _getProp2 = _interopRequireDefault(_getProp);
@@ -37045,7 +37032,7 @@ var Photo = function (_React$Component) {
 		_this.user_url = (0, _getProp2.default)(_this.provider, result, "user_url");
 		_this.link = (0, _getProp2.default)(_this.provider, result, "link");
 		_this.likes = (0, _getProp2.default)(_this.provider, result, "likes");
-		_this.attribution = instant_img_localize.photo_by + " <a href=\"https://unsplash.com/@" + _this.user + "?utm_source=wordpress-instant-images&utm_medium=referral\">" + _this.name + "</a> on <a href=\"https://unsplash.com/?utm_source=wordpress-instant-images&utm_medium=referral\">Unsplash</a>";
+		_this.attribution = (0, _generateAttribution2.default)(_this.provider, _this.user_url, _this.name);
 
 		_this.view_all = instant_img_localize.view_all;
 		_this.inProgress = false;
@@ -37624,7 +37611,7 @@ var Photo = function (_React$Component) {
 								_react2.default.createElement(
 									"div",
 									{ className: "user-wrap" },
-									this.user_photo.length > 0 && _react2.default.createElement("img", { src: this.user_photo }),
+									this.user_photo && this.user_photo.length > 0 && _react2.default.createElement("img", { src: this.user_photo }),
 									this.provider === "unsplash" ? this.user : this.name
 								)
 							),
@@ -37969,6 +37956,14 @@ var _getResults = __webpack_require__(/*! ../functions/getResults */ "./src/js/f
 
 var _getResults2 = _interopRequireDefault(_getResults);
 
+var _searchByID = __webpack_require__(/*! ../functions/searchByID */ "./src/js/functions/searchByID.js");
+
+var _searchByID2 = _interopRequireDefault(_searchByID);
+
+var _NoResults = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
+
+var _NoResults2 = _interopRequireDefault(_NoResults);
+
 var _Orientation = __webpack_require__(/*! ./Orientation */ "./src/js/components/Orientation.js");
 
 var _Orientation2 = _interopRequireDefault(_Orientation);
@@ -38002,6 +37997,7 @@ var PhotoList = function (_React$Component) {
 		// Get current provider settings.
 		var _this = _possibleConstructorReturn(this, (PhotoList.__proto__ || Object.getPrototypeOf(PhotoList)).call(this, props));
 
+		_this.providers = ["Unsplash", "Pixabay"];
 		_this.provider = _this.props.provider; // Unsplash, Pixabay, etc.
 		_this.api_provider = _API2.default[_this.provider]; // The API settings for the provider.
 		_this.arr_key = _this.api_provider.arr_key;
@@ -38214,19 +38210,19 @@ var PhotoList = function (_React$Component) {
 			// Search by ID.
 			// Allow users to search by photo by prepending id:{photo_id} to search terms.
 			var search_type = term.substring(0, 3);
+
 			if (search_type === "id:") {
 				type = "id";
 				term = term.replace("id:", "");
-				url = this.api_provider.photo_api + "/" + term + _API2.default.app_id;
+				url = (0, _searchByID2.default)(this.provider, term, this.api_provider.photo_api, this.api_provider.app_id);
 			}
 
 			fetch(url).then(function (data) {
 				return data.json();
 			}).then(function (data) {
-				var results = (0, _getResults2.default)(self.provider, self.arr_key, data, true);
-
 				// Search term.
 				if (type === "term") {
+					var results = (0, _getResults2.default)(self.provider, self.arr_key, data, true);
 					self.total_results = data.total;
 
 					// Check for returned data.
@@ -38235,21 +38231,25 @@ var PhotoList = function (_React$Component) {
 					// Update Props.
 					self.results = results;
 					self.setState({ results: self.results });
-					console.log("results", self.results);
 				}
 
-				// Search by photo ID.
+				// Search by ID.
 				if (type === "id" && data) {
 					// Convert return data to array.
 					var photoArray = [];
 
+					var result = (0, _getResults.getResultById)(self.provider, self.arr_key, data, true);
+
+					// Data comes back differently in a search by ID.
+					// Need to parse it for unsplash and pixabay separatly.
+
 					if (data.errors) {
-						// If error was returned.
+						// If error was returned (Unsplash Only).
 						self.total_results = 0;
 						self.checkTotalResults("0");
 					} else {
 						// No errors, display results
-						photoArray.push(data);
+						photoArray.push(result);
 						self.total_results = 1;
 						self.checkTotalResults("1");
 					}
@@ -38261,7 +38261,16 @@ var PhotoList = function (_React$Component) {
 				input.classList.remove("searching");
 			}).catch(function (error) {
 				console.log(error);
+
+				// Error, reset all search parameters.
+				input.classList.remove("searching");
 				self.isLoading = false;
+				self.total_results = 0;
+				self.isDone = true;
+
+				// Update Props.
+				self.results = [];
+				self.setState({ results: self.results });
 			});
 		}
 
@@ -38299,7 +38308,7 @@ var PhotoList = function (_React$Component) {
 			var url = this.api_url + "&page=" + this.page + "&" + this.order_key + "=" + this.orderby;
 
 			if (this.is_search) {
-				url = this.api_url + "&page=" + this.page + "&" + this.api_provider.search_query_var + "=" + this.search_term;
+				url = this.search_api_url + "&page=" + this.page + "&" + this.api_provider.search_query_var + "=" + this.search_term;
 
 				if (this.hasOrientation()) {
 					// Set orientation
@@ -38310,9 +38319,7 @@ var PhotoList = function (_React$Component) {
 			fetch(url).then(function (data) {
 				return data.json();
 			}).then(function (data) {
-				console.log(data);
-
-				var moreResults = (0, _getResults2.default)(self.provider, self.arr_key, data);
+				var moreResults = (0, _getResults2.default)(self.provider, self.arr_key, data, self.is_search);
 
 				// Unsplash search results are recieved in different JSON format
 				if (self.is_search && self.provider === "unsplash") {
@@ -38385,22 +38392,41 @@ var PhotoList = function (_React$Component) {
 				self.isLoading = false;
 			});
 		}
+
+		/**
+   * Toggle the service provider.
+   *
+   * @param {Event} e The clicked element event.
+   */
+
 	}, {
 		key: "switchProvider",
-		value: function switchProvider() {
-			if (this.provider === "pixabay") {
-				this.provider = "unsplash";
-			} else {
-				this.provider = "pixabay";
+		value: function switchProvider(e) {
+			var target = e.currentTarget;
+			var parent = target.parentNode;
+			var provider = target.dataset.provider;
+			if (provider === this.provider) {
+				return false;
 			}
 
-			this.api_provider = _API2.default[this.provider]; // The API settings for the provider.
+			console.log(provider);
+
+			this.provider = provider;
+
+			// Remove active from buttons.
+			parent.querySelectorAll("button").forEach(function (button) {
+				button.classList.remove("active");
+			});
+
+			// Select active button.
+			target.classList.add("active");
+
+			this.api_provider = _API2.default[this.provider];
 			this.arr_key = this.api_provider.arr_key;
 			this.order_key = this.api_provider.order_key;
 
 			this.api_url = "" + this.api_provider.photo_api + this.api_provider.app_id + _API2.default.posts_per_page;
 			this.search_api_url = "" + this.api_provider.search_api + this.api_provider.app_id + _API2.default.posts_per_page;
-			console.log(this.buttonLatest.current);
 
 			this.togglePhotoList("latest", this.buttonLatest.current, true);
 		}
@@ -38476,8 +38502,10 @@ var PhotoList = function (_React$Component) {
 
 			// Set active item, if not search
 			if (!this.is_search) {
-				var active = this.container.querySelector(".control-nav li button." + this.orderby);
-				active.classList.add("active");
+				var active = this.container.querySelector(".control-nav li button.instant-images-" + this.orderby);
+				if (active) {
+					active.classList.add("active");
+				}
 			}
 			setTimeout(function () {
 				self.isLoading = false;
@@ -38582,69 +38610,44 @@ var PhotoList = function (_React$Component) {
 			return _react2.default.createElement(
 				"div",
 				{ id: "photo-listing", className: this.provider },
-				_react2.default.createElement(
-					"button",
-					{ onClick: function onClick(e) {
-							return _this3.switchProvider("unsplash");
-						} },
-					"Unsplash"
+				this.providers && _react2.default.createElement(
+					"nav",
+					{ className: "provider-nav" },
+					this.providers.map(function (provider, iterator) {
+						return _react2.default.createElement(
+							"button",
+							{
+								key: "provider-" + iterator,
+								"data-provider": provider.toLowerCase(),
+								onClick: function onClick(e) {
+									return _this3.switchProvider(e);
+								}
+							},
+							provider
+						);
+					})
 				),
-				_react2.default.createElement(
-					"button",
-					{ onClick: function onClick(e) {
-							return _this3.switchProvider("pixabay");
-						} },
-					"Pixabay"
-				),
-				_react2.default.createElement(
+				this.api_provider.order && _react2.default.createElement(
 					"ul",
 					{ className: "control-nav" },
-					_react2.default.createElement(
-						"li",
-						null,
-						_react2.default.createElement(
-							"button",
-							{
-								type: "button",
-								className: "latest",
-								onClick: function onClick(e) {
-									return _this3.togglePhotoList("latest", e);
+					this.api_provider.order.map(function (order, iterator) {
+						return _react2.default.createElement(
+							"li",
+							{ key: _this3.provider + "-order-" + iterator },
+							_react2.default.createElement(
+								"button",
+								{
+									type: "button",
+									className: "instant-images-" + order,
+									onClick: function onClick(e) {
+										return _this3.togglePhotoList(order, e);
+									},
+									ref: order === "latest" ? _this3.buttonLatest : null
 								},
-								ref: this.buttonLatest
-							},
-							instant_img_localize.latest
-						)
-					),
-					_react2.default.createElement(
-						"li",
-						{ id: "nav-target" },
-						_react2.default.createElement(
-							"button",
-							{
-								type: "button",
-								className: "popular",
-								onClick: function onClick(e) {
-									return _this3.togglePhotoList("popular", e);
-								}
-							},
-							instant_img_localize.popular
-						)
-					),
-					this.provider === "unsplash" && _react2.default.createElement(
-						"li",
-						null,
-						_react2.default.createElement(
-							"button",
-							{
-								type: "button",
-								className: "oldest",
-								onClick: function onClick(e) {
-									return _this3.togglePhotoList("oldest", e);
-								}
-							},
-							instant_img_localize.oldest
-						)
-					),
+								instant_img_localize[order]
+							)
+						);
+					}),
 					_react2.default.createElement(
 						"li",
 						{ className: "search-field", id: "search-bar" },
@@ -38671,6 +38674,7 @@ var PhotoList = function (_React$Component) {
 							),
 							_react2.default.createElement(_ResultsToolTip2.default, {
 								container: this.container,
+								buttonLatest: this.buttonLatest,
 								isSearch: this.is_search,
 								total: this.total_results,
 								title: this.total_results + " " + instant_img_localize.search_results + " " + this.search_term
@@ -38701,25 +38705,7 @@ var PhotoList = function (_React$Component) {
 						});
 					})
 				),
-				_react2.default.createElement(
-					"div",
-					{
-						className: this.total_results == 0 && this.is_search === true ? "no-results show" : "no-results",
-						title: this.props.title
-					},
-					_react2.default.createElement(
-						"h3",
-						null,
-						instant_img_localize.no_results,
-						" "
-					),
-					_react2.default.createElement(
-						"p",
-						null,
-						instant_img_localize.no_results_desc,
-						" "
-					)
-				),
+				this.total_results == 0 && this.is_search === true && _react2.default.createElement(_NoResults2.default, null),
 				_react2.default.createElement("div", { className: "loading-block" }),
 				_react2.default.createElement(
 					"div",
@@ -38736,11 +38722,7 @@ var PhotoList = function (_React$Component) {
 						instant_img_localize.load_more
 					)
 				),
-				_react2.default.createElement(
-					"div",
-					{ id: "tooltip" },
-					"Meow"
-				)
+				_react2.default.createElement("div", { id: "tooltip" })
 			);
 		}
 	}]);
@@ -38786,17 +38768,13 @@ var ResultsToolTip = function (_React$Component) {
 	function ResultsToolTip(props) {
 		_classCallCheck(this, ResultsToolTip);
 
-		return _possibleConstructorReturn(this, (ResultsToolTip.__proto__ || Object.getPrototypeOf(ResultsToolTip)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (ResultsToolTip.__proto__ || Object.getPrototypeOf(ResultsToolTip)).call(this, props));
+
+		_this.buttonLatest = _this.props.buttonLatest;
+		return _this;
 	}
 
 	_createClass(ResultsToolTip, [{
-		key: "resetSearch",
-		value: function resetSearch() {
-			var nav = this.props.container.querySelector(".control-nav");
-			var navItem = nav.querySelector("li button.latest");
-			navItem.click();
-		}
-	}, {
 		key: "render",
 		value: function render() {
 			var _this2 = this;
@@ -38816,8 +38794,8 @@ var ResultsToolTip = function (_React$Component) {
 					{
 						type: "button",
 						title: instant_img_localize.clear_search,
-						onClick: function onClick(e) {
-							return _this2.resetSearch();
+						onClick: function onClick() {
+							return _this2.buttonLatest.current.click();
 						}
 					},
 					"x",
@@ -38857,20 +38835,61 @@ module.exports = {
 		search_query_var: "query",
 		arr_key: "results",
 		order_key: "order_by",
+		order: ["latest", "popular", "oldest"],
 		orientation: ["landscape", "portrait", "squarish"]
 	},
 	pixabay: {
 		app_id: "/?key=23559219-67621b8a8bd93df7b6aef72a7",
-		photo_api: "https://pixabay.com/api/",
+		photo_api: "https://pixabay.com/api",
 		search_api: "https://pixabay.com/api",
 		search_query_var: "q",
 		arr_key: "hits",
 		order_key: "order",
+		order: ["latest", "popular"],
 		orientation: ["horizontal", "vertical"]
 	},
-	photo_api: "https://api.unsplash.com/photos",
 	posts_per_page: "&per_page=20"
 };
+
+/***/ }),
+
+/***/ "./src/js/functions/generateAttribution.js.js":
+/*!****************************************************!*\
+  !*** ./src/js/functions/generateAttribution.js.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = generateAttribution;
+/**
+ * Get the API URL for searches by ID.
+ *
+ * @param  {string} provider  The service provider.
+ * @param  {string} url       The user url.
+ * @param  {string} name      The user name.
+ * @return {string}           The raw attribution HTML.
+ */
+function generateAttribution(provider, url, name) {
+	var attribution = instant_img_localize.photo_by;
+
+	console.log(name);
+	switch (provider) {
+		case "unsplash":
+			attribution += " <a href=\"" + url + "?utm_source=wordpress-instant-images&utm_medium=referral\">" + name + "</a> on <a href=\"https://unsplash.com/?utm_source=wordpress-instant-images&utm_medium=referral\">Unsplash</a>";
+			break;
+		case "pixabay":
+			attribution += " <a href=\"" + url + "?utm_source=wordpress-instant-images&utm_medium=referral\">" + name + "</a> on <a href=\"https://pixabay.com/?utm_source=wordpress-instant-images&utm_medium=referral\">Pixabay</a>";
+			break;
+	}
+
+	return attribution;
+}
 
 /***/ }),
 
@@ -38889,7 +38908,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = getProp;
 /**
- * Get props from API results.
+ * Get props per provider from API results.
  *
  * @param {string} provider  The current service provider.
  * @param {object} result    The photo object.
@@ -38897,99 +38916,97 @@ exports.default = getProp;
  * @return {string}          The value as a string.
  */
 function getProp(provider, result, attribute) {
-	var value = '';
+	var value = "";
 	switch (attribute) {
-
-		case 'thumb':
-			if (provider === 'pixabay') {
+		case "thumb":
+			if (provider === "pixabay") {
 				value = result.previewURL;
 			}
-			if (provider === 'unsplash') {
+			if (provider === "unsplash") {
 				value = result.urls.thumb;
 			}
 			break;
 
-		case 'img':
-			if (provider === 'pixabay') {
+		case "img":
+			if (provider === "pixabay") {
 				value = result.webformatURL;
 			}
-			if (provider === 'unsplash') {
+			if (provider === "unsplash") {
 				value = result.urls.small;
 			}
 			break;
 
-		case 'full_size':
-			if (provider === 'pixabay') {
+		case "full_size":
+			if (provider === "pixabay") {
 				value = result.largeImageURL;
 			}
-			if (provider === 'unsplash') {
+			if (provider === "unsplash") {
 				value = result.urls.full;
 			}
 			break;
 
-		case 'author':
-			if (provider === 'pixabay') {
+		case "author":
+			if (provider === "pixabay") {
 				value = result.user;
 			}
-			if (provider === 'unsplash') {
+			if (provider === "unsplash") {
 				value = result.user.name;
 			}
 			break;
 
-		case 'user':
-			if (provider === 'pixabay') {
+		case "user":
+			if (provider === "pixabay") {
 				value = result.user_id;
 			}
-			if (provider === 'unsplash') {
+			if (provider === "unsplash") {
 				value = result.user.username;
 			}
 			break;
 
-		case 'name':
-			if (provider === 'pixabay') {
+		case "name":
+			if (provider === "pixabay") {
 				value = result.user;
 			}
-			if (provider === 'unsplash') {
+			if (provider === "unsplash") {
 				value = result.user.name;
 			}
 			break;
 
-		case 'user_photo':
-			if (provider === 'pixabay') {
+		case "user_photo":
+			if (provider === "pixabay") {
 				value = result.userImageURL;
 			}
-			if (provider === 'unsplash') {
+			if (provider === "unsplash") {
 				value = result.user.profile_image.small;
 			}
 			break;
 
-		case 'user_url':
-			if (provider === 'pixabay') {
-				value = 'https://pixabay.com/users/' + result.user + '-' + result.user_id + '/';
+		case "user_url":
+			if (provider === "pixabay") {
+				value = "https://pixabay.com/users/" + result.user + "-" + result.user_id + "/";
 			}
-			if (provider === 'unsplash') {
-				value = 'https://unsplash.com/@' + result.user.username + '?utm_source=wordpress-instant-images&utm_medium=referral';
+			if (provider === "unsplash") {
+				value = "https://unsplash.com/@" + result.user.username + "?utm_source=wordpress-instant-images&utm_medium=referral";
 			}
 			break;
 
-		case 'link':
-			if (provider === 'pixabay') {
+		case "link":
+			if (provider === "pixabay") {
 				value = result.pageURL;
 			}
-			if (provider === 'unsplash') {
+			if (provider === "unsplash") {
 				value = result.links.html;
 			}
 			break;
 
-		case 'likes':
-			if (provider === 'pixabay') {
+		case "likes":
+			if (provider === "pixabay") {
 				value = result.likes;
 			}
-			if (provider === 'unsplash') {
+			if (provider === "unsplash") {
 				value = result.likes;
 			}
 			break;
-
 	}
 
 	return value;
@@ -39008,10 +39025,10 @@ function getProp(provider, result, attribute) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 exports.default = getResults;
-
+exports.getResultById = getResultById;
 /**
  * Access the results of different providers.
  * Unsplash and Pixabay return results in different object formats.
@@ -39023,16 +39040,37 @@ exports.default = getResults;
  * @return {Array} 				 The photos as an array.
  */
 function getResults(provider, key, data, is_search) {
-  if (provider === 'unsplash') {
-    if (is_search) {
-      return data[key] || [];
-    } else {
-      return data || [];
-    }
-  }
-  if (provider === 'pixabay') {
-    return data[key] || [];
-  }
+	var results = [];
+	switch (provider) {
+		case "unsplash":
+			if (is_search) {
+				results = data[key] || [];
+			} else {
+				results = data || [];
+			}
+			break;
+
+		case "pixabay":
+			results = data[key] || [];
+			break;
+	}
+
+	return results;
+}
+
+function getResultById(provider, key, data) {
+	var result = [];
+	switch (provider) {
+		case "unsplash":
+			result = data || [];
+			break;
+
+		case "pixabay":
+			result = data[key] && data[key][0] ? data[key][0] : [];
+			break;
+	}
+
+	return result;
 }
 
 /***/ }),
@@ -39129,6 +39167,46 @@ if (!Array.from) {
 			return A;
 		};
 	}();
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/searchByID.js":
+/*!****************************************!*\
+  !*** ./src/js/functions/searchByID.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = searchByID;
+/**
+ * Get the API URL for searches by ID.
+ *
+ * @param  {string} provider  The current service provider.
+ * @param  {string} id        The photo id.
+ * @param  {string} attribute The base api URL.
+ * @param  {string} app_id    The provider API key.
+ * @return {string}           The API URL.
+ */
+function searchByID(provider, id, base_url, app_id) {
+	var url = "";
+	switch (provider) {
+		case "unsplash":
+			url = "" + base_url + id + app_id;
+			break;
+
+		case "pixabay":
+			url = "" + base_url + app_id + "&id=" + id;
+			break;
+	}
+
+	return url;
 }
 
 /***/ }),
