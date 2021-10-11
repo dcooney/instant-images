@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import API from "./components/API";
 import PhotoList from "./components/PhotoList";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");

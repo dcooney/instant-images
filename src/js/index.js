@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import API from "./components/API";
 import PhotoList from "./components/PhotoList";
+import API from "./constants/API";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 require("./functions/helpers");
 
-const provider = 'unsplash';
+const provider = "unsplash";
 
 /**
  * Get the initial set of photos.
@@ -16,7 +16,6 @@ const provider = 'unsplash';
  * @param {string} provider The current service provider.
  */
 const GetPhotos = (page = 1, orderby = "latest", provider = "unsplash") => {
-
 	const container = document.querySelector(".instant-img-container");
 
 	const start = `${API[provider].photo_api}${API[provider].app_id}`;
@@ -33,7 +32,6 @@ const GetPhotos = (page = 1, orderby = "latest", provider = "unsplash") => {
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
-
 				const element = document.getElementById("app");
 				ReactDOM.render(
 					<PhotoList

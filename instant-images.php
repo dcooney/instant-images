@@ -15,7 +15,6 @@
  */
 
 /*
-
 NEW: Added button to auto-generate Photo attribution in image caption.
 UPDATE: Updated styling and fucntionality of photo detail editor.
 
@@ -26,6 +25,10 @@ TODO:
 
 - Fix reset (switchProvider) function.
 	- This is not working because of react state
+
+- Default Provider
+  - Add setting for setting a default provider (Unsplash/Pixabay)
+
 
 */
 
@@ -232,10 +235,12 @@ class InstantImages {
 				'cancel'                  => __( 'Cancel', 'instant-images' ),
 				'save'                    => __( 'Save', 'instant-images' ),
 				'upload_now'              => __( 'Upload', 'instant-images' ),
-				'orientation'             => __( 'Image Orientation', 'instant-images' ),
+				'orientation'             => __( 'Orientation', 'instant-images' ),
 				'landscape'               => __( 'Landscape', 'instant-images' ),
 				'portrait'                => __( 'Portrait', 'instant-images' ),
 				'squarish'                => __( 'Squarish', 'instant-images' ),
+				'horizontal'              => __( 'Horizontal', 'instant-images' ),
+				'vertical'                => __( 'Vertical', 'instant-images' ),
 				'attribution'             => __( 'Add Photo Attribution', 'instant-images' ),
 			)
 		);

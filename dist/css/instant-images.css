@@ -1774,6 +1774,10 @@ body.media_page_instant-images #wpfooter p {
   font-size: 13px;
 }
 
+.orientation-list span i {
+  margin-right: 3px;
+}
+
 .orientation-list ul {
   -webkit-box-flex: 1;
       -ms-flex: 1;

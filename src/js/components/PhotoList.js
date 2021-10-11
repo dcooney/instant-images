@@ -1,32 +1,11 @@
-import React from "react";
 import Masonry from "masonry-layout";
-const imagesLoaded = require("imagesloaded");
+import React from "react";
+import API from "../constants/API";
+import getResults from "../functions/getResults";
+import Orientation from "./Orientation";
 import Photo from "./Photo";
 import ResultsToolTip from "./ResultsToolTip";
-import API from "./API";
-
-/**
- * Access the results of different providers.
- * Unsplash and Pixabay return results in different object formats.
- *
- * @param  {string}  provider  The current service provider.
- * @param  {string}  key       The match key to access.
- * @param  {Array}   data      The photo array.
- * @param  {Boolean} is_search Is this a search request.
- * @return {Array} 				 The photos as an array.
- */
-function accessResults(provider, key, data, is_search){
-	if(provider === 'unsplash'){
-		if(is_search){
-			return data[key] || [];
-		} else {
-			return data || [];
-		}
-	}
-	if(provider === 'pixabay'){
-		return data[key] || [];
-	}
-}
+const imagesLoaded = require("imagesloaded");
 
 class PhotoList extends React.Component {
 	constructor(props) {
@@ -41,7 +20,11 @@ class PhotoList extends React.Component {
 		this.api_url = `${this.api_provider.photo_api}${this.api_provider.app_id}${API.posts_per_page}`;
 		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.app_id}${API.posts_per_page}`;
 
-		this.results = accessResults(this.provider, this.arr_key, this.props.results);
+		this.results = getResults(
+			this.provider,
+			this.arr_key,
+			this.props.results
+		);
 		this.state = { results: this.results };
 
 		this.orderby = this.props.orderby; // Orderby
@@ -238,12 +221,10 @@ class PhotoList extends React.Component {
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
-
-				const results = accessResults(self.provider, self.arr_key, data, true);
+				const results = getResults(self.provider, self.arr_key, data, true);
 
 				// Search term.
 				if (type === "term") {
-
 					self.total_results = data.total;
 
 					// Check for returned data.
@@ -252,7 +233,7 @@ class PhotoList extends React.Component {
 					// Update Props.
 					self.results = results;
 					self.setState({ results: self.results });
-					console.log('results', self.results);
+					console.log("results", self.results);
 				}
 
 				// Search by photo ID.
@@ -264,7 +245,6 @@ class PhotoList extends React.Component {
 						// If error was returned.
 						self.total_results = 0;
 						self.checkTotalResults("0");
-
 					} else {
 						// No errors, display results
 						photoArray.push(data);
@@ -323,20 +303,20 @@ class PhotoList extends React.Component {
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
-
 				console.log(data);
 
-				let moreResults = accessResults(self.provider, self.arr_key, data);
+				let moreResults = getResults(self.provider, self.arr_key, data);
 
 				// Unsplash search results are recieved in different JSON format
-				if (self.is_search && self.provider === 'unsplash') {
+				if (self.is_search && self.provider === "unsplash") {
 					moreResults = data.results;
 				}
 
 				// Loop results, push items into array
-				moreResults && moreResults.map((data) => {
-					self.results.push(data);
-				});
+				moreResults &&
+					moreResults.map((data) => {
+						self.results.push(data);
+					});
 
 				// Check for returned data
 				self.checkTotalResults(data.length);
@@ -377,8 +357,7 @@ class PhotoList extends React.Component {
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
-
-				const results = accessResults(self.provider, self.arr_key, data);
+				const results = getResults(self.provider, self.arr_key, data);
 
 				// Check for returned data
 				self.checkTotalResults(results.length);
@@ -398,12 +377,11 @@ class PhotoList extends React.Component {
 			});
 	}
 
-
-	switchProvider () {
-		if(this.provider === 'pixabay'){
-			this.provider = 'unsplash';
+	switchProvider() {
+		if (this.provider === "pixabay") {
+			this.provider = "unsplash";
 		} else {
-			this.provider = 'pixabay';
+			this.provider = "pixabay";
 		}
 
 		this.api_provider = API[this.provider]; // The API settings for the provider.
@@ -414,8 +392,7 @@ class PhotoList extends React.Component {
 		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.app_id}${API.posts_per_page}`;
 		console.log(this.buttonLatest.current);
 
-		this.togglePhotoList('latest', this.buttonLatest.current, true);
-
+		this.togglePhotoList("latest", this.buttonLatest.current, true);
 	}
 
 	/**
@@ -563,15 +540,14 @@ class PhotoList extends React.Component {
 	}
 
 	render() {
-		// Show/Hide orientation listing
-		let orientationStyle = this.is_search
-			? { display: "flex" }
-			: { display: "none" };
-
 		return (
 			<div id="photo-listing" className={this.provider}>
-			<button onClick={(e)=> this.switchProvider('unsplash')}>Unsplash</button>
-			<button onClick={(e)=> this.switchProvider('pixabay')}>Pixabay</button>
+				<button onClick={(e) => this.switchProvider("unsplash")}>
+					Unsplash
+				</button>
+				<button onClick={(e) => this.switchProvider("pixabay")}>
+					Pixabay
+				</button>
 
 				<ul className="control-nav">
 					<li>
@@ -593,7 +569,7 @@ class PhotoList extends React.Component {
 							{instant_img_localize.popular}
 						</button>
 					</li>
-					{this.provider === 'unsplash' && (
+					{this.provider === "unsplash" && (
 						<li>
 							<button
 								type="button"
@@ -636,42 +612,19 @@ class PhotoList extends React.Component {
 
 				<div className="error-messaging"></div>
 
-				<div className="orientation-list" style={orientationStyle}>
-					<span>
-						<i className="fa fa-filter" aria-hidden="true"></i>{" "}
-						{instant_img_localize.orientation}:
-					</span>
-					<ul>
-						<li
-							tabIndex="0"
-							onClick={(e) => this.setOrientation("landscape", e)}
-							onKeyPress={(e) => this.setOrientation("landscape", e)}
-						>
-							{instant_img_localize.landscape}
-						</li>
-						<li
-							tabIndex="0"
-							onClick={(e) => this.setOrientation("portrait", e)}
-							onKeyPress={(e) => this.setOrientation("portrait", e)}
-						>
-							{instant_img_localize.portrait}
-						</li>
-						<li
-							tabIndex="0"
-							onClick={(e) => this.setOrientation("squarish", e)}
-							onKeyPress={(e) => this.setOrientation("squarish", e)}
-						>
-							{instant_img_localize.squarish}
-						</li>
-					</ul>
-				</div>
+				{this.is_search && (
+					<Orientation
+						provider={this.provider}
+						setOrientation={this.setOrientation.bind(this)}
+					/>
+				)}
 
 				<div id="photos" className="photo-target">
 					{this.state.results.map((result, iterator) => (
 						<Photo
 							provider={this.provider}
 							result={result}
-							key={result.id + iterator}
+							key={`${this.provider}-${result.id}-${iterator}`}
 							editor={this.editor}
 							mediaRouter={this.is_media_router}
 							blockEditor={this.is_block_editor}

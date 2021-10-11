@@ -13,6 +13,9 @@
 		margin: 0 10px 0 0;
 		font-size: 13px;
 		//font-style: italic;
+		i{
+			margin-right: 3px;
+		}
 	}
 	ul{
 		flex: 1;
@@ -31,8 +34,8 @@
 			}
 			&:focus{
 				border-color: #5d72c3;
-				color: #111;	
-				outline: none;			
+				color: #111;
+				outline: none;
 			}
 			&.active{
 				background-color: #5d72c3;
@@ -55,7 +58,7 @@
 		margin-bottom: 10px;
 		span{
 			display: none;
-		}	
+		}
 		ul{
 			padding: 0;
 			width: 100%;

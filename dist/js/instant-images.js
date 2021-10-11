@@ -36882,37 +36882,96 @@ if (!global.fetch) {
 
 /***/ }),
 
-/***/ "./src/js/components/API.js":
-/*!**********************************!*\
-  !*** ./src/js/components/API.js ***!
-  \**********************************/
+/***/ "./src/js/components/Orientation.js":
+/*!******************************************!*\
+  !*** ./src/js/components/Orientation.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-module.exports = {
-	unsplash: {
-		app_id: "?client_id=" + instant_img_localize.unsplash_app_id,
-		photo_api: "https://api.unsplash.com/photos/",
-		collections_api: "https://api.unsplash.com/collections",
-		search_api: "https://api.unsplash.com/search/photos",
-		search_query_var: 'query',
-		arr_key: 'results',
-		order_key: 'order_by'
-	},
-	pixabay: {
-		app_id: "/?key=23559219-67621b8a8bd93df7b6aef72a7",
-		photo_api: "https://pixabay.com/api/",
-		search_api: "https://pixabay.com/api",
-		search_query_var: 'q',
-		arr_key: 'hits',
-		order_key: 'order'
-	},
-	photo_api: "https://api.unsplash.com/photos",
-	posts_per_page: "&per_page=20"
-};
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+
+var _API2 = _interopRequireDefault(_API);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Orientation = function (_React$Component) {
+	_inherits(Orientation, _React$Component);
+
+	function Orientation(props) {
+		_classCallCheck(this, Orientation);
+
+		var _this = _possibleConstructorReturn(this, (Orientation.__proto__ || Object.getPrototypeOf(Orientation)).call(this, props));
+
+		_this.provider = _this.props.provider;
+		_this.setOrientation = _this.props.setOrientation.bind(_this);
+		_this.options = _API2.default[_this.provider].orientation;
+		return _this;
+	}
+
+	_createClass(Orientation, [{
+		key: "render",
+		value: function render() {
+			var _this2 = this;
+
+			return _react2.default.createElement(
+				"div",
+				{ className: "orientation-list" },
+				_react2.default.createElement(
+					"span",
+					null,
+					_react2.default.createElement("i", { className: "fa fa-filter", "aria-hidden": "true" }),
+					" ",
+					instant_img_localize.orientation,
+					":"
+				),
+				_react2.default.createElement(
+					"ul",
+					null,
+					this.options && this.options.map(function (option, iterator) {
+						return _react2.default.createElement(
+							"li",
+							{
+								key: iterator + "-" + option,
+								tabIndex: "0",
+								onClick: function onClick(e) {
+									return _this2.setOrientation(option, e);
+								},
+								onKeyPress: function onKeyPress(e) {
+									return _this2.setOrientation(option, e);
+								}
+							},
+							instant_img_localize[option]
+						);
+					})
+				)
+			);
+		}
+	}]);
+
+	return Orientation;
+}(_react2.default.Component);
+
+exports.default = Orientation;
 
 /***/ }),
 
@@ -36932,17 +36991,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _API = __webpack_require__(/*! ./API */ "./src/js/components/API.js");
+var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
 
 var _API2 = _interopRequireDefault(_API);
-
-var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-var _axios2 = _interopRequireDefault(_axios);
 
 var _getProp = __webpack_require__(/*! ../functions/getProp */ "./src/js/functions/getProp.js");
 
@@ -36969,23 +37028,23 @@ var Photo = function (_React$Component) {
 		var result = _this.props.result;
 
 		_this.id = result.id;
-		_this.thumb = (0, _getProp2.default)(_this.provider, result, 'thumb');
-		_this.img = (0, _getProp2.default)(_this.provider, result, 'img');
-		_this.full_size = (0, _getProp2.default)(_this.provider, result, 'full_size');
-		_this.author = (0, _getProp2.default)(_this.provider, result, 'author');
+		_this.thumb = (0, _getProp2.default)(_this.provider, result, "thumb");
+		_this.img = (0, _getProp2.default)(_this.provider, result, "img");
+		_this.full_size = (0, _getProp2.default)(_this.provider, result, "full_size");
+		_this.author = (0, _getProp2.default)(_this.provider, result, "author");
 		_this.img_title = instant_img_localize.photo_by + " " + _this.author;
 		_this.filename = result.id;
 		_this.title = _this.img_title;
 		_this.alt = result.alt_description ? result.alt_description : null;
-		_this.alt = _this.alt === null ? '' : _this.alt;
-		_this.caption = '';
+		_this.alt = _this.alt === null ? "" : _this.alt;
+		_this.caption = "";
 
-		_this.user = (0, _getProp2.default)(_this.provider, result, 'user');
-		_this.name = (0, _getProp2.default)(_this.provider, result, 'name');
-		_this.user_photo = (0, _getProp2.default)(_this.provider, result, 'user_photo');
-		_this.user_url = (0, _getProp2.default)(_this.provider, result, 'user_url');
-		_this.link = (0, _getProp2.default)(_this.provider, result, 'link');
-		_this.likes = (0, _getProp2.default)(_this.provider, result, 'likes');
+		_this.user = (0, _getProp2.default)(_this.provider, result, "user");
+		_this.name = (0, _getProp2.default)(_this.provider, result, "name");
+		_this.user_photo = (0, _getProp2.default)(_this.provider, result, "user_photo");
+		_this.user_url = (0, _getProp2.default)(_this.provider, result, "user_url");
+		_this.link = (0, _getProp2.default)(_this.provider, result, "link");
+		_this.likes = (0, _getProp2.default)(_this.provider, result, "likes");
 		_this.attribution = instant_img_localize.photo_by + " <a href=\"https://unsplash.com/@" + _this.user + "?utm_source=wordpress-instant-images&utm_medium=referral\">" + _this.name + "</a> on <a href=\"https://unsplash.com/?utm_source=wordpress-instant-images&utm_medium=referral\">Unsplash</a>";
 
 		_this.view_all = instant_img_localize.view_all;
@@ -37147,8 +37206,7 @@ var Photo = function (_React$Component) {
 	}, {
 		key: "triggerUnsplashDownload",
 		value: function triggerUnsplashDownload(id) {
-
-			if (!this.provider === 'unsplash') {
+			if (!this.provider === "unsplash") {
 				return;
 			}
 
@@ -37561,13 +37619,13 @@ var Photo = function (_React$Component) {
 									className: "user fade",
 									href: this.user_url,
 									target: "_blank",
-									title: this.provider === 'unsplash' ? this.view_all + " @ " + this.user : this.view_all + " " + this.name
+									title: this.provider === "unsplash" ? this.view_all + " @ " + this.user : this.view_all + " " + this.name
 								},
 								_react2.default.createElement(
 									"div",
 									{ className: "user-wrap" },
 									this.user_photo.length > 0 && _react2.default.createElement("img", { src: this.user_photo }),
-									this.provider === 'unsplash' ? this.user : this.name
+									this.provider === "unsplash" ? this.user : this.name
 								)
 							),
 							_react2.default.createElement(
@@ -37694,7 +37752,7 @@ var Photo = function (_React$Component) {
 								{
 									className: "tooltip--above",
 									href: this.link,
-									"data-title": this.provider === 'unsplash' ? instant_img_localize.view_on_unsplash : instant_img_localize.view_on_pixabay,
+									"data-title": this.provider === "unsplash" ? instant_img_localize.view_on_unsplash : instant_img_localize.view_on_pixabay,
 									onMouseEnter: function onMouseEnter(e) {
 										return _this2.showTooltip(e);
 									},
@@ -37710,7 +37768,7 @@ var Photo = function (_React$Component) {
 								_react2.default.createElement(
 									"span",
 									{ className: "offscreen" },
-									this.provider === 'unsplash' ? instant_img_localize.view_on_unsplash : instant_img_localize.view_on_pixabay
+									this.provider === "unsplash" ? instant_img_localize.view_on_unsplash : instant_img_localize.view_on_pixabay
 								)
 							)
 						)
@@ -37735,7 +37793,10 @@ var Photo = function (_React$Component) {
 									instant_img_localize.edit_details_intro
 								)
 							),
-							_react2.default.createElement("div", { className: "preview", style: { backgroundImage: "url(" + this.thumb + ")" } })
+							_react2.default.createElement("div", {
+								className: "preview",
+								style: { backgroundImage: "url(" + this.thumb + ")" }
+							})
 						),
 						_react2.default.createElement(
 							"label",
@@ -37826,9 +37887,12 @@ var Photo = function (_React$Component) {
 							{ className: "add-attribution-row" },
 							_react2.default.createElement(
 								"button",
-								{ onClick: function onClick(e) {
+								{
+									onClick: function onClick(e) {
 										return _this2.addAttribution(e);
-									}, type: "button" },
+									},
+									type: "button"
+								},
 								instant_img_localize.attribution
 							)
 						),
@@ -37889,13 +37953,25 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _masonryLayout = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
+
+var _masonryLayout2 = _interopRequireDefault(_masonryLayout);
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _masonryLayout = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
+var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
 
-var _masonryLayout2 = _interopRequireDefault(_masonryLayout);
+var _API2 = _interopRequireDefault(_API);
+
+var _getResults = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
+
+var _getResults2 = _interopRequireDefault(_getResults);
+
+var _Orientation = __webpack_require__(/*! ./Orientation */ "./src/js/components/Orientation.js");
+
+var _Orientation2 = _interopRequireDefault(_Orientation);
 
 var _Photo = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
 
@@ -37904,10 +37980,6 @@ var _Photo2 = _interopRequireDefault(_Photo);
 var _ResultsToolTip = __webpack_require__(/*! ./ResultsToolTip */ "./src/js/components/ResultsToolTip.js");
 
 var _ResultsToolTip2 = _interopRequireDefault(_ResultsToolTip);
-
-var _API = __webpack_require__(/*! ./API */ "./src/js/components/API.js");
-
-var _API2 = _interopRequireDefault(_API);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37920,30 +37992,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var imagesLoaded = __webpack_require__(/*! imagesloaded */ "./node_modules/imagesloaded/imagesloaded.js");
-
-
-/**
- * Access the results of different providers.
- * Unsplash and Pixabay return results in different object formats.
- *
- * @param  {string}  provider  The current service provider.
- * @param  {string}  key       The match key to access.
- * @param  {Array}   data      The photo array.
- * @param  {Boolean} is_search Is this a search request.
- * @return {Array} 				 The photos as an array.
- */
-function accessResults(provider, key, data, is_search) {
-	if (provider === 'unsplash') {
-		if (is_search) {
-			return data[key] || [];
-		} else {
-			return data || [];
-		}
-	}
-	if (provider === 'pixabay') {
-		return data[key] || [];
-	}
-}
 
 var PhotoList = function (_React$Component) {
 	_inherits(PhotoList, _React$Component);
@@ -37962,7 +38010,7 @@ var PhotoList = function (_React$Component) {
 		_this.api_url = "" + _this.api_provider.photo_api + _this.api_provider.app_id + _API2.default.posts_per_page;
 		_this.search_api_url = "" + _this.api_provider.search_api + _this.api_provider.app_id + _API2.default.posts_per_page;
 
-		_this.results = accessResults(_this.provider, _this.arr_key, _this.props.results);
+		_this.results = (0, _getResults2.default)(_this.provider, _this.arr_key, _this.props.results);
 		_this.state = { results: _this.results };
 
 		_this.orderby = _this.props.orderby; // Orderby
@@ -38175,12 +38223,10 @@ var PhotoList = function (_React$Component) {
 			fetch(url).then(function (data) {
 				return data.json();
 			}).then(function (data) {
-
-				var results = accessResults(self.provider, self.arr_key, data, true);
+				var results = (0, _getResults2.default)(self.provider, self.arr_key, data, true);
 
 				// Search term.
 				if (type === "term") {
-
 					self.total_results = data.total;
 
 					// Check for returned data.
@@ -38189,7 +38235,7 @@ var PhotoList = function (_React$Component) {
 					// Update Props.
 					self.results = results;
 					self.setState({ results: self.results });
-					console.log('results', self.results);
+					console.log("results", self.results);
 				}
 
 				// Search by photo ID.
@@ -38264,13 +38310,12 @@ var PhotoList = function (_React$Component) {
 			fetch(url).then(function (data) {
 				return data.json();
 			}).then(function (data) {
-
 				console.log(data);
 
-				var moreResults = accessResults(self.provider, self.arr_key, data);
+				var moreResults = (0, _getResults2.default)(self.provider, self.arr_key, data);
 
 				// Unsplash search results are recieved in different JSON format
-				if (self.is_search && self.provider === 'unsplash') {
+				if (self.is_search && self.provider === "unsplash") {
 					moreResults = data.results;
 				}
 
@@ -38322,8 +38367,7 @@ var PhotoList = function (_React$Component) {
 			fetch(url).then(function (data) {
 				return data.json();
 			}).then(function (data) {
-
-				var results = accessResults(self.provider, self.arr_key, data);
+				var results = (0, _getResults2.default)(self.provider, self.arr_key, data);
 
 				// Check for returned data
 				self.checkTotalResults(results.length);
@@ -38344,10 +38388,10 @@ var PhotoList = function (_React$Component) {
 	}, {
 		key: "switchProvider",
 		value: function switchProvider() {
-			if (this.provider === 'pixabay') {
-				this.provider = 'unsplash';
+			if (this.provider === "pixabay") {
+				this.provider = "unsplash";
 			} else {
-				this.provider = 'pixabay';
+				this.provider = "pixabay";
 			}
 
 			this.api_provider = _API2.default[this.provider]; // The API settings for the provider.
@@ -38358,7 +38402,7 @@ var PhotoList = function (_React$Component) {
 			this.search_api_url = "" + this.api_provider.search_api + this.api_provider.app_id + _API2.default.posts_per_page;
 			console.log(this.buttonLatest.current);
 
-			this.togglePhotoList('latest', this.buttonLatest.current, true);
+			this.togglePhotoList("latest", this.buttonLatest.current, true);
 		}
 
 		/**
@@ -38535,23 +38579,20 @@ var PhotoList = function (_React$Component) {
 		value: function render() {
 			var _this3 = this;
 
-			// Show/Hide orientation listing
-			var orientationStyle = this.is_search ? { display: "flex" } : { display: "none" };
-
 			return _react2.default.createElement(
 				"div",
 				{ id: "photo-listing", className: this.provider },
 				_react2.default.createElement(
 					"button",
 					{ onClick: function onClick(e) {
-							return _this3.switchProvider('unsplash');
+							return _this3.switchProvider("unsplash");
 						} },
 					"Unsplash"
 				),
 				_react2.default.createElement(
 					"button",
 					{ onClick: function onClick(e) {
-							return _this3.switchProvider('pixabay');
+							return _this3.switchProvider("pixabay");
 						} },
 					"Pixabay"
 				),
@@ -38589,7 +38630,7 @@ var PhotoList = function (_React$Component) {
 							instant_img_localize.popular
 						)
 					),
-					this.provider === 'unsplash' && _react2.default.createElement(
+					this.provider === "unsplash" && _react2.default.createElement(
 						"li",
 						null,
 						_react2.default.createElement(
@@ -38638,61 +38679,10 @@ var PhotoList = function (_React$Component) {
 					)
 				),
 				_react2.default.createElement("div", { className: "error-messaging" }),
-				_react2.default.createElement(
-					"div",
-					{ className: "orientation-list", style: orientationStyle },
-					_react2.default.createElement(
-						"span",
-						null,
-						_react2.default.createElement("i", { className: "fa fa-filter", "aria-hidden": "true" }),
-						" ",
-						instant_img_localize.orientation,
-						":"
-					),
-					_react2.default.createElement(
-						"ul",
-						null,
-						_react2.default.createElement(
-							"li",
-							{
-								tabIndex: "0",
-								onClick: function onClick(e) {
-									return _this3.setOrientation("landscape", e);
-								},
-								onKeyPress: function onKeyPress(e) {
-									return _this3.setOrientation("landscape", e);
-								}
-							},
-							instant_img_localize.landscape
-						),
-						_react2.default.createElement(
-							"li",
-							{
-								tabIndex: "0",
-								onClick: function onClick(e) {
-									return _this3.setOrientation("portrait", e);
-								},
-								onKeyPress: function onKeyPress(e) {
-									return _this3.setOrientation("portrait", e);
-								}
-							},
-							instant_img_localize.portrait
-						),
-						_react2.default.createElement(
-							"li",
-							{
-								tabIndex: "0",
-								onClick: function onClick(e) {
-									return _this3.setOrientation("squarish", e);
-								},
-								onKeyPress: function onKeyPress(e) {
-									return _this3.setOrientation("squarish", e);
-								}
-							},
-							instant_img_localize.squarish
-						)
-					)
-				),
+				this.is_search && _react2.default.createElement(_Orientation2.default, {
+					provider: this.provider,
+					setOrientation: this.setOrientation.bind(this)
+				}),
 				_react2.default.createElement(
 					"div",
 					{ id: "photos", className: "photo-target" },
@@ -38700,7 +38690,7 @@ var PhotoList = function (_React$Component) {
 						return _react2.default.createElement(_Photo2.default, {
 							provider: _this3.provider,
 							result: result,
-							key: result.id + iterator,
+							key: _this3.provider + "-" + result.id + "-" + iterator,
 							editor: _this3.editor,
 							mediaRouter: _this3.is_media_router,
 							blockEditor: _this3.is_block_editor,
@@ -38848,6 +38838,42 @@ exports.default = ResultsToolTip;
 
 /***/ }),
 
+/***/ "./src/js/constants/API.js":
+/*!*********************************!*\
+  !*** ./src/js/constants/API.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+	unsplash: {
+		app_id: "?client_id=" + instant_img_localize.unsplash_app_id,
+		photo_api: "https://api.unsplash.com/photos/",
+		collections_api: "https://api.unsplash.com/collections",
+		search_api: "https://api.unsplash.com/search/photos",
+		search_query_var: "query",
+		arr_key: "results",
+		order_key: "order_by",
+		orientation: ["landscape", "portrait", "squarish"]
+	},
+	pixabay: {
+		app_id: "/?key=23559219-67621b8a8bd93df7b6aef72a7",
+		photo_api: "https://pixabay.com/api/",
+		search_api: "https://pixabay.com/api",
+		search_query_var: "q",
+		arr_key: "hits",
+		order_key: "order",
+		orientation: ["horizontal", "vertical"]
+	},
+	photo_api: "https://api.unsplash.com/photos",
+	posts_per_page: "&per_page=20"
+};
+
+/***/ }),
+
 /***/ "./src/js/functions/getProp.js":
 /*!*************************************!*\
   !*** ./src/js/functions/getProp.js ***!
@@ -38971,6 +38997,46 @@ function getProp(provider, result, attribute) {
 
 /***/ }),
 
+/***/ "./src/js/functions/getResults.js":
+/*!****************************************!*\
+  !*** ./src/js/functions/getResults.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getResults;
+
+/**
+ * Access the results of different providers.
+ * Unsplash and Pixabay return results in different object formats.
+ *
+ * @param  {string}  provider  The current service provider.
+ * @param  {string}  key       The match key to access.
+ * @param  {Array}   data      The photo array.
+ * @param  {Boolean} is_search Is this a search request.
+ * @return {Array} 				 The photos as an array.
+ */
+function getResults(provider, key, data, is_search) {
+  if (provider === 'unsplash') {
+    if (is_search) {
+      return data[key] || [];
+    } else {
+      return data || [];
+    }
+  }
+  if (provider === 'pixabay') {
+    return data[key] || [];
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/functions/helpers.js":
 /*!*************************************!*\
   !*** ./src/js/functions/helpers.js ***!
@@ -39085,13 +39151,13 @@ var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/i
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _API = __webpack_require__(/*! ./components/API */ "./src/js/components/API.js");
-
-var _API2 = _interopRequireDefault(_API);
-
 var _PhotoList = __webpack_require__(/*! ./components/PhotoList */ "./src/js/components/PhotoList.js");
 
 var _PhotoList2 = _interopRequireDefault(_PhotoList);
+
+var _API = __webpack_require__(/*! ./constants/API */ "./src/js/constants/API.js");
+
+var _API2 = _interopRequireDefault(_API);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -39099,7 +39165,7 @@ __webpack_require__(/*! es6-promise */ "./node_modules/es6-promise/dist/es6-prom
 __webpack_require__(/*! isomorphic-fetch */ "./node_modules/isomorphic-fetch/fetch-npm-browserify.js");
 __webpack_require__(/*! ./functions/helpers */ "./src/js/functions/helpers.js");
 
-var provider = 'unsplash';
+var provider = "unsplash";
 
 /**
  * Get the initial set of photos.
@@ -39112,7 +39178,6 @@ var GetPhotos = function GetPhotos() {
 	var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 	var orderby = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "latest";
 	var provider = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "unsplash";
-
 
 	var container = document.querySelector(".instant-img-container");
 
@@ -39130,7 +39195,6 @@ var GetPhotos = function GetPhotos() {
 		fetch(url).then(function (data) {
 			return data.json();
 		}).then(function (data) {
-
 			var element = document.getElementById("app");
 			_reactDom2.default.render(_react2.default.createElement(_PhotoList2.default, {
 				container: element,

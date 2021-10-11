@@ -1,7 +1,7 @@
-import React from "react";
-import API from "./API";
 import axios from "axios";
-import getProp from '../functions/getProp';
+import React from "react";
+import API from "../constants/API";
+import getProp from "../functions/getProp";
 
 class Photo extends React.Component {
 	constructor(props) {
@@ -12,23 +12,23 @@ class Photo extends React.Component {
 		const result = this.props.result;
 
 		this.id = result.id;
-		this.thumb = getProp(this.provider, result, 'thumb');
-		this.img = getProp(this.provider, result, 'img');
-		this.full_size = getProp(this.provider, result, 'full_size');
-		this.author = getProp(this.provider, result, 'author');
+		this.thumb = getProp(this.provider, result, "thumb");
+		this.img = getProp(this.provider, result, "img");
+		this.full_size = getProp(this.provider, result, "full_size");
+		this.author = getProp(this.provider, result, "author");
 		this.img_title = `${instant_img_localize.photo_by} ${this.author}`;
 		this.filename = result.id;
 		this.title = this.img_title;
 		this.alt = result.alt_description ? result.alt_description : null;
-		this.alt = this.alt === null ? '' : this.alt;
-		this.caption = '';
+		this.alt = this.alt === null ? "" : this.alt;
+		this.caption = "";
 
-		this.user = getProp(this.provider, result, 'user');
-		this.name = getProp(this.provider, result, 'name');
-		this.user_photo = getProp(this.provider, result, 'user_photo');
-		this.user_url = getProp(this.provider, result, 'user_url');
-		this.link = getProp(this.provider, result, 'link');
-		this.likes = getProp(this.provider, result, 'likes');
+		this.user = getProp(this.provider, result, "user");
+		this.name = getProp(this.provider, result, "name");
+		this.user_photo = getProp(this.provider, result, "user_photo");
+		this.user_url = getProp(this.provider, result, "user_url");
+		this.link = getProp(this.provider, result, "link");
+		this.likes = getProp(this.provider, result, "likes");
 		this.attribution = `${instant_img_localize.photo_by} <a href="https://unsplash.com/@${this.user}?utm_source=wordpress-instant-images&utm_medium=referral">${this.name}</a> on <a href="https://unsplash.com/?utm_source=wordpress-instant-images&utm_medium=referral">Unsplash</a>`;
 
 		this.view_all = instant_img_localize.view_all;
@@ -205,8 +205,7 @@ class Photo extends React.Component {
 	 * @since 3.1
 	 */
 	triggerUnsplashDownload(id) {
-
-		if(!this.provider === 'unsplash'){
+		if (!this.provider === "unsplash") {
 			return;
 		}
 
@@ -538,7 +537,7 @@ class Photo extends React.Component {
 	 * @param {Element} e The target element.
 	 * @since 4.5
 	 */
-	addAttribution(e){
+	addAttribution(e) {
 		e.preventDefault();
 		const self = this;
 		this.captionRef.current.value = this.attribution;
@@ -580,13 +579,19 @@ class Photo extends React.Component {
 								className="user fade"
 								href={this.user_url}
 								target="_blank"
-								title={this.provider === 'unsplash' ? `${this.view_all} @ ${this.user}` : `${this.view_all} ${this.name}`}
+								title={
+									this.provider === "unsplash"
+										? `${this.view_all} @ ${this.user}`
+										: `${this.view_all} ${this.name}`
+								}
 							>
 								<div className="user-wrap">
 									{this.user_photo.length > 0 && (
 										<img src={this.user_photo} />
 									)}
-									{this.provider === 'unsplash' ? this.user : this.name}
+									{this.provider === "unsplash"
+										? this.user
+										: this.name}
 								</div>
 							</a>
 							<div className="photo-options">
@@ -669,7 +674,11 @@ class Photo extends React.Component {
 							<a
 								className="tooltip--above"
 								href={this.link}
-								data-title={this.provider === 'unsplash' ? instant_img_localize.view_on_unsplash : instant_img_localize.view_on_pixabay}
+								data-title={
+									this.provider === "unsplash"
+										? instant_img_localize.view_on_unsplash
+										: instant_img_localize.view_on_pixabay
+								}
 								onMouseEnter={(e) => this.showTooltip(e)}
 								onMouseLeave={(e) => this.hideTooltip(e)}
 								target="_blank"
@@ -679,7 +688,9 @@ class Photo extends React.Component {
 									aria-hidden="true"
 								></i>
 								<span className="offscreen">
-									{this.provider === 'unsplash' ? instant_img_localize.view_on_unsplash : instant_img_localize.view_on_pixabay}
+									{this.provider === "unsplash"
+										? instant_img_localize.view_on_unsplash
+										: instant_img_localize.view_on_pixabay}
 								</span>
 							</a>
 						</div>
@@ -693,7 +704,10 @@ class Photo extends React.Component {
 								</p>
 								<p>{instant_img_localize.edit_details_intro}</p>
 							</div>
-							<div className="preview" style={{backgroundImage: `url(${this.thumb})`}}></div>
+							<div
+								className="preview"
+								style={{ backgroundImage: `url(${this.thumb})` }}
+							></div>
 						</div>
 						<label>
 							<span>{instant_img_localize.edit_filename}:</span>
@@ -740,7 +754,10 @@ class Photo extends React.Component {
 							></textarea>
 						</label>
 						<div className="add-attribution-row">
-							<button onClick={(e) => this.addAttribution(e)} type="button">
+							<button
+								onClick={(e) => this.addAttribution(e)}
+								type="button"
+							>
 								{instant_img_localize.attribution}
 							</button>
 						</div>
