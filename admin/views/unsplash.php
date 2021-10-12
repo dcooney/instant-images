@@ -17,9 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<span>
 		<?php
 			// translators: Instant Images tagline.
-			$instant_images_tagline = __( 'One click photo uploads from %s', 'instant-images' );
+			$instant_images_tagline = __( 'One click photo uploads from %1$s and %2$s', 'instant-images' );
 			// @codingStandardsIgnoreStart
-			echo sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">unsplash.com</a>' );
+			echo sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">Unsplash</a>', '<a href="https://pixabay.com/" target="_blank">Pixabay</a>' );
 			// @codingStandardsIgnoreEnd
 		?>
 	</h1>

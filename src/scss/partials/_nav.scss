@@ -1,6 +1,12 @@
 .instant-img-container {
 	.control-nav {
-		display: block;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		@media screen and (max-width: $xsmall) {
+			justify-content: center;
+		}
+		width: 100%;
 		margin: 0;
 		padding: 25px 0;
 		list-style: none;
@@ -16,6 +22,10 @@
 			background: none;
 			font-size: 18px;
 			position: relative;
+			&:first-of-type{
+				margin: 0 10px 0 0;
+				font-size: 14px;
+			}
 			button {
 				padding: 0 24px 0 2px;
 				height: 42px;
@@ -56,21 +66,21 @@
 			}
 
 			@media screen and (max-width: $xsmall) {
-				width: 33.333%;
+				//width: 33.333%;
 				text-align: center;
 				margin: 0;
 				padding-bottom: 15px;
 			}
 			&.search-field {
-				float: right;
 				width: 40%;
 				margin: 0;
+				margin-left: auto;
 				max-width: 500px;
 				@media screen and (max-width: $xsmall) {
 					width: 100%;
 					display: block;
 					position: static;
-					padding-bottom: 15px;
+					padding-bottom: 0;
 					text-align: left;
 					max-width: 100%;
 				}
@@ -142,7 +152,7 @@
 					padding: 0 1px 0 0;
 					margin: 0;
 					position: relative;
-					height: 48px;
+					height: 42px;
 					display: block;
 					&:hover {
 						button {

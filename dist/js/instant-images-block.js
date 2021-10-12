@@ -9723,6 +9723,14 @@ var PhotoList = function (_React$Component) {
 				this.api_provider.order && _react2.default.createElement(
 					"ul",
 					{ className: "control-nav" },
+					_react2.default.createElement(
+						"li",
+						null,
+						_react2.default.createElement("i", {
+							className: "fa fa-sort-amount-asc",
+							"aria-hidden": "true"
+						})
+					),
 					this.api_provider.order.map(function (order, iterator) {
 						return _react2.default.createElement(
 							"li",

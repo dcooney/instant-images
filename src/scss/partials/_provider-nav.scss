@@ -8,7 +8,7 @@
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
 	background-color: #f7f7f7;
 	button{
-		padding: 10px 10px 10px 35px;
+		padding: 8px 8px 8px 35px;
 		border: 1px solid transparent;
 		background: transparent;
 		margin-right: 5px;
@@ -21,22 +21,20 @@
 		&:hover,
 		&:focus{
 			color: #333;
-			border-color: #e1e1e1;
-			box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);
 		}
 		&[data-provider="unsplash"]{
-			background: #f7f7f7 url("../img/logos/unsplash.svg") no-repeat 10px center;
+			background: #f7f7f7 url("../img/logos/unsplash.svg") no-repeat 8px center;
 			background-size: 18px 18px;
 		}
 		&[data-provider="pixabay"]{
-			background: #f7f7f7 url("../img/logos/pixabay.png") no-repeat 10px center;
+			background: #f7f7f7 url("../img/logos/pixabay.png") no-repeat 8px center;
 			background-size: 20px 20px;
 		}
 		&.active{
 			background-color: #fff;
 			border-color: #e1e1e1;
 			color: #333;
-			cursor: default;
+			cursor: default;box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);
 		}
 	}
 }

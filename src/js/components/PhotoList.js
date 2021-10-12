@@ -610,6 +610,12 @@ class PhotoList extends React.Component {
 				)}
 				{this.api_provider.order && (
 					<ul className="control-nav">
+						<li>
+							<i
+								className="fa fa-sort-amount-asc"
+								aria-hidden="true"
+							></i>
+						</li>
 						{this.api_provider.order.map((order, iterator) => (
 							<li key={`${this.provider}-order-${iterator}`}>
 								<button
