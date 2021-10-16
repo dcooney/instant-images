@@ -31,7 +31,7 @@
 				height: 42px;
 				line-height: 42px;
 				display: block;
-				color: #999;
+				color: $text_light;
 				text-decoration: none;
 				box-shadow: none;
 				background-color: transparent;
@@ -49,7 +49,7 @@
 					text-decoration: underline;
 				}
 				&.active {
-					color: #333;
+					color: $text;
 					cursor: default;
 					font-weight: 600;
 				}
@@ -164,14 +164,14 @@
 					width: 100%;
 					padding: 0 10px 0 42px;
 					border: 1px solid #e1e1e1;
-					background-color: #f7f7f7 !important;
+					background-color: $light_grey !important;
 					height: 42px;
 					line-height: 42px;
 					border-radius: 3px;
 					font-size: 16px;
 					transition: padding 0.15s ease;
 					&:focus {
-						border-color: #999;
+						border-color: $text_light;
 						box-shadow: 0 0 0 4px rgba(#000, 0.075);
 					}
 					&.searching {
@@ -180,6 +180,13 @@
 						background-position: 37px center;
 						background-repeat: no-repeat;
 					}
+				}
+				// Remove X button in search.
+				input[type="search"]::-webkit-search-decoration,
+				input[type="search"]::-webkit-search-cancel-button,
+				input[type="search"]::-webkit-search-results-button,
+				input[type="search"]::-webkit-search-results-decoration {
+					-webkit-appearance:none;
 				}
 				button {
 					position: absolute;
@@ -200,11 +207,11 @@
 					padding: 0;
 					&:hover {
 						outline: none;
-						color: #5d72c3;
+						color: $purple;
 					}
 					&:focus {
 						outline: none;
-						color: #5d72c3;
+						color: $purple;
 					}
 				}
 				input[type="search"]::-webkit-input-placeholder {

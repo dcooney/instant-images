@@ -7,15 +7,21 @@
  * @param  {string} app_id    The provider API key.
  * @return {string}           The API URL.
  */
-export default function searchByID(provider, id, base_url, app_id) {
+export default function searchByID(
+	provider,
+	id,
+	base_url,
+	api_query_var,
+	app_id
+) {
 	let url = "";
 	switch (provider) {
 		case "unsplash":
-			url = `${base_url}${id}${app_id}`;
+			url = `${base_url}${id}${api_query_var}${app_id}`;
 			break;
 
 		case "pixabay":
-			url = `${base_url}${app_id}&id=${id}`;
+			url = `${base_url}${api_query_var}${app_id}&id=${id}`;
 			break;
 	}
 

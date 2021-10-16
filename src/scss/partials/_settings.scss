@@ -1,6 +1,6 @@
 .instant-images-settings{
 	display: none;
-	background-color: #efefef;
+	background-color: $grey;
 	border-top: 1px solid #e7e7e7;
 	border-bottom: 1px solid #e7e7e7;
 	.cnkt-sidebar{
@@ -11,10 +11,22 @@
 			width: 50%;
 			@media screen and (max-width: $small){
 				float: none !important;
-				width: 100% !important;	
+				width: 100% !important;
 			}
 			&.ii-settings{
-				width: 31.333%
+				width: 31.333%;
+				select,
+				input[type=text],
+				input[type=number]{
+					background-color: #fff;
+					width: 100%;
+					padding: 5px 10px;
+					border-color: $text_light;
+				}
+				input[type=text],
+				input[type=number]{
+					padding: 10px;
+				}
 			}
 			&.ii-plugins{
 				width: 68.666%;
@@ -26,17 +38,17 @@
 	         padding: 17px 20px 3px;
 	         font-size: 16px;
 	         &.w-border{
-		         border-top: 1px solid #e7e7e7; 
+		         border-top: 1px solid #e7e7e7;
 	         }
 	      }
 	      h2 + p{
 	         padding: 0 20px 15px;
 	         margin: 0 !important;
-	         border-bottom: 1px solid #e7e7e7; 
+	         border-bottom: 1px solid #e7e7e7;
 	      }
 	      h2,
 	      h2 + p{
-	         background: #f7f7f7;
+	         background: $light_grey;
 	         margin: 0;
 	      }
 	      ul.whats-new{
@@ -48,9 +60,9 @@
 				      display: inline-block;
 				      margin: 0;
 				      padding: 3px;
-				      background: #f7f7f7;
+				      background: $light_grey;
 				      border-radius: 2px;
-				      box-shadow: 0 0 0 1px #efefef;
+				      box-shadow: 0 0 0 1px $grey;
 			      }
 		      }
 	      }
@@ -60,7 +72,7 @@
 		   padding: 0 0 20px;
 		   margin: 0 0 20px;
 		   overflow: hidden;
-		   position: relative;	
+		   position: relative;
 		   border: 1px solid #e7e7e7;
 		}
 		.cta.padding-bottom{
@@ -69,7 +81,7 @@
 		.cnkt-sidebar h3,
 		.cnkt-sidebar h4{
 			margin-top: 0;
-		}	
+		}
 		.cta-wrap{
 	   	display: block;
 	   	padding: 10px 20px;
@@ -81,7 +93,7 @@
 			   	line-height: 1;
 			   	padding: 8px 10px;
 			   	border-radius: 2px;
-			   	background: #ffffcc; 
+			   	background: #ffffcc;
 			   	color: #666;
 		   	}
 	   	}
@@ -91,7 +103,7 @@
 			margin: 2% 1% 0;
 			@media screen and (max-width: 1170px){
 				width: 100%;
-				margin: 2% 0 0;	
+				margin: 2% 0 0;
 			}
 			h2{
 	         border: none;
@@ -101,7 +113,7 @@
 	      h2 + p{
 	         padding: 0;
 	         margin: 0 !important;
-	         border-bottom: none; 
+	         border-bottom: none;
 	      }
 	      h2,
 	      h2 + p{

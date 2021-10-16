@@ -9,7 +9,6 @@
 export default function generateAttribution(provider, url, name) {
 	let attribution = instant_img_localize.photo_by;
 
-	console.log(name);
 	switch (provider) {
 		case "unsplash":
 			attribution += ` <a href="${url}?utm_source=wordpress-instant-images&utm_medium=referral">${name}</a> on <a href="https://unsplash.com/?utm_source=wordpress-instant-images&utm_medium=referral">Unsplash</a>`;

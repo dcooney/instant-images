@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import API from "../constants/API";
+import API from "../constants/API.js";
 import generateAttribution from "../functions/generateAttribution.js";
 import getProp from "../functions/getProp";
 
@@ -9,6 +9,7 @@ class Photo extends React.Component {
 		super(props);
 
 		this.provider = this.props.provider;
+		this.api_provider = API[this.provider];
 
 		const result = this.props.result;
 
@@ -39,8 +40,8 @@ class Photo extends React.Component {
 		this.view_all = instant_img_localize.view_all;
 		this.inProgress = false;
 		this.container = document.querySelector(".instant-img-container");
-		this.showTooltip = this.props.showTooltip;
-		this.hideTooltip = this.props.hideTooltip;
+		this.showTooltip = this.props.showTooltip.bind(this);
+		this.hideTooltip = this.props.hideTooltip.bind(this);
 
 		// Gutenberg Sidebar
 		this.setAsFeaturedImage = false;
@@ -151,8 +152,10 @@ class Photo extends React.Component {
 							attachment.id
 						);
 
-						// Trigger Download Counter at Unsplash
-						self.triggerUnsplashDownload(id);
+						// Trigger Download Counter at Unsplash.
+						if (self.provider === "unsplash") {
+							self.triggerUnsplashDownload(id);
+						}
 
 						// Set Featured Image [Gutenberg Sidebar]
 						if (self.displayGutenbergControl && self.setAsFeaturedImage) {
@@ -210,11 +213,7 @@ class Photo extends React.Component {
 	 * @since 3.1
 	 */
 	triggerUnsplashDownload(id) {
-		if (!this.provider === "unsplash") {
-			return;
-		}
-
-		const url = `${this.provider.photo_api}/${id}/download/${API.app_id}`;
+		const url = `${this.api_provider.photo_api}/${id}/download/${this.api_provider.api_query_var}${this.api_provider.app_id}`;
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {
@@ -552,10 +551,10 @@ class Photo extends React.Component {
 	}
 
 	render() {
-		let likeTxt =
-			parseInt(this.likes) > 1
-				? instant_img_localize.likes_plural
-				: instant_img_localize.likes;
+		const likeTxt =
+			parseInt(this.likes) === 1
+				? instant_img_localize.likes
+				: instant_img_localize.likes_plural;
 
 		return (
 			<article className="photo">

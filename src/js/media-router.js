@@ -9,6 +9,11 @@ require("./functions/helpers");
 let activeFrameId = "";
 let activeFrame = "";
 
+const provider =
+	instant_img_localize && instant_img_localize.default_provider
+		? instant_img_localize.default_provider
+		: "unsplash";
+
 // Load MediaFrame deps
 const oldMediaFrame = wp.media.view.MediaFrame.Post;
 const oldMediaFrameSelect = wp.media.view.MediaFrame.Select;
@@ -120,7 +125,7 @@ const instantImagesMediaTab = () => {
 			results=""
 			page="1"
 			orderby="latest"
-			service="unsplash"
+			provider={provider}
 		/>,
 		element
 	);

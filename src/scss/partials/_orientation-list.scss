@@ -4,8 +4,8 @@
 	width: 100%;
 	padding: 7px 0;
 	margin: 0 0 10px;
-	border-top: 1px solid #efefef;
-	border-bottom: 1px solid #efefef;
+	border-top: 1px solid $grey;
+	border-bottom: 1px solid $grey;
 	position: relative;
 	top: -7px;
 	span{
@@ -27,19 +27,19 @@
 			padding: 4px 6px;
 			transition: all 0.25s ease;
 			border: 1px solid transparent;
-			color: #999;
+			color: $text_light;
 			font-size: 13px;
 			&:hover{
 				color: #111;
 			}
 			&:focus{
-				border-color: #5d72c3;
+				border-color: $purple;
 				color: #111;
 				outline: none;
 			}
 			&.active{
-				background-color: #5d72c3;
-				border-color: #5d72c3;
+				background-color: $purple;
+				border-color: $purple;
 				color: #fff;
 				outline: none;
 			}
@@ -54,7 +54,7 @@
 		flex-wrap: wrap;
 		justify-content: center;
 		border-top: none;
-		background: #f7f7f7;
+		background: $light_grey;
 		margin-bottom: 10px;
 		span{
 			display: none;

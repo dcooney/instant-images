@@ -1,7 +1,9 @@
 module.exports = {
 	unsplash: {
-		app_id: "?client_id=" + instant_img_localize.unsplash_app_id,
-		photo_api: "https://api.unsplash.com/photos/",
+		requires_key: false,
+		app_id: instant_img_localize.unsplash_app_id,
+		api_query_var: "/?client_id=",
+		photo_api: "https://api.unsplash.com/photos",
 		collections_api: "https://api.unsplash.com/collections",
 		search_api: "https://api.unsplash.com/search/photos",
 		search_query_var: "query",
@@ -11,7 +13,11 @@ module.exports = {
 		orientation: ["landscape", "portrait", "squarish"],
 	},
 	pixabay: {
-		app_id: "/?key=23559219-67621b8a8bd93df7b6aef72a7",
+		requires_key: true,
+		//app_id: "",
+		//app_id: "23559219-67621b8a8bd93df7b6aef72a7",
+		app_id: instant_img_localize.pixabay_app_id,
+		api_query_var: "/?key=",
 		photo_api: "https://pixabay.com/api",
 		search_api: "https://pixabay.com/api",
 		search_query_var: "q",

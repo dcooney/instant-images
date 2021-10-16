@@ -438,7 +438,7 @@
 		&--controls,
 		&--title {
 			display: block;
-			background: #f7f7f7;
+			background: $light_grey;
 			border: 1px solid #e1e1e1;
 			padding: 15px 10px;
 			border-radius: 2px 2px 0 0;
@@ -475,7 +475,7 @@
 				font-size: 12px;
 				line-height: 1.45;
 				margin: 0;
-				color: #999;
+				color: $text_light;
 				&.heading {
 					color: #222;
 					margin: 0 0 3px;

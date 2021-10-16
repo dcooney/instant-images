@@ -1,9 +1,4 @@
-$xlarge: 1570px;
-$large: 1270px;
-$medium: 1024px;
-$small: 800px;
-$wp_small: 640px;
-$xsmall: 600px;
+
 
 body.media_page_instant-images {
 	background: #fff;
@@ -21,8 +16,8 @@ body.media_page_instant-images {
 		padding-top: 0;
 		padding-bottom: 0;
 		line-height: 40px;
-		background: #f7f7f7;
-		border-top: 1px solid #efefef;
+		background: $light_grey;
+		border-top: 1px solid $grey;
 		position: fixed;
 		bottom: 0;
 		z-index: 1100;
@@ -54,7 +49,7 @@ body.media_page_instant-images {
 		box-sizing: border-box;
 	}
 	a {
-		color: #5d72c3;
+		color: $purple;
 		transition: all 0.25s ease;
 		&:hover {
 			color: #5568ae;
@@ -82,27 +77,25 @@ body.media_page_instant-images {
 	}
 
 	.error-messaging {
-		display: none;
-		&.active {
-			padding: 17px 17px 17px 57px;
-			border-radius: 3px;
-			background: #df3333;
-			color: #fff;
-			font-size: 13px;
-			margin-bottom: 25px;
+		padding: 20px 20px 20px 60px;
+		border-radius: 3px;
+		background: #da4444;
+		color: #fff;
+		font-size: 13px;
+		line-height: 1.5;
+		margin-bottom: 25px;
+		display: block;
+		position: relative;
+		&:before {
+			font-family: "FontAwesome";
+			content: "\f06a";
 			display: block;
-			position: relative;
-			&:before {
-				font-family: "FontAwesome";
-				content: "\f06a";
-				display: block;
-				left: 17px;
-				top: 50%;
-				transform: translateY(-50%);
-				position: absolute;
-				font-size: 30px;
-				opacity: 0.75;
-			}
+			left: 17px;
+			top: 50%;
+			transform: translateY(-50%);
+			position: absolute;
+			font-size: 32px;
+			opacity: 0.75;
 		}
 	}
 
@@ -112,11 +105,11 @@ body.media_page_instant-images {
    */
 
 	.header-wrap {
-		background: #f7f7f7 url("../img/logo-48x48.png") no-repeat 25px 20px;
+		background: $light_grey url("../img/logo-48x48.png") no-repeat 25px 20px;
 		padding: 20px 25px 20px 83px;
 		min-height: 88px;
 		overflow: hidden;
-		border-bottom: 1px solid #efefef;
+		border-bottom: 1px solid $grey;
 		position: relative;
 		@media screen and (max-width: $small) {
 			background-position: center 20px;
@@ -152,7 +145,7 @@ body.media_page_instant-images {
 			span {
 				display: block;
 				padding: 3px 0 0;
-				color: #888;
+				color: $text_light;
 				font-size: 15px;
 				font-weight: 400;
 			}
@@ -184,7 +177,7 @@ body.media_page_instant-images {
 	.permissions-warning {
 		padding: 0 25px;
 		.inner {
-			border-bottom: 1px solid #efefef;
+			border-bottom: 1px solid $grey;
 			padding: 32px 0;
 		}
 		input {
@@ -215,7 +208,7 @@ body.media_page_instant-images {
 		padding: 25px 0;
 		text-align: center;
 		display: none;
-		border-top: 1px solid #efefef;
+		border-top: 1px solid $grey;
 
 		button {
 			display: inline-block;
@@ -312,7 +305,7 @@ body.media_page_instant-images {
 }
 .instant-img-container .form-table td {
 	border-top: 0;
-	padding: 0 0 15px;
+	padding: 0 0 10px;
 	float: left;
 	width: 100%;
 	margin: 0;
@@ -376,16 +369,16 @@ body.media_page_instant-images {
 	padding: 10px;
 	line-height: 1;
 	border: 1px solid #ccc;
-	background: #f7f7f7;
+	background: $light_grey;
 	width: 100%;
 	border-radius: 2px;
 	height: auto;
 }
 .instant-img-container input[type="text"]:focus,
 .instant-img-container textarea:focus {
-	border-color: #999;
+	border-color: $text_light;
 	box-shadow: 0 0 3px #ccc;
-	background: #efefef;
+	background: $grey;
 }
 
 /* Helpers */

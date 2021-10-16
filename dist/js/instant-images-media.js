@@ -36799,6 +36799,186 @@ if (!global.fetch) {
 
 /***/ }),
 
+/***/ "./src/js/components/ErrorMessage.js":
+/*!*******************************************!*\
+  !*** ./src/js/components/ErrorMessage.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ErrorMessage = function (_React$Component) {
+	_inherits(ErrorMessage, _React$Component);
+
+	function ErrorMessage() {
+		_classCallCheck(this, ErrorMessage);
+
+		return _possibleConstructorReturn(this, (ErrorMessage.__proto__ || Object.getPrototypeOf(ErrorMessage)).apply(this, arguments));
+	}
+
+	_createClass(ErrorMessage, [{
+		key: "render",
+		value: function render() {
+			return _react2.default.createElement(
+				"div",
+				{ className: "error-messaging" },
+				_react2.default.createElement("span", {
+					dangerouslySetInnerHTML: {
+						__html: "" + instant_img_localize.error_restapi + instant_img_localize.error_restapi_desc
+					}
+				})
+			);
+		}
+	}]);
+
+	return ErrorMessage;
+}(_react2.default.Component);
+
+exports.default = ErrorMessage;
+
+/***/ }),
+
+/***/ "./src/js/components/LoadMore.js":
+/*!***************************************!*\
+  !*** ./src/js/components/LoadMore.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LoadMore = function (_React$Component) {
+	_inherits(LoadMore, _React$Component);
+
+	function LoadMore(props) {
+		_classCallCheck(this, LoadMore);
+
+		var _this = _possibleConstructorReturn(this, (LoadMore.__proto__ || Object.getPrototypeOf(LoadMore)).call(this, props));
+
+		_this.loadMorePhotos = _this.props.loadMorePhotos.bind(_this);
+		return _this;
+	}
+
+	_createClass(LoadMore, [{
+		key: "render",
+		value: function render() {
+			var _this2 = this;
+
+			return _react2.default.createElement(
+				"div",
+				{ className: "load-more-wrap" },
+				_react2.default.createElement(
+					"button",
+					{
+						type: "button",
+						className: "button",
+						onClick: function onClick() {
+							return _this2.loadMorePhotos();
+						}
+					},
+					instant_img_localize.load_more
+				)
+			);
+		}
+	}]);
+
+	return LoadMore;
+}(_react2.default.Component);
+
+exports.default = LoadMore;
+
+/***/ }),
+
+/***/ "./src/js/components/LoadingBlock.js":
+/*!*******************************************!*\
+  !*** ./src/js/components/LoadingBlock.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LoadingBlock = function (_React$Component) {
+	_inherits(LoadingBlock, _React$Component);
+
+	function LoadingBlock() {
+		_classCallCheck(this, LoadingBlock);
+
+		return _possibleConstructorReturn(this, (LoadingBlock.__proto__ || Object.getPrototypeOf(LoadingBlock)).apply(this, arguments));
+	}
+
+	_createClass(LoadingBlock, [{
+		key: "render",
+		value: function render() {
+			return _react2.default.createElement("div", { className: "loading-block" });
+		}
+	}]);
+
+	return LoadingBlock;
+}(_react2.default.Component);
+
+exports.default = LoadingBlock;
+
+/***/ }),
+
 /***/ "./src/js/components/NoResults.js":
 /*!****************************************!*\
   !*** ./src/js/components/NoResults.js ***!
@@ -36982,7 +37162,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+var _API = __webpack_require__(/*! ../constants/API.js */ "./src/js/constants/API.js");
 
 var _API2 = _interopRequireDefault(_API);
 
@@ -37011,6 +37191,7 @@ var Photo = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (Photo.__proto__ || Object.getPrototypeOf(Photo)).call(this, props));
 
 		_this.provider = _this.props.provider;
+		_this.api_provider = _API2.default[_this.provider];
 
 		var result = _this.props.result;
 
@@ -37037,8 +37218,8 @@ var Photo = function (_React$Component) {
 		_this.view_all = instant_img_localize.view_all;
 		_this.inProgress = false;
 		_this.container = document.querySelector(".instant-img-container");
-		_this.showTooltip = _this.props.showTooltip;
-		_this.hideTooltip = _this.props.hideTooltip;
+		_this.showTooltip = _this.props.showTooltip.bind(_this);
+		_this.hideTooltip = _this.props.hideTooltip.bind(_this);
 
 		// Gutenberg Sidebar
 		_this.setAsFeaturedImage = false;
@@ -37146,8 +37327,10 @@ var Photo = function (_React$Component) {
 						// Success/Upload Complete
 						self.uploadComplete(target, photo, msg, edit_url, attachment.id);
 
-						// Trigger Download Counter at Unsplash
-						self.triggerUnsplashDownload(id);
+						// Trigger Download Counter at Unsplash.
+						if (self.provider === "unsplash") {
+							self.triggerUnsplashDownload(id);
+						}
 
 						// Set Featured Image [Gutenberg Sidebar]
 						if (self.displayGutenbergControl && self.setAsFeaturedImage) {
@@ -37193,11 +37376,7 @@ var Photo = function (_React$Component) {
 	}, {
 		key: "triggerUnsplashDownload",
 		value: function triggerUnsplashDownload(id) {
-			if (!this.provider === "unsplash") {
-				return;
-			}
-
-			var url = this.provider.photo_api + "/" + id + "/download/" + _API2.default.app_id;
+			var url = this.api_provider.photo_api + "/" + id + "/download/" + this.api_provider.api_query_var + this.api_provider.app_id;
 			fetch(url).then(function (data) {
 				return data.json();
 			}).then(function (data) {
@@ -37566,7 +37745,7 @@ var Photo = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
-			var likeTxt = parseInt(this.likes) > 1 ? instant_img_localize.likes_plural : instant_img_localize.likes;
+			var likeTxt = parseInt(this.likes) === 1 ? instant_img_localize.likes : instant_img_localize.likes_plural;
 
 			return _react2.default.createElement(
 				"article",
@@ -37960,6 +38139,18 @@ var _searchByID = __webpack_require__(/*! ../functions/searchByID */ "./src/js/f
 
 var _searchByID2 = _interopRequireDefault(_searchByID);
 
+var _ErrorMessage = __webpack_require__(/*! ./ErrorMessage */ "./src/js/components/ErrorMessage.js");
+
+var _ErrorMessage2 = _interopRequireDefault(_ErrorMessage);
+
+var _LoadingBlock = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
+
+var _LoadingBlock2 = _interopRequireDefault(_LoadingBlock);
+
+var _LoadMore = __webpack_require__(/*! ./LoadMore */ "./src/js/components/LoadMore.js");
+
+var _LoadMore2 = _interopRequireDefault(_LoadMore);
+
 var _NoResults = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
 
 var _NoResults2 = _interopRequireDefault(_NoResults);
@@ -37976,7 +38167,13 @@ var _ResultsToolTip = __webpack_require__(/*! ./ResultsToolTip */ "./src/js/comp
 
 var _ResultsToolTip2 = _interopRequireDefault(_ResultsToolTip);
 
+var _Tooltip = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip.js");
+
+var _Tooltip2 = _interopRequireDefault(_Tooltip);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -38003,9 +38200,12 @@ var PhotoList = function (_React$Component) {
 		_this.arr_key = _this.api_provider.arr_key;
 		_this.order_key = _this.api_provider.order_key;
 
-		_this.api_url = "" + _this.api_provider.photo_api + _this.api_provider.app_id + _API2.default.posts_per_page;
-		_this.search_api_url = "" + _this.api_provider.search_api + _this.api_provider.app_id + _API2.default.posts_per_page;
+		_this.api_url = "" + _this.api_provider.photo_api + _this.api_provider.api_query_var + _this.api_provider.app_id + _API2.default.posts_per_page;
+		_this.search_api_url = "" + _this.api_provider.search_api + _this.api_provider.api_query_var + _this.api_provider.app_id + _API2.default.posts_per_page;
 
+		_this.hasAPIError = _this.props.hasError;
+
+		// Results state.
 		_this.results = (0, _getResults2.default)(_this.provider, _this.arr_key, _this.props.results);
 		_this.state = { results: _this.results };
 
@@ -38016,16 +38216,21 @@ var PhotoList = function (_React$Component) {
 		_this.search_term = "";
 		_this.total_results = 0;
 		_this.orientation = "";
-
-		_this.isLoading = false; // loading flag
-		_this.isDone = false; // Done flag - no photos remain
-
+		_this.isLoading = false; // Loading flag.
+		_this.isDone = false; // Done flag.
+		_this.restapi_error = false;
 		_this.errorMsg = "";
 		_this.msnry = "";
 		_this.tooltipInterval = "";
+
+		// Refs.
+		_this.photoTarget = _react2.default.createRef();
+		_this.providerNav = _react2.default.createRef();
+		_this.controlNav = _react2.default.createRef();
 		_this.photoSearch = _react2.default.createRef();
 		_this.buttonLatest = _react2.default.createRef();
 
+		// Editor props.
 		_this.editor = _this.props.editor ? _this.props.editor : "classic";
 		_this.is_block_editor = _this.props.editor === "gutenberg" ? true : false;
 		_this.is_media_router = _this.props.editor === "media-router" ? true : false;
@@ -38057,42 +38262,28 @@ var PhotoList = function (_React$Component) {
 		key: "test",
 		value: function test() {
 			var self = this;
-
-			var target = this.container.querySelector(".error-messaging"); // Target element
-
 			var testURL = instant_img_localize.root + "instant-images/test/"; // REST Route
 			var restAPITest = new XMLHttpRequest();
 			restAPITest.open("POST", testURL, true);
 			restAPITest.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
 			restAPITest.setRequestHeader("Content-Type", "application/json");
 			restAPITest.send();
-
 			restAPITest.onload = function () {
 				if (restAPITest.status >= 200 && restAPITest.status < 400) {
-					// Success
-
 					var response = JSON.parse(restAPITest.response);
 					var success = response.success;
-
 					if (!success) {
-						self.renderTestError(target);
+						self.setState({ restapi_error: true });
 					}
 				} else {
 					// Error
-					self.renderTestError(target);
+					self.setState({ restapi_error: true });
 				}
 			};
-
 			restAPITest.onerror = function (errorMsg) {
 				console.log(errorMsg);
-				self.renderTestError(errorTarget);
+				self.setState({ restapi_error: true });
 			};
-		}
-	}, {
-		key: "renderTestError",
-		value: function renderTestError(target) {
-			target.classList.add("active");
-			target.innerHTML = instant_img_localize.error_restapi + instant_img_localize.error_restapi_desc;
 		}
 
 		/**
@@ -38214,7 +38405,7 @@ var PhotoList = function (_React$Component) {
 			if (search_type === "id:") {
 				type = "id";
 				term = term.replace("id:", "");
-				url = (0, _searchByID2.default)(this.provider, term, this.api_provider.photo_api, this.api_provider.app_id);
+				url = (0, _searchByID2.default)(this.provider, term, this.api_provider.photo_api, this.api_provider.api_query_var, this.api_provider.app_id);
 			}
 
 			fetch(url).then(function (data) {
@@ -38238,11 +38429,10 @@ var PhotoList = function (_React$Component) {
 					// Convert return data to array.
 					var photoArray = [];
 
+					// Get results via ID.
 					var result = (0, _getResults.getResultById)(self.provider, self.arr_key, data, true);
 
 					// Data comes back differently in a search by ID.
-					// Need to parse it for unsplash and pixabay separatly.
-
 					if (data.errors) {
 						// If error was returned (Unsplash Only).
 						self.total_results = 0;
@@ -38289,6 +38479,58 @@ var PhotoList = function (_React$Component) {
 			this.is_search = false;
 			this.search_term = "";
 			this.clearOrientation();
+		}
+
+		/**
+   * Get the initial set of photos for the current view (New/Popular/Old/etc...).
+   *
+   * @param {string}  view  Current view.
+   * @param {Element} e     The clicked element.
+   * @param {Boolean} reset Is this an app reset.
+   * @since 3.0
+   */
+
+	}, {
+		key: "getPhotos",
+		value: function getPhotos(view, e) {
+			var reset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+			var self = this;
+			var el = e.target || e;
+
+			if (el.classList.contains("active") && !reset) {
+				return; // exit if active
+			}
+
+			el.classList.add("loading"); // Add class to nav btn
+			this.isLoading = true;
+			this.page = 1;
+			this.orderby = view;
+			this.results = [];
+			this.clearSearch();
+
+			var url = this.api_url + "&page=" + this.page + "&" + this.order_key + "=" + this.orderby;
+
+			fetch(url).then(function (data) {
+				return data.json();
+			}).then(function (data) {
+				var results = (0, _getResults2.default)(self.provider, self.arr_key, data);
+
+				// Check for returned data
+				self.checkTotalResults(results.length);
+
+				// Update Props.
+				self.results = results;
+
+				// Set results state.
+				self.setState({ results: results });
+
+				// Remove class from nav btn.
+				el.classList.remove("loading");
+			}).catch(function (error) {
+				console.log(error);
+				self.isLoading = false;
+			});
 		}
 
 		/**
@@ -38343,93 +38585,92 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * Toogles the photo view (New/Popular/Old).
-   *
-   * @param {string}  view  Current view.
-   * @param {Element} e     The clicked element.
-   * @param {Boolean} reset Is this an app reset.
-   * @since 3.0
-   */
-
-	}, {
-		key: "togglePhotoList",
-		value: function togglePhotoList(view, e) {
-			var reset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-			var self = this;
-			var el = e.target || e;
-
-			if (el.classList.contains("active") && !reset) {
-				return; // exit if active
-			}
-
-			el.classList.add("loading"); // Add class to nav btn
-			this.isLoading = true;
-			this.page = 1;
-			this.orderby = view;
-			this.results = [];
-			this.clearSearch();
-
-			var url = this.api_url + "&page=" + this.page + "&" + this.order_key + "=" + this.orderby;
-			fetch(url).then(function (data) {
-				return data.json();
-			}).then(function (data) {
-				var results = (0, _getResults2.default)(self.provider, self.arr_key, data);
-
-				// Check for returned data
-				self.checkTotalResults(results.length);
-
-				// Update Props.
-				self.results = results;
-
-				// Set results state.
-				self.setState({ results: results });
-
-				// Remove class from nav btn.
-				el.classList.remove("loading");
-			}).catch(function (error) {
-				console.log(error);
-				self.isLoading = false;
-			});
-		}
-
-		/**
-   * Toggle the service provider.
+   * Toggles the service provider.
    *
    * @param {Event} e The clicked element event.
    */
 
 	}, {
 		key: "switchProvider",
-		value: function switchProvider(e) {
-			var target = e.currentTarget;
-			var parent = target.parentNode;
-			var provider = target.dataset.provider;
-			if (provider === this.provider) {
-				return false;
+		value: function () {
+			var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
+				var target, provider, api, url, response, ok, status;
+				return regeneratorRuntime.wrap(function _callee$(_context) {
+					while (1) {
+						switch (_context.prev = _context.next) {
+							case 0:
+								target = e.currentTarget;
+								provider = target.dataset.provider;
+
+								if (!(provider === this.provider)) {
+									_context.next = 4;
+									break;
+								}
+
+								return _context.abrupt("return", false);
+
+							case 4:
+								if (!_API2.default[provider].requires_key) {
+									_context.next = 15;
+									break;
+								}
+
+								api = _API2.default[provider];
+								url = "" + api.photo_api + api.api_query_var + api.app_id + "&per_page=10&page=1";
+								_context.next = 9;
+								return fetch(url);
+
+							case 9:
+								response = _context.sent;
+								ok = response.ok;
+								status = response.status;
+
+								if (!(!ok || status === 400 || status === 401 || status === 500)) {
+									_context.next = 15;
+									break;
+								}
+
+								alert("NEED API KEY ");
+								return _context.abrupt("return");
+
+							case 15:
+
+								// Set new state provider.
+								this.provider = provider;
+								this.api_provider = _API2.default[this.provider];
+
+								// Remove active from buttons.
+								this.providerNav.current.querySelectorAll("button").forEach(function (button) {
+									button.classList.remove("active");
+								});
+
+								// Select active button.
+								target.classList.add("active");
+
+								// Set current provider params.
+								this.arr_key = this.api_provider.arr_key;
+								this.order_key = this.api_provider.order_key;
+
+								this.api_url = "" + this.api_provider.photo_api + this.api_provider.api_query_var + this.api_provider.app_id + _API2.default.posts_per_page;
+								this.search_api_url = "" + this.api_provider.search_api + this.api_provider.api_query_var + this.api_provider.app_id + _API2.default.posts_per_page;
+
+								// At last, get the photos.
+								this.getPhotos("latest", this.buttonLatest.current, true);
+
+							case 24:
+							case "end":
+								return _context.stop();
+						}
+					}
+				}, _callee, this);
+			}));
+
+			function switchProvider(_x2) {
+				return _ref.apply(this, arguments);
 			}
 
-			console.log(provider);
-
-			this.provider = provider;
-
-			// Remove active from buttons.
-			parent.querySelectorAll("button").forEach(function (button) {
-				button.classList.remove("active");
-			});
-
-			// Select active button.
-			target.classList.add("active");
-
-			this.api_provider = _API2.default[this.provider];
-			this.arr_key = this.api_provider.arr_key;
-			this.order_key = this.api_provider.order_key;
-
-			this.api_url = "" + this.api_provider.photo_api + this.api_provider.app_id + _API2.default.posts_per_page;
-			this.search_api_url = "" + this.api_provider.search_api + this.api_provider.app_id + _API2.default.posts_per_page;
-
-			this.togglePhotoList("latest", this.buttonLatest.current, true);
-		}
+			return switchProvider;
+		}()
 
 		/**
    * Renders the Masonry layout.
@@ -38444,13 +38685,13 @@ var PhotoList = function (_React$Component) {
 				return false;
 			}
 			var self = this;
-			var photoListWrapper = self.container.querySelector(".photo-target");
+			var photoListWrapper = self.photoTarget.current;
 			imagesLoaded(photoListWrapper, function () {
 				self.msnry = new _masonryLayout2.default(photoListWrapper, {
 					itemSelector: ".photo"
 				});
-				[].concat(_toConsumableArray(self.container.querySelectorAll(".photo-target .photo"))).forEach(function (el) {
-					return el.classList.add("in-view");
+				self.photoTarget.current.querySelectorAll(".photo").forEach(function (el) {
+					el.classList.add("in-view");
 				});
 			});
 		}
@@ -38495,14 +38736,14 @@ var PhotoList = function (_React$Component) {
 		key: "setActiveState",
 		value: function setActiveState() {
 			var self = this;
-			// Remove .active class
-			[].concat(_toConsumableArray(this.container.querySelectorAll(".control-nav button"))).forEach(function (el) {
+			// Remove .active class from control nav.
+			this.controlNav.current.querySelectorAll("button").forEach(function (el) {
 				return el.classList.remove("active");
 			});
 
-			// Set active item, if not search
+			// Set active item, if not search.
 			if (!this.is_search) {
-				var active = this.container.querySelector(".control-nav li button.instant-images-" + this.orderby);
+				var active = this.controlNav.current.querySelector("li button.instant-images-" + this.orderby);
 				if (active) {
 					active.classList.add("active");
 				}
@@ -38612,7 +38853,7 @@ var PhotoList = function (_React$Component) {
 				{ id: "photo-listing", className: this.provider },
 				this.providers && _react2.default.createElement(
 					"nav",
-					{ className: "provider-nav" },
+					{ className: "provider-nav", ref: this.providerNav },
 					this.providers.map(function (provider, iterator) {
 						return _react2.default.createElement(
 							"button",
@@ -38621,7 +38862,8 @@ var PhotoList = function (_React$Component) {
 								"data-provider": provider.toLowerCase(),
 								onClick: function onClick(e) {
 									return _this3.switchProvider(e);
-								}
+								},
+								className: _this3.provider === provider.toLowerCase() ? "active" : ""
 							},
 							provider
 						);
@@ -38629,7 +38871,7 @@ var PhotoList = function (_React$Component) {
 				),
 				this.api_provider.order && _react2.default.createElement(
 					"ul",
-					{ className: "control-nav" },
+					{ className: "control-nav", ref: this.controlNav },
 					_react2.default.createElement(
 						"li",
 						null,
@@ -38648,7 +38890,7 @@ var PhotoList = function (_React$Component) {
 									type: "button",
 									className: "instant-images-" + order,
 									onClick: function onClick(e) {
-										return _this3.togglePhotoList(order, e);
+										return _this3.getPhotos(order, e);
 									},
 									ref: order === "latest" ? _this3.buttonLatest : null
 								},
@@ -38690,14 +38932,14 @@ var PhotoList = function (_React$Component) {
 						)
 					)
 				),
-				_react2.default.createElement("div", { className: "error-messaging" }),
+				this.restapi_error && _react2.default.createElement(_ErrorMessage2.default, null),
 				this.is_search && _react2.default.createElement(_Orientation2.default, {
 					provider: this.provider,
 					setOrientation: this.setOrientation.bind(this)
 				}),
 				_react2.default.createElement(
 					"div",
-					{ id: "photos", className: "photo-target" },
+					{ id: "photos", className: "photo-target", ref: this.photoTarget },
 					this.state.results.map(function (result, iterator) {
 						return _react2.default.createElement(_Photo2.default, {
 							provider: _this3.provider,
@@ -38714,23 +38956,9 @@ var PhotoList = function (_React$Component) {
 					})
 				),
 				this.total_results == 0 && this.is_search === true && _react2.default.createElement(_NoResults2.default, null),
-				_react2.default.createElement("div", { className: "loading-block" }),
-				_react2.default.createElement(
-					"div",
-					{ className: "load-more-wrap" },
-					_react2.default.createElement(
-						"button",
-						{
-							type: "button",
-							className: "button",
-							onClick: function onClick() {
-								return _this3.loadMorePhotos();
-							}
-						},
-						instant_img_localize.load_more
-					)
-				),
-				_react2.default.createElement("div", { id: "tooltip" })
+				_react2.default.createElement(_LoadingBlock2.default, null),
+				_react2.default.createElement(_LoadMore2.default, { loadMorePhotos: this.loadMorePhotos }),
+				_react2.default.createElement(_Tooltip2.default, null)
 			);
 		}
 	}]);
@@ -38824,6 +39052,57 @@ exports.default = ResultsToolTip;
 
 /***/ }),
 
+/***/ "./src/js/components/Tooltip.js":
+/*!**************************************!*\
+  !*** ./src/js/components/Tooltip.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Tooltip = function (_React$Component) {
+	_inherits(Tooltip, _React$Component);
+
+	function Tooltip() {
+		_classCallCheck(this, Tooltip);
+
+		return _possibleConstructorReturn(this, (Tooltip.__proto__ || Object.getPrototypeOf(Tooltip)).apply(this, arguments));
+	}
+
+	_createClass(Tooltip, [{
+		key: "render",
+		value: function render() {
+			return _react2.default.createElement("div", { id: "tooltip" });
+		}
+	}]);
+
+	return Tooltip;
+}(_react2.default.Component);
+
+exports.default = Tooltip;
+
+/***/ }),
+
 /***/ "./src/js/constants/API.js":
 /*!*********************************!*\
   !*** ./src/js/constants/API.js ***!
@@ -38836,8 +39115,10 @@ exports.default = ResultsToolTip;
 
 module.exports = {
 	unsplash: {
-		app_id: "?client_id=" + instant_img_localize.unsplash_app_id,
-		photo_api: "https://api.unsplash.com/photos/",
+		requires_key: false,
+		app_id: instant_img_localize.unsplash_app_id,
+		api_query_var: "/?client_id=",
+		photo_api: "https://api.unsplash.com/photos",
 		collections_api: "https://api.unsplash.com/collections",
 		search_api: "https://api.unsplash.com/search/photos",
 		search_query_var: "query",
@@ -38847,7 +39128,11 @@ module.exports = {
 		orientation: ["landscape", "portrait", "squarish"]
 	},
 	pixabay: {
-		app_id: "/?key=23559219-67621b8a8bd93df7b6aef72a7",
+		requires_key: true,
+		//app_id: "",
+		//app_id: "23559219-67621b8a8bd93df7b6aef72a7",
+		app_id: instant_img_localize.pixabay_app_id,
+		api_query_var: "/?key=",
 		photo_api: "https://pixabay.com/api",
 		search_api: "https://pixabay.com/api",
 		search_query_var: "q",
@@ -38886,7 +39171,6 @@ exports.default = generateAttribution;
 function generateAttribution(provider, url, name) {
 	var attribution = instant_img_localize.photo_by;
 
-	console.log(name);
 	switch (provider) {
 		case "unsplash":
 			attribution += " <a href=\"" + url + "?utm_source=wordpress-instant-images&utm_medium=referral\">" + name + "</a> on <a href=\"https://unsplash.com/?utm_source=wordpress-instant-images&utm_medium=referral\">Unsplash</a>";
@@ -39202,15 +39486,15 @@ exports.default = searchByID;
  * @param  {string} app_id    The provider API key.
  * @return {string}           The API URL.
  */
-function searchByID(provider, id, base_url, app_id) {
+function searchByID(provider, id, base_url, api_query_var, app_id) {
 	var url = "";
 	switch (provider) {
 		case "unsplash":
-			url = "" + base_url + id + app_id;
+			url = "" + base_url + id + api_query_var + app_id;
 			break;
 
 		case "pixabay":
-			url = "" + base_url + app_id + "&id=" + id;
+			url = "" + base_url + api_query_var + app_id + "&id=" + id;
 			break;
 	}
 
@@ -39250,6 +39534,8 @@ __webpack_require__(/*! ./functions/helpers */ "./src/js/functions/helpers.js");
 // Global vars
 var activeFrameId = "";
 var activeFrame = "";
+
+var provider = instant_img_localize && instant_img_localize.default_provider ? instant_img_localize.default_provider : "unsplash";
 
 // Load MediaFrame deps
 var oldMediaFrame = wp.media.view.MediaFrame.Post;
@@ -39361,7 +39647,7 @@ var instantImagesMediaTab = function instantImagesMediaTab() {
 		results: "",
 		page: "1",
 		orderby: "latest",
-		service: "unsplash"
+		provider: provider
 	}), element);
 };
 

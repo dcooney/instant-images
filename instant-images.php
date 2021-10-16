@@ -16,24 +16,37 @@
 
 /*
 NEW: Added button to auto-generate Photo attribution in image caption.
+NEW: Added unistaller script to remove plugin settings.
 UPDATE: Updated styling and fucntionality of photo detail editor.
 
 TODO:
-- Pixabay API Key Option
-- Add search [DONE]
-	- Search By ID
+- Pixabay
+	- API Key Option [DONE]
+	- When key is not valid, need to handle 400 errors.
+	- Create error state that informs the user to enter a valid API key.
+	- Auto test the API key before submitting the form.
+	- Create method to add API Key outside of settings. Update all settings at once.
+	- If pixabay API key is empty, display a view with info on how to add a key.
+
+
+- Add pixaby search [DONE]
+	- Search By ID [DONE]
+
+- User Search
+
+- Add Color filters.
 
 - Search - Load More not working. [ DONE]
 
-- Fix reset (switchProvider) function.
+- Fix reset (switchProvider) function. [ DONE]
 	- This is not working because of react state
 
-- Default Provider
-  - Add setting for setting a default provider (Unsplash/Pixabay)
+- Default Provider [ DONE]
+- Add setting for setting a default provider (Unsplash/Pixabay) [ DONE]
 
-- Gutenberg
-- Modals
+- Gutenberg & Modals
 	- Confirm everything works in all instances.
+	- Confirm default and errors are displayed.
 
 */
 
@@ -181,9 +194,11 @@ class InstantImages {
 	public static function instant_img_localize( $script = 'instant-images-react' ) {
 
 		global $post;
-		$options    = get_option( 'instant_img_settings' );
-		$download_w = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
-		$download_h = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
+		$options          = get_option( 'instant_img_settings' );
+		$download_w       = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
+		$download_h       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
+		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
+		$pixabay_api      = isset( $options['pixabay_api'] ) ? $options['pixabay_api'] : ''; // Pixabay API.
 
 		wp_localize_script(
 			$script,
@@ -195,10 +210,12 @@ class InstantImages {
 				'ajax_url'                => admin_url( 'admin-ajax.php' ),
 				'admin_nonce'             => wp_create_nonce( 'instant_img_nonce' ),
 				'parent_id'               => ( $post ) ? $post->ID : 0,
+				'default_provider'        => $default_provider,
 				'download_width'          => esc_html( $download_w ),
 				'download_height'         => esc_html( $download_h ),
 				'unsplash_default_app_id' => INSTANT_IMAGES_DEFAULT_APP_ID,
 				'unsplash_app_id'         => INSTANT_IMAGES_DEFAULT_APP_ID,
+				'pixabay_app_id'          => $pixabay_api,
 				'error_msg_title'         => __( 'Error accessing Unsplash API', 'instant-images' ),
 				'error_msg_desc'          => __( 'Please check your Application ID.', 'instant-images' ),
 				'error_upload'            => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),

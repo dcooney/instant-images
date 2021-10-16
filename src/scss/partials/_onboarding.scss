@@ -1,27 +1,27 @@
 .onboarding {
-	position: relative;	
+	position: relative;
 	position: absolute;
 	z-index: 9999;
 	width: auto;
 	font-size: 14px;
 	line-height: 1.4;
 	color: #777;
-	
+
 	&.bottom{
    	//margin-top: -40px;
 	}
-	   
+
    .inner{
       display: block;
       position: relative;
       padding: 0 55px 0 25px;
       line-height: 46px;
-      height: 46px;      
+      height: 46px;
       border-radius: 4px;
       background: #fff;
       border: 1px solid #ccc;
       box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
-      &:after, 
+      &:after,
    	&:before {
       	bottom: 100%;
       	left: 50%;
@@ -45,10 +45,10 @@
       	margin-left: -11px;
       }
    }
-   
+
    &.bottom{
       .inner{
-         &:after, 
+         &:after,
       	&:before {
          	bottom: auto;
          	top: 100%;
@@ -69,7 +69,7 @@
          }
       }
    }
-   
+
    a{
       position: absolute;
       top: 8px;
@@ -78,8 +78,8 @@
       margin: 0 !important;
       font-size: 20px;
       color: #222;
-      background: #f7f7f7;
-      border: 1px solid #efefef;
+      background: $light_grey;
+      border: 1px solid $grey;
       line-height: 28px !important;
       height: 28px !important;
       width: 28px !important;
