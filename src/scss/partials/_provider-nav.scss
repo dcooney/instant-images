@@ -6,8 +6,12 @@
 	padding: 5px 25px;
 	border-bottom: 1px solid $grey;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
-	background-color: $light_grey;
-	button{
+	background-color: $lighter_grey;
+	position: relative;
+	> div{
+		position: relative;
+	}
+	&--btn{
 		padding: 8px 8px 8px 35px;
 		border: 1px solid transparent;
 		background: transparent;
@@ -23,16 +27,16 @@
 			color: $text;
 		}
 		&[data-provider="unsplash"]{
-			background: $light_grey url("../img/logos/unsplash.svg") no-repeat 8px center;
+			background: $lighter_grey url("../img/logos/unsplash.svg") no-repeat 8px center;
 			background-size: 18px 18px;
 		}
 		&[data-provider="pixabay"]{
-			background: $light_grey url("../img/logos/pixabay.png") no-repeat 8px center;
+			background: $lighter_grey url("../img/logos/pixabay.png") no-repeat 8px center;
 			background-size: 20px 20px;
 		}
 		&.active{
 			background-color: #fff;
-			border-color: #e1e1e1;
+			border-color: $border;
 			color: $text;
 			cursor: default;box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);
 		}

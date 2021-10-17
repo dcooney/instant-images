@@ -16,7 +16,7 @@ body.media_page_instant-images {
 		padding-top: 0;
 		padding-bottom: 0;
 		line-height: 40px;
-		background: $light_grey;
+		background: $lighter_grey;
 		border-top: 1px solid $grey;
 		position: fixed;
 		bottom: 0;
@@ -27,6 +27,9 @@ body.media_page_instant-images {
 		@media screen and (max-width: $small) {
 			display: none;
 		}
+	}
+	&.overflow-hidden{
+		overflow: hidden;
 	}
 }
 
@@ -105,7 +108,7 @@ body.media_page_instant-images {
    */
 
 	.header-wrap {
-		background: $light_grey url("../img/logo-48x48.png") no-repeat 25px 20px;
+		background: $lighter_grey url("../img/logo-48x48.png") no-repeat 25px 20px;
 		padding: 20px 25px 20px 83px;
 		min-height: 88px;
 		overflow: hidden;
@@ -369,7 +372,7 @@ body.media_page_instant-images {
 	padding: 10px;
 	line-height: 1;
 	border: 1px solid #ccc;
-	background: $light_grey;
+	background: $lighter_grey;
 	width: 100%;
 	border-radius: 2px;
 	height: auto;

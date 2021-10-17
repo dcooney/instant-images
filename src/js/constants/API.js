@@ -1,7 +1,6 @@
 module.exports = {
 	unsplash: {
 		requires_key: false,
-		app_id: instant_img_localize.unsplash_app_id,
 		api_query_var: "/?client_id=",
 		photo_api: "https://api.unsplash.com/photos",
 		collections_api: "https://api.unsplash.com/collections",
@@ -14,9 +13,6 @@ module.exports = {
 	},
 	pixabay: {
 		requires_key: true,
-		//app_id: "",
-		//app_id: "23559219-67621b8a8bd93df7b6aef72a7",
-		app_id: instant_img_localize.pixabay_app_id,
 		api_query_var: "/?key=",
 		photo_api: "https://pixabay.com/api",
 		search_api: "https://pixabay.com/api",

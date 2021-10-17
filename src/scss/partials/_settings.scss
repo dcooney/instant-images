@@ -27,6 +27,11 @@
 				input[type=number]{
 					padding: 10px;
 				}
+				span.desc{
+					font-size: 11px;
+					display: block;
+					padding: 5px 2px;
+				}
 			}
 			&.ii-plugins{
 				width: 68.666%;
@@ -48,7 +53,7 @@
 	      }
 	      h2,
 	      h2 + p{
-	         background: $light_grey;
+	         background: $lighter_grey;
 	         margin: 0;
 	      }
 	      ul.whats-new{
@@ -60,7 +65,7 @@
 				      display: inline-block;
 				      margin: 0;
 				      padding: 3px;
-				      background: $light_grey;
+				      background: $lighter_grey;
 				      border-radius: 2px;
 				      box-shadow: 0 0 0 1px $grey;
 			      }

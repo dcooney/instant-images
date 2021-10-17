@@ -189,7 +189,9 @@ function instant_images_default_provider() {
 	</label>
 	<select id="default_provider" name="instant_img_settings[default_provider]">
 		<option value="unsplash" <?php selected( 'unsplash', $options['default_provider'] ); ?>><?php esc_attr_e( 'Unsplash', 'instant-images' ); ?></option>
-		<option value="pixabay" <?php selected( 'pixabay', $options['default_provider'] ); ?>><?php esc_attr_e( 'Pixabay', 'instant-images' ); ?></option>
+		<optgroup label="<?php esc_attr_e( 'API Key Required', 'instant-images' ); ?>">
+			<option value="pixabay" <?php selected( 'pixabay', $options['default_provider'] ); ?>><?php esc_attr_e( 'Pixabay', 'instant-images' ); ?></option>
+		</optgroup>
 	</select>
 	<?php
 }
@@ -210,5 +212,6 @@ function instant_images_pixabay_api_callback() {
 		<strong><?php esc_attr_e( 'Pixabay API Key:', 'instant-images' ); ?></strong>
 	</label>
 	<input type="text" id="pixabay_api" name="instant_img_settings[pixabay_api]" value="<?php echo wp_kses_post( $options['pixabay_api'] ); ?>" >
+	<span class="desc">&rarr; <a href="https://pixabay.com/" target="_blank"><?php esc_attr_e( 'Get API Key', 'instant-images' ); ?></a></span>
 	<?php
 }

@@ -10,9 +10,9 @@ class Photo extends React.Component {
 
 		this.provider = this.props.provider;
 		this.api_provider = API[this.provider];
+		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 
 		const result = this.props.result;
-
 		this.id = result.id;
 		this.thumb = getProp(this.provider, result, "thumb");
 		this.img = getProp(this.provider, result, "img");
@@ -213,7 +213,7 @@ class Photo extends React.Component {
 	 * @since 3.1
 	 */
 	triggerUnsplashDownload(id) {
-		const url = `${this.api_provider.photo_api}/${id}/download/${this.api_provider.api_query_var}${this.api_provider.app_id}`;
+		const url = `${this.api_provider.photo_api}/${id}/download/${this.api_provider.api_query_var}${this.api_key}`;
 		fetch(url)
 			.then((data) => data.json())
 			.then(function (data) {

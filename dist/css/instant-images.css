@@ -38,6 +38,10 @@ body.media_page_instant-images #wpfooter p {
   }
 }
 
+body.media_page_instant-images.overflow-hidden {
+  overflow: hidden;
+}
+
 .instant-img-container {
   font-size: 14px;
   color: #666;
@@ -942,7 +946,7 @@ body.media_page_instant-images #wpfooter p {
 #photos .photo a.upload.success .status {
   visibility: visible;
   opacity: 1;
-  background-color: #63d875;
+  background-color: #5bc56b;
 }
 
 #photos .photo a.upload.success .status:before {
@@ -1449,6 +1453,12 @@ body.media_page_instant-images #wpfooter p {
   padding: 10px;
 }
 
+.instant-images-settings .cnkt-sidebar .cta.ii-settings span.desc {
+  font-size: 11px;
+  display: block;
+  padding: 5px 2px;
+}
+
 .instant-images-settings .cnkt-sidebar .cta.ii-plugins {
   width: 68.666%;
   width: calc(68.666% - 25px);
@@ -1891,9 +1901,14 @@ body.media_page_instant-images #wpfooter p {
   -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
   background-color: #f7f7f7;
+  position: relative;
 }
 
-.provider-nav button {
+.provider-nav > div {
+  position: relative;
+}
+
+.provider-nav--btn {
   padding: 8px 8px 8px 35px;
   border: 1px solid transparent;
   background: transparent;
@@ -1909,29 +1924,195 @@ body.media_page_instant-images #wpfooter p {
   transition: all 0.2s ease;
 }
 
-.provider-nav button:hover, .provider-nav button:focus {
+.provider-nav--btn:hover, .provider-nav--btn:focus {
   color: #333;
 }
 
-.provider-nav button[data-provider="unsplash"] {
+.provider-nav--btn[data-provider="unsplash"] {
   background: #f7f7f7 url(../img/unsplash.svg) no-repeat 8px center;
   -webkit-background-size: 18px 18px;
           background-size: 18px 18px;
 }
 
-.provider-nav button[data-provider="pixabay"] {
+.provider-nav--btn[data-provider="pixabay"] {
   background: #f7f7f7 url(../img/pixabay.png) no-repeat 8px center;
   -webkit-background-size: 20px 20px;
           background-size: 20px 20px;
 }
 
-.provider-nav button.active {
+.provider-nav--btn.active {
   background-color: #fff;
   border-color: #e1e1e1;
   color: #333;
   cursor: default;
   -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);
           box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);
+}
+
+.instant-img-container .api-lightbox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: fixed;
+  z-index: 998;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 5%;
+  background-color: rgba(0, 0, 0, 0.75);
+  font-size: 13px;
+}
+
+.instant-img-container .api-lightbox > div {
+  max-width: 500px;
+  width: 100%;
+  padding: 25px;
+  background-color: #fffce6;
+  background-color: #f7f7f7;
+  border: 1px solid #e1e1e1;
+  -webkit-border-radius: 5px;
+          border-radius: 5px;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+.instant-img-container .api-lightbox > div > div {
+  position: relative;
+}
+
+.instant-img-container .api-lightbox--close {
+  position: absolute;
+  right: -25px;
+  top: -25px;
+  border: none;
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 25px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.instant-img-container .api-lightbox--close:hover, .instant-img-container .api-lightbox--close:focus {
+  opacity: 1;
+}
+
+.instant-img-container .api-lightbox label,
+.instant-img-container .api-lightbox button[type=submit] {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+  padding: 0;
+  margin: 0 0 5px;
+  cursor: pointer;
+}
+
+.instant-img-container .api-lightbox--input-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 2px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+}
+
+.instant-img-container .api-lightbox--input-wrap:focus-within {
+  border-color: #ccc;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.instant-img-container .api-lightbox--input-wrap span {
+  width: 22px;
+  height: 36px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-border-radius: 2px;
+          border-radius: 2px;
+}
+
+.instant-img-container .api-lightbox--input-wrap span i {
+  font-size: 16px;
+}
+
+.instant-img-container .api-lightbox--input-wrap span.invalid {
+  cursor: help;
+}
+
+.instant-img-container .api-lightbox--input-wrap span.invalid i {
+  color: #d4aa4d;
+}
+
+.instant-img-container .api-lightbox--input-wrap span.valid i {
+  color: #5bc56b;
+}
+
+.instant-img-container .api-lightbox--input-wrap span.loading i {
+  color: #333;
+}
+
+.instant-img-container .api-lightbox--input-wrap input {
+  line-height: 36px;
+  height: 36px;
+  padding: 0 5px;
+  background-color: transparent;
+  border: none;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.instant-img-container .api-lightbox--input-wrap input:focus {
+  background: transparent;
+  outline: none;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.instant-img-container .api-lightbox button[type=submit] {
+  width: 100%;
+  border: none;
+  background-color: #586ec6;
+  color: #fff;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  padding: 0 10px;
+  line-height: 44px;
+  height: 44px;
+  margin: 0;
+}
+
+.instant-img-container .api-lightbox button[type=submit]:hover, .instant-img-container .api-lightbox button[type=submit]:focus {
+  background-color: #455cb6;
 }
 
 /*# sourceMappingURL=instant-images.css.map*/

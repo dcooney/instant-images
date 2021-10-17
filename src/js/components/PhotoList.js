@@ -3,6 +3,7 @@ import React from "react";
 import API from "../constants/API";
 import getResults, { getResultById } from "../functions/getResults";
 import searchByID from "../functions/searchByID";
+import APILightbox from "./APILightbox";
 import ErrorMessage from "./ErrorMessage";
 import LoadingBlock from "./LoadingBlock";
 import LoadMore from "./LoadMore";
@@ -19,13 +20,16 @@ class PhotoList extends React.Component {
 
 		// Get current provider settings.
 		this.providers = ["Unsplash", "Pixabay"];
+
 		this.provider = this.props.provider; // Unsplash, Pixabay, etc.
 		this.api_provider = API[this.provider]; // The API settings for the provider.
 		this.arr_key = this.api_provider.arr_key;
 		this.order_key = this.api_provider.order_key;
 
-		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_provider.app_id}${API.posts_per_page}`;
-		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_provider.app_id}${API.posts_per_page}`;
+		this.api_key = instant_img_localize[`${this.provider}_app_id`];
+
+		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.posts_per_page}`;
+		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_key}${API.posts_per_page}`;
 
 		this.hasAPIError = this.props.hasError;
 
@@ -35,7 +39,11 @@ class PhotoList extends React.Component {
 			this.arr_key,
 			this.props.results
 		);
-		this.state = { results: this.results };
+		this.state = {
+			results: this.results,
+			restapi_error: false,
+			api_lightbox: false,
+		};
 
 		this.orderby = this.props.orderby; // Orderby
 		this.page = this.props.page; // Page
@@ -46,7 +54,6 @@ class PhotoList extends React.Component {
 		this.orientation = "";
 		this.isLoading = false; // Loading flag.
 		this.isDone = false; // Done flag.
-		this.restapi_error = false;
 		this.errorMsg = "";
 		this.msnry = "";
 		this.tooltipInterval = "";
@@ -221,7 +228,7 @@ class PhotoList extends React.Component {
 				term,
 				this.api_provider.photo_api,
 				this.api_provider.api_query_var,
-				this.api_provider.app_id
+				this.api_key
 			);
 		}
 
@@ -410,8 +417,45 @@ class PhotoList extends React.Component {
 	}
 
 	/**
+	 * Callback after activating and verififying an API key.
+	 *
+	 * @since 4.5
+	 * @param {string} provider The verified provider.
+	 */
+	afterVerifiedAPICallback(provider) {
+		const button = this.providerNav.current.querySelector(
+			`button[data-provider=${provider}]`
+		);
+		if (!button) {
+			return;
+		}
+		this.setState({ api_lightbox: false }); // Close the lightbox.
+		document.body.classList.remove("overflow-hidden");
+		button.click();
+	}
+
+	/**
+	 * Close the API Lightbox.
+	 *
+	 * @param {string} provider The previous provider.
+	 */
+	closeAPILightbox(provider) {
+		this.setState({ api_lightbox: false }); // Close the lightbox.
+		document.body.classList.remove("overflow-hidden");
+
+		// Set focus on previous provider button.
+		const target = this.providerNav.current.querySelector(
+			`button[data-provider=${provider}]`
+		);
+		if (target) {
+			target.focus({ preventScroll: true });
+		}
+	}
+
+	/**
 	 * Toggles the service provider.
 	 *
+	 * @since 4.5
 	 * @param {Event} e The clicked element event.
 	 */
 	async switchProvider(e) {
@@ -426,14 +470,21 @@ class PhotoList extends React.Component {
 		// Bounce if API key for service is invalid.
 		if (API[provider].requires_key) {
 			const api = API[provider];
-			const url = `${api.photo_api}${api.api_query_var}${api.app_id}&per_page=10&page=1`;
+			const api_key = instant_img_localize[`${provider}_app_id`];
+			const url = `${api.photo_api}${api.api_query_var}${api_key}&per_page=5&page=1`;
 
 			const response = await fetch(url);
 			const ok = response.ok;
 			const status = response.status;
 
 			if (!ok || status === 400 || status === 401 || status === 500) {
-				alert("NEED API KEY ");
+				this.setState({ api_lightbox: provider });
+				document.body.classList.add("overflow-hidden");
+				// Show API Lightbox.
+				// target.parentNode
+				// 	.querySelector(".api-lightbox")
+				// 	.classList.add("active");
+
 				return;
 			}
 		}
@@ -453,9 +504,10 @@ class PhotoList extends React.Component {
 		// Set current provider params.
 		this.arr_key = this.api_provider.arr_key;
 		this.order_key = this.api_provider.order_key;
+		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 
-		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_provider.app_id}${API.posts_per_page}`;
-		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_provider.app_id}${API.posts_per_page}`;
+		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.posts_per_page}`;
+		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_key}${API.posts_per_page}`;
 
 		// At last, get the photos.
 		this.getPhotos("latest", this.buttonLatest.current, true);
@@ -543,7 +595,7 @@ class PhotoList extends React.Component {
 		const target = e.currentTarget;
 		const rect = target.getBoundingClientRect();
 		let left = Math.round(rect.left);
-		let top = Math.round(rect.top);
+		const top = Math.round(rect.top);
 		const tooltip = this.container.querySelector("#tooltip");
 		tooltip.classList.remove("over");
 
@@ -553,15 +605,12 @@ class PhotoList extends React.Component {
 			tooltip.classList.remove("above");
 		}
 
-		// Get Content
-		let title = target.dataset.title;
-
-		// Delay reveal
+		// Delay Tooltip Reveal.
 		this.tooltipInterval = setInterval(function () {
 			clearInterval(self.tooltipInterval);
-			tooltip.innerHTML = title;
+			tooltip.innerHTML = target.dataset.title; // Tooltip content.
 
-			// Position Tooltip
+			// Position Tooltip.
 			left = left - tooltip.offsetWidth + target.offsetWidth + 5;
 			tooltip.style.left = `${left}px`;
 			tooltip.style.top = `${top}px`;
@@ -569,7 +618,7 @@ class PhotoList extends React.Component {
 			setTimeout(function () {
 				tooltip.classList.add("over");
 			}, 150);
-		}, 500);
+		}, 750);
 	}
 
 	/**
@@ -577,7 +626,7 @@ class PhotoList extends React.Component {
 	 *
 	 * @since 4.3.0
 	 */
-	hideTooltip(e) {
+	hideTooltip() {
 		clearInterval(this.tooltipInterval);
 		let tooltip = this.container.querySelector("#tooltip");
 		tooltip.classList.remove("over");
@@ -613,21 +662,33 @@ class PhotoList extends React.Component {
 				{this.providers && (
 					<nav className="provider-nav" ref={this.providerNav}>
 						{this.providers.map((provider, iterator) => (
-							<button
-								key={`provider-${iterator}`}
-								data-provider={provider.toLowerCase()}
-								onClick={(e) => this.switchProvider(e)}
-								className={
-									this.provider === provider.toLowerCase()
-										? "active"
-										: ""
-								}
-							>
-								{provider}
-							</button>
+							<div key={`provider-${iterator}`}>
+								<button
+									data-provider={provider.toLowerCase()}
+									onClick={(e) => this.switchProvider(e)}
+									className={
+										this.provider === provider.toLowerCase()
+											? "provider-nav--btn active"
+											: "provider-nav--btn"
+									}
+								>
+									{provider}
+								</button>
+							</div>
 						))}
 					</nav>
 				)}
+
+				{this.state.api_lightbox && (
+					<APILightbox
+						provider={this.state.api_lightbox}
+						afterVerifiedAPICallback={this.afterVerifiedAPICallback.bind(
+							this
+						)}
+						closeAPILightbox={this.closeAPILightbox.bind(this)}
+					/>
+				)}
+
 				{this.api_provider.order && (
 					<ul className="control-nav" ref={this.controlNav}>
 						<li>
@@ -680,7 +741,7 @@ class PhotoList extends React.Component {
 					</ul>
 				)}
 
-				{this.restapi_error && <ErrorMessage />}
+				{this.state.restapi_error && <ErrorMessage />}
 
 				{this.is_search && (
 					<Orientation

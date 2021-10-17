@@ -5,10 +5,15 @@ import API from "./constants/API";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 require("./functions/helpers");
+
+// Default Provider.
 const provider =
 	instant_img_localize && instant_img_localize.default_provider
 		? instant_img_localize.default_provider
 		: "unsplash";
+
+// Default API Key.
+const api_key = instant_img_localize[`${provider}_app_id`];
 
 /**
  * Get the initial set of photos.
@@ -19,7 +24,7 @@ const provider =
  */
 function GetPhotos(page = 1, orderby = "latest", provider = "unsplash") {
 	const container = document.querySelector(".instant-img-container");
-	const start = `${API[provider].photo_api}${API[provider].api_query_var}${API[provider].app_id}`;
+	const start = `${API[provider].photo_api}${API[provider].api_query_var}${api_key}`;
 	const url = `${start}${API.posts_per_page}&page=${page}&${API[provider].order_key}=${orderby}`;
 
 	/**

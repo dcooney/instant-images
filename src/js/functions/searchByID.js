@@ -17,7 +17,7 @@ export default function searchByID(
 	let url = "";
 	switch (provider) {
 		case "unsplash":
-			url = `${base_url}${id}${api_query_var}${app_id}`;
+			url = `${base_url}/${id}${api_query_var}${app_id}`;
 			break;
 
 		case "pixabay":

@@ -146,7 +146,7 @@
 				.status {
 					visibility: visible;
 					opacity: 1;
-					background-color: #63d875;
+					background-color: $green;
 					&:before {
 						content: "\f00c";
 						color: #fff;
@@ -163,7 +163,7 @@
 				.status {
 					visibility: visible;
 					opacity: 1;
-					background-color: #df3333;
+					background-color: $red;
 					&:before {
 						content: "\f12a";
 						color: #fff;
@@ -428,7 +428,7 @@
 		padding: 5px;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
-		border: 1px solid #e1e1e1;
+		border: 1px solid $border;
 		transform: scale(1.025);
 		&.editing {
 			visibility: visible;
@@ -438,8 +438,8 @@
 		&--controls,
 		&--title {
 			display: block;
-			background: $light_grey;
-			border: 1px solid #e1e1e1;
+			background: $lighter_grey;
+			border: 1px solid $border;
 			padding: 15px 10px;
 			border-radius: 2px 2px 0 0;
 			.button-primary {
@@ -490,7 +490,7 @@
 			padding: 15px;
 			display: block;
 			background: #fff;
-			border: 1px solid #e1e1e1;
+			border: 1px solid $border;
 			border-bottom: none;
 			position: relative;
 		}
@@ -541,7 +541,7 @@
 			line-height: 35px;
 			background: rgb(133, 133, 133);
 			border-radius: 0 2px 2px 0;
-			color: #e1e1e1;
+			color: $border;
 			font-style: normal;
 			font-size: 11px;
 			padding: 0 10px;

@@ -1,0 +1,132 @@
+.instant-img-container {
+	.api-lightbox{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: fixed;
+		z-index: 998;
+		left:0;
+		top: 0;
+		right:0;
+		bottom:0;
+		padding: 5%;
+		background-color: rgba(0, 0, 0, 0.75);
+		font-size: 13px;
+
+		> div{
+			max-width: 500px;
+			width: 100%;
+			padding: 25px;
+			background-color: #fffce6;
+			background-color: $lighter_grey;
+			border: 1px solid $border;
+			border-radius: 5px;
+			box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+			&> div{
+				position: relative;
+			}
+		}
+
+		&--close{
+			position: absolute;
+			right: -25px;
+			top: -25px;
+			border: none;
+			background-color: transparent;
+			width: 40px;
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 25px;
+			cursor: pointer;
+			opacity: 0.5;
+			&:hover,
+			&:focus{
+				opacity: 1;
+			}
+		}
+
+		label,
+		button[type=submit]{
+			font-size: 12px;
+			text-transform: uppercase;
+			font-weight: 600;
+			display: block;
+			padding: 0;
+			margin: 0 0 5px;
+			cursor: pointer;
+		}
+
+		&--input-wrap{
+			display: flex;
+			width: 100%;
+			padding: 2px;
+			margin-bottom: 10px;
+			background-color: #fff;
+			border: 1px solid $border;
+			border-radius: $radius;
+			&:focus-within{
+				border-color: #ccc;
+				box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+			}
+			span{
+				width: 22px;
+				height: 36px;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				border-radius: 2px;
+				i{
+					font-size: 16px;
+				}
+				&.invalid{
+					cursor: help;
+					i{
+						color: $warn;
+					}
+				}
+				&.valid{
+					i{
+						color: $green;
+					}
+				}
+				&.loading{
+					i{
+						color: $text;
+					}
+				}
+			}
+			input{
+				line-height: 36px;
+				height: 36px;
+				padding: 0 5px;
+				background-color: transparent;
+				border: none;
+				flex: 1;
+				&:focus{
+					background: transparent;
+					outline: none;
+					border: none;
+					box-shadow: none;
+				}
+			}
+		}
+		button[type=submit]{
+			width: 100%;
+			border: none;
+			background-color: $purple;
+			color: #fff;
+			border-radius: $radius;
+			padding: 0 10px;
+			line-height: 44px;
+			height: 44px;
+			margin: 0;
+			&:hover,
+			&:focus{
+				background-color: $purple_dark;
+			}
+		}
+
+	}
+}

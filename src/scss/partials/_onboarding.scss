@@ -78,7 +78,7 @@
       margin: 0 !important;
       font-size: 20px;
       color: #222;
-      background: $light_grey;
+      background: $lighter_grey;
       border: 1px solid $grey;
       line-height: 28px !important;
       height: 28px !important;
@@ -90,8 +90,8 @@
       &:hover,
       &:focus{
          color: #fff !important;
-         background-color: #df3333 !important;
-         border-color: #df3333 !important;
+         background-color: $red !important;
+         border-color: $red !important;
       }
    }
 }

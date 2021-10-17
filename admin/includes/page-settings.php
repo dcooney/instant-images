@@ -32,7 +32,7 @@
 		<p><?php esc_attr_e( 'The latest Instant Images updates', 'instant-images' ); ?>.</p>
 		<div class="cta-wrap">
 			<ul class="whats-new">
-				<li><strong>Improved Download Speeds</strong>: Instant Images <em>v+</em> is now up to 4x faster than previous versions after a critical update in the initial image fetching process.</li>
+				<li><strong>Improved Download Speeds</strong>: Instant Images is now up to 4x faster than previous versions after a critical update in the initial image fetching process.</li>
 				<li><strong>Media Modals</strong>: Instant Images tab added to all WordPress Media Modal windows.</li>
 				<li><strong>Gutenberg Support</strong>: Instant Images directly integrates with Gutenberg as a plugin sidebar.</li>
 				<li><strong>User Roles</strong>: Added <em>instant_images_user_role</em> filter to allow for control over user capability.</li>
