@@ -11,10 +11,10 @@ export default function generateAttribution(provider, url, name) {
 
 	switch (provider) {
 		case "unsplash":
-			attribution += ` <a href="${url}?utm_source=wordpress-instant-images&utm_medium=referral">${name}</a> on <a href="https://unsplash.com/?utm_source=wordpress-instant-images&utm_medium=referral">Unsplash</a>`;
+			attribution += ` <a href="${url}?utm_source=wordpress-instant-images&utm_medium=referral">${name}</a> on <a href="${instant_img_localize.unsplash_url}/?utm_source=wordpress-instant-images&utm_medium=referral">Unsplash</a>`;
 			break;
 		case "pixabay":
-			attribution += ` <a href="${url}?utm_source=wordpress-instant-images&utm_medium=referral">${name}</a> on <a href="https://pixabay.com/?utm_source=wordpress-instant-images&utm_medium=referral">Pixabay</a>`;
+			attribution += ` <a href="${url}?utm_source=wordpress-instant-images&utm_medium=referral">${name}</a> on <a href="${instant_img_localize.pixabay_url}/?utm_source=wordpress-instant-images&utm_medium=referral">Pixabay</a>`;
 			break;
 	}
 

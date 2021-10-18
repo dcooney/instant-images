@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom download API route
+ * Custom /ownload API route for download and adding images to media library.
  *
  * @since 3.0
  * @author dcooney

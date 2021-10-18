@@ -1,6 +1,7 @@
 import Masonry from "masonry-layout";
 import React from "react";
 import API from "../constants/API";
+import buildTestURL from "../functions/buildTestURL";
 import getResults, { getResultById } from "../functions/getResults";
 import searchByID from "../functions/searchByID";
 import APILightbox from "./APILightbox";
@@ -469,22 +470,13 @@ class PhotoList extends React.Component {
 		// API Checker.
 		// Bounce if API key for service is invalid.
 		if (API[provider].requires_key) {
-			const api = API[provider];
-			const api_key = instant_img_localize[`${provider}_app_id`];
-			const url = `${api.photo_api}${api.api_query_var}${api_key}&per_page=5&page=1`;
-
-			const response = await fetch(url);
+			const response = await fetch(buildTestURL(provider));
 			const ok = response.ok;
 			const status = response.status;
 
 			if (!ok || status === 400 || status === 401 || status === 500) {
-				this.setState({ api_lightbox: provider });
+				this.setState({ api_lightbox: provider }); // Show API Lightbox.
 				document.body.classList.add("overflow-hidden");
-				// Show API Lightbox.
-				// target.parentNode
-				// 	.querySelector(".api-lightbox")
-				// 	.classList.add("active");
-
 				return;
 			}
 		}

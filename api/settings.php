@@ -1,8 +1,8 @@
 <?php
 /**
- * Custom /resize route
+ * Custom /settings route to update plugin settings.
  *
- * @since 3.0
+ * @since 4.5
  * @author dcooney
  * @package InstantImages
  */
@@ -38,14 +38,39 @@ function instant_images_settings( WP_REST_Request $request ) {
 
 	if ( InstantImages::instant_img_has_access() ) {
 
-		// Global settings.
-		$options = get_option( 'instant_img_settings' );
+		// Get JSON Data.
+		$data = json_decode( $request->get_body(), true ); // Get contents of request body.
 
-		// Access is enable, send the response.
-		$response = array( 'success' => true );
+		if ( $data ) {
 
-		// Send response as JSON.
-		wp_send_json( $response );
+			$option = 'instant_img_settings';
+
+			// Global settings.
+			$options = get_option( $option );
+			$setting = sanitize_text_field( $data['setting'] ); // The setting to update.
+			$value   = sanitize_text_field( $data['value'] ); // The value to update.
+
+			if ( $setting ) {
+				$options[ $setting ] = $value;
+				update_option( $option, $options );
+
+				// Success.
+				$response = array(
+					'success' => true,
+					'msg'     => 'Settings saved.',
+				);
+			} else {
+				// Error.
+				$response = array(
+					'success' => false,
+					'msg'     => 'Unable to save settings.',
+				);
+			}
+
+			// Send response as JSON.
+			wp_send_json( $response );
+
+		}
 	}
 
 }

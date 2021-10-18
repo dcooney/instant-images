@@ -37558,9 +37558,13 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+var _buildTestURL = __webpack_require__(/*! ../functions/buildTestURL */ "./src/js/functions/buildTestURL.js");
 
-var _API2 = _interopRequireDefault(_API);
+var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
+
+var _updatePluginSetting = __webpack_require__(/*! ../functions/updatePluginSetting */ "./src/js/functions/updatePluginSetting.js");
+
+var _updatePluginSetting2 = _interopRequireDefault(_updatePluginSetting);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37585,7 +37589,7 @@ var APILightbox = function (_React$Component) {
 		_this.api_key = instant_img_localize[_this.provider + "_app_id"];
 		_this.inputRef = _react2.default.createRef();
 		_this.loading = false;
-		_this.state = { status: "invalid" };
+		_this.state = { status: "invalid", response: "" };
 		_this.afterVerifiedAPICallback = _this.props.afterVerifiedAPICallback.bind(_this);
 		_this.closeAPILightbox = _this.props.closeAPILightbox.bind(_this);
 		_this.escFunction = _this.escFunction.bind(_this);
@@ -37603,7 +37607,7 @@ var APILightbox = function (_React$Component) {
 		key: "handleSubmit",
 		value: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
-				var self, key, api, url, response, ok, status, settingField;
+				var self, key, response, ok, status, settingField;
 				return regeneratorRuntime.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
@@ -37615,13 +37619,17 @@ var APILightbox = function (_React$Component) {
 								this.setState({ status: "loading" });
 
 								key = this.inputRef.current.value;
-								api = _API2.default[this.provider];
-								url = "" + api.photo_api + api.api_query_var + key + "&per_page=10&page=1";
+
+								if (!key) {
+									this.inputRef.current.focus({ preventScroll: true });
+								}
+
+								// Set localized variable.
+								instant_img_localize[this.provider + "_app_id"] = key;
 
 								// Fetch API data.
-
 								_context.next = 8;
-								return fetch(url);
+								return fetch((0, _buildTestURL2.default)(this.provider));
 
 							case 8:
 								response = _context.sent;
@@ -37631,32 +37639,38 @@ var APILightbox = function (_React$Component) {
 								ok = response.ok;
 								status = response.status;
 
-								// Set localized variable.
-
-								instant_img_localize[this.provider + "_app_id"] = key;
-
 								// Update the specific provider API key in the Instant Images settings.
+
 								settingField = document.querySelector("input[name=\"instant_img_settings[" + this.provider + "_api]\"]");
 
 								if (settingField) {
 									settingField.value = key;
 								}
 
+								// Update plugin settings via REST API.
+								(0, _updatePluginSetting2.default)(this.provider + "_api", key);
+
 								// Handle response actions.
 								if (ok) {
 									// Success.
-									this.setState({ status: "valid" });
+									this.setState({
+										status: "valid",
+										response: instant_img_localize.api_success_msg
+									});
 									setTimeout(function () {
 										self.afterVerifiedAPICallback(self.provider);
-									}, 250);
+									}, 1500);
 								} else {
 									// Error/Invalid.
 									this.setState({ status: "invalid" });
 									if (status === 400 || status === 401) {
 										// Unsplash/Pixabay incorrect API key.
+										this.setState({ response: instant_img_localize.api_invalid_msg });
 										console.warn(instant_img_localize.instant_images + ": " + status + " Error - " + instant_img_localize.api_invalid_msg);
 									}
 									if (status === 429) {
+										// Pixabay - too many requests.
+										this.setState({ response: instant_img_localize.api_ratelimit_msg });
 										console.warn(instant_img_localize.instant_images + ": " + instant_img_localize.api_ratelimit_msg);
 									}
 								}
@@ -37683,7 +37697,25 @@ var APILightbox = function (_React$Component) {
 	}, {
 		key: "closeLightbox",
 		value: function closeLightbox() {
-			this.closeAPILightbox(this.provider);
+			var self = this;
+			this.lightbox.current.classList.remove("active");
+			setTimeout(function () {
+				self.closeAPILightbox(this.provider);
+			}, 250);
+		}
+
+		/**
+   * Close the lightbox with a background click.
+   */
+
+	}, {
+		key: "bkgClick",
+		value: function bkgClick(e) {
+			var target = e.target;
+			// If clicked element is the background.
+			if (target === this.lightbox.current) {
+				this.closeLightbox();
+			}
 		}
 
 		/**
@@ -37703,6 +37735,7 @@ var APILightbox = function (_React$Component) {
 		key: "componentDidMount",
 		value: function componentDidMount() {
 			document.addEventListener("keydown", this.escFunction, false);
+			this.lightbox.current.classList.add("active");
 		}
 	}, {
 		key: "componentWillUnmount",
@@ -37720,7 +37753,14 @@ var APILightbox = function (_React$Component) {
 				null,
 				_react2.default.createElement(
 					"div",
-					{ className: "api-lightbox", ref: this.lightbox },
+					{
+						className: "api-lightbox",
+						ref: this.lightbox,
+						onClick: function onClick(e) {
+							return _this2.bkgClick(e);
+						},
+						tabIndex: "-1"
+					},
 					_react2.default.createElement(
 						"div",
 						null,
@@ -37743,19 +37783,39 @@ var APILightbox = function (_React$Component) {
 								)
 							),
 							_react2.default.createElement(
-								"p",
-								null,
-								"Pixabay requires an API key."
+								"div",
+								{ className: "api-lightbox--details" },
+								_react2.default.createElement(
+									"h3",
+									{ "data-provider": this.provider },
+									this.provider
+								),
+								_react2.default.createElement(
+									"p",
+									null,
+									instant_img_localize[this.provider + "_api_desc"]
+								),
+								_react2.default.createElement(
+									"p",
+									null,
+									_react2.default.createElement(
+										"a",
+										{
+											href: instant_img_localize[this.provider + "_api_url"],
+											target: "_blank"
+										},
+										instant_img_localize.get_api_key
+									)
+								)
 							),
 							_react2.default.createElement(
 								"form",
 								{ onSubmit: function onSubmit(e) {
 										return _this2.handleSubmit(e);
 									} },
-								_react2.default.createElement("hr", null),
 								_react2.default.createElement(
 									"label",
-									{ htmlFor: "key" },
+									{ htmlFor: "key", className: "offscreen" },
 									instant_img_localize.enter_api_key
 								),
 								_react2.default.createElement(
@@ -37787,6 +37847,13 @@ var APILightbox = function (_React$Component) {
 										placeholder: "Enter API Key",
 										defaultValue: this.api_key
 									})
+								),
+								this.state.response && _react2.default.createElement(
+									"p",
+									{
+										className: "api-lightbox--response " + this.state.status
+									},
+									this.state.response
 								),
 								_react2.default.createElement(
 									"button",
@@ -39140,6 +39207,10 @@ var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.j
 
 var _API2 = _interopRequireDefault(_API);
 
+var _buildTestURL = __webpack_require__(/*! ../functions/buildTestURL */ "./src/js/functions/buildTestURL.js");
+
+var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
+
 var _getResults = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
 
 var _getResults2 = _interopRequireDefault(_getResults);
@@ -39652,7 +39723,7 @@ var PhotoList = function (_React$Component) {
 		key: "switchProvider",
 		value: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
-				var target, provider, api, api_key, url, response, ok, status;
+				var target, provider, response, ok, status;
 				return regeneratorRuntime.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
@@ -39669,36 +39740,28 @@ var PhotoList = function (_React$Component) {
 
 							case 4:
 								if (!_API2.default[provider].requires_key) {
-									_context.next = 17;
+									_context.next = 14;
 									break;
 								}
 
-								api = _API2.default[provider];
-								api_key = instant_img_localize[provider + "_app_id"];
-								url = "" + api.photo_api + api.api_query_var + api_key + "&per_page=5&page=1";
-								_context.next = 10;
-								return fetch(url);
+								_context.next = 7;
+								return fetch((0, _buildTestURL2.default)(provider));
 
-							case 10:
+							case 7:
 								response = _context.sent;
 								ok = response.ok;
 								status = response.status;
 
 								if (!(!ok || status === 400 || status === 401 || status === 500)) {
-									_context.next = 17;
+									_context.next = 14;
 									break;
 								}
 
-								this.setState({ api_lightbox: provider });
+								this.setState({ api_lightbox: provider }); // Show API Lightbox.
 								document.body.classList.add("overflow-hidden");
-								// Show API Lightbox.
-								// target.parentNode
-								// 	.querySelector(".api-lightbox")
-								// 	.classList.add("active");
-
 								return _context.abrupt("return");
 
-							case 17:
+							case 14:
 
 								// Set new state provider.
 								this.provider = provider;
@@ -39723,7 +39786,7 @@ var PhotoList = function (_React$Component) {
 								// At last, get the photos.
 								this.getPhotos("latest", this.buttonLatest.current, true);
 
-							case 27:
+							case 24:
 							case "end":
 								return _context.stop();
 						}
@@ -40213,6 +40276,43 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./src/js/functions/buildTestURL.js":
+/*!******************************************!*\
+  !*** ./src/js/functions/buildTestURL.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = buildTestURL;
+
+var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+
+var _API2 = _interopRequireDefault(_API);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Build a API testing URL.
+ *
+ * @param  {string} provider  The current service provider.
+ * @return {string}           The API URL.
+ */
+function buildTestURL(provider) {
+  var api = _API2.default[provider];
+  var api_key = instant_img_localize[provider + "_app_id"];
+  var url = "" + api.photo_api + api.api_query_var + api_key + "&per_page=5&page=1";
+
+  return url;
+}
+
+/***/ }),
+
 /***/ "./src/js/functions/generateAttribution.js.js":
 /*!****************************************************!*\
   !*** ./src/js/functions/generateAttribution.js.js ***!
@@ -40240,10 +40340,10 @@ function generateAttribution(provider, url, name) {
 
 	switch (provider) {
 		case "unsplash":
-			attribution += " <a href=\"" + url + "?utm_source=wordpress-instant-images&utm_medium=referral\">" + name + "</a> on <a href=\"https://unsplash.com/?utm_source=wordpress-instant-images&utm_medium=referral\">Unsplash</a>";
+			attribution += " <a href=\"" + url + "?utm_source=wordpress-instant-images&utm_medium=referral\">" + name + "</a> on <a href=\"" + instant_img_localize.unsplash_url + "/?utm_source=wordpress-instant-images&utm_medium=referral\">Unsplash</a>";
 			break;
 		case "pixabay":
-			attribution += " <a href=\"" + url + "?utm_source=wordpress-instant-images&utm_medium=referral\">" + name + "</a> on <a href=\"https://pixabay.com/?utm_source=wordpress-instant-images&utm_medium=referral\">Pixabay</a>";
+			attribution += " <a href=\"" + url + "?utm_source=wordpress-instant-images&utm_medium=referral\">" + name + "</a> on <a href=\"" + instant_img_localize.pixabay_url + "/?utm_source=wordpress-instant-images&utm_medium=referral\">Pixabay</a>";
 			break;
 	}
 
@@ -40342,10 +40442,10 @@ function getProp(provider, result, attribute) {
 
 		case "user_url":
 			if (provider === "pixabay") {
-				value = "https://pixabay.com/users/" + result.user + "-" + result.user_id + "/";
+				value = instant_img_localize.pixabay_url + "/users/" + result.user + "-" + result.user_id + "/";
 			}
 			if (provider === "unsplash") {
-				value = "https://unsplash.com/@" + result.user.username + "?utm_source=wordpress-instant-images&utm_medium=referral";
+				value = instant_img_localize.unsplash_url + "/@" + result.user.username + "?utm_source=wordpress-instant-images&utm_medium=referral";
 			}
 			break;
 
@@ -40470,6 +40570,61 @@ function searchByID(provider, id, base_url, api_query_var, app_id) {
 	}
 
 	return url;
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/updatePluginSetting.js":
+/*!*************************************************!*\
+  !*** ./src/js/functions/updatePluginSetting.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = updatePluginSetting;
+
+var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Update plugin settings by specific key/value pair.
+ *
+ * @param {string} provider The previous provider.
+ * @param {string} value 	 The value to save.
+ */
+function updatePluginSetting(setting, value) {
+	// API URL
+	var api = instant_img_localize.root + "instant-images/settings/";
+
+	// Data Params
+	var data = {
+		setting: setting,
+		value: value
+	};
+
+	// Config Params
+	var config = {
+		headers: {
+			"X-WP-Nonce": instant_img_localize.nonce,
+			"Content-Type": "application/json"
+		}
+	};
+
+	_axios2.default.post(api, JSON.stringify(data), config).then(function (res) {
+		var response = res.data;
+		console.log(response);
+	}).catch(function (error) {
+		console.log(error);
+	});
 }
 
 /***/ })

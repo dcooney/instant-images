@@ -74,10 +74,10 @@ export default function getProp(provider, result, attribute) {
 
 		case "user_url":
 			if (provider === "pixabay") {
-				value = `https://pixabay.com/users/${result.user}-${result.user_id}/`;
+				value = `${instant_img_localize.pixabay_url}/users/${result.user}-${result.user_id}/`;
 			}
 			if (provider === "unsplash") {
-				value = `https://unsplash.com/@${result.user.username}?utm_source=wordpress-instant-images&utm_medium=referral`;
+				value = `${instant_img_localize.unsplash_url}/@${result.user.username}?utm_source=wordpress-instant-images&utm_medium=referral`;
 			}
 			break;
 

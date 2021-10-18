@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom /resize route
+ * Custom /test route to text REST API access.
  *
  * @since 3.0
  * @author dcooney

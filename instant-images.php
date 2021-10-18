@@ -28,22 +28,23 @@ TODO:
 	- Create method to add API Key outside of settings. Update all settings at once.
 	- If pixabay API key is empty, display a view with info on how to add a key.
 
-- Send REST request to update API settings field for API key. (api/settings.php)
+- Send REST request to update API settings field for API key. (api/settings.php) [DONE]
 
 - Add pixaby search [DONE]
 	- Search By ID [DONE]
 
 - User Search
-
 - Add Color filters.
 
 - Search - Load More not working. [ DONE]
-
 - Fix reset (switchProvider) function. [ DONE]
 	- This is not working because of react state
 
 - Default Provider [ DONE]
 - Add setting for setting a default provider (Unsplash/Pixabay) [ DONE]
+
+- Initiate Load
+	- What happens when Pixbay key is error.
 
 - Gutenberg & Modals
 	- Confirm everything works in all instances.
@@ -215,7 +216,12 @@ class InstantImages {
 				'download_width'     => esc_html( $download_w ),
 				'download_height'    => esc_html( $download_h ),
 				'unsplash_app_id'    => INSTANT_IMAGES_DEFAULT_APP_ID,
+				'unsplash_url'       => 'https://unsplash.com',
+				'unsplash_api_url'   => 'https://unsplash.com/developers',
 				'pixabay_app_id'     => $pixabay_api,
+				'pixabay_url'        => 'https://pixabay.com',
+				'pixabay_api_url'    => 'https://pixabay.com/service/about/api/',
+				'pixabay_api_desc'   => __( 'Access to images from Pixabay requires a valid API key. API keys are available for free, just sign up for an account at Pixabay, enter your API key below and you\'re good to go!', 'instant-images' ),
 				'error_upload'       => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
 				'error_restapi'      => '<strong>' . __( 'There was an error accessing the WP REST API.', 'instant-images' ) . '</strong><br/>',
 				'error_restapi_desc' => __( 'Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images' ),
@@ -266,8 +272,10 @@ class InstantImages {
 				'btnVerify'          => __( 'Verify', 'instant-images' ),
 				'enter_api_key'      => __( 'Enter API Key', 'instant-images' ),
 				'api_key_invalid'    => __( 'The API Key is Invalid', 'instant-images' ),
-				'api_invalid_msg'    => __( 'The API kay entered is not valid - try again.', 'instant-images' ),
-				'api_ratelimit_msg'  => __( 'The daily or hourly API rate limit has been exceeded. Try again later.', 'instant-images' ),
+				'api_success_msg'    => __( 'API key has been successfully validated!', 'instant-images' ),
+				'api_invalid_msg'    => __( 'API key entered is not valid - try again.', 'instant-images' ),
+				'api_ratelimit_msg'  => __( 'Your daily or hourly API rate limit has been exceeded. Try again later.', 'instant-images' ),
+				'get_api_key'        => __( 'Get API Key Now', 'instant-images' ),
 			)
 		);
 	}
@@ -287,6 +295,7 @@ class InstantImages {
 		// REST API Routes.
 		require_once 'api/test.php';
 		require_once 'api/download.php';
+		require_once 'api/settings.php';
 	}
 
 	/**

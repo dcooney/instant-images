@@ -158,13 +158,11 @@ function instant_images_tab_display_callback() {
 		$options['media_modal_display'] = '0';
 	}
 
-	$style = 'style="position: absolute; left: 0; top: 9px;"';
-
 	$html  = '<label style="cursor: default;"><strong>' . esc_attr__( 'Media Modal:', 'instant-images' ) . '</strong></label>';
-	$html .= '<label for="media_modal_display" style="padding-left: 24px; position: relative;">';
+	$html .= '<label for="media_modal_display">';
 	$html .= '<input type="hidden" name="instant_img_settings[media_modal_display]" value="0" />';
-	$html .= '<input ' . $style . ' type="checkbox" name="instant_img_settings[media_modal_display]" id="media_modal_display" value="1"' . ( $options['media_modal_display'] ? ' checked="checked"' : '' ) . ' />';
-	$html .= __( 'Hide the <b>Instant Images</b> tab in admin Media Modal windows.', 'instant-images' );
+	$html .= '<input type="checkbox" name="instant_img_settings[media_modal_display]" id="media_modal_display" value="1"' . ( $options['media_modal_display'] ? ' checked="checked"' : '' ) . ' />';
+	$html .= __( 'Hide Instant Images tab in Media Modal windows.', 'instant-images' );
 	$html .= '</label>';
 
 	// @codingStandardsIgnoreStart
@@ -189,9 +187,7 @@ function instant_images_default_provider() {
 	</label>
 	<select id="default_provider" name="instant_img_settings[default_provider]">
 		<option value="unsplash" <?php selected( 'unsplash', $options['default_provider'] ); ?>><?php esc_attr_e( 'Unsplash', 'instant-images' ); ?></option>
-		<optgroup label="<?php esc_attr_e( 'API Key Required', 'instant-images' ); ?>">
-			<option value="pixabay" <?php selected( 'pixabay', $options['default_provider'] ); ?>><?php esc_attr_e( 'Pixabay', 'instant-images' ); ?></option>
-		</optgroup>
+		<option value="pixabay" <?php selected( 'pixabay', $options['default_provider'] ); ?>><?php esc_attr_e( 'Pixabay', 'instant-images' ); ?> (<?php esc_attr_e( 'Requires API Key', 'instant-images' ); ?>)</option>
 	</select>
 	<?php
 }

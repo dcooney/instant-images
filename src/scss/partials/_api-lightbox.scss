@@ -1,36 +1,102 @@
+// Media Modal
+.media-frame-content{
+	.instant-img-container {
+		.api-lightbox{
+
+		}
+	}
+}
+
+// Instant Images Plugin Page.
 .instant-img-container {
 	.api-lightbox{
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		position: fixed;
-		z-index: 998;
+		position: absolute;
+		z-index: 9999;
 		left:0;
 		top: 0;
 		right:0;
 		bottom:0;
+		height: 100vh;
 		padding: 5%;
 		background-color: rgba(0, 0, 0, 0.75);
 		font-size: 13px;
+		&.active{
+			> div{
+				transform: scale(1);
+				opacity: 1;
+			}
+		}
 
 		> div{
-			max-width: 500px;
+			max-width: 450px;
 			width: 100%;
-			padding: 25px;
-			background-color: #fffce6;
-			background-color: $lighter_grey;
+			padding: 0;
+			background-color: #fff;
 			border: 1px solid $border;
 			border-radius: 5px;
 			box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
-			&> div{
+			position: relative;
+			transform: scale(0.9);
+			opacity: 0;
+			transition: all 0.3s ease-in-out;
+			& > div{
 				position: relative;
+			}
+		}
+
+		&--details{
+			border-bottom: 1px solid $border;
+			padding: 25px;
+			padding-bottom: 20px;
+			position: relative;
+			&:after,
+			&:before {
+				top: 100%;
+				left: 50px;
+				border: solid transparent;
+				content: "";
+				height: 0;
+				width: 0;
+				position: absolute;
+				pointer-events: none;
+			}
+			&:after {
+				border-color: rgba(255, 255, 255, 0);
+				border-top-color: #ffffff;
+				border-width: 10px;
+				margin-left: -10px;
+			}
+			&:before {
+				border-color: rgba(194, 225, 245, 0);
+				border-top-color:  #ccc;
+				border-width: 11px;
+				margin-left: -11px;
+			}
+			h3{
+				font-size: 16px;
+				line-height: 18px;
+				padding: 0 0 0 25px;
+				text-transform: uppercase;
+				margin: 0 0 10px;
+				background-position: left center;
+			}
+			p{
+				font-size: 13px;
+				margin: 0 0 5px;
+				a{
+					font-weight: 500;
+				}
 			}
 		}
 
 		&--close{
 			position: absolute;
-			right: -25px;
-			top: -25px;
+			z-index: 1;
+			right: 0px;
+			top: 0;
 			border: none;
 			background-color: transparent;
 			width: 40px;
@@ -47,6 +113,12 @@
 			}
 		}
 
+		form{
+			display: block;
+			background-color: $lighter_grey;
+			padding: 25px;
+		}
+
 		label,
 		button[type=submit]{
 			font-size: 12px;
@@ -61,7 +133,7 @@
 		&--input-wrap{
 			display: flex;
 			width: 100%;
-			padding: 2px;
+			padding: 0;
 			margin-bottom: 10px;
 			background-color: #fff;
 			border: 1px solid $border;
@@ -71,12 +143,14 @@
 				box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 			}
 			span{
-				width: 22px;
-				height: 36px;
+				width: 40px;
+				height: 40px;
 				display: flex;
-				justify-content: flex-end;
+				justify-content: center;
 				align-items: center;
-				border-radius: 2px;
+				border-radius: 2px 0 0 2px;
+				border-right: 1px solid $border;
+				background-color: $lighter_grey;
 				i{
 					font-size: 16px;
 				}
@@ -98,12 +172,13 @@
 				}
 			}
 			input{
-				line-height: 36px;
-				height: 36px;
-				padding: 0 5px;
+				line-height: 40px;
+				height: 40px;
+				padding: 0 10px;
 				background-color: transparent;
 				border: none;
 				flex: 1;
+				font-size: 12px;
 				&:focus{
 					background: transparent;
 					outline: none;
@@ -119,14 +194,23 @@
 			color: #fff;
 			border-radius: $radius;
 			padding: 0 10px;
-			line-height: 44px;
-			height: 44px;
+			line-height: 46px;
+			height: 46px;
 			margin: 0;
 			&:hover,
 			&:focus{
 				background-color: $purple_dark;
 			}
 		}
-
+		&--response{
+			color: $red;
+			margin: 0;
+			font-size: 13px;
+			font-weight: 500;
+			padding: 0 2px 12px;
+			&.valid{
+				color: $green_dark;
+			}
+		}
 	}
 }
