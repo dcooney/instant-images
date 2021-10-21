@@ -39104,6 +39104,10 @@ var _buildTestURL = __webpack_require__(/*! ../functions/buildTestURL */ "./src/
 
 var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
 
+var _consoleStatus = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
+
+var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
+
 var _updatePluginSetting = __webpack_require__(/*! ../functions/updatePluginSetting */ "./src/js/functions/updatePluginSetting.js");
 
 var _updatePluginSetting2 = _interopRequireDefault(_updatePluginSetting);
@@ -39181,7 +39185,7 @@ var APILightbox = function (_React$Component) {
 								ok = response.ok;
 								status = response.status;
 
-								// Update the specific provider API key in the Instant Images settings.
+								// Update the matching provider API key in the Instant Images settings.
 
 								settingField = document.querySelector("input[name=\"instant_img_settings[" + this.provider + "_api]\"]");
 
@@ -39205,15 +39209,18 @@ var APILightbox = function (_React$Component) {
 								} else {
 									// Error/Invalid.
 									this.setState({ status: "invalid" });
+
+									// Render console warning.
+									(0, _consoleStatus2.default)(this.provider, status);
+
+									// Set response state.
 									if (status === 400 || status === 401) {
 										// Unsplash/Pixabay incorrect API key.
 										this.setState({ response: instant_img_localize.api_invalid_msg });
-										console.warn(instant_img_localize.instant_images + ": " + status + " Error - " + instant_img_localize.api_invalid_msg);
 									}
 									if (status === 429) {
 										// Pixabay - too many requests.
 										this.setState({ response: instant_img_localize.api_ratelimit_msg });
-										console.warn(instant_img_localize.instant_images + ": " + instant_img_localize.api_ratelimit_msg);
 									}
 								}
 
@@ -41851,6 +41858,47 @@ function buildTestURL(provider) {
   var url = "" + api.photo_api + api.api_query_var + api_key + "&per_page=5&page=1";
 
   return url;
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/consoleStatus.js":
+/*!*******************************************!*\
+  !*** ./src/js/functions/consoleStatus.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = consoleStatus;
+/**
+ * Display a console message about API status.
+ *
+ * @param {string} provider The API service provider.
+ * @param {string} status The API status.
+ */
+function consoleStatus(provider) {
+	var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+	var local = instant_img_localize;
+	if (status === 400 || status === 401) {
+		// Unsplash/Pixabay incorrect API key.
+		console.warn("[" + local.instant_images + " - " + status + " Error] " + capitalize(provider) + ": " + local.api_invalid_msg);
+	}
+	if (status === 429) {
+		// Pixabay - too many requests.
+		console.warn("[" + local.instant_images + " - " + status + " Error] " + capitalize(provider) + ": " + local.api_ratelimit_msg);
+	}
+}
+
+function capitalize(s) {
+	if (typeof s !== "string") return "";
+	return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 /***/ }),

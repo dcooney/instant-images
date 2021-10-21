@@ -1,6 +1,7 @@
 import FocusTrap from "focus-trap-react";
 import React from "react";
 import buildTestURL from "../functions/buildTestURL";
+import consoleStatus from "../functions/consoleStatus";
 import updatePluginSetting from "../functions/updatePluginSetting";
 
 class APILightbox extends React.Component {
@@ -44,7 +45,7 @@ class APILightbox extends React.Component {
 		const ok = response.ok;
 		const status = response.status;
 
-		// Update the specific provider API key in the Instant Images settings.
+		// Update the matching provider API key in the Instant Images settings.
 		const settingField = document.querySelector(
 			`input[name="instant_img_settings[${this.provider}_api]"]`
 		);
@@ -68,19 +69,18 @@ class APILightbox extends React.Component {
 		} else {
 			// Error/Invalid.
 			this.setState({ status: "invalid" });
+
+			// Render console warning.
+			consoleStatus(this.provider, status);
+
+			// Set response state.
 			if (status === 400 || status === 401) {
 				// Unsplash/Pixabay incorrect API key.
 				this.setState({ response: instant_img_localize.api_invalid_msg });
-				console.warn(
-					`${instant_img_localize.instant_images}: ${status} Error - ${instant_img_localize.api_invalid_msg}`
-				);
 			}
 			if (status === 429) {
 				// Pixabay - too many requests.
 				this.setState({ response: instant_img_localize.api_ratelimit_msg });
-				console.warn(
-					`${instant_img_localize.instant_images}: ${instant_img_localize.api_ratelimit_msg}`
-				);
 			}
 		}
 	}

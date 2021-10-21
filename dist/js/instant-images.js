@@ -39104,6 +39104,10 @@ var _buildTestURL = __webpack_require__(/*! ../functions/buildTestURL */ "./src/
 
 var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
 
+var _consoleStatus = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
+
+var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
+
 var _updatePluginSetting = __webpack_require__(/*! ../functions/updatePluginSetting */ "./src/js/functions/updatePluginSetting.js");
 
 var _updatePluginSetting2 = _interopRequireDefault(_updatePluginSetting);
@@ -39181,7 +39185,7 @@ var APILightbox = function (_React$Component) {
 								ok = response.ok;
 								status = response.status;
 
-								// Update the specific provider API key in the Instant Images settings.
+								// Update the matching provider API key in the Instant Images settings.
 
 								settingField = document.querySelector("input[name=\"instant_img_settings[" + this.provider + "_api]\"]");
 
@@ -39205,15 +39209,18 @@ var APILightbox = function (_React$Component) {
 								} else {
 									// Error/Invalid.
 									this.setState({ status: "invalid" });
+
+									// Render console warning.
+									(0, _consoleStatus2.default)(this.provider, status);
+
+									// Set response state.
 									if (status === 400 || status === 401) {
 										// Unsplash/Pixabay incorrect API key.
 										this.setState({ response: instant_img_localize.api_invalid_msg });
-										console.warn(instant_img_localize.instant_images + ": " + status + " Error - " + instant_img_localize.api_invalid_msg);
 									}
 									if (status === 429) {
 										// Pixabay - too many requests.
 										this.setState({ response: instant_img_localize.api_ratelimit_msg });
-										console.warn(instant_img_localize.instant_images + ": " + instant_img_localize.api_ratelimit_msg);
 									}
 								}
 
@@ -41855,6 +41862,47 @@ function buildTestURL(provider) {
 
 /***/ }),
 
+/***/ "./src/js/functions/consoleStatus.js":
+/*!*******************************************!*\
+  !*** ./src/js/functions/consoleStatus.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = consoleStatus;
+/**
+ * Display a console message about API status.
+ *
+ * @param {string} provider The API service provider.
+ * @param {string} status The API status.
+ */
+function consoleStatus(provider) {
+	var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+	var local = instant_img_localize;
+	if (status === 400 || status === 401) {
+		// Unsplash/Pixabay incorrect API key.
+		console.warn("[" + local.instant_images + " - " + status + " Error] " + capitalize(provider) + ": " + local.api_invalid_msg);
+	}
+	if (status === 429) {
+		// Pixabay - too many requests.
+		console.warn("[" + local.instant_images + " - " + status + " Error] " + capitalize(provider) + ": " + local.api_ratelimit_msg);
+	}
+}
+
+function capitalize(s) {
+	if (typeof s !== "string") return "";
+	return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/***/ }),
+
 /***/ "./src/js/functions/generateAttribution.js.js":
 /*!****************************************************!*\
   !*** ./src/js/functions/generateAttribution.js.js ***!
@@ -42293,17 +42341,24 @@ var _API = __webpack_require__(/*! ./constants/API */ "./src/js/constants/API.js
 
 var _API2 = _interopRequireDefault(_API);
 
+var _buildTestURL = __webpack_require__(/*! ./functions/buildTestURL */ "./src/js/functions/buildTestURL.js");
+
+var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
+
+var _consoleStatus = __webpack_require__(/*! ./functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
+
+var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 __webpack_require__(/*! es6-promise */ "./node_modules/es6-promise/dist/es6-promise.js").polyfill();
 __webpack_require__(/*! isomorphic-fetch */ "./node_modules/isomorphic-fetch/fetch-npm-browserify.js");
 __webpack_require__(/*! ./functions/helpers */ "./src/js/functions/helpers.js");
 
-// Default Provider.
+// Provider from settings.
 var provider = instant_img_localize && instant_img_localize.default_provider ? instant_img_localize.default_provider : "unsplash";
-
-// Default API Key.
-var api_key = instant_img_localize[provider + "_app_id"];
 
 /**
  * Get the initial set of photos.
@@ -42317,61 +42372,92 @@ function GetPhotos() {
 	var orderby = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "latest";
 	var provider = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "unsplash";
 
+	// App container.
 	var container = document.querySelector(".instant-img-container");
+
+	// API Key.
+	var api_key = instant_img_localize[provider + "_app_id"];
+
+	// API URL
 	var start = "" + _API2.default[provider].photo_api + _API2.default[provider].api_query_var + api_key;
 	var url = "" + start + _API2.default.posts_per_page + "&page=" + page + "&" + _API2.default[provider].order_key + "=" + orderby;
 
-	/**
-  * Render the InstantImages app.
-  *
-  * @param {array}   data  The photo array.
-  * @param {boolean} error Was there an error detected?
-  * @return {Element}      The PhotoList component.
-  */
-	function renderApp(data) {
-		var error = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-		var app = document.getElementById("app");
-		_reactDom2.default.render(_react2.default.createElement(_PhotoList2.default, {
-			container: app,
-			editor: "classic",
-			results: data,
-			page: page,
-			orderby: orderby,
-			provider: provider,
-			hasError: error
-		}), app);
-	}
-
-	/**
-  * Initialize Instant Images.
-  */
 	function initialize() {
-		// Remove init button (if necessary)
+		// Get Data from API
+		fetch(url).then(function (data) {
+			return data.json();
+		}).then(function (data) {
+			var app = document.getElementById("app");
+			_reactDom2.default.render(_react2.default.createElement(_PhotoList2.default, {
+				container: app,
+				editor: "classic",
+				results: data,
+				page: page,
+				orderby: orderby,
+				provider: provider
+			}), app);
+		}).catch(function (error) {
+			console.log(error);
+		});
+
+		// Remove init button (if required).
 		var initWrap = container.querySelector(".initialize-wrap");
 		if (typeof initWrap != "undefined" && initWrap != null) {
 			initWrap.parentNode.removeChild(initWrap);
 		}
-
-		// Get Data from API
-		fetch(url).then(function (data) {
-			if (data.status >= 200 && data.status <= 299) {
-				return data.json();
-			} else if (data.status === 400) {
-				renderApp("", true);
-			} else {
-				throw Error(data.statusText);
-			}
-		}).then(function (data) {
-			renderApp(data);
-		}).catch(function (error) {
-			console.log(error);
-		});
 	}
 	initialize();
 }
 
-GetPhotos(1, "latest", provider);
+_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+	var defaultProvider, api_required, response, ok, status;
+	return regeneratorRuntime.wrap(function _callee$(_context) {
+		while (1) {
+			switch (_context.prev = _context.next) {
+				case 0:
+					defaultProvider = "unsplash";
+					api_required = "" + _API2.default[provider].requires_key;
+
+					// Send test API request to confirm API key is functional.
+
+					if (!api_required) {
+						_context.next = 11;
+						break;
+					}
+
+					_context.next = 5;
+					return fetch((0, _buildTestURL2.default)(provider));
+
+				case 5:
+					response = _context.sent;
+
+					// Handle response.
+					ok = response.ok;
+					status = response.status;
+
+
+					if (ok) {
+						GetPhotos(1, "latest", provider);
+					} else {
+						GetPhotos(1, "latest", defaultProvider);
+
+						// Render console warning.
+						(0, _consoleStatus2.default)(provider, status);
+					}
+					_context.next = 12;
+					break;
+
+				case 11:
+					// Fallback to Unsplash.
+					GetPhotos(1, "latest", defaultProvider);
+
+				case 12:
+				case "end":
+					return _context.stop();
+			}
+		}
+	}, _callee, undefined);
+}))();
 
 /***/ })
 
