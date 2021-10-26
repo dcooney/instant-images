@@ -46,23 +46,3 @@
 		}
 	}
 }
-
-.components-panel{
-	.orientation-list{
-		position: static;
-		text-align: center;
-		flex-wrap: wrap;
-		justify-content: center;
-		border-top: none;
-		background: $lighter_grey;
-		margin-bottom: 10px;
-		span{
-			display: none;
-		}
-		ul{
-			padding: 0;
-			width: 100%;
-			justify-content: center;
-		}
-	}
-}

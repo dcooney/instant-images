@@ -29,10 +29,8 @@ class PhotoList extends React.Component {
 
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 
-		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.posts_per_page}`;
-		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_key}${API.posts_per_page}`;
-
-		this.hasAPIError = this.props.hasError;
+		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
+		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
 
 		// Results state.
 		this.results = getResults(
@@ -498,8 +496,8 @@ class PhotoList extends React.Component {
 		this.order_key = this.api_provider.order_key;
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 
-		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.posts_per_page}`;
-		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_key}${API.posts_per_page}`;
+		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
+		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
 
 		// At last, get the photos.
 		this.getPhotos("latest", this.buttonLatest.current, true);
@@ -664,7 +662,7 @@ class PhotoList extends React.Component {
 											: "provider-nav--btn"
 									}
 								>
-									{provider}
+									<span>{provider}</span>
 								</button>
 							</div>
 						))}
@@ -683,12 +681,6 @@ class PhotoList extends React.Component {
 
 				{this.api_provider.order && (
 					<ul className="control-nav" ref={this.controlNav}>
-						<li>
-							<i
-								className="fa fa-sort-amount-asc"
-								aria-hidden="true"
-							></i>
-						</li>
 						{this.api_provider.order.map((order, iterator) => (
 							<li key={`${this.provider}-order-${iterator}`}>
 								<button
@@ -764,7 +756,7 @@ class PhotoList extends React.Component {
 				)}
 
 				<LoadingBlock />
-				<LoadMore loadMorePhotos={this.loadMorePhotos} />
+				<LoadMore loadMorePhotos={this.loadMorePhotos.bind(this)} />
 				<Tooltip />
 			</div>
 		);

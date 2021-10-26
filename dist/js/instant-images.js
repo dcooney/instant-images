@@ -39865,7 +39865,12 @@ var Photo = function (_React$Component) {
 			caption: _this.caption
 		};
 
+		// Refs.
+		_this.photo = _react2.default.createRef();
+		_this.photoUpload = _react2.default.createRef();
+		_this.editScreen = _react2.default.createRef();
 		_this.captionRef = _react2.default.createRef();
+		_this.noticeMsg = _react2.default.createRef();
 		return _this;
 	}
 
@@ -39883,25 +39888,26 @@ var Photo = function (_React$Component) {
 			e.preventDefault();
 			var self = this;
 
-			var target = e.currentTarget; // get current <a/>
-			var photo = target.parentElement.parentElement.parentElement; // Get parent .photo el
-			var notice = photo.querySelector(".notice-msg"); // Locate .notice-msg div
+			var target = e.currentTarget;
+			var photo = self.photo.current;
+			var notice = self.noticeMsg.current;
 
 			if (!target.classList.contains("upload")) {
 				// If target is .download-photo, switch target definition
-				target = photo.querySelector("a.upload");
+				target = self.photoUpload.current; // a.upload.
 			}
 
 			if (target.classList.contains("success") || this.inProgress) {
 				return false; // Exit if already uploaded or in progress.
 			}
-			this.inProgress = true;
 
+			this.inProgress = true;
 			target.classList.add("uploading");
 			photo.classList.add("in-progress");
 
 			// Status messaging
 			notice.innerHTML = instant_img_localize.saving;
+
 			setTimeout(function () {
 				// Change notice after 3 seconds
 				notice.innerHTML = instant_img_localize.resizing;
@@ -40021,14 +40027,8 @@ var Photo = function (_React$Component) {
 	}, {
 		key: "setFeaturedImageClick",
 		value: function setFeaturedImageClick(e) {
-			var target = e.currentTarget;
-			if (!target) {
-				return false;
-			}
-
 			this.hideTooltip(e);
-			var parent = target.parentNode.parentNode.parentNode;
-			var photo = parent.querySelector("a.upload");
+			var photo = this.photoUpload.current;
 			if (photo) {
 				this.setAsFeaturedImage = true;
 				photo.click();
@@ -40045,14 +40045,8 @@ var Photo = function (_React$Component) {
 	}, {
 		key: "insertImageIntoPost",
 		value: function insertImageIntoPost(e) {
-			var target = e.currentTarget;
-			if (!target) {
-				return false;
-			}
-
 			this.hideTooltip(e);
-			var parent = target.parentNode.parentNode.parentNode;
-			var photo = parent.querySelector("a.upload");
+			var photo = this.photoUpload.current;
 			if (photo) {
 				this.insertIntoPost = true;
 				photo.click();
@@ -40166,7 +40160,7 @@ var Photo = function (_React$Component) {
 
 	}, {
 		key: "uploadError",
-		value: function uploadError(target, photo, notice, msg) {
+		value: function uploadError(target, notice, msg) {
 			target.classList.remove("uploading");
 			target.classList.remove("resizing");
 			target.classList.add("errors");
@@ -40201,16 +40195,15 @@ var Photo = function (_React$Component) {
 		key: "showEditScreen",
 		value: function showEditScreen(e) {
 			e.preventDefault();
-			var el = e.currentTarget;
+			var self = this;
 			this.hideTooltip(e);
-			var photo = el.closest(".photo");
-			var editScreen = photo.querySelector(".edit-screen");
 
-			editScreen.classList.add("editing"); // Show edit screen
+			// Show edit screen
+			self.editScreen.current.classList.add("editing");
 
 			// Set focus on edit screen
 			setTimeout(function () {
-				editScreen.focus();
+				self.editScreen.current.focus({ preventScroll: true });
 			}, 150);
 		}
 
@@ -40251,34 +40244,33 @@ var Photo = function (_React$Component) {
 		/**
    * Handles the save event for the edit screen
    *
-   * @param {Element} e The target element.
    * @since 3.2
    */
 
 	}, {
 		key: "saveEditChange",
-		value: function saveEditChange(e) {
-			var el = e.currentTarget;
-			var photo = el.closest(".photo");
-
+		value: function saveEditChange() {
 			// Filename
-			var filename = photo.querySelector('input[name="filename"]');
+			var filename = this.photo.current.querySelector('input[name="filename"]');
 			this.filename = filename.value;
 
 			// Title
-			var title = photo.querySelector('input[name="title"]');
+			var title = this.photo.current.querySelector('input[name="title"]');
 			this.title = title.value;
 
 			// Alt
-			var alt = photo.querySelector('input[name="alt"]');
+			var alt = this.photo.current.querySelector('input[name="alt"]');
 			this.alt = alt.value;
 
 			// Caption
-			var caption = photo.querySelector('textarea[name="caption"]');
+			var caption = this.photo.current.querySelector('textarea[name="caption"]');
 			this.caption = caption.value;
 
-			photo.querySelector(".edit-screen").classList.remove("editing"); // Hide edit screen
-			photo.querySelector("a.upload").click();
+			// Hide edit screen.
+			this.editScreen.current.classList.remove("editing");
+
+			// Trigger photo click.
+			this.photoUpload.current.click();
 		}
 
 		/**
@@ -40291,42 +40283,39 @@ var Photo = function (_React$Component) {
 	}, {
 		key: "cancelEditChange",
 		value: function cancelEditChange(e) {
-			var el = e.currentTarget;
-			var photo = el.closest(".photo");
-			if (photo) {
-				var target = photo.querySelector("a.upload");
+			// Filename
+			var filename = this.photo.current.querySelector('input[name="filename"]');
+			filename.value = filename.dataset.original;
+			this.setState({
+				filename: filename.value
+			});
 
-				// Filename
-				var filename = photo.querySelector('input[name="filename"]');
-				filename.value = filename.dataset.original;
-				this.setState({
-					filename: filename.value
-				});
+			// Title
+			var title = this.photo.current.querySelector('input[name="title"]');
+			title.value = title.dataset.original;
+			this.setState({
+				title: title.value
+			});
 
-				// Title
-				var title = photo.querySelector('input[name="title"]');
-				title.value = title.dataset.original;
-				this.setState({
-					title: title.value
-				});
+			// Alt
+			var alt = this.photo.current.querySelector('input[name="alt"]');
+			alt.value = alt.dataset.original;
+			this.setState({
+				alt: alt.value
+			});
 
-				// Alt
-				var alt = photo.querySelector('input[name="alt"]');
-				alt.value = alt.dataset.original;
-				this.setState({
-					alt: alt.value
-				});
+			// Caption
+			var caption = this.photo.current.querySelector('textarea[name="caption"]');
+			caption.value = caption.dataset.original;
+			this.setState({
+				caption: caption.value
+			});
 
-				// Caption
-				var caption = photo.querySelector('textarea[name="caption"]');
-				caption.value = caption.dataset.original;
-				this.setState({
-					caption: caption.value
-				});
+			// Hide edit screen
+			this.editScreen.current.classList.remove("editing");
 
-				photo.querySelector(".edit-screen").classList.remove("editing"); // Hide edit screen
-				target.focus();
-			}
+			// Set focus back on photo.
+			this.photoUpload.current.focus({ preventScrol: true });
 		}
 
 		/**
@@ -40374,7 +40363,7 @@ var Photo = function (_React$Component) {
 
 			return _react2.default.createElement(
 				"article",
-				{ className: "photo" },
+				{ className: "photo", ref: this.photo },
 				_react2.default.createElement(
 					"div",
 					{ className: "photo--wrap" },
@@ -40386,6 +40375,7 @@ var Photo = function (_React$Component) {
 							{
 								className: "upload loaded",
 								href: this.full_size,
+								ref: this.photoUpload,
 								"data-id": this.id,
 								"data-url": this.full_size,
 								"data-filename": this.state.filename,
@@ -40400,7 +40390,7 @@ var Photo = function (_React$Component) {
 							_react2.default.createElement("img", { src: this.img, alt: "" }),
 							_react2.default.createElement("div", { className: "status" })
 						),
-						_react2.default.createElement("div", { className: "notice-msg" }),
+						_react2.default.createElement("div", { className: "notice-msg", ref: this.noticeMsg }),
 						_react2.default.createElement(
 							"div",
 							{ className: "user-controls" },
@@ -40566,7 +40556,7 @@ var Photo = function (_React$Component) {
 					),
 					_react2.default.createElement(
 						"div",
-						{ className: "edit-screen", tabIndex: "0" },
+						{ className: "edit-screen", tabIndex: "0", ref: this.editScreen },
 						_react2.default.createElement(
 							"div",
 							{ className: "edit-screen--title" },
@@ -40708,8 +40698,8 @@ var Photo = function (_React$Component) {
 								{
 									type: "button",
 									className: "button button-primary",
-									onClick: function onClick(e) {
-										return _this2.saveEditChange(e);
+									onClick: function onClick() {
+										return _this2.saveEditChange();
 									}
 								},
 								instant_img_localize.upload_now
@@ -40836,10 +40826,8 @@ var PhotoList = function (_React$Component) {
 
 		_this.api_key = instant_img_localize[_this.provider + "_app_id"];
 
-		_this.api_url = "" + _this.api_provider.photo_api + _this.api_provider.api_query_var + _this.api_key + _API2.default.posts_per_page;
-		_this.search_api_url = "" + _this.api_provider.search_api + _this.api_provider.api_query_var + _this.api_key + _API2.default.posts_per_page;
-
-		_this.hasAPIError = _this.props.hasError;
+		_this.api_url = "" + _this.api_provider.photo_api + _this.api_provider.api_query_var + _this.api_key + _API2.default.defaults.posts_per_page;
+		_this.search_api_url = "" + _this.api_provider.search_api + _this.api_provider.api_query_var + _this.api_key + _API2.default.defaults.posts_per_page;
 
 		// Results state.
 		_this.results = (0, _getResults2.default)(_this.provider, _this.arr_key, _this.props.results);
@@ -41329,8 +41317,8 @@ var PhotoList = function (_React$Component) {
 								this.order_key = this.api_provider.order_key;
 								this.api_key = instant_img_localize[this.provider + "_app_id"];
 
-								this.api_url = "" + this.api_provider.photo_api + this.api_provider.api_query_var + this.api_key + _API2.default.posts_per_page;
-								this.search_api_url = "" + this.api_provider.search_api + this.api_provider.api_query_var + this.api_key + _API2.default.posts_per_page;
+								this.api_url = "" + this.api_provider.photo_api + this.api_provider.api_query_var + this.api_key + _API2.default.defaults.posts_per_page;
+								this.search_api_url = "" + this.api_provider.search_api + this.api_provider.api_query_var + this.api_key + _API2.default.defaults.posts_per_page;
 
 								// At last, get the photos.
 								this.getPhotos("latest", this.buttonLatest.current, true);
@@ -41542,7 +41530,11 @@ var PhotoList = function (_React$Component) {
 									},
 									className: _this3.provider === provider.toLowerCase() ? "provider-nav--btn active" : "provider-nav--btn"
 								},
-								provider
+								_react2.default.createElement(
+									"span",
+									null,
+									provider
+								)
 							)
 						);
 					})
@@ -41555,14 +41547,6 @@ var PhotoList = function (_React$Component) {
 				this.api_provider.order && _react2.default.createElement(
 					"ul",
 					{ className: "control-nav", ref: this.controlNav },
-					_react2.default.createElement(
-						"li",
-						null,
-						_react2.default.createElement("i", {
-							className: "fa fa-sort-amount-asc",
-							"aria-hidden": "true"
-						})
-					),
 					this.api_provider.order.map(function (order, iterator) {
 						return _react2.default.createElement(
 							"li",
@@ -41640,7 +41624,7 @@ var PhotoList = function (_React$Component) {
 				),
 				this.total_results == 0 && this.is_search === true && _react2.default.createElement(_NoResults2.default, null),
 				_react2.default.createElement(_LoadingBlock2.default, null),
-				_react2.default.createElement(_LoadMore2.default, { loadMorePhotos: this.loadMorePhotos }),
+				_react2.default.createElement(_LoadMore2.default, { loadMorePhotos: this.loadMorePhotos.bind(this) }),
 				_react2.default.createElement(_Tooltip2.default, null)
 			);
 		}
@@ -41797,6 +41781,11 @@ exports.default = Tooltip;
 
 
 module.exports = {
+	defaults: {
+		provider: "unsplash",
+		order: "latest",
+		posts_per_page: "&per_page=20"
+	},
 	unsplash: {
 		requires_key: false,
 		api_query_var: "/?client_id=",
@@ -41819,8 +41808,7 @@ module.exports = {
 		order_key: "order",
 		order: ["latest", "popular"],
 		orientation: ["horizontal", "vertical"]
-	},
-	posts_per_page: "&per_page=20"
+	}
 };
 
 /***/ }),
@@ -41877,7 +41865,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = consoleStatus;
 /**
- * Display a console message about API status.
+ * Display a console.log message about API status.
  *
  * @param {string} provider The API service provider.
  * @param {string} status The API status.
@@ -42063,6 +42051,38 @@ function getProp(provider, result, attribute) {
 
 /***/ }),
 
+/***/ "./src/js/functions/getProvider.js":
+/*!*****************************************!*\
+  !*** ./src/js/functions/getProvider.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getProvider;
+
+var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+
+var _API2 = _interopRequireDefault(_API);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Get the default provider on page load.
+ *
+ * @return {string} 				 The default service provider.
+ */
+function getProvider() {
+  return instant_img_localize && instant_img_localize.default_provider ? instant_img_localize.default_provider : _API2.default.defaults.provider;
+}
+
+/***/ }),
+
 /***/ "./src/js/functions/getResults.js":
 /*!****************************************!*\
   !*** ./src/js/functions/getResults.js ***!
@@ -42089,6 +42109,10 @@ exports.getResultById = getResultById;
  * @return {Array} 				 The photos as an array.
  */
 function getResults(provider, key, data, is_search) {
+	if (!data) {
+		return [];
+	}
+
 	var results = [];
 	switch (provider) {
 		case "unsplash":
@@ -42107,7 +42131,19 @@ function getResults(provider, key, data, is_search) {
 	return results;
 }
 
+/**
+ * Get results by photo ID.
+ *
+ * @param  {string}  provider  The current service provider.
+ * @param  {string}  key       The match key to access.
+ * @param  {Array}   data      The photo array.
+ * @return {Array} 				 The photos as an array.
+ */
 function getResultById(provider, key, data) {
+	if (!data) {
+		return [];
+	}
+
 	var result = [];
 	switch (provider) {
 		case "unsplash":
@@ -42349,6 +42385,10 @@ var _consoleStatus = __webpack_require__(/*! ./functions/consoleStatus */ "./src
 
 var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
 
+var _getProvider = __webpack_require__(/*! ./functions/getProvider */ "./src/js/functions/getProvider.js");
+
+var _getProvider2 = _interopRequireDefault(_getProvider);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -42357,8 +42397,8 @@ __webpack_require__(/*! es6-promise */ "./node_modules/es6-promise/dist/es6-prom
 __webpack_require__(/*! isomorphic-fetch */ "./node_modules/isomorphic-fetch/fetch-npm-browserify.js");
 __webpack_require__(/*! ./functions/helpers */ "./src/js/functions/helpers.js");
 
-// Provider from settings.
-var provider = instant_img_localize && instant_img_localize.default_provider ? instant_img_localize.default_provider : "unsplash";
+// Get provider from settings.
+var provider = (0, _getProvider2.default)();
 
 /**
  * Get the initial set of photos.
@@ -42369,8 +42409,8 @@ var provider = instant_img_localize && instant_img_localize.default_provider ? i
  */
 function GetPhotos() {
 	var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-	var orderby = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "latest";
-	var provider = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "unsplash";
+	var orderby = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _API2.default.defaults.order;
+	var provider = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _API2.default.defaults.provider;
 
 	// App container.
 	var container = document.querySelector(".instant-img-container");
@@ -42378,9 +42418,9 @@ function GetPhotos() {
 	// API Key.
 	var api_key = instant_img_localize[provider + "_app_id"];
 
-	// API URL
+	// API URL.
 	var start = "" + _API2.default[provider].photo_api + _API2.default[provider].api_query_var + api_key;
-	var url = "" + start + _API2.default.posts_per_page + "&page=" + page + "&" + _API2.default[provider].order_key + "=" + orderby;
+	var url = "" + start + _API2.default.defaults.posts_per_page + "&page=" + page + "&" + _API2.default[provider].order_key + "=" + orderby;
 
 	function initialize() {
 		// Get Data from API
@@ -42409,27 +42449,32 @@ function GetPhotos() {
 	initialize();
 }
 
+/**
+ * Dispatch an initial fetch request to confirm the default API key is valid.
+ */
 _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-	var defaultProvider, api_required, response, ok, status;
+	var defaultProvider, defaultOrder, api_required, response, ok, status;
 	return regeneratorRuntime.wrap(function _callee$(_context) {
 		while (1) {
 			switch (_context.prev = _context.next) {
 				case 0:
-					defaultProvider = "unsplash";
-					api_required = "" + _API2.default[provider].requires_key;
+					defaultProvider = _API2.default.defaults.provider;
+					defaultOrder = _API2.default.defaults.order;
+					api_required = _API2.default[provider].requires_key;
 
 					// Send test API request to confirm API key is functional.
 
 					if (!api_required) {
-						_context.next = 11;
+						_context.next = 12;
 						break;
 					}
 
-					_context.next = 5;
+					_context.next = 6;
 					return fetch((0, _buildTestURL2.default)(provider));
 
-				case 5:
+				case 6:
 					response = _context.sent;
+
 
 					// Handle response.
 					ok = response.ok;
@@ -42437,21 +42482,23 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
 
 
 					if (ok) {
-						GetPhotos(1, "latest", provider);
+						// Success.
+						GetPhotos(1, defaultOrder, provider);
 					} else {
-						GetPhotos(1, "latest", defaultProvider);
+						// Status Error: Fallback to default provider.
+						GetPhotos(1, defaultOrder, defaultProvider);
 
 						// Render console warning.
 						(0, _consoleStatus2.default)(provider, status);
 					}
-					_context.next = 12;
+					_context.next = 13;
 					break;
 
-				case 11:
-					// Fallback to Unsplash.
-					GetPhotos(1, "latest", defaultProvider);
-
 				case 12:
+					// API Error: Fallback to default provider.
+					GetPhotos(1, defaultOrder, defaultProvider);
+
+				case 13:
 				case "end":
 					return _context.stop();
 			}

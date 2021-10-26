@@ -1,7 +1,7 @@
-import Icon from "../icon";
+import Icon from "./utils/icon";
 const { PluginSidebarMoreMenuItem } = wp.editPost;
 
-const UnsplashMenu = () => (
+const Menu = () => (
 	<PluginSidebarMoreMenuItem
 		icon={<Icon color="unsplash" />}
 		target="instant-images-sidebar"
@@ -10,4 +10,4 @@ const UnsplashMenu = () => (
 		Instant Images
 	</PluginSidebarMoreMenuItem>
 );
-export default UnsplashMenu;
+export default Menu;

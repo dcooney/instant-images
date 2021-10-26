@@ -62,7 +62,12 @@ class Photo extends React.Component {
 			caption: this.caption,
 		};
 
+		// Refs.
+		this.photo = React.createRef();
+		this.photoUpload = React.createRef();
+		this.editScreen = React.createRef();
 		this.captionRef = React.createRef();
+		this.noticeMsg = React.createRef();
 	}
 
 	/**
@@ -75,25 +80,26 @@ class Photo extends React.Component {
 		e.preventDefault();
 		const self = this;
 
-		let target = e.currentTarget; // get current <a/>
-		const photo = target.parentElement.parentElement.parentElement; // Get parent .photo el
-		const notice = photo.querySelector(".notice-msg"); // Locate .notice-msg div
+		let target = e.currentTarget;
+		const photo = self.photo.current;
+		const notice = self.noticeMsg.current;
 
 		if (!target.classList.contains("upload")) {
 			// If target is .download-photo, switch target definition
-			target = photo.querySelector("a.upload");
+			target = self.photoUpload.current; // a.upload.
 		}
 
 		if (target.classList.contains("success") || this.inProgress) {
 			return false; // Exit if already uploaded or in progress.
 		}
-		this.inProgress = true;
 
+		this.inProgress = true;
 		target.classList.add("uploading");
 		photo.classList.add("in-progress");
 
 		// Status messaging
 		notice.innerHTML = instant_img_localize.saving;
+
 		setTimeout(function () {
 			// Change notice after 3 seconds
 			notice.innerHTML = instant_img_localize.resizing;
@@ -129,15 +135,15 @@ class Photo extends React.Component {
 		axios
 			.post(api, JSON.stringify(data), config)
 			.then(function (res) {
-				let response = res.data;
+				const response = res.data;
 
 				if (response) {
 					// Successful response from server
-					let success = response.success;
-					let id = response.id;
-					let attachment = response.attachment;
-					let admin_url = response.admin_url;
-					let msg = response.msg;
+					const success = response.success;
+					const id = response.id;
+					const attachment = response.attachment;
+					const admin_url = response.admin_url;
+					const msg = response.msg;
 
 					if (success) {
 						// Edit URL
@@ -231,14 +237,8 @@ class Photo extends React.Component {
 	 * @since 4.0
 	 */
 	setFeaturedImageClick(e) {
-		const target = e.currentTarget;
-		if (!target) {
-			return false;
-		}
-
 		this.hideTooltip(e);
-		const parent = target.parentNode.parentNode.parentNode;
-		const photo = parent.querySelector("a.upload");
+		const photo = this.photoUpload.current;
 		if (photo) {
 			this.setAsFeaturedImage = true;
 			photo.click();
@@ -252,14 +252,8 @@ class Photo extends React.Component {
 	 * @since 4.0
 	 */
 	insertImageIntoPost(e) {
-		let target = e.currentTarget;
-		if (!target) {
-			return false;
-		}
-
 		this.hideTooltip(e);
-		let parent = target.parentNode.parentNode.parentNode;
-		let photo = parent.querySelector("a.upload");
+		const photo = this.photoUpload.current;
 		if (photo) {
 			this.insertIntoPost = true;
 			photo.click();
@@ -371,7 +365,7 @@ class Photo extends React.Component {
 	 * @param {string}  msg    Error Msg.
 	 * @since 3.0
 	 */
-	uploadError(target, photo, notice, msg) {
+	uploadError(target, notice, msg) {
 		target.classList.remove("uploading");
 		target.classList.remove("resizing");
 		target.classList.add("errors");
@@ -400,16 +394,15 @@ class Photo extends React.Component {
 	 */
 	showEditScreen(e) {
 		e.preventDefault();
-		const el = e.currentTarget;
+		const self = this;
 		this.hideTooltip(e);
-		const photo = el.closest(".photo");
-		const editScreen = photo.querySelector(".edit-screen");
 
-		editScreen.classList.add("editing"); // Show edit screen
+		// Show edit screen
+		self.editScreen.current.classList.add("editing");
 
 		// Set focus on edit screen
 		setTimeout(function () {
-			editScreen.focus();
+			self.editScreen.current.focus({ preventScroll: true });
 		}, 150);
 	}
 
@@ -447,31 +440,32 @@ class Photo extends React.Component {
 	/**
 	 * Handles the save event for the edit screen
 	 *
-	 * @param {Element} e The target element.
 	 * @since 3.2
 	 */
-	saveEditChange(e) {
-		let el = e.currentTarget;
-		let photo = el.closest(".photo");
-
+	saveEditChange() {
 		// Filename
-		let filename = photo.querySelector('input[name="filename"]');
+		let filename = this.photo.current.querySelector('input[name="filename"]');
 		this.filename = filename.value;
 
 		// Title
-		let title = photo.querySelector('input[name="title"]');
+		let title = this.photo.current.querySelector('input[name="title"]');
 		this.title = title.value;
 
 		// Alt
-		let alt = photo.querySelector('input[name="alt"]');
+		let alt = this.photo.current.querySelector('input[name="alt"]');
 		this.alt = alt.value;
 
 		// Caption
-		let caption = photo.querySelector('textarea[name="caption"]');
+		let caption = this.photo.current.querySelector(
+			'textarea[name="caption"]'
+		);
 		this.caption = caption.value;
 
-		photo.querySelector(".edit-screen").classList.remove("editing"); // Hide edit screen
-		photo.querySelector("a.upload").click();
+		// Hide edit screen.
+		this.editScreen.current.classList.remove("editing");
+
+		// Trigger photo click.
+		this.photoUpload.current.click();
 	}
 
 	/**
@@ -481,42 +475,43 @@ class Photo extends React.Component {
 	 * @since 3.2
 	 */
 	cancelEditChange(e) {
-		let el = e.currentTarget;
-		let photo = el.closest(".photo");
-		if (photo) {
-			let target = photo.querySelector("a.upload");
+		// Filename
+		const filename = this.photo.current.querySelector(
+			'input[name="filename"]'
+		);
+		filename.value = filename.dataset.original;
+		this.setState({
+			filename: filename.value,
+		});
 
-			// Filename
-			let filename = photo.querySelector('input[name="filename"]');
-			filename.value = filename.dataset.original;
-			this.setState({
-				filename: filename.value,
-			});
+		// Title
+		const title = this.photo.current.querySelector('input[name="title"]');
+		title.value = title.dataset.original;
+		this.setState({
+			title: title.value,
+		});
 
-			// Title
-			let title = photo.querySelector('input[name="title"]');
-			title.value = title.dataset.original;
-			this.setState({
-				title: title.value,
-			});
+		// Alt
+		const alt = this.photo.current.querySelector('input[name="alt"]');
+		alt.value = alt.dataset.original;
+		this.setState({
+			alt: alt.value,
+		});
 
-			// Alt
-			let alt = photo.querySelector('input[name="alt"]');
-			alt.value = alt.dataset.original;
-			this.setState({
-				alt: alt.value,
-			});
+		// Caption
+		const caption = this.photo.current.querySelector(
+			'textarea[name="caption"]'
+		);
+		caption.value = caption.dataset.original;
+		this.setState({
+			caption: caption.value,
+		});
 
-			// Caption
-			let caption = photo.querySelector('textarea[name="caption"]');
-			caption.value = caption.dataset.original;
-			this.setState({
-				caption: caption.value,
-			});
+		// Hide edit screen
+		this.editScreen.current.classList.remove("editing");
 
-			photo.querySelector(".edit-screen").classList.remove("editing"); // Hide edit screen
-			target.focus();
-		}
+		// Set focus back on photo.
+		this.photoUpload.current.focus({ preventScrol: true });
 	}
 
 	/**
@@ -557,12 +552,13 @@ class Photo extends React.Component {
 				: instant_img_localize.likes_plural;
 
 		return (
-			<article className="photo">
+			<article className="photo" ref={this.photo}>
 				<div className="photo--wrap">
 					<div className="img-wrap">
 						<a
 							className="upload loaded"
 							href={this.full_size}
+							ref={this.photoUpload}
 							data-id={this.id}
 							data-url={this.full_size}
 							data-filename={this.state.filename}
@@ -576,7 +572,7 @@ class Photo extends React.Component {
 							<div className="status" />
 						</a>
 
-						<div className="notice-msg" />
+						<div className="notice-msg" ref={this.noticeMsg} />
 
 						<div className="user-controls">
 							<a
@@ -700,7 +696,7 @@ class Photo extends React.Component {
 						</div>
 					</div>
 
-					<div className="edit-screen" tabIndex="0">
+					<div className="edit-screen" tabIndex="0" ref={this.editScreen}>
 						<div className="edit-screen--title">
 							<div>
 								<p className="heading">
@@ -777,7 +773,7 @@ class Photo extends React.Component {
 							<button
 								type="button"
 								className="button button-primary"
-								onClick={(e) => this.saveEditChange(e)}
+								onClick={() => this.saveEditChange()}
 							>
 								{instant_img_localize.upload_now}
 							</button>

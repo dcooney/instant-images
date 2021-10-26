@@ -1,4 +1,9 @@
 module.exports = {
+	defaults: {
+		provider: "unsplash",
+		order: "latest",
+		posts_per_page: "&per_page=20",
+	},
 	unsplash: {
 		requires_key: false,
 		api_query_var: "/?client_id=",
@@ -22,5 +27,4 @@ module.exports = {
 		order: ["latest", "popular"],
 		orientation: ["horizontal", "vertical"],
 	},
-	posts_per_page: "&per_page=20",
 };

@@ -9,6 +9,10 @@
  * @return {Array} 				 The photos as an array.
  */
 export default function getResults(provider, key, data, is_search) {
+	if (!data) {
+		return [];
+	}
+
 	let results = [];
 	switch (provider) {
 		case "unsplash":
@@ -27,7 +31,19 @@ export default function getResults(provider, key, data, is_search) {
 	return results;
 }
 
+/**
+ * Get results by photo ID.
+ *
+ * @param  {string}  provider  The current service provider.
+ * @param  {string}  key       The match key to access.
+ * @param  {Array}   data      The photo array.
+ * @return {Array} 				 The photos as an array.
+ */
 export function getResultById(provider, key, data) {
+	if (!data) {
+		return [];
+	}
+
 	let result = [];
 	switch (provider) {
 		case "unsplash":
