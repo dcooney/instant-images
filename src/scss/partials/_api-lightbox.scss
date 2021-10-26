@@ -1,8 +1,18 @@
-// Media Modal
+// Media Modal.
 .media-frame-content{
 	.instant-img-container {
 		.api-lightbox{
+			position: fixed;
+		}
+	}
+}
 
+// Gutenberg Sidebar.
+.components-panel{
+	.instant-img-container {
+		.api-lightbox{
+			height: 100%;
+			align-items: flex-start;
 		}
 	}
 }
@@ -14,7 +24,7 @@
 		align-items: center;
 		justify-content: center;
 		position: absolute;
-		z-index: 9999;
+		z-index: 99999;
 		left:0;
 		top: 0;
 		right:0;
@@ -138,9 +148,10 @@
 			background-color: #fff;
 			border: 1px solid $border;
 			border-radius: $radius;
+			transition: all 0.2s ease;
 			&:focus-within{
-				border-color: #ccc;
-				box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+				border-color: $text_light;
+				box-shadow: 0 0 1px 4px rgba(#000, 0.065);
 			}
 			span{
 				width: 40px;
@@ -179,6 +190,27 @@
 				border: none;
 				flex: 1;
 				font-size: 12px;
+
+				&::-webkit-input-placeholder {
+					color:$text_light;
+					font-weight: 400;
+					font-style: italic;
+				}
+				&:-moz-placeholder {
+					color: $text_light;
+					font-weight: 400;
+					font-style: italic;
+				}
+				&::-moz-placeholder {
+					color: $text_light;
+					font-weight: 400;
+					font-style: italic;
+				}
+				&:-ms-input-placeholder {
+					color: $text_light;
+					font-weight: 400;
+					font-style: italic;
+				}
 				&:focus{
 					background: transparent;
 					outline: none;

@@ -1,9 +1,9 @@
 <?php
 /**
- * Uninstall Instant Images
+ * Uninstall Instant Images.
  *
  * Deletes all the plugin data.
- *  1. Plugin settings.
+ *  1. Plugin options/settings.
  *
  * @since 4.5
  * @package InstantImages

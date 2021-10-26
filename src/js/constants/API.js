@@ -18,6 +18,7 @@ module.exports = {
 	},
 	pixabay: {
 		requires_key: true,
+		new: true,
 		api_query_var: "/?key=",
 		photo_api: "https://pixabay.com/api",
 		search_api: "https://pixabay.com/api",

@@ -687,15 +687,15 @@ body.media_page_instant-images.overflow-hidden {
   -webkit-border-radius: 5px;
           border-radius: 5px;
   font-size: 16px;
-  -webkit-transition: padding 0.15s ease;
-  -o-transition: padding 0.15s ease;
-  transition: padding 0.15s ease;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .instant-img-container .control-nav li.search-field input:focus {
   border-color: #999;
-  -webkit-box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.075);
-          box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: 0 0 1px 4px rgba(0, 0, 0, 0.065);
+          box-shadow: 0 0 1px 4px rgba(0, 0, 0, 0.065);
 }
 
 .instant-img-container .control-nav li.search-field input.searching {
@@ -746,25 +746,25 @@ body.media_page_instant-images.overflow-hidden {
 
 .instant-img-container .control-nav li.search-field input[type="search"]::-webkit-input-placeholder {
   color: #ccc;
-  font-weight: 300;
+  font-weight: 400;
   font-style: normal;
 }
 
 .instant-img-container .control-nav li.search-field input[type="search"]:-moz-placeholder {
   color: #ccc;
-  font-weight: 300;
+  font-weight: 400;
   font-style: normal;
 }
 
 .instant-img-container .control-nav li.search-field input[type="search"]::-moz-placeholder {
   color: #ccc;
-  font-weight: 300;
+  font-weight: 400;
   font-style: normal;
 }
 
 .instant-img-container .control-nav li.search-field input[type="search"]:-ms-input-placeholder {
   color: #ccc;
-  font-weight: 300;
+  font-weight: 400;
   font-style: normal;
 }
 
@@ -1906,6 +1906,14 @@ body.loading .instant-img-container .loading-block {
   outline: none;
 }
 
+.media-frame-content .instant-img-container .load-more-wrap {
+  display: block;
+}
+
+.media-frame-content .instant-img-container .provider-nav {
+  padding: 10px 25px;
+}
+
 .provider-nav {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1956,6 +1964,18 @@ body.loading .instant-img-container .loading-block {
           box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);
 }
 
+.provider-nav--new {
+  color: #333;
+  background-color: #ffe732;
+  font-size: 9px;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 3px 4px;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  margin-left: 5px;
+}
+
 [data-provider="unsplash"] {
   background: url(../img/unsplash.svg) no-repeat 8px center;
   -webkit-background-size: 18px 18px;
@@ -1966,6 +1986,17 @@ body.loading .instant-img-container .loading-block {
   background: url(../img/pixabay.png) no-repeat 8px center;
   -webkit-background-size: 20px 20px;
           background-size: 20px 20px;
+}
+
+.media-frame-content .instant-img-container .api-lightbox {
+  position: fixed;
+}
+
+.components-panel .instant-img-container .api-lightbox {
+  height: 100%;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
 .instant-img-container .api-lightbox {
@@ -1979,7 +2010,7 @@ body.loading .instant-img-container .loading-block {
       -ms-flex-pack: center;
           justify-content: center;
   position: absolute;
-  z-index: 9999;
+  z-index: 99999;
   left: 0;
   top: 0;
   right: 0;
@@ -2126,12 +2157,15 @@ body.loading .instant-img-container .loading-block {
   border: 1px solid #e1e1e1;
   -webkit-border-radius: 3px;
           border-radius: 3px;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .instant-img-container .api-lightbox--input-wrap:focus-within {
-  border-color: #ccc;
-  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  border-color: #999;
+  -webkit-box-shadow: 0 0 1px 4px rgba(0, 0, 0, 0.065);
+          box-shadow: 0 0 1px 4px rgba(0, 0, 0, 0.065);
 }
 
 .instant-img-container .api-lightbox--input-wrap span {
@@ -2182,6 +2216,30 @@ body.loading .instant-img-container .loading-block {
       -ms-flex: 1;
           flex: 1;
   font-size: 12px;
+}
+
+.instant-img-container .api-lightbox--input-wrap input::-webkit-input-placeholder {
+  color: #999;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.instant-img-container .api-lightbox--input-wrap input:-moz-placeholder {
+  color: #999;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.instant-img-container .api-lightbox--input-wrap input::-moz-placeholder {
+  color: #999;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.instant-img-container .api-lightbox--input-wrap input:-ms-input-placeholder {
+  color: #999;
+  font-weight: 400;
+  font-style: italic;
 }
 
 .instant-img-container .api-lightbox--input-wrap input:focus {

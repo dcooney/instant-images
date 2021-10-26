@@ -14,44 +14,6 @@
  * @package InstantImages
  */
 
-/*
-NEW: Added button to auto-generate Photo attribution in image caption.
-NEW: Added unistaller script to remove plugin settings.
-UPDATE: Updated styling and fucntionality of photo detail editor.
-
-TODO:
-- Pixabay
-	- API Key Option [DONE]
-	- When key is not valid, need to handle 400 errors.
-	- Create error state that informs the user to enter a valid API key.
-	- Auto test the API key before submitting the form.
-	- Create method to add API Key outside of settings. Update all settings at once.
-	- If pixabay API key is empty, display a view with info on how to add a key.
-
-- Send REST request to update API settings field for API key. (api/settings.php) [DONE]
-
-- Add pixaby search [DONE]
-	- Search By ID [DONE]
-
-- User Search
-- Add Color filters.
-
-- Search - Load More not working. [ DONE]
-- Fix reset (switchProvider) function. [ DONE]
-	- This is not working because of react state
-
-- Default Provider [ DONE]
-- Add setting for setting a default provider (Unsplash/Pixabay) [ DONE]
-
-- Initiate Load
-	- What happens when Pixbay key is error.
-
-- Gutenberg & Modals
-	- Confirm everything works in all instances.
-	- Confirm default and errors are displayed.
-
-*/
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }

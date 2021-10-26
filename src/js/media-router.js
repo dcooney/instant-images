@@ -195,7 +195,7 @@ const createWrapperHTML = () => {
 };
 
 // Document Ready
-jQuery(document).on("ready", function ($) {
+jQuery(document).ready(function ($) {
 	if (wp.media) {
 		// Open
 		wp.media.view.Modal.prototype.on("open", function () {

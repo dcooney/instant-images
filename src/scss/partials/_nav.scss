@@ -171,10 +171,10 @@
 					line-height: 42px;
 					border-radius: 5px;
 					font-size: 16px;
-					transition: padding 0.15s ease;
+					transition: all 0.2s ease;
 					&:focus {
 						border-color: $text_light;
-						box-shadow: 0 0 0 4px rgba(#000, 0.075);
+						box-shadow: 0 0 1px 4px rgba(#000, 0.065);
 					}
 					&.searching {
 						padding-left: 62px;
@@ -218,22 +218,22 @@
 				}
 				input[type="search"]::-webkit-input-placeholder {
 					color: #ccc;
-					font-weight: 300;
+					font-weight: 400;
 					font-style: normal;
 				}
 				input[type="search"]:-moz-placeholder {
 					color: #ccc;
-					font-weight: 300;
+					font-weight: 400;
 					font-style: normal;
 				}
 				input[type="search"]::-moz-placeholder {
 					color: #ccc;
-					font-weight: 300;
+					font-weight: 400;
 					font-style: normal;
 				}
 				input[type="search"]:-ms-input-placeholder {
 					color: #ccc;
-					font-weight: 300;
+					font-weight: 400;
 					font-style: normal;
 				}
 			}

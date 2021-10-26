@@ -200,7 +200,6 @@ class PhotoList extends React.Component {
 	 *
 	 * @param {string} term The search term.
 	 * @since 3.0
-	 * @updated 3.1
 	 */
 	doSearch(term) {
 		const self = this;
@@ -418,8 +417,8 @@ class PhotoList extends React.Component {
 	/**
 	 * Callback after activating and verififying an API key.
 	 *
-	 * @since 4.5
 	 * @param {string} provider The verified provider.
+	 * @since 4.5
 	 */
 	afterVerifiedAPICallback(provider) {
 		const button = this.providerNav.current.querySelector(
@@ -454,8 +453,8 @@ class PhotoList extends React.Component {
 	/**
 	 * Toggles the service provider.
 	 *
-	 * @since 4.5
 	 * @param {Event} e The clicked element event.
+	 * @since 4.5
 	 */
 	async switchProvider(e) {
 		const target = e.currentTarget;
@@ -541,7 +540,7 @@ class PhotoList extends React.Component {
 	/**
 	 * A checker to determine is there are remaining search results.
 	 *
-	 * @param num   int    Total search results
+	 * @param {number} num Total search results.
 	 * @since 3.0
 	 */
 	checkTotalResults(num) {
@@ -578,6 +577,7 @@ class PhotoList extends React.Component {
 	/**
 	 * Show the tooltip.
 	 *
+	 * @param {Event} e The clicked element event.
 	 * @since 4.3.0
 	 */
 	showTooltip(e) {
@@ -663,6 +663,9 @@ class PhotoList extends React.Component {
 									}
 								>
 									<span>{provider}</span>
+									{API[provider.toLowerCase()].new && (
+										<span className="provider-nav--new">New</span>
+									)}
 								</button>
 							</div>
 						))}

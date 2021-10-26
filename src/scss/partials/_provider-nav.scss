@@ -1,3 +1,16 @@
+// Media Modal.
+.media-frame-content{
+	.instant-img-container{
+      .load-more-wrap{
+         display: block;
+      }
+		.provider-nav{
+			padding: 10px 25px;
+		}
+   }
+}
+
+// Instant Images Plugin Page.
 .provider-nav{
 	display: flex;
 	flex-wrap: nowrap;
@@ -18,7 +31,7 @@
 		margin-right: 5px;
 		cursor: pointer;
 		position: relative;
-		border-radius: 3px;
+		border-radius: $radius;
 		font-size: 14px;
 		color:$text_light;
 		transition: all 0.2s ease;
@@ -33,6 +46,16 @@
 			color: $text;
 			cursor: default;box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);
 		}
+	}
+	&--new{
+		color: $text;
+		background-color: $yellow;
+		font-size: 9px;
+		text-transform: uppercase;
+		display: inline-block;
+		padding: 3px 4px;
+		border-radius: $radius;
+		margin-left: 5px;
 	}
 }
 

@@ -39569,7 +39569,6 @@ var PhotoList = function (_React$Component) {
    *
    * @param {string} term The search term.
    * @since 3.0
-   * @updated 3.1
    */
 
 	}, {
@@ -39776,8 +39775,8 @@ var PhotoList = function (_React$Component) {
 		/**
    * Callback after activating and verififying an API key.
    *
-   * @since 4.5
    * @param {string} provider The verified provider.
+   * @since 4.5
    */
 
 	}, {
@@ -39814,8 +39813,8 @@ var PhotoList = function (_React$Component) {
 		/**
    * Toggles the service provider.
    *
-   * @since 4.5
    * @param {Event} e The clicked element event.
+   * @since 4.5
    */
 
 	}, {
@@ -39944,7 +39943,7 @@ var PhotoList = function (_React$Component) {
 		/**
    * A checker to determine is there are remaining search results.
    *
-   * @param num   int    Total search results
+   * @param {number} num Total search results.
    * @since 3.0
    */
 
@@ -39985,6 +39984,7 @@ var PhotoList = function (_React$Component) {
 		/**
    * Show the tooltip.
    *
+   * @param {Event} e The clicked element event.
    * @since 4.3.0
    */
 
@@ -40096,6 +40096,11 @@ var PhotoList = function (_React$Component) {
 									"span",
 									null,
 									provider
+								),
+								_API2.default[provider.toLowerCase()].new && _react2.default.createElement(
+									"span",
+									{ className: "provider-nav--new" },
+									"New"
 								)
 							)
 						);
@@ -40362,6 +40367,7 @@ module.exports = {
 	},
 	pixabay: {
 		requires_key: true,
+		new: true,
 		api_query_var: "/?key=",
 		photo_api: "https://pixabay.com/api",
 		search_api: "https://pixabay.com/api",
