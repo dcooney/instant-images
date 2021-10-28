@@ -37,7 +37,7 @@ add_action( 'admin_menu', 'instant_images_create_page' );
 function instant_images_settings_page() {
 	$show_settings = true;
 	echo '<div class="instant-img-container" data-media-popup="false">';
-	include INSTANT_IMAGES_PATH . 'admin/views/unsplash.php';
+	include INSTANT_IMAGES_PATH . 'admin/views/app.php';
 	echo '</div>';
 }
 
@@ -139,7 +139,7 @@ function instant_images_media_tab() {
 	$show_settings = false;
 	?>
 	<div class="instant-img-container editor" data-media-popup="true">
-		<?php include INSTANT_IMAGES_PATH . 'admin/views/unsplash.php'; ?>
+		<?php include INSTANT_IMAGES_PATH . 'admin/views/app.php'; ?>
 	</div>
 	<?php
 }

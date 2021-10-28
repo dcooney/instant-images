@@ -1,7 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import API from "./components/API";
 import PhotoList from "./components/PhotoList";
+import API from "./constants/API";
+import buildTestURL from "./functions/buildTestURL";
+import consoleStatus from "./functions/consoleStatus";
+import getProvider from "./functions/getProvider";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 require("./functions/helpers");
@@ -91,49 +94,98 @@ wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
 
 // Render Instant Images
 const instantImagesMediaTab = () => {
-	let html = createMediaWrapper(); // Create HTML wrapper
+	const html = createWrapperHTML(); // Create HTML wrapper
 
 	if (!activeFrame) {
-		return false;
+		return false; // Exit if not a frame.
 	}
 
-	let modal = activeFrame.querySelector(".media-frame-content"); // Get all media modals
+	const modal = activeFrame.querySelector(".media-frame-content"); // Get all media modals
 	if (!modal) {
-		// Exit if not modal
-		return false;
+		return false; // Exit if not modal.
 	}
 
-	modal.innerHTML = ""; // Clear Modal
-	modal.appendChild(html); // Append Instant Images
+	modal.innerHTML = ""; // Clear any existing modals.
+	modal.appendChild(html); // Append Instant Images to modal.
 
-	let element = modal.querySelector(
+	const element = modal.querySelector(
 		"#instant-images-media-router-" + activeFrameId
 	);
 	if (!element) {
-		// Exit if not element
-		return false;
+		return false; // Exit if not element.
 	}
 
+	getMediaModalProvider(element);
+};
+
+/**
+ * Get the provider before initializing Instant Images.
+ *
+ * @param {Element} element The Instant Images HTML element to initialize.
+ */
+const getMediaModalProvider = async (element) => {
+	// Get provider and options from settings.
+	const provider = getProvider();
+	const defaultProvider = API.defaults.provider;
+	const api_required = API[provider].requires_key;
+
+	// Send test API request to confirm API key is functional.
+	if (api_required) {
+		const response = await fetch(buildTestURL(provider));
+
+		// Handle response.
+		const ok = response.ok;
+		const status = response.status;
+
+		if (ok) {
+			// Success.
+			renderPhotoList(element, provider);
+		} else {
+			// Status Error: Fallback to default provider.
+			renderPhotoList(element, defaultProvider);
+
+			// Render console warning.
+			consoleStatus(provider, status);
+		}
+	} else {
+		// API Error: Fallback to default provider.
+		renderPhotoList(element, provider);
+	}
+};
+
+/**
+ * Render the main PhotoList Instant Images component.
+ *
+ * @param {Element} element  The Instant Images HTML element to initialize.
+ * @param {string}  provider The verified provider.
+ * @return {Element}         The PhotoList component.
+ */
+const renderPhotoList = (element, provider) => {
 	ReactDOM.render(
 		<PhotoList
 			container={element}
 			editor="media-router"
-			results=""
-			page="1"
-			orderby="latest"
-			service="unsplash"
+			page={1}
+			orderby={API.defaults.order}
+			provider={provider}
 		/>,
 		element
 	);
 };
 
-// Create HTML markup
-const createMediaWrapper = () => {
-	let wrapper = document.createElement("div");
+/**
+ * Create HTML markup to wrap Instant Images.
+ *
+ * @return {Element} Create the HTML markup for the media modal.
+ */
+const createWrapperHTML = () => {
+	const wrapper = document.createElement("div");
 	wrapper.classList.add("instant-img-container");
-	let container = document.createElement("div");
+
+	const container = document.createElement("div");
 	container.classList.add("instant-images-wrapper");
-	let frame = document.createElement("div");
+
+	const frame = document.createElement("div");
 	frame.setAttribute("id", "instant-images-media-router-" + activeFrameId);
 
 	container.appendChild(frame);
@@ -162,8 +214,8 @@ jQuery(document).ready(function ($) {
 		$(document).on(
 			"click",
 			".media-router button.media-menu-item",
-			function (e) {
-				let selectedTab = activeFrame.querySelector(
+			function () {
+				const selectedTab = activeFrame.querySelector(
 					".media-router button.media-menu-item.active"
 				);
 				if (selectedTab && selectedTab.id === "menu-item-instantimages") {

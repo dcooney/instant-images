@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'INSTANT_IMAGES_VERSION', '4.4.0.3' );
-define( 'INSTANT_IMAGES_RELEASE', 'July 30, 2021' );
+define( 'INSTANT_IMAGES_VERSION', '4.5.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'October 28, 2021' );
 
 /**
  * Activation hook
@@ -158,66 +158,86 @@ class InstantImages {
 	public static function instant_img_localize( $script = 'instant-images-react' ) {
 
 		global $post;
-		$options    = get_option( 'instant_img_settings' );
-		$download_w = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
-		$download_h = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
+		$options          = get_option( 'instant_img_settings' );
+		$download_w       = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
+		$download_h       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
+		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
+		$pixabay_api      = isset( $options['pixabay_api'] ) ? $options['pixabay_api'] : ''; // Pixabay API.
 
 		wp_localize_script(
 			$script,
 			'instant_img_localize',
 			array(
-				'instant_images'          => __( 'Instant Images', 'instant-images' ),
-				'root'                    => esc_url_raw( rest_url() ),
-				'nonce'                   => wp_create_nonce( 'wp_rest' ),
-				'ajax_url'                => admin_url( 'admin-ajax.php' ),
-				'admin_nonce'             => wp_create_nonce( 'instant_img_nonce' ),
-				'parent_id'               => ( $post ) ? $post->ID : 0,
-				'download_width'          => esc_html( $download_w ),
-				'download_height'         => esc_html( $download_h ),
-				'unsplash_default_app_id' => INSTANT_IMAGES_DEFAULT_APP_ID,
-				'unsplash_app_id'         => INSTANT_IMAGES_DEFAULT_APP_ID,
-				'error_msg_title'         => __( 'Error accessing Unsplash API', 'instant-images' ),
-				'error_msg_desc'          => __( 'Please check your Application ID.', 'instant-images' ),
-				'error_upload'            => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
-				'error_restapi'           => '<strong>' . __( 'There was an error accessing the WP REST API.', 'instant-images' ) . '</strong><br/>',
-				'error_restapi_desc'      => __( 'Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images' ),
-				'photo_by'                => __( 'Photo by', 'instant-images' ),
-				'view_all'                => __( 'View All Photos by', 'instant-images' ),
-				'upload'                  => __( 'Click Image to Upload', 'instant-images' ),
-				'upload_btn'              => __( 'Click to Upload', 'instant-images' ),
-				'full_size'               => __( 'View Full Size', 'instant-images' ),
-				'likes'                   => __( 'Like', 'instant-images' ),
-				'likes_plural'            => __( 'Likes', 'instant-images' ),
-				'saving'                  => __( 'Downloading image...', 'instant-images' ),
-				'resizing'                => __( 'Creating image sizes...', 'instant-images' ),
-				'resizing_still'          => __( 'Still resizing...', 'instant-images' ),
-				'no_results'              => __( 'Sorry, nothing matched your query', 'instant-images' ),
-				'no_results_desc'         => __( 'Please try adjusting your search criteria', 'instant-images' ),
-				'latest'                  => __( 'New', 'instant-images' ),
-				'oldest'                  => __( 'Oldest', 'instant-images' ),
-				'popular'                 => __( 'Popular', 'instant-images' ),
-				'load_more'               => __( 'Load More Images', 'instant-images' ),
-				'search'                  => __( 'Search for Toronto + Coffee etc...', 'instant-images' ),
-				'search_label'            => __( 'Search', 'instant-images' ),
-				'search_results'          => __( 'images found for', 'instant-images' ),
-				'clear_search'            => __( 'Clear Search Results', 'instant-images' ),
-				'view_on_unsplash'        => __( 'View on Unsplash', 'instant-images' ),
-				'set_as_featured'         => __( 'Set as Featured Image', 'instant-images' ),
-				'insert_into_post'        => __( 'Insert Into Post', 'instant-images' ),
-				'edit_filename'           => __( 'Filename', 'instant-images' ),
-				'edit_title'              => __( 'Title', 'instant-images' ),
-				'edit_alt'                => __( 'Alt Text', 'instant-images' ),
-				'edit_caption'            => __( 'Caption', 'instant-images' ),
-				'edit_upload'             => __( 'Edit Attachment Details', 'instant-images' ),
-				'edit_details'            => __( 'Edit Image Details', 'instant-images' ),
-				'edit_details_intro'      => __( 'Update and save image details prior to uploading', 'instant-images' ),
-				'cancel'                  => __( 'Cancel', 'instant-images' ),
-				'save'                    => __( 'Save', 'instant-images' ),
-				'upload_now'              => __( 'Upload', 'instant-images' ),
-				'orientation'             => __( 'Image Orientation', 'instant-images' ),
-				'landscape'               => __( 'Landscape', 'instant-images' ),
-				'portrait'                => __( 'Portrait', 'instant-images' ),
-				'squarish'                => __( 'Squarish', 'instant-images' ),
+				'instant_images'     => __( 'Instant Images', 'instant-images' ),
+				'root'               => esc_url_raw( rest_url() ),
+				'nonce'              => wp_create_nonce( 'wp_rest' ),
+				'ajax_url'           => admin_url( 'admin-ajax.php' ),
+				'admin_nonce'        => wp_create_nonce( 'instant_img_nonce' ),
+				'parent_id'          => ( $post ) ? $post->ID : 0,
+				'default_provider'   => $default_provider,
+				'download_width'     => esc_html( $download_w ),
+				'download_height'    => esc_html( $download_h ),
+				'unsplash_app_id'    => INSTANT_IMAGES_DEFAULT_APP_ID,
+				'unsplash_url'       => 'https://unsplash.com',
+				'unsplash_api_url'   => 'https://unsplash.com/developers',
+				'pixabay_app_id'     => $pixabay_api,
+				'pixabay_url'        => 'https://pixabay.com',
+				'pixabay_api_url'    => 'https://pixabay.com/service/about/api/',
+				'pixabay_api_desc'   => __( 'Access to images from Pixabay requires a valid API key. API keys are available for free, just sign up for an account at Pixabay, enter your API key below and you\'re good to go!', 'instant-images' ),
+				'error_upload'       => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
+				'error_restapi'      => '<strong>' . __( 'There was an error accessing the WP REST API.', 'instant-images' ) . '</strong><br/>',
+				'error_restapi_desc' => __( 'Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images' ),
+				'photo_by'           => __( 'Photo by', 'instant-images' ),
+				'view_all'           => __( 'View All Photos by', 'instant-images' ),
+				'upload'             => __( 'Click Image to Upload', 'instant-images' ),
+				'upload_btn'         => __( 'Click to Upload', 'instant-images' ),
+				'full_size'          => __( 'View Full Size', 'instant-images' ),
+				'likes'              => __( 'Like', 'instant-images' ),
+				'likes_plural'       => __( 'Likes', 'instant-images' ),
+				'saving'             => __( 'Downloading image...', 'instant-images' ),
+				'resizing'           => __( 'Creating image sizes...', 'instant-images' ),
+				'resizing_still'     => __( 'Still resizing...', 'instant-images' ),
+				'no_results'         => __( 'Sorry, nothing matched your query', 'instant-images' ),
+				'no_results_desc'    => __( 'Please try adjusting your search criteria', 'instant-images' ),
+				'latest'             => __( 'New', 'instant-images' ),
+				'oldest'             => __( 'Oldest', 'instant-images' ),
+				'popular'            => __( 'Popular', 'instant-images' ),
+				'views'              => __( 'Views', 'instant-images' ),
+				'downloads'          => __( 'Downloads', 'instant-images' ),
+				'load_more'          => __( 'Load More Images', 'instant-images' ),
+				'search'             => __( 'Search for Toronto + Coffee etc...', 'instant-images' ),
+				'search_label'       => __( 'Search', 'instant-images' ),
+				'search_results'     => __( 'images found for', 'instant-images' ),
+				'clear_search'       => __( 'Clear Search Results', 'instant-images' ),
+				'view_on_unsplash'   => __( 'View on Unsplash', 'instant-images' ),
+				'view_on_pixabay'    => __( 'View on Pixabay', 'instant-images' ),
+				'set_as_featured'    => __( 'Set as Featured Image', 'instant-images' ),
+				'insert_into_post'   => __( 'Insert Into Post', 'instant-images' ),
+				'edit_filename'      => __( 'Filename', 'instant-images' ),
+				'edit_title'         => __( 'Title', 'instant-images' ),
+				'edit_alt'           => __( 'Alt Text', 'instant-images' ),
+				'edit_caption'       => __( 'Caption', 'instant-images' ),
+				'edit_upload'        => __( 'Edit Attachment Details', 'instant-images' ),
+				'edit_details'       => __( 'Edit Image Details', 'instant-images' ),
+				'edit_details_intro' => __( 'Update image details prior to uploading.', 'instant-images' ),
+				'cancel'             => __( 'Cancel', 'instant-images' ),
+				'save'               => __( 'Save', 'instant-images' ),
+				'upload_now'         => __( 'Upload', 'instant-images' ),
+				'orientation'        => __( 'Orientation', 'instant-images' ),
+				'landscape'          => __( 'Landscape', 'instant-images' ),
+				'portrait'           => __( 'Portrait', 'instant-images' ),
+				'squarish'           => __( 'Squarish', 'instant-images' ),
+				'horizontal'         => __( 'Horizontal', 'instant-images' ),
+				'vertical'           => __( 'Vertical', 'instant-images' ),
+				'attribution'        => __( 'Add Photo Attribution', 'instant-images' ),
+				'btnClose'           => __( 'Close', 'instant-images' ),
+				'btnVerify'          => __( 'Verify', 'instant-images' ),
+				'enter_api_key'      => __( 'Enter API Key', 'instant-images' ),
+				'api_key_invalid'    => __( 'The API Key is Invalid', 'instant-images' ),
+				'api_success_msg'    => __( 'API key has been successfully validated!', 'instant-images' ),
+				'api_invalid_msg'    => __( 'API key entered is not valid - try again.', 'instant-images' ),
+				'api_ratelimit_msg'  => __( 'Your daily or hourly API rate limit has been exceeded. Try again later.', 'instant-images' ),
+				'get_api_key'        => __( 'Get API Key Now', 'instant-images' ),
 			)
 		);
 	}
@@ -237,6 +257,7 @@ class InstantImages {
 		// REST API Routes.
 		require_once 'api/test.php';
 		require_once 'api/download.php';
+		require_once 'api/settings.php';
 	}
 
 	/**

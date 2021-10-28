@@ -146,7 +146,7 @@
 				.status {
 					visibility: visible;
 					opacity: 1;
-					background-color: #63d875;
+					background-color: $green;
 					&:before {
 						content: "\f00c";
 						color: #fff;
@@ -163,7 +163,7 @@
 				.status {
 					visibility: visible;
 					opacity: 1;
-					background-color: #df3333;
+					background-color: $red;
 					&:before {
 						content: "\f12a";
 						color: #fff;
@@ -364,14 +364,26 @@
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
+					&:before{
+						content: '';
+						display: block;
+						z-index: 0;
+						background-color: #fff;
+						height: 20px;
+						opacity: 0.25;
+					}
 				}
-				img {
+				img,
+				.user-wrap:before {
 					width: 20px;
 					max-width: 20px;
 					border-radius: 100%;
 					position: absolute;
 					left: 8px;
 					top: 8px;
+				}
+				img{
+					z-index: 1;
 				}
 			}
 		}
@@ -413,10 +425,10 @@
 		opacity: 0;
 		visibility: hidden;
 		transition: all 0.25s ease;
-		padding: 8px;
+		padding: 5px;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
-		border: 1px solid #e1e1e1;
+		border: 1px solid $border;
 		transform: scale(1.025);
 		&.editing {
 			visibility: visible;
@@ -426,41 +438,79 @@
 		&--controls,
 		&--title {
 			display: block;
-			background: #f7f7f7;
-			border: 1px solid #e1e1e1;
-			padding: 15px;
+			background: $lighter_grey;
+			border: 1px solid $border;
+			padding: 15px 10px;
 			border-radius: 2px 2px 0 0;
 			.button-primary {
 				float: right;
 			}
 		}
 		&--controls {
-			border-radius: 0 0 2px 2px;
+			border-radius: 0 0 3px 3px;
 		}
 		&--title {
 			border-bottom: none;
+			display: flex;
+			flex-wrap: nowrap;
+			width: 100%;
+			padding: 10px;
+			border-radius: 3px 3px 0 0;
+			> div{
+				padding: 5px 15px 5px 5px;
+				flex: 1;
+
+				&.preview{
+					width: 30%;
+					padding: 0;
+					background-size: cover;
+					background-position: center;
+					background-repeat: no-repeat;
+					border-radius: 2px;
+					flex: none;
+					//transform: rotate(-2deg);
+				}
+			}
 			p {
 				font-size: 12px;
-				line-height: 1.25;
+				line-height: 1.45;
 				margin: 0;
-				color: #999;
+				color: $text_light;
 				&.heading {
 					color: #222;
-					margin: 0 0 5px;
+					margin: 0 0 3px;
 					font-weight: 600;
 					text-transform: uppercase;
 				}
 			}
 		}
-		label {
+		label,
+		.add-attribution-row {
 			margin: 0;
 			padding: 15px;
 			display: block;
 			background: #fff;
-			border: 1px solid #e1e1e1;
+			border: 1px solid $border;
 			border-bottom: none;
-			border-radius: 2px;
 			position: relative;
+		}
+		.add-attribution-row {
+			padding-top: 0;
+			margin-top: -15px;
+			border-top: none;
+			button{
+				cursor: pointer;
+				font-size: 11px;
+				outline: none;
+				padding: 5px 0;
+				border:none;
+				background: none;
+				text-decoration: underline;
+				&:hover,
+				&:focus{
+					text-decoration: none;
+				}
+			}
 		}
 		span {
 			display: block;
@@ -473,23 +523,25 @@
 		}
 		textarea {
 			resize: none;
+			font-size: 12px;
+			line-height: 1.35;
 		}
 		input {
 			font-size: 12px;
-			padding: 0 5px;
+			padding: 0 10px;
 			margin: 0;
-			height: 30px;
-			line-height: 30px;
+			height: 35px;
+			line-height: 35px;
 		}
 		em {
 			position: absolute;
 			bottom: 15px;
 			right: 15px;
-			height: 30px;
-			line-height: 30px;
-			background: #777;
+			height: 35px;
+			line-height: 35px;
+			background: rgb(133, 133, 133);
 			border-radius: 0 2px 2px 0;
-			color: #e1e1e1;
+			color: $border;
 			font-style: normal;
 			font-size: 11px;
 			padding: 0 10px;

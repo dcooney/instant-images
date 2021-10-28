@@ -3,7 +3,6 @@ var instant_images = instant_images || {};
 jQuery(document).ready(function ($) {
 	"use strict";
 
-	var init = true;
 	var speed = 350;
 
 	// Media Uploader
@@ -89,7 +88,7 @@ jQuery(document).ready(function ($) {
 		$(this).ajaxSubmit({
 			success: function () {
 				$(".save-settings .loading").fadeOut(speed, function () {
-					//window.location.reload();
+					window.location.reload();
 				});
 			},
 			error: function () {

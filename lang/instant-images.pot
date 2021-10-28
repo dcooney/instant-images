@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Instant Images\n"
-"POT-Creation-Date: 2020-08-10 08:14-0400\n"
+"POT-Creation-Date: 2021-10-28 09:44-0400\n"
 "PO-Revision-Date: 2017-09-21 10:40-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -19,313 +19,337 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: src\n"
 "X-Poedit-SearchPathExcluded-2: webpack\n"
 "X-Poedit-SearchPathExcluded-3: node_modules\n"
+"X-Poedit-SearchPathExcluded-4: vendor\n"
 
-#: admin/admin.php:107 admin/admin.php:123 instant-images.php:135
+#: admin/admin.php:94 instant-images.php:171
 msgid "Instant Images"
 msgstr ""
 
-#: admin/includes/cta/permissions.php:14
-msgid "Permissions Error"
-msgstr ""
-
-#: admin/includes/cta/permissions.php:15
-msgid "Instant Images is unable to download and process images on your server."
-msgstr ""
-
-#: admin/includes/cta/permissions.php:16
-msgid "Please enable read/write access to the following directory"
-msgstr ""
-
-#: admin/includes/settings.php:18 admin/includes/unsplash-settings.php:6
-msgid "Global Settings"
-msgstr ""
-
-#: admin/includes/settings.php:26
-msgid "Upload Image Width"
-msgstr ""
-
-#: admin/includes/settings.php:35
-msgid "Upload Image Height"
-msgstr ""
-
-#: admin/includes/settings.php:44
-msgid "Media Tab"
-msgstr ""
-
-#: admin/includes/settings.php:57
-msgid "Manage your media upload settings."
-msgstr ""
-
-#: admin/includes/settings.php:79
-msgid "Max Image Upload Width:"
-msgstr ""
-
-#: admin/includes/settings.php:93
-msgid "Max Image Upload Height:"
-msgstr ""
-
-#: admin/includes/settings.php:108
-msgid "Media Modal:"
-msgstr ""
-
-#: admin/includes/settings.php:112
-msgid "Hide the <b>Instant Images</b> tab in admin Media Modal windows."
-msgstr ""
-
-#: admin/includes/unsplash-settings.php:7
-msgid "Manage your media upload settings"
-msgstr ""
-
-#: admin/includes/unsplash-settings.php:16
+#: admin/includes/page-settings.php:69
 msgid "Save Settings"
 msgstr ""
 
-#: admin/includes/unsplash-settings.php:23
-msgid "What's New"
+#: admin/includes/settings.php:27
+msgid "Global Settings"
 msgstr ""
 
-#: admin/includes/unsplash-settings.php:24
-msgid "The latest Instant Images updates"
+#: admin/includes/settings.php:35
+msgid "Upload Image Width"
 msgstr ""
 
-#: admin/includes/unsplash-settings.php:54
-msgid "Our Plugins"
+#: admin/includes/settings.php:44
+msgid "Upload Image Height"
 msgstr ""
 
-#: admin/views/unsplash.php:11
+#: admin/includes/settings.php:53
+msgid "Default Image Provider"
+msgstr ""
+
+#: admin/includes/settings.php:62
+msgid "Pixabay API Key"
+msgstr ""
+
+#: admin/includes/settings.php:71
+msgid "Media Tab"
+msgstr ""
+
+#: admin/includes/settings.php:165
+msgid "Hide Instant Images tab in Media Modal windows."
+msgstr ""
+
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:52
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:365
+msgid "Install Now"
+msgstr ""
+
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:87
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:367
+msgid "Activated"
+msgstr ""
+
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:91
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:366
+msgid "Activate"
+msgstr ""
+
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:129
+msgid "By"
+msgstr ""
+
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:142
+msgid "More Details"
+msgstr ""
+
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:164
+msgid "Sorry, you are not allowed to install plugins on this site."
+msgstr ""
+
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:171
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:242
+msgid "Error - unable to verify nonce, please try again."
+msgstr ""
+
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:235
+msgid "Sorry, you are not allowed to activate plugins on this site."
+msgstr ""
+
+#: admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:364
+msgid "Are you sure you want to install this plugin?"
+msgstr ""
+
+#: admin/views/app.php:20
 #, php-format
-msgid "One click photo uploads from %s"
+msgid "One click photo uploads from %1$s and %2$s."
 msgstr ""
 
-#: admin/views/unsplash.php:16
-msgid "Settings"
-msgstr ""
-
-#: api/download.php:64
-msgid "Image does not exist or there was an error accessing the remote file."
-msgstr ""
-
-#: api/download.php:76
-msgid "Image download failed, please try again. Errors:"
+#: api/download.php:44
+msgid "You do not have sufficient access to upload images with Instant Images."
 msgstr ""
 
 #: api/download.php:82
+msgid "Image does not exist or there was an error accessing the remote file."
+msgstr ""
+
+#: api/download.php:93
+msgid "Image download failed, please try again. Errors:"
+msgstr ""
+
+#: api/download.php:99
 msgid "Image type could not be determined"
 msgstr ""
 
-#: api/download.php:118
+#: api/download.php:147
 msgid "Image successfully uploaded to the media library!"
 msgstr ""
 
-#: api/download.php:135
+#: api/download.php:164
 msgid ""
 "There was an error getting image details from the request, please try again."
 msgstr ""
 
-#: instant-images.php:145
-msgid "Error accessing Unsplash API"
+#: instant-images.php:186
+msgid ""
+"Access to images from Pixabay requires a valid API key. API keys are "
+"available for free, just sign up for an account at Pixabay, enter your API "
+"key below and you're good to go!"
 msgstr ""
 
-#: instant-images.php:146
-msgid "Please check your Application ID."
-msgstr ""
-
-#: instant-images.php:147
+#: instant-images.php:187
 msgid ""
 "There was no response while attempting to the download image to your server. "
 "Check your server permission and max file upload size or try again"
 msgstr ""
 
-#: instant-images.php:148
+#: instant-images.php:188
 msgid "There was an error accessing the WP REST API."
 msgstr ""
 
-#: instant-images.php:149
+#: instant-images.php:189
 msgid ""
 "Instant Images requires access to the WP REST API via <u>POST</u> request to "
 "fetch and upload images to your media library."
 msgstr ""
 
-#: instant-images.php:150
+#: instant-images.php:190
 msgid "Photo by"
 msgstr ""
 
-#: instant-images.php:151
+#: instant-images.php:191
 msgid "View All Photos by"
 msgstr ""
 
-#: instant-images.php:152
+#: instant-images.php:192
 msgid "Click Image to Upload"
 msgstr ""
 
-#: instant-images.php:153
+#: instant-images.php:193
 msgid "Click to Upload"
 msgstr ""
 
-#: instant-images.php:154
+#: instant-images.php:194
 msgid "View Full Size"
 msgstr ""
 
-#: instant-images.php:155
+#: instant-images.php:195
 msgid "Like"
 msgstr ""
 
-#: instant-images.php:156
+#: instant-images.php:196
 msgid "Likes"
 msgstr ""
 
-#: instant-images.php:157
+#: instant-images.php:197
 msgid "Downloading image..."
 msgstr ""
 
-#: instant-images.php:158
+#: instant-images.php:198
 msgid "Creating image sizes..."
 msgstr ""
 
-#: instant-images.php:159
+#: instant-images.php:199
 msgid "Still resizing..."
 msgstr ""
 
-#: instant-images.php:160
+#: instant-images.php:200
 msgid "Sorry, nothing matched your query"
 msgstr ""
 
-#: instant-images.php:161
+#: instant-images.php:201
 msgid "Please try adjusting your search criteria"
 msgstr ""
 
-#: instant-images.php:162
+#: instant-images.php:202
 msgid "New"
 msgstr ""
 
-#: instant-images.php:163
+#: instant-images.php:203
 msgid "Oldest"
 msgstr ""
 
-#: instant-images.php:164
+#: instant-images.php:204
 msgid "Popular"
 msgstr ""
 
-#: instant-images.php:165
+#: instant-images.php:205
+msgid "Views"
+msgstr ""
+
+#: instant-images.php:206
+msgid "Downloads"
+msgstr ""
+
+#: instant-images.php:207
 msgid "Load More Images"
 msgstr ""
 
-#: instant-images.php:166
+#: instant-images.php:208
 msgid "Search for Toronto + Coffee etc..."
 msgstr ""
 
-#: instant-images.php:167
+#: instant-images.php:209
+msgid "Search"
+msgstr ""
+
+#: instant-images.php:210
 msgid "images found for"
 msgstr ""
 
-#: instant-images.php:168
+#: instant-images.php:211
 msgid "Clear Search Results"
 msgstr ""
 
-#: instant-images.php:169
+#: instant-images.php:212
 msgid "View on Unsplash"
 msgstr ""
 
-#: instant-images.php:170
+#: instant-images.php:213
+msgid "View on Pixabay"
+msgstr ""
+
+#: instant-images.php:214
 msgid "Set as Featured Image"
 msgstr ""
 
-#: instant-images.php:171
+#: instant-images.php:215
 msgid "Insert Into Post"
 msgstr ""
 
-#: instant-images.php:172
+#: instant-images.php:216
 msgid "Filename"
 msgstr ""
 
-#: instant-images.php:173
+#: instant-images.php:217
 msgid "Title"
 msgstr ""
 
-#: instant-images.php:174
+#: instant-images.php:218
 msgid "Alt Text"
 msgstr ""
 
-#: instant-images.php:175
+#: instant-images.php:219
 msgid "Caption"
 msgstr ""
 
-#: instant-images.php:176
+#: instant-images.php:220
 msgid "Edit Attachment Details"
 msgstr ""
 
-#: instant-images.php:177
+#: instant-images.php:221
 msgid "Edit Image Details"
 msgstr ""
 
-#: instant-images.php:178
-msgid "Update and save image details prior to uploading"
+#: instant-images.php:222
+msgid "Update image details prior to uploading."
 msgstr ""
 
-#: instant-images.php:179
+#: instant-images.php:223
 msgid "Cancel"
 msgstr ""
 
-#: instant-images.php:180
+#: instant-images.php:224
 msgid "Save"
 msgstr ""
 
-#: instant-images.php:181
+#: instant-images.php:225
 msgid "Upload"
 msgstr ""
 
-#: instant-images.php:182
-msgid "Image Orientation"
+#: instant-images.php:226
+msgid "Orientation"
 msgstr ""
 
-#: instant-images.php:183
+#: instant-images.php:227
 msgid "Landscape"
 msgstr ""
 
-#: instant-images.php:184
+#: instant-images.php:228
 msgid "Portrait"
 msgstr ""
 
-#: instant-images.php:185
+#: instant-images.php:229
 msgid "Squarish"
 msgstr ""
 
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:52
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:365
-msgid "Install Now"
+#: instant-images.php:230
+msgid "Horizontal"
 msgstr ""
 
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:87
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:367
-msgid "Activated"
+#: instant-images.php:231
+msgid "Vertical"
 msgstr ""
 
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:91
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:366
-msgid "Activate"
+#: instant-images.php:232
+msgid "Add Photo Attribution"
 msgstr ""
 
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:129
-msgid "By"
+#: instant-images.php:233
+msgid "Close"
 msgstr ""
 
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:142
-msgid "More Details"
+#: instant-images.php:234
+msgid "Verify"
 msgstr ""
 
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:164
-msgid "Sorry, you are not allowed to install plugins on this site."
+#: instant-images.php:235
+msgid "Enter API Key"
 msgstr ""
 
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:171
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:242
-msgid "Error - unable to verify nonce, please try again."
+#: instant-images.php:236
+msgid "The API Key is Invalid"
 msgstr ""
 
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:235
-msgid "Sorry, you are not allowed to activate plugins on this site."
+#: instant-images.php:237
+msgid "API key has been successfully validated!"
 msgstr ""
 
-#: vendor/connekt-plugin-installer/class-connekt-plugin-installer.php:364
-msgid "Are you sure you want to install this plugin?"
+#: instant-images.php:238
+msgid "API key entered is not valid - try again."
+msgstr ""
+
+#: instant-images.php:239
+msgid "Your daily or hourly API rate limit has been exceeded. Try again later."
+msgstr ""
+
+#: instant-images.php:240
+msgid "Get API Key Now"
 msgstr ""

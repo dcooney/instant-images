@@ -1,20 +1,20 @@
-=== Instant Images - One Click Unsplash Uploads ===
+=== Instant Images - One Click Unsplash and Pixabay Uploads ===
 Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
-Tags: stock photo, unsplash, prototyping, photos, upload, media library, image upload, free photos
+Tags: unsplash, pixabay, stock photo, prototyping, photos, media library, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 5.8
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-One click uploads of Unsplash photos directly to your WordPress media library.
+One click uploads of Unsplash and Pixabay photos directly to your WordPress media library.
 
 == Description ==
 
-Instantly upload photos from Unsplash to your website without leaving WordPress!
+Instantly upload photos from Unsplash or Pixabay to your website without leaving WordPress!
 
-**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [unsplash.com](http://unsplash.com) directly to your media library.
+**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [unsplash.com](http://unsplash.com) and [Pixabay](http://pixabay.com) directly to your media library.
 
 [youtube https://www.youtube.com/watch?v=s6Q7Kfi2f1c]
 
@@ -34,7 +34,7 @@ The perfect tool for users who want to save time and frustration by uploading im
 - **Edit Image Metadata** - Easily edit image filename, alt text and caption prior to uploading to your media library.
 - **Accessibility** - Automatically include a relevant alt description for screen readers, visually reduced users, and SEO.
 - **Easy to Use** - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
-- **No Account Needed** - An Unsplash account is not required for use of this plugin. Just activate and you're ready to go.
+- **No Unsplash Account Needed** - An Unsplash account is not required for use of this plugin. Just activate and you're ready to go.
 
 ---
 
@@ -60,7 +60,7 @@ Pull requests can be submitted via [GitHub](https://github.com/dcooney/instant-i
 == Frequently Asked Questions ==
 
 = Can I legally use these photos on my website? =
-All photos published on Unsplash are licensed under Creative Commons Zero which means you can copy, modify, distribute and use the photos for free, including commercial purposes, without asking permission from or providing attribution to the photographer or Unsplash.
+All photos published on Unsplash are licensed under Creative Commons Zero which means you can copy, modify, distribute and use the photos for free, including commercial purposes, without asking permission from or providing attribution to the photographer or Unsplash/Pixabay.
 [Learn More](http://creativecommons.org/publicdomain/zero/1.0/)
 
 = Can I search for individual photos by ID? =
@@ -84,8 +84,11 @@ Yes, this plugin is required to write temporary images into an `/instant-images`
 
 Some hosts lock down their servers and you may be required to update your php.ini or .htaccess in order to use this plugin.
 
-= Do I need an Unsplash account? =
+= Do I need an account at Unsplash? =
 No, there is no need to sign up from an Unsplash account to access the photos server via Instant Images.
+
+= Do I need an account at Pixabay? =
+Yes, Pixabay access requires an API key. You can get this by signing up for a free account at [Pixabay](https://pixabay.com/).
 
 
 == Installation ==
@@ -124,6 +127,14 @@ How to install Instant Images.
 6. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 4.5.0 - October 28, 2021 =
+NEW: 🎉 Pixabay! We've added support for [Pixabay](https://pixabay.com) images. This requires a valid API key.
+NEW: Added button to auto-generate Photo attribution in image caption.
+NEW: Added uninstaller script to remove plugin settings.
+UPDATE: Updated styling and functionality of photo detail editor.
+UPDATE: Various UI/UX updates.
+
 
 = 4.4.0.3 - July 30, 2021 =
 * Fix: WP 5.8 issue resolved - added fix for Instant Images causing the Widget Block Editor to fail due to JS error.
