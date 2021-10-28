@@ -1,5 +1,3 @@
-
-
 body.media_page_instant-images {
 	background: #fff;
 	#wpcontent {
@@ -28,7 +26,7 @@ body.media_page_instant-images {
 			display: none;
 		}
 	}
-	&.overflow-hidden{
+	&.overflow-hidden {
 		overflow: hidden;
 	}
 }
@@ -106,7 +104,6 @@ body.media_page_instant-images {
       Admin Screens - Setting page
       wp-admin/upload.php?page=instant-images
    */
-
 	.header-wrap {
 		background: $lighter_grey url("../img/logo-48x48.png") no-repeat 25px 20px;
 		padding: 20px 25px 20px 83px;
@@ -234,10 +231,7 @@ body.media_page_instant-images {
 	}
 }
 
-/*
-   Columns
-*/
-
+// defaults
 .instant-img-container .cnkt-main {
 	width: 100%;
 	float: none;
@@ -250,10 +244,7 @@ body.media_page_instant-images {
 	margin-top: 0;
 }
 
-/*
- * Settings
- */
-
+// Settings
 .instant-img-container .save-settings {
 	p.submit {
 		float: left;
@@ -269,10 +260,7 @@ body.media_page_instant-images {
 	}
 }
 
-/*
- * Thickbox styles
- */
-
+// Thickbox styles
 #TB_ajaxContent {
 	clear: both;
 	line-height: 1.4em;
@@ -283,10 +271,12 @@ body.media_page_instant-images {
 	padding: 15px !important;
 }
 
-/* Table */
+// Table
 .cnkt-sidebar .form-table {
 	margin: 0;
 	border: none;
+	position: relative;
+	top: -5px;
 }
 .cnkt-sidebar .form-table td,
 .cnkt-sidebar .form-table label,
@@ -294,6 +284,7 @@ body.media_page_instant-images {
 	font-size: 13px;
 }
 .cnkt-sidebar .form-table label {
+	color: $text;
 	display: block;
 	clear: both;
 	float: none;
@@ -312,9 +303,6 @@ body.media_page_instant-images {
 	float: left;
 	width: 100%;
 	margin: 0;
-}
-.instant-img-container .form-table tr:first-of-type td {
-	padding: 10px 0;
 }
 .cnkt-sidebar .form-table .form-msg,
 .cnkt-main .form-msg {
@@ -359,8 +347,11 @@ body.media_page_instant-images {
 .instant-img-container textarea {
 	box-shadow: none;
 }
+.instant-img-container .save-settings {
+	padding-top: 5px;
+}
 .instant-img-container label {
-	padding: 5px 0;
+	padding: 5px 0px;
 }
 #unsplash-form-options h2,
 #unsplash-form-options p.desc {
@@ -371,7 +362,6 @@ body.media_page_instant-images {
 .instant-img-container textarea {
 	padding: 10px;
 	line-height: 1;
-	border: 1px solid #ccc;
 	background: $lighter_grey;
 	width: 100%;
 	border-radius: 2px;
@@ -384,7 +374,7 @@ body.media_page_instant-images {
 	background: $grey;
 }
 
-/* Helpers */
+// Helpers
 .instant-img-container {
 	.spacer {
 		display: block;

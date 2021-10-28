@@ -3,7 +3,7 @@ var instant_images = instant_images || {};
 jQuery(document).ready(function ($) {
 	"use strict";
 
-	var speed = 250;
+	var speed = 350;
 
 	// Media Uploader
 	instant_images.setEditor = function (frame) {

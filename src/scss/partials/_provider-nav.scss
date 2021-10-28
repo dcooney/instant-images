@@ -1,30 +1,30 @@
 // Media Modal.
-.media-frame-content{
-	.instant-img-container{
-      .load-more-wrap{
-         display: block;
-      }
-		.provider-nav{
+.media-frame-content {
+	.instant-img-container {
+		.load-more-wrap {
+			display: block;
+		}
+		.provider-nav {
 			padding: 10px 25px;
 		}
-   }
+	}
 }
 
 // Instant Images Plugin Page.
-.provider-nav{
+.provider-nav {
 	display: flex;
 	flex-wrap: nowrap;
 	width: calc(100% + 50px);
 	margin-left: -25px;
-	padding: 5px 25px;
+	padding: 10px 25px;
 	border-bottom: 1px solid $grey;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
 	background-color: $lighter_grey;
 	position: relative;
-	> div{
+	> div {
 		position: relative;
 	}
-	&--btn{
+	&--btn {
 		padding: 8px 8px 8px 35px;
 		border: 1px solid transparent;
 		background: transparent;
@@ -33,37 +33,41 @@
 		position: relative;
 		border-radius: $radius;
 		font-size: 14px;
-		color:$text_light;
+		color: $text_light;
 		transition: all 0.2s ease;
 		background-color: $lighter_grey;
 		&:hover,
-		&:focus{
+		&:focus {
 			color: $text;
 		}
-		&.active{
+		&.active {
 			background-color: #fff;
 			border-color: $border;
 			color: $text;
-			cursor: default;box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);
+			cursor: default;
+			box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);
 		}
 	}
-	&--new{
+	&--new {
 		color: $text;
 		background-color: $yellow;
 		font-size: 9px;
 		text-transform: uppercase;
-		display: inline-block;
+		display: inline;
 		padding: 3px 4px;
 		border-radius: $radius;
 		margin-left: 5px;
+		position: relative;
+		top: -1px;
+		letter-spacing: -0.05rem;
 	}
 }
 
-[data-provider="unsplash"]{
+[data-provider="unsplash"] {
 	background: url("../img/logos/unsplash.svg") no-repeat 8px center;
 	background-size: 18px 18px;
 }
-[data-provider="pixabay"]{
+[data-provider="pixabay"] {
 	background: url("../img/logos/pixabay.png") no-repeat 8px center;
 	background-size: 20px 20px;
 }

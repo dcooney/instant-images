@@ -128,7 +128,7 @@ How to install Instant Images.
 
 == Changelog ==
 
-= 4.5.0 - October 26, 2021 =
+= 4.5.0 - October 28, 2021 =
 NEW: 🎉 Pixabay! We've added support for [Pixabay](https://pixabay.com) images. This requires a valid API key.
 NEW: Added button to auto-generate Photo attribution in image caption.
 NEW: Added uninstaller script to remove plugin settings.

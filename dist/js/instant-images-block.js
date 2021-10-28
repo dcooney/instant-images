@@ -40433,7 +40433,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = consoleStatus;
 /**
- * Display a console.log message about API status.
+ * Display a console.warn message about API status.
  *
  * @param {string} provider The API service provider.
  * @param {string} status The API status.

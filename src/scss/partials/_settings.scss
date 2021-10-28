@@ -1,133 +1,214 @@
-.instant-images-settings{
+.instant-images-settings {
 	display: none;
 	background-color: $grey;
-	border-top: 1px solid #e7e7e7;
-	border-bottom: 1px solid #e7e7e7;
-	.cnkt-sidebar{
+	border-top: 1px solid $border;
+	border-bottom: 1px solid $border;
+	.cnkt-sidebar {
 		padding: 20px 25px;
 		overflow: hidden;
-		.cta{
-			float: left;
-			width: 50%;
-			@media screen and (max-width: $small){
-				float: none !important;
-				width: 100% !important;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		line-height: 1.45;
+		p {
+			font-size: 13px;
+		}
+		.cta {
+			width: 100%;
+			@media screen and (min-width: $small) {
+				width: calc(65% - 10px);
 			}
-			&.ii-settings{
-				width: 31.333%;
+			background: #fff;
+			padding: 0;
+			overflow: hidden;
+			position: relative;
+			border: 1px solid $border;
+			border-radius: $radius;
+			overflow: hidden;
+
+			// What's New
+			&.ii-whats-new {
+				order: 2;
+				@media screen and (min-width: $small) {
+					order: 1;
+				}
+				padding-bottom: 52px;
+				ul {
+					display: flex;
+					flex-wrap: wrap;
+					list-style: none;
+					margin: 0;
+					padding: 15px;
+					li {
+						line-height: 1.45;
+						width: 100%;
+						@media screen and (min-width: $medium) {
+							width: 50%;
+						}
+						@media screen and (min-width: $large) {
+							width: 33.333%;
+						}
+						background-color: transparent;
+						padding: 5px;
+						margin: 0;
+						position: relative;
+						display: flex;
+						p {
+							font-size: 13px;
+							position: relative;
+							z-index: 1;
+							margin: 0;
+							padding: 15px;
+							border: 1px solid $border;
+							strong {
+								font-size: 14px;
+								color: $text;
+								display: block;
+								font-weight: 700;
+								margin: 0 0 5px;
+								color: $text;
+							}
+						}
+						code {
+							font-size: 12px;
+							margin: 0;
+							padding: 3px;
+							background: $lighter_grey;
+							border-radius: 2px;
+							box-shadow: 0 0 0 1px $grey;
+						}
+					}
+				}
+				.with-love {
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					width: 100%;
+					border-radius: 0 0 2px 2px;
+					background-color: $lighter_grey;
+					border-top: 1px solid $border;
+					text-align: center;
+					margin: 0;
+					padding: 15px;
+					p {
+						margin: 0;
+					}
+				}
+			}
+			// Settings
+			&.ii-settings {
+				order: 1;
+				@media screen and (min-width: $small) {
+					order: 2;
+					width: 35%;
+				}
 				select,
-				input[type=text],
-				input[type=number]{
+				input[type="text"],
+				input[type="number"] {
 					background-color: #fff;
 					width: 100%;
 					padding: 5px 10px;
-					border-color: $text_light;
+					border-color: #ccc;
+					max-width: none;
 				}
-				input[type=text],
-				input[type=number]{
+				input[type="text"],
+				input[type="number"] {
 					padding: 10px;
 				}
-				span.desc{
+				span.desc {
 					font-size: 11px;
 					display: block;
 					padding: 5px 2px;
 				}
 			}
-			&.ii-plugins{
-				width: 68.666%;
-				width: calc(68.666% - 25px);
-				float: right;
+			// Plugins
+			&.ii-plugins {
+				width: 100%;
+				margin-top: 10px;
+				order: 3;
+				.cnkt-plugin-installer {
+					width: 100%;
+					position: static;
+					justify-content: space-between;
+					padding: 20px 20px 0;
+					.plugin {
+						width: 100%;
+						@media screen and (min-width: $small) {
+							width: calc(50% - 10px);
+						}
+						margin: 0 0 20px;
+						line-height: 1.45;
+						h2 {
+							margin-bottom: 5px;
+						}
+					}
+					&:after {
+						display: none;
+					}
+				}
 			}
-	   	h2{
-	         border: none;
-	         padding: 17px 20px 3px;
-	         font-size: 16px;
-	         &.w-border{
-		         border-top: 1px solid #e7e7e7;
-	         }
-	      }
-	      h2 + p{
-	         padding: 0 20px 15px;
-	         margin: 0 !important;
-	         border-bottom: 1px solid #e7e7e7;
-	      }
-	      h2,
-	      h2 + p{
-	         background: $lighter_grey;
-	         margin: 0;
-	      }
-	      ul.whats-new{
-		      list-style: disc;
-		      padding: 0 0 10px 20px;
-		      li{
-			      margin: 10px 0 0;
-			      pre{
-				      display: inline-block;
-				      margin: 0;
-				      padding: 3px;
-				      background: $lighter_grey;
-				      border-radius: 2px;
-				      box-shadow: 0 0 0 1px $grey;
-			      }
-		      }
-	      }
-	   }
-	   .cta{
-		   background: #fff;
-		   padding: 0 0 20px;
-		   margin: 0 0 20px;
-		   overflow: hidden;
-		   position: relative;
-		   border: 1px solid #e7e7e7;
 		}
-		.cta.padding-bottom{
-			padding-bottom: 66px;
+		h2 {
+			border: none;
+			padding: 20px 20px 0;
+			font-size: 18px;
+			font-weight: 700;
+		}
+		h2 + p {
+			padding: 0 20px 16px;
+			margin: 0 !important;
+			border-bottom: 1px solid $border;
+		}
+		h2,
+		h2 + p {
+			background: $lighter_grey;
+			margin: 0;
 		}
 		.cnkt-sidebar h3,
-		.cnkt-sidebar h4{
+		.cnkt-sidebar h4 {
 			margin-top: 0;
 		}
-		.cta-wrap{
-	   	display: block;
-	   	padding: 10px 20px;
-	   	h4{
-		   	padding: 10px 0 7px;
-		   	margin: 0;
-		   	span{
-			   	display: inline-block;
-			   	line-height: 1;
-			   	padding: 8px 10px;
-			   	border-radius: 2px;
-			   	background: #ffffcc;
-			   	color: #666;
-		   	}
-	   	}
+		.cta-wrap {
+			display: block;
+			padding: 20px;
+			h4 {
+				padding: 10px 0 7px;
+				margin: 0;
+				span {
+					display: inline-block;
+					line-height: 1;
+					padding: 8px 10px;
+					border-radius: 2px;
+					background: #ffffcc;
+					color: #666;
+				}
+			}
 		}
-		.cnkt-plugin-installer .plugin{
+		.cnkt-plugin-installer .plugin {
 			width: 48%;
 			margin: 2% 1% 0;
-			@media screen and (max-width: 1170px){
+			@media screen and (max-width: 1170px) {
 				width: 100%;
 				margin: 2% 0 0;
 			}
-			h2{
-	         border: none;
-	         padding: 0;
-	         font-size: 16px;
-	      }
-	      h2 + p{
-	         padding: 0;
-	         margin: 0 !important;
-	         border-bottom: none;
-	      }
-	      h2,
-	      h2 + p{
-	         background: none;
-	         margin: 0;
-	      }
+			h2 {
+				border: none;
+				padding: 0;
+				font-size: 16px;
+			}
+			h2 + p {
+				padding: 0;
+				margin: 0 !important;
+				border-bottom: none;
+			}
+			h2,
+			h2 + p {
+				background: none;
+				margin: 0;
+			}
 		}
 	}
-	table{
+	table {
 		margin-top: 5px;
 	}
 }
