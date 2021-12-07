@@ -646,6 +646,10 @@ class PhotoList extends React.Component {
 		}
 	}
 
+	filterColor() {
+		console.log(this);
+	}
+
 	render() {
 		return (
 			<div id="photo-listing" className={this.provider}>
@@ -736,6 +740,14 @@ class PhotoList extends React.Component {
 						setOrientation={this.setOrientation.bind(this)}
 					/>
 				)}
+
+				<select onChange={this.filterColor}>
+					<option>Select Color</option>
+					<option value="grayscale">grayscale</option>
+					<option value="transparent">transparent</option>
+					<option value="red">red</option>
+					<option value="orange">orange</option>
+				</select>
 
 				<div id="photos" className="photo-target" ref={this.photoTarget}>
 					{this.state.results.map((result, iterator) => (

@@ -41507,6 +41507,11 @@ var PhotoList = function (_React$Component) {
 			}
 		}
 	}, {
+		key: "filterColor",
+		value: function filterColor() {
+			console.log(this);
+		}
+	}, {
 		key: "render",
 		value: function render() {
 			var _this3 = this;
@@ -41609,6 +41614,35 @@ var PhotoList = function (_React$Component) {
 					provider: this.provider,
 					setOrientation: this.setOrientation.bind(this)
 				}),
+				_react2.default.createElement(
+					"select",
+					{ onChange: this.filterColor },
+					_react2.default.createElement(
+						"option",
+						null,
+						"Select Color"
+					),
+					_react2.default.createElement(
+						"option",
+						{ value: "grayscale" },
+						"grayscale"
+					),
+					_react2.default.createElement(
+						"option",
+						{ value: "transparent" },
+						"transparent"
+					),
+					_react2.default.createElement(
+						"option",
+						{ value: "red" },
+						"red"
+					),
+					_react2.default.createElement(
+						"option",
+						{ value: "orange" },
+						"orange"
+					)
+				),
 				_react2.default.createElement(
 					"div",
 					{ id: "photos", className: "photo-target", ref: this.photoTarget },
@@ -41793,6 +41827,7 @@ module.exports = {
 	},
 	unsplash: {
 		requires_key: false,
+		new: false,
 		api_query_var: "/?client_id=",
 		photo_api: "https://api.unsplash.com/photos",
 		collections_api: "https://api.unsplash.com/collections",

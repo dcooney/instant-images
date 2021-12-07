@@ -6,6 +6,7 @@ module.exports = {
 	},
 	unsplash: {
 		requires_key: false,
+		new: false,
 		api_query_var: "/?client_id=",
 		photo_api: "https://api.unsplash.com/photos",
 		collections_api: "https://api.unsplash.com/collections",
