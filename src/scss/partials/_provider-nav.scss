@@ -25,7 +25,7 @@
 		position: relative;
 	}
 	&--btn {
-		padding: 8px 8px 8px 35px;
+		padding: 10px 10px 10px 36px;
 		border: 1px solid transparent;
 		background: transparent;
 		margin-right: 5px;
@@ -64,10 +64,10 @@
 }
 
 [data-provider="unsplash"] {
-	background: url("../img/logos/unsplash.svg") no-repeat 8px center;
+	background: url("../img/logos/unsplash.svg") no-repeat 10px center;
 	background-size: 18px 18px;
 }
 [data-provider="pixabay"] {
-	background: url("../img/logos/pixabay.png") no-repeat 8px center;
+	background: url("../img/logos/pixabay.png") no-repeat 10px center;
 	background-size: 20px 20px;
 }

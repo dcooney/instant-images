@@ -7,6 +7,7 @@ module.exports = {
 	unsplash: {
 		requires_key: false,
 		new: false,
+		filters: true,
 		api_query_var: "/?client_id=",
 		photo_api: "https://api.unsplash.com/photos",
 		collections_api: "https://api.unsplash.com/collections",
@@ -19,7 +20,8 @@ module.exports = {
 	},
 	pixabay: {
 		requires_key: true,
-		new: true,
+		new: false,
+		filters: true,
 		api_query_var: "/?key=",
 		photo_api: "https://pixabay.com/api",
 		search_api: "https://pixabay.com/api",

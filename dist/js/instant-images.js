@@ -40732,6 +40732,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _masonryLayout = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
@@ -40746,9 +40748,21 @@ var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.j
 
 var _API2 = _interopRequireDefault(_API);
 
+var _filters = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
+
+var _filters2 = _interopRequireDefault(_filters);
+
 var _buildTestURL = __webpack_require__(/*! ../functions/buildTestURL */ "./src/js/functions/buildTestURL.js");
 
 var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
+
+var _contentSafety = __webpack_require__(/*! ../functions/contentSafety */ "./src/js/functions/contentSafety.js");
+
+var _contentSafety2 = _interopRequireDefault(_contentSafety);
+
+var _createQS = __webpack_require__(/*! ../functions/createQS */ "./src/js/functions/createQS.js");
+
+var _createQS2 = _interopRequireDefault(_createQS);
 
 var _getResults = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
 
@@ -40818,14 +40832,13 @@ var PhotoList = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (PhotoList.__proto__ || Object.getPrototypeOf(PhotoList)).call(this, props));
 
 		_this.providers = ["Unsplash", "Pixabay"];
-
 		_this.provider = _this.props.provider; // Unsplash, Pixabay, etc.
 		_this.api_provider = _API2.default[_this.provider]; // The API settings for the provider.
 		_this.arr_key = _this.api_provider.arr_key;
 		_this.order_key = _this.api_provider.order_key;
 
+		// API Vars.
 		_this.api_key = instant_img_localize[_this.provider + "_app_id"];
-
 		_this.api_url = "" + _this.api_provider.photo_api + _this.api_provider.api_query_var + _this.api_key + _API2.default.defaults.posts_per_page;
 		_this.search_api_url = "" + _this.api_provider.search_api + _this.api_provider.api_query_var + _this.api_key + _API2.default.defaults.posts_per_page;
 
@@ -40833,16 +40846,19 @@ var PhotoList = function (_React$Component) {
 		_this.results = (0, _getResults2.default)(_this.provider, _this.arr_key, _this.props.results);
 		_this.state = {
 			results: _this.results,
+			filters: _filters2.default[_this.provider],
 			restapi_error: false,
 			api_lightbox: false
 		};
 
+		_this.filters = {};
 		_this.orderby = _this.props.orderby; // Orderby
 		_this.page = _this.props.page; // Page
 
 		_this.is_search = false;
 		_this.search_term = "";
 		_this.total_results = 0;
+		_this.view = "";
 		_this.orientation = "";
 		_this.isLoading = false; // Loading flag.
 		_this.isDone = false; // Done flag.
@@ -40855,7 +40871,7 @@ var PhotoList = function (_React$Component) {
 		_this.providerNav = _react2.default.createRef();
 		_this.controlNav = _react2.default.createRef();
 		_this.photoSearch = _react2.default.createRef();
-		_this.buttonLatest = _react2.default.createRef();
+		_this.filterGroups = _react2.default.createRef();
 
 		// Editor props.
 		_this.editor = _this.props.editor ? _this.props.editor : "classic";
@@ -40940,7 +40956,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * Orientation filter. Availlable during a search only.
+   * Orientation filter - availlable during a search only.
    *
    * @param {string} orientation The orientation of the photos.
    * @param {MouseEvent} event The dispatched orientation setter event.
@@ -41015,9 +41031,10 @@ var PhotoList = function (_React$Component) {
 			var self = this;
 			var input = this.photoSearch.current;
 			var type = "term";
-			this.page = 1; // reset page num
 
-			var url = this.search_api_url + "&page=" + this.page + "&" + this.api_provider.search_query_var + "=" + this.search_term;
+			this.page = 1; // Reset currentpage num.
+
+			var url = this.search_api_url + "&page=" + this.page + "&" + this.api_provider.search_query_var + "=" + this.search_term + (0, _contentSafety2.default)(this.provider);
 
 			if (this.hasOrientation()) {
 				// Set orientation
@@ -41089,6 +41106,9 @@ var PhotoList = function (_React$Component) {
 				self.setState({ results: self.results });
 			});
 		}
+	}, {
+		key: "disableFilters",
+		value: function disableFilters() {}
 
 		/**
    * Reset search results and results view.
@@ -41108,34 +41128,56 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * Get the initial set of photos for the current view (New/Popular/Old/etc...).
+   * Click event for the control nav items.
    *
+   * @param {Event} e The clicked element event.
    * @param {string}  view  Current view.
-   * @param {Element} e     The clicked element.
-   * @param {Boolean} reset Is this an app reset.
+   * @since 4.6
+   */
+
+	}, {
+		key: "controlsClick",
+		value: function controlsClick(e, view) {
+			var target = e.currentTarget;
+			this.view = view;
+			if (!target.classList.contains("active")) {
+				this.getPhotos(view);
+			}
+		}
+
+		/**
+   * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
+   *
+   * @param {string}  view     Current view.
+   * @param {Boolean} reset    Is this an app reset.
+   * @param {Boolean} switcher Is this a provider switch.
    * @since 3.0
    */
 
 	}, {
 		key: "getPhotos",
-		value: function getPhotos(view, e) {
-			var reset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+		value: function getPhotos(view) {
+			var reset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+			var switcher = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
 			var self = this;
-			var el = e.target || e;
 
-			if (el.classList.contains("active") && !reset) {
+			if (this.isLoading && !reset) {
 				return; // exit if active
 			}
 
-			el.classList.add("loading"); // Add class to nav btn
+			this.photoTarget.current.classList.add("loading");
 			this.isLoading = true;
 			this.page = 1;
 			this.orderby = view;
 			this.results = [];
 			this.clearSearch();
 
-			var url = this.api_url + "&page=" + this.page + "&" + this.order_key + "=" + this.orderby;
+			// Get filters.
+			var filters = (0, _createQS2.default)(this.filters);
+
+			// Build URL.
+			var url = this.api_url + "&page=" + this.page + "&" + this.order_key + "=" + this.orderby + (0, _contentSafety2.default)(this.provider) + filters;
 
 			fetch(url).then(function (data) {
 				return data.json();
@@ -41149,12 +41191,25 @@ var PhotoList = function (_React$Component) {
 				self.results = results;
 
 				// Set results state.
-				self.setState({ results: results });
+				if (!switcher) {
+					self.setState({
+						results: results
+					});
+				} else {
+					self.setState({
+						results: results,
+						filters: _filters2.default[self.provider]
+					});
+				}
 
-				// Remove class from nav btn.
-				el.classList.remove("loading");
+				// Delay for effect.
+				setTimeout(function () {
+					self.photoTarget.current.classList.remove("loading");
+					self.isLoading = false;
+				}, 250);
 			}).catch(function (error) {
 				console.log(error);
+				self.photoTarget.current.classList.remove("loading");
 				self.isLoading = false;
 			});
 		}
@@ -41184,6 +41239,12 @@ var PhotoList = function (_React$Component) {
 				}
 			}
 
+			// Get filters.
+			var filters = (0, _createQS2.default)(this.filters);
+
+			// Build URL
+			url = filters ? "" + url + (0, _contentSafety2.default)(this.provider) + filters : url;
+
 			fetch(url).then(function (data) {
 				return data.json();
 			}).then(function (data) {
@@ -41204,11 +41265,44 @@ var PhotoList = function (_React$Component) {
 
 				// Update Props
 				self.setState({ results: self.results });
+
+				self.isLoading = false;
 			}).catch(function (error) {
 				console.log(error);
 				self.isLoading = false;
 			});
 		}
+
+		/**
+   * Filter the photo listing.
+   *
+   * @param {Event} e The dispatched change event.
+   */
+
+	}, {
+		key: "filterPhotos",
+		value: function filterPhotos(e) {
+			var value = e.target.value;
+			var filter = e.target.dataset.filter;
+			console.log(this.filters);
+			if (this.filters[filter] && value === "#" || value === "") {
+				delete this.filters[filter];
+			} else {
+				this.filters[filter] = value;
+			}
+			console.log(this.filters);
+			this.getPhotos(this.view, true);
+		}
+
+		/**
+   * Toggle the filters menu.
+   *
+   * @param {Event} e The dispatched click event.
+   */
+
+	}, {
+		key: "toggleFilters",
+		value: function toggleFilters(e) {}
 
 		/**
    * Callback after activating and verififying an API key.
@@ -41303,6 +41397,9 @@ var PhotoList = function (_React$Component) {
 								this.provider = provider;
 								this.api_provider = _API2.default[this.provider];
 
+								// Clear filters.
+								this.filters = {};
+
 								// Remove active from buttons.
 								this.providerNav.current.querySelectorAll("button").forEach(function (button) {
 									button.classList.remove("active");
@@ -41320,9 +41417,10 @@ var PhotoList = function (_React$Component) {
 								this.search_api_url = "" + this.api_provider.search_api + this.api_provider.api_query_var + this.api_key + _API2.default.defaults.posts_per_page;
 
 								// At last, get the photos.
-								this.getPhotos("latest", this.buttonLatest.current, true);
+								this.view = "latest";
+								this.getPhotos(this.view, true, true);
 
-							case 24:
+							case 26:
 							case "end":
 								return _context.stop();
 						}
@@ -41330,7 +41428,7 @@ var PhotoList = function (_React$Component) {
 				}, _callee, this);
 			}));
 
-			function switchProvider(_x2) {
+			function switchProvider(_x3) {
 				return _ref.apply(this, arguments);
 			}
 
@@ -41392,31 +41490,19 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * Sets the main navigation active state.
+   * Sets the loading state.
    *
    * @since 3.0
    */
 
 	}, {
-		key: "setActiveState",
-		value: function setActiveState() {
+		key: "doneLoading",
+		value: function doneLoading() {
 			var self = this;
-			// Remove .active class from control nav.
-			this.controlNav.current.querySelectorAll("button").forEach(function (el) {
-				return el.classList.remove("active");
-			});
-
-			// Set active item, if not search.
-			if (!this.is_search) {
-				var active = this.controlNav.current.querySelector("li button.instant-images-" + this.orderby);
-				if (active) {
-					active.classList.add("active");
-				}
-			}
 			setTimeout(function () {
 				self.isLoading = false;
 				self.container.classList.remove("loading");
-			}, 1000);
+			}, 500);
 		}
 
 		/**
@@ -41479,7 +41565,7 @@ var PhotoList = function (_React$Component) {
 		key: "componentDidUpdate",
 		value: function componentDidUpdate() {
 			this.renderLayout();
-			this.setActiveState();
+			this.doneLoading();
 		}
 
 		// Component Init
@@ -41490,7 +41576,7 @@ var PhotoList = function (_React$Component) {
 			var _this2 = this;
 
 			this.renderLayout();
-			this.setActiveState();
+			this.doneLoading();
 			this.test();
 			this.container.classList.remove("loading");
 			this.wrapper.classList.add("loaded");
@@ -41505,11 +41591,6 @@ var PhotoList = function (_React$Component) {
 					return _this2.onScroll();
 				});
 			}
-		}
-	}, {
-		key: "filterColor",
-		value: function filterColor() {
-			console.log(this);
 		}
 	}, {
 		key: "render",
@@ -41554,30 +41635,58 @@ var PhotoList = function (_React$Component) {
 					afterVerifiedAPICallback: this.afterVerifiedAPICallback.bind(this),
 					closeAPILightbox: this.closeAPILightbox.bind(this)
 				}),
-				this.api_provider.order && _react2.default.createElement(
-					"ul",
+				_react2.default.createElement(
+					"div",
 					{ className: "control-nav", ref: this.controlNav },
-					this.api_provider.order.map(function (order, iterator) {
-						return _react2.default.createElement(
-							"li",
-							{ key: _this3.provider + "-order-" + iterator },
-							_react2.default.createElement(
-								"button",
-								{
-									type: "button",
-									className: "instant-images-" + order,
-									onClick: function onClick(e) {
-										return _this3.getPhotos(order, e);
+					this.api_provider.filters && Object.entries(this.state.filters).length && _react2.default.createElement(
+						"div",
+						{
+							className: "control-nav--filters",
+							ref: this.filterGroups
+						},
+						Object.entries(this.state.filters).map(function (_ref2, i) {
+							var _ref3 = _slicedToArray(_ref2, 2),
+							    key = _ref3[0],
+							    filter = _ref3[1];
+
+							return _react2.default.createElement(
+								"label",
+								{ key: i },
+								_react2.default.createElement(
+									"span",
+									null,
+									filter.label
+								),
+								_react2.default.createElement(
+									"select",
+									{
+										onChange: function onChange(e) {
+											return _this3.filterPhotos(e);
+										},
+										"data-filter": key
 									},
-									ref: order === "latest" ? _this3.buttonLatest : null
-								},
-								instant_img_localize[order]
-							)
-						);
-					}),
+									filter.option && _react2.default.createElement(
+										"option",
+										{ value: "#" },
+										filter.option
+									),
+									filter.filters && filter.filters.map(function (item, key) {
+										return _react2.default.createElement(
+											"option",
+											{ key: key, value: item },
+											item
+										);
+									})
+								)
+							);
+						})
+					),
 					_react2.default.createElement(
-						"li",
-						{ className: "search-field", id: "search-bar" },
+						"div",
+						{
+							className: "control-nav--search search-field",
+							id: "search-bar"
+						},
 						_react2.default.createElement(
 							"form",
 							{ onSubmit: function onSubmit(e) {
@@ -41601,7 +41710,7 @@ var PhotoList = function (_React$Component) {
 							),
 							_react2.default.createElement(_ResultsToolTip2.default, {
 								container: this.container,
-								buttonLatest: this.buttonLatest,
+								getPhotos: this.getPhotos.bind(this),
 								isSearch: this.is_search,
 								total: this.total_results,
 								title: this.total_results + " " + instant_img_localize.search_results + " " + this.search_term
@@ -41614,35 +41723,6 @@ var PhotoList = function (_React$Component) {
 					provider: this.provider,
 					setOrientation: this.setOrientation.bind(this)
 				}),
-				_react2.default.createElement(
-					"select",
-					{ onChange: this.filterColor },
-					_react2.default.createElement(
-						"option",
-						null,
-						"Select Color"
-					),
-					_react2.default.createElement(
-						"option",
-						{ value: "grayscale" },
-						"grayscale"
-					),
-					_react2.default.createElement(
-						"option",
-						{ value: "transparent" },
-						"transparent"
-					),
-					_react2.default.createElement(
-						"option",
-						{ value: "red" },
-						"red"
-					),
-					_react2.default.createElement(
-						"option",
-						{ value: "orange" },
-						"orange"
-					)
-				),
 				_react2.default.createElement(
 					"div",
 					{ id: "photos", className: "photo-target", ref: this.photoTarget },
@@ -41712,7 +41792,7 @@ var ResultsToolTip = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (ResultsToolTip.__proto__ || Object.getPrototypeOf(ResultsToolTip)).call(this, props));
 
-		_this.buttonLatest = _this.props.buttonLatest;
+		_this.getPhotos = _this.props.getPhotos.bind(_this);
 		return _this;
 	}
 
@@ -41737,7 +41817,7 @@ var ResultsToolTip = function (_React$Component) {
 						type: "button",
 						title: instant_img_localize.clear_search,
 						onClick: function onClick() {
-							return _this2.buttonLatest.current.click();
+							return _this2.getPhotos("latest");
 						}
 					},
 					"x",
@@ -41828,6 +41908,7 @@ module.exports = {
 	unsplash: {
 		requires_key: false,
 		new: false,
+		filters: true,
 		api_query_var: "/?client_id=",
 		photo_api: "https://api.unsplash.com/photos",
 		collections_api: "https://api.unsplash.com/collections",
@@ -41840,7 +41921,8 @@ module.exports = {
 	},
 	pixabay: {
 		requires_key: true,
-		new: true,
+		new: false,
+		filters: true,
 		api_query_var: "/?key=",
 		photo_api: "https://pixabay.com/api",
 		search_api: "https://pixabay.com/api",
@@ -41849,6 +41931,51 @@ module.exports = {
 		order_key: "order",
 		order: ["latest", "popular"],
 		orientation: ["horizontal", "vertical"]
+	}
+};
+
+/***/ }),
+
+/***/ "./src/js/constants/filters.js":
+/*!*************************************!*\
+  !*** ./src/js/constants/filters.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+	unsplash: {
+		order: {
+			label: "Order",
+			filters: ["latest", "oldest", "popular"]
+		}
+	},
+	pixabay: {
+		order: {
+			label: "Order",
+			filters: ["latest", "popular"]
+		},
+		image_type: {
+			label: "Type",
+			filters: ["all", "photo", "illustration", "vector"]
+		},
+		category: {
+			label: "Category",
+			option: "--Select--",
+			filters: ["backgrounds", "fashion", "nature", "science", "education", "feelings", "health", "people", "religion", "places", "animals", "industry", "computer", "food", "sports", "transportation", "travel", "buildings", "business", "music"]
+		},
+		colors: {
+			label: "Colors",
+			option: "--Select--",
+			filters: ["grayscale", "transparent", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown"]
+		},
+		orientation: {
+			label: "Orientation",
+			filters: ["all", "horizontal", "vertical"]
+		}
 	}
 };
 
@@ -41928,6 +42055,78 @@ function consoleStatus(provider) {
 function capitalize(s) {
 	if (typeof s !== "string") return "";
 	return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/contentSafety.js":
+/*!*******************************************!*\
+  !*** ./src/js/functions/contentSafety.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = contentSafety;
+/**
+ * Set the photo safety for indicating that only images suitable for all ages should be returned.
+ * @see https://unsplash.com/documentation#content-safety
+ * @see https://pixabay.com/api/docs/
+ *
+ * @param  {string}  provider  The current service provider.
+ * @return {string} 				 The api string for filtering content.
+ */
+function contentSafety(provider) {
+	var str = "";
+	switch (provider) {
+		case "unsplash":
+			if (instant_img_localize.unsplash_content_filter) {
+				str = "&content_filter=" + instant_img_localize.unsplash_content_filter;
+			}
+			break;
+
+		case "pixabay":
+			if (instant_img_localize.pixabay_safesearch) {
+				str = "&safesearch=" + instant_img_localize.pixabay_safesearch;
+			}
+			break;
+	}
+	return str;
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/createQS.js":
+/*!**************************************!*\
+  !*** ./src/js/functions/createQS.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = createQS;
+/**
+ * Create a querystring from an object.
+ *
+ * @param  {string} obj The object.
+ * @return {string}     The generated querystring.
+ */
+function createQS(obj) {
+  var qs = Object.keys(obj).map(function (key) {
+    return key + "=" + obj[key];
+  }).join("&");
+
+  return "&" + qs;
 }
 
 /***/ }),
@@ -42426,6 +42625,10 @@ var _consoleStatus = __webpack_require__(/*! ./functions/consoleStatus */ "./src
 
 var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
 
+var _contentSafety = __webpack_require__(/*! ./functions/contentSafety */ "./src/js/functions/contentSafety.js");
+
+var _contentSafety2 = _interopRequireDefault(_contentSafety);
+
 var _getProvider = __webpack_require__(/*! ./functions/getProvider */ "./src/js/functions/getProvider.js");
 
 var _getProvider2 = _interopRequireDefault(_getProvider);
@@ -42460,7 +42663,7 @@ function GetPhotos() {
 	var api_key = instant_img_localize[provider + "_app_id"];
 
 	// API URL.
-	var start = "" + _API2.default[provider].photo_api + _API2.default[provider].api_query_var + api_key;
+	var start = "" + _API2.default[provider].photo_api + _API2.default[provider].api_query_var + api_key + (0, _contentSafety2.default)(provider);
 	var url = "" + start + _API2.default.defaults.posts_per_page + "&page=" + page + "&" + _API2.default[provider].order_key + "=" + orderby;
 
 	function initialize() {

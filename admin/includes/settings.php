@@ -200,14 +200,20 @@ function instant_images_default_provider() {
  */
 function instant_images_pixabay_api_callback() {
 	$options = get_option( 'instant_img_settings' );
-	if ( ! isset( $options['pixabay_api'] ) ) {
-		$options['pixabay_api'] = '';
+
+	if ( defined( 'INSTANT_IMAGES_PIXABAY_KEY' ) ) {
+		$options['pixabay_api'] = INSTANT_IMAGES_PIXABAY_KEY; // Constant.
+	} else {
+		if ( ! isset( $options['pixabay_api'] ) ) {
+			$options['pixabay_api'] = '';
+		}
 	}
+
 	?>
 	<label for="pixabay_api" style="cursor: default; margin-bottom: 3px;">
 		<strong><?php esc_attr_e( 'Pixabay API Key:', 'instant-images' ); ?></strong>
 	</label>
-	<input type="text" id="pixabay_api" name="instant_img_settings[pixabay_api]" value="<?php echo wp_kses_post( $options['pixabay_api'] ); ?>" >
+	<input type="text" id="pixabay_api" name="instant_img_settings[pixabay_api]" value="<?php echo wp_kses_post( $options['pixabay_api'] ); ?>" <?php echo defined( 'INSTANT_IMAGES_PIXABAY_KEY' ) ? ' readonly="readonly"' : ''; ?>>
 	<span class="desc">&rarr; <a href="https://pixabay.com/" target="_blank"><?php esc_attr_e( 'Get API Key', 'instant-images' ); ?></a></span>
 	<?php
 }

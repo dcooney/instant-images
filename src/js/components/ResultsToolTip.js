@@ -3,7 +3,7 @@ import React from "react";
 class ResultsToolTip extends React.Component {
 	constructor(props) {
 		super(props);
-		this.buttonLatest = this.props.buttonLatest;
+		this.getPhotos = this.props.getPhotos.bind(this);
 	}
 
 	render() {
@@ -17,7 +17,7 @@ class ResultsToolTip extends React.Component {
 				<button
 					type="button"
 					title={instant_img_localize.clear_search}
-					onClick={() => this.buttonLatest.current.click()}
+					onClick={() => this.getPhotos("latest")}
 				>
 					x
 					<span className="offscreen">

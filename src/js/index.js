@@ -4,6 +4,7 @@ import PhotoList from "./components/PhotoList";
 import API from "./constants/API";
 import buildTestURL from "./functions/buildTestURL";
 import consoleStatus from "./functions/consoleStatus";
+import contentSafety from "./functions/contentSafety";
 import getProvider from "./functions/getProvider";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
@@ -31,7 +32,9 @@ function GetPhotos(
 	const api_key = instant_img_localize[`${provider}_app_id`];
 
 	// API URL.
-	const start = `${API[provider].photo_api}${API[provider].api_query_var}${api_key}`;
+	const start = `${API[provider].photo_api}${
+		API[provider].api_query_var
+	}${api_key}${contentSafety(provider)}`;
 	const url = `${start}${API.defaults.posts_per_page}&page=${page}&${API[provider].order_key}=${orderby}`;
 
 	function initialize() {

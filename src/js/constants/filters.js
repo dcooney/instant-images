@@ -1,0 +1,68 @@
+module.exports = {
+	unsplash: {
+		order: {
+			label: "Order",
+			filters: ["latest", "oldest", "popular"],
+		},
+	},
+	pixabay: {
+		order: {
+			label: "Order",
+			filters: ["latest", "popular"],
+		},
+		image_type: {
+			label: "Type",
+			filters: ["all", "photo", "illustration", "vector"],
+		},
+		category: {
+			label: "Category",
+			option: "--Select--",
+			filters: [
+				"backgrounds",
+				"fashion",
+				"nature",
+				"science",
+				"education",
+				"feelings",
+				"health",
+				"people",
+				"religion",
+				"places",
+				"animals",
+				"industry",
+				"computer",
+				"food",
+				"sports",
+				"transportation",
+				"travel",
+				"buildings",
+				"business",
+				"music",
+			],
+		},
+		colors: {
+			label: "Colors",
+			option: "--Select--",
+			filters: [
+				"grayscale",
+				"transparent",
+				"red",
+				"orange",
+				"yellow",
+				"green",
+				"turquoise",
+				"blue",
+				"lilac",
+				"pink",
+				"white",
+				"gray",
+				"black",
+				"brown",
+			],
+		},
+		orientation: {
+			label: "Orientation",
+			filters: ["all", "horizontal", "vertical"],
+		},
+	},
+};
