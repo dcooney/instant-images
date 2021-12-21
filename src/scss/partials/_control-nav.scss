@@ -55,12 +55,29 @@
 					text-transform: uppercase;
 					font-size: 10px;
 					padding-bottom: 1px;
+					padding-left: 1px;
+				}
+				&:focus-within {
+					select:not[disabled] {
+						border-color: $text_light;
+						box-shadow: 0 0 1px 5px rgba(#000, 0.025);
+					}
 				}
 			}
 			select {
 				text-transform: capitalize;
 				width: 100%;
 				border-color: $input;
+				color: $text;
+				background-color: $lighter_grey;
+				min-height: 36px;
+				&[disabled] {
+					cursor: not-allowed;
+				}
+				&:not[disabled]:hover {
+					border-color: $text_light;
+					box-shadow: 0 0 1px 5px rgba(#000, 0.025);
+				}
 			}
 		}
 
@@ -73,11 +90,11 @@
 		&--search {
 			display: flex;
 			align-items: center;
-			width: 30%;
+			width: 35%;
 			max-width: 350px;
 			margin: 0;
 			margin-left: auto;
-			padding: 0 0 0 15px;
+			padding: 0 0 0 20px;
 			position: relative;
 			&:before {
 				position: absolute;
@@ -109,11 +126,11 @@
 			.searchResults {
 				position: absolute;
 				right: 100.5%;
-				top: 4px;
+				top: 5px;
 				width: auto;
-				height: 34px;
-				line-height: 34px;
-				padding: 0 0 0 10px;
+				height: 30px;
+				line-height: 30px;
+				padding: 0 0 0 8px;
 				background: $purple;
 				border: 1px solid $purple_dark;
 				border-radius: 4px;
@@ -136,7 +153,7 @@
 					padding: 0;
 					height: auto;
 					line-height: 1;
-					width: 30px;
+					width: 28px;
 					font-weight: 700;
 					opacity: 0.65;
 					display: flex;
@@ -184,7 +201,7 @@
 				padding: 0 1px 0 0;
 				margin: 0;
 				position: relative;
-				height: 40px;
+				height: 38px;
 				display: block;
 				width: 100%;
 				&:hover {
@@ -198,9 +215,8 @@
 				padding: 0 10px 0 38px;
 				border: 1px solid $input;
 				background-color: $lighter_grey !important;
-				height: 40px;
-				line-height: 40px;
-				//@at-root: $radius;
+				height: 38px;
+				line-height: 38px;
 				border-radius: 999px;
 				font-size: 13px;
 				transition: border 0.25s ease;
@@ -225,9 +241,9 @@
 				position: absolute;
 				left: 2px;
 				top: 0;
-				width: 40px;
-				height: 40px;
-				line-height: 40px;
+				width: 38px;
+				height: 38px;
+				line-height: 38px;
 				border-radius: 100%;
 				z-index: 1;
 				border: none !important;

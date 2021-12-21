@@ -6,6 +6,12 @@
 		}
 		.provider-nav {
 			padding: 10px 25px;
+			background-color: #fff;
+			&--btn {
+				&.active {
+					background-color: $lighter_grey;
+				}
+			}
 		}
 	}
 }
@@ -42,7 +48,7 @@
 		}
 		&.active {
 			background-color: #fff;
-			border-color: $border;
+			border-color: $input;
 			color: $text;
 			cursor: default;
 			box-shadow: 0 0 6px rgba(0, 0, 0, 0.075);

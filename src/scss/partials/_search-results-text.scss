@@ -5,10 +5,13 @@ div.search-results-text {
 	padding: 10px;
 	background-color: $yellow_bkg;
 	border-bottom: 1px solid $grey;
-	font-size: 13px;
+	font-size: 12px;
+	@media screen and (min-width: $small) {
+		font-size: 13px;
+	}
 	width: 100%;
 	text-align: center;
-	span {
+	span.search-results-term {
 		color: $text;
 		font-weight: 700;
 	}

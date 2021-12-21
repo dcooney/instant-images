@@ -39498,6 +39498,7 @@ var PhotoList = function (_React$Component) {
 			var type = "term";
 
 			this.page = 1; // Reset currentpage num.
+			this.toggleFilters(); // Disable filters.
 
 			var url = this.search_api_url + "&page=" + this.page + "&" + this.api_provider.search_query_var + "=" + this.search_term + (0, _contentSafety2.default)(this.provider);
 
@@ -39571,11 +39572,22 @@ var PhotoList = function (_React$Component) {
 				self.setState({ results: self.results });
 			});
 		}
+
+		/**
+   * Disable all filters.
+   */
+
 	}, {
-		key: "disableFilters",
-		value: function disableFilters() {
-			var filters = this.filterGroups.current.querySelectorAll("label");
-			console.log(filters);
+		key: "toggleFilters",
+		value: function toggleFilters() {
+			var _this2 = this;
+
+			var filters = this.filterGroups.current.querySelectorAll("select");
+			if (filters) {
+				filters.forEach(function (select) {
+					select.disabled = _this2.is_search ? true : false;
+				});
+			}
 		}
 
 		/**
@@ -39592,7 +39604,7 @@ var PhotoList = function (_React$Component) {
 			this.total_results = 0;
 			this.is_search = false;
 			this.search_term = "";
-			this.clearOrientation();
+			this.toggleFilters(); // Re-enable filters.
 		}
 
 		/**
@@ -39752,25 +39764,13 @@ var PhotoList = function (_React$Component) {
 		value: function filterPhotos(e) {
 			var value = e.target.value;
 			var filter = e.target.dataset.filter;
-			console.log(this.filters);
 			if (this.filters[filter] && value === "#" || value === "") {
 				delete this.filters[filter];
 			} else {
 				this.filters[filter] = value;
 			}
-			console.log(this.filters);
 			this.getPhotos(this.view, true);
 		}
-
-		/**
-   * Toggle the filters menu.
-   *
-   * @param {Event} e The dispatched click event.
-   */
-
-	}, {
-		key: "toggleFilters",
-		value: function toggleFilters(e) {}
 
 		/**
    * Callback after activating and verififying an API key.
@@ -40041,7 +40041,7 @@ var PhotoList = function (_React$Component) {
 	}, {
 		key: "componentDidMount",
 		value: function componentDidMount() {
-			var _this2 = this;
+			var _this3 = this;
 
 			this.renderLayout();
 			this.doneLoading();
@@ -40056,14 +40056,14 @@ var PhotoList = function (_React$Component) {
 			} else {
 				// Add scroll event
 				window.addEventListener("scroll", function () {
-					return _this2.onScroll();
+					return _this3.onScroll();
 				});
 			}
 		}
 	}, {
 		key: "render",
 		value: function render() {
-			var _this3 = this;
+			var _this4 = this;
 
 			return _react2.default.createElement(
 				"div",
@@ -40080,9 +40080,9 @@ var PhotoList = function (_React$Component) {
 								{
 									"data-provider": provider.toLowerCase(),
 									onClick: function onClick(e) {
-										return _this3.switchProvider(e);
+										return _this4.switchProvider(e);
 									},
-									className: _this3.provider === provider.toLowerCase() ? "provider-nav--btn active" : "provider-nav--btn"
+									className: _this4.provider === provider.toLowerCase() ? "provider-nav--btn active" : "provider-nav--btn"
 								},
 								_react2.default.createElement(
 									"span",
@@ -40132,7 +40132,7 @@ var PhotoList = function (_React$Component) {
 										"select",
 										{
 											onChange: function onChange(e) {
-												return _this3.filterPhotos(e);
+												return _this4.filterPhotos(e);
 											},
 											"data-filter": key
 										},
@@ -40167,7 +40167,7 @@ var PhotoList = function (_React$Component) {
 						_react2.default.createElement(
 							"form",
 							{ onSubmit: function onSubmit(e) {
-									return _this3.search(e);
+									return _this4.search(e);
 								}, autoComplete: "off" },
 							_react2.default.createElement(
 								"label",
@@ -40200,23 +40200,27 @@ var PhotoList = function (_React$Component) {
 					"div",
 					{ className: "search-results-text" },
 					this.total_results + " " + instant_img_localize.search_results + "  ",
-					"'",
 					_react2.default.createElement(
 						"span",
-						null,
+						{ className: "search-results-term" },
 						"" + this.search_term
 					),
-					"' -",
 					_react2.default.createElement(
-						"button",
-						{
-							type: "button",
-							title: instant_img_localize.clear_search,
-							onClick: function onClick() {
-								return _this3.getPhotos("latest");
-							}
-						},
-						instant_img_localize.clear_search
+						"span",
+						{ className: "search-results-clear" },
+						" ",
+						"-",
+						_react2.default.createElement(
+							"button",
+							{
+								type: "button",
+								title: instant_img_localize.clear_search,
+								onClick: function onClick() {
+									return _this4.getPhotos("latest");
+								}
+							},
+							instant_img_localize.clear_search
+						)
 					)
 				),
 				_react2.default.createElement(
@@ -40224,16 +40228,16 @@ var PhotoList = function (_React$Component) {
 					{ id: "photos", className: "photo-target", ref: this.photoTarget },
 					this.state.results.map(function (result, iterator) {
 						return _react2.default.createElement(_Photo2.default, {
-							provider: _this3.provider,
+							provider: _this4.provider,
 							result: result,
-							key: _this3.provider + "-" + result.id + "-" + iterator,
-							editor: _this3.editor,
-							mediaRouter: _this3.is_media_router,
-							blockEditor: _this3.is_block_editor,
-							SetFeaturedImage: _this3.SetFeaturedImage,
-							InsertImage: _this3.InsertImage,
-							showTooltip: _this3.showTooltip,
-							hideTooltip: _this3.hideTooltip
+							key: _this4.provider + "-" + result.id + "-" + iterator,
+							editor: _this4.editor,
+							mediaRouter: _this4.is_media_router,
+							blockEditor: _this4.is_block_editor,
+							SetFeaturedImage: _this4.SetFeaturedImage,
+							InsertImage: _this4.InsertImage,
+							showTooltip: _this4.showTooltip,
+							hideTooltip: _this4.hideTooltip
 						});
 					})
 				),

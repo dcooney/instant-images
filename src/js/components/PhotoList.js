@@ -211,6 +211,7 @@ class PhotoList extends React.Component {
 		let type = "term";
 
 		this.page = 1; // Reset currentpage num.
+		this.toggleFilters(); // Disable filters.
 
 		let url = `${this.search_api_url}&page=${this.page}&${
 			this.api_provider.search_query_var
@@ -304,9 +305,16 @@ class PhotoList extends React.Component {
 			});
 	}
 
-	disableFilters() {
-		const filters = this.filterGroups.current.querySelectorAll("label");
-		console.log(filters);
+	/**
+	 * Disable all filters.
+	 */
+	toggleFilters() {
+		const filters = this.filterGroups.current.querySelectorAll("select");
+		if (filters) {
+			filters.forEach((select) => {
+				select.disabled = this.is_search ? true : false;
+			});
+		}
 	}
 
 	/**
@@ -320,7 +328,7 @@ class PhotoList extends React.Component {
 		this.total_results = 0;
 		this.is_search = false;
 		this.search_term = "";
-		this.clearOrientation();
+		this.toggleFilters(); // Re-enable filters.
 	}
 
 	/**
@@ -475,22 +483,13 @@ class PhotoList extends React.Component {
 	filterPhotos(e) {
 		const value = e.target.value;
 		const filter = e.target.dataset.filter;
-		console.log(this.filters);
 		if ((this.filters[filter] && value === "#") || value === "") {
 			delete this.filters[filter];
 		} else {
 			this.filters[filter] = value;
 		}
-		console.log(this.filters);
 		this.getPhotos(this.view, true);
 	}
-
-	/**
-	 * Toggle the filters menu.
-	 *
-	 * @param {Event} e The dispatched click event.
-	 */
-	toggleFilters(e) {}
 
 	/**
 	 * Callback after activating and verififying an API key.
@@ -821,14 +820,18 @@ class PhotoList extends React.Component {
 				{this.is_search && (
 					<div className="search-results-text">
 						{`${this.total_results} ${instant_img_localize.search_results}  `}
-						'<span>{`${this.search_term}`}</span>' -
-						<button
-							type="button"
-							title={instant_img_localize.clear_search}
-							onClick={() => this.getPhotos("latest")}
-						>
-							{instant_img_localize.clear_search}
-						</button>
+						<span className="search-results-term">{`${this.search_term}`}</span>
+						<span className="search-results-clear">
+							{" "}
+							-
+							<button
+								type="button"
+								title={instant_img_localize.clear_search}
+								onClick={() => this.getPhotos("latest")}
+							>
+								{instant_img_localize.clear_search}
+							</button>
+						</span>
 					</div>
 				)}
 

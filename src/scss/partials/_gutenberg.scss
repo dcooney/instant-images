@@ -38,6 +38,14 @@ body.loading {
 			font-size: 13px;
 		}
 	}
+	.search-results-text {
+		font-size: 12px;
+		border-top: 1px solid $gb_border;
+		border-color: $gb_border;
+		.search-results-clear {
+			display: none;
+		}
+	}
 	#photos {
 		width: 100%;
 		margin: 0;
@@ -63,60 +71,55 @@ body.loading {
 	.control-nav {
 		padding: 0 5px 5px;
 		border-bottom: 1px solid $gb_border;
-		li {
-			font-size: 13px;
-			button {
-				padding-left: 4px;
-			}
-			a {
-				padding: 16px 24px 16px 0;
+		margin: 0 0 10px;
+		.control-nav--spacer {
+			display: none;
+		}
+		&--filters-wrap {
+			flex: none;
+			width: 100%;
+		}
+		&--search {
+			float: none;
+			width: 100%;
+			padding: 10px 0;
+			clear: both;
+			form {
 				height: auto;
-				line-height: 1.2;
 			}
-			&.search-field {
-				float: none;
-				width: 100%;
-				padding: 0;
-				clear: both;
-				form {
-					height: auto;
+			&:before {
+				display: none;
+			}
+			button[type="submit"] {
+				display: none;
+			}
+			input {
+				line-height: 40px;
+				height: 40px;
+				padding-right: 10px;
+				padding-left: 10px;
+				border-color: #e2e4e7;
+				font-size: 13px;
+				border-radius: 3px !important;
+				background-position: 8px center;
+				&.searching {
+					padding-left: 30px;
 				}
-				&:before {
-					content: "";
-					display: table;
-					clear: both;
+				&:focus {
+					box-shadow: none;
 				}
-				button[type="submit"] {
+			}
+			.searchResults {
+				right: 2px;
+				left: auto;
+				top: 2px;
+				border-radius: 2px;
+				font-size: 12px;
+				height: 36px;
+				line-height: 35px;
+				&:before,
+				&:after {
 					display: none;
-				}
-				input {
-					line-height: 40px;
-					height: 40px;
-					padding-right: 10px;
-					padding-left: 10px;
-					border-color: #e2e4e7;
-					font-size: 13px;
-					border-radius: 3px !important;
-					background-position: 8px center;
-					&.searching {
-						padding-left: 30px;
-					}
-					&:focus {
-						box-shadow: none;
-					}
-				}
-				.searchResults {
-					right: 2px;
-					left: auto;
-					top: 2px;
-					border-radius: 2px;
-					font-size: 12px;
-					height: 36px;
-					line-height: 35px;
-					&:before,
-					&:after {
-						display: none;
-					}
 				}
 			}
 		}
