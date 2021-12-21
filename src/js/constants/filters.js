@@ -16,7 +16,7 @@ module.exports = {
 		},
 		category: {
 			label: "Category",
-			option: "--Select--",
+			option: "Select",
 			filters: [
 				"backgrounds",
 				"fashion",

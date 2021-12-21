@@ -232,7 +232,7 @@ class InstantImages {
 				'search'                  => __( 'Search for Toronto + Coffee etc...', 'instant-images' ),
 				'search_label'            => __( 'Search', 'instant-images' ),
 				'search_results'          => __( 'images found for', 'instant-images' ),
-				'clear_search'            => __( 'Clear Search Results', 'instant-images' ),
+				'clear_search'            => __( 'Clear Search', 'instant-images' ),
 				'view_on_unsplash'        => __( 'View on Unsplash', 'instant-images' ),
 				'view_on_pixabay'         => __( 'View on Pixabay', 'instant-images' ),
 				'set_as_featured'         => __( 'Set as Featured Image', 'instant-images' ),
@@ -262,6 +262,7 @@ class InstantImages {
 				'api_invalid_msg'         => __( 'API key entered is not valid - try again.', 'instant-images' ),
 				'api_ratelimit_msg'       => __( 'Your daily or hourly API rate limit has been exceeded. Try again later.', 'instant-images' ),
 				'get_api_key'             => __( 'Get API Key Now', 'instant-images' ),
+				'select'                  => __( '-- Select --', 'instant-images' ),
 			)
 		);
 	}

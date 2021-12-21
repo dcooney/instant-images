@@ -2,29 +2,36 @@
 	.control-nav {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: center;
-		@media screen and (max-width: $xsmall) {
+		@media screen and (max-width: $small) {
 			justify-content: center;
 		}
 		width: 100%;
-		margin: 0;
-		padding: 20px 0;
+		margin: 0 0 20px;
+		padding: 10px 0;
 		list-style: none;
+		border-bottom: 1px solid $grey;
 		&:after {
 			content: "";
 			display: table;
 			clear: both;
 		}
 		// Filters
-		&--filters{
+		&--filters-wrap {
+			flex: 1;
+			overflow-x: auto;
+			padding: 10px 0;
+			position: relative;
+			@media screen and (max-width: $small) {
+				flex: none;
+				width: 100%;
+			}
+		}
+		&--filters {
 			position: relative;
 			display: flex;
-			flex: 1;
 			align-items: center;
 			gap: 10px;
-			//display: none;
-			width: auto;
-			padding: 0 15px 0 0;
+			width: 100%;
 			&:before {
 				display: block;
 				display: none;
@@ -35,8 +42,14 @@
 				margin-right: 10px;
 			}
 			label {
-				padding: 0;
+				// padding: 10px;
+				// border: 1px solid $grey;
+				border-left: none;
+				//background-color: $lighter_grey;
 				display: block;
+				min-width: 125px;
+				padding: 0;
+				margin: 0;
 				span {
 					display: block;
 					text-transform: uppercase;
@@ -46,22 +59,52 @@
 			}
 			select {
 				text-transform: capitalize;
+				width: 100%;
+				border-color: $input;
 			}
+		}
+
+		&--spacer {
+			min-width: 15px;
+			opacity: 0;
 		}
 
 		// Search
 		&--search {
-			width: 35%;
+			display: flex;
+			align-items: center;
+			width: 30%;
+			max-width: 350px;
 			margin: 0;
 			margin-left: auto;
-			max-width: 400px;
-			@media screen and (max-width: $xsmall) {
+			padding: 0 0 0 15px;
+			position: relative;
+			&:before {
+				position: absolute;
+				z-index: 999;
+				left: -25px;
+				top: 0;
+				width: 25px;
+				height: 100%;
+				content: "";
+				display: block;
+				background: linear-gradient(
+					90deg,
+					rgba(255, 255, 255, 0) 0%,
+					rgba(255, 255, 255, 1) 100%
+				);
+			}
+			@media screen and (max-width: $small) {
 				width: 100%;
 				display: block;
 				position: static;
-				padding-bottom: 0;
+				padding: 0;
 				text-align: left;
 				max-width: 100%;
+				padding: 10px 0;
+				&:before {
+					display: none;
+				}
 			}
 			.searchResults {
 				position: absolute;
@@ -73,8 +116,8 @@
 				padding: 0 0 0 10px;
 				background: $purple;
 				border: 1px solid $purple_dark;
-				border-radius: 3px;
-				z-index: 99;
+				border-radius: 4px;
+				z-index: 9999;
 				font-size: 13px;
 				font-weight: 500;
 				transition: all 0.25s ease;
@@ -141,8 +184,9 @@
 				padding: 0 1px 0 0;
 				margin: 0;
 				position: relative;
-				height: 42px;
+				height: 40px;
 				display: block;
+				width: 100%;
 				&:hover {
 					button[type="submit"] {
 						opacity: 1;
@@ -151,19 +195,20 @@
 			}
 			input {
 				width: 100%;
-				padding: 0 10px 0 40px;
+				padding: 0 10px 0 38px;
 				border: 1px solid $input;
 				background-color: $lighter_grey !important;
-				height: 42px;
-				line-height: 42px;
-				border-radius: $radius;
-				font-size: 15px;
-				transition: all 0.2s ease;
+				height: 40px;
+				line-height: 40px;
+				//@at-root: $radius;
+				border-radius: 999px;
+				font-size: 13px;
+				transition: border 0.25s ease;
 				background-position: right 10px center;
 				background-repeat: no-repeat;
 				&:focus {
 					border-color: $text_light;
-					box-shadow: 0 0 1px 4px rgba(#000, 0.065);
+					box-shadow: 0 0 1px 5px rgba(#000, 0.025);
 				}
 				&.searching {
 					background-image: url("../img/ajax-loader.gif");
@@ -178,28 +223,26 @@
 			}
 			button[type="submit"] {
 				position: absolute;
-				left: 0;
+				left: 2px;
 				top: 0;
-				width: 42px;
-				height: 42px;
-				line-height: 42px;
+				width: 40px;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 100%;
 				z-index: 1;
 				border: none !important;
 				background: transparent !important;
 				cursor: pointer;
-				color: #666;
+				color: $text;
 				box-shadow: none !important;
 				transition: all 0.25s ease;
-				opacity: 0.65;
+				opacity: 0.75;
 				margin: 0;
 				padding: 0;
-				&:hover {
-					outline: none;
-					color: $purple;
-				}
+				font-size: 16px;
+				&:hover,
 				&:focus {
-					outline: none;
-					color: $purple;
+					opacity: 1;
 				}
 			}
 			input[type="search"]::-webkit-input-placeholder {

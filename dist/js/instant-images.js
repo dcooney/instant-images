@@ -39670,99 +39670,6 @@ exports.default = NoResults;
 
 /***/ }),
 
-/***/ "./src/js/components/Orientation.js":
-/*!******************************************!*\
-  !*** ./src/js/components/Orientation.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-
-var _API2 = _interopRequireDefault(_API);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Orientation = function (_React$Component) {
-	_inherits(Orientation, _React$Component);
-
-	function Orientation(props) {
-		_classCallCheck(this, Orientation);
-
-		var _this = _possibleConstructorReturn(this, (Orientation.__proto__ || Object.getPrototypeOf(Orientation)).call(this, props));
-
-		_this.provider = _this.props.provider;
-		_this.setOrientation = _this.props.setOrientation.bind(_this);
-		_this.options = _API2.default[_this.provider].orientation;
-		return _this;
-	}
-
-	_createClass(Orientation, [{
-		key: "render",
-		value: function render() {
-			var _this2 = this;
-
-			return _react2.default.createElement(
-				"div",
-				{ className: "orientation-list" },
-				_react2.default.createElement(
-					"span",
-					null,
-					_react2.default.createElement("i", { className: "fa fa-filter", "aria-hidden": "true" }),
-					" ",
-					instant_img_localize.orientation,
-					":"
-				),
-				_react2.default.createElement(
-					"ul",
-					null,
-					this.options && this.options.map(function (option, iterator) {
-						return _react2.default.createElement(
-							"li",
-							{
-								key: iterator + "-" + option,
-								tabIndex: "0",
-								onClick: function onClick(e) {
-									return _this2.setOrientation(option, e);
-								},
-								onKeyPress: function onKeyPress(e) {
-									return _this2.setOrientation(option, e);
-								}
-							},
-							instant_img_localize[option]
-						);
-					})
-				)
-			);
-		}
-	}]);
-
-	return Orientation;
-}(_react2.default.Component);
-
-exports.default = Orientation;
-
-/***/ }),
-
 /***/ "./src/js/components/Photo.js":
 /*!************************************!*\
   !*** ./src/js/components/Photo.js ***!
@@ -40792,10 +40699,6 @@ var _NoResults = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoR
 
 var _NoResults2 = _interopRequireDefault(_NoResults);
 
-var _Orientation = __webpack_require__(/*! ./Orientation */ "./src/js/components/Orientation.js");
-
-var _Orientation2 = _interopRequireDefault(_Orientation);
-
 var _Photo = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
 
 var _Photo2 = _interopRequireDefault(_Photo);
@@ -41108,7 +41011,10 @@ var PhotoList = function (_React$Component) {
 		}
 	}, {
 		key: "disableFilters",
-		value: function disableFilters() {}
+		value: function disableFilters() {
+			var filters = this.filterGroups.current.querySelectorAll("label");
+			console.log(filters);
+		}
 
 		/**
    * Reset search results and results view.
@@ -41641,45 +41547,54 @@ var PhotoList = function (_React$Component) {
 					this.api_provider.filters && Object.entries(this.state.filters).length && _react2.default.createElement(
 						"div",
 						{
-							className: "control-nav--filters",
+							className: "control-nav--filters-wrap",
 							ref: this.filterGroups
 						},
-						Object.entries(this.state.filters).map(function (_ref2, i) {
-							var _ref3 = _slicedToArray(_ref2, 2),
-							    key = _ref3[0],
-							    filter = _ref3[1];
+						_react2.default.createElement(
+							"div",
+							{ className: "control-nav--filters" },
+							Object.entries(this.state.filters).map(function (_ref2, i) {
+								var _ref3 = _slicedToArray(_ref2, 2),
+								    key = _ref3[0],
+								    filter = _ref3[1];
 
-							return _react2.default.createElement(
-								"label",
-								{ key: i },
-								_react2.default.createElement(
-									"span",
-									null,
-									filter.label
-								),
-								_react2.default.createElement(
-									"select",
-									{
-										onChange: function onChange(e) {
-											return _this3.filterPhotos(e);
-										},
-										"data-filter": key
-									},
-									filter.option && _react2.default.createElement(
-										"option",
-										{ value: "#" },
-										filter.option
+								return _react2.default.createElement(
+									"label",
+									{ key: i },
+									_react2.default.createElement(
+										"span",
+										null,
+										filter.label
 									),
-									filter.filters && filter.filters.map(function (item, key) {
-										return _react2.default.createElement(
+									_react2.default.createElement(
+										"select",
+										{
+											onChange: function onChange(e) {
+												return _this3.filterPhotos(e);
+											},
+											"data-filter": key
+										},
+										filter.option && _react2.default.createElement(
 											"option",
-											{ key: key, value: item },
-											item
-										);
-									})
-								)
-							);
-						})
+											{ value: "#" },
+											filter.option && filter.option === "Select" ? instant_img_localize.select : filter.option
+										),
+										filter.filters && filter.filters.map(function (item, key) {
+											return _react2.default.createElement(
+												"option",
+												{ key: key, value: item },
+												item
+											);
+										})
+									)
+								);
+							}),
+							_react2.default.createElement(
+								"div",
+								{ className: "control-nav--spacer" },
+								"-"
+							)
+						)
 					),
 					_react2.default.createElement(
 						"div",
@@ -41719,10 +41634,29 @@ var PhotoList = function (_React$Component) {
 					)
 				),
 				this.state.restapi_error && _react2.default.createElement(_ErrorMessage2.default, null),
-				this.is_search && _react2.default.createElement(_Orientation2.default, {
-					provider: this.provider,
-					setOrientation: this.setOrientation.bind(this)
-				}),
+				this.is_search && _react2.default.createElement(
+					"div",
+					{ className: "search-results-text" },
+					this.total_results + " " + instant_img_localize.search_results + "  ",
+					"'",
+					_react2.default.createElement(
+						"span",
+						null,
+						"" + this.search_term
+					),
+					"' -",
+					_react2.default.createElement(
+						"button",
+						{
+							type: "button",
+							title: instant_img_localize.clear_search,
+							onClick: function onClick() {
+								return _this3.getPhotos("latest");
+							}
+						},
+						instant_img_localize.clear_search
+					)
+				),
 				_react2.default.createElement(
 					"div",
 					{ id: "photos", className: "photo-target", ref: this.photoTarget },
@@ -41964,7 +41898,7 @@ module.exports = {
 		},
 		category: {
 			label: "Category",
-			option: "--Select--",
+			option: "Select",
 			filters: ["backgrounds", "fashion", "nature", "science", "education", "feelings", "health", "people", "religion", "places", "animals", "industry", "computer", "food", "sports", "transportation", "travel", "buildings", "business", "music"]
 		},
 		colors: {

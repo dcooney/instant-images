@@ -12,7 +12,6 @@ import ErrorMessage from "./ErrorMessage";
 import LoadingBlock from "./LoadingBlock";
 import LoadMore from "./LoadMore";
 import NoResults from "./NoResults";
-import Orientation from "./Orientation";
 import Photo from "./Photo";
 import ResultsToolTip from "./ResultsToolTip";
 import Tooltip from "./Tooltip";
@@ -305,7 +304,10 @@ class PhotoList extends React.Component {
 			});
 	}
 
-	disableFilters() {}
+	disableFilters() {
+		const filters = this.filterGroups.current.querySelectorAll("label");
+		console.log(filters);
+	}
 
 	/**
 	 * Reset search results and results view.
@@ -684,7 +686,7 @@ class PhotoList extends React.Component {
 	 */
 	hideTooltip() {
 		clearInterval(this.tooltipInterval);
-		let tooltip = this.container.querySelector("#tooltip");
+		const tooltip = this.container.querySelector("#tooltip");
 		tooltip.classList.remove("over");
 	}
 
@@ -752,32 +754,38 @@ class PhotoList extends React.Component {
 					{this.api_provider.filters &&
 						Object.entries(this.state.filters).length && (
 							<div
-								className="control-nav--filters"
+								className="control-nav--filters-wrap"
 								ref={this.filterGroups}
 							>
-								{Object.entries(this.state.filters).map(
-									([key, filter], i) => (
-										<label key={i}>
-											<span>{filter.label}</span>
-											<select
-												onChange={(e) => this.filterPhotos(e)}
-												data-filter={key}
-											>
-												{filter.option && (
-													<option value="#">
-														{filter.option}
-													</option>
-												)}
-												{filter.filters &&
-													filter.filters.map((item, key) => (
-														<option key={key} value={item}>
-															{item}
+								<div className="control-nav--filters">
+									{Object.entries(this.state.filters).map(
+										([key, filter], i) => (
+											<label key={i}>
+												<span>{filter.label}</span>
+												<select
+													onChange={(e) => this.filterPhotos(e)}
+													data-filter={key}
+												>
+													{filter.option && (
+														<option value="#">
+															{filter.option &&
+															filter.option === "Select"
+																? instant_img_localize.select
+																: filter.option}
 														</option>
-													))}
-											</select>
-										</label>
-									)
-								)}
+													)}
+													{filter.filters &&
+														filter.filters.map((item, key) => (
+															<option key={key} value={item}>
+																{item}
+															</option>
+														))}
+												</select>
+											</label>
+										)
+									)}
+									<div className="control-nav--spacer">-</div>
+								</div>
 							</div>
 						)}
 					<div
@@ -802,13 +810,7 @@ class PhotoList extends React.Component {
 								getPhotos={this.getPhotos.bind(this)}
 								isSearch={this.is_search}
 								total={this.total_results}
-								title={
-									this.total_results +
-									" " +
-									instant_img_localize.search_results +
-									" " +
-									this.search_term
-								}
+								title={`${this.total_results} ${instant_img_localize.search_results} ${this.search_term}`}
 							/>
 						</form>
 					</div>
@@ -817,10 +819,17 @@ class PhotoList extends React.Component {
 				{this.state.restapi_error && <ErrorMessage />}
 
 				{this.is_search && (
-					<Orientation
-						provider={this.provider}
-						setOrientation={this.setOrientation.bind(this)}
-					/>
+					<div className="search-results-text">
+						{`${this.total_results} ${instant_img_localize.search_results}  `}
+						'<span>{`${this.search_term}`}</span>' -
+						<button
+							type="button"
+							title={instant_img_localize.clear_search}
+							onClick={() => this.getPhotos("latest")}
+						>
+							{instant_img_localize.clear_search}
+						</button>
+					</div>
 				)}
 
 				<div id="photos" className="photo-target" ref={this.photoTarget}>
