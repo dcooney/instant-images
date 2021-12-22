@@ -2766,10 +2766,23 @@ var FocusTrap = /*#__PURE__*/function (_React$Component) {
     _this.updatePreviousElement();
 
     return _this;
-  } // TODO: Need more test coverage for this function
+  }
+  /**
+   * Gets the configured document.
+   * @returns {Document|undefined} Configured document, falling back to the main
+   *  document, if it exists. During SSR, `undefined` is returned since the
+   *  document doesn't exist.
+   */
 
 
   _createClass(FocusTrap, [{
+    key: "getDocument",
+    value: function getDocument() {
+      // SSR: careful to check if `document` exists before accessing it as a variable
+      return this.props.focusTrapOptions.document || (typeof document !== 'undefined' ? document : undefined);
+    } // TODO: Need more test coverage for this function
+
+  }, {
     key: "getNodeForOption",
     value: function getNodeForOption(optionName) {
       var optionValue = this.tailoredFocusTrapOptions[optionName];
@@ -2781,7 +2794,9 @@ var FocusTrap = /*#__PURE__*/function (_React$Component) {
       var node = optionValue;
 
       if (typeof optionValue === 'string') {
-        node = document.querySelector(optionValue);
+        var _this$getDocument;
+
+        node = (_this$getDocument = this.getDocument()) === null || _this$getDocument === void 0 ? void 0 : _this$getDocument.querySelector(optionValue);
 
         if (!node) {
           throw new Error("`".concat(optionName, "` refers to no known node"));
@@ -2809,8 +2824,7 @@ var FocusTrap = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updatePreviousElement",
     value: function updatePreviousElement() {
-      // SSR: careful to check if `document` exists before accessing it as a variable
-      var currentDocument = this.props.focusTrapOptions.document || (typeof document !== 'undefined' ? document : undefined);
+      var currentDocument = this.getDocument();
 
       if (currentDocument) {
         this.previouslyFocusedElement = currentDocument.activeElement;
@@ -2884,7 +2898,14 @@ var FocusTrap = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.setupFocusTrap();
+      if (this.props.active) {
+        this.setupFocusTrap();
+      } // else, wait for later activation in case the `focusTrapOptions` will be updated
+      //  again before the trap is activated (e.g. if waiting to know what the document
+      //  object will be, so the Trap must be rendered, but the consumer is waiting to
+      //  activate until they have obtained the document from a ref)
+      //  @see https://github.com/focus-trap/focus-trap-react/issues/539
+
     }
   }, {
     key: "componentDidUpdate",
@@ -2916,9 +2937,22 @@ var FocusTrap = /*#__PURE__*/function (_React$Component) {
         if (hasUnpaused) {
           this.focusTrap.unpause();
         }
-      } else if (prevProps.containerElements !== this.props.containerElements) {
-        this.focusTrapElements = this.props.containerElements;
-        this.setupFocusTrap();
+      } else {
+        // NOTE: if we're in `componentDidUpdate` and we don't have a trap yet,
+        //  it either means it shouldn't be active, or it should be but none of
+        //  of given `containerElements` were present in the DOM the last time
+        //  we tried to create the trap
+        if (prevProps.containerElements !== this.props.containerElements) {
+          this.focusTrapElements = this.props.containerElements;
+        } // don't create the trap unless it should be active in case the consumer
+        //  is still updating `focusTrapOptions`
+        //  @see https://github.com/focus-trap/focus-trap-react/issues/539
+
+
+        if (this.props.active) {
+          this.updatePreviousElement();
+          this.setupFocusTrap();
+        }
       }
     }
   }, {
