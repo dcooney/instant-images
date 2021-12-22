@@ -1,22 +1,22 @@
 module.exports = {
 	unsplash: {
 		order: {
-			label: "Order",
+			label: "orderby",
 			filters: ["latest", "oldest", "popular"],
 		},
 	},
 	pixabay: {
 		order: {
-			label: "Order",
+			label: "orderby",
 			filters: ["latest", "popular"],
 		},
 		image_type: {
-			label: "Type",
+			label: "type",
 			filters: ["all", "photo", "illustration", "vector"],
 		},
 		category: {
-			label: "Category",
-			option: "Select",
+			label: "category",
+			option: "select",
 			filters: [
 				"backgrounds",
 				"fashion",
@@ -41,8 +41,8 @@ module.exports = {
 			],
 		},
 		colors: {
-			label: "Colors",
-			option: "--Select--",
+			label: "colors",
+			option: "select",
 			filters: [
 				"grayscale",
 				"transparent",
@@ -61,7 +61,7 @@ module.exports = {
 			],
 		},
 		orientation: {
-			label: "Orientation",
+			label: "orientation",
 			filters: ["all", "horizontal", "vertical"],
 		},
 	},

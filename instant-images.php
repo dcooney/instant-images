@@ -262,7 +262,14 @@ class InstantImages {
 				'api_invalid_msg'         => __( 'API key entered is not valid - try again.', 'instant-images' ),
 				'api_ratelimit_msg'       => __( 'Your daily or hourly API rate limit has been exceeded. Try again later.', 'instant-images' ),
 				'get_api_key'             => __( 'Get API Key Now', 'instant-images' ),
-				'select'                  => __( '-- Select --', 'instant-images' ),
+				'filters'                 => array(
+					'select'      => __( '-- Select --', 'instant-images' ),
+					'orderby'     => __( 'Order By:', 'instant-images' ),
+					'type'        => __( 'Type:', 'instant-images' ),
+					'category'    => __( 'Category:', 'instant-images' ),
+					'colors'      => __( 'Colors:', 'instant-images' ),
+					'orientation' => __( 'Orientation:', 'instant-images' ),
+				),
 			)
 		);
 	}

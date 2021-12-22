@@ -39296,7 +39296,7 @@ var PhotoList = function (_React$Component) {
 		// Get current provider settings.
 		var _this = _possibleConstructorReturn(this, (PhotoList.__proto__ || Object.getPrototypeOf(PhotoList)).call(this, props));
 
-		_this.providers = ["Unsplash", "Pixabay"];
+		_this.providers = ["Unsplash", "Pixabay", "Pexels"];
 		_this.provider = _this.props.provider; // Unsplash, Pixabay, etc.
 		_this.api_provider = _API2.default[_this.provider]; // The API settings for the provider.
 		_this.arr_key = _this.api_provider.arr_key;
@@ -40126,7 +40126,7 @@ var PhotoList = function (_React$Component) {
 									_react2.default.createElement(
 										"span",
 										null,
-										filter.label
+										instant_img_localize.filters[filter.label]
 									),
 									_react2.default.createElement(
 										"select",
@@ -40139,7 +40139,7 @@ var PhotoList = function (_React$Component) {
 										filter.option && _react2.default.createElement(
 											"option",
 											{ value: "#" },
-											filter.option && filter.option === "Select" ? instant_img_localize.select : filter.option
+											filter.option && filter.option === "select" ? instant_img_localize.filters.select : filter.option
 										),
 										filter.filters && filter.filters.map(function (item, key) {
 											return _react2.default.createElement(
@@ -40431,6 +40431,19 @@ module.exports = {
 		order_key: "order",
 		order: ["latest", "popular"],
 		orientation: ["horizontal", "vertical"]
+	},
+	pexels: {
+		requires_key: true,
+		new: false,
+		filters: true,
+		api_query_var: "/?key=",
+		photo_api: "https://pixabay.com/api",
+		search_api: "https://pixabay.com/api",
+		search_query_var: "q",
+		arr_key: "hits",
+		order_key: "order",
+		order: ["latest", "popular"],
+		orientation: ["horizontal", "vertical"]
 	}
 };
 
@@ -40449,31 +40462,31 @@ module.exports = {
 module.exports = {
 	unsplash: {
 		order: {
-			label: "Order",
+			label: "orderby",
 			filters: ["latest", "oldest", "popular"]
 		}
 	},
 	pixabay: {
 		order: {
-			label: "Order",
+			label: "orderby",
 			filters: ["latest", "popular"]
 		},
 		image_type: {
-			label: "Type",
+			label: "type",
 			filters: ["all", "photo", "illustration", "vector"]
 		},
 		category: {
-			label: "Category",
-			option: "Select",
+			label: "category",
+			option: "select",
 			filters: ["backgrounds", "fashion", "nature", "science", "education", "feelings", "health", "people", "religion", "places", "animals", "industry", "computer", "food", "sports", "transportation", "travel", "buildings", "business", "music"]
 		},
 		colors: {
-			label: "Colors",
-			option: "--Select--",
+			label: "colors",
+			option: "select",
 			filters: ["grayscale", "transparent", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown"]
 		},
 		orientation: {
-			label: "Orientation",
+			label: "orientation",
 			filters: ["all", "horizontal", "vertical"]
 		}
 	}

@@ -31,7 +31,9 @@
 		position: relative;
 	}
 	&--btn {
-		padding: 10px 10px 10px 36px;
+		padding: 0 10px 0 36px;
+		height: $el_height;
+		line-height: $el_height;
 		border: 1px solid transparent;
 		background: transparent;
 		margin-right: 5px;

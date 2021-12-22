@@ -487,7 +487,7 @@ body.media_page_instant-images.overflow-hidden {
       -ms-flex: 1;
           flex: 1;
   overflow-x: auto;
-  padding: 10px 0;
+  padding: 10px 0 5px;
   position: relative;
 }
 
@@ -510,6 +510,12 @@ body.media_page_instant-images.overflow-hidden {
           align-items: center;
   gap: 10px;
   width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .instant-img-container .control-nav--filters {
+    gap: 15px;
+  }
 }
 
 .instant-img-container .control-nav--filters:before {
@@ -550,7 +556,10 @@ body.media_page_instant-images.overflow-hidden {
   border-color: #ccc;
   color: #333;
   background-color: #f7f7f7;
-  min-height: 36px;
+  min-height: 38px;
+  line-height: 38px;
+  font-size: 14px;
+  padding: 0 24px 0 8px;
 }
 
 .instant-img-container .control-nav--filters select[disabled] {
@@ -568,18 +577,21 @@ body.media_page_instant-images.overflow-hidden {
   opacity: 0;
 }
 
+@media screen and (max-width: 800px) {
+  .instant-img-container .control-nav--spacer {
+    display: none;
+  }
+}
+
 .instant-img-container .control-nav--search {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   width: 35%;
   max-width: 350px;
   margin: 0;
   margin-left: auto;
-  padding: 0 0 0 20px;
+  padding: 29px 0 0 20px;
   position: relative;
 }
 
@@ -730,7 +742,7 @@ body.media_page_instant-images.overflow-hidden {
   line-height: 38px;
   -webkit-border-radius: 999px;
           border-radius: 999px;
-  font-size: 13px;
+  font-size: 14px;
   -webkit-transition: border 0.25s ease;
   -o-transition: border 0.25s ease;
   transition: border 0.25s ease;
@@ -788,24 +800,28 @@ body.media_page_instant-images.overflow-hidden {
   color: #ccc;
   font-weight: 400;
   font-style: normal;
+  font-size: 14px;
 }
 
 .instant-img-container .control-nav--search input[type="search"]:-moz-placeholder {
   color: #ccc;
   font-weight: 400;
   font-style: normal;
+  font-size: 14px;
 }
 
 .instant-img-container .control-nav--search input[type="search"]::-moz-placeholder {
   color: #ccc;
   font-weight: 400;
   font-style: normal;
+  font-size: 14px;
 }
 
 .instant-img-container .control-nav--search input[type="search"]:-ms-input-placeholder {
   color: #ccc;
   font-weight: 400;
   font-style: normal;
+  font-size: 14px;
 }
 
 #photos {
@@ -2143,7 +2159,9 @@ body.loading .instant-img-container .loading-block {
 }
 
 .provider-nav--btn {
-  padding: 10px 10px 10px 36px;
+  padding: 0 10px 0 36px;
+  height: 38px;
+  line-height: 38px;
   border: 1px solid transparent;
   background: transparent;
   margin-right: 5px;

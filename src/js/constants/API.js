@@ -31,4 +31,17 @@ module.exports = {
 		order: ["latest", "popular"],
 		orientation: ["horizontal", "vertical"],
 	},
+	pexels: {
+		requires_key: true,
+		new: false,
+		filters: true,
+		api_query_var: "/?key=",
+		photo_api: "https://pixabay.com/api",
+		search_api: "https://pixabay.com/api",
+		search_query_var: "q",
+		arr_key: "hits",
+		order_key: "order",
+		order: ["latest", "popular"],
+		orientation: ["horizontal", "vertical"],
+	},
 };
