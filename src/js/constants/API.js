@@ -14,8 +14,6 @@ module.exports = {
 		search_api: "https://api.unsplash.com/search/photos",
 		search_query_var: "query",
 		arr_key: "results",
-		order_key: "order_by",
-		order: ["latest", "popular", "oldest"],
 		orientation: ["landscape", "portrait", "squarish"],
 	},
 	pixabay: {
@@ -27,8 +25,6 @@ module.exports = {
 		search_api: "https://pixabay.com/api",
 		search_query_var: "q",
 		arr_key: "hits",
-		order_key: "order",
-		order: ["latest", "popular"],
 		orientation: ["horizontal", "vertical"],
 	},
 };

@@ -70,8 +70,8 @@
 				border-color: $input;
 				color: $text;
 				background-color: $lighter_grey;
-				min-height: $el_height;
-				line-height: $el_height;
+				min-height: 36px;
+				line-height: 36px;
 				font-size: 14px;
 				padding: 0 24px 0 8px;
 				&[disabled] {
@@ -149,7 +149,6 @@
 				align-items: center;
 				span {
 					cursor: help;
-					font-style: italic;
 				}
 				button {
 					cursor: pointer;

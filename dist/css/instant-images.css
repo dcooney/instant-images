@@ -556,8 +556,8 @@ body.media_page_instant-images.overflow-hidden {
   border-color: #ccc;
   color: #333;
   background-color: #f7f7f7;
-  min-height: 38px;
-  line-height: 38px;
+  min-height: 36px;
+  line-height: 36px;
   font-size: 14px;
   padding: 0 24px 0 8px;
 }
@@ -656,7 +656,6 @@ body.media_page_instant-images.overflow-hidden {
 
 .instant-img-container .control-nav--search .searchResults span {
   cursor: help;
-  font-style: italic;
 }
 
 .instant-img-container .control-nav--search .searchResults button {
@@ -2528,7 +2527,7 @@ div.search-results-text {
 
 div.search-results-text span.search-results-term {
   color: #333;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 div.search-results-text button {

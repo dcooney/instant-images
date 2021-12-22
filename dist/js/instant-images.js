@@ -39517,6 +39517,93 @@ exports.default = ErrorMessage;
 
 /***/ }),
 
+/***/ "./src/js/components/Filter.js":
+/*!*************************************!*\
+  !*** ./src/js/components/Filter.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Filter = function (_React$Component) {
+	_inherits(Filter, _React$Component);
+
+	function Filter(props) {
+		_classCallCheck(this, Filter);
+
+		var _this = _possibleConstructorReturn(this, (Filter.__proto__ || Object.getPrototypeOf(Filter)).call(this, props));
+
+		_this.data = _this.props.data;
+		_this.filterKey = _this.props.filterKey;
+		_this.function = _this.props.function.bind(_this);
+		return _this;
+	}
+
+	_createClass(Filter, [{
+		key: "render",
+		value: function render() {
+			var _this2 = this;
+
+			return _react2.default.createElement(
+				"label",
+				null,
+				_react2.default.createElement(
+					"span",
+					null,
+					instant_img_localize.filters[this.data.label]
+				),
+				_react2.default.createElement(
+					"select",
+					{
+						onChange: function onChange(e) {
+							return _this2.function(e);
+						},
+						"data-filter": this.filterKey
+					},
+					this.data.option && _react2.default.createElement(
+						"option",
+						{ value: "#" },
+						this.data.option && this.data.option === "select" ? instant_img_localize.filters.select : this.data.option
+					),
+					this.data.filters && this.data.filters.map(function (item, key) {
+						return _react2.default.createElement(
+							"option",
+							{ key: key, value: item },
+							item
+						);
+					})
+				)
+			);
+		}
+	}]);
+
+	return Filter;
+}(_react2.default.Component);
+
+exports.default = Filter;
+
+/***/ }),
+
 /***/ "./src/js/components/LoadMore.js":
 /*!***************************************!*\
   !*** ./src/js/components/LoadMore.js ***!
@@ -40721,6 +40808,10 @@ var _ErrorMessage = __webpack_require__(/*! ./ErrorMessage */ "./src/js/componen
 
 var _ErrorMessage2 = _interopRequireDefault(_ErrorMessage);
 
+var _Filter = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
+
+var _Filter2 = _interopRequireDefault(_Filter);
+
 var _LoadingBlock = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
 
 var _LoadingBlock2 = _interopRequireDefault(_LoadingBlock);
@@ -40749,8 +40840,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -40772,7 +40861,6 @@ var PhotoList = function (_React$Component) {
 		_this.provider = _this.props.provider; // Unsplash, Pixabay, etc.
 		_this.api_provider = _API2.default[_this.provider]; // The API settings for the provider.
 		_this.arr_key = _this.api_provider.arr_key;
-		_this.order_key = _this.api_provider.order_key;
 
 		// API Vars.
 		_this.api_key = instant_img_localize[_this.provider + "_app_id"];
@@ -40783,12 +40871,15 @@ var PhotoList = function (_React$Component) {
 		_this.results = (0, _getResults2.default)(_this.provider, _this.arr_key, _this.props.results);
 		_this.state = {
 			results: _this.results,
-			filters: _filters2.default[_this.provider],
+			filters: _filters2.default[_this.provider].filters,
+			search_filters: _filters2.default[_this.provider].search,
 			restapi_error: false,
 			api_lightbox: false
 		};
 
 		_this.filters = {};
+		_this.search_filters = {};
+
 		_this.orderby = _this.props.orderby; // Orderby
 		_this.page = _this.props.page; // Page
 
@@ -40796,7 +40887,6 @@ var PhotoList = function (_React$Component) {
 		_this.search_term = "";
 		_this.total_results = 0;
 		_this.view = "";
-		_this.orientation = "";
 		_this.isLoading = false; // Loading flag.
 		_this.isDone = false; // Done flag.
 		_this.errorMsg = "";
@@ -40893,69 +40983,6 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * Orientation filter - availlable during a search only.
-   *
-   * @param {string} orientation The orientation of the photos.
-   * @param {MouseEvent} event The dispatched orientation setter event.
-   * @since 4.2
-   */
-
-	}, {
-		key: "setOrientation",
-		value: function setOrientation(orientation, event) {
-			if (event && event.target) {
-				var target = event.target;
-
-				if (target.classList.contains("active")) {
-					// Clear orientation
-					target.classList.remove("active");
-					this.orientation = "";
-				} else {
-					// Set orientation
-					var siblings = target.parentNode.querySelectorAll("li");
-					[].concat(_toConsumableArray(siblings)).forEach(function (el) {
-						return el.classList.remove("active");
-					}); // remove active classes
-
-					target.classList.add("active");
-					this.orientation = orientation;
-				}
-
-				if (this.search_term !== "") {
-					this.doSearch(this.search_term);
-				}
-			}
-		}
-
-		/**
-   * Is their an orientation set.
-   *
-   * @since 4.2
-   */
-
-	}, {
-		key: "hasOrientation",
-		value: function hasOrientation() {
-			return this.orientation === "" ? false : true;
-		}
-
-		/**
-   * Clear the orientation.
-   *
-   * @since 4.2
-   */
-
-	}, {
-		key: "clearOrientation",
-		value: function clearOrientation() {
-			var items = this.container.querySelectorAll(".orientation-list li");
-			[].concat(_toConsumableArray(items)).forEach(function (el) {
-				return el.classList.remove("active");
-			}); // remove active classes
-			this.orientation = "";
-		}
-
-		/**
    * Run the search.
    *
    * @param {string} term The search term.
@@ -40974,20 +41001,18 @@ var PhotoList = function (_React$Component) {
 
 			var url = this.search_api_url + "&page=" + this.page + "&" + this.api_provider.search_query_var + "=" + this.search_term + (0, _contentSafety2.default)(this.provider);
 
-			if (this.hasOrientation()) {
-				// Set orientation
-				url = url + "&orientation=" + this.orientation;
-			}
-
 			// Search by ID.
 			// Allow users to search by photo by prepending id:{photo_id} to search terms.
 			var search_type = term.substring(0, 3);
-
 			if (search_type === "id:") {
 				type = "id";
 				term = term.replace("id:", "");
 				url = (0, _searchByID2.default)(this.provider, term, this.api_provider.photo_api, this.api_provider.api_query_var, this.api_key);
 			}
+
+			// Get search filters.
+			var filters = (0, _createQS2.default)(this.search_filters);
+			url = filters !== "&" ? "" + url + filters : url;
 
 			fetch(url).then(function (data) {
 				return data.json();
@@ -41002,7 +41027,9 @@ var PhotoList = function (_React$Component) {
 
 					// Update Props.
 					self.results = results;
-					self.setState({ results: self.results });
+					self.setState({
+						results: self.results
+					});
 				}
 
 				// Search by ID.
@@ -41046,24 +41073,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * Disable all filters.
-   */
-
-	}, {
-		key: "toggleFilters",
-		value: function toggleFilters() {
-			var _this2 = this;
-
-			var filters = this.filterGroups.current.querySelectorAll("select");
-			if (filters) {
-				filters.forEach(function (select) {
-					select.disabled = _this2.is_search ? true : false;
-				});
-			}
-		}
-
-		/**
-   * Reset search results and results view.
+   * Reset search results, settings and results view.
    *
    * @since 3.0
    */
@@ -41071,11 +41081,11 @@ var PhotoList = function (_React$Component) {
 	}, {
 		key: "clearSearch",
 		value: function clearSearch() {
-			var input = this.photoSearch.current;
-			input.value = "";
+			this.photoSearch.current.value = "";
 			this.total_results = 0;
 			this.is_search = false;
 			this.search_term = "";
+			this.search_filters = {}; // Reset search filters.
 			this.toggleFilters(); // Re-enable filters.
 		}
 
@@ -41129,7 +41139,7 @@ var PhotoList = function (_React$Component) {
 			var filters = (0, _createQS2.default)(this.filters);
 
 			// Build URL.
-			var url = this.api_url + "&page=" + this.page + "&" + this.order_key + "=" + this.orderby + (0, _contentSafety2.default)(this.provider) + filters;
+			var url = this.api_url + "&page=" + this.page + "&" + (0, _contentSafety2.default)(this.provider) + filters;
 
 			fetch(url).then(function (data) {
 				return data.json();
@@ -41150,7 +41160,7 @@ var PhotoList = function (_React$Component) {
 				} else {
 					self.setState({
 						results: results,
-						filters: _filters2.default[self.provider]
+						filters: _filters2.default[self.provider].filters
 					});
 				}
 
@@ -41180,19 +41190,15 @@ var PhotoList = function (_React$Component) {
 			this.container.classList.add("loading");
 			this.isLoading = true;
 
-			var url = this.api_url + "&page=" + this.page + "&" + this.order_key + "=" + this.orderby;
+			var url = this.api_url + "&page=" + this.page + "&";
+			var filters = "";
 
 			if (this.is_search) {
 				url = this.search_api_url + "&page=" + this.page + "&" + this.api_provider.search_query_var + "=" + this.search_term;
-
-				if (this.hasOrientation()) {
-					// Set orientation
-					url = url + "&orientation=" + this.orientation;
-				}
+				filters = (0, _createQS2.default)(this.search_filters);
+			} else {
+				filters = (0, _createQS2.default)(this.filters);
 			}
-
-			// Get filters.
-			var filters = (0, _createQS2.default)(this.filters);
 
 			// Build URL
 			url = filters ? "" + url + (0, _contentSafety2.default)(this.provider) + filters : url;
@@ -41242,6 +41248,42 @@ var PhotoList = function (_React$Component) {
 				this.filters[filter] = value;
 			}
 			this.getPhotos(this.view, true);
+		}
+
+		/**
+   * Filter the search results.
+   *
+   * @param {Event} e The dispatched change event.
+   */
+
+	}, {
+		key: "filterSearch",
+		value: function filterSearch(e) {
+			var value = e.target.value;
+			var filter = e.target.dataset.filter;
+			if (this.search_filters[filter] && value === "#" || value === "") {
+				delete this.search_filters[filter];
+			} else {
+				this.search_filters[filter] = value;
+			}
+			this.doSearch(this.search_term);
+		}
+
+		/**
+   * Toggle the active state of all filters.
+   */
+
+	}, {
+		key: "toggleFilters",
+		value: function toggleFilters() {
+			var _this2 = this;
+
+			var filters = this.filterGroups.current.querySelectorAll("select");
+			if (filters) {
+				filters.forEach(function (select) {
+					select.disabled = _this2.is_search ? true : false;
+				});
+			}
 		}
 
 		/**
@@ -41339,6 +41381,7 @@ var PhotoList = function (_React$Component) {
 
 								// Clear filters.
 								this.filters = {};
+								this.search_filters = {};
 
 								// Remove active from buttons.
 								this.providerNav.current.querySelectorAll("button").forEach(function (button) {
@@ -41350,7 +41393,6 @@ var PhotoList = function (_React$Component) {
 
 								// Set current provider params.
 								this.arr_key = this.api_provider.arr_key;
-								this.order_key = this.api_provider.order_key;
 								this.api_key = instant_img_localize[this.provider + "_app_id"];
 
 								this.api_url = "" + this.api_provider.photo_api + this.api_provider.api_query_var + this.api_key + _API2.default.defaults.posts_per_page;
@@ -41578,13 +41620,13 @@ var PhotoList = function (_React$Component) {
 				_react2.default.createElement(
 					"div",
 					{ className: "control-nav", ref: this.controlNav },
-					this.api_provider.filters && Object.entries(this.state.filters).length && _react2.default.createElement(
+					_react2.default.createElement(
 						"div",
 						{
 							className: "control-nav--filters-wrap",
 							ref: this.filterGroups
 						},
-						_react2.default.createElement(
+						Object.entries(this.state.filters).length && _react2.default.createElement(
 							"div",
 							{ className: "control-nav--filters" },
 							Object.entries(this.state.filters).map(function (_ref2, i) {
@@ -41592,36 +41634,12 @@ var PhotoList = function (_React$Component) {
 								    key = _ref3[0],
 								    filter = _ref3[1];
 
-								return _react2.default.createElement(
-									"label",
-									{ key: i },
-									_react2.default.createElement(
-										"span",
-										null,
-										instant_img_localize.filters[filter.label]
-									),
-									_react2.default.createElement(
-										"select",
-										{
-											onChange: function onChange(e) {
-												return _this4.filterPhotos(e);
-											},
-											"data-filter": key
-										},
-										filter.option && _react2.default.createElement(
-											"option",
-											{ value: "#" },
-											filter.option && filter.option === "select" ? instant_img_localize.filters.select : filter.option
-										),
-										filter.filters && filter.filters.map(function (item, key) {
-											return _react2.default.createElement(
-												"option",
-												{ key: key, value: item },
-												item
-											);
-										})
-									)
-								);
+								return _react2.default.createElement(_Filter2.default, {
+									key: key + "-" + i,
+									filterKey: key,
+									data: filter,
+									"function": _this4.filterPhotos.bind(_this4)
+								});
 							}),
 							_react2.default.createElement(
 								"div",
@@ -41670,28 +41688,55 @@ var PhotoList = function (_React$Component) {
 				this.state.restapi_error && _react2.default.createElement(_ErrorMessage2.default, null),
 				this.is_search && _react2.default.createElement(
 					"div",
-					{ className: "search-results-text" },
-					this.total_results + " " + instant_img_localize.search_results + "  ",
+					null,
 					_react2.default.createElement(
-						"span",
-						{ className: "search-results-term" },
-						"" + this.search_term
-					),
-					_react2.default.createElement(
-						"span",
-						{ className: "search-results-clear" },
-						" ",
-						"-",
+						"div",
+						{ className: "search-results-text" },
+						this.total_results + " " + instant_img_localize.search_results + "  ",
+						"'",
 						_react2.default.createElement(
-							"button",
-							{
-								type: "button",
-								title: instant_img_localize.clear_search,
-								onClick: function onClick() {
-									return _this4.getPhotos("latest");
-								}
-							},
-							instant_img_localize.clear_search
+							"span",
+							{ className: "search-results-term" },
+							"" + this.search_term
+						),
+						"'",
+						_react2.default.createElement(
+							"span",
+							{ className: "search-results-clear" },
+							" ",
+							"-",
+							_react2.default.createElement(
+								"button",
+								{
+									type: "button",
+									title: instant_img_localize.clear_search,
+									onClick: function onClick() {
+										return _this4.getPhotos("latest");
+									}
+								},
+								instant_img_localize.clear_search
+							)
+						)
+					),
+					Object.entries(this.state.search_filters).length && _react2.default.createElement(
+						"div",
+						{ className: "search--filters" },
+						Object.entries(this.state.search_filters).map(function (_ref4, i) {
+							var _ref5 = _slicedToArray(_ref4, 2),
+							    key = _ref5[0],
+							    filter = _ref5[1];
+
+							return _react2.default.createElement(_Filter2.default, {
+								key: key + "-" + i,
+								filterKey: key,
+								data: filter,
+								"function": _this4.filterSearch.bind(_this4)
+							});
+						}),
+						_react2.default.createElement(
+							"div",
+							{ className: "control-nav--spacer" },
+							"-"
 						)
 					)
 				),
@@ -41887,8 +41932,6 @@ module.exports = {
 		search_api: "https://api.unsplash.com/search/photos",
 		search_query_var: "query",
 		arr_key: "results",
-		order_key: "order_by",
-		order: ["latest", "popular", "oldest"],
 		orientation: ["landscape", "portrait", "squarish"]
 	},
 	pixabay: {
@@ -41900,8 +41943,6 @@ module.exports = {
 		search_api: "https://pixabay.com/api",
 		search_query_var: "q",
 		arr_key: "hits",
-		order_key: "order",
-		order: ["latest", "popular"],
 		orientation: ["horizontal", "vertical"]
 	}
 };
@@ -41920,33 +41961,53 @@ module.exports = {
 
 module.exports = {
 	unsplash: {
-		order: {
-			label: "orderby",
-			filters: ["latest", "oldest", "popular"]
+		filters: {
+			order_by: {
+				label: "orderby",
+				filters: ["latest", "oldest", "popular"]
+			}
+		},
+		search: {
+			order_by: {
+				label: "orderby",
+				filters: ["relevance", "latest"]
+			},
+			orientation: {
+				label: "orientation",
+				option: "select",
+				filters: ["landscape", "portrait", "squarish"]
+			},
+			color: {
+				label: "colors",
+				option: "select",
+				filters: ["black_and_white", "black", "white", "yellow", "orange", "red", "purple", "magenta", "green", "teal", "blue"]
+			}
 		}
 	},
 	pixabay: {
-		order: {
-			label: "orderby",
-			filters: ["latest", "popular"]
-		},
-		image_type: {
-			label: "type",
-			filters: ["all", "photo", "illustration", "vector"]
-		},
-		category: {
-			label: "category",
-			option: "select",
-			filters: ["backgrounds", "fashion", "nature", "science", "education", "feelings", "health", "people", "religion", "places", "animals", "industry", "computer", "food", "sports", "transportation", "travel", "buildings", "business", "music"]
-		},
-		colors: {
-			label: "colors",
-			option: "select",
-			filters: ["grayscale", "transparent", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown"]
-		},
-		orientation: {
-			label: "orientation",
-			filters: ["all", "horizontal", "vertical"]
+		filters: {
+			order: {
+				label: "orderby",
+				filters: ["latest", "popular"]
+			},
+			image_type: {
+				label: "type",
+				filters: ["all", "photo", "illustration", "vector"]
+			},
+			category: {
+				label: "category",
+				option: "select",
+				filters: ["backgrounds", "fashion", "nature", "science", "education", "feelings", "health", "people", "religion", "places", "animals", "industry", "computer", "food", "sports", "transportation", "travel", "buildings", "business", "music"]
+			},
+			colors: {
+				label: "colors",
+				option: "select",
+				filters: ["grayscale", "transparent", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown"]
+			},
+			orientation: {
+				label: "orientation",
+				filters: ["all", "horizontal", "vertical"]
+			}
 		}
 	}
 };
@@ -42636,7 +42697,7 @@ function GetPhotos() {
 
 	// API URL.
 	var start = "" + _API2.default[provider].photo_api + _API2.default[provider].api_query_var + api_key + (0, _contentSafety2.default)(provider);
-	var url = "" + start + _API2.default.defaults.posts_per_page + "&page=" + page + "&" + _API2.default[provider].order_key + "=" + orderby;
+	var url = "" + start + _API2.default.defaults.posts_per_page + "&page=" + page;
 
 	function initialize() {
 		// Get Data from API

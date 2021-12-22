@@ -9,6 +9,7 @@ import getResults, { getResultById } from "../functions/getResults";
 import searchByID from "../functions/searchByID";
 import APILightbox from "./APILightbox";
 import ErrorMessage from "./ErrorMessage";
+import Filter from "./Filter";
 import LoadingBlock from "./LoadingBlock";
 import LoadMore from "./LoadMore";
 import NoResults from "./NoResults";
@@ -26,7 +27,6 @@ class PhotoList extends React.Component {
 		this.provider = this.props.provider; // Unsplash, Pixabay, etc.
 		this.api_provider = API[this.provider]; // The API settings for the provider.
 		this.arr_key = this.api_provider.arr_key;
-		this.order_key = this.api_provider.order_key;
 
 		// API Vars.
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
@@ -41,12 +41,15 @@ class PhotoList extends React.Component {
 		);
 		this.state = {
 			results: this.results,
-			filters: FILTERS[this.provider],
+			filters: FILTERS[this.provider].filters,
+			search_filters: FILTERS[this.provider].search,
 			restapi_error: false,
 			api_lightbox: false,
 		};
 
 		this.filters = {};
+		this.search_filters = {};
+
 		this.orderby = this.props.orderby; // Orderby
 		this.page = this.props.page; // Page
 
@@ -54,7 +57,6 @@ class PhotoList extends React.Component {
 		this.search_term = "";
 		this.total_results = 0;
 		this.view = "";
-		this.orientation = "";
 		this.isLoading = false; // Loading flag.
 		this.isDone = false; // Done flag.
 		this.errorMsg = "";
@@ -150,56 +152,6 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * Orientation filter - availlable during a search only.
-	 *
-	 * @param {string} orientation The orientation of the photos.
-	 * @param {MouseEvent} event The dispatched orientation setter event.
-	 * @since 4.2
-	 */
-	setOrientation(orientation, event) {
-		if (event && event.target) {
-			let target = event.target;
-
-			if (target.classList.contains("active")) {
-				// Clear orientation
-				target.classList.remove("active");
-				this.orientation = "";
-			} else {
-				// Set orientation
-				let siblings = target.parentNode.querySelectorAll("li");
-				[...siblings].forEach((el) => el.classList.remove("active")); // remove active classes
-
-				target.classList.add("active");
-				this.orientation = orientation;
-			}
-
-			if (this.search_term !== "") {
-				this.doSearch(this.search_term);
-			}
-		}
-	}
-
-	/**
-	 * Is their an orientation set.
-	 *
-	 * @since 4.2
-	 */
-	hasOrientation() {
-		return this.orientation === "" ? false : true;
-	}
-
-	/**
-	 * Clear the orientation.
-	 *
-	 * @since 4.2
-	 */
-	clearOrientation() {
-		const items = this.container.querySelectorAll(".orientation-list li");
-		[...items].forEach((el) => el.classList.remove("active")); // remove active classes
-		this.orientation = "";
-	}
-
-	/**
 	 * Run the search.
 	 *
 	 * @param {string} term The search term.
@@ -217,15 +169,9 @@ class PhotoList extends React.Component {
 			this.api_provider.search_query_var
 		}=${this.search_term}${contentSafety(this.provider)}`;
 
-		if (this.hasOrientation()) {
-			// Set orientation
-			url = `${url}&orientation=${this.orientation}`;
-		}
-
 		// Search by ID.
 		// Allow users to search by photo by prepending id:{photo_id} to search terms.
 		const search_type = term.substring(0, 3);
-
 		if (search_type === "id:") {
 			type = "id";
 			term = term.replace("id:", "");
@@ -237,6 +183,10 @@ class PhotoList extends React.Component {
 				this.api_key
 			);
 		}
+
+		// Get search filters.
+		const filters = createQS(this.search_filters);
+		url = filters !== "&" ? `${url}${filters}` : url;
 
 		fetch(url)
 			.then((data) => data.json())
@@ -256,7 +206,9 @@ class PhotoList extends React.Component {
 
 					// Update Props.
 					self.results = results;
-					self.setState({ results: self.results });
+					self.setState({
+						results: self.results,
+					});
 				}
 
 				// Search by ID.
@@ -306,28 +258,16 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * Disable all filters.
-	 */
-	toggleFilters() {
-		const filters = this.filterGroups.current.querySelectorAll("select");
-		if (filters) {
-			filters.forEach((select) => {
-				select.disabled = this.is_search ? true : false;
-			});
-		}
-	}
-
-	/**
-	 * Reset search results and results view.
+	 * Reset search results, settings and results view.
 	 *
 	 * @since 3.0
 	 */
 	clearSearch() {
-		const input = this.photoSearch.current;
-		input.value = "";
+		this.photoSearch.current.value = "";
 		this.total_results = 0;
 		this.is_search = false;
 		this.search_term = "";
+		this.search_filters = {}; // Reset search filters.
 		this.toggleFilters(); // Re-enable filters.
 	}
 
@@ -372,9 +312,9 @@ class PhotoList extends React.Component {
 		const filters = createQS(this.filters);
 
 		// Build URL.
-		const url = `${this.api_url}&page=${this.page}&${this.order_key}=${
-			this.orderby
-		}${contentSafety(this.provider)}${filters}`;
+		const url = `${this.api_url}&page=${this.page}&${contentSafety(
+			this.provider
+		)}${filters}`;
 
 		fetch(url)
 			.then((data) => data.json())
@@ -395,7 +335,7 @@ class PhotoList extends React.Component {
 				} else {
 					self.setState({
 						results: results,
-						filters: FILTERS[self.provider],
+						filters: FILTERS[self.provider].filters,
 					});
 				}
 
@@ -423,19 +363,15 @@ class PhotoList extends React.Component {
 		this.container.classList.add("loading");
 		this.isLoading = true;
 
-		let url = `${this.api_url}&page=${this.page}&${this.order_key}=${this.orderby}`;
+		let url = `${this.api_url}&page=${this.page}&`;
+		let filters = "";
 
 		if (this.is_search) {
 			url = `${this.search_api_url}&page=${this.page}&${this.api_provider.search_query_var}=${this.search_term}`;
-
-			if (this.hasOrientation()) {
-				// Set orientation
-				url = `${url}&orientation=${this.orientation}`;
-			}
+			filters = createQS(this.search_filters);
+		} else {
+			filters = createQS(this.filters);
 		}
-
-		// Get filters.
-		const filters = createQS(this.filters);
 
 		// Build URL
 		url = filters ? `${url}${contentSafety(this.provider)}${filters}` : url;
@@ -489,6 +425,34 @@ class PhotoList extends React.Component {
 			this.filters[filter] = value;
 		}
 		this.getPhotos(this.view, true);
+	}
+
+	/**
+	 * Filter the search results.
+	 *
+	 * @param {Event} e The dispatched change event.
+	 */
+	filterSearch(e) {
+		const value = e.target.value;
+		const filter = e.target.dataset.filter;
+		if ((this.search_filters[filter] && value === "#") || value === "") {
+			delete this.search_filters[filter];
+		} else {
+			this.search_filters[filter] = value;
+		}
+		this.doSearch(this.search_term);
+	}
+
+	/**
+	 * Toggle the active state of all filters.
+	 */
+	toggleFilters() {
+		const filters = this.filterGroups.current.querySelectorAll("select");
+		if (filters) {
+			filters.forEach((select) => {
+				select.disabled = this.is_search ? true : false;
+			});
+		}
 	}
 
 	/**
@@ -561,6 +525,7 @@ class PhotoList extends React.Component {
 
 		// Clear filters.
 		this.filters = {};
+		this.search_filters = {};
 
 		// Remove active from buttons.
 		this.providerNav.current.querySelectorAll("button").forEach((button) => {
@@ -572,7 +537,6 @@ class PhotoList extends React.Component {
 
 		// Set current provider params.
 		this.arr_key = this.api_provider.arr_key;
-		this.order_key = this.api_provider.order_key;
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 
 		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
@@ -750,50 +714,26 @@ class PhotoList extends React.Component {
 				)}
 
 				<div className="control-nav" ref={this.controlNav}>
-					{this.api_provider.filters &&
-						Object.entries(this.state.filters).length && (
-							<div
-								className="control-nav--filters-wrap"
-								ref={this.filterGroups}
-							>
-								<div className="control-nav--filters">
-									{Object.entries(this.state.filters).map(
-										([key, filter], i) => (
-											<label key={i}>
-												<span>
-													{
-														instant_img_localize.filters[
-															filter.label
-														]
-													}
-												</span>
-												<select
-													onChange={(e) => this.filterPhotos(e)}
-													data-filter={key}
-												>
-													{filter.option && (
-														<option value="#">
-															{filter.option &&
-															filter.option === "select"
-																? instant_img_localize.filters
-																		.select
-																: filter.option}
-														</option>
-													)}
-													{filter.filters &&
-														filter.filters.map((item, key) => (
-															<option key={key} value={item}>
-																{item}
-															</option>
-														))}
-												</select>
-											</label>
-										)
-									)}
-									<div className="control-nav--spacer">-</div>
-								</div>
+					<div
+						className="control-nav--filters-wrap"
+						ref={this.filterGroups}
+					>
+						{Object.entries(this.state.filters).length && (
+							<div className="control-nav--filters">
+								{Object.entries(this.state.filters).map(
+									([key, filter], i) => (
+										<Filter
+											key={`${key}-${i}`}
+											filterKey={key}
+											data={filter}
+											function={this.filterPhotos.bind(this)}
+										/>
+									)
+								)}
+								<div className="control-nav--spacer">-</div>
 							</div>
 						)}
+					</div>
 					<div
 						className="control-nav--search search-field"
 						id="search-bar"
@@ -825,20 +765,39 @@ class PhotoList extends React.Component {
 				{this.state.restapi_error && <ErrorMessage />}
 
 				{this.is_search && (
-					<div className="search-results-text">
-						{`${this.total_results} ${instant_img_localize.search_results}  `}
-						<span className="search-results-term">{`${this.search_term}`}</span>
-						<span className="search-results-clear">
-							{" "}
-							-
-							<button
-								type="button"
-								title={instant_img_localize.clear_search}
-								onClick={() => this.getPhotos("latest")}
-							>
-								{instant_img_localize.clear_search}
-							</button>
-						</span>
+					<div>
+						<div className="search-results-text">
+							{`${this.total_results} ${instant_img_localize.search_results}  `}
+							'
+							<span className="search-results-term">{`${this.search_term}`}</span>
+							'
+							<span className="search-results-clear">
+								{" "}
+								-
+								<button
+									type="button"
+									title={instant_img_localize.clear_search}
+									onClick={() => this.getPhotos("latest")}
+								>
+									{instant_img_localize.clear_search}
+								</button>
+							</span>
+						</div>
+						{Object.entries(this.state.search_filters).length && (
+							<div className="search--filters">
+								{Object.entries(this.state.search_filters).map(
+									([key, filter], i) => (
+										<Filter
+											key={`${key}-${i}`}
+											filterKey={key}
+											data={filter}
+											function={this.filterSearch.bind(this)}
+										/>
+									)
+								)}
+								<div className="control-nav--spacer">-</div>
+							</div>
+						)}
 					</div>
 				)}
 

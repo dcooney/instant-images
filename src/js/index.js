@@ -35,7 +35,7 @@ function GetPhotos(
 	const start = `${API[provider].photo_api}${
 		API[provider].api_query_var
 	}${api_key}${contentSafety(provider)}`;
-	const url = `${start}${API.defaults.posts_per_page}&page=${page}&${API[provider].order_key}=${orderby}`;
+	const url = `${start}${API.defaults.posts_per_page}&page=${page}`;
 
 	function initialize() {
 		// Get Data from API
