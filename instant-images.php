@@ -2,39 +2,24 @@
 /**
  * Plugin Name: Instant Images
  * Plugin URI: https://connekthq.com/plugins/instant-images/
- * Description: One click photo uploads directly to your media library.
+ * Description: One click photo uploads from Unsplash and Pixabay directly to your media library.
  * Author: Darren Cooney
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 4.5.0
+ * Version: 4.5.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
  * @package InstantImages
  */
 
-/*
-* NEW - Added Pixabay photo filters.
-* NEW - Added new `instant_images_pixabay_safesearch` & `instant_images_unsplash_content_filter` filters that allow for modifying the flags the indicate the types of suitable images that should be returned.
-	- https://unsplash.com/documentation#content-safety
-	- https://pixabay.com/api/docs/
-	// add_filter( 'instant_images_pixabay_safesearch', '__return_false' );
-	// add_filter( 'instant_images_unsplash_content_filter', function(){
-	// 	return 'high';
-	// });
-
-* NEW - Added Pixabay API constant that allows for setting Pixabay API key via site constant.
-   - `define( 'INSTANT_IMAGES_PIXABAY_KEY', 'YOUR-KEY-HERE' );`
-
-*/
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'INSTANT_IMAGES_VERSION', '4.5.0' );
-define( 'INSTANT_IMAGES_RELEASE', 'October 28, 2021' );
+define( 'INSTANT_IMAGES_VERSION', '4.5.1' );
+define( 'INSTANT_IMAGES_RELEASE', 'Decemeber 22, 2021' );
 
 /**
  * Activation hook

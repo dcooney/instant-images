@@ -39296,7 +39296,7 @@ var PhotoList = function (_React$Component) {
 		// Get current provider settings.
 		var _this = _possibleConstructorReturn(this, (PhotoList.__proto__ || Object.getPrototypeOf(PhotoList)).call(this, props));
 
-		_this.providers = ["Unsplash", "Pixabay", "Pexels"];
+		_this.providers = ["Unsplash", "Pixabay"];
 		_this.provider = _this.props.provider; // Unsplash, Pixabay, etc.
 		_this.api_provider = _API2.default[_this.provider]; // The API settings for the provider.
 		_this.arr_key = _this.api_provider.arr_key;
@@ -40420,19 +40420,6 @@ module.exports = {
 		orientation: ["landscape", "portrait", "squarish"]
 	},
 	pixabay: {
-		requires_key: true,
-		new: false,
-		filters: true,
-		api_query_var: "/?key=",
-		photo_api: "https://pixabay.com/api",
-		search_api: "https://pixabay.com/api",
-		search_query_var: "q",
-		arr_key: "hits",
-		order_key: "order",
-		order: ["latest", "popular"],
-		orientation: ["horizontal", "vertical"]
-	},
-	pexels: {
 		requires_key: true,
 		new: false,
 		filters: true,

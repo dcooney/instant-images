@@ -22,12 +22,12 @@ class PhotoList extends React.Component {
 		super(props);
 
 		// Get current provider settings.
-		this.providers = ["Unsplash", "Pixabay", "Pexels"];
+		this.providers = ["Unsplash", "Pixabay"];
 		this.provider = this.props.provider; // Unsplash, Pixabay, etc.
 		this.api_provider = API[this.provider]; // The API settings for the provider.
 		this.arr_key = this.api_provider.arr_key;
 		this.order_key = this.api_provider.order_key;
- 
+
 		// API Vars.
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
