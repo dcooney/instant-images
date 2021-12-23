@@ -18,7 +18,7 @@
 		min-height: 200px;
 		background: rgba(255, 255, 255, 0.95) url("../img/ajax-loader-lg.gif")
 			no-repeat center 90px;
-		z-index: 9999;
+		z-index: 999;
 		transition: all 0.25s ease;
 	}
 	&.loading {

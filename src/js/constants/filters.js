@@ -3,23 +3,26 @@ module.exports = {
 		filters: {
 			order_by: {
 				label: "orderby",
-				filters: ["latest", "oldest", "popular"],
+				default: "latest",
+				filters: ["latest", "popular", "oldest"],
 			},
 		},
 		search: {
 			order_by: {
 				label: "orderby",
+				default: "relevance",
 				filters: ["relevance", "latest"],
 			},
 			orientation: {
 				label: "orientation",
-				option: "select",
-				filters: ["landscape", "portrait", "squarish"],
+				default: "all",
+				filters: ["all", "landscape", "portrait", "squarish"],
 			},
 			color: {
 				label: "colors",
-				option: "select",
+				default: "all",
 				filters: [
+					"all",
 					"black_and_white",
 					"black",
 					"white",
@@ -39,16 +42,19 @@ module.exports = {
 		filters: {
 			order: {
 				label: "orderby",
+				default: "popular",
 				filters: ["latest", "popular"],
 			},
 			image_type: {
 				label: "type",
+				default: "all",
 				filters: ["all", "photo", "illustration", "vector"],
 			},
 			category: {
 				label: "category",
-				option: "select",
+				default: "all",
 				filters: [
+					"all",
 					"backgrounds",
 					"fashion",
 					"nature",
@@ -73,10 +79,10 @@ module.exports = {
 			},
 			colors: {
 				label: "colors",
-				option: "select",
+				default: "all",
 				filters: [
+					"all",
 					"grayscale",
-					"transparent",
 					"red",
 					"orange",
 					"yellow",
@@ -89,10 +95,40 @@ module.exports = {
 					"gray",
 					"black",
 					"brown",
+					"transparent",
 				],
 			},
 			orientation: {
 				label: "orientation",
+				default: "all",
+				filters: ["all", "horizontal", "vertical"],
+			},
+		},
+		search: {
+			colors: {
+				label: "colors",
+				default: "all",
+				filters: [
+					"all",
+					"grayscale",
+					"red",
+					"orange",
+					"yellow",
+					"green",
+					"turquoise",
+					"blue",
+					"lilac",
+					"pink",
+					"white",
+					"gray",
+					"black",
+					"brown",
+					"transparent",
+				],
+			},
+			orientation: {
+				label: "orientation",
+				default: "all",
 				filters: ["all", "horizontal", "vertical"],
 			},
 		},

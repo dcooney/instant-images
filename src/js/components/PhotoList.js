@@ -62,6 +62,7 @@ class PhotoList extends React.Component {
 		this.errorMsg = "";
 		this.msnry = "";
 		this.tooltipInterval = "";
+		this.delay = 250;
 
 		// Refs.
 		this.photoTarget = React.createRef();
@@ -162,6 +163,9 @@ class PhotoList extends React.Component {
 		const input = this.photoSearch.current;
 		let type = "term";
 
+		this.photoTarget.current.classList.add("loading");
+		this.isLoading = true;
+
 		this.page = 1; // Reset currentpage num.
 		this.toggleFilters(); // Disable filters.
 
@@ -208,6 +212,7 @@ class PhotoList extends React.Component {
 					self.results = results;
 					self.setState({
 						results: self.results,
+						search_filters: FILTERS[self.provider].search,
 					});
 				}
 
@@ -240,7 +245,12 @@ class PhotoList extends React.Component {
 					self.setState({ results: self.results });
 				}
 
-				input.classList.remove("searching");
+				// Delay for effect.
+				setTimeout(function () {
+					input.classList.remove("searching");
+					self.photoTarget.current.classList.remove("loading");
+					self.isLoading = false;
+				}, self.delay);
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -250,6 +260,9 @@ class PhotoList extends React.Component {
 				self.isLoading = false;
 				self.total_results = 0;
 				self.isDone = true;
+
+				this.photoTarget.current.classList.remove("loading");
+				this.isLoading = false;
 
 				// Update Props.
 				self.results = [];
@@ -343,7 +356,7 @@ class PhotoList extends React.Component {
 				setTimeout(function () {
 					self.photoTarget.current.classList.remove("loading");
 					self.isLoading = false;
-				}, 250);
+				}, self.delay);
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -414,11 +427,10 @@ class PhotoList extends React.Component {
 	/**
 	 * Filter the photo listing.
 	 *
-	 * @param {Event} e The dispatched change event.
+	 * @param {string} filter The current filter key.
+	 * @param {string} value  The value to filter.
 	 */
-	filterPhotos(e) {
-		const value = e.target.value;
-		const filter = e.target.dataset.filter;
+	filterPhotos(filter, value) {
 		if ((this.filters[filter] && value === "#") || value === "") {
 			delete this.filters[filter];
 		} else {
@@ -430,11 +442,10 @@ class PhotoList extends React.Component {
 	/**
 	 * Filter the search results.
 	 *
-	 * @param {Event} e The dispatched change event.
+	 * @param {string} filter The current filter key.
+	 * @param {string} value  The value to filter.
 	 */
-	filterSearch(e) {
-		const value = e.target.value;
-		const filter = e.target.dataset.filter;
+	filterSearch(filter, value) {
 		if ((this.search_filters[filter] && value === "#") || value === "") {
 			delete this.search_filters[filter];
 		} else {
@@ -447,11 +458,18 @@ class PhotoList extends React.Component {
 	 * Toggle the active state of all filters.
 	 */
 	toggleFilters() {
-		const filters = this.filterGroups.current.querySelectorAll("select");
+		const filters = this.filterGroups.current.querySelectorAll(
+			"button.filter-dropdown--button"
+		);
 		if (filters) {
-			filters.forEach((select) => {
-				select.disabled = this.is_search ? true : false;
+			filters.forEach((button) => {
+				button.disabled = this.is_search ? true : false;
 			});
+		}
+		if (this.is_search) {
+			this.filterGroups.current.classList.add("inactive");
+		} else {
+			this.filterGroups.current.classList.remove("inactive");
 		}
 	}
 
@@ -602,7 +620,7 @@ class PhotoList extends React.Component {
 		setTimeout(function () {
 			self.isLoading = false;
 			self.container.classList.remove("loading");
-		}, 500);
+		}, self.delay);
 	}
 
 	/**
@@ -638,7 +656,7 @@ class PhotoList extends React.Component {
 
 			setTimeout(function () {
 				tooltip.classList.add("over");
-			}, 150);
+			}, self.delay);
 		}, 750);
 	}
 
@@ -725,6 +743,7 @@ class PhotoList extends React.Component {
 										<Filter
 											key={`${key}-${i}`}
 											filterKey={key}
+											provider={this.provider}
 											data={filter}
 											function={this.filterPhotos.bind(this)}
 										/>
@@ -764,38 +783,37 @@ class PhotoList extends React.Component {
 
 				{this.state.restapi_error && <ErrorMessage />}
 
-				{this.is_search && (
-					<div>
-						<div className="search-results-text">
-							{`${this.total_results} ${instant_img_localize.search_results}  `}
-							'
-							<span className="search-results-term">{`${this.search_term}`}</span>
-							'
-							<span className="search-results-clear">
-								{" "}
-								-
-								<button
-									type="button"
-									title={instant_img_localize.clear_search}
-									onClick={() => this.getPhotos("latest")}
-								>
-									{instant_img_localize.clear_search}
-								</button>
-							</span>
+				{this.is_search && this.editor !== "gutenberg" && (
+					<div className="search-results-header">
+						<h2>{this.search_term}</h2>
+
+						<div className="search-results-header--text">
+							{`${this.total_results} ${instant_img_localize.search_results}`}{" "}
+							<strong>{`${this.search_term}`}</strong>
+							{" - "}
+							<button
+								title={instant_img_localize.clear_search}
+								onClick={() => this.getPhotos("latest")}
+							>
+								{instant_img_localize.clear_search}
+							</button>
 						</div>
 						{Object.entries(this.state.search_filters).length && (
-							<div className="search--filters">
-								{Object.entries(this.state.search_filters).map(
-									([key, filter], i) => (
-										<Filter
-											key={`${key}-${i}`}
-											filterKey={key}
-											data={filter}
-											function={this.filterSearch.bind(this)}
-										/>
-									)
-								)}
-								<div className="control-nav--spacer">-</div>
+							<div className="control-nav--filters-wrap">
+								<div className="control-nav--filters">
+									{Object.entries(this.state.search_filters).map(
+										([key, filter], i) => (
+											<Filter
+												key={`${key}-${i}`}
+												filterKey={key}
+												provider={this.provider}
+												data={filter}
+												function={this.filterSearch.bind(this)}
+											/>
+										)
+									)}
+									<div className="control-nav--spacer">-</div>
+								</div>
 							</div>
 						)}
 					</div>

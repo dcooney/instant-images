@@ -2,12 +2,13 @@
 	.control-nav {
 		display: flex;
 		flex-wrap: wrap;
+		align-items: center;
 		@media screen and (max-width: $small) {
 			justify-content: center;
 		}
 		width: 100%;
 		margin: 0 0 20px;
-		padding: 10px 0;
+		padding: 20px 0;
 		list-style: none;
 		border-bottom: 1px solid $grey;
 		&:after {
@@ -18,21 +19,28 @@
 		// Filters
 		&--filters-wrap {
 			flex: 1;
-			overflow-x: auto;
-			padding: 10px 0 5px;
 			position: relative;
 			@media screen and (max-width: $small) {
 				flex: none;
 				width: 100%;
 			}
+			transition: all 0.25s ease;
+			&.inactive {
+				opacity: 0.55;
+				filter: blur(1px);
+				* {
+					cursor: not-allowed;
+				}
+			}
 		}
 		&--filters {
 			position: relative;
 			display: flex;
+			flex-wrap: wrap;
 			align-items: center;
-			gap: 10px;
+			column-gap: 15px;
 			@media screen and (min-width: $medium) {
-				gap: 15px;
+				column-gap: 20px;
 			}
 			width: 100%;
 			&:before {
@@ -99,23 +107,8 @@
 			max-width: 350px;
 			margin: 0;
 			margin-left: auto;
-			padding: 29px 0 0 20px;
+			padding: 0 0 0 20px;
 			position: relative;
-			&:before {
-				position: absolute;
-				z-index: 999;
-				left: -25px;
-				top: 0;
-				width: 25px;
-				height: 100%;
-				content: "";
-				display: block;
-				background: linear-gradient(
-					90deg,
-					rgba(255, 255, 255, 0) 0%,
-					rgba(255, 255, 255, 1) 100%
-				);
-			}
 			@media screen and (max-width: $small) {
 				width: 100%;
 				display: block;
@@ -124,9 +117,6 @@
 				text-align: left;
 				max-width: 100%;
 				padding: 10px 0;
-				&:before {
-					display: none;
-				}
 			}
 			.searchResults {
 				position: absolute;

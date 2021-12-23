@@ -1,17 +1,13 @@
 // Media Modal.
+.media-frame-router {
+	button#menu-item-instantimages.active {
+		background-color: $lighter_grey;
+	}
+}
 .media-frame-content {
 	.instant-img-container {
 		.load-more-wrap {
 			display: block;
-		}
-		.provider-nav {
-			padding: 10px 25px;
-			background-color: #fff;
-			&--btn {
-				&.active {
-					background-color: $lighter_grey;
-				}
-			}
 		}
 	}
 }

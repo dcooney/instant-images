@@ -249,7 +249,7 @@ class InstantImages {
 				'get_api_key'             => __( 'Get API Key Now', 'instant-images' ),
 				'filters'                 => array(
 					'select'      => __( '-- Select --', 'instant-images' ),
-					'orderby'     => __( 'Order By:', 'instant-images' ),
+					'orderby'     => __( 'Order:', 'instant-images' ),
 					'type'        => __( 'Type:', 'instant-images' ),
 					'category'    => __( 'Category:', 'instant-images' ),
 					'colors'      => __( 'Colors:', 'instant-images' ),

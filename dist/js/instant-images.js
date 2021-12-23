@@ -86,6 +86,17 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/a11yarrows/dist/a11yarrows.min.js":
+/*!********************************************************!*\
+  !*** ./node_modules/a11yarrows/dist/a11yarrows.min.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t():undefined}(window,function(){return function(e){var t={};function r(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}return r.m=e,r.c=t,r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)r.d(n,o,function(t){return e[t]}.bind(null,o));return n},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="",r(r.s=0)}([function(e,t,r){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.init=function(e,t){if((t=Object.assign({},n,t)).target=e,t.next=t.next?t.next:"down",t.prev=t.prev?t.prev:"up",!t.target||!t.selector)return;i(t),window.addEventListener(t.event,function(e){o(e,t)})};var n=r(1),o=r(2),i=r(7);r(8)},function(e,t,r){"use strict";e.exports={selector:"a",loop:!0,event:"keydown",next:"down right",prev:"up left"}},function(e,t,r){"use strict";var n=r(3),o=r(4),i=r(5),u=r(6);e.exports=function(e,t){var r=e.target,f=e.which||e.keycode,c=t.target.querySelectorAll(t.selector);c=c?Array.prototype.slice.call(c):c;var a=i(r,c);if(!c||!a)return!1;if(-1!==u(t.next,n).indexOf(f)){var l=o(r,c,"next");if(l<c.length)return c[l].focus(),e.preventDefault(),e.stopPropagation(),!1;if(t.loop)return c[0].focus(),e.preventDefault(),e.stopPropagation(),!1}if(-1!==u(t.prev,n).indexOf(f)){var p=o(r,c,"previous");if(p<c.length&&-1!==p)return c[p].focus(),e.preventDefault(),e.stopPropagation(),!1;if(t.loop)return c[c.length-1].focus(),e.preventDefault(),e.stopPropagation(),!1}return!0}},function(e,t,r){"use strict";e.exports={up:38,right:39,down:40,left:37,escape:27,enter:13,spacebar:32,tab:9}},function(e,t,r){"use strict";e.exports=function(e,t){var r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"next",n=Array.prototype.slice.call(t).indexOf(e);if(-1!==n)return"previous"===r?n-1:n+1}},function(e,t,r){"use strict";e.exports=function(e,t){return-1!==Array.prototype.slice.call(t).indexOf(e)}},function(e,t,r){"use strict";e.exports=function(e,t){for(var r=e.split(" "),n=[],o=0;o<r.length;o++)n.push(t[r[o]]);return n}},function(e,t,r){"use strict";e.exports=function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"";if(!e.target||!e.selector)return!1;var t=e.target.querySelectorAll(e.selector);(t=t?Array.prototype.slice.call(t):t).forEach(function(e){e.tabIndex=0})}},function(e,t,r){"use strict";"function"!=typeof Object.assign&&Object.defineProperty(Object,"assign",{value:function(e,t){if(null==e)throw new TypeError("Cannot convert undefined or null to object");for(var r=Object(e),n=1;n<arguments.length;n++){var o=arguments[n];if(null!=o)for(var i in o)Object.prototype.hasOwnProperty.call(o,i)&&(r[i]=o[i])}return r},writable:!0,configurable:!0}),Array.prototype.forEach||(Array.prototype.forEach=function(e){var t,r;if(null==this)throw new TypeError("this is null or not defined");var n=Object(this),o=n.length>>>0;if("function"!=typeof e)throw new TypeError(e+" is not a function");for(arguments.length>1&&(t=arguments[1]),r=0;r<o;){var i;r in n&&(i=n[r],e.call(t,i,r,n)),r++}})}])});
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -2175,6 +2186,74 @@ module.exports = {
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"_from\":\"axios@^0.21.2\",\"_id\":\"axios@0.21.4\",\"_inBundle\":false,\"_integrity\":\"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"axios@^0.21.2\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"^0.21.2\",\"saveSpec\":null,\"fetchSpec\":\"^0.21.2\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz\",\"_shasum\":\"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575\",\"_spec\":\"axios@^0.21.2\",\"_where\":\"/Users/darrencooney/Local Sites/instant-images/app/public/wp-content/plugins/instant-images\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.14.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.3.0\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^23.0.0\",\"grunt-karma\":\"^4.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^4.0.2\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^6.3.2\",\"karma-chrome-launcher\":\"^3.1.0\",\"karma-firefox-launcher\":\"^2.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^4.3.6\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.8\",\"karma-webpack\":\"^4.0.2\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^8.2.1\",\"sinon\":\"^4.5.0\",\"terser-webpack-plugin\":\"^4.2.3\",\"typescript\":\"^4.0.5\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^4.44.2\",\"webpack-dev-server\":\"^3.11.0\"},\"homepage\":\"https://axios-http.com\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.4\"}");
+
+/***/ }),
+
+/***/ "./node_modules/classnames/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/classnames/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2018 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames() {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				if (arg.length) {
+					var inner = classNames.apply(null, arg);
+					if (inner) {
+						classes.push(inner);
+					}
+				}
+			} else if (argType === 'object') {
+				if (arg.toString === Object.prototype.toString) {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				} else {
+					classes.push(arg.toString());
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
+
 
 /***/ }),
 
@@ -39533,11 +39612,21 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _a11yarrows = __webpack_require__(/*! a11yarrows */ "./node_modules/a11yarrows/dist/a11yarrows.min.js");
+
+var a11yarrows = _interopRequireWildcard(_a11yarrows);
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -39554,42 +39643,225 @@ var Filter = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (Filter.__proto__ || Object.getPrototypeOf(Filter)).call(this, props));
 
 		_this.data = _this.props.data;
+		_this.default = _this.data.default;
 		_this.filterKey = _this.props.filterKey;
-		_this.function = _this.props.function.bind(_this);
+		_this.provider = _this.props.provider;
+		_this.id = _this.provider + "-" + _this.filterKey;
+		_this.clickHandler = _this.props.function.bind(_this);
+		_this.toggleMenu = _this.toggleMenu.bind(_this);
+		_this.closeMenuOutside = _this.closeMenuOutside.bind(_this);
+		_this.focusOutside = _this.focusOutside.bind(_this);
+		_this.escClick = _this.escClick.bind(_this);
+		_this.isColor = _this.filterKey === "colors" || _this.filterKey === "color";
+		_this.state = {
+			expanded: false,
+			selected: _this.data.default
+		};
 		return _this;
 	}
 
+	/**
+  * Toggle menu open/closed.
+  *
+  * @param {Event} event The click event.
+  */
+
+
 	_createClass(Filter, [{
-		key: "render",
-		value: function render() {
+		key: "toggleMenu",
+		value: function toggleMenu(event) {
 			var _this2 = this;
 
+			event.preventDefault();
+
+			// If disabled, don't open menu.
+			var target = event.currentTarget;
+			if (target.disabled) {
+				return false;
+			}
+
+			if (this.state.expanded) {
+				this.setState({ expanded: false }, function () {
+					document.removeEventListener("click", _this2.closeMenuOutside);
+				});
+			} else {
+				this.setState({ expanded: true }, function () {
+					document.addEventListener("click", _this2.closeMenuOutside);
+				});
+			}
+		}
+
+		/**
+   * Close menu when clicking outside.
+   *
+   * @param {Event} event The click event.
+   */
+
+	}, {
+		key: "closeMenuOutside",
+		value: function closeMenuOutside(event) {
+			var _this3 = this;
+
+			if (!this.menu.contains(event.target) && !this.trigger.contains(event.target)) {
+				this.setState({ expanded: false }, function () {
+					document.removeEventListener("click", _this3.closeMenuOutside);
+				});
+			}
+		}
+
+		/**
+   * Checks for focus outside of component.
+   *
+   * @param {Event} event The click event.
+   */
+
+	}, {
+		key: "focusOutside",
+		value: function focusOutside(event) {
+			if (!this.dropdown.contains(event.target)) {
+				this.closeMenuOutside(event);
+			}
+		}
+
+		/**
+   * Detect esc key press.
+   *
+   * @param {Event} event The click event.
+   */
+
+	}, {
+		key: "escClick",
+		value: function escClick(event) {
+			if (event.key === "Escape") {
+				this.setState({ expanded: false });
+			}
+		}
+
+		/**
+   * Click handler for the filter buttons.
+   *
+   * @param {string} filter The current filter key.
+   * @param {string} value  The value to filter.
+   */
+
+	}, {
+		key: "click",
+		value: function click(filter, value) {
+			var self = this;
+			var newValue = this.state.selected !== value ? value : this.default;
+
+			this.setState({
+				selected: newValue
+			});
+			this.clickHandler(filter, newValue);
+
+			// Delay for effect.
+			setTimeout(function () {
+				self.trigger.click();
+			}, 100);
+		}
+
+		/**
+   * Convert a color to a CSS value.
+   * @see https://www.w3schools.com/colors/colors_names.asp
+   *
+   * @param  {string} color The current color.
+   * @return {string}       The color.
+   */
+
+	}, {
+		key: "convertColor",
+		value: function convertColor(color) {
+			if (color === "lilac") {
+				color = "DarkViolet";
+			}
+			if (color === "grayscale" || color === "black_and_white") {
+				color = "LightGray";
+			}
+			return color;
+		}
+
+		// Initiate functions on mount.
+
+	}, {
+		key: "componentDidMount",
+		value: function componentDidMount() {
+			// Initiate arrow menus.
+			a11yarrows.init(this.dropdown, {
+				selector: "button"
+			});
+
+			// Check for focus outside.
+			document.addEventListener("keyup", this.focusOutside);
+			document.addEventListener("keydown", this.escClick);
+		}
+
+		// Functions to run on unmount.
+
+	}, {
+		key: "componentWillUnmount",
+		value: function componentWillUnmount() {
+			document.removeEventListener("keyup", this.focusOutside);
+			document.removeEventListener("keydown", this.escClick);
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			var _this4 = this;
+
 			return _react2.default.createElement(
-				"label",
-				null,
+				"div",
+				{
+					className: "filter-dropdown",
+					id: this.id,
+					ref: function ref(element) {
+						_this4.dropdown = element;
+					}
+				},
 				_react2.default.createElement(
-					"span",
-					null,
-					instant_img_localize.filters[this.data.label]
+					"button",
+					{
+						onClick: this.toggleMenu,
+						className: "filter-dropdown--button",
+						"aria-expanded": this.state.expanded ? "true" : "false",
+						ref: function ref(element) {
+							_this4.trigger = element;
+						}
+					},
+					instant_img_localize.filters[this.data.label],
+					" ",
+					_react2.default.createElement(
+						"span",
+						null,
+						this.state.selected
+					),
+					_react2.default.createElement("i", { className: "fa fa-caret-down", "aria-hidden": "true" })
 				),
 				_react2.default.createElement(
-					"select",
+					"div",
 					{
-						onChange: function onChange(e) {
-							return _this2.function(e);
-						},
-						"data-filter": this.filterKey
+						className: (0, _classnames2.default)("filter-dropdown--menu", this.state.expanded ? "expanded" : null),
+						"data-key": this.filterKey,
+						"aria-hidden": this.state.expanded ? "false" : "true",
+						ref: function ref(element) {
+							_this4.menu = element;
+						}
 					},
-					this.data.option && _react2.default.createElement(
-						"option",
-						{ value: "#" },
-						this.data.option && this.data.option === "select" ? instant_img_localize.filters.select : this.data.option
-					),
-					this.data.filters && this.data.filters.map(function (item, key) {
+					this.data.filters && this.data.filters.map(function (value, key) {
 						return _react2.default.createElement(
-							"option",
-							{ key: key, value: item },
-							item
+							"button",
+							{
+								key: key,
+								className: (0, _classnames2.default)("filter-dropdown--item", _this4.state.selected === value ? "selected" : null),
+								onClick: function onClick() {
+									return _this4.click(_this4.filterKey, value);
+								}
+							},
+							value.replace(/_/g, " "),
+							value !== "all" && value !== "transparent" && _this4.isColor ? _react2.default.createElement("span", {
+								className: "_color",
+								style: { color: _this4.convertColor(value) }
+							}) : null
 						);
 					})
 				)
@@ -40892,6 +41164,7 @@ var PhotoList = function (_React$Component) {
 		_this.errorMsg = "";
 		_this.msnry = "";
 		_this.tooltipInterval = "";
+		_this.delay = 250;
 
 		// Refs.
 		_this.photoTarget = _react2.default.createRef();
@@ -40996,6 +41269,9 @@ var PhotoList = function (_React$Component) {
 			var input = this.photoSearch.current;
 			var type = "term";
 
+			this.photoTarget.current.classList.add("loading");
+			this.isLoading = true;
+
 			this.page = 1; // Reset currentpage num.
 			this.toggleFilters(); // Disable filters.
 
@@ -41028,7 +41304,8 @@ var PhotoList = function (_React$Component) {
 					// Update Props.
 					self.results = results;
 					self.setState({
-						results: self.results
+						results: self.results,
+						search_filters: _filters2.default[self.provider].search
 					});
 				}
 
@@ -41056,7 +41333,12 @@ var PhotoList = function (_React$Component) {
 					self.setState({ results: self.results });
 				}
 
-				input.classList.remove("searching");
+				// Delay for effect.
+				setTimeout(function () {
+					input.classList.remove("searching");
+					self.photoTarget.current.classList.remove("loading");
+					self.isLoading = false;
+				}, self.delay);
 			}).catch(function (error) {
 				console.log(error);
 
@@ -41065,6 +41347,9 @@ var PhotoList = function (_React$Component) {
 				self.isLoading = false;
 				self.total_results = 0;
 				self.isDone = true;
+
+				this.photoTarget.current.classList.remove("loading");
+				this.isLoading = false;
 
 				// Update Props.
 				self.results = [];
@@ -41168,7 +41453,7 @@ var PhotoList = function (_React$Component) {
 				setTimeout(function () {
 					self.photoTarget.current.classList.remove("loading");
 					self.isLoading = false;
-				}, 250);
+				}, self.delay);
 			}).catch(function (error) {
 				console.log(error);
 				self.photoTarget.current.classList.remove("loading");
@@ -41234,14 +41519,13 @@ var PhotoList = function (_React$Component) {
 		/**
    * Filter the photo listing.
    *
-   * @param {Event} e The dispatched change event.
+   * @param {string} filter The current filter key.
+   * @param {string} value  The value to filter.
    */
 
 	}, {
 		key: "filterPhotos",
-		value: function filterPhotos(e) {
-			var value = e.target.value;
-			var filter = e.target.dataset.filter;
+		value: function filterPhotos(filter, value) {
 			if (this.filters[filter] && value === "#" || value === "") {
 				delete this.filters[filter];
 			} else {
@@ -41253,14 +41537,13 @@ var PhotoList = function (_React$Component) {
 		/**
    * Filter the search results.
    *
-   * @param {Event} e The dispatched change event.
+   * @param {string} filter The current filter key.
+   * @param {string} value  The value to filter.
    */
 
 	}, {
 		key: "filterSearch",
-		value: function filterSearch(e) {
-			var value = e.target.value;
-			var filter = e.target.dataset.filter;
+		value: function filterSearch(filter, value) {
 			if (this.search_filters[filter] && value === "#" || value === "") {
 				delete this.search_filters[filter];
 			} else {
@@ -41278,11 +41561,16 @@ var PhotoList = function (_React$Component) {
 		value: function toggleFilters() {
 			var _this2 = this;
 
-			var filters = this.filterGroups.current.querySelectorAll("select");
+			var filters = this.filterGroups.current.querySelectorAll("button.filter-dropdown--button");
 			if (filters) {
-				filters.forEach(function (select) {
-					select.disabled = _this2.is_search ? true : false;
+				filters.forEach(function (button) {
+					button.disabled = _this2.is_search ? true : false;
 				});
+			}
+			if (this.is_search) {
+				this.filterGroups.current.classList.add("inactive");
+			} else {
+				this.filterGroups.current.classList.remove("inactive");
 			}
 		}
 
@@ -41484,7 +41772,7 @@ var PhotoList = function (_React$Component) {
 			setTimeout(function () {
 				self.isLoading = false;
 				self.container.classList.remove("loading");
-			}, 500);
+			}, self.delay);
 		}
 
 		/**
@@ -41523,7 +41811,7 @@ var PhotoList = function (_React$Component) {
 
 				setTimeout(function () {
 					tooltip.classList.add("over");
-				}, 150);
+				}, self.delay);
 			}, 750);
 		}
 
@@ -41637,6 +41925,7 @@ var PhotoList = function (_React$Component) {
 								return _react2.default.createElement(_Filter2.default, {
 									key: key + "-" + i,
 									filterKey: key,
+									provider: _this4.provider,
 									data: filter,
 									"function": _this4.filterPhotos.bind(_this4)
 								});
@@ -41686,57 +41975,60 @@ var PhotoList = function (_React$Component) {
 					)
 				),
 				this.state.restapi_error && _react2.default.createElement(_ErrorMessage2.default, null),
-				this.is_search && _react2.default.createElement(
+				this.is_search && this.editor !== "gutenberg" && _react2.default.createElement(
 					"div",
-					null,
+					{ className: "search-results-header" },
+					_react2.default.createElement(
+						"h2",
+						null,
+						this.search_term
+					),
 					_react2.default.createElement(
 						"div",
-						{ className: "search-results-text" },
-						this.total_results + " " + instant_img_localize.search_results + "  ",
-						"'",
+						{ className: "search-results-header--text" },
+						this.total_results + " " + instant_img_localize.search_results,
+						" ",
 						_react2.default.createElement(
-							"span",
-							{ className: "search-results-term" },
+							"strong",
+							null,
 							"" + this.search_term
 						),
-						"'",
+						" - ",
 						_react2.default.createElement(
-							"span",
-							{ className: "search-results-clear" },
-							" ",
-							"-",
-							_react2.default.createElement(
-								"button",
-								{
-									type: "button",
-									title: instant_img_localize.clear_search,
-									onClick: function onClick() {
-										return _this4.getPhotos("latest");
-									}
-								},
-								instant_img_localize.clear_search
-							)
+							"button",
+							{
+								title: instant_img_localize.clear_search,
+								onClick: function onClick() {
+									return _this4.getPhotos("latest");
+								}
+							},
+							instant_img_localize.clear_search
 						)
 					),
 					Object.entries(this.state.search_filters).length && _react2.default.createElement(
 						"div",
-						{ className: "search--filters" },
-						Object.entries(this.state.search_filters).map(function (_ref4, i) {
-							var _ref5 = _slicedToArray(_ref4, 2),
-							    key = _ref5[0],
-							    filter = _ref5[1];
-
-							return _react2.default.createElement(_Filter2.default, {
-								key: key + "-" + i,
-								filterKey: key,
-								data: filter,
-								"function": _this4.filterSearch.bind(_this4)
-							});
-						}),
+						{ className: "control-nav--filters-wrap" },
 						_react2.default.createElement(
 							"div",
-							{ className: "control-nav--spacer" },
-							"-"
+							{ className: "control-nav--filters" },
+							Object.entries(this.state.search_filters).map(function (_ref4, i) {
+								var _ref5 = _slicedToArray(_ref4, 2),
+								    key = _ref5[0],
+								    filter = _ref5[1];
+
+								return _react2.default.createElement(_Filter2.default, {
+									key: key + "-" + i,
+									filterKey: key,
+									provider: _this4.provider,
+									data: filter,
+									"function": _this4.filterSearch.bind(_this4)
+								});
+							}),
+							_react2.default.createElement(
+								"div",
+								{ className: "control-nav--spacer" },
+								"-"
+							)
 						)
 					)
 				),
@@ -41964,23 +42256,25 @@ module.exports = {
 		filters: {
 			order_by: {
 				label: "orderby",
-				filters: ["latest", "oldest", "popular"]
+				default: "latest",
+				filters: ["latest", "popular", "oldest"]
 			}
 		},
 		search: {
 			order_by: {
 				label: "orderby",
+				default: "relevance",
 				filters: ["relevance", "latest"]
 			},
 			orientation: {
 				label: "orientation",
-				option: "select",
-				filters: ["landscape", "portrait", "squarish"]
+				default: "all",
+				filters: ["all", "landscape", "portrait", "squarish"]
 			},
 			color: {
 				label: "colors",
-				option: "select",
-				filters: ["black_and_white", "black", "white", "yellow", "orange", "red", "purple", "magenta", "green", "teal", "blue"]
+				default: "all",
+				filters: ["all", "black_and_white", "black", "white", "yellow", "orange", "red", "purple", "magenta", "green", "teal", "blue"]
 			}
 		}
 	},
@@ -41988,24 +42282,39 @@ module.exports = {
 		filters: {
 			order: {
 				label: "orderby",
+				default: "popular",
 				filters: ["latest", "popular"]
 			},
 			image_type: {
 				label: "type",
+				default: "all",
 				filters: ["all", "photo", "illustration", "vector"]
 			},
 			category: {
 				label: "category",
-				option: "select",
-				filters: ["backgrounds", "fashion", "nature", "science", "education", "feelings", "health", "people", "religion", "places", "animals", "industry", "computer", "food", "sports", "transportation", "travel", "buildings", "business", "music"]
+				default: "all",
+				filters: ["all", "backgrounds", "fashion", "nature", "science", "education", "feelings", "health", "people", "religion", "places", "animals", "industry", "computer", "food", "sports", "transportation", "travel", "buildings", "business", "music"]
 			},
 			colors: {
 				label: "colors",
-				option: "select",
-				filters: ["grayscale", "transparent", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown"]
+				default: "all",
+				filters: ["all", "grayscale", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown", "transparent"]
 			},
 			orientation: {
 				label: "orientation",
+				default: "all",
+				filters: ["all", "horizontal", "vertical"]
+			}
+		},
+		search: {
+			colors: {
+				label: "colors",
+				default: "all",
+				filters: ["all", "grayscale", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown", "transparent"]
+			},
+			orientation: {
+				label: "orientation",
+				default: "all",
 				filters: ["all", "horizontal", "vertical"]
 			}
 		}
