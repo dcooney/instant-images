@@ -39828,14 +39828,17 @@ var Filter = function (_React$Component) {
 							_this4.trigger = element;
 						}
 					},
-					instant_img_localize.filters[this.data.label],
-					" ",
 					_react2.default.createElement(
 						"span",
-						null,
-						this.state.selected
+						{ className: "filter-dropdown--button-label" },
+						instant_img_localize.filters[this.data.label]
 					),
-					_react2.default.createElement("i", { className: "fa fa-caret-down", "aria-hidden": "true" })
+					_react2.default.createElement(
+						"span",
+						{ className: "filter-dropdown--button-selected" },
+						this.state.selected,
+						_react2.default.createElement("i", { className: "fa fa-caret-down", "aria-hidden": "true" })
+					)
 				),
 				_react2.default.createElement(
 					"div",
@@ -41929,12 +41932,7 @@ var PhotoList = function (_React$Component) {
 									data: filter,
 									"function": _this4.filterPhotos.bind(_this4)
 								});
-							}),
-							_react2.default.createElement(
-								"div",
-								{ className: "control-nav--spacer" },
-								"-"
-							)
+							})
 						)
 					),
 					_react2.default.createElement(
@@ -42023,12 +42021,7 @@ var PhotoList = function (_React$Component) {
 									data: filter,
 									"function": _this4.filterSearch.bind(_this4)
 								});
-							}),
-							_react2.default.createElement(
-								"div",
-								{ className: "control-nav--spacer" },
-								"-"
-							)
+							})
 						)
 					)
 				),

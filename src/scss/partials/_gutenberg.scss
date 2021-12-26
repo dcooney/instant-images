@@ -82,14 +82,17 @@ body.loading {
 			display: block;
 		}
 		&--filters {
-			column-gap: 0;
+			column-gap: 6px;
 			padding: 10px 0;
 			.filter-dropdown {
-				width: 50%;
+				width: calc(50% - 3px);
 				display: none;
 				button {
 					padding: 5px;
 					font-size: 13px;
+					&.filter-dropdown--button {
+						display: block;
+					}
 					i {
 						margin-left: auto;
 						padding-right: 5px;
@@ -106,6 +109,18 @@ body.loading {
 				&:nth-child(1),
 				&:nth-child(2) {
 					display: block;
+				}
+				.filter-dropdown--button-label {
+					display: block;
+					font-size: 10px;
+					text-transform: uppercase;
+					margin: 0 0 2px;
+				}
+				.filter-dropdown--button-selected {
+					display: flex;
+					align-items: center;
+					width: 100%;
+					font-size: 14px;
 				}
 			}
 		}

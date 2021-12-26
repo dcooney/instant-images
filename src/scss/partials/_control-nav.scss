@@ -92,18 +92,13 @@
 			}
 		}
 
-		&--spacer {
-			min-width: 15px;
-			opacity: 0;
-			@media screen and (max-width: $small) {
-				display: none;
-			}
-		}
-
 		// Search
 		&--search {
 			display: flex;
-			width: 35%;
+			width: 30%;
+			@media screen and (min-width: $large) {
+				width: 35%;
+			}
 			max-width: 350px;
 			margin: 0;
 			margin-left: auto;

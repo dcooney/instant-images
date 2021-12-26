@@ -158,9 +158,13 @@ class Filter extends React.Component {
 						this.trigger = element;
 					}}
 				>
-					{instant_img_localize.filters[this.data.label]}{" "}
-					<span>{this.state.selected}</span>
-					<i className="fa fa-caret-down" aria-hidden="true"></i>
+					<span className="filter-dropdown--button-label">
+						{instant_img_localize.filters[this.data.label]}
+					</span>
+					<span className="filter-dropdown--button-selected">
+						{this.state.selected}
+						<i className="fa fa-caret-down" aria-hidden="true"></i>
+					</span>
 				</button>
 				<div
 					className={cn(

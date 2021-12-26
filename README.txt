@@ -130,8 +130,12 @@ How to install Instant Images.
 
 = 4.5.1 - December 22, 2021 =
 NEW: Added Pixabay photo filters (Type, Category, Colors and Orientation).
+NEW: Added Unsplash search filters for Color, Orientation and Order.
 NEW: Added new `instant_images_pixabay_safesearch` & `instant_images_unsplash_content_filter` filters that allow for modifying the flags the indicate the types of suitable images that should be returned. Get more information in our [FAQ](https://connekthq.com/plugins/instant-images/faqs/#can-i-ensure-only-photos-safe-for-work-are-returned-in-the-photo-listings).
 NEW: Added Pixabay API constant that allows for setting Pixabay API key via site constant. e.g. `define( 'INSTANT_IMAGES_PIXABAY_KEY', 'YOUR-KEY-HERE' );`
+UPDATE: Revamped filtering menus and orientation options.
+UPDATE: Other UI/UX updates to make the plugin more visually appealing.
+UPDATE: Improved plugin accessibility across various sections.
 
 
 = 4.5.0 - October 28, 2021 =

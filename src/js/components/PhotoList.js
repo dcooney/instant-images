@@ -749,7 +749,6 @@ class PhotoList extends React.Component {
 										/>
 									)
 								)}
-								<div className="control-nav--spacer">-</div>
 							</div>
 						)}
 					</div>
@@ -812,7 +811,6 @@ class PhotoList extends React.Component {
 											/>
 										)
 									)}
-									<div className="control-nav--spacer">-</div>
 								</div>
 							</div>
 						)}

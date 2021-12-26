@@ -5,7 +5,6 @@
 		border: none;
 		text-align: left;
 		color: $text_light;
-		font-size: 14px;
 		&:not(disabled) {
 			cursor: pointer;
 		}
@@ -13,18 +12,26 @@
 	&--button {
 		display: flex;
 		align-items: center;
-		gap: 7px;
+		gap: 5px;
 		padding: 10px 2px 10px 0;
 		text-transform: capitalize;
-		color: $text;
 		color: $text_light;
 		width: 100%;
-		span {
+		font-size: 14px;
+		@media screen and (min-width: $xlarge) {
+			font-size: 15px;
+		}
+		span.filter-dropdown--button-label {
+			padding-right: 3px;
+		}
+		span.filter-dropdown--button-selected {
 			color: $text;
 			font-weight: 500;
 		}
 		i {
-			opacity: 0.5;
+			opacity: 0.4;
+			margin-left: 10px;
+			font-size: 14px;
 		}
 		&:hover,
 		&:focus {
@@ -66,12 +73,13 @@
 			text-transform: capitalize;
 			padding: 8px 5px;
 			transition: all 0.25 ease;
+			font-size: 14px;
 			&:before {
 				font-family: "FontAwesome";
 				content: "\f00c";
 				display: block;
 				color: $input;
-				opacity: 0.25;
+				opacity: 0.4;
 				font-size: 10px;
 			}
 			&:hover,
