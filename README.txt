@@ -3,7 +3,7 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: unsplash, pixabay, stock photo, prototyping, photos, media library, image upload, upload, free photos
 Requires at least: 4.0
-Tested up to: 5.8
+Tested up to: 5.8.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
