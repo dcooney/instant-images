@@ -86,6 +86,17 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/a11yarrows/dist/a11yarrows.min.js":
+/*!********************************************************!*\
+  !*** ./node_modules/a11yarrows/dist/a11yarrows.min.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t():undefined}(window,function(){return function(e){var t={};function r(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}return r.m=e,r.c=t,r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)r.d(n,o,function(t){return e[t]}.bind(null,o));return n},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="",r(r.s=0)}([function(e,t,r){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.init=function(e,t){if((t=Object.assign({},n,t)).target=e,t.next=t.next?t.next:"down",t.prev=t.prev?t.prev:"up",!t.target||!t.selector)return;i(t),window.addEventListener(t.event,function(e){o(e,t)})};var n=r(1),o=r(2),i=r(7);r(8)},function(e,t,r){"use strict";e.exports={selector:"a",loop:!0,event:"keydown",next:"down right",prev:"up left"}},function(e,t,r){"use strict";var n=r(3),o=r(4),i=r(5),u=r(6);e.exports=function(e,t){var r=e.target,f=e.which||e.keycode,c=t.target.querySelectorAll(t.selector);c=c?Array.prototype.slice.call(c):c;var a=i(r,c);if(!c||!a)return!1;if(-1!==u(t.next,n).indexOf(f)){var l=o(r,c,"next");if(l<c.length)return c[l].focus(),e.preventDefault(),e.stopPropagation(),!1;if(t.loop)return c[0].focus(),e.preventDefault(),e.stopPropagation(),!1}if(-1!==u(t.prev,n).indexOf(f)){var p=o(r,c,"previous");if(p<c.length&&-1!==p)return c[p].focus(),e.preventDefault(),e.stopPropagation(),!1;if(t.loop)return c[c.length-1].focus(),e.preventDefault(),e.stopPropagation(),!1}return!0}},function(e,t,r){"use strict";e.exports={up:38,right:39,down:40,left:37,escape:27,enter:13,spacebar:32,tab:9}},function(e,t,r){"use strict";e.exports=function(e,t){var r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"next",n=Array.prototype.slice.call(t).indexOf(e);if(-1!==n)return"previous"===r?n-1:n+1}},function(e,t,r){"use strict";e.exports=function(e,t){return-1!==Array.prototype.slice.call(t).indexOf(e)}},function(e,t,r){"use strict";e.exports=function(e,t){for(var r=e.split(" "),n=[],o=0;o<r.length;o++)n.push(t[r[o]]);return n}},function(e,t,r){"use strict";e.exports=function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"";if(!e.target||!e.selector)return!1;var t=e.target.querySelectorAll(e.selector);(t=t?Array.prototype.slice.call(t):t).forEach(function(e){e.tabIndex=0})}},function(e,t,r){"use strict";"function"!=typeof Object.assign&&Object.defineProperty(Object,"assign",{value:function(e,t){if(null==e)throw new TypeError("Cannot convert undefined or null to object");for(var r=Object(e),n=1;n<arguments.length;n++){var o=arguments[n];if(null!=o)for(var i in o)Object.prototype.hasOwnProperty.call(o,i)&&(r[i]=o[i])}return r},writable:!0,configurable:!0}),Array.prototype.forEach||(Array.prototype.forEach=function(e){var t,r;if(null==this)throw new TypeError("this is null or not defined");var n=Object(this),o=n.length>>>0;if("function"!=typeof e)throw new TypeError(e+" is not a function");for(arguments.length>1&&(t=arguments[1]),r=0;r<o;){var i;r in n&&(i=n[r],e.call(t,i,r,n)),r++}})}])});
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -2178,6 +2189,74 @@ module.exports = JSON.parse("{\"_from\":\"axios@^0.21.2\",\"_id\":\"axios@0.21.4
 
 /***/ }),
 
+/***/ "./node_modules/classnames/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/classnames/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2018 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames() {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				if (arg.length) {
+					var inner = classNames.apply(null, arg);
+					if (inner) {
+						classes.push(inner);
+					}
+				}
+			} else if (argType === 'object') {
+				if (arg.toString === Object.prototype.toString) {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				} else {
+					classes.push(arg.toString());
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
+
+
+/***/ }),
+
 /***/ "./node_modules/desandro-matches-selector/matches-selector.js":
 /*!********************************************************************!*\
   !*** ./node_modules/desandro-matches-selector/matches-selector.js ***!
@@ -3883,10 +3962,23 @@ var FocusTrap = /*#__PURE__*/function (_React$Component) {
     _this.updatePreviousElement();
 
     return _this;
-  } // TODO: Need more test coverage for this function
+  }
+  /**
+   * Gets the configured document.
+   * @returns {Document|undefined} Configured document, falling back to the main
+   *  document, if it exists. During SSR, `undefined` is returned since the
+   *  document doesn't exist.
+   */
 
 
   _createClass(FocusTrap, [{
+    key: "getDocument",
+    value: function getDocument() {
+      // SSR: careful to check if `document` exists before accessing it as a variable
+      return this.props.focusTrapOptions.document || (typeof document !== 'undefined' ? document : undefined);
+    } // TODO: Need more test coverage for this function
+
+  }, {
     key: "getNodeForOption",
     value: function getNodeForOption(optionName) {
       var optionValue = this.tailoredFocusTrapOptions[optionName];
@@ -3898,7 +3990,9 @@ var FocusTrap = /*#__PURE__*/function (_React$Component) {
       var node = optionValue;
 
       if (typeof optionValue === 'string') {
-        node = document.querySelector(optionValue);
+        var _this$getDocument;
+
+        node = (_this$getDocument = this.getDocument()) === null || _this$getDocument === void 0 ? void 0 : _this$getDocument.querySelector(optionValue);
 
         if (!node) {
           throw new Error("`".concat(optionName, "` refers to no known node"));
@@ -3926,8 +4020,7 @@ var FocusTrap = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updatePreviousElement",
     value: function updatePreviousElement() {
-      // SSR: careful to check if `document` exists before accessing it as a variable
-      var currentDocument = this.props.focusTrapOptions.document || (typeof document !== 'undefined' ? document : undefined);
+      var currentDocument = this.getDocument();
 
       if (currentDocument) {
         this.previouslyFocusedElement = currentDocument.activeElement;
@@ -4001,7 +4094,14 @@ var FocusTrap = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.setupFocusTrap();
+      if (this.props.active) {
+        this.setupFocusTrap();
+      } // else, wait for later activation in case the `focusTrapOptions` will be updated
+      //  again before the trap is activated (e.g. if waiting to know what the document
+      //  object will be, so the Trap must be rendered, but the consumer is waiting to
+      //  activate until they have obtained the document from a ref)
+      //  @see https://github.com/focus-trap/focus-trap-react/issues/539
+
     }
   }, {
     key: "componentDidUpdate",
@@ -4033,9 +4133,22 @@ var FocusTrap = /*#__PURE__*/function (_React$Component) {
         if (hasUnpaused) {
           this.focusTrap.unpause();
         }
-      } else if (prevProps.containerElements !== this.props.containerElements) {
-        this.focusTrapElements = this.props.containerElements;
-        this.setupFocusTrap();
+      } else {
+        // NOTE: if we're in `componentDidUpdate` and we don't have a trap yet,
+        //  it either means it shouldn't be active, or it should be but none of
+        //  of given `containerElements` were present in the DOM the last time
+        //  we tried to create the trap
+        if (prevProps.containerElements !== this.props.containerElements) {
+          this.focusTrapElements = this.props.containerElements;
+        } // don't create the trap unless it should be active in case the consumer
+        //  is still updating `focusTrapOptions`
+        //  @see https://github.com/focus-trap/focus-trap-react/issues/539
+
+
+        if (this.props.active) {
+          this.updatePreviousElement();
+          this.setupFocusTrap();
+        }
       }
     }
   }, {
@@ -39483,6 +39596,289 @@ exports.default = ErrorMessage;
 
 /***/ }),
 
+/***/ "./src/js/components/Filter.js":
+/*!*************************************!*\
+  !*** ./src/js/components/Filter.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _a11yarrows = __webpack_require__(/*! a11yarrows */ "./node_modules/a11yarrows/dist/a11yarrows.min.js");
+
+var a11yarrows = _interopRequireWildcard(_a11yarrows);
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Filter = function (_React$Component) {
+	_inherits(Filter, _React$Component);
+
+	function Filter(props) {
+		_classCallCheck(this, Filter);
+
+		var _this = _possibleConstructorReturn(this, (Filter.__proto__ || Object.getPrototypeOf(Filter)).call(this, props));
+
+		_this.data = _this.props.data;
+		_this.default = _this.data.default;
+		_this.filterKey = _this.props.filterKey;
+		_this.provider = _this.props.provider;
+		_this.id = _this.provider + "-" + _this.filterKey;
+		_this.clickHandler = _this.props.function.bind(_this);
+		_this.toggleMenu = _this.toggleMenu.bind(_this);
+		_this.closeMenuOutside = _this.closeMenuOutside.bind(_this);
+		_this.focusOutside = _this.focusOutside.bind(_this);
+		_this.escClick = _this.escClick.bind(_this);
+		_this.isColor = _this.filterKey === "colors" || _this.filterKey === "color";
+		_this.state = {
+			expanded: false,
+			selected: _this.data.default
+		};
+		return _this;
+	}
+
+	/**
+  * Toggle menu open/closed.
+  *
+  * @param {Event} event The click event.
+  */
+
+
+	_createClass(Filter, [{
+		key: "toggleMenu",
+		value: function toggleMenu(event) {
+			var _this2 = this;
+
+			event.preventDefault();
+
+			// If disabled, don't open menu.
+			var target = event.currentTarget;
+			if (target.disabled) {
+				return false;
+			}
+
+			if (this.state.expanded) {
+				this.setState({ expanded: false }, function () {
+					document.removeEventListener("click", _this2.closeMenuOutside);
+				});
+			} else {
+				this.setState({ expanded: true }, function () {
+					document.addEventListener("click", _this2.closeMenuOutside);
+				});
+			}
+		}
+
+		/**
+   * Close menu when clicking outside.
+   *
+   * @param {Event} event The click event.
+   */
+
+	}, {
+		key: "closeMenuOutside",
+		value: function closeMenuOutside(event) {
+			var _this3 = this;
+
+			if (!this.menu.contains(event.target) && !this.trigger.contains(event.target)) {
+				this.setState({ expanded: false }, function () {
+					document.removeEventListener("click", _this3.closeMenuOutside);
+				});
+			}
+		}
+
+		/**
+   * Checks for focus outside of component.
+   *
+   * @param {Event} event The click event.
+   */
+
+	}, {
+		key: "focusOutside",
+		value: function focusOutside(event) {
+			if (!this.dropdown.contains(event.target)) {
+				this.closeMenuOutside(event);
+			}
+		}
+
+		/**
+   * Detect esc key press.
+   *
+   * @param {Event} event The click event.
+   */
+
+	}, {
+		key: "escClick",
+		value: function escClick(event) {
+			if (event.key === "Escape") {
+				this.setState({ expanded: false });
+			}
+		}
+
+		/**
+   * Click handler for the filter buttons.
+   *
+   * @param {string} filter The current filter key.
+   * @param {string} value  The value to filter.
+   */
+
+	}, {
+		key: "click",
+		value: function click(filter, value) {
+			var self = this;
+			var newValue = this.state.selected !== value ? value : this.default;
+
+			this.setState({
+				selected: newValue
+			});
+			this.clickHandler(filter, newValue);
+
+			// Delay for effect.
+			setTimeout(function () {
+				self.trigger.click();
+			}, 100);
+		}
+
+		/**
+   * Convert a color to a CSS value.
+   * @see https://www.w3schools.com/colors/colors_names.asp
+   *
+   * @param  {string} color The current color.
+   * @return {string}       The color.
+   */
+
+	}, {
+		key: "convertColor",
+		value: function convertColor(color) {
+			if (color === "lilac") {
+				color = "DarkViolet";
+			}
+			if (color === "grayscale" || color === "black_and_white") {
+				color = "LightGray";
+			}
+			return color;
+		}
+
+		// Initiate functions on mount.
+
+	}, {
+		key: "componentDidMount",
+		value: function componentDidMount() {
+			// Initiate arrow menus.
+			a11yarrows.init(this.dropdown, {
+				selector: "button"
+			});
+
+			// Check for focus outside.
+			document.addEventListener("keyup", this.focusOutside);
+			document.addEventListener("keydown", this.escClick);
+		}
+
+		// Functions to run on unmount.
+
+	}, {
+		key: "componentWillUnmount",
+		value: function componentWillUnmount() {
+			document.removeEventListener("keyup", this.focusOutside);
+			document.removeEventListener("keydown", this.escClick);
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			var _this4 = this;
+
+			return _react2.default.createElement(
+				"div",
+				{
+					className: "filter-dropdown",
+					id: this.id,
+					ref: function ref(element) {
+						_this4.dropdown = element;
+					}
+				},
+				_react2.default.createElement(
+					"button",
+					{
+						onClick: this.toggleMenu,
+						className: "filter-dropdown--button",
+						"aria-expanded": this.state.expanded ? "true" : "false",
+						ref: function ref(element) {
+							_this4.trigger = element;
+						}
+					},
+					_react2.default.createElement(
+						"span",
+						{ className: "filter-dropdown--button-label" },
+						instant_img_localize.filters[this.data.label]
+					),
+					_react2.default.createElement(
+						"span",
+						{ className: "filter-dropdown--button-selected" },
+						this.state.selected,
+						_react2.default.createElement("i", { className: "fa fa-caret-down", "aria-hidden": "true" })
+					)
+				),
+				_react2.default.createElement(
+					"div",
+					{
+						className: (0, _classnames2.default)("filter-dropdown--menu", this.state.expanded ? "expanded" : null),
+						"data-key": this.filterKey,
+						"aria-hidden": this.state.expanded ? "false" : "true",
+						ref: function ref(element) {
+							_this4.menu = element;
+						}
+					},
+					this.data.filters && this.data.filters.map(function (value, key) {
+						return _react2.default.createElement(
+							"button",
+							{
+								key: key,
+								className: (0, _classnames2.default)("filter-dropdown--item", _this4.state.selected === value ? "selected" : null),
+								onClick: function onClick() {
+									return _this4.click(_this4.filterKey, value);
+								}
+							},
+							value.replace(/_/g, " "),
+							value !== "all" && value !== "transparent" && _this4.isColor ? _react2.default.createElement("span", {
+								className: "_color",
+								style: { color: _this4.convertColor(value) }
+							}) : null
+						);
+					})
+				)
+			);
+		}
+	}]);
+
+	return Filter;
+}(_react2.default.Component);
+
+exports.default = Filter;
+
+/***/ }),
+
 /***/ "./src/js/components/LoadMore.js":
 /*!***************************************!*\
   !*** ./src/js/components/LoadMore.js ***!
@@ -39667,99 +40063,6 @@ var NoResults = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = NoResults;
-
-/***/ }),
-
-/***/ "./src/js/components/Orientation.js":
-/*!******************************************!*\
-  !*** ./src/js/components/Orientation.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-
-var _API2 = _interopRequireDefault(_API);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Orientation = function (_React$Component) {
-	_inherits(Orientation, _React$Component);
-
-	function Orientation(props) {
-		_classCallCheck(this, Orientation);
-
-		var _this = _possibleConstructorReturn(this, (Orientation.__proto__ || Object.getPrototypeOf(Orientation)).call(this, props));
-
-		_this.provider = _this.props.provider;
-		_this.setOrientation = _this.props.setOrientation.bind(_this);
-		_this.options = _API2.default[_this.provider].orientation;
-		return _this;
-	}
-
-	_createClass(Orientation, [{
-		key: "render",
-		value: function render() {
-			var _this2 = this;
-
-			return _react2.default.createElement(
-				"div",
-				{ className: "orientation-list" },
-				_react2.default.createElement(
-					"span",
-					null,
-					_react2.default.createElement("i", { className: "fa fa-filter", "aria-hidden": "true" }),
-					" ",
-					instant_img_localize.orientation,
-					":"
-				),
-				_react2.default.createElement(
-					"ul",
-					null,
-					this.options && this.options.map(function (option, iterator) {
-						return _react2.default.createElement(
-							"li",
-							{
-								key: iterator + "-" + option,
-								tabIndex: "0",
-								onClick: function onClick(e) {
-									return _this2.setOrientation(option, e);
-								},
-								onKeyPress: function onKeyPress(e) {
-									return _this2.setOrientation(option, e);
-								}
-							},
-							instant_img_localize[option]
-						);
-					})
-				)
-			);
-		}
-	}]);
-
-	return Orientation;
-}(_react2.default.Component);
-
-exports.default = Orientation;
 
 /***/ }),
 
@@ -40732,6 +41035,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _masonryLayout = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
@@ -40746,9 +41051,21 @@ var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.j
 
 var _API2 = _interopRequireDefault(_API);
 
+var _filters = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
+
+var _filters2 = _interopRequireDefault(_filters);
+
 var _buildTestURL = __webpack_require__(/*! ../functions/buildTestURL */ "./src/js/functions/buildTestURL.js");
 
 var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
+
+var _contentSafety = __webpack_require__(/*! ../functions/contentSafety */ "./src/js/functions/contentSafety.js");
+
+var _contentSafety2 = _interopRequireDefault(_contentSafety);
+
+var _createQS = __webpack_require__(/*! ../functions/createQS */ "./src/js/functions/createQS.js");
+
+var _createQS2 = _interopRequireDefault(_createQS);
 
 var _getResults = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
 
@@ -40766,6 +41083,10 @@ var _ErrorMessage = __webpack_require__(/*! ./ErrorMessage */ "./src/js/componen
 
 var _ErrorMessage2 = _interopRequireDefault(_ErrorMessage);
 
+var _Filter = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
+
+var _Filter2 = _interopRequireDefault(_Filter);
+
 var _LoadingBlock = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
 
 var _LoadingBlock2 = _interopRequireDefault(_LoadingBlock);
@@ -40777,10 +41098,6 @@ var _LoadMore2 = _interopRequireDefault(_LoadMore);
 var _NoResults = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
 
 var _NoResults2 = _interopRequireDefault(_NoResults);
-
-var _Orientation = __webpack_require__(/*! ./Orientation */ "./src/js/components/Orientation.js");
-
-var _Orientation2 = _interopRequireDefault(_Orientation);
 
 var _Photo = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
 
@@ -40797,8 +41114,6 @@ var _Tooltip2 = _interopRequireDefault(_Tooltip);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -40818,14 +41133,12 @@ var PhotoList = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (PhotoList.__proto__ || Object.getPrototypeOf(PhotoList)).call(this, props));
 
 		_this.providers = ["Unsplash", "Pixabay"];
-
 		_this.provider = _this.props.provider; // Unsplash, Pixabay, etc.
 		_this.api_provider = _API2.default[_this.provider]; // The API settings for the provider.
 		_this.arr_key = _this.api_provider.arr_key;
-		_this.order_key = _this.api_provider.order_key;
 
+		// API Vars.
 		_this.api_key = instant_img_localize[_this.provider + "_app_id"];
-
 		_this.api_url = "" + _this.api_provider.photo_api + _this.api_provider.api_query_var + _this.api_key + _API2.default.defaults.posts_per_page;
 		_this.search_api_url = "" + _this.api_provider.search_api + _this.api_provider.api_query_var + _this.api_key + _API2.default.defaults.posts_per_page;
 
@@ -40833,9 +41146,14 @@ var PhotoList = function (_React$Component) {
 		_this.results = (0, _getResults2.default)(_this.provider, _this.arr_key, _this.props.results);
 		_this.state = {
 			results: _this.results,
+			filters: _filters2.default[_this.provider].filters,
+			search_filters: _filters2.default[_this.provider].search,
 			restapi_error: false,
 			api_lightbox: false
 		};
+
+		_this.filters = {};
+		_this.search_filters = {};
 
 		_this.orderby = _this.props.orderby; // Orderby
 		_this.page = _this.props.page; // Page
@@ -40843,19 +41161,20 @@ var PhotoList = function (_React$Component) {
 		_this.is_search = false;
 		_this.search_term = "";
 		_this.total_results = 0;
-		_this.orientation = "";
+		_this.view = "";
 		_this.isLoading = false; // Loading flag.
 		_this.isDone = false; // Done flag.
 		_this.errorMsg = "";
 		_this.msnry = "";
 		_this.tooltipInterval = "";
+		_this.delay = 250;
 
 		// Refs.
 		_this.photoTarget = _react2.default.createRef();
 		_this.providerNav = _react2.default.createRef();
 		_this.controlNav = _react2.default.createRef();
 		_this.photoSearch = _react2.default.createRef();
-		_this.buttonLatest = _react2.default.createRef();
+		_this.filterGroups = _react2.default.createRef();
 
 		// Editor props.
 		_this.editor = _this.props.editor ? _this.props.editor : "classic";
@@ -40940,69 +41259,6 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * Orientation filter. Availlable during a search only.
-   *
-   * @param {string} orientation The orientation of the photos.
-   * @param {MouseEvent} event The dispatched orientation setter event.
-   * @since 4.2
-   */
-
-	}, {
-		key: "setOrientation",
-		value: function setOrientation(orientation, event) {
-			if (event && event.target) {
-				var target = event.target;
-
-				if (target.classList.contains("active")) {
-					// Clear orientation
-					target.classList.remove("active");
-					this.orientation = "";
-				} else {
-					// Set orientation
-					var siblings = target.parentNode.querySelectorAll("li");
-					[].concat(_toConsumableArray(siblings)).forEach(function (el) {
-						return el.classList.remove("active");
-					}); // remove active classes
-
-					target.classList.add("active");
-					this.orientation = orientation;
-				}
-
-				if (this.search_term !== "") {
-					this.doSearch(this.search_term);
-				}
-			}
-		}
-
-		/**
-   * Is their an orientation set.
-   *
-   * @since 4.2
-   */
-
-	}, {
-		key: "hasOrientation",
-		value: function hasOrientation() {
-			return this.orientation === "" ? false : true;
-		}
-
-		/**
-   * Clear the orientation.
-   *
-   * @since 4.2
-   */
-
-	}, {
-		key: "clearOrientation",
-		value: function clearOrientation() {
-			var items = this.container.querySelectorAll(".orientation-list li");
-			[].concat(_toConsumableArray(items)).forEach(function (el) {
-				return el.classList.remove("active");
-			}); // remove active classes
-			this.orientation = "";
-		}
-
-		/**
    * Run the search.
    *
    * @param {string} term The search term.
@@ -41015,24 +41271,27 @@ var PhotoList = function (_React$Component) {
 			var self = this;
 			var input = this.photoSearch.current;
 			var type = "term";
-			this.page = 1; // reset page num
 
-			var url = this.search_api_url + "&page=" + this.page + "&" + this.api_provider.search_query_var + "=" + this.search_term;
+			this.photoTarget.current.classList.add("loading");
+			this.isLoading = true;
 
-			if (this.hasOrientation()) {
-				// Set orientation
-				url = url + "&orientation=" + this.orientation;
-			}
+			this.page = 1; // Reset currentpage num.
+			this.toggleFilters(); // Disable filters.
+
+			var url = this.search_api_url + "&page=" + this.page + "&" + this.api_provider.search_query_var + "=" + this.search_term + (0, _contentSafety2.default)(this.provider);
 
 			// Search by ID.
 			// Allow users to search by photo by prepending id:{photo_id} to search terms.
 			var search_type = term.substring(0, 3);
-
 			if (search_type === "id:") {
 				type = "id";
 				term = term.replace("id:", "");
 				url = (0, _searchByID2.default)(this.provider, term, this.api_provider.photo_api, this.api_provider.api_query_var, this.api_key);
 			}
+
+			// Get search filters.
+			var filters = (0, _createQS2.default)(this.search_filters);
+			url = filters !== "&" ? "" + url + filters : url;
 
 			fetch(url).then(function (data) {
 				return data.json();
@@ -41047,7 +41306,10 @@ var PhotoList = function (_React$Component) {
 
 					// Update Props.
 					self.results = results;
-					self.setState({ results: self.results });
+					self.setState({
+						results: self.results,
+						search_filters: _filters2.default[self.provider].search
+					});
 				}
 
 				// Search by ID.
@@ -41074,7 +41336,12 @@ var PhotoList = function (_React$Component) {
 					self.setState({ results: self.results });
 				}
 
-				input.classList.remove("searching");
+				// Delay for effect.
+				setTimeout(function () {
+					input.classList.remove("searching");
+					self.photoTarget.current.classList.remove("loading");
+					self.isLoading = false;
+				}, self.delay);
 			}).catch(function (error) {
 				console.log(error);
 
@@ -41084,6 +41351,9 @@ var PhotoList = function (_React$Component) {
 				self.total_results = 0;
 				self.isDone = true;
 
+				this.photoTarget.current.classList.remove("loading");
+				this.isLoading = false;
+
 				// Update Props.
 				self.results = [];
 				self.setState({ results: self.results });
@@ -41091,7 +41361,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * Reset search results and results view.
+   * Reset search results, settings and results view.
    *
    * @since 3.0
    */
@@ -41099,43 +41369,65 @@ var PhotoList = function (_React$Component) {
 	}, {
 		key: "clearSearch",
 		value: function clearSearch() {
-			var input = this.photoSearch.current;
-			input.value = "";
+			this.photoSearch.current.value = "";
 			this.total_results = 0;
 			this.is_search = false;
 			this.search_term = "";
-			this.clearOrientation();
+			this.search_filters = {}; // Reset search filters.
+			this.toggleFilters(); // Re-enable filters.
 		}
 
 		/**
-   * Get the initial set of photos for the current view (New/Popular/Old/etc...).
+   * Click event for the control nav items.
    *
+   * @param {Event} e The clicked element event.
    * @param {string}  view  Current view.
-   * @param {Element} e     The clicked element.
-   * @param {Boolean} reset Is this an app reset.
+   * @since 4.6
+   */
+
+	}, {
+		key: "controlsClick",
+		value: function controlsClick(e, view) {
+			var target = e.currentTarget;
+			this.view = view;
+			if (!target.classList.contains("active")) {
+				this.getPhotos(view);
+			}
+		}
+
+		/**
+   * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
+   *
+   * @param {string}  view     Current view.
+   * @param {Boolean} reset    Is this an app reset.
+   * @param {Boolean} switcher Is this a provider switch.
    * @since 3.0
    */
 
 	}, {
 		key: "getPhotos",
-		value: function getPhotos(view, e) {
-			var reset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+		value: function getPhotos(view) {
+			var reset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+			var switcher = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
 			var self = this;
-			var el = e.target || e;
 
-			if (el.classList.contains("active") && !reset) {
+			if (this.isLoading && !reset) {
 				return; // exit if active
 			}
 
-			el.classList.add("loading"); // Add class to nav btn
+			this.photoTarget.current.classList.add("loading");
 			this.isLoading = true;
 			this.page = 1;
 			this.orderby = view;
 			this.results = [];
 			this.clearSearch();
 
-			var url = this.api_url + "&page=" + this.page + "&" + this.order_key + "=" + this.orderby;
+			// Get filters.
+			var filters = (0, _createQS2.default)(this.filters);
+
+			// Build URL.
+			var url = this.api_url + "&page=" + this.page + "&" + (0, _contentSafety2.default)(this.provider) + filters;
 
 			fetch(url).then(function (data) {
 				return data.json();
@@ -41149,12 +41441,25 @@ var PhotoList = function (_React$Component) {
 				self.results = results;
 
 				// Set results state.
-				self.setState({ results: results });
+				if (!switcher) {
+					self.setState({
+						results: results
+					});
+				} else {
+					self.setState({
+						results: results,
+						filters: _filters2.default[self.provider].filters
+					});
+				}
 
-				// Remove class from nav btn.
-				el.classList.remove("loading");
+				// Delay for effect.
+				setTimeout(function () {
+					self.photoTarget.current.classList.remove("loading");
+					self.isLoading = false;
+				}, self.delay);
 			}).catch(function (error) {
 				console.log(error);
+				self.photoTarget.current.classList.remove("loading");
 				self.isLoading = false;
 			});
 		}
@@ -41173,16 +41478,18 @@ var PhotoList = function (_React$Component) {
 			this.container.classList.add("loading");
 			this.isLoading = true;
 
-			var url = this.api_url + "&page=" + this.page + "&" + this.order_key + "=" + this.orderby;
+			var url = this.api_url + "&page=" + this.page + "&";
+			var filters = "";
 
 			if (this.is_search) {
 				url = this.search_api_url + "&page=" + this.page + "&" + this.api_provider.search_query_var + "=" + this.search_term;
-
-				if (this.hasOrientation()) {
-					// Set orientation
-					url = url + "&orientation=" + this.orientation;
-				}
+				filters = (0, _createQS2.default)(this.search_filters);
+			} else {
+				filters = (0, _createQS2.default)(this.filters);
 			}
+
+			// Build URL
+			url = filters ? "" + url + (0, _contentSafety2.default)(this.provider) + filters : url;
 
 			fetch(url).then(function (data) {
 				return data.json();
@@ -41204,10 +41511,70 @@ var PhotoList = function (_React$Component) {
 
 				// Update Props
 				self.setState({ results: self.results });
+
+				self.isLoading = false;
 			}).catch(function (error) {
 				console.log(error);
 				self.isLoading = false;
 			});
+		}
+
+		/**
+   * Filter the photo listing.
+   *
+   * @param {string} filter The current filter key.
+   * @param {string} value  The value to filter.
+   */
+
+	}, {
+		key: "filterPhotos",
+		value: function filterPhotos(filter, value) {
+			if (this.filters[filter] && value === "#" || value === "") {
+				delete this.filters[filter];
+			} else {
+				this.filters[filter] = value;
+			}
+			this.getPhotos(this.view, true);
+		}
+
+		/**
+   * Filter the search results.
+   *
+   * @param {string} filter The current filter key.
+   * @param {string} value  The value to filter.
+   */
+
+	}, {
+		key: "filterSearch",
+		value: function filterSearch(filter, value) {
+			if (this.search_filters[filter] && value === "#" || value === "") {
+				delete this.search_filters[filter];
+			} else {
+				this.search_filters[filter] = value;
+			}
+			this.doSearch(this.search_term);
+		}
+
+		/**
+   * Toggle the active state of all filters.
+   */
+
+	}, {
+		key: "toggleFilters",
+		value: function toggleFilters() {
+			var _this2 = this;
+
+			var filters = this.filterGroups.current.querySelectorAll("button.filter-dropdown--button");
+			if (filters) {
+				filters.forEach(function (button) {
+					button.disabled = _this2.is_search ? true : false;
+				});
+			}
+			if (this.is_search) {
+				this.filterGroups.current.classList.add("inactive");
+			} else {
+				this.filterGroups.current.classList.remove("inactive");
+			}
 		}
 
 		/**
@@ -41303,6 +41670,10 @@ var PhotoList = function (_React$Component) {
 								this.provider = provider;
 								this.api_provider = _API2.default[this.provider];
 
+								// Clear filters.
+								this.filters = {};
+								this.search_filters = {};
+
 								// Remove active from buttons.
 								this.providerNav.current.querySelectorAll("button").forEach(function (button) {
 									button.classList.remove("active");
@@ -41313,16 +41684,16 @@ var PhotoList = function (_React$Component) {
 
 								// Set current provider params.
 								this.arr_key = this.api_provider.arr_key;
-								this.order_key = this.api_provider.order_key;
 								this.api_key = instant_img_localize[this.provider + "_app_id"];
 
 								this.api_url = "" + this.api_provider.photo_api + this.api_provider.api_query_var + this.api_key + _API2.default.defaults.posts_per_page;
 								this.search_api_url = "" + this.api_provider.search_api + this.api_provider.api_query_var + this.api_key + _API2.default.defaults.posts_per_page;
 
 								// At last, get the photos.
-								this.getPhotos("latest", this.buttonLatest.current, true);
+								this.view = "latest";
+								this.getPhotos(this.view, true, true);
 
-							case 24:
+							case 26:
 							case "end":
 								return _context.stop();
 						}
@@ -41330,7 +41701,7 @@ var PhotoList = function (_React$Component) {
 				}, _callee, this);
 			}));
 
-			function switchProvider(_x2) {
+			function switchProvider(_x3) {
 				return _ref.apply(this, arguments);
 			}
 
@@ -41392,31 +41763,19 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * Sets the main navigation active state.
+   * Sets the loading state.
    *
    * @since 3.0
    */
 
 	}, {
-		key: "setActiveState",
-		value: function setActiveState() {
+		key: "doneLoading",
+		value: function doneLoading() {
 			var self = this;
-			// Remove .active class from control nav.
-			this.controlNav.current.querySelectorAll("button").forEach(function (el) {
-				return el.classList.remove("active");
-			});
-
-			// Set active item, if not search.
-			if (!this.is_search) {
-				var active = this.controlNav.current.querySelector("li button.instant-images-" + this.orderby);
-				if (active) {
-					active.classList.add("active");
-				}
-			}
 			setTimeout(function () {
 				self.isLoading = false;
 				self.container.classList.remove("loading");
-			}, 1000);
+			}, self.delay);
 		}
 
 		/**
@@ -41455,7 +41814,7 @@ var PhotoList = function (_React$Component) {
 
 				setTimeout(function () {
 					tooltip.classList.add("over");
-				}, 150);
+				}, self.delay);
 			}, 750);
 		}
 
@@ -41479,7 +41838,7 @@ var PhotoList = function (_React$Component) {
 		key: "componentDidUpdate",
 		value: function componentDidUpdate() {
 			this.renderLayout();
-			this.setActiveState();
+			this.doneLoading();
 		}
 
 		// Component Init
@@ -41487,10 +41846,10 @@ var PhotoList = function (_React$Component) {
 	}, {
 		key: "componentDidMount",
 		value: function componentDidMount() {
-			var _this2 = this;
+			var _this3 = this;
 
 			this.renderLayout();
-			this.setActiveState();
+			this.doneLoading();
 			this.test();
 			this.container.classList.remove("loading");
 			this.wrapper.classList.add("loaded");
@@ -41502,14 +41861,14 @@ var PhotoList = function (_React$Component) {
 			} else {
 				// Add scroll event
 				window.addEventListener("scroll", function () {
-					return _this2.onScroll();
+					return _this3.onScroll();
 				});
 			}
 		}
 	}, {
 		key: "render",
 		value: function render() {
-			var _this3 = this;
+			var _this4 = this;
 
 			return _react2.default.createElement(
 				"div",
@@ -41526,9 +41885,9 @@ var PhotoList = function (_React$Component) {
 								{
 									"data-provider": provider.toLowerCase(),
 									onClick: function onClick(e) {
-										return _this3.switchProvider(e);
+										return _this4.switchProvider(e);
 									},
-									className: _this3.provider === provider.toLowerCase() ? "provider-nav--btn active" : "provider-nav--btn"
+									className: _this4.provider === provider.toLowerCase() ? "provider-nav--btn active" : "provider-nav--btn"
 								},
 								_react2.default.createElement(
 									"span",
@@ -41549,34 +41908,43 @@ var PhotoList = function (_React$Component) {
 					afterVerifiedAPICallback: this.afterVerifiedAPICallback.bind(this),
 					closeAPILightbox: this.closeAPILightbox.bind(this)
 				}),
-				this.api_provider.order && _react2.default.createElement(
-					"ul",
+				_react2.default.createElement(
+					"div",
 					{ className: "control-nav", ref: this.controlNav },
-					this.api_provider.order.map(function (order, iterator) {
-						return _react2.default.createElement(
-							"li",
-							{ key: _this3.provider + "-order-" + iterator },
-							_react2.default.createElement(
-								"button",
-								{
-									type: "button",
-									className: "instant-images-" + order,
-									onClick: function onClick(e) {
-										return _this3.getPhotos(order, e);
-									},
-									ref: order === "latest" ? _this3.buttonLatest : null
-								},
-								instant_img_localize[order]
-							)
-						);
-					}),
 					_react2.default.createElement(
-						"li",
-						{ className: "search-field", id: "search-bar" },
+						"div",
+						{
+							className: "control-nav--filters-wrap",
+							ref: this.filterGroups
+						},
+						Object.entries(this.state.filters).length && _react2.default.createElement(
+							"div",
+							{ className: "control-nav--filters" },
+							Object.entries(this.state.filters).map(function (_ref2, i) {
+								var _ref3 = _slicedToArray(_ref2, 2),
+								    key = _ref3[0],
+								    filter = _ref3[1];
+
+								return _react2.default.createElement(_Filter2.default, {
+									key: key + "-" + i,
+									filterKey: key,
+									provider: _this4.provider,
+									data: filter,
+									"function": _this4.filterPhotos.bind(_this4)
+								});
+							})
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{
+							className: "control-nav--search search-field",
+							id: "search-bar"
+						},
 						_react2.default.createElement(
 							"form",
 							{ onSubmit: function onSubmit(e) {
-									return _this3.search(e);
+									return _this4.search(e);
 								}, autoComplete: "off" },
 							_react2.default.createElement(
 								"label",
@@ -41596,7 +41964,7 @@ var PhotoList = function (_React$Component) {
 							),
 							_react2.default.createElement(_ResultsToolTip2.default, {
 								container: this.container,
-								buttonLatest: this.buttonLatest,
+								getPhotos: this.getPhotos.bind(this),
 								isSearch: this.is_search,
 								total: this.total_results,
 								title: this.total_results + " " + instant_img_localize.search_results + " " + this.search_term
@@ -41605,25 +41973,73 @@ var PhotoList = function (_React$Component) {
 					)
 				),
 				this.state.restapi_error && _react2.default.createElement(_ErrorMessage2.default, null),
-				this.is_search && _react2.default.createElement(_Orientation2.default, {
-					provider: this.provider,
-					setOrientation: this.setOrientation.bind(this)
-				}),
+				this.is_search && this.editor !== "gutenberg" && _react2.default.createElement(
+					"div",
+					{ className: "search-results-header" },
+					_react2.default.createElement(
+						"h2",
+						null,
+						this.search_term
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "search-results-header--text" },
+						this.total_results + " " + instant_img_localize.search_results,
+						" ",
+						_react2.default.createElement(
+							"strong",
+							null,
+							"" + this.search_term
+						),
+						" - ",
+						_react2.default.createElement(
+							"button",
+							{
+								title: instant_img_localize.clear_search,
+								onClick: function onClick() {
+									return _this4.getPhotos("latest");
+								}
+							},
+							instant_img_localize.clear_search
+						)
+					),
+					Object.entries(this.state.search_filters).length && _react2.default.createElement(
+						"div",
+						{ className: "control-nav--filters-wrap" },
+						_react2.default.createElement(
+							"div",
+							{ className: "control-nav--filters" },
+							Object.entries(this.state.search_filters).map(function (_ref4, i) {
+								var _ref5 = _slicedToArray(_ref4, 2),
+								    key = _ref5[0],
+								    filter = _ref5[1];
+
+								return _react2.default.createElement(_Filter2.default, {
+									key: key + "-" + i,
+									filterKey: key,
+									provider: _this4.provider,
+									data: filter,
+									"function": _this4.filterSearch.bind(_this4)
+								});
+							})
+						)
+					)
+				),
 				_react2.default.createElement(
 					"div",
 					{ id: "photos", className: "photo-target", ref: this.photoTarget },
 					this.state.results.map(function (result, iterator) {
 						return _react2.default.createElement(_Photo2.default, {
-							provider: _this3.provider,
+							provider: _this4.provider,
 							result: result,
-							key: _this3.provider + "-" + result.id + "-" + iterator,
-							editor: _this3.editor,
-							mediaRouter: _this3.is_media_router,
-							blockEditor: _this3.is_block_editor,
-							SetFeaturedImage: _this3.SetFeaturedImage,
-							InsertImage: _this3.InsertImage,
-							showTooltip: _this3.showTooltip,
-							hideTooltip: _this3.hideTooltip
+							key: _this4.provider + "-" + result.id + "-" + iterator,
+							editor: _this4.editor,
+							mediaRouter: _this4.is_media_router,
+							blockEditor: _this4.is_block_editor,
+							SetFeaturedImage: _this4.SetFeaturedImage,
+							InsertImage: _this4.InsertImage,
+							showTooltip: _this4.showTooltip,
+							hideTooltip: _this4.hideTooltip
 						});
 					})
 				),
@@ -41678,7 +42094,7 @@ var ResultsToolTip = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (ResultsToolTip.__proto__ || Object.getPrototypeOf(ResultsToolTip)).call(this, props));
 
-		_this.buttonLatest = _this.props.buttonLatest;
+		_this.getPhotos = _this.props.getPhotos.bind(_this);
 		return _this;
 	}
 
@@ -41703,7 +42119,7 @@ var ResultsToolTip = function (_React$Component) {
 						type: "button",
 						title: instant_img_localize.clear_search,
 						onClick: function onClick() {
-							return _this2.buttonLatest.current.click();
+							return _this2.getPhotos("latest");
 						}
 					},
 					"x",
@@ -41793,27 +42209,108 @@ module.exports = {
 	},
 	unsplash: {
 		requires_key: false,
+		new: false,
+		filters: true,
 		api_query_var: "/?client_id=",
 		photo_api: "https://api.unsplash.com/photos",
 		collections_api: "https://api.unsplash.com/collections",
 		search_api: "https://api.unsplash.com/search/photos",
 		search_query_var: "query",
 		arr_key: "results",
-		order_key: "order_by",
-		order: ["latest", "popular", "oldest"],
 		orientation: ["landscape", "portrait", "squarish"]
 	},
 	pixabay: {
 		requires_key: true,
-		new: true,
+		new: false,
+		filters: true,
 		api_query_var: "/?key=",
 		photo_api: "https://pixabay.com/api",
 		search_api: "https://pixabay.com/api",
 		search_query_var: "q",
 		arr_key: "hits",
-		order_key: "order",
-		order: ["latest", "popular"],
 		orientation: ["horizontal", "vertical"]
+	}
+};
+
+/***/ }),
+
+/***/ "./src/js/constants/filters.js":
+/*!*************************************!*\
+  !*** ./src/js/constants/filters.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+	unsplash: {
+		filters: {
+			order_by: {
+				label: "orderby",
+				default: "latest",
+				filters: ["latest", "popular", "oldest"]
+			}
+		},
+		search: {
+			order_by: {
+				label: "orderby",
+				default: "relevance",
+				filters: ["relevance", "latest"]
+			},
+			orientation: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "landscape", "portrait", "squarish"]
+			},
+			color: {
+				label: "colors",
+				default: "all",
+				filters: ["all", "black_and_white", "black", "white", "yellow", "orange", "red", "purple", "magenta", "green", "teal", "blue"]
+			}
+		}
+	},
+	pixabay: {
+		filters: {
+			order: {
+				label: "orderby",
+				default: "popular",
+				filters: ["latest", "popular"]
+			},
+			image_type: {
+				label: "type",
+				default: "all",
+				filters: ["all", "photo", "illustration", "vector"]
+			},
+			category: {
+				label: "category",
+				default: "all",
+				filters: ["all", "backgrounds", "fashion", "nature", "science", "education", "feelings", "health", "people", "religion", "places", "animals", "industry", "computer", "food", "sports", "transportation", "travel", "buildings", "business", "music"]
+			},
+			colors: {
+				label: "colors",
+				default: "all",
+				filters: ["all", "grayscale", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown", "transparent"]
+			},
+			orientation: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "horizontal", "vertical"]
+			}
+		},
+		search: {
+			colors: {
+				label: "colors",
+				default: "all",
+				filters: ["all", "grayscale", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown", "transparent"]
+			},
+			orientation: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "horizontal", "vertical"]
+			}
+		}
 	}
 };
 
@@ -41893,6 +42390,78 @@ function consoleStatus(provider) {
 function capitalize(s) {
 	if (typeof s !== "string") return "";
 	return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/contentSafety.js":
+/*!*******************************************!*\
+  !*** ./src/js/functions/contentSafety.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = contentSafety;
+/**
+ * Set the photo safety for indicating that only images suitable for all ages should be returned.
+ * @see https://unsplash.com/documentation#content-safety
+ * @see https://pixabay.com/api/docs/
+ *
+ * @param  {string}  provider  The current service provider.
+ * @return {string} 				 The api string for filtering content.
+ */
+function contentSafety(provider) {
+	var str = "";
+	switch (provider) {
+		case "unsplash":
+			if (instant_img_localize.unsplash_content_filter) {
+				str = "&content_filter=" + instant_img_localize.unsplash_content_filter;
+			}
+			break;
+
+		case "pixabay":
+			if (instant_img_localize.pixabay_safesearch) {
+				str = "&safesearch=" + instant_img_localize.pixabay_safesearch;
+			}
+			break;
+	}
+	return str;
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/createQS.js":
+/*!**************************************!*\
+  !*** ./src/js/functions/createQS.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = createQS;
+/**
+ * Create a querystring from an object.
+ *
+ * @param  {string} obj The object.
+ * @return {string}     The generated querystring.
+ */
+function createQS(obj) {
+  var qs = Object.keys(obj).map(function (key) {
+    return key + "=" + obj[key];
+  }).join("&");
+
+  return "&" + qs;
 }
 
 /***/ }),

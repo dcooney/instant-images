@@ -1,15 +1,18 @@
 import Masonry from "masonry-layout";
 import React from "react";
 import API from "../constants/API";
+import FILTERS from "../constants/filters";
 import buildTestURL from "../functions/buildTestURL";
+import contentSafety from "../functions/contentSafety";
+import createQS from "../functions/createQS";
 import getResults, { getResultById } from "../functions/getResults";
 import searchByID from "../functions/searchByID";
 import APILightbox from "./APILightbox";
 import ErrorMessage from "./ErrorMessage";
+import Filter from "./Filter";
 import LoadingBlock from "./LoadingBlock";
 import LoadMore from "./LoadMore";
 import NoResults from "./NoResults";
-import Orientation from "./Orientation";
 import Photo from "./Photo";
 import ResultsToolTip from "./ResultsToolTip";
 import Tooltip from "./Tooltip";
@@ -21,14 +24,12 @@ class PhotoList extends React.Component {
 
 		// Get current provider settings.
 		this.providers = ["Unsplash", "Pixabay"];
-
 		this.provider = this.props.provider; // Unsplash, Pixabay, etc.
 		this.api_provider = API[this.provider]; // The API settings for the provider.
 		this.arr_key = this.api_provider.arr_key;
-		this.order_key = this.api_provider.order_key;
 
+		// API Vars.
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
-
 		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
 		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
 
@@ -40,9 +41,14 @@ class PhotoList extends React.Component {
 		);
 		this.state = {
 			results: this.results,
+			filters: FILTERS[this.provider].filters,
+			search_filters: FILTERS[this.provider].search,
 			restapi_error: false,
 			api_lightbox: false,
 		};
+
+		this.filters = {};
+		this.search_filters = {};
 
 		this.orderby = this.props.orderby; // Orderby
 		this.page = this.props.page; // Page
@@ -50,19 +56,20 @@ class PhotoList extends React.Component {
 		this.is_search = false;
 		this.search_term = "";
 		this.total_results = 0;
-		this.orientation = "";
+		this.view = "";
 		this.isLoading = false; // Loading flag.
 		this.isDone = false; // Done flag.
 		this.errorMsg = "";
 		this.msnry = "";
 		this.tooltipInterval = "";
+		this.delay = 250;
 
 		// Refs.
 		this.photoTarget = React.createRef();
 		this.providerNav = React.createRef();
 		this.controlNav = React.createRef();
 		this.photoSearch = React.createRef();
-		this.buttonLatest = React.createRef();
+		this.filterGroups = React.createRef();
 
 		// Editor props.
 		this.editor = this.props.editor ? this.props.editor : "classic";
@@ -146,56 +153,6 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * Orientation filter. Availlable during a search only.
-	 *
-	 * @param {string} orientation The orientation of the photos.
-	 * @param {MouseEvent} event The dispatched orientation setter event.
-	 * @since 4.2
-	 */
-	setOrientation(orientation, event) {
-		if (event && event.target) {
-			let target = event.target;
-
-			if (target.classList.contains("active")) {
-				// Clear orientation
-				target.classList.remove("active");
-				this.orientation = "";
-			} else {
-				// Set orientation
-				let siblings = target.parentNode.querySelectorAll("li");
-				[...siblings].forEach((el) => el.classList.remove("active")); // remove active classes
-
-				target.classList.add("active");
-				this.orientation = orientation;
-			}
-
-			if (this.search_term !== "") {
-				this.doSearch(this.search_term);
-			}
-		}
-	}
-
-	/**
-	 * Is their an orientation set.
-	 *
-	 * @since 4.2
-	 */
-	hasOrientation() {
-		return this.orientation === "" ? false : true;
-	}
-
-	/**
-	 * Clear the orientation.
-	 *
-	 * @since 4.2
-	 */
-	clearOrientation() {
-		const items = this.container.querySelectorAll(".orientation-list li");
-		[...items].forEach((el) => el.classList.remove("active")); // remove active classes
-		this.orientation = "";
-	}
-
-	/**
 	 * Run the search.
 	 *
 	 * @param {string} term The search term.
@@ -205,19 +162,20 @@ class PhotoList extends React.Component {
 		const self = this;
 		const input = this.photoSearch.current;
 		let type = "term";
-		this.page = 1; // reset page num
 
-		let url = `${this.search_api_url}&page=${this.page}&${this.api_provider.search_query_var}=${this.search_term}`;
+		this.photoTarget.current.classList.add("loading");
+		this.isLoading = true;
 
-		if (this.hasOrientation()) {
-			// Set orientation
-			url = `${url}&orientation=${this.orientation}`;
-		}
+		this.page = 1; // Reset currentpage num.
+		this.toggleFilters(); // Disable filters.
+
+		let url = `${this.search_api_url}&page=${this.page}&${
+			this.api_provider.search_query_var
+		}=${this.search_term}${contentSafety(this.provider)}`;
 
 		// Search by ID.
 		// Allow users to search by photo by prepending id:{photo_id} to search terms.
 		const search_type = term.substring(0, 3);
-
 		if (search_type === "id:") {
 			type = "id";
 			term = term.replace("id:", "");
@@ -229,6 +187,10 @@ class PhotoList extends React.Component {
 				this.api_key
 			);
 		}
+
+		// Get search filters.
+		const filters = createQS(this.search_filters);
+		url = filters !== "&" ? `${url}${filters}` : url;
 
 		fetch(url)
 			.then((data) => data.json())
@@ -248,7 +210,10 @@ class PhotoList extends React.Component {
 
 					// Update Props.
 					self.results = results;
-					self.setState({ results: self.results });
+					self.setState({
+						results: self.results,
+						search_filters: FILTERS[self.provider].search,
+					});
 				}
 
 				// Search by ID.
@@ -280,7 +245,12 @@ class PhotoList extends React.Component {
 					self.setState({ results: self.results });
 				}
 
-				input.classList.remove("searching");
+				// Delay for effect.
+				setTimeout(function () {
+					input.classList.remove("searching");
+					self.photoTarget.current.classList.remove("loading");
+					self.isLoading = false;
+				}, self.delay);
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -291,6 +261,9 @@ class PhotoList extends React.Component {
 				self.total_results = 0;
 				self.isDone = true;
 
+				this.photoTarget.current.classList.remove("loading");
+				this.isLoading = false;
+
 				// Update Props.
 				self.results = [];
 				self.setState({ results: self.results });
@@ -298,43 +271,63 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * Reset search results and results view.
+	 * Reset search results, settings and results view.
 	 *
 	 * @since 3.0
 	 */
 	clearSearch() {
-		const input = this.photoSearch.current;
-		input.value = "";
+		this.photoSearch.current.value = "";
 		this.total_results = 0;
 		this.is_search = false;
 		this.search_term = "";
-		this.clearOrientation();
+		this.search_filters = {}; // Reset search filters.
+		this.toggleFilters(); // Re-enable filters.
 	}
 
 	/**
-	 * Get the initial set of photos for the current view (New/Popular/Old/etc...).
+	 * Click event for the control nav items.
 	 *
+	 * @param {Event} e The clicked element event.
 	 * @param {string}  view  Current view.
-	 * @param {Element} e     The clicked element.
-	 * @param {Boolean} reset Is this an app reset.
+	 * @since 4.6
+	 */
+	controlsClick(e, view) {
+		const target = e.currentTarget;
+		this.view = view;
+		if (!target.classList.contains("active")) {
+			this.getPhotos(view);
+		}
+	}
+
+	/**
+	 * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
+	 *
+	 * @param {string}  view     Current view.
+	 * @param {Boolean} reset    Is this an app reset.
+	 * @param {Boolean} switcher Is this a provider switch.
 	 * @since 3.0
 	 */
-	getPhotos(view, e, reset = false) {
+	getPhotos(view, reset = false, switcher = false) {
 		const self = this;
-		const el = e.target || e;
 
-		if (el.classList.contains("active") && !reset) {
+		if (this.isLoading && !reset) {
 			return; // exit if active
 		}
 
-		el.classList.add("loading"); // Add class to nav btn
+		this.photoTarget.current.classList.add("loading");
 		this.isLoading = true;
 		this.page = 1;
 		this.orderby = view;
 		this.results = [];
 		this.clearSearch();
 
-		const url = `${this.api_url}&page=${this.page}&${this.order_key}=${this.orderby}`;
+		// Get filters.
+		const filters = createQS(this.filters);
+
+		// Build URL.
+		const url = `${this.api_url}&page=${this.page}&${contentSafety(
+			this.provider
+		)}${filters}`;
 
 		fetch(url)
 			.then((data) => data.json())
@@ -348,13 +341,26 @@ class PhotoList extends React.Component {
 				self.results = results;
 
 				// Set results state.
-				self.setState({ results: results });
+				if (!switcher) {
+					self.setState({
+						results: results,
+					});
+				} else {
+					self.setState({
+						results: results,
+						filters: FILTERS[self.provider].filters,
+					});
+				}
 
-				// Remove class from nav btn.
-				el.classList.remove("loading");
+				// Delay for effect.
+				setTimeout(function () {
+					self.photoTarget.current.classList.remove("loading");
+					self.isLoading = false;
+				}, self.delay);
 			})
 			.catch(function (error) {
 				console.log(error);
+				self.photoTarget.current.classList.remove("loading");
 				self.isLoading = false;
 			});
 	}
@@ -370,16 +376,18 @@ class PhotoList extends React.Component {
 		this.container.classList.add("loading");
 		this.isLoading = true;
 
-		let url = `${this.api_url}&page=${this.page}&${this.order_key}=${this.orderby}`;
+		let url = `${this.api_url}&page=${this.page}&`;
+		let filters = "";
 
 		if (this.is_search) {
 			url = `${this.search_api_url}&page=${this.page}&${this.api_provider.search_query_var}=${this.search_term}`;
-
-			if (this.hasOrientation()) {
-				// Set orientation
-				url = `${url}&orientation=${this.orientation}`;
-			}
+			filters = createQS(this.search_filters);
+		} else {
+			filters = createQS(this.filters);
 		}
+
+		// Build URL
+		url = filters ? `${url}${contentSafety(this.provider)}${filters}` : url;
 
 		fetch(url)
 			.then((data) => data.json())
@@ -407,11 +415,62 @@ class PhotoList extends React.Component {
 
 				// Update Props
 				self.setState({ results: self.results });
+
+				self.isLoading = false;
 			})
 			.catch(function (error) {
 				console.log(error);
 				self.isLoading = false;
 			});
+	}
+
+	/**
+	 * Filter the photo listing.
+	 *
+	 * @param {string} filter The current filter key.
+	 * @param {string} value  The value to filter.
+	 */
+	filterPhotos(filter, value) {
+		if ((this.filters[filter] && value === "#") || value === "") {
+			delete this.filters[filter];
+		} else {
+			this.filters[filter] = value;
+		}
+		this.getPhotos(this.view, true);
+	}
+
+	/**
+	 * Filter the search results.
+	 *
+	 * @param {string} filter The current filter key.
+	 * @param {string} value  The value to filter.
+	 */
+	filterSearch(filter, value) {
+		if ((this.search_filters[filter] && value === "#") || value === "") {
+			delete this.search_filters[filter];
+		} else {
+			this.search_filters[filter] = value;
+		}
+		this.doSearch(this.search_term);
+	}
+
+	/**
+	 * Toggle the active state of all filters.
+	 */
+	toggleFilters() {
+		const filters = this.filterGroups.current.querySelectorAll(
+			"button.filter-dropdown--button"
+		);
+		if (filters) {
+			filters.forEach((button) => {
+				button.disabled = this.is_search ? true : false;
+			});
+		}
+		if (this.is_search) {
+			this.filterGroups.current.classList.add("inactive");
+		} else {
+			this.filterGroups.current.classList.remove("inactive");
+		}
 	}
 
 	/**
@@ -482,6 +541,10 @@ class PhotoList extends React.Component {
 		this.provider = provider;
 		this.api_provider = API[this.provider];
 
+		// Clear filters.
+		this.filters = {};
+		this.search_filters = {};
+
 		// Remove active from buttons.
 		this.providerNav.current.querySelectorAll("button").forEach((button) => {
 			button.classList.remove("active");
@@ -492,14 +555,14 @@ class PhotoList extends React.Component {
 
 		// Set current provider params.
 		this.arr_key = this.api_provider.arr_key;
-		this.order_key = this.api_provider.order_key;
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 
 		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
 		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
 
 		// At last, get the photos.
-		this.getPhotos("latest", this.buttonLatest.current, true);
+		this.view = "latest";
+		this.getPhotos(this.view, true, true);
 	}
 
 	/**
@@ -548,30 +611,16 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * Sets the main navigation active state.
+	 * Sets the loading state.
 	 *
 	 * @since 3.0
 	 */
-	setActiveState() {
+	doneLoading() {
 		const self = this;
-		// Remove .active class from control nav.
-		this.controlNav.current
-			.querySelectorAll("button")
-			.forEach((el) => el.classList.remove("active"));
-
-		// Set active item, if not search.
-		if (!this.is_search) {
-			const active = this.controlNav.current.querySelector(
-				`li button.instant-images-${this.orderby}`
-			);
-			if (active) {
-				active.classList.add("active");
-			}
-		}
 		setTimeout(function () {
 			self.isLoading = false;
 			self.container.classList.remove("loading");
-		}, 1000);
+		}, self.delay);
 	}
 
 	/**
@@ -607,7 +656,7 @@ class PhotoList extends React.Component {
 
 			setTimeout(function () {
 				tooltip.classList.add("over");
-			}, 150);
+			}, self.delay);
 		}, 750);
 	}
 
@@ -618,20 +667,20 @@ class PhotoList extends React.Component {
 	 */
 	hideTooltip() {
 		clearInterval(this.tooltipInterval);
-		let tooltip = this.container.querySelector("#tooltip");
+		const tooltip = this.container.querySelector("#tooltip");
 		tooltip.classList.remove("over");
 	}
 
 	// Component Updated
 	componentDidUpdate() {
 		this.renderLayout();
-		this.setActiveState();
+		this.doneLoading();
 	}
 
 	// Component Init
 	componentDidMount() {
 		this.renderLayout();
-		this.setActiveState();
+		this.doneLoading();
 		this.test();
 		this.container.classList.remove("loading");
 		this.wrapper.classList.add("loaded");
@@ -682,59 +731,90 @@ class PhotoList extends React.Component {
 					/>
 				)}
 
-				{this.api_provider.order && (
-					<ul className="control-nav" ref={this.controlNav}>
-						{this.api_provider.order.map((order, iterator) => (
-							<li key={`${this.provider}-order-${iterator}`}>
-								<button
-									type="button"
-									className={`instant-images-${order}`}
-									onClick={(e) => this.getPhotos(order, e)}
-									ref={order === "latest" ? this.buttonLatest : null}
-								>
-									{instant_img_localize[order]}
-								</button>
-							</li>
-						))}
-						<li className="search-field" id="search-bar">
-							<form onSubmit={(e) => this.search(e)} autoComplete="off">
-								<label htmlFor="photo-search" className="offscreen">
-									{instant_img_localize.search_label}
-								</label>
-								<input
-									type="search"
-									id="photo-search"
-									placeholder={instant_img_localize.search}
-									ref={this.photoSearch}
-								/>
-								<button type="submit" id="photo-search-submit">
-									<i className="fa fa-search"></i>
-								</button>
-								<ResultsToolTip
-									container={this.container}
-									buttonLatest={this.buttonLatest}
-									isSearch={this.is_search}
-									total={this.total_results}
-									title={
-										this.total_results +
-										" " +
-										instant_img_localize.search_results +
-										" " +
-										this.search_term
-									}
-								/>
-							</form>
-						</li>
-					</ul>
-				)}
+				<div className="control-nav" ref={this.controlNav}>
+					<div
+						className="control-nav--filters-wrap"
+						ref={this.filterGroups}
+					>
+						{Object.entries(this.state.filters).length && (
+							<div className="control-nav--filters">
+								{Object.entries(this.state.filters).map(
+									([key, filter], i) => (
+										<Filter
+											key={`${key}-${i}`}
+											filterKey={key}
+											provider={this.provider}
+											data={filter}
+											function={this.filterPhotos.bind(this)}
+										/>
+									)
+								)}
+							</div>
+						)}
+					</div>
+					<div
+						className="control-nav--search search-field"
+						id="search-bar"
+					>
+						<form onSubmit={(e) => this.search(e)} autoComplete="off">
+							<label htmlFor="photo-search" className="offscreen">
+								{instant_img_localize.search_label}
+							</label>
+							<input
+								type="search"
+								id="photo-search"
+								placeholder={instant_img_localize.search}
+								ref={this.photoSearch}
+							/>
+							<button type="submit" id="photo-search-submit">
+								<i className="fa fa-search"></i>
+							</button>
+							<ResultsToolTip
+								container={this.container}
+								getPhotos={this.getPhotos.bind(this)}
+								isSearch={this.is_search}
+								total={this.total_results}
+								title={`${this.total_results} ${instant_img_localize.search_results} ${this.search_term}`}
+							/>
+						</form>
+					</div>
+				</div>
 
 				{this.state.restapi_error && <ErrorMessage />}
 
-				{this.is_search && (
-					<Orientation
-						provider={this.provider}
-						setOrientation={this.setOrientation.bind(this)}
-					/>
+				{this.is_search && this.editor !== "gutenberg" && (
+					<div className="search-results-header">
+						<h2>{this.search_term}</h2>
+
+						<div className="search-results-header--text">
+							{`${this.total_results} ${instant_img_localize.search_results}`}{" "}
+							<strong>{`${this.search_term}`}</strong>
+							{" - "}
+							<button
+								title={instant_img_localize.clear_search}
+								onClick={() => this.getPhotos("latest")}
+							>
+								{instant_img_localize.clear_search}
+							</button>
+						</div>
+						{Object.entries(this.state.search_filters).length && (
+							<div className="control-nav--filters-wrap">
+								<div className="control-nav--filters">
+									{Object.entries(this.state.search_filters).map(
+										([key, filter], i) => (
+											<Filter
+												key={`${key}-${i}`}
+												filterKey={key}
+												provider={this.provider}
+												data={filter}
+												function={this.filterSearch.bind(this)}
+											/>
+										)
+									)}
+								</div>
+							</div>
+						)}
+					</div>
 				)}
 
 				<div id="photos" className="photo-target" ref={this.photoTarget}>

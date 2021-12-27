@@ -5,6 +5,29 @@
 	padding: 0;
 	position: relative;
 
+	&:after {
+		visibility: hidden;
+		opacity: 0;
+		display: block;
+		content: "";
+		position: absolute;
+		left: -10px;
+		top: -5px;
+		width: calc(100% + 20px);
+		height: calc(100% + 10px);
+		min-height: 200px;
+		background: rgba(255, 255, 255, 0.95) url("../img/ajax-loader-lg.gif")
+			no-repeat center 90px;
+		z-index: 999;
+		transition: all 0.25s ease;
+	}
+	&.loading {
+		&:after {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+
 	.photo {
 		width: 20%;
 		margin: 0;
@@ -364,8 +387,8 @@
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
-					&:before{
-						content: '';
+					&:before {
+						content: "";
 						display: block;
 						z-index: 0;
 						background-color: #fff;
@@ -382,7 +405,7 @@
 					left: 8px;
 					top: 8px;
 				}
-				img{
+				img {
 					z-index: 1;
 				}
 			}
@@ -456,11 +479,11 @@
 			width: 100%;
 			padding: 10px;
 			border-radius: 3px 3px 0 0;
-			> div{
+			> div {
 				padding: 5px 15px 5px 5px;
 				flex: 1;
 
-				&.preview{
+				&.preview {
 					width: 30%;
 					padding: 0;
 					background-size: cover;
@@ -498,16 +521,16 @@
 			padding-top: 0;
 			margin-top: -15px;
 			border-top: none;
-			button{
+			button {
 				cursor: pointer;
 				font-size: 11px;
 				outline: none;
 				padding: 5px 0;
-				border:none;
+				border: none;
 				background: none;
 				text-decoration: underline;
 				&:hover,
-				&:focus{
+				&:focus {
 					text-decoration: none;
 				}
 			}

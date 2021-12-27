@@ -110,6 +110,13 @@
 					padding: 5px 10px;
 					border-color: #ccc;
 					max-width: none;
+					&[readonly]{
+						background-color: $lighter_grey;
+						cursor: not-allowed;
+						opacity: 0.65;
+						border-color: #ccc !important;
+						box-shadow: none !important;
+					}
 				}
 				input[type="text"],
 				input[type="number"] {
@@ -118,7 +125,7 @@
 				span.desc {
 					font-size: 11px;
 					display: block;
-					padding: 5px 2px;
+					padding: 8px 2px 5px;
 				}
 			}
 			// Plugins
