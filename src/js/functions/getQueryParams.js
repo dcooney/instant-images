@@ -5,10 +5,9 @@ import API from "../constants/API";
  *
  * @param  {string}  provider  The current service provider.
  * @param  {object}  filters   Optional query filters to append to base params.
- * @param  {object}  optional  An optional third set of params to append.
  * @return {object} 				 Parameters used for the fetch request.
  */
-export default function getQueryParams(provider, filters, optional) {
+export default function getQueryParams(provider, filters) {
 	if (!provider) {
 		return {};
 	}
@@ -20,7 +19,7 @@ export default function getQueryParams(provider, filters, optional) {
 
 	params = getAuth(params, provider);
 	params = getContentSafety(params, provider);
-	params = { ...params, ...filters, ...optional };
+	params = { ...params, ...filters };
 
 	/**
 	 * Display query params in the browser console.

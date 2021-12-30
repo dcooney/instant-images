@@ -42996,10 +42996,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @param  {string}  provider  The current service provider.
  * @param  {object}  filters   Optional query filters to append to base params.
- * @param  {object}  optional  An optional third set of params to append.
  * @return {object} 				 Parameters used for the fetch request.
  */
-function getQueryParams(provider, filters, optional) {
+function getQueryParams(provider, filters) {
 	if (!provider) {
 		return {};
 	}
@@ -43011,7 +43010,7 @@ function getQueryParams(provider, filters, optional) {
 
 	params = getAuth(params, provider);
 	params = getContentSafety(params, provider);
-	params = _extends({}, params, filters, optional);
+	params = _extends({}, params, filters);
 
 	/**
   * Display query params in the browser console.
