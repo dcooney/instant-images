@@ -39554,6 +39554,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _masonryLayout = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
@@ -39579,10 +39581,6 @@ var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
 var _buildURL = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
 
 var _buildURL2 = _interopRequireDefault(_buildURL);
-
-var _contentSafety = __webpack_require__(/*! ../functions/contentSafety */ "./src/js/functions/contentSafety.js");
-
-var _contentSafety2 = _interopRequireDefault(_contentSafety);
 
 var _getHeaders = __webpack_require__(/*! ../functions/getHeaders */ "./src/js/functions/getHeaders.js");
 
@@ -39637,6 +39635,8 @@ var _Tooltip = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip
 var _Tooltip2 = _interopRequireDefault(_Tooltip);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
@@ -39795,14 +39795,13 @@ var PhotoList = function (_React$Component) {
 		key: "doSearch",
 		value: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(term) {
-				var self, search_type, sep, input, photoTarget, url, headers, response, ok, data, results, photoArray, result;
+				var self, search_type, input, photoTarget, search_url, search_query, search_params, params, url, headers, response, ok, data, results, photoArray, result;
 				return regeneratorRuntime.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
 							case 0:
 								self = this;
 								search_type = term.substring(0, 3) === "id:" ? "id" : "term";
-								sep = "?";
 								input = this.photoSearch.current;
 								photoTarget = this.photoTarget.current;
 
@@ -39814,42 +39813,46 @@ var PhotoList = function (_React$Component) {
 								this.toggleFilters(); // Disable filters.
 
 								// Build API URL.
-								url = "";
+								search_url = this.search_api;
+								search_query = {};
+
 
 								if (search_type === "id") {
-									url = (0, _searchByID2.default)(this, term);
+									search_url = (0, _searchByID2.default)(this, term);
 								} else {
-									url = "" + this.search_api + sep + "page=" + this.page + "&" + this.api_provider.search_var + "=" + this.search_term + (0, _contentSafety2.default)(this.provider);
+									search_query = _defineProperty({}, this.api_provider.search_var, this.search_term);
 								}
 
 								// Build URL.
-								//const params = getQueryParams(this.provider, this.search_filters);
-								//const url = buildURL(this.photo_api, params);
+								search_params = _extends({}, search_query, this.search_filters, { page: this.page });
+								params = (0, _getQueryParams2.default)(this.provider, search_params);
+								url = (0, _buildURL2.default)(search_url, params);
 
 								// Create fetch request.
+
 								headers = (0, _getHeaders2.default)(this.provider);
-								_context.next = 14;
+								_context.next = 17;
 								return fetch(url, { headers: headers });
 
-							case 14:
+							case 17:
 								response = _context.sent;
 								ok = response.ok;
 
 								if (!ok) {
-									_context.next = 40;
+									_context.next = 43;
 									break;
 								}
 
-								_context.next = 19;
+								_context.next = 22;
 								return response.json();
 
-							case 19:
+							case 22:
 								data = _context.sent;
 								_context.t0 = search_type;
-								_context.next = _context.t0 === "term" ? 23 : _context.t0 === "id" ? 30 : 37;
+								_context.next = _context.t0 === "term" ? 26 : _context.t0 === "id" ? 33 : 40;
 								break;
 
-							case 23:
+							case 26:
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data, true);
 
 
@@ -39866,9 +39869,9 @@ var PhotoList = function (_React$Component) {
 									search_filters: _filters2.default[this.provider].search
 								});
 
-								return _context.abrupt("break", 37);
+								return _context.abrupt("break", 40);
 
-							case 30:
+							case 33:
 								// Convert return data to array.
 								photoArray = [];
 
@@ -39893,9 +39896,9 @@ var PhotoList = function (_React$Component) {
 								this.show_search_filters = false;
 								this.results = photoArray;
 								this.setState({ results: self.results });
-								return _context.abrupt("break", 37);
+								return _context.abrupt("break", 40);
 
-							case 37:
+							case 40:
 
 								// Delay for effect.
 								setTimeout(function () {
@@ -39903,10 +39906,10 @@ var PhotoList = function (_React$Component) {
 									photoTarget.classList.remove("loading");
 									self.isLoading = false;
 								}, this.delay);
-								_context.next = 48;
+								_context.next = 51;
 								break;
 
-							case 40:
+							case 43:
 								// Error handling.
 
 								// Reset all search parameters.
@@ -39921,7 +39924,7 @@ var PhotoList = function (_React$Component) {
 								this.results = [];
 								this.setState({ results: this.results });
 
-							case 48:
+							case 51:
 							case "end":
 								return _context.stop();
 						}
@@ -40056,7 +40059,7 @@ var PhotoList = function (_React$Component) {
 		key: "loadMorePhotos",
 		value: function () {
 			var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-				var self, filters, loadmore_url, params, url, headers, response, ok, status, statusText, data, results;
+				var self, search_query, loadmore_url, filters, loadmore_params, params, url, headers, response, ok, status, statusText, data, results;
 				return regeneratorRuntime.wrap(function _callee3$(_context3) {
 					while (1) {
 						switch (_context3.prev = _context3.next) {
@@ -40067,35 +40070,41 @@ var PhotoList = function (_React$Component) {
 								this.isLoading = true;
 								this.page = parseInt(this.page) + 1;
 
-								filters = this.is_search ? this.search_filters : this.filters;
-								loadmore_url = this.is_search ? this.search_api : this.photo_api;
+								// Get search query.
+								search_query = {};
 
-
-								console.log(this.search_api);
-								filters.page = this.page; // Increase page num.
+								if (this.is_search) {
+									search_query = _defineProperty({}, this.api_provider.search_var, this.search_term);
+								}
 
 								// Build URL.
-								params = (0, _getQueryParams2.default)(this.provider, filters);
+								loadmore_url = this.is_search ? this.search_api : this.photo_api;
+								filters = this.is_search ? this.search_filters : this.filters;
+								loadmore_params = _extends({}, filters, search_query, { page: this.page });
+								params = (0, _getQueryParams2.default)(this.provider, loadmore_params);
 								url = (0, _buildURL2.default)(loadmore_url, params);
+
+								// Create fetch request.
+
 								headers = (0, _getHeaders2.default)(this.provider);
-								_context3.next = 13;
+								_context3.next = 14;
 								return fetch(url, { headers: headers });
 
-							case 13:
+							case 14:
 								response = _context3.sent;
 								ok = response.ok, status = response.status, statusText = response.statusText;
 
 								// Status OK.
 
 								if (!ok) {
-									_context3.next = 26;
+									_context3.next = 27;
 									break;
 								}
 
-								_context3.next = 18;
+								_context3.next = 19;
 								return response.json();
 
-							case 18:
+							case 19:
 								data = _context3.sent;
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data, this.is_search);
 
@@ -40112,14 +40121,14 @@ var PhotoList = function (_React$Component) {
 
 								this.checkTotalResults(data.length); // Check for returned data.
 								this.setState({ results: this.results }); // Update Props.
-								_context3.next = 28;
+								_context3.next = 29;
 								break;
 
-							case 26:
+							case 27:
 								console.warn("Error: " + status + " - " + statusText);
 								self.isLoading = false;
 
-							case 28:
+							case 29:
 							case "end":
 								return _context3.stop();
 						}
@@ -41176,75 +41185,6 @@ function consoleStatus(provider) {
 
 /***/ }),
 
-/***/ "./src/js/functions/contentSafety.js":
-/*!*******************************************!*\
-  !*** ./src/js/functions/contentSafety.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.default = contentSafety;
-exports.getContentSafety = getContentSafety;
-/**
- * Set the photo safety for indicating that only images suitable for all ages should be returned.
- * @see https://unsplash.com/documentation#content-safety
- * @see https://pixabay.com/api/docs/
- *
- * @param  {string}  provider  The current service provider.
- * @return {string} 				 The api string for filtering content.
- */
-function contentSafety(provider) {
-	var str = "";
-	switch (provider) {
-		case "unsplash":
-			if (instant_img_localize.unsplash_content_filter) {
-				str = "&content_filter=" + instant_img_localize.unsplash_content_filter;
-			}
-			break;
-
-		case "pixabay":
-			if (instant_img_localize.pixabay_safesearch) {
-				str = "&safesearch=" + instant_img_localize.pixabay_safesearch;
-			}
-			break;
-	}
-	return str;
-}
-
-/**
- * Set the photo safety for indicating that only images suitable for all ages should be returned.
- * @see https://unsplash.com/documentation#content-safety
- * @see https://pixabay.com/api/docs/
- *
- * @param  {object}  params   The current params object.
- * @param  {string}  provider The current service provider.
- * @return {object} 				The fetch parameters object.
- */
-function getContentSafety(params, provider) {
-	switch (provider) {
-		case "unsplash":
-			if (instant_img_localize.unsplash_content_filter) {
-				params.content_filter = instant_img_localize.unsplash_content_filter;
-			}
-			break;
-
-		case "pixabay":
-			if (instant_img_localize.pixabay_safesearch) {
-				params.safesearch = instant_img_localize.pixabay_safesearch;
-			}
-			break;
-	}
-	return params;
-}
-
-/***/ }),
-
 /***/ "./src/js/functions/generateAttribution.js.js":
 /*!****************************************************!*\
   !*** ./src/js/functions/generateAttribution.js.js ***!
@@ -41548,11 +41488,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Build the API query parameters
  *
- * @param  {string}  provider The current service provider.
- * @param  {object}  filters  Optional filters to append to params.
- * @return {object} 				Parameters used for the fetch request.
+ * @param  {string}  provider  The current service provider.
+ * @param  {object}  filters   Optional query filters to append to base params.
+ * @param  {object}  optional  An optional third set of params to append.
+ * @return {object} 				 Parameters used for the fetch request.
  */
-function getQueryParams(provider, filters) {
+function getQueryParams(provider, filters, optional) {
 	if (!provider) {
 		return {};
 	}
@@ -41564,8 +41505,16 @@ function getQueryParams(provider, filters) {
 
 	params = getAuth(params, provider);
 	params = getContentSafety(params, provider);
-	params = _extends({}, params, filters);
+	params = _extends({}, params, filters, optional);
 
+	/**
+  * Display query params in the browser console.
+  *
+  * Global plugin hook.
+  */
+	if (instant_img_localize.query_debug) {
+		console.table(params);
+	}
 	return params;
 }
 
@@ -41735,32 +41684,28 @@ exports.default = searchByID;
  * Prepending id:{photo_id} to search terms will search photos by unique ID.
  *
  * @param  {object} options  An object containing provider variables.
- * @param  {string} id       The photo id.
+ * @param  {string} term     The photo search term.
  * @return {string}          The search API URL.
  */
-function searchByID(options, id) {
+function searchByID(options, term) {
 	var provider = options.provider,
-	    api_provider = options.api_provider,
-	    api_key = options.api_key;
-	var photo_api = api_provider.photo_api,
-	    api_query_var = api_provider.api_query_var;
+	    api_provider = options.api_provider;
+	var photo_api = api_provider.photo_api;
 
-	id = id.replace("id:", "");
+	var id = term.replace("id:", "");
 
 	var url = "";
 	switch (provider) {
 		case "unsplash":
-			url = "" + photo_api + id + "?" + api_query_var + api_key; // https://api.unsplash.com/photos/{PHOTO_ID}
+			url = "" + photo_api + id; // https://api.unsplash.com/photos/{PHOTO_ID}
 			break;
 
 		case "pixabay":
-			url = photo_api + "?id=" + id + "&" + api_query_var + api_key;
-			// https://pixabay.com/api/?id={PHOTO_ID}
+			url = photo_api + "?id=" + id; // https://pixabay.com/api/?id={PHOTO_ID}
 			break;
 
 		case "pexels":
-			url = "" + photo_api.replace("curated", "photos") + id;
-			// https://api.pexels.com/v1/photos/{PHOTO_ID}
+			url = photo_api.replace("curated", "photos") + "/" + id; // https://api.pexels.com/v1/photos/{PHOTO_ID}
 			break;
 	}
 
@@ -41783,6 +41728,17 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.default = unsplashDownload;
+
+var _buildURL = __webpack_require__(/*! ./buildURL */ "./src/js/functions/buildURL.js");
+
+var _buildURL2 = _interopRequireDefault(_buildURL);
+
+var _getQueryParams = __webpack_require__(/*! ./getQueryParams */ "./src/js/functions/getQueryParams.js");
+
+var _getQueryParams2 = _interopRequireDefault(_getQueryParams);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /**
  * Function to trigger download action at unsplash.com.
  * This is used to give authors download credits and nothing more.
@@ -41792,7 +41748,10 @@ exports.default = unsplashDownload;
  * @since 3.1
  */
 function unsplashDownload(vars, id) {
-	var url = vars.api_provider.photo_api + "/" + id + "/download?" + vars.api_provider.api_query_var + vars.api_key;
+	var download_url = "" + vars.api_provider.photo_api + id + "/download";
+	var params = (0, _getQueryParams2.default)("unsplash");
+	var url = (0, _buildURL2.default)(download_url, params);
+
 	fetch(url).then(function (data) {
 		return data.json();
 	}).then(function (data) {

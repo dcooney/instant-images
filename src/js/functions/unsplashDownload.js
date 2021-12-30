@@ -1,3 +1,6 @@
+import buildURL from "./buildURL";
+import getQueryParams from "./getQueryParams";
+
 /**
  * Function to trigger download action at unsplash.com.
  * This is used to give authors download credits and nothing more.
@@ -7,7 +10,10 @@
  * @since 3.1
  */
 export default function unsplashDownload(vars, id) {
-	const url = `${vars.api_provider.photo_api}/${id}/download?${vars.api_provider.api_query_var}${vars.api_key}`;
+	const download_url = `${vars.api_provider.photo_api}${id}/download`;
+	const params = getQueryParams("unsplash");
+	const url = buildURL(download_url, params);
+
 	fetch(url)
 		.then((data) => data.json())
 		.then(function (data) {

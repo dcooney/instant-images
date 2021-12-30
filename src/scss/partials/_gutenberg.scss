@@ -23,6 +23,12 @@ body.loading {
 	fill: $purple !important;
 }
 
+button[aria-expanded="true"] .instant-images-sidebar-icon svg,
+button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
+	stroke: $purple_bright !important;
+	fill: $purple_bright !important;
+}
+
 .components-panel {
 	.instant-img-container {
 		.load-more-wrap {
@@ -49,12 +55,13 @@ body.loading {
 	#photos {
 		width: 100%;
 		margin: 0;
-		padding: 5px;
+		padding: 5px 10px;
+		overflow: hidden;
 		.photo {
 			width: 100%;
 			display: block;
 			opacity: 1 !important;
-			margin: 0 0 5px;
+			margin: 0 0 10px;
 			padding: 0;
 		}
 	}

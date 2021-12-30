@@ -3,11 +3,12 @@ import API from "../constants/API";
 /**
  * Build the API query parameters
  *
- * @param  {string}  provider The current service provider.
- * @param  {object}  filters  Optional filters to append to params.
- * @return {object} 				Parameters used for the fetch request.
+ * @param  {string}  provider  The current service provider.
+ * @param  {object}  filters   Optional query filters to append to base params.
+ * @param  {object}  optional  An optional third set of params to append.
+ * @return {object} 				 Parameters used for the fetch request.
  */
-export default function getQueryParams(provider, filters) {
+export default function getQueryParams(provider, filters, optional) {
 	if (!provider) {
 		return {};
 	}
@@ -19,8 +20,16 @@ export default function getQueryParams(provider, filters) {
 
 	params = getAuth(params, provider);
 	params = getContentSafety(params, provider);
-	params = { ...params, ...filters };
+	params = { ...params, ...filters, ...optional };
 
+	/**
+	 * Display query params in the browser console.
+	 *
+	 * Global plugin hook.
+	 */
+	if (instant_img_localize.query_debug) {
+		console.table(params);
+	}
 	return params;
 }
 

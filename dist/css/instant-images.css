@@ -1835,6 +1835,12 @@ body.loading .instant-img-container .loading-block {
   fill: #586ec6 !important;
 }
 
+button[aria-expanded="true"] .instant-images-sidebar-icon svg,
+button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
+  stroke: #aabbff !important;
+  fill: #aabbff !important;
+}
+
 .components-panel .instant-img-container .load-more-wrap {
   display: block;
 }
@@ -1864,14 +1870,15 @@ body.loading .instant-img-container .loading-block {
 .components-panel #photos {
   width: 100%;
   margin: 0;
-  padding: 5px;
+  padding: 5px 10px;
+  overflow: hidden;
 }
 
 .components-panel #photos .photo {
   width: 100%;
   display: block;
   opacity: 1 !important;
-  margin: 0 0 5px;
+  margin: 0 0 10px;
   padding: 0;
 }
 
@@ -2155,72 +2162,6 @@ body.loading .instant-img-container .loading-block {
   .no-results {
     padding: 50px;
   }
-}
-
-.orientation-list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 100%;
-  padding: 7px 0;
-  margin: 0 0 10px;
-  border-top: 1px solid #efefef;
-  border-bottom: 1px solid #efefef;
-  position: relative;
-  top: -7px;
-}
-
-.orientation-list span {
-  opacity: 0.5;
-  margin: 0 10px 0 0;
-  font-size: 13px;
-}
-
-.orientation-list span i {
-  margin-right: 2px;
-}
-
-.orientation-list ul {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.orientation-list ul li {
-  margin: 0 1px 0 0;
-  -webkit-border-radius: 3px;
-          border-radius: 3px;
-  cursor: pointer;
-  padding: 4px 6px;
-  -webkit-transition: all 0.25s ease;
-  -o-transition: all 0.25s ease;
-  transition: all 0.25s ease;
-  border: 1px solid transparent;
-  color: #999;
-  font-size: 13px;
-}
-
-.orientation-list ul li:hover {
-  color: #111;
-}
-
-.orientation-list ul li:focus {
-  border-color: #586ec6;
-  color: #111;
-  outline: none;
-}
-
-.orientation-list ul li.active {
-  background-color: #586ec6;
-  border-color: #586ec6;
-  color: #fff;
-  outline: none;
 }
 
 .media-frame-router button#menu-item-instantimages.active {

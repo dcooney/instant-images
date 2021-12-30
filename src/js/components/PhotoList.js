@@ -4,7 +4,6 @@ import API from "../constants/API";
 import FILTERS from "../constants/filters";
 import buildTestURL from "../functions/buildTestURL";
 import buildURL from "../functions/buildURL";
-import contentSafety from "../functions/contentSafety";
 import getHeaders from "../functions/getHeaders";
 import getQueryParams from "../functions/getQueryParams";
 import getResults, {
@@ -164,7 +163,6 @@ class PhotoList extends React.Component {
 	async doSearch(term) {
 		const self = this;
 		const search_type = term.substring(0, 3) === "id:" ? "id" : "term";
-		const sep = "?";
 		const input = this.photoSearch.current;
 		const photoTarget = this.photoTarget.current;
 
@@ -175,18 +173,25 @@ class PhotoList extends React.Component {
 		this.toggleFilters(); // Disable filters.
 
 		// Build API URL.
-		let url = "";
+		let search_url = this.search_api;
+		let search_query = {};
+
 		if (search_type === "id") {
-			url = searchByID(this, term);
+			search_url = searchByID(this, term);
 		} else {
-			url = `${this.search_api}${sep}page=${this.page}&${
-				this.api_provider.search_var
-			}=${this.search_term}${contentSafety(this.provider)}`;
+			search_query = {
+				[this.api_provider.search_var]: this.search_term,
+			};
 		}
 
 		// Build URL.
-		//const params = getQueryParams(this.provider, this.search_filters);
-		//const url = buildURL(this.photo_api, params);
+		const search_params = {
+			...search_query,
+			...this.search_filters,
+			...{ page: this.page },
+		};
+		const params = getQueryParams(this.provider, search_params);
+		const url = buildURL(search_url, params);
 
 		// Create fetch request.
 		const headers = getHeaders(this.provider);
@@ -288,7 +293,7 @@ class PhotoList extends React.Component {
 	 */
 	async getPhotos(view, reset = false, switcher = false) {
 		if (this.isLoading && !reset) {
-			return; // exit if active
+			return;
 		}
 
 		const self = this;
@@ -350,16 +355,26 @@ class PhotoList extends React.Component {
 		this.isLoading = true;
 		this.page = parseInt(this.page) + 1;
 
-		let filters = this.is_search ? this.search_filters : this.filters;
-		let loadmore_url = this.is_search ? this.search_api : this.photo_api;
-
-		console.log(this.search_api);
-		filters.page = this.page; // Increase page num.
+		// Get search query.
+		let search_query = {};
+		if (this.is_search) {
+			search_query = {
+				[this.api_provider.search_var]: this.search_term,
+			};
+		}
 
 		// Build URL.
-		const params = getQueryParams(this.provider, filters);
+		const loadmore_url = this.is_search ? this.search_api : this.photo_api;
+		const filters = this.is_search ? this.search_filters : this.filters;
+		const loadmore_params = {
+			...filters,
+			...search_query,
+			...{ page: this.page },
+		};
+		const params = getQueryParams(this.provider, loadmore_params);
 		const url = buildURL(loadmore_url, params);
 
+		// Create fetch request.
 		const headers = getHeaders(this.provider);
 		const response = await fetch(url, { headers });
 		const { ok, status, statusText } = response;

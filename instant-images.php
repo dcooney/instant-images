@@ -237,6 +237,7 @@ class InstantImages {
 				'default_provider'        => $default_provider,
 				'download_width'          => esc_html( $download_w ),
 				'download_height'         => esc_html( $download_h ),
+				'query_debug'             => apply_filters( 'instant_images_query_debug', false ),
 				'unsplash_app_id'         => INSTANT_IMAGES_DEFAULT_APP_ID,
 				'unsplash_url'            => 'https://unsplash.com',
 				'unsplash_api_url'        => 'https://unsplash.com/developers',
