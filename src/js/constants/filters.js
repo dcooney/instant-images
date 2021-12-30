@@ -1,4 +1,44 @@
 module.exports = {
+	pexels: {
+		filters: {
+			order_by: {
+				label: "orderby",
+				default: "curated",
+				filters: ["curated"],
+			},
+		},
+		search: {
+			orientation: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "landscape", "portrait", "square"],
+			},
+			color: {
+				label: "colors",
+				default: "all",
+				filters: [
+					"all",
+					"red",
+					"orange",
+					"yellow",
+					"green",
+					"turquoise",
+					"blue",
+					"violet",
+					"pink",
+					"brown",
+					"black",
+					"gray",
+					"white",
+				],
+			},
+			size: {
+				label: "size",
+				default: "all",
+				filters: ["all", "large", "medium", "small"],
+			},
+		},
+	},
 	unsplash: {
 		filters: {
 			order_by: {

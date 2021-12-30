@@ -28,6 +28,9 @@
 			&.inactive {
 				opacity: 0.55;
 				filter: blur(1px);
+				i {
+					opacity: 0.4 !important;
+				}
 				* {
 					cursor: not-allowed;
 				}

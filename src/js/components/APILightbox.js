@@ -2,6 +2,7 @@ import FocusTrap from "focus-trap-react";
 import React from "react";
 import buildTestURL from "../functions/buildTestURL";
 import consoleStatus from "../functions/consoleStatus";
+import getHeaders from "../functions/getHeaders";
 import updatePluginSetting from "../functions/updatePluginSetting";
 
 class APILightbox extends React.Component {
@@ -38,13 +39,6 @@ class APILightbox extends React.Component {
 		// Set localized variable.
 		instant_img_localize[`${this.provider}_app_id`] = key;
 
-		// Fetch API data.
-		const response = await fetch(buildTestURL(this.provider));
-
-		// Handle response.
-		const ok = response.ok;
-		const status = response.status;
-
 		// Update the matching provider API key in the Instant Images settings.
 		const settingField = document.querySelector(
 			`input[name="instant_img_settings[${this.provider}_api]"]`
@@ -56,32 +50,60 @@ class APILightbox extends React.Component {
 		// Update plugin settings via REST API.
 		updatePluginSetting(`${this.provider}_api`, key);
 
-		// Handle response actions.
-		if (ok) {
-			// Success.
-			this.setState({
-				status: "valid",
-				response: instant_img_localize.api_success_msg,
-			});
-			setTimeout(function () {
-				self.afterVerifiedAPICallback(self.provider);
-			}, 1500);
-		} else {
+		// Get authentication headers.
+		const headers = getHeaders(this.provider);
+
+		try {
+			// Fetch API data.
+			const response = await fetch(buildTestURL(self.provider), { headers });
+
+			// Handle response.
+			const ok = response.ok;
+			const status = response.status;
+
+			// Handle response actions.
+			if (ok) {
+				// Success.
+				self.setState({
+					status: "valid",
+					response: instant_img_localize.api_success_msg,
+				});
+				setTimeout(function () {
+					self.afterVerifiedAPICallback(self.provider);
+				}, 1500);
+			} else {
+				// Error/Invalid.
+				this.setState({ status: "invalid" });
+
+				// Render console warning.
+				consoleStatus(self.provider, status);
+
+				// Set response state.
+				if (status === 400 || status === 401) {
+					// Unsplash/Pixabay incorrect API key.
+					self.setState({
+						response: instant_img_localize.api_invalid_msg,
+					});
+				}
+				if (status === 429) {
+					// Pixabay - too many requests.
+					self.setState({
+						response: instant_img_localize.api_ratelimit_msg,
+					});
+				}
+			}
+		} catch (error) {
+			// Catch all other errors.
+
 			// Error/Invalid.
 			this.setState({ status: "invalid" });
 
 			// Render console warning.
-			consoleStatus(this.provider, status);
+			consoleStatus(self.provider, 500);
 
-			// Set response state.
-			if (status === 400 || status === 401) {
-				// Unsplash/Pixabay incorrect API key.
-				this.setState({ response: instant_img_localize.api_invalid_msg });
-			}
-			if (status === 429) {
-				// Pixabay - too many requests.
-				this.setState({ response: instant_img_localize.api_ratelimit_msg });
-			}
+			self.setState({
+				response: instant_img_localize.api_invalid_msg,
+			});
 		}
 	}
 

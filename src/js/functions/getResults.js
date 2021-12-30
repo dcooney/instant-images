@@ -12,8 +12,8 @@ export default function getResults(provider, key, data, is_search) {
 	if (!data) {
 		return [];
 	}
-
 	let results = [];
+
 	switch (provider) {
 		case "unsplash":
 			if (is_search) {
@@ -23,7 +23,7 @@ export default function getResults(provider, key, data, is_search) {
 			}
 			break;
 
-		case "pixabay":
+		default:
 			results = data[key] || [];
 			break;
 	}
@@ -47,6 +47,7 @@ export function getResultById(provider, key, data) {
 	let result = [];
 	switch (provider) {
 		case "unsplash":
+		case "pexels":
 			result = data || [];
 			break;
 
@@ -56,4 +57,26 @@ export function getResultById(provider, key, data) {
 	}
 
 	return result;
+}
+
+/**
+ * Get the total search results by provider.
+ *
+ * @param  {string} provider The current service provider.
+ * @param  {object} obj      The search data object.
+ * @return {string}          The total results.
+ */
+export function getSearchTotalByProvider(provider, obj) {
+	let total = "";
+	switch (provider) {
+		case "pexels":
+			total = obj.total_results;
+			break;
+
+		default:
+			total = obj.total;
+			break;
+	}
+
+	return total;
 }

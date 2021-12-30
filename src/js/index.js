@@ -3,9 +3,11 @@ import ReactDOM from "react-dom";
 import PhotoList from "./components/PhotoList";
 import API from "./constants/API";
 import buildTestURL from "./functions/buildTestURL";
+import buildURL from "./functions/buildURL";
 import consoleStatus from "./functions/consoleStatus";
-import contentSafety from "./functions/contentSafety";
+import getHeaders from "./functions/getHeaders";
 import getProvider from "./functions/getProvider";
+import getQueryParams from "./functions/getQueryParams";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 require("./functions/helpers");
@@ -25,21 +27,16 @@ function GetPhotos(
 	orderby = API.defaults.order,
 	provider = API.defaults.provider
 ) {
-	// App container.
 	const container = document.querySelector(".instant-img-container");
 
-	// API Key.
-	const api_key = instant_img_localize[`${provider}_app_id`];
-
-	// API URL.
-	const start = `${API[provider].photo_api}${
-		API[provider].api_query_var
-	}${api_key}${contentSafety(provider)}`;
-	const url = `${start}${API.defaults.posts_per_page}&page=${page}`;
+	// Build URL.
+	const params = getQueryParams(provider);
+	const url = buildURL(API[provider].photo_api, params);
 
 	function initialize() {
-		// Get Data from API
-		fetch(url)
+		// Create fetch request.
+		const headers = getHeaders(provider);
+		fetch(url, { headers })
 			.then((data) => data.json())
 			.then(function (data) {
 				const app = document.getElementById("app");
@@ -78,21 +75,26 @@ function GetPhotos(
 
 	// Send test API request to confirm API key is functional.
 	if (api_required) {
-		const response = await fetch(buildTestURL(provider));
+		try {
+			const headers = getHeaders(provider);
+			const response = await fetch(buildTestURL(provider), { headers });
 
-		// Handle response.
-		const ok = response.ok;
-		const status = response.status;
+			// Handle response.
+			const { ok, status } = response;
 
-		if (ok) {
-			// Success.
-			GetPhotos(1, defaultOrder, provider);
-		} else {
-			// Status Error: Fallback to default provider.
+			if (ok) {
+				// Success.
+				GetPhotos(1, defaultOrder, provider);
+			} else {
+				// Status Error: Fallback to default provider.
+				GetPhotos(1, defaultOrder, defaultProvider);
+
+				// Render console warning.
+				consoleStatus(provider, status);
+			}
+		} catch (error) {
+			// API Error: Fallback to default provider.
 			GetPhotos(1, defaultOrder, defaultProvider);
-
-			// Render console warning.
-			consoleStatus(provider, status);
 		}
 	} else {
 		// API Error: Fallback to default provider.

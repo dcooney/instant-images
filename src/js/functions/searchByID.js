@@ -1,27 +1,30 @@
 /**
- * Get the API URL for searches by ID.
+ * Get the API URL for searching by ID.
+ * Prepending id:{photo_id} to search terms will search photos by unique ID.
  *
- * @param  {string} provider  The current service provider.
- * @param  {string} id        The photo id.
- * @param  {string} attribute The base api URL.
- * @param  {string} app_id    The provider API key.
- * @return {string}           The API URL.
+ * @param  {object} options  An object containing provider variables.
+ * @param  {string} id       The photo id.
+ * @return {string}          The search API URL.
  */
-export default function searchByID(
-	provider,
-	id,
-	base_url,
-	api_query_var,
-	app_id
-) {
+export default function searchByID(options, id) {
+	const { provider, api_provider, api_key } = options;
+	const { photo_api, api_query_var } = api_provider;
+	id = id.replace("id:", "");
+
 	let url = "";
 	switch (provider) {
 		case "unsplash":
-			url = `${base_url}/${id}${api_query_var}${app_id}`;
+			url = `${photo_api}${id}?${api_query_var}${api_key}`; // https://api.unsplash.com/photos/{PHOTO_ID}
 			break;
 
 		case "pixabay":
-			url = `${base_url}${api_query_var}${app_id}&id=${id}`;
+			url = `${photo_api}?id=${id}&${api_query_var}${api_key}`;
+			// https://pixabay.com/api/?id={PHOTO_ID}
+			break;
+
+		case "pexels":
+			url = `${photo_api.replace("curated", "photos")}${id}`;
+			// https://api.pexels.com/v1/photos/{PHOTO_ID}
 			break;
 	}
 

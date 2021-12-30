@@ -1,4 +1,6 @@
 import API from "../constants/API";
+import buildURL from "./buildURL";
+import getQueryParams from "./getQueryParams";
 
 /**
  * Build a API testing URL.
@@ -8,8 +10,15 @@ import API from "../constants/API";
  */
 export default function buildTestURL(provider) {
 	const api = API[provider];
-	const api_key = instant_img_localize[`${provider}_app_id`];
-	const url = `${api.photo_api}${api.api_query_var}${api_key}&per_page=5&page=1`;
+	let options = {
+		per_page: 5,
+		page: 1,
+	};
+
+	// Build URL.
+	let params = getQueryParams(provider);
+	params = { ...params, ...options };
+	const url = buildURL(api.photo_api, params);
 
 	return url;
 }

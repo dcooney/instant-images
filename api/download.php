@@ -64,8 +64,9 @@ function instant_images_download( WP_REST_Request $request ) {
 
 	if ( $data ) {
 
+		$provider  = $data['provider'];
 		$id        = $data['id']; // Image ID.
-		$image_url = $data['image_url'] . '&fit=clip&w=' . $max_width . '&h=' . $max_height; // Image URL.
+		$image_url = instant_images_generate_image_url( $provider, $data['image_url'], $max_width, $max_height ); // Image URL.
 		$filename  = sanitize_text_field( $data['filename'] ); // The filename.
 		$title     = sanitize_text_field( $data['title'] ); // Title.
 		$alt       = sanitize_text_field( $data['alt'] ); // Alt text.
@@ -172,12 +173,42 @@ function instant_images_download( WP_REST_Request $request ) {
 	}
 }
 
+/**
+ * Generate an image URL with cropping params.
+ *
+ * @param  string $provider   The image provider.
+ * @param  string $url        The image url.
+ * @param  string $max_width  The max width of the image.
+ * @param  string $max_height The max height of the image.
+ * @return string             The image path.
+ * @since 4.6
+ * @author dcooney
+ * @package InstantImages
+ */
+function instant_images_generate_image_url( $provider, $url, $max_width, $max_height ) {
+	$image_url = '';
+
+	switch ( $provider ) {
+		case 'unsplash':
+			$image_url = $url . '&fit=clip&w=' . $max_width . '&h=' . $max_height;
+			break;
+
+		case 'pexels':
+			$image_url = $url . '?dpr=1&w=' . $max_width . '&h=' . $max_height;
+			break;
+
+		default:
+			$image_url = $url;
+			break;
+	}
+	return $image_url;
+}
 
 /**
  * Check if a remote image file exists.
  *
- * @param string $url The url to the remote image.
- * @return bool Whether the remote image exists.
+ * @param  string $url The url to the remote image.
+ * @return bool        Whether the remote image exists.
  * @since 3.0
  * @author dcooney
  * @package InstantImages
@@ -186,8 +217,6 @@ function instant_images_remote_file_exists( $url ) {
 	$response = wp_remote_head( $url );
 	return 200 === wp_remote_retrieve_response_code( $response );
 }
-
-
 
 /**
  * Resize original image to max size (set in Instant Images settings)

@@ -28,7 +28,6 @@ export default function updatePluginSetting(setting, value) {
 		.post(api, JSON.stringify(data), config)
 		.then(function (res) {
 			const response = res.data;
-			console.log(response);
 		})
 		.catch(function (error) {
 			console.log(error);

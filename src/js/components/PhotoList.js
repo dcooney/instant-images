@@ -3,9 +3,14 @@ import React from "react";
 import API from "../constants/API";
 import FILTERS from "../constants/filters";
 import buildTestURL from "../functions/buildTestURL";
+import buildURL from "../functions/buildURL";
 import contentSafety from "../functions/contentSafety";
-import createQS from "../functions/createQS";
-import getResults, { getResultById } from "../functions/getResults";
+import getHeaders from "../functions/getHeaders";
+import getQueryParams from "../functions/getQueryParams";
+import getResults, {
+	getResultById,
+	getSearchTotalByProvider,
+} from "../functions/getResults";
 import searchByID from "../functions/searchByID";
 import APILightbox from "./APILightbox";
 import ErrorMessage from "./ErrorMessage";
@@ -23,15 +28,16 @@ class PhotoList extends React.Component {
 		super(props);
 
 		// Get current provider settings.
-		this.providers = ["Unsplash", "Pixabay"];
+		this.providers = ["Unsplash", "Pixabay", "Pexels"];
 		this.provider = this.props.provider; // Unsplash, Pixabay, etc.
 		this.api_provider = API[this.provider]; // The API settings for the provider.
 		this.arr_key = this.api_provider.arr_key;
+		this.per_page = API.defaults.per_page;
 
 		// API Vars.
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
-		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
-		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
+		this.photo_api = this.api_provider.photo_api;
+		this.search_api = this.api_provider.search_api;
 
 		// Results state.
 		this.results = getResults(
@@ -49,6 +55,7 @@ class PhotoList extends React.Component {
 
 		this.filters = {};
 		this.search_filters = {};
+		this.show_search_filters = true;
 
 		this.orderby = this.props.orderby; // Orderby
 		this.page = this.props.page; // Page
@@ -99,37 +106,6 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * Test access to the REST API.
-	 *
-	 * @since 3.2
-	 */
-	test() {
-		const self = this;
-		const testURL = instant_img_localize.root + "instant-images/test/"; // REST Route
-		const restAPITest = new XMLHttpRequest();
-		restAPITest.open("POST", testURL, true);
-		restAPITest.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
-		restAPITest.setRequestHeader("Content-Type", "application/json");
-		restAPITest.send();
-		restAPITest.onload = function () {
-			if (restAPITest.status >= 200 && restAPITest.status < 400) {
-				const response = JSON.parse(restAPITest.response);
-				const success = response.success;
-				if (!success) {
-					self.setState({ restapi_error: true });
-				}
-			} else {
-				// Error
-				self.setState({ restapi_error: true });
-			}
-		};
-		restAPITest.onerror = function (errorMsg) {
-			console.log(errorMsg);
-			self.setState({ restapi_error: true });
-		};
-	}
-
-	/**
 	 * Trigger Search.
 	 *
 	 * @param {Event} event The dispatched submit event.
@@ -137,137 +113,17 @@ class PhotoList extends React.Component {
 	 */
 	search(event) {
 		event.preventDefault();
-
 		const input = this.photoSearch.current;
 		const term = input.value;
 
 		if (term.length > 2) {
 			input.classList.add("searching");
-			this.container.classList.add("loading");
 			this.search_term = term;
 			this.is_search = true;
 			this.doSearch(this.search_term);
 		} else {
 			input.focus();
 		}
-	}
-
-	/**
-	 * Run the search.
-	 *
-	 * @param {string} term The search term.
-	 * @since 3.0
-	 */
-	doSearch(term) {
-		const self = this;
-		const input = this.photoSearch.current;
-		let type = "term";
-
-		this.photoTarget.current.classList.add("loading");
-		this.isLoading = true;
-
-		this.page = 1; // Reset currentpage num.
-		this.toggleFilters(); // Disable filters.
-
-		let url = `${this.search_api_url}&page=${this.page}&${
-			this.api_provider.search_query_var
-		}=${this.search_term}${contentSafety(this.provider)}`;
-
-		// Search by ID.
-		// Allow users to search by photo by prepending id:{photo_id} to search terms.
-		const search_type = term.substring(0, 3);
-		if (search_type === "id:") {
-			type = "id";
-			term = term.replace("id:", "");
-			url = searchByID(
-				this.provider,
-				term,
-				this.api_provider.photo_api,
-				this.api_provider.api_query_var,
-				this.api_key
-			);
-		}
-
-		// Get search filters.
-		const filters = createQS(this.search_filters);
-		url = filters !== "&" ? `${url}${filters}` : url;
-
-		fetch(url)
-			.then((data) => data.json())
-			.then(function (data) {
-				// Search term.
-				if (type === "term") {
-					const results = getResults(
-						self.provider,
-						self.arr_key,
-						data,
-						true
-					);
-					self.total_results = data.total;
-
-					// Check for returned data.
-					self.checkTotalResults(results.length);
-
-					// Update Props.
-					self.results = results;
-					self.setState({
-						results: self.results,
-						search_filters: FILTERS[self.provider].search,
-					});
-				}
-
-				// Search by ID.
-				if (type === "id" && data) {
-					// Convert return data to array.
-					const photoArray = [];
-
-					// Get results via ID.
-					const result = getResultById(
-						self.provider,
-						self.arr_key,
-						data,
-						true
-					);
-
-					// Data comes back differently in a search by ID.
-					if (data.errors) {
-						// If error was returned (Unsplash Only).
-						self.total_results = 0;
-						self.checkTotalResults("0");
-					} else {
-						// No errors, display results
-						photoArray.push(result);
-						self.total_results = 1;
-						self.checkTotalResults("1");
-					}
-
-					self.results = photoArray;
-					self.setState({ results: self.results });
-				}
-
-				// Delay for effect.
-				setTimeout(function () {
-					input.classList.remove("searching");
-					self.photoTarget.current.classList.remove("loading");
-					self.isLoading = false;
-				}, self.delay);
-			})
-			.catch(function (error) {
-				console.log(error);
-
-				// Error, reset all search parameters.
-				input.classList.remove("searching");
-				self.isLoading = false;
-				self.total_results = 0;
-				self.isDone = true;
-
-				this.photoTarget.current.classList.remove("loading");
-				this.isLoading = false;
-
-				// Update Props.
-				self.results = [];
-				self.setState({ results: self.results });
-			});
 	}
 
 	/**
@@ -300,6 +156,129 @@ class PhotoList extends React.Component {
 	}
 
 	/**
+	 * Perform a photo search.
+	 *
+	 * @param {string} term The search term.
+	 * @since 3.0
+	 */
+	async doSearch(term) {
+		const self = this;
+		const search_type = term.substring(0, 3) === "id:" ? "id" : "term";
+		const sep = "?";
+		const input = this.photoSearch.current;
+		const photoTarget = this.photoTarget.current;
+
+		// Set loading variables and options.
+		photoTarget.classList.add("loading");
+		this.isLoading = true;
+		this.page = 1; // Reset current page num.
+		this.toggleFilters(); // Disable filters.
+
+		// Build API URL.
+		let url = "";
+		if (search_type === "id") {
+			url = searchByID(this, term);
+		} else {
+			url = `${this.search_api}${sep}page=${this.page}&${
+				this.api_provider.search_var
+			}=${this.search_term}${contentSafety(this.provider)}`;
+		}
+
+		// Build URL.
+		//const params = getQueryParams(this.provider, this.search_filters);
+		//const url = buildURL(this.photo_api, params);
+
+		// Create fetch request.
+		const headers = getHeaders(this.provider);
+		const response = await fetch(url, { headers });
+		const { ok } = response;
+
+		if (ok) {
+			// Get response data.
+			const data = await response.json();
+
+			switch (search_type) {
+				case "term":
+					const results = getResults(
+						this.provider,
+						this.arr_key,
+						data,
+						true
+					);
+
+					this.total_results = getSearchTotalByProvider(
+						this.provider,
+						data
+					);
+
+					// Check for returned data.
+					this.checkTotalResults(results.length);
+
+					// Update Props.
+					this.show_search_filters = this.total_results > 0 ? true : false;
+					this.results = results;
+					this.setState({
+						results: this.results,
+						search_filters: FILTERS[this.provider].search,
+					});
+
+					break;
+
+				case "id":
+					// Convert return data to array.
+					const photoArray = [];
+
+					// Get results via ID.
+					const result = getResultById(
+						this.provider,
+						this.arr_key,
+						data,
+						true
+					);
+
+					// Data comes back differently in a search by ID.
+					if (data.errors) {
+						// If error was returned (Unsplash Only).
+						this.total_results = 0;
+						this.checkTotalResults("0");
+					} else {
+						// No errors, display results
+						photoArray.push(result);
+						this.total_results = 1;
+						this.checkTotalResults("1");
+						this.isDone = true;
+					}
+
+					this.show_search_filters = false;
+					this.results = photoArray;
+					this.setState({ results: self.results });
+					break;
+			}
+
+			// Delay for effect.
+			setTimeout(function () {
+				input.classList.remove("searching");
+				photoTarget.classList.remove("loading");
+				self.isLoading = false;
+			}, this.delay);
+		} else {
+			// Error handling.
+
+			// Reset all search parameters.
+			this.isDone = true;
+			this.isLoading = false;
+			this.show_search_filters = false;
+			this.total_results = 0;
+			input.classList.remove("searching");
+			photoTarget.classList.remove("loading");
+
+			// Update Props.
+			this.results = [];
+			this.setState({ results: this.results });
+		}
+	}
+
+	/**
 	 * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
 	 *
 	 * @param {string}  view     Current view.
@@ -307,13 +286,12 @@ class PhotoList extends React.Component {
 	 * @param {Boolean} switcher Is this a provider switch.
 	 * @since 3.0
 	 */
-	getPhotos(view, reset = false, switcher = false) {
-		const self = this;
-
+	async getPhotos(view, reset = false, switcher = false) {
 		if (this.isLoading && !reset) {
 			return; // exit if active
 		}
 
+		const self = this;
 		this.photoTarget.current.classList.add("loading");
 		this.isLoading = true;
 		this.page = 1;
@@ -321,48 +299,44 @@ class PhotoList extends React.Component {
 		this.results = [];
 		this.clearSearch();
 
-		// Get filters.
-		const filters = createQS(this.filters);
-
 		// Build URL.
-		const url = `${this.api_url}&page=${this.page}&${contentSafety(
-			this.provider
-		)}${filters}`;
+		const params = getQueryParams(this.provider, this.filters);
+		const url = buildURL(this.photo_api, params);
 
-		fetch(url)
-			.then((data) => data.json())
-			.then(function (data) {
-				const results = getResults(self.provider, self.arr_key, data);
+		// Create fetch request.
+		const headers = getHeaders(this.provider);
+		const response = await fetch(url, { headers });
+		const { ok, status, statusText } = response;
 
-				// Check for returned data
-				self.checkTotalResults(results.length);
+		// Status OK.
+		if (ok) {
+			const data = await response.json();
+			const results = getResults(this.provider, this.arr_key, data);
+			this.checkTotalResults(results.length); // Check for returned data.
+			this.results = results; // Update Props.
 
-				// Update Props.
-				self.results = results;
+			// Set results state.
+			if (!switcher) {
+				this.setState({
+					results: results,
+				});
+			} else {
+				this.setState({
+					results: results,
+					filters: FILTERS[this.provider].filters,
+				});
+			}
+		} else {
+			console.warn(`Error: ${status} - ${statusText}`);
+			this.photoTarget.current.classList.remove("loading");
+			this.isLoading = false;
+		}
 
-				// Set results state.
-				if (!switcher) {
-					self.setState({
-						results: results,
-					});
-				} else {
-					self.setState({
-						results: results,
-						filters: FILTERS[self.provider].filters,
-					});
-				}
-
-				// Delay for effect.
-				setTimeout(function () {
-					self.photoTarget.current.classList.remove("loading");
-					self.isLoading = false;
-				}, self.delay);
-			})
-			.catch(function (error) {
-				console.log(error);
-				self.photoTarget.current.classList.remove("loading");
-				self.isLoading = false;
-			});
+		// Delay loading animatons for effect.
+		setTimeout(function () {
+			self.photoTarget.current.classList.remove("loading");
+			self.isLoading = false;
+		}, self.delay);
 	}
 
 	/**
@@ -370,58 +344,53 @@ class PhotoList extends React.Component {
 	 *
 	 * @since 3.0
 	 */
-	loadMorePhotos() {
+	async loadMorePhotos() {
 		const self = this;
-		this.page = parseInt(this.page) + 1;
 		this.container.classList.add("loading");
 		this.isLoading = true;
+		this.page = parseInt(this.page) + 1;
 
-		let url = `${this.api_url}&page=${this.page}&`;
-		let filters = "";
+		let filters = this.is_search ? this.search_filters : this.filters;
+		let loadmore_url = this.is_search ? this.search_api : this.photo_api;
 
-		if (this.is_search) {
-			url = `${this.search_api_url}&page=${this.page}&${this.api_provider.search_query_var}=${this.search_term}`;
-			filters = createQS(this.search_filters);
+		console.log(this.search_api);
+		filters.page = this.page; // Increase page num.
+
+		// Build URL.
+		const params = getQueryParams(this.provider, filters);
+		const url = buildURL(loadmore_url, params);
+
+		const headers = getHeaders(this.provider);
+		const response = await fetch(url, { headers });
+		const { ok, status, statusText } = response;
+
+		// Status OK.
+		if (ok) {
+			const data = await response.json();
+			let results = getResults(
+				this.provider,
+				this.arr_key,
+				data,
+				this.is_search
+			);
+
+			// Unsplash search results are returned in different JSON format
+			if (this.is_search && this.provider === "unsplash") {
+				results = data.results;
+			}
+
+			// Loop result & push items into array.
+			results &&
+				results.map((data) => {
+					self.results.push(data);
+				});
+
+			this.checkTotalResults(data.length); // Check for returned data.
+			this.setState({ results: this.results }); // Update Props.
 		} else {
-			filters = createQS(this.filters);
+			console.warn(`Error: ${status} - ${statusText}`);
+			self.isLoading = false;
 		}
-
-		// Build URL
-		url = filters ? `${url}${contentSafety(this.provider)}${filters}` : url;
-
-		fetch(url)
-			.then((data) => data.json())
-			.then(function (data) {
-				let moreResults = getResults(
-					self.provider,
-					self.arr_key,
-					data,
-					self.is_search
-				);
-
-				// Unsplash search results are recieved in different JSON format
-				if (self.is_search && self.provider === "unsplash") {
-					moreResults = data.results;
-				}
-
-				// Loop results, push items into array
-				moreResults &&
-					moreResults.map((data) => {
-						self.results.push(data);
-					});
-
-				// Check for returned data
-				self.checkTotalResults(data.length);
-
-				// Update Props
-				self.setState({ results: self.results });
-
-				self.isLoading = false;
-			})
-			.catch(function (error) {
-				console.log(error);
-				self.isLoading = false;
-			});
 	}
 
 	/**
@@ -431,7 +400,11 @@ class PhotoList extends React.Component {
 	 * @param {string} value  The value to filter.
 	 */
 	filterPhotos(filter, value) {
-		if ((this.filters[filter] && value === "#") || value === "") {
+		if (
+			(this.filters[filter] && value === "#") ||
+			value === "" ||
+			value === "all"
+		) {
 			delete this.filters[filter];
 		} else {
 			this.filters[filter] = value;
@@ -446,7 +419,11 @@ class PhotoList extends React.Component {
 	 * @param {string} value  The value to filter.
 	 */
 	filterSearch(filter, value) {
-		if ((this.search_filters[filter] && value === "#") || value === "") {
+		if (
+			(this.search_filters[filter] && value === "#") ||
+			value === "" ||
+			value === "all"
+		) {
 			delete this.search_filters[filter];
 		} else {
 			this.search_filters[filter] = value;
@@ -524,26 +501,34 @@ class PhotoList extends React.Component {
 		}
 
 		// API Checker.
-		// Bounce if API key for service is invalid.
+		// Bounce if API key for provider is invalid.
 		if (API[provider].requires_key) {
-			const response = await fetch(buildTestURL(provider));
-			const ok = response.ok;
-			const status = response.status;
-
-			if (!ok || status === 400 || status === 401 || status === 500) {
-				this.setState({ api_lightbox: provider }); // Show API Lightbox.
+			// Get authentication headers.
+			const headers = getHeaders(provider);
+			const self = this;
+			try {
+				const response = await fetch(buildTestURL(provider), { headers });
+				const ok = response.ok;
+				const status = response.status;
+				if (
+					!ok ||
+					status === 400 ||
+					status === 401 ||
+					status === 500 ||
+					status === 404
+				) {
+					// Catch forbidden and 404s.
+					self.setState({ api_lightbox: provider }); // Show API Lightbox.
+					document.body.classList.add("overflow-hidden");
+					return;
+				}
+			} catch (error) {
+				// Catch all other errors.
+				self.setState({ api_lightbox: provider }); // Show API Lightbox.
 				document.body.classList.add("overflow-hidden");
 				return;
 			}
 		}
-
-		// Set new state provider.
-		this.provider = provider;
-		this.api_provider = API[this.provider];
-
-		// Clear filters.
-		this.filters = {};
-		this.search_filters = {};
 
 		// Remove active from buttons.
 		this.providerNav.current.querySelectorAll("button").forEach((button) => {
@@ -553,14 +538,19 @@ class PhotoList extends React.Component {
 		// Select active button.
 		target.classList.add("active");
 
-		// Set current provider params.
+		// Update API provider params.
+		this.provider = provider;
+		this.api_provider = API[this.provider];
 		this.arr_key = this.api_provider.arr_key;
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
+		this.photo_api = this.api_provider.photo_api;
+		this.search_api = this.api_provider.search_api;
 
-		this.api_url = `${this.api_provider.photo_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
-		this.search_api_url = `${this.api_provider.search_api}${this.api_provider.api_query_var}${this.api_key}${API.defaults.posts_per_page}`;
+		// Clear all filters.
+		this.filters = {};
+		this.search_filters = {};
 
-		// At last, get the photos.
+		// Finally, fetch the photos.
 		this.view = "latest";
 		this.getPhotos(this.view, true, true);
 	}
@@ -592,9 +582,9 @@ class PhotoList extends React.Component {
 	 * @since 3.0
 	 */
 	onScroll() {
-		let wHeight = window.innerHeight;
-		let scrollTop = window.pageYOffset;
-		let scrollH = document.body.scrollHeight - 400;
+		const wHeight = window.innerHeight;
+		const scrollTop = window.pageYOffset;
+		const scrollH = document.body.scrollHeight - 200;
 		if (wHeight + scrollTop >= scrollH && !this.isLoading && !this.isDone) {
 			this.loadMorePhotos();
 		}
@@ -607,7 +597,7 @@ class PhotoList extends React.Component {
 	 * @since 3.0
 	 */
 	checkTotalResults(num) {
-		this.isDone = num == 0 ? true : false;
+		this.isDone = parseInt(num) === 0 ? true : false;
 	}
 
 	/**
@@ -669,6 +659,37 @@ class PhotoList extends React.Component {
 		clearInterval(this.tooltipInterval);
 		const tooltip = this.container.querySelector("#tooltip");
 		tooltip.classList.remove("over");
+	}
+
+	/**
+	 * Test access to the REST API.
+	 *
+	 * @since 3.2
+	 */
+	test() {
+		const self = this;
+		const testURL = instant_img_localize.root + "instant-images/test/"; // REST Route
+		const restAPITest = new XMLHttpRequest();
+		restAPITest.open("POST", testURL, true);
+		restAPITest.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
+		restAPITest.setRequestHeader("Content-Type", "application/json");
+		restAPITest.send();
+		restAPITest.onload = function () {
+			if (restAPITest.status >= 200 && restAPITest.status < 400) {
+				const response = JSON.parse(restAPITest.response);
+				const success = response.success;
+				if (!success) {
+					self.setState({ restapi_error: true });
+				}
+			} else {
+				// Error
+				self.setState({ restapi_error: true });
+			}
+		};
+		restAPITest.onerror = function (errorMsg) {
+			console.log(errorMsg);
+			self.setState({ restapi_error: true });
+		};
 	}
 
 	// Component Updated
@@ -741,7 +762,7 @@ class PhotoList extends React.Component {
 								{Object.entries(this.state.filters).map(
 									([key, filter], i) => (
 										<Filter
-											key={`${key}-${i}`}
+											key={`${key}-${this.provider}-${i}`}
 											filterKey={key}
 											provider={this.provider}
 											data={filter}
@@ -785,7 +806,6 @@ class PhotoList extends React.Component {
 				{this.is_search && this.editor !== "gutenberg" && (
 					<div className="search-results-header">
 						<h2>{this.search_term}</h2>
-
 						<div className="search-results-header--text">
 							{`${this.total_results} ${instant_img_localize.search_results}`}{" "}
 							<strong>{`${this.search_term}`}</strong>
@@ -797,23 +817,24 @@ class PhotoList extends React.Component {
 								{instant_img_localize.clear_search}
 							</button>
 						</div>
-						{Object.entries(this.state.search_filters).length && (
-							<div className="control-nav--filters-wrap">
-								<div className="control-nav--filters">
-									{Object.entries(this.state.search_filters).map(
-										([key, filter], i) => (
-											<Filter
-												key={`${key}-${i}`}
-												filterKey={key}
-												provider={this.provider}
-												data={filter}
-												function={this.filterSearch.bind(this)}
-											/>
-										)
-									)}
+						{this.show_search_filters &&
+							Object.entries(this.state.search_filters).length && (
+								<div className="control-nav--filters-wrap">
+									<div className="control-nav--filters">
+										{Object.entries(this.state.search_filters).map(
+											([key, filter], i) => (
+												<Filter
+													key={`${key}-${i}`}
+													filterKey={key}
+													provider={this.provider}
+													data={filter}
+													function={this.filterSearch.bind(this)}
+												/>
+											)
+										)}
+									</div>
 								</div>
-							</div>
-						)}
+							)}
 					</div>
 				)}
 
