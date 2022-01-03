@@ -19,7 +19,7 @@ module.exports = {
 	pixabay: {
 		requires_key: true,
 		auth_headers: false,
-		new: false,
+		new: true,
 		api_var: "key",
 		api_query_var: "key=",
 		photo_api: "https://pixabay.com/api/",

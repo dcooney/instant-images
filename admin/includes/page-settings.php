@@ -14,6 +14,12 @@
 			<ul>
 				<li>
 					<p>
+						<strong>Pexels</strong>
+						We've added support for the <a href="https://pexels.com/" target="_blank">Pexels</a> API. This requires your own API key.
+					</p>
+				</li>
+				<li>
+					<p>
 						<strong>Pixabay</strong>
 						We've added support for the <a href="https://pixabay.com/" target="_blank">Pixabay</a> API. This requires your own API key.
 					</p>

@@ -2263,8 +2263,8 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 
 [data-provider="pexels"] {
   background: url(../img/pexels.svg) no-repeat 10px center;
-  -webkit-background-size: 18px 18px;
-          background-size: 18px 18px;
+  -webkit-background-size: 20px 20px;
+          background-size: 20px 20px;
 }
 
 .media-frame-content .instant-img-container .api-lightbox {
@@ -2617,21 +2617,21 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   display: block;
   visibility: hidden;
   opacity: 0;
-  -webkit-transform: scale(0.95);
-      -ms-transform: scale(0.95);
-          transform: scale(0.95);
-  -webkit-transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out, -webkit-transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56);
-  transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out, -webkit-transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56);
-  -o-transition: transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
-  transition: transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
-  transition: transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.1s ease-in-out, visibility 0.1s ease-in-out, -webkit-transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56);
+  -webkit-transform: scale(0.9);
+      -ms-transform: scale(0.9);
+          transform: scale(0.9);
+  -webkit-transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, -webkit-transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56);
+  transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, -webkit-transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56);
+  -o-transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+  transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+  transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, -webkit-transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56);
   padding: 10px;
   background-color: #fff;
   border: 1px solid #e1e1e1;
   -webkit-border-radius: 3px;
           border-radius: 3px;
-  -webkit-box-shadow: 0 8px 16px rgba(69, 92, 182, 0.2);
-          box-shadow: 0 8px 16px rgba(69, 92, 182, 0.2);
+  -webkit-box-shadow: 0 8px 16px rgba(48, 63, 122, 0.175);
+          box-shadow: 0 8px 16px rgba(48, 63, 122, 0.175);
   z-index: 9999;
   position: absolute;
   top: 110%;

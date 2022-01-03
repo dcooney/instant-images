@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Instant Images
  * Plugin URI: https://connekthq.com/plugins/instant-images/
- * Description: One click photo uploads from Unsplash and Pixabay directly to your media library.
+ * Description: One click photo uploads directly to your media library from Unsplash, Pixabay and Pexels.
  * Author: Darren Cooney
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
@@ -14,26 +14,15 @@
  * @package InstantImages
  */
 
-/*
-NEW: Added Pexels integration. This requires a valid API key.
-FIX: Fixed issue with filtering Unsplash search results by 'all'.
-FIX: Various admin UI/UX updates to make things smoother.
 
-TODO:
-- Confirm Unsplash Queries [DONE]
-- Convert all fetch requests to async/await
-	- Confirm `ok` works for confirming ALL queries. [DONE]
-	- Fixes the ID query to remove the `Id:2736456` from title.
-- Wrap all fetch requests in try/catch to catch 500 errors.
-
-*/
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+delete_option( 'instant_img_settings' );
 
-define( 'INSTANT_IMAGES_VERSION', '4.5.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'Decemeber 27, 2021' );
+define( 'INSTANT_IMAGES_VERSION', '4.6.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'January 2, 2022' );
 
 /**
  * Activation hook

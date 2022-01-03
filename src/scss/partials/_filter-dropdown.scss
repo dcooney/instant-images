@@ -44,9 +44,9 @@
 		display: block;
 		visibility: hidden;
 		opacity: 0;
-		transform: scale(0.95);
-		transition: transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56),
-			opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
+		transform: scale(0.9);
+		transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56),
+			opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
 		padding: 10px;
 		background-color: #fff;
 		border: 1px solid $border;
