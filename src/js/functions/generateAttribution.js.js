@@ -1,3 +1,5 @@
+import capitalizeFirstLetter from "./capitalizeFirstLetter";
+
 /**
  * Get the API URL for searches by ID.
  *
@@ -7,16 +9,13 @@
  * @return {string}           The raw attribution HTML.
  */
 export default function generateAttribution(provider, url, name) {
-	let attribution = instant_img_localize.photo_by;
-
-	switch (provider) {
-		case "unsplash":
-			attribution += ` <a href="${url}?utm_source=wordpress-instant-images&utm_medium=referral">${name}</a> on <a href="${instant_img_localize.unsplash_url}/?utm_source=wordpress-instant-images&utm_medium=referral">Unsplash</a>`;
-			break;
-		case "pixabay":
-			attribution += ` <a href="${url}?utm_source=wordpress-instant-images&utm_medium=referral">${name}</a> on <a href="${instant_img_localize.pixabay_url}/?utm_source=wordpress-instant-images&utm_medium=referral">Pixabay</a>`;
-			break;
-	}
+	const provider_url = `${provider}_url`;
+	const referral = "?utm_source=wordpress-instant-images&utm_medium=referral";
+	const attribution = `${
+		instant_img_localize.photo_by
+	}<a href="${url}">${name}</a> on <a href="${
+		instant_img_localize[provider_url]
+	}/?${referral}">${capitalizeFirstLetter(provider)}</a>`;
 
 	return attribution;
 }

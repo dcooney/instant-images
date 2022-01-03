@@ -1,18 +1,18 @@
 === Instant Images - One Click Unsplash and Pixabay Uploads ===
 Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
-Tags: unsplash, pixabay, stock photo, prototyping, photos, media library, image upload, upload, free photos
+Tags: unsplash, pixabay, pexels, stock photo, prototyping, photos, media library, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 5.8.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-One click uploads of Unsplash and Pixabay photos directly to your WordPress media library.
+One click uploads of photos from Unsplash, Pixabay and Pexels directly to your WordPress media library.
 
 == Description ==
 
-Instantly upload photos from Unsplash or Pixabay to your website without leaving WordPress!
+Instantly upload photos from Unsplash, Pixabay or Pexels to your website without leaving WordPress!
 
 **Instant Images** is the fastest and easiest way to upload high quality FREE photos from [unsplash.com](http://unsplash.com) and [Pixabay](http://pixabay.com) directly to your media library.
 
@@ -91,6 +91,10 @@ No, there is no need to sign up from an Unsplash account to access the photos se
 Yes, Pixabay access requires an API key. You can get this by signing up for a free account at [Pixabay](https://pixabay.com/).
 
 
+= Do I need an account at Pexels? =
+Yes, Pexels access requires an API key. You can get this by signing up for a free account at [Pexels](https://pexels.com/).
+
+
 == Installation ==
 
 How to install Instant Images.
@@ -127,6 +131,11 @@ How to install Instant Images.
 6. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 4.6.0 - January 2, 2022 =
+NEW: Added Pexels integration. This requires a valid API key.
+FIX: Fixed issue with filtering Unsplash search results by 'all'.
+FIX: Various admin UI/UX updates and tweaks to improve the look and feel.
 
 = 4.5.1 - December 27, 2021 =
 NEW: Added Pixabay photo filters (Type, Category, Colors and Orientation).

@@ -510,6 +510,10 @@ body.media_page_instant-images.overflow-hidden {
           filter: blur(1px);
 }
 
+.instant-img-container .control-nav--filters-wrap.inactive i {
+  opacity: 0.4 !important;
+}
+
 .instant-img-container .control-nav--filters-wrap.inactive * {
   cursor: not-allowed;
 }
@@ -838,7 +842,7 @@ body.media_page_instant-images.overflow-hidden {
   top: -5px;
   width: calc(100% + 20px);
   height: calc(100% + 10px);
-  min-height: 200px;
+  min-height: 300px;
   background: rgba(255, 255, 255, 0.95) url(../img/ajax-loader-lg.gif) no-repeat center 90px;
   z-index: 999;
   -webkit-transition: all 0.25s ease;
@@ -1124,7 +1128,7 @@ body.media_page_instant-images.overflow-hidden {
 }
 
 #photos .photo .options i.heart-like {
-  color: #d13714;
+  color: #de4624;
   -webkit-transition: all 0.25s ease 0.05s;
   -o-transition: all 0.25s ease 0.05s;
   transition: all 0.25s ease 0.05s;
@@ -1285,7 +1289,7 @@ body.media_page_instant-images.overflow-hidden {
   opacity: 0.25;
 }
 
-#photos .photo .fade.user img,
+#photos .photo .fade.user img.user-wrap--photo,
 #photos .photo .fade.user .user-wrap:before {
   width: 20px;
   max-width: 20px;
@@ -1296,7 +1300,7 @@ body.media_page_instant-images.overflow-hidden {
   top: 8px;
 }
 
-#photos .photo .fade.user img {
+#photos .photo .fade.user img.user-wrap--photo {
   z-index: 1;
 }
 
@@ -1831,6 +1835,12 @@ body.loading .instant-img-container .loading-block {
   fill: #586ec6 !important;
 }
 
+button[aria-expanded="true"] .instant-images-sidebar-icon svg,
+button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
+  stroke: #aabbff !important;
+  fill: #aabbff !important;
+}
+
 .components-panel .instant-img-container .load-more-wrap {
   display: block;
 }
@@ -1860,14 +1870,15 @@ body.loading .instant-img-container .loading-block {
 .components-panel #photos {
   width: 100%;
   margin: 0;
-  padding: 5px;
+  padding: 5px 10px;
+  overflow: hidden;
 }
 
 .components-panel #photos .photo {
   width: 100%;
   display: block;
   opacity: 1 !important;
-  margin: 0 0 5px;
+  margin: 0 0 10px;
   padding: 0;
 }
 
@@ -2073,9 +2084,9 @@ body.loading .instant-img-container .loading-block {
           border-radius: 2px;
   -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
           box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-  -webkit-transition: all 0.15s ease;
-  -o-transition: all 0.15s ease;
-  transition: all 0.15s ease;
+  -webkit-transition: opacity 0.15s ease;
+  -o-transition: opacity 0.15s ease;
+  transition: opacity 0.15s ease;
 }
 
 .instant-img-container #tooltip:after {
@@ -2110,14 +2121,36 @@ body.loading .instant-img-container .loading-block {
 
 .no-results {
   display: block;
-  padding: 150px 100px;
+  padding: 100px;
   text-align: center;
+  position: relative;
+}
+
+.no-results::before {
+  content: "\F002";
+  font-family: "FontAwesome";
+  display: block;
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  font-size: 85px;
+  opacity: 0.1;
+  -webkit-transform: translateY(-50%) translateX(-50%);
+      -ms-transform: translateY(-50%) translateX(-50%);
+          transform: translateY(-50%) translateX(-50%);
+}
+
+.no-results > div {
+  position: relative;
+  z-index: 10;
 }
 
 .no-results h3 {
   font-size: 24px;
-  line-height: 29px;
-  margin: 0 0 10px;
+  line-height: 1.2;
+  margin: 0 0 10px !important;
+  font-weight: 700;
 }
 
 .no-results p {
@@ -2129,72 +2162,6 @@ body.loading .instant-img-container .loading-block {
   .no-results {
     padding: 50px;
   }
-}
-
-.orientation-list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 100%;
-  padding: 7px 0;
-  margin: 0 0 10px;
-  border-top: 1px solid #efefef;
-  border-bottom: 1px solid #efefef;
-  position: relative;
-  top: -7px;
-}
-
-.orientation-list span {
-  opacity: 0.5;
-  margin: 0 10px 0 0;
-  font-size: 13px;
-}
-
-.orientation-list span i {
-  margin-right: 2px;
-}
-
-.orientation-list ul {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.orientation-list ul li {
-  margin: 0 1px 0 0;
-  -webkit-border-radius: 3px;
-          border-radius: 3px;
-  cursor: pointer;
-  padding: 4px 6px;
-  -webkit-transition: all 0.25s ease;
-  -o-transition: all 0.25s ease;
-  transition: all 0.25s ease;
-  border: 1px solid transparent;
-  color: #999;
-  font-size: 13px;
-}
-
-.orientation-list ul li:hover {
-  color: #111;
-}
-
-.orientation-list ul li:focus {
-  border-color: #586ec6;
-  color: #111;
-  outline: none;
-}
-
-.orientation-list ul li.active {
-  background-color: #586ec6;
-  border-color: #586ec6;
-  color: #fff;
-  outline: none;
 }
 
 .media-frame-router button#menu-item-instantimages.active {
@@ -2219,19 +2186,29 @@ body.loading .instant-img-container .loading-block {
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
   background-color: #f7f7f7;
   position: relative;
+  overflow-x: auto;
 }
 
 .provider-nav > div {
   position: relative;
+  margin: 0 5px;
+}
+
+.provider-nav > div:first-of-type {
+  margin-left: 0;
+}
+
+.provider-nav > div:last-of-type {
+  margin-left: 0;
 }
 
 .provider-nav--btn {
   padding: 0 10px 0 36px;
+  margin: 0;
   height: 38px;
   line-height: 38px;
   border: 1px solid transparent;
   background: transparent;
-  margin-right: 5px;
   cursor: pointer;
   position: relative;
   -webkit-border-radius: 3px;
@@ -2280,6 +2257,12 @@ body.loading .instant-img-container .loading-block {
 
 [data-provider="pixabay"] {
   background: url(../img/pixabay.png) no-repeat 10px center;
+  -webkit-background-size: 20px 20px;
+          background-size: 20px 20px;
+}
+
+[data-provider="pexels"] {
+  background: url(../img/pexels.svg) no-repeat 10px center;
   -webkit-background-size: 20px 20px;
           background-size: 20px 20px;
 }
@@ -2634,21 +2617,21 @@ body.loading .instant-img-container .loading-block {
   display: block;
   visibility: hidden;
   opacity: 0;
-  -webkit-transform: scale(0.95);
-      -ms-transform: scale(0.95);
-          transform: scale(0.95);
-  -webkit-transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out, -webkit-transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56);
-  transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out, -webkit-transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56);
-  -o-transition: transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
-  transition: transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
-  transition: transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.1s ease-in-out, visibility 0.1s ease-in-out, -webkit-transform 0.2s cubic-bezier(0.24, 0.22, 0.015, 1.56);
+  -webkit-transform: scale(0.9);
+      -ms-transform: scale(0.9);
+          transform: scale(0.9);
+  -webkit-transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, -webkit-transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56);
+  transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, -webkit-transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56);
+  -o-transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+  transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+  transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, -webkit-transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56);
   padding: 10px;
   background-color: #fff;
   border: 1px solid #e1e1e1;
   -webkit-border-radius: 3px;
           border-radius: 3px;
-  -webkit-box-shadow: 0 8px 16px rgba(69, 92, 182, 0.2);
-          box-shadow: 0 8px 16px rgba(69, 92, 182, 0.2);
+  -webkit-box-shadow: 0 8px 16px rgba(48, 63, 122, 0.175);
+          box-shadow: 0 8px 16px rgba(48, 63, 122, 0.175);
   z-index: 9999;
   position: absolute;
   top: 110%;
@@ -2738,8 +2721,7 @@ body.loading .instant-img-container .loading-block {
 
 .search-results-header--text {
   font-size: 14px;
-  margin: 0;
-  padding-bottom: 10px;
+  margin: 0 0 15px;
   color: #999;
 }
 

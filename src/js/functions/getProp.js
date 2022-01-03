@@ -8,6 +8,7 @@
  */
 export default function getProp(provider, result, attribute) {
 	let value = "";
+	const referral = "?utm_source=wordpress-instant-images&utm_medium=referral";
 	switch (attribute) {
 		case "thumb":
 			if (provider === "pixabay") {
@@ -15,6 +16,9 @@ export default function getProp(provider, result, attribute) {
 			}
 			if (provider === "unsplash") {
 				value = result.urls.thumb;
+			}
+			if (provider === "pexels") {
+				value = result.src.tiny;
 			}
 			break;
 
@@ -25,6 +29,9 @@ export default function getProp(provider, result, attribute) {
 			if (provider === "unsplash") {
 				value = result.urls.small;
 			}
+			if (provider === "pexels") {
+				value = result.src.large;
+			}
 			break;
 
 		case "full_size":
@@ -33,6 +40,9 @@ export default function getProp(provider, result, attribute) {
 			}
 			if (provider === "unsplash") {
 				value = result.urls.full;
+			}
+			if (provider === "pexels") {
+				value = result.src.original;
 			}
 			break;
 
@@ -43,6 +53,9 @@ export default function getProp(provider, result, attribute) {
 			if (provider === "unsplash") {
 				value = result.user.name;
 			}
+			if (provider === "pexels") {
+				value = result.photographer;
+			}
 			break;
 
 		case "user":
@@ -51,6 +64,9 @@ export default function getProp(provider, result, attribute) {
 			}
 			if (provider === "unsplash") {
 				value = result.user.username;
+			}
+			if (provider === "pexels") {
+				value = result.photographer_id;
 			}
 			break;
 
@@ -61,6 +77,9 @@ export default function getProp(provider, result, attribute) {
 			if (provider === "unsplash") {
 				value = result.user.name;
 			}
+			if (provider === "pexels") {
+				value = result.photographer;
+			}
 			break;
 
 		case "user_photo":
@@ -70,14 +89,20 @@ export default function getProp(provider, result, attribute) {
 			if (provider === "unsplash") {
 				value = result.user.profile_image.small;
 			}
+			if (provider === "pexels") {
+				value = false;
+			}
 			break;
 
 		case "user_url":
 			if (provider === "pixabay") {
-				value = `${instant_img_localize.pixabay_url}/users/${result.user}-${result.user_id}/`;
+				value = `${instant_img_localize.pixabay_url}/users/${result.user}-${result.user_id}/?${referral}`;
 			}
 			if (provider === "unsplash") {
-				value = `${instant_img_localize.unsplash_url}/@${result.user.username}?utm_source=wordpress-instant-images&utm_medium=referral`;
+				value = `${instant_img_localize.unsplash_url}/@${result.user.username}?${referral}`;
+			}
+			if (provider === "pexels") {
+				value = `${result.photographer_url}?${referral}`;
 			}
 			break;
 
@@ -88,6 +113,9 @@ export default function getProp(provider, result, attribute) {
 			if (provider === "unsplash") {
 				value = result.links.html;
 			}
+			if (provider === "pexels") {
+				value = result.url;
+			}
 			break;
 
 		case "likes":
@@ -96,6 +124,21 @@ export default function getProp(provider, result, attribute) {
 			}
 			if (provider === "unsplash") {
 				value = result.likes;
+			}
+			if (provider === "pexels") {
+				value = false;
+			}
+			break;
+
+		case "alt":
+			if (provider === "pixabay") {
+				value = result.alt_description;
+			}
+			if (provider === "unsplash") {
+				value = result.alt_description;
+			}
+			if (provider === "pexels") {
+				value = result.alt;
 			}
 			break;
 	}

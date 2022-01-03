@@ -16,6 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 2.0
  */
 function instant_images_admin_init() {
+
+	$providers = InstantImages::instant_img_get_providers();
+
 	register_setting(
 		'instant-img-setting-group',
 		'instant_img_settings',
@@ -56,14 +59,24 @@ function instant_images_admin_init() {
 		'unsplash_general_settings'
 	);
 
-	// Pixabay API Key.
-	add_settings_field(
-		'pixabay_api',
-		__( 'Pixabay API Key', 'instant-images' ),
-		'instant_images_pixabay_api_callback',
-		'instant-images',
-		'unsplash_general_settings'
-	);
+	// Providers API Keys.
+	$count = 0;
+	foreach ( $providers as $provider ) {
+		if ( $provider['requires_key'] ) {
+			$count++;
+			$key   = $provider['slug'] . '_api';
+			$title = $provider['name'] . __( 'API Key', 'instant-images' );
+			// Only set the callback on the first item as they are created only once.
+			$callback = 1 === $count ? 'instant_images_api_key_callback' : 'instant_images_callable';
+			add_settings_field(
+				$key,
+				$title,
+				$callback,
+				'instant-images',
+				'unsplash_general_settings'
+			);
+		}
+	}
 
 	// Button Display.
 	add_settings_field(
@@ -177,7 +190,8 @@ function instant_images_tab_display_callback() {
  * @since 4.5
  */
 function instant_images_default_provider() {
-	$options = get_option( 'instant_img_settings' );
+	$providers = InstantImages::instant_img_get_providers();
+	$options   = get_option( 'instant_img_settings' );
 	if ( ! isset( $options['default_provider'] ) ) {
 		$options['default_provider'] = 'unsplash';
 	}
@@ -186,34 +200,63 @@ function instant_images_default_provider() {
 		<strong><?php esc_attr_e( 'Default Provider:', 'instant-images' ); ?></strong>
 	</label>
 	<select id="default_provider" name="instant_img_settings[default_provider]">
-		<option value="unsplash" <?php selected( 'unsplash', $options['default_provider'] ); ?>><?php esc_attr_e( 'Unsplash', 'instant-images' ); ?></option>
-		<option value="pixabay" <?php selected( 'pixabay', $options['default_provider'] ); ?>><?php esc_attr_e( 'Pixabay', 'instant-images' ); ?> (<?php esc_attr_e( 'Requires API Key', 'instant-images' ); ?>)</option>
+		<?php foreach ( $providers as $provider ) { ?>
+			<option value="<?php echo esc_html( $provider['slug'] ); ?>" <?php selected( esc_html( $provider['slug'] ), $options['default_provider'] ); ?>>
+				<?php echo esc_html( $provider['name'] ); ?>
+				<?php
+				if ( $provider['requires_key'] ) {
+					?>
+				(<?php esc_attr_e( 'Requires API Key', 'instant-images' ); ?>) <?php } ?>
+			</option>
+		<?php } ?>
 	</select>
 	<?php
 }
 
+
 /**
- * Set the Pizabay API key.
+ * Set the API keys for each required provider.
  *
  * @author ConnektMedia <support@connekthq.com>
  * @since 4.5
  */
-function instant_images_pixabay_api_callback() {
-	$options = get_option( 'instant_img_settings' );
+function instant_images_api_key_callback() {
+	$providers = InstantImages::instant_img_get_providers();
+	$options   = get_option( 'instant_img_settings' );
 
-	if ( defined( 'INSTANT_IMAGES_PIXABAY_KEY' ) ) {
-		$options['pixabay_api'] = INSTANT_IMAGES_PIXABAY_KEY; // Constant.
-	} else {
-		if ( ! isset( $options['pixabay_api'] ) ) {
-			$options['pixabay_api'] = '';
+	foreach ( $providers as $provider ) {
+		if ( $provider['requires_key'] ) {
+
+			$key      = $provider['slug'] . '_api';
+			$title    = $provider['name'] . ' ' . __( 'API Key', 'instant-images' );
+			$constant = $provider['constant'];
+			$url      = $provider['url'];
+
+			if ( defined( $constant ) ) {
+				$options[ $key ] = constant( $constant );
+			} else {
+				if ( ! isset( $options[ $key ] ) ) {
+					$options[ $key ] = '';
+				}
+			}
+			?>
+			<label for="<?php echo esc_html( $key ); ?>" style="cursor: default; margin-bottom: 3px;">
+			<strong><?php echo esc_attr( $title ); ?></strong>
+			</label>
+			<input type="text" id="<?php echo esc_html( $key ); ?>" name="instant_img_settings[<?php echo esc_html( $key ); ?>]" value="<?php echo wp_kses_post( $options[ $key ] ); ?>" <?php echo defined( 'INSTANT_IMAGES_PIXABAY_KEY' ) ? ' readonly="readonly"' : ''; ?>>
+			<span class="desc">&rarr; <a href="<?php echo wp_kses_post( $url ); ?>" target="_blank"><?php esc_attr_e( 'Get API Key', 'instant-images' ); ?></a></span>
+
+			<?php
 		}
 	}
+}
 
-	?>
-	<label for="pixabay_api" style="cursor: default; margin-bottom: 3px;">
-		<strong><?php esc_attr_e( 'Pixabay API Key:', 'instant-images' ); ?></strong>
-	</label>
-	<input type="text" id="pixabay_api" name="instant_img_settings[pixabay_api]" value="<?php echo wp_kses_post( $options['pixabay_api'] ); ?>" <?php echo defined( 'INSTANT_IMAGES_PIXABAY_KEY' ) ? ' readonly="readonly"' : ''; ?>>
-	<span class="desc">&rarr; <a href="https://pixabay.com/" target="_blank"><?php esc_attr_e( 'Get API Key', 'instant-images' ); ?></a></span>
-	<?php
+/**
+ * Empty callback function for the API Key switcher.
+ *
+ * @author ConnektMedia <support@connekthq.com>
+ * @since 4.6
+ */
+function instant_images_callable() {
+	return null;
 }

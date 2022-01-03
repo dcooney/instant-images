@@ -1,3 +1,5 @@
+import capitalizeFirstLetter from "./capitalizeFirstLetter";
+
 /**
  * Display a console.warn message about API status.
  *
@@ -9,7 +11,7 @@ export default function consoleStatus(provider, status = 0) {
 	if (status === 400 || status === 401) {
 		// Unsplash/Pixabay incorrect API key.
 		console.warn(
-			`[${local.instant_images} - ${status} Error] ${capitalize(
+			`[${local.instant_images} - ${status} Error] ${capitalizeFirstLetter(
 				provider
 			)}: ${local.api_invalid_msg}`
 		);
@@ -17,14 +19,9 @@ export default function consoleStatus(provider, status = 0) {
 	if (status === 429) {
 		// Pixabay - too many requests.
 		console.warn(
-			`[${local.instant_images} - ${status} Error] ${capitalize(
+			`[${local.instant_images} - ${status} Error] ${capitalizeFirstLetter(
 				provider
 			)}: ${local.api_ratelimit_msg}`
 		);
 	}
-}
-
-function capitalize(s) {
-	if (typeof s !== "string") return "";
-	return s.charAt(0).toUpperCase() + s.slice(1);
 }

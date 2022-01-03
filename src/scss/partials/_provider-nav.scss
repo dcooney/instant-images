@@ -23,16 +23,24 @@
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
 	background-color: $lighter_grey;
 	position: relative;
+	overflow-x: auto;
 	> div {
 		position: relative;
+		margin: 0 5px;
+		&:first-of-type {
+			margin-left: 0;
+		}
+		&:last-of-type {
+			margin-left: 0;
+		}
 	}
 	&--btn {
 		padding: 0 10px 0 36px;
+		margin: 0;
 		height: $el_height;
 		line-height: $el_height;
 		border: 1px solid transparent;
 		background: transparent;
-		margin-right: 5px;
 		cursor: pointer;
 		position: relative;
 		border-radius: $radius;
@@ -40,6 +48,7 @@
 		color: $text_light;
 		transition: all 0.2s ease;
 		background-color: $lighter_grey;
+
 		&:hover,
 		&:focus {
 			color: $text;
@@ -71,7 +80,13 @@
 	background: url("../img/logos/unsplash.svg") no-repeat 10px center;
 	background-size: 18px 18px;
 }
+
 [data-provider="pixabay"] {
 	background: url("../img/logos/pixabay.png") no-repeat 10px center;
+	background-size: 20px 20px;
+}
+
+[data-provider="pexels"] {
+	background: url("../img/logos/pexels.svg") no-repeat 10px center;
 	background-size: 20px 20px;
 }

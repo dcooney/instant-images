@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Instant Images
  * Plugin URI: https://connekthq.com/plugins/instant-images/
- * Description: One click photo uploads from Unsplash and Pixabay directly to your media library.
+ * Description: One click photo uploads directly to your media library from Unsplash, Pixabay and Pexels.
  * Author: Darren Cooney
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
@@ -14,12 +14,15 @@
  * @package InstantImages
  */
 
+
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+delete_option( 'instant_img_settings' );
 
-define( 'INSTANT_IMAGES_VERSION', '4.5.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'Decemeber 27, 2021' );
+define( 'INSTANT_IMAGES_VERSION', '4.6.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'January 2, 2022' );
 
 /**
  * Activation hook
@@ -83,6 +86,40 @@ class InstantImages {
 		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain.
 		$this->includes();
 		$this->constants();
+	}
+
+	/**
+	 * Get a list of all plugin providers.
+	 *
+	 * @since 4.6
+	 * @author ConnektMedia <support@connekthq.com>
+	 * @return array The array of providers.
+	 */
+	public static function instant_img_get_providers() {
+		$providers = [
+			[
+				'name'         => 'Unsplash',
+				'slug'         => 'unsplash',
+				'requires_key' => false,
+				'url'          => 'unsplash_url',
+				'constant'     => '',
+			],
+			[
+				'name'         => 'Pixabay',
+				'slug'         => 'pixabay',
+				'requires_key' => true,
+				'url'          => 'https://pixabay.com',
+				'constant'     => 'INSTANT_IMAGES_PIXABAY_KEY',
+			],
+			[
+				'name'         => 'Pexels',
+				'slug'         => 'pexels',
+				'requires_key' => true,
+				'url'          => 'https://pexels.com',
+				'constant'     => 'INSTANT_IMAGES_PEXELS_KEY',
+			],
+		];
+		return $providers;
 	}
 
 	/**
@@ -169,6 +206,12 @@ class InstantImages {
 		} else {
 			$pixabay_api = isset( $options['pixabay_api'] ) ? $options['pixabay_api'] : '';
 		}
+		// Pexels API.
+		if ( defined( 'INSTANT_IMAGES_PEXELS_KEY' ) ) {
+			$pexels_api = INSTANT_IMAGES_PEXELS_KEY; // Constant.
+		} else {
+			$pexels_api = isset( $options['pexels_api'] ) ? $options['pexels_api'] : '';
+		}
 
 		wp_localize_script(
 			$script,
@@ -183,6 +226,7 @@ class InstantImages {
 				'default_provider'        => $default_provider,
 				'download_width'          => esc_html( $download_w ),
 				'download_height'         => esc_html( $download_h ),
+				'query_debug'             => apply_filters( 'instant_images_query_debug', false ),
 				'unsplash_app_id'         => INSTANT_IMAGES_DEFAULT_APP_ID,
 				'unsplash_url'            => 'https://unsplash.com',
 				'unsplash_api_url'        => 'https://unsplash.com/developers',
@@ -192,6 +236,10 @@ class InstantImages {
 				'pixabay_api_url'         => 'https://pixabay.com/service/about/api/',
 				'pixabay_api_desc'        => __( 'Access to images from Pixabay requires a valid API key. API keys are available for free, just sign up for an account at Pixabay, enter your API key below and you\'re good to go!', 'instant-images' ),
 				'pixabay_safesearch'      => apply_filters( 'instant_images_pixabay_safesearch', 'true' ),
+				'pexels_app_id'           => $pexels_api,
+				'pexels_url'              => 'https://pexels.com',
+				'pexels_api_url'          => 'https://www.pexels.com/join-consumer/',
+				'pexels_api_desc'         => __( 'Access to images from Pexels requires a valid API key. API keys are available for free, just sign up for an account at Pexels, enter your API key below and you\'re good to go!', 'instant-images' ),
 				'error_upload'            => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
 				'error_restapi'           => '<strong>' . __( 'There was an error accessing the WP REST API.', 'instant-images' ) . '</strong><br/>',
 				'error_restapi_desc'      => __( 'Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images' ),
@@ -206,7 +254,7 @@ class InstantImages {
 				'resizing'                => __( 'Creating image sizes...', 'instant-images' ),
 				'resizing_still'          => __( 'Still resizing...', 'instant-images' ),
 				'no_results'              => __( 'Sorry, nothing matched your query', 'instant-images' ),
-				'no_results_desc'         => __( 'Please try adjusting your search criteria', 'instant-images' ),
+				'no_results_desc'         => __( 'Try adjusting your search criteria', 'instant-images' ),
 				'latest'                  => __( 'New', 'instant-images' ),
 				'oldest'                  => __( 'Oldest', 'instant-images' ),
 				'popular'                 => __( 'Popular', 'instant-images' ),
@@ -218,8 +266,7 @@ class InstantImages {
 				'search_label'            => __( 'Search', 'instant-images' ),
 				'search_results'          => __( 'images found for', 'instant-images' ),
 				'clear_search'            => __( 'Clear Search', 'instant-images' ),
-				'view_on_unsplash'        => __( 'View on Unsplash', 'instant-images' ),
-				'view_on_pixabay'         => __( 'View on Pixabay', 'instant-images' ),
+				'open_external'           => __( 'Open image on', 'instant-images' ),
 				'set_as_featured'         => __( 'Set as Featured Image', 'instant-images' ),
 				'insert_into_post'        => __( 'Insert Into Post', 'instant-images' ),
 				'edit_filename'           => __( 'Filename', 'instant-images' ),
@@ -254,6 +301,7 @@ class InstantImages {
 					'category'    => __( 'Category:', 'instant-images' ),
 					'colors'      => __( 'Colors:', 'instant-images' ),
 					'orientation' => __( 'Orientation:', 'instant-images' ),
+					'size'        => __( 'Size:', 'instant-images' ),
 				),
 			)
 		);
@@ -350,7 +398,6 @@ class InstantImages {
 		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
 		define( 'INSTANT_IMAGES_DEFAULT_APP_ID', '5746b12f75e91c251bddf6f83bd2ad0d658122676e9bd2444e110951f9a04af8' );
 	}
-
 
 	/**
 	 * Add custom links to plugins.php

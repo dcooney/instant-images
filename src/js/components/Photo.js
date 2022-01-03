@@ -1,8 +1,10 @@
 import axios from "axios";
 import React from "react";
 import API from "../constants/API.js";
+import capitalizeFirstLetter from "../functions/capitalizeFirstLetter";
 import generateAttribution from "../functions/generateAttribution.js";
 import getProp from "../functions/getProp";
+import unsplashDownload from "../functions/unsplashDownload";
 
 class Photo extends React.Component {
 	constructor(props) {
@@ -21,7 +23,7 @@ class Photo extends React.Component {
 		this.img_title = `${instant_img_localize.photo_by} ${this.author}`;
 		this.filename = result.id;
 		this.title = this.img_title;
-		this.alt = result.alt_description ? result.alt_description : null;
+		this.alt = getProp(this.provider, result, "alt");
 		this.alt = this.alt === null ? "" : this.alt;
 		this.caption = "";
 
@@ -114,6 +116,7 @@ class Photo extends React.Component {
 
 		// Data Params
 		const data = {
+			provider: this.provider,
 			id: target.getAttribute("data-id"),
 			image_url: target.getAttribute("data-url"),
 			filename: target.getAttribute("data-id") + ".jpg",
@@ -158,9 +161,9 @@ class Photo extends React.Component {
 							attachment.id
 						);
 
-						// Trigger Download Counter at Unsplash.
+						// Trigger a download at Unsplash.
 						if (self.provider === "unsplash") {
-							self.triggerUnsplashDownload(id);
+							unsplashDownload(self, id);
 						}
 
 						// Set Featured Image [Gutenberg Sidebar]
@@ -205,25 +208,6 @@ class Photo extends React.Component {
 						instant_img_localize.error_upload
 					);
 				}
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-	}
-
-	/**
-	 * Function to trigger download action at unsplash.com
-	 * This is used to give authors download credits and nothing more
-	 *
-	 * @param {string} id The ID of the image
-	 * @since 3.1
-	 */
-	triggerUnsplashDownload(id) {
-		const url = `${this.api_provider.photo_api}/${id}/download/${this.api_provider.api_query_var}${this.api_key}`;
-		fetch(url)
-			.then((data) => data.json())
-			.then(function (data) {
-				// Success, nothing else happens here
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -286,11 +270,11 @@ class Photo extends React.Component {
 		target.classList.add("success");
 		this.inProgress = false;
 
-		// Remove uploaded and success states after 7.5 seconds.
+		// Remove uploaded and success states after 5 seconds.
 		setTimeout(function () {
 			photo.classList.remove("uploaded");
 			target.classList.remove("success");
-		}, 7500);
+		}, 5000);
 
 		// Gutenberg Sidebar
 		if (this.is_block_editor) {
@@ -587,7 +571,10 @@ class Photo extends React.Component {
 							>
 								<div className="user-wrap">
 									{this.user_photo && this.user_photo.length > 0 && (
-										<img src={this.user_photo} />
+										<img
+											className="user-wrap--photo"
+											src={this.user_photo}
+										/>
 									)}
 									{this.provider === "unsplash"
 										? this.user
@@ -659,26 +646,26 @@ class Photo extends React.Component {
 						</div>
 
 						<div className="options">
-							<span
-								className="likes tooltip--above"
-								data-title={this.likes + " " + likeTxt}
-								onMouseEnter={(e) => this.showTooltip(e)}
-								onMouseLeave={(e) => this.hideTooltip(e)}
-							>
-								<i
-									className="fa fa-heart heart-like"
-									aria-hidden="true"
-								></i>{" "}
-								{this.likes}
-							</span>
+							{this.likes ? (
+								<span
+									className="likes tooltip--above"
+									data-title={this.likes + " " + likeTxt}
+									onMouseEnter={(e) => this.showTooltip(e)}
+									onMouseLeave={(e) => this.hideTooltip(e)}
+								>
+									<i
+										className="fa fa-heart heart-like"
+										aria-hidden="true"
+									></i>{" "}
+									{this.likes}
+								</span>
+							) : null}
 							<a
 								className="tooltip--above"
 								href={this.link}
-								data-title={
-									this.provider === "unsplash"
-										? instant_img_localize.view_on_unsplash
-										: instant_img_localize.view_on_pixabay
-								}
+								data-title={`${
+									instant_img_localize.open_external
+								} ${capitalizeFirstLetter(this.provider)}`}
 								onMouseEnter={(e) => this.showTooltip(e)}
 								onMouseLeave={(e) => this.hideTooltip(e)}
 								target="_blank"
@@ -688,9 +675,9 @@ class Photo extends React.Component {
 									aria-hidden="true"
 								></i>
 								<span className="offscreen">
-									{this.provider === "unsplash"
-										? instant_img_localize.view_on_unsplash
-										: instant_img_localize.view_on_pixabay}
+									{`${
+										instant_img_localize.open_external
+									} ${capitalizeFirstLetter(this.provider)}`}
 								</span>
 							</a>
 						</div>

@@ -5,9 +5,9 @@
  * @return {string}     The generated querystring.
  */
 export default function createQS(obj) {
-	const qs = Object.keys(obj)
+	const querystring = Object.keys(obj)
 		.map((key) => `${key}=${obj[key]}`)
 		.join("&");
 
-	return `&${qs}`;
+	return querystring ? `&${querystring}` : "";
 }
