@@ -132,6 +132,9 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 4.6.0.1 - January 3, 2022 =
+HOTFIX: Hotfix for accidentaly `delete_options` function left in whilst testing. Sorry about that!
+
 = 4.6.0 - January 2, 2022 =
 NEW: Added Pexels integration. This requires a valid API key.
 FIX: Fixed issue with filtering Unsplash search results by 'all'.
