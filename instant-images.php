@@ -14,6 +14,10 @@
  * @package InstantImages
  */
 
+/*
+* NEW - Added rate-limit checker to determine the status of the API and display a warning if the limit has been exceeded.
+
+*/
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -291,7 +295,7 @@ class InstantImages {
 				'api_key_invalid'         => __( 'The API Key is Invalid', 'instant-images' ),
 				'api_success_msg'         => __( 'API key has been successfully validated!', 'instant-images' ),
 				'api_invalid_msg'         => __( 'API key entered is not valid - try again.', 'instant-images' ),
-				'api_ratelimit_msg'       => __( 'Your daily or hourly API rate limit has been exceeded. Try again later.', 'instant-images' ),
+				'api_ratelimit_msg'       => __( 'The API rate limit has been exceeded for this image provider. Please add a new API key or try again later.', 'instant-images' ),
 				'get_api_key'             => __( 'Get API Key Now', 'instant-images' ),
 				'filters'                 => array(
 					'select'      => __( '-- Select --', 'instant-images' ),

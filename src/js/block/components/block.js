@@ -2,6 +2,7 @@ import React from "react";
 import PhotoList from "../../components/PhotoList";
 import API from "../../constants/API";
 import buildTestURL from "../../functions/buildTestURL";
+import checkRateLimit from "../../functions/checkRateLimit";
 import consoleStatus from "../../functions/consoleStatus";
 import getProvider from "../../functions/getProvider";
 import Icon from "./utils/icon";
@@ -33,6 +34,7 @@ const Block = () => {
 				// Handle response.
 				const ok = response.ok;
 				const status = response.status;
+				checkRateLimit(response.headers);
 
 				if (ok) {
 					// Success.
