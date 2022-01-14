@@ -37754,6 +37754,7 @@ var APILightbox = function (_React$Component) {
 		_this.provider = _this.props.provider;
 		_this.api_key = instant_img_localize[_this.provider + "_app_id"];
 		_this.inputRef = _react2.default.createRef();
+		_this.submitRef = _react2.default.createRef();
 		_this.loading = false;
 		_this.state = { status: "invalid", response: "" };
 		_this.afterVerifiedAPICallback = _this.props.afterVerifiedAPICallback.bind(_this);
@@ -37773,7 +37774,7 @@ var APILightbox = function (_React$Component) {
 		key: "handleSubmit",
 		value: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
-				var self, key, settingField, headers, response, ok, status;
+				var self, key, updateKey, settingField, headers, response, ok, status;
 				return regeneratorRuntime.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
@@ -37785,9 +37786,10 @@ var APILightbox = function (_React$Component) {
 								this.setState({ status: "loading" });
 
 								key = this.inputRef.current.value;
+								updateKey = key;
 
 								if (!key) {
-									this.inputRef.current.focus({ preventScroll: true });
+									key = instant_img_localize[this.provider + "_default_app_id"];
 								}
 
 								// Set localized variable.
@@ -37797,19 +37799,19 @@ var APILightbox = function (_React$Component) {
 								settingField = document.querySelector("input[name=\"instant_img_settings[" + this.provider + "_api]\"]");
 
 								if (settingField) {
-									settingField.value = key;
+									settingField.value = updateKey;
 								}
 
 								// Update plugin settings via REST API.
-								(0, _updatePluginSetting2.default)(this.provider + "_api", key);
+								(0, _updatePluginSetting2.default)(this.provider + "_api", updateKey);
 
 								// Get authentication headers.
 								headers = (0, _getHeaders2.default)(this.provider);
-								_context.prev = 10;
-								_context.next = 13;
+								_context.prev = 11;
+								_context.next = 14;
 								return fetch((0, _buildTestURL2.default)(self.provider), { headers: headers });
 
-							case 13:
+							case 14:
 								response = _context.sent;
 
 
@@ -37850,12 +37852,12 @@ var APILightbox = function (_React$Component) {
 										});
 									}
 								}
-								_context.next = 25;
+								_context.next = 26;
 								break;
 
-							case 20:
-								_context.prev = 20;
-								_context.t0 = _context["catch"](10);
+							case 21:
+								_context.prev = 21;
+								_context.t0 = _context["catch"](11);
 
 								// Catch all other errors.
 
@@ -37869,12 +37871,12 @@ var APILightbox = function (_React$Component) {
 									response: instant_img_localize.api_invalid_msg
 								});
 
-							case 25:
+							case 26:
 							case "end":
 								return _context.stop();
 						}
 					}
-				}, _callee, this, [[10, 20]]);
+				}, _callee, this, [[11, 21]]);
 			}));
 
 			function handleSubmit(_x) {
@@ -37924,6 +37926,29 @@ var APILightbox = function (_React$Component) {
 			if (e.keyCode === 27) {
 				this.closeLightbox();
 			}
+		}
+
+		/**
+   * Open the API window.
+   *
+   * @param {string} url The destination URL.
+   */
+
+	}, {
+		key: "gotoURL",
+		value: function gotoURL(url) {
+			window.open(url, "_blank");
+		}
+
+		/**
+   * Reset the key to use Instant Images default.
+   */
+
+	}, {
+		key: "useDefaultKey",
+		value: function useDefaultKey() {
+			this.inputRef.current.value = "";
+			this.submitRef.current.click();
 		}
 	}, {
 		key: "componentDidMount",
@@ -37991,14 +38016,27 @@ var APILightbox = function (_React$Component) {
 								),
 								_react2.default.createElement(
 									"p",
-									null,
+									{ className: "action-controls" },
 									_react2.default.createElement(
-										"a",
+										"button",
 										{
-											href: instant_img_localize[this.provider + "_api_url"],
-											target: "_blank"
+											onClick: function onClick() {
+												return _this2.gotoURL(instant_img_localize[_this2.provider + "_api_url"]);
+											}
 										},
 										instant_img_localize.get_api_key
+									),
+									_react2.default.createElement(
+										"span",
+										null,
+										"|"
+									),
+									_react2.default.createElement(
+										"button",
+										{ onClick: function onClick() {
+												return _this2.useDefaultKey();
+											} },
+										instant_img_localize.use_instant_images_key
 									)
 								)
 							),
@@ -38051,7 +38089,7 @@ var APILightbox = function (_React$Component) {
 								),
 								_react2.default.createElement(
 									"button",
-									{ type: "submit" },
+									{ type: "submit", ref: this.submitRef },
 									instant_img_localize.btnVerify
 								)
 							)
@@ -41008,7 +41046,7 @@ module.exports = {
 			order: {
 				label: "orderby",
 				default: "popular",
-				filters: ["latest", "popular"]
+				filters: ["popular", "latest"]
 			},
 			image_type: {
 				label: "type",
@@ -41302,6 +41340,7 @@ function getHeaders(provider) {
 	var headers = {};
 	switch (provider) {
 		case "pexels":
+			console.log("dedw");
 			headers = {
 				Authorization: api_key
 			};

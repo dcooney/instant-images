@@ -2373,12 +2373,41 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 }
 
 .instant-img-container .api-lightbox--details p {
+  margin: 10px 0 0;
   font-size: 13px;
-  margin: 0 0 5px;
 }
 
-.instant-img-container .api-lightbox--details p a {
+.instant-img-container .api-lightbox--details p.action-controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  line-height: 1;
+}
+
+.instant-img-container .api-lightbox--details p.action-controls button {
+  font-size: 12px;
   font-weight: 500;
+  color: #586ec6;
+  background-color: transparent;
+  border: none;
+  padding: 8px 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.instant-img-container .api-lightbox--details p.action-controls button:hover, .instant-img-container .api-lightbox--details p.action-controls button:focus {
+  color: #455cb6;
+  text-decoration: underline;
+}
+
+.instant-img-container .api-lightbox--details p.action-controls span {
+  display: inline-block;
+  opacity: 0.35;
+  padding: 0 8px;
 }
 
 .instant-img-container .api-lightbox--close {
@@ -2415,7 +2444,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 }
 
 .instant-img-container .api-lightbox label,
-.instant-img-container .api-lightbox button[type=submit] {
+.instant-img-container .api-lightbox button[type="submit"] {
   font-size: 12px;
   text-transform: uppercase;
   font-weight: 600;
@@ -2529,7 +2558,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
           box-shadow: none;
 }
 
-.instant-img-container .api-lightbox button[type=submit] {
+.instant-img-container .api-lightbox button[type="submit"] {
   width: 100%;
   border: none;
   background-color: #586ec6;
@@ -2542,7 +2571,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   margin: 0;
 }
 
-.instant-img-container .api-lightbox button[type=submit]:hover, .instant-img-container .api-lightbox button[type=submit]:focus {
+.instant-img-container .api-lightbox button[type="submit"]:hover, .instant-img-container .api-lightbox button[type="submit"]:focus {
   background-color: #455cb6;
 }
 

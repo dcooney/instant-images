@@ -83,7 +83,7 @@ module.exports = {
 			order: {
 				label: "orderby",
 				default: "popular",
-				filters: ["latest", "popular"],
+				filters: ["popular", "latest"],
 			},
 			image_type: {
 				label: "type",
