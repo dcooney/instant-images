@@ -7,25 +7,19 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 4.6.0.1
+ * Version: 4.6.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
  * @package InstantImages
  */
 
-/*
-* NEW - Added rate-limit checker to determine the status of the API and display an alert warning if the limit has been exceeded.
-
-*/
-
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'INSTANT_IMAGES_VERSION', '4.6.0.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'January 3, 2022' );
+define( 'INSTANT_IMAGES_VERSION', '4.6.1' );
+define( 'INSTANT_IMAGES_RELEASE', 'January 14, 2022' );
 
 /**
  * Activation hook
@@ -104,21 +98,21 @@ class InstantImages {
 				'name'         => 'Unsplash',
 				'slug'         => 'unsplash',
 				'requires_key' => false,
-				'url'          => 'unsplash_url',
-				'constant'     => '',
+				'url'          => 'https://unsplash.com/developers',
+				'constant'     => 'INSTANT_IMAGES_UNSPLASH_KEY',
 			],
 			[
 				'name'         => 'Pixabay',
 				'slug'         => 'pixabay',
 				'requires_key' => true,
-				'url'          => 'https://pixabay.com',
+				'url'          => 'https://pixabay.com/service/about/api/',
 				'constant'     => 'INSTANT_IMAGES_PIXABAY_KEY',
 			],
 			[
 				'name'         => 'Pexels',
 				'slug'         => 'pexels',
 				'requires_key' => true,
-				'url'          => 'https://pexels.com',
+				'url'          => 'https://www.pexels.com/join-consumer/',
 				'constant'     => 'INSTANT_IMAGES_PEXELS_KEY',
 			],
 		];
@@ -203,9 +197,16 @@ class InstantImages {
 		$download_h       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
 		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
 
+		// Unsplash API.
+		if ( defined( 'INSTANT_IMAGES_UNSPLASH_KEY' ) ) {
+			$unsplash_api = INSTANT_IMAGES_PIXABAY_KEY;
+		} else {
+			$unsplash_api = isset( $options['unsplash_api'] ) ? $options['unsplash_api'] : '';
+			$unsplash_api = empty( $unsplash_api ) ? INSTANT_IMAGES_UNSPLASH_APP_ID : $unsplash_api; // If empty, set to default key.
+		}
 		// Pixabay API.
 		if ( defined( 'INSTANT_IMAGES_PIXABAY_KEY' ) ) {
-			$pixabay_api = INSTANT_IMAGES_PIXABAY_KEY; // Constant.
+			$pixabay_api = INSTANT_IMAGES_PIXABAY_KEY;
 		} else {
 			$pixabay_api = isset( $options['pixabay_api'] ) ? $options['pixabay_api'] : '';
 			$pixabay_api = empty( $pixabay_api ) ? INSTANT_IMAGES_PIXABAY_APP_ID : $pixabay_api; // If empty, set to default key.
@@ -213,7 +214,7 @@ class InstantImages {
 
 		// Pexels API.
 		if ( defined( 'INSTANT_IMAGES_PEXELS_KEY' ) ) {
-			$pexels_api = INSTANT_IMAGES_PEXELS_KEY; // Constant.
+			$pexels_api = INSTANT_IMAGES_PEXELS_KEY;
 		} else {
 			$pexels_api = isset( $options['pexels_api'] ) ? $options['pexels_api'] : '';
 			$pexels_api = empty( $pexels_api ) ? INSTANT_IMAGES_PIXABAY_APP_ID : $pexels_api; // If empty, set to default key.

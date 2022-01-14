@@ -3,7 +3,7 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: unsplash, pixabay, pexels, stock photo, prototyping, photos, media library, image upload, upload, free photos
 Requires at least: 4.0
-Tested up to: 5.8.2
+Tested up to: 5.8.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -131,6 +131,10 @@ How to install Instant Images.
 6. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 4.6.1 - January 14, 2022 =
+NEW: Added default API keys for all API providers 🎉 . Default API keys can still be overwritten in the plugin settings shouls you want to use your own key.
+NEW: Added rate-limit checker to determine the status of the API and display an alert warning if the limit has been exceeded.
 
 = 4.6.0.1 - January 3, 2022 =
 HOTFIX: Hotfix for accidentaly `delete_options` function left in whilst testing. Sorry about that!

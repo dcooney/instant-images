@@ -40941,7 +40941,7 @@ module.exports = {
 		per_page: "20"
 	},
 	unsplash: {
-		requires_key: false,
+		requires_key: true,
 		auth_headers: false,
 		new: false,
 		api_var: "client_id",
