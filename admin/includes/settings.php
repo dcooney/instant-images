@@ -226,7 +226,7 @@ function instant_images_api_key_callback() {
 	?>
 	<div class="ii-api-desc">
 		<p><strong><?php _e( 'API Keys', 'instant-images' ); ?></strong></p>
-		<p><?php _e( 'Use the options below to replace the default API keys provided by Instant Images with your own.', 'instant-images' ); ?><br/>
+		<p><?php _e( 'Replace the API keys provided by Instant Images with your own. Leave empty to restore the default keys.', 'instant-images' ); ?><br/>
 	</div>
 	<?php
 	foreach ( $providers as $provider ) {

@@ -1699,7 +1699,7 @@ body.media_page_instant-images.overflow-hidden {
 }
 
 .instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-option {
-  padding: 10px 10px 12px;
+  padding: 14px 14px 16px;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1;
   border-bottom: none;
@@ -1727,7 +1727,7 @@ body.media_page_instant-images.overflow-hidden {
 }
 
 .instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-label label {
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   margin: 0 0 2px;
 }
