@@ -4,6 +4,7 @@ import API from "../constants/API";
 import FILTERS from "../constants/filters";
 import buildTestURL from "../functions/buildTestURL";
 import buildURL from "../functions/buildURL";
+import checkRateLimit from "../functions/checkRateLimit";
 import getHeaders from "../functions/getHeaders";
 import getQueryParams from "../functions/getQueryParams";
 import getResults, {
@@ -197,6 +198,7 @@ class PhotoList extends React.Component {
 		const headers = getHeaders(this.provider);
 		const response = await fetch(url, { headers });
 		const { ok } = response;
+		checkRateLimit(response.headers);
 
 		if (ok) {
 			// Get response data.
@@ -312,6 +314,7 @@ class PhotoList extends React.Component {
 		const headers = getHeaders(this.provider);
 		const response = await fetch(url, { headers });
 		const { ok, status, statusText } = response;
+		checkRateLimit(response.headers);
 
 		// Status OK.
 		if (ok) {
@@ -378,6 +381,7 @@ class PhotoList extends React.Component {
 		const headers = getHeaders(this.provider);
 		const response = await fetch(url, { headers });
 		const { ok, status, statusText } = response;
+		checkRateLimit(response.headers);
 
 		// Status OK.
 		if (ok) {
@@ -525,6 +529,7 @@ class PhotoList extends React.Component {
 				const response = await fetch(buildTestURL(provider), { headers });
 				const ok = response.ok;
 				const status = response.status;
+				checkRateLimit(response.headers);
 				if (
 					!ok ||
 					status === 400 ||

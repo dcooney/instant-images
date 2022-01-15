@@ -1,16 +1,16 @@
 // Media Modal.
-.media-frame-content{
+.media-frame-content {
 	.instant-img-container {
-		.api-lightbox{
+		.api-lightbox {
 			position: fixed;
 		}
 	}
 }
 
 // Gutenberg Sidebar.
-.components-panel{
+.components-panel {
 	.instant-img-container {
-		.api-lightbox{
+		.api-lightbox {
 			height: 100%;
 			align-items: flex-start;
 		}
@@ -19,28 +19,28 @@
 
 // Instant Images Plugin Page.
 .instant-img-container {
-	.api-lightbox{
+	.api-lightbox {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		position: absolute;
 		z-index: 99999;
-		left:0;
+		left: 0;
 		top: 0;
-		right:0;
-		bottom:0;
+		right: 0;
+		bottom: 0;
 		height: 100vh;
 		padding: 5%;
 		background-color: rgba(0, 0, 0, 0.75);
 		font-size: 13px;
-		&.active{
-			> div{
+		&.active {
+			> div {
 				transform: scale(1);
 				opacity: 1;
 			}
 		}
 
-		> div{
+		> div {
 			max-width: 450px;
 			width: 100%;
 			padding: 0;
@@ -52,12 +52,12 @@
 			transform: scale(0.95);
 			opacity: 0;
 			transition: all 0.3s ease-in-out;
-			& > div{
+			& > div {
 				position: relative;
 			}
 		}
 
-		&--details{
+		&--details {
 			border-bottom: 1px solid $border;
 			padding: 25px;
 			padding-bottom: 20px;
@@ -81,11 +81,11 @@
 			}
 			&:before {
 				border-color: rgba(194, 225, 245, 0);
-				border-top-color:  $border;
+				border-top-color: $border;
 				border-width: 11px;
 				margin-left: -11px;
 			}
-			h3{
+			h3 {
 				font-size: 16px;
 				line-height: 18px;
 				padding: 0 0 0 25px;
@@ -93,16 +93,39 @@
 				margin: 0 0 10px;
 				background-position: left center;
 			}
-			p{
+			p {
+				margin: 10px 0 0;
 				font-size: 13px;
-				margin: 0 0 5px;
-				a{
-					font-weight: 500;
+				&.action-controls {
+					display: flex;
+					align-items: center;
+					width: 100%;
+					line-height: 1;
+					button {
+						font-size: 12px;
+						font-weight: 500;
+						color: $purple;
+						background-color: transparent;
+						border: none;
+						padding: 8px 0;
+						margin: 0;
+						cursor: pointer;
+						&:hover,
+						&:focus {
+							color: $purple_dark;
+							text-decoration: underline;
+						}
+					}
+					span {
+						display: inline-block;
+						opacity: 0.35;
+						padding: 0 8px;
+					}
 				}
 			}
 		}
 
-		&--close{
+		&--close {
 			position: absolute;
 			z-index: 1;
 			right: 0px;
@@ -118,19 +141,19 @@
 			cursor: pointer;
 			opacity: 0.5;
 			&:hover,
-			&:focus{
+			&:focus {
 				opacity: 1;
 			}
 		}
 
-		form{
+		form {
 			display: block;
 			background-color: $lighter_grey;
 			padding: 25px;
 		}
 
 		label,
-		button[type=submit]{
+		button[type="submit"] {
 			font-size: 12px;
 			text-transform: uppercase;
 			font-weight: 600;
@@ -140,7 +163,7 @@
 			cursor: pointer;
 		}
 
-		&--input-wrap{
+		&--input-wrap {
 			display: flex;
 			width: 100%;
 			padding: 0;
@@ -149,11 +172,11 @@
 			border: 1px solid $border;
 			border-radius: $radius;
 			transition: all 0.2s ease;
-			&:focus-within{
+			&:focus-within {
 				border-color: $text_light;
 				box-shadow: 0 0 1px 4px rgba(#000, 0.065);
 			}
-			span{
+			span {
 				width: 40px;
 				height: 40px;
 				display: flex;
@@ -162,27 +185,27 @@
 				border-radius: 2px 0 0 2px;
 				border-right: 1px solid $border;
 				background-color: $lighter_grey;
-				i{
+				i {
 					font-size: 16px;
 				}
-				&.invalid{
+				&.invalid {
 					cursor: help;
-					i{
+					i {
 						color: $warn;
 					}
 				}
-				&.valid{
-					i{
+				&.valid {
+					i {
 						color: $green;
 					}
 				}
-				&.loading{
-					i{
+				&.loading {
+					i {
 						color: $text;
 					}
 				}
 			}
-			input{
+			input {
 				line-height: 40px;
 				height: 40px;
 				padding: 0 10px;
@@ -192,7 +215,7 @@
 				font-size: 12px;
 
 				&::-webkit-input-placeholder {
-					color:$text_light;
+					color: $text_light;
 					font-weight: 400;
 					font-style: italic;
 				}
@@ -211,7 +234,7 @@
 					font-weight: 400;
 					font-style: italic;
 				}
-				&:focus{
+				&:focus {
 					background: transparent;
 					outline: none;
 					border: none;
@@ -219,7 +242,7 @@
 				}
 			}
 		}
-		button[type=submit]{
+		button[type="submit"] {
 			width: 100%;
 			border: none;
 			background-color: $purple;
@@ -230,17 +253,17 @@
 			height: 46px;
 			margin: 0;
 			&:hover,
-			&:focus{
+			&:focus {
 				background-color: $purple_dark;
 			}
 		}
-		&--response{
+		&--response {
 			color: $red;
 			margin: 0;
 			font-size: 13px;
 			font-weight: 500;
 			padding: 0 2px 12px;
-			&.valid{
+			&.valid {
 				color: $green_dark;
 			}
 		}

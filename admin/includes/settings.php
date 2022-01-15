@@ -203,10 +203,9 @@ function instant_images_default_provider() {
 		<?php foreach ( $providers as $provider ) { ?>
 			<option value="<?php echo esc_html( $provider['slug'] ); ?>" <?php selected( esc_html( $provider['slug'] ), $options['default_provider'] ); ?>>
 				<?php echo esc_html( $provider['name'] ); ?>
-				<?php
-				if ( $provider['requires_key'] ) {
-					?>
-				(<?php esc_attr_e( 'Requires API Key', 'instant-images' ); ?>) <?php } ?>
+				<?php if ( $provider['requires_key'] ) { ?>
+					<?php // esc_attr_e( 'API Key Required', 'instant-images' ); ?>
+				<?php } ?>
 			</option>
 		<?php } ?>
 	</select>
@@ -224,11 +223,17 @@ function instant_images_api_key_callback() {
 	$providers = InstantImages::instant_img_get_providers();
 	$options   = get_option( 'instant_img_settings' );
 
+	?>
+	<div class="ii-api-desc">
+		<p><strong><?php _e( 'API Keys', 'instant-images' ); ?></strong></p>
+		<p><?php _e( 'Replace the API keys provided by Instant Images with your own. Leave empty to restore the default keys.', 'instant-images' ); ?><br/>
+	</div>
+	<?php
 	foreach ( $providers as $provider ) {
 		if ( $provider['requires_key'] ) {
 
 			$key      = $provider['slug'] . '_api';
-			$title    = $provider['name'] . ' ' . __( 'API Key', 'instant-images' );
+			$title    = $provider['name'];
 			$constant = $provider['constant'];
 			$url      = $provider['url'];
 
@@ -240,12 +245,15 @@ function instant_images_api_key_callback() {
 				}
 			}
 			?>
-			<label for="<?php echo esc_html( $key ); ?>" style="cursor: default; margin-bottom: 3px;">
-			<strong><?php echo esc_attr( $title ); ?></strong>
-			</label>
-			<input type="text" id="<?php echo esc_html( $key ); ?>" name="instant_img_settings[<?php echo esc_html( $key ); ?>]" value="<?php echo wp_kses_post( $options[ $key ] ); ?>" <?php echo defined( 'INSTANT_IMAGES_PIXABAY_KEY' ) ? ' readonly="readonly"' : ''; ?>>
-			<span class="desc">&rarr; <a href="<?php echo wp_kses_post( $url ); ?>" target="_blank"><?php esc_attr_e( 'Get API Key', 'instant-images' ); ?></a></span>
-
+			<div class="ii-api-option">
+				<div class="ii-api-label">
+					<label for="<?php echo esc_html( $key ); ?>">
+						<strong><?php echo esc_attr( $title ); ?></strong>
+					</label>
+					<span class="desc">&rarr; <a href="<?php echo wp_kses_post( $url ); ?>" target="_blank"><?php esc_attr_e( 'Get Key', 'instant-images' ); ?></a></span>
+				</div>
+				<input type="text" id="<?php echo esc_html( $key ); ?>" name="instant_img_settings[<?php echo esc_html( $key ); ?>]" value="<?php echo wp_kses_post( $options[ $key ] ); ?>" <?php echo defined( $constant ) ? ' readonly="readonly"' : ''; ?>>
+			</div>
 			<?php
 		}
 	}

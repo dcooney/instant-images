@@ -9,6 +9,7 @@ export default function getHeaders(provider) {
 	let headers = {};
 	switch (provider) {
 		case "pexels":
+			console.log("dedw");
 			headers = {
 				Authorization: api_key,
 			};

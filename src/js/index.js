@@ -4,6 +4,7 @@ import PhotoList from "./components/PhotoList";
 import API from "./constants/API";
 import buildTestURL from "./functions/buildTestURL";
 import buildURL from "./functions/buildURL";
+import checkRateLimit from "./functions/checkRateLimit";
 import consoleStatus from "./functions/consoleStatus";
 import getHeaders from "./functions/getHeaders";
 import getProvider from "./functions/getProvider";
@@ -33,12 +34,17 @@ function GetPhotos(
 	const params = getQueryParams(provider);
 	const url = buildURL(API[provider].photo_api, params);
 
-	function initialize() {
+	async function initialize() {
 		// Create fetch request.
 		const headers = getHeaders(provider);
-		fetch(url, { headers })
-			.then((data) => data.json())
-			.then(function (data) {
+		const response = await fetch(url, { headers });
+		const { ok } = response;
+		checkRateLimit(response.headers);
+
+		try {
+			if (ok) {
+				// Get response data.
+				const data = await response.json();
 				const app = document.getElementById("app");
 				ReactDOM.render(
 					<PhotoList
@@ -51,10 +57,10 @@ function GetPhotos(
 					/>,
 					app
 				);
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
+			}
+		} catch (error) {
+			console.log(error);
+		}
 
 		// Remove init button (if required).
 		const initWrap = container.querySelector(".initialize-wrap");

@@ -1666,7 +1666,7 @@ body.media_page_instant-images.overflow-hidden {
 .instant-images-settings .cnkt-sidebar .cta.ii-settings input[type="number"][readonly] {
   background-color: #f7f7f7;
   cursor: not-allowed;
-  opacity: 0.65;
+  opacity: 0.5;
   border-color: #ccc !important;
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
@@ -1680,7 +1680,56 @@ body.media_page_instant-images.overflow-hidden {
 .instant-images-settings .cnkt-sidebar .cta.ii-settings span.desc {
   font-size: 11px;
   display: block;
-  padding: 8px 2px 5px;
+}
+
+.instant-images-settings .cnkt-sidebar .cta.ii-settings span.desc a {
+  text-decoration: none;
+}
+
+.instant-images-settings .cnkt-sidebar .cta.ii-settings span.desc a:hover, .instant-images-settings .cnkt-sidebar .cta.ii-settings span.desc a:focus {
+  text-decoration: underline;
+}
+
+.instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-desc {
+  padding-bottom: 6px;
+}
+
+.instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-desc p strong {
+  color: #333;
+}
+
+.instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-option {
+  padding: 14px 14px 16px;
+  background-color: #f7f7f7;
+  border: 1px solid #e1e1e1;
+  border-bottom: none;
+}
+
+.instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-option:last-of-type {
+  margin: 0;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-option input[readonly] {
+  background-color: #fff;
+}
+
+.instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-label label {
+  font-size: 12px;
+  text-transform: uppercase;
+  margin: 0 0 2px;
 }
 
 .instant-images-settings .cnkt-sidebar .cta.ii-plugins {
@@ -2373,12 +2422,41 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 }
 
 .instant-img-container .api-lightbox--details p {
+  margin: 10px 0 0;
   font-size: 13px;
-  margin: 0 0 5px;
 }
 
-.instant-img-container .api-lightbox--details p a {
+.instant-img-container .api-lightbox--details p.action-controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  line-height: 1;
+}
+
+.instant-img-container .api-lightbox--details p.action-controls button {
+  font-size: 12px;
   font-weight: 500;
+  color: #586ec6;
+  background-color: transparent;
+  border: none;
+  padding: 8px 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.instant-img-container .api-lightbox--details p.action-controls button:hover, .instant-img-container .api-lightbox--details p.action-controls button:focus {
+  color: #455cb6;
+  text-decoration: underline;
+}
+
+.instant-img-container .api-lightbox--details p.action-controls span {
+  display: inline-block;
+  opacity: 0.35;
+  padding: 0 8px;
 }
 
 .instant-img-container .api-lightbox--close {
@@ -2415,7 +2493,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 }
 
 .instant-img-container .api-lightbox label,
-.instant-img-container .api-lightbox button[type=submit] {
+.instant-img-container .api-lightbox button[type="submit"] {
   font-size: 12px;
   text-transform: uppercase;
   font-weight: 600;
@@ -2529,7 +2607,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
           box-shadow: none;
 }
 
-.instant-img-container .api-lightbox button[type=submit] {
+.instant-img-container .api-lightbox button[type="submit"] {
   width: 100%;
   border: none;
   background-color: #586ec6;
@@ -2542,7 +2620,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   margin: 0;
 }
 
-.instant-img-container .api-lightbox button[type=submit]:hover, .instant-img-container .api-lightbox button[type=submit]:focus {
+.instant-img-container .api-lightbox button[type="submit"]:hover, .instant-img-container .api-lightbox button[type="submit"]:focus {
   background-color: #455cb6;
 }
 

@@ -16,7 +16,7 @@ export default function unsplashDownload(vars, id) {
 
 	fetch(url)
 		.then((data) => data.json())
-		.then(function (data) {
+		.then(function () {
 			// Success, nothing else happens here
 			console.log("Image download successsfully triggered at Unsplash.");
 		})

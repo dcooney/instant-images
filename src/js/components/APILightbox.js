@@ -1,6 +1,7 @@
 import FocusTrap from "focus-trap-react";
 import React from "react";
 import buildTestURL from "../functions/buildTestURL";
+import checkRateLimit from "../functions/checkRateLimit";
 import consoleStatus from "../functions/consoleStatus";
 import getHeaders from "../functions/getHeaders";
 import updatePluginSetting from "../functions/updatePluginSetting";
@@ -12,6 +13,7 @@ class APILightbox extends React.Component {
 		this.provider = this.props.provider;
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 		this.inputRef = React.createRef();
+		this.submitRef = React.createRef();
 		this.loading = false;
 		this.state = { status: "invalid", response: "" };
 		this.afterVerifiedAPICallback =
@@ -31,9 +33,10 @@ class APILightbox extends React.Component {
 
 		this.setState({ status: "loading" });
 
-		const key = this.inputRef.current.value;
+		let key = this.inputRef.current.value;
+		const updateKey = key;
 		if (!key) {
-			this.inputRef.current.focus({ preventScroll: true });
+			key = instant_img_localize[`${this.provider}_default_app_id`];
 		}
 
 		// Set localized variable.
@@ -44,11 +47,11 @@ class APILightbox extends React.Component {
 			`input[name="instant_img_settings[${this.provider}_api]"]`
 		);
 		if (settingField) {
-			settingField.value = key;
+			settingField.value = updateKey;
 		}
 
 		// Update plugin settings via REST API.
-		updatePluginSetting(`${this.provider}_api`, key);
+		updatePluginSetting(`${this.provider}_api`, updateKey);
 
 		// Get authentication headers.
 		const headers = getHeaders(this.provider);
@@ -60,6 +63,7 @@ class APILightbox extends React.Component {
 			// Handle response.
 			const ok = response.ok;
 			const status = response.status;
+			checkRateLimit(response.headers);
 
 			// Handle response actions.
 			if (ok) {
@@ -140,6 +144,23 @@ class APILightbox extends React.Component {
 		}
 	}
 
+	/**
+	 * Open the API window.
+	 *
+	 * @param {string} url The destination URL.
+	 */
+	gotoURL(url) {
+		window.open(url, "_blank");
+	}
+
+	/**
+	 * Reset the key to use Instant Images default.
+	 */
+	useDefaultKey() {
+		this.inputRef.current.value = "";
+		this.submitRef.current.click();
+	}
+
 	componentDidMount() {
 		document.addEventListener("keydown", this.escFunction, false);
 		this.lightbox.current.classList.add("active");
@@ -178,17 +199,22 @@ class APILightbox extends React.Component {
 								<p>
 									{instant_img_localize[`${this.provider}_api_desc`]}
 								</p>
-								<p>
-									<a
-										href={
-											instant_img_localize[
-												`${this.provider}_api_url`
-											]
+								<p className="action-controls">
+									<button
+										onClick={() =>
+											this.gotoURL(
+												instant_img_localize[
+													`${this.provider}_api_url`
+												]
+											)
 										}
-										target="_blank"
 									>
 										{instant_img_localize.get_api_key}
-									</a>
+									</button>
+									<span>|</span>
+									<button onClick={() => this.useDefaultKey()}>
+										{instant_img_localize.use_instant_images_key}
+									</button>
 								</p>
 							</div>
 							<form onSubmit={(e) => this.handleSubmit(e)}>
@@ -234,7 +260,7 @@ class APILightbox extends React.Component {
 										{this.state.response}
 									</p>
 								)}
-								<button type="submit">
+								<button type="submit" ref={this.submitRef}>
 									{instant_img_localize.btnVerify}
 								</button>
 							</form>

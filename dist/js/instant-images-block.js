@@ -37365,6 +37365,10 @@ var _buildTestURL = __webpack_require__(/*! ../../functions/buildTestURL */ "./s
 
 var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
 
+var _checkRateLimit = __webpack_require__(/*! ../../functions/checkRateLimit */ "./src/js/functions/checkRateLimit.js");
+
+var _checkRateLimit2 = _interopRequireDefault(_checkRateLimit);
+
 var _consoleStatus = __webpack_require__(/*! ../../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
 
 var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
@@ -37424,7 +37428,7 @@ var Block = function Block() {
 						switch (_context.prev = _context.next) {
 							case 0:
 								if (!api_required) {
-									_context.next = 9;
+									_context.next = 10;
 									break;
 								}
 
@@ -37439,6 +37443,7 @@ var Block = function Block() {
 								ok = response.ok;
 								status = response.status;
 
+								(0, _checkRateLimit2.default)(response.headers);
 
 								if (ok) {
 									// Success.
@@ -37450,14 +37455,14 @@ var Block = function Block() {
 									// Render console warning.
 									(0, _consoleStatus2.default)(provider, status);
 								}
-								_context.next = 10;
+								_context.next = 11;
 								break;
 
-							case 9:
+							case 10:
 								// API Error: Fallback to default provider.
 								setPluginProvider(defaultProvider);
 
-							case 10:
+							case 11:
 							case "end":
 								return _context.stop();
 						}
@@ -37711,6 +37716,10 @@ var _buildTestURL = __webpack_require__(/*! ../functions/buildTestURL */ "./src/
 
 var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
 
+var _checkRateLimit = __webpack_require__(/*! ../functions/checkRateLimit */ "./src/js/functions/checkRateLimit.js");
+
+var _checkRateLimit2 = _interopRequireDefault(_checkRateLimit);
+
 var _consoleStatus = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
 
 var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
@@ -37745,6 +37754,7 @@ var APILightbox = function (_React$Component) {
 		_this.provider = _this.props.provider;
 		_this.api_key = instant_img_localize[_this.provider + "_app_id"];
 		_this.inputRef = _react2.default.createRef();
+		_this.submitRef = _react2.default.createRef();
 		_this.loading = false;
 		_this.state = { status: "invalid", response: "" };
 		_this.afterVerifiedAPICallback = _this.props.afterVerifiedAPICallback.bind(_this);
@@ -37764,7 +37774,7 @@ var APILightbox = function (_React$Component) {
 		key: "handleSubmit",
 		value: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
-				var self, key, settingField, headers, response, ok, status;
+				var self, key, updateKey, settingField, headers, response, ok, status;
 				return regeneratorRuntime.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
@@ -37776,9 +37786,10 @@ var APILightbox = function (_React$Component) {
 								this.setState({ status: "loading" });
 
 								key = this.inputRef.current.value;
+								updateKey = key;
 
 								if (!key) {
-									this.inputRef.current.focus({ preventScroll: true });
+									key = instant_img_localize[this.provider + "_default_app_id"];
 								}
 
 								// Set localized variable.
@@ -37788,19 +37799,19 @@ var APILightbox = function (_React$Component) {
 								settingField = document.querySelector("input[name=\"instant_img_settings[" + this.provider + "_api]\"]");
 
 								if (settingField) {
-									settingField.value = key;
+									settingField.value = updateKey;
 								}
 
 								// Update plugin settings via REST API.
-								(0, _updatePluginSetting2.default)(this.provider + "_api", key);
+								(0, _updatePluginSetting2.default)(this.provider + "_api", updateKey);
 
 								// Get authentication headers.
 								headers = (0, _getHeaders2.default)(this.provider);
-								_context.prev = 10;
-								_context.next = 13;
+								_context.prev = 11;
+								_context.next = 14;
 								return fetch((0, _buildTestURL2.default)(self.provider), { headers: headers });
 
-							case 13:
+							case 14:
 								response = _context.sent;
 
 
@@ -37808,8 +37819,9 @@ var APILightbox = function (_React$Component) {
 								ok = response.ok;
 								status = response.status;
 
-								// Handle response actions.
+								(0, _checkRateLimit2.default)(response.headers);
 
+								// Handle response actions.
 								if (ok) {
 									// Success.
 									self.setState({
@@ -37840,12 +37852,12 @@ var APILightbox = function (_React$Component) {
 										});
 									}
 								}
-								_context.next = 24;
+								_context.next = 26;
 								break;
 
-							case 19:
-								_context.prev = 19;
-								_context.t0 = _context["catch"](10);
+							case 21:
+								_context.prev = 21;
+								_context.t0 = _context["catch"](11);
 
 								// Catch all other errors.
 
@@ -37859,12 +37871,12 @@ var APILightbox = function (_React$Component) {
 									response: instant_img_localize.api_invalid_msg
 								});
 
-							case 24:
+							case 26:
 							case "end":
 								return _context.stop();
 						}
 					}
-				}, _callee, this, [[10, 19]]);
+				}, _callee, this, [[11, 21]]);
 			}));
 
 			function handleSubmit(_x) {
@@ -37914,6 +37926,29 @@ var APILightbox = function (_React$Component) {
 			if (e.keyCode === 27) {
 				this.closeLightbox();
 			}
+		}
+
+		/**
+   * Open the API window.
+   *
+   * @param {string} url The destination URL.
+   */
+
+	}, {
+		key: "gotoURL",
+		value: function gotoURL(url) {
+			window.open(url, "_blank");
+		}
+
+		/**
+   * Reset the key to use Instant Images default.
+   */
+
+	}, {
+		key: "useDefaultKey",
+		value: function useDefaultKey() {
+			this.inputRef.current.value = "";
+			this.submitRef.current.click();
 		}
 	}, {
 		key: "componentDidMount",
@@ -37981,14 +38016,27 @@ var APILightbox = function (_React$Component) {
 								),
 								_react2.default.createElement(
 									"p",
-									null,
+									{ className: "action-controls" },
 									_react2.default.createElement(
-										"a",
+										"button",
 										{
-											href: instant_img_localize[this.provider + "_api_url"],
-											target: "_blank"
+											onClick: function onClick() {
+												return _this2.gotoURL(instant_img_localize[_this2.provider + "_api_url"]);
+											}
 										},
 										instant_img_localize.get_api_key
+									),
+									_react2.default.createElement(
+										"span",
+										null,
+										"|"
+									),
+									_react2.default.createElement(
+										"button",
+										{ onClick: function onClick() {
+												return _this2.useDefaultKey();
+											} },
+										instant_img_localize.use_instant_images_key
 									)
 								)
 							),
@@ -38041,7 +38089,7 @@ var APILightbox = function (_React$Component) {
 								),
 								_react2.default.createElement(
 									"button",
-									{ type: "submit" },
+									{ type: "submit", ref: this.submitRef },
 									instant_img_localize.btnVerify
 								)
 							)
@@ -39582,6 +39630,10 @@ var _buildURL = __webpack_require__(/*! ../functions/buildURL */ "./src/js/funct
 
 var _buildURL2 = _interopRequireDefault(_buildURL);
 
+var _checkRateLimit = __webpack_require__(/*! ../functions/checkRateLimit */ "./src/js/functions/checkRateLimit.js");
+
+var _checkRateLimit2 = _interopRequireDefault(_checkRateLimit);
+
 var _getHeaders = __webpack_require__(/*! ../functions/getHeaders */ "./src/js/functions/getHeaders.js");
 
 var _getHeaders2 = _interopRequireDefault(_getHeaders);
@@ -39838,21 +39890,23 @@ var PhotoList = function (_React$Component) {
 								response = _context.sent;
 								ok = response.ok;
 
+								(0, _checkRateLimit2.default)(response.headers);
+
 								if (!ok) {
-									_context.next = 43;
+									_context.next = 44;
 									break;
 								}
 
-								_context.next = 22;
+								_context.next = 23;
 								return response.json();
 
-							case 22:
+							case 23:
 								data = _context.sent;
 								_context.t0 = search_type;
-								_context.next = _context.t0 === "term" ? 26 : _context.t0 === "id" ? 33 : 40;
+								_context.next = _context.t0 === "term" ? 27 : _context.t0 === "id" ? 34 : 41;
 								break;
 
-							case 26:
+							case 27:
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data, true);
 
 
@@ -39869,9 +39923,9 @@ var PhotoList = function (_React$Component) {
 									search_filters: _filters2.default[this.provider].search
 								});
 
-								return _context.abrupt("break", 40);
+								return _context.abrupt("break", 41);
 
-							case 33:
+							case 34:
 								// Convert return data to array.
 								photoArray = [];
 
@@ -39896,9 +39950,9 @@ var PhotoList = function (_React$Component) {
 								this.show_search_filters = false;
 								this.results = photoArray;
 								this.setState({ results: self.results });
-								return _context.abrupt("break", 40);
+								return _context.abrupt("break", 41);
 
-							case 40:
+							case 41:
 
 								// Delay for effect.
 								setTimeout(function () {
@@ -39906,10 +39960,10 @@ var PhotoList = function (_React$Component) {
 									photoTarget.classList.remove("loading");
 									self.isLoading = false;
 								}, this.delay);
-								_context.next = 51;
+								_context.next = 52;
 								break;
 
-							case 43:
+							case 44:
 								// Error handling.
 
 								// Reset all search parameters.
@@ -39924,7 +39978,7 @@ var PhotoList = function (_React$Component) {
 								this.results = [];
 								this.setState({ results: this.results });
 
-							case 51:
+							case 52:
 							case "end":
 								return _context.stop();
 						}
@@ -39990,17 +40044,19 @@ var PhotoList = function (_React$Component) {
 								response = _context2.sent;
 								ok = response.ok, status = response.status, statusText = response.statusText;
 
+								(0, _checkRateLimit2.default)(response.headers);
+
 								// Status OK.
 
 								if (!ok) {
-									_context2.next = 26;
+									_context2.next = 27;
 									break;
 								}
 
-								_context2.next = 19;
+								_context2.next = 20;
 								return response.json();
 
-							case 19:
+							case 20:
 								data = _context2.sent;
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data);
 
@@ -40018,15 +40074,15 @@ var PhotoList = function (_React$Component) {
 										filters: _filters2.default[this.provider].filters
 									});
 								}
-								_context2.next = 29;
+								_context2.next = 30;
 								break;
 
-							case 26:
+							case 27:
 								console.warn("Error: " + status + " - " + statusText);
 								this.photoTarget.current.classList.remove("loading");
 								this.isLoading = false;
 
-							case 29:
+							case 30:
 
 								// Delay loading animatons for effect.
 								setTimeout(function () {
@@ -40034,7 +40090,7 @@ var PhotoList = function (_React$Component) {
 									self.isLoading = false;
 								}, self.delay);
 
-							case 30:
+							case 31:
 							case "end":
 								return _context2.stop();
 						}
@@ -40094,17 +40150,19 @@ var PhotoList = function (_React$Component) {
 								response = _context3.sent;
 								ok = response.ok, status = response.status, statusText = response.statusText;
 
+								(0, _checkRateLimit2.default)(response.headers);
+
 								// Status OK.
 
 								if (!ok) {
-									_context3.next = 27;
+									_context3.next = 28;
 									break;
 								}
 
-								_context3.next = 19;
+								_context3.next = 20;
 								return response.json();
 
-							case 19:
+							case 20:
 								data = _context3.sent;
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data, this.is_search);
 
@@ -40121,14 +40179,14 @@ var PhotoList = function (_React$Component) {
 
 								this.checkTotalResults(data.length); // Check for returned data.
 								this.setState({ results: this.results }); // Update Props.
-								_context3.next = 29;
+								_context3.next = 30;
 								break;
 
-							case 27:
+							case 28:
 								console.warn("Error: " + status + " - " + statusText);
 								self.isLoading = false;
 
-							case 29:
+							case 30:
 							case "end":
 								return _context3.stop();
 						}
@@ -40267,7 +40325,7 @@ var PhotoList = function (_React$Component) {
 
 							case 4:
 								if (!_API2.default[provider].requires_key) {
-									_context4.next = 24;
+									_context4.next = 25;
 									break;
 								}
 
@@ -40283,8 +40341,10 @@ var PhotoList = function (_React$Component) {
 								ok = response.ok;
 								status = response.status;
 
+								(0, _checkRateLimit2.default)(response.headers);
+
 								if (!(!ok || status === 400 || status === 401 || status === 500 || status === 404)) {
-									_context4.next = 17;
+									_context4.next = 18;
 									break;
 								}
 
@@ -40293,12 +40353,12 @@ var PhotoList = function (_React$Component) {
 								document.body.classList.add("overflow-hidden");
 								return _context4.abrupt("return");
 
-							case 17:
-								_context4.next = 24;
+							case 18:
+								_context4.next = 25;
 								break;
 
-							case 19:
-								_context4.prev = 19;
+							case 20:
+								_context4.prev = 20;
 								_context4.t0 = _context4["catch"](7);
 
 								// Catch all other errors.
@@ -40306,7 +40366,7 @@ var PhotoList = function (_React$Component) {
 								document.body.classList.add("overflow-hidden");
 								return _context4.abrupt("return");
 
-							case 24:
+							case 25:
 
 								// Remove active from buttons.
 								this.providerNav.current.querySelectorAll("button").forEach(function (button) {
@@ -40332,12 +40392,12 @@ var PhotoList = function (_React$Component) {
 								this.view = "latest";
 								this.getPhotos(this.view, true, true);
 
-							case 36:
+							case 37:
 							case "end":
 								return _context4.stop();
 						}
 					}
-				}, _callee4, this, [[7, 19]]);
+				}, _callee4, this, [[7, 20]]);
 			}));
 
 			function switchProvider(_x5) {
@@ -40881,7 +40941,7 @@ module.exports = {
 		per_page: "20"
 	},
 	unsplash: {
-		requires_key: false,
+		requires_key: true,
 		auth_headers: false,
 		new: false,
 		api_var: "client_id",
@@ -40986,7 +41046,7 @@ module.exports = {
 			order: {
 				label: "orderby",
 				default: "popular",
-				filters: ["latest", "popular"]
+				filters: ["popular", "latest"]
 			},
 			image_type: {
 				label: "type",
@@ -41142,6 +41202,37 @@ function capitalizeFirstLetter(str) {
 
 /***/ }),
 
+/***/ "./src/js/functions/checkRateLimit.js":
+/*!********************************************!*\
+  !*** ./src/js/functions/checkRateLimit.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = checkRateLimit;
+/**
+ * Check the `x-ratelimit-remaining` headers to confirm the API is available.
+ *
+ * @param  {object}  headers  The request headers object.
+ */
+function checkRateLimit(headers) {
+	if (!headers) {
+		return "";
+	}
+	var remaining = headers.get("x-ratelimit-remaining");
+	if (parseInt(remaining) < 2) {
+		alert(instant_img_localize.api_ratelimit_msg);
+	}
+}
+
+/***/ }),
+
 /***/ "./src/js/functions/consoleStatus.js":
 /*!*******************************************!*\
   !*** ./src/js/functions/consoleStatus.js ***!
@@ -41249,6 +41340,7 @@ function getHeaders(provider) {
 	var headers = {};
 	switch (provider) {
 		case "pexels":
+			console.log("dedw");
 			headers = {
 				Authorization: api_key
 			};
@@ -41753,7 +41845,7 @@ function unsplashDownload(vars, id) {
 
 	fetch(url).then(function (data) {
 		return data.json();
-	}).then(function (data) {
+	}).then(function () {
 		// Success, nothing else happens here
 		console.log("Image download successsfully triggered at Unsplash.");
 	}).catch(function (error) {

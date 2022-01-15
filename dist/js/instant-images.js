@@ -39217,6 +39217,10 @@ var _buildTestURL = __webpack_require__(/*! ../functions/buildTestURL */ "./src/
 
 var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
 
+var _checkRateLimit = __webpack_require__(/*! ../functions/checkRateLimit */ "./src/js/functions/checkRateLimit.js");
+
+var _checkRateLimit2 = _interopRequireDefault(_checkRateLimit);
+
 var _consoleStatus = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
 
 var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
@@ -39251,6 +39255,7 @@ var APILightbox = function (_React$Component) {
 		_this.provider = _this.props.provider;
 		_this.api_key = instant_img_localize[_this.provider + "_app_id"];
 		_this.inputRef = _react2.default.createRef();
+		_this.submitRef = _react2.default.createRef();
 		_this.loading = false;
 		_this.state = { status: "invalid", response: "" };
 		_this.afterVerifiedAPICallback = _this.props.afterVerifiedAPICallback.bind(_this);
@@ -39270,7 +39275,7 @@ var APILightbox = function (_React$Component) {
 		key: "handleSubmit",
 		value: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
-				var self, key, settingField, headers, response, ok, status;
+				var self, key, updateKey, settingField, headers, response, ok, status;
 				return regeneratorRuntime.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
@@ -39282,9 +39287,10 @@ var APILightbox = function (_React$Component) {
 								this.setState({ status: "loading" });
 
 								key = this.inputRef.current.value;
+								updateKey = key;
 
 								if (!key) {
-									this.inputRef.current.focus({ preventScroll: true });
+									key = instant_img_localize[this.provider + "_default_app_id"];
 								}
 
 								// Set localized variable.
@@ -39294,19 +39300,19 @@ var APILightbox = function (_React$Component) {
 								settingField = document.querySelector("input[name=\"instant_img_settings[" + this.provider + "_api]\"]");
 
 								if (settingField) {
-									settingField.value = key;
+									settingField.value = updateKey;
 								}
 
 								// Update plugin settings via REST API.
-								(0, _updatePluginSetting2.default)(this.provider + "_api", key);
+								(0, _updatePluginSetting2.default)(this.provider + "_api", updateKey);
 
 								// Get authentication headers.
 								headers = (0, _getHeaders2.default)(this.provider);
-								_context.prev = 10;
-								_context.next = 13;
+								_context.prev = 11;
+								_context.next = 14;
 								return fetch((0, _buildTestURL2.default)(self.provider), { headers: headers });
 
-							case 13:
+							case 14:
 								response = _context.sent;
 
 
@@ -39314,8 +39320,9 @@ var APILightbox = function (_React$Component) {
 								ok = response.ok;
 								status = response.status;
 
-								// Handle response actions.
+								(0, _checkRateLimit2.default)(response.headers);
 
+								// Handle response actions.
 								if (ok) {
 									// Success.
 									self.setState({
@@ -39346,12 +39353,12 @@ var APILightbox = function (_React$Component) {
 										});
 									}
 								}
-								_context.next = 24;
+								_context.next = 26;
 								break;
 
-							case 19:
-								_context.prev = 19;
-								_context.t0 = _context["catch"](10);
+							case 21:
+								_context.prev = 21;
+								_context.t0 = _context["catch"](11);
 
 								// Catch all other errors.
 
@@ -39365,12 +39372,12 @@ var APILightbox = function (_React$Component) {
 									response: instant_img_localize.api_invalid_msg
 								});
 
-							case 24:
+							case 26:
 							case "end":
 								return _context.stop();
 						}
 					}
-				}, _callee, this, [[10, 19]]);
+				}, _callee, this, [[11, 21]]);
 			}));
 
 			function handleSubmit(_x) {
@@ -39420,6 +39427,29 @@ var APILightbox = function (_React$Component) {
 			if (e.keyCode === 27) {
 				this.closeLightbox();
 			}
+		}
+
+		/**
+   * Open the API window.
+   *
+   * @param {string} url The destination URL.
+   */
+
+	}, {
+		key: "gotoURL",
+		value: function gotoURL(url) {
+			window.open(url, "_blank");
+		}
+
+		/**
+   * Reset the key to use Instant Images default.
+   */
+
+	}, {
+		key: "useDefaultKey",
+		value: function useDefaultKey() {
+			this.inputRef.current.value = "";
+			this.submitRef.current.click();
 		}
 	}, {
 		key: "componentDidMount",
@@ -39487,14 +39517,27 @@ var APILightbox = function (_React$Component) {
 								),
 								_react2.default.createElement(
 									"p",
-									null,
+									{ className: "action-controls" },
 									_react2.default.createElement(
-										"a",
+										"button",
 										{
-											href: instant_img_localize[this.provider + "_api_url"],
-											target: "_blank"
+											onClick: function onClick() {
+												return _this2.gotoURL(instant_img_localize[_this2.provider + "_api_url"]);
+											}
 										},
 										instant_img_localize.get_api_key
+									),
+									_react2.default.createElement(
+										"span",
+										null,
+										"|"
+									),
+									_react2.default.createElement(
+										"button",
+										{ onClick: function onClick() {
+												return _this2.useDefaultKey();
+											} },
+										instant_img_localize.use_instant_images_key
 									)
 								)
 							),
@@ -39547,7 +39590,7 @@ var APILightbox = function (_React$Component) {
 								),
 								_react2.default.createElement(
 									"button",
-									{ type: "submit" },
+									{ type: "submit", ref: this.submitRef },
 									instant_img_localize.btnVerify
 								)
 							)
@@ -41088,6 +41131,10 @@ var _buildURL = __webpack_require__(/*! ../functions/buildURL */ "./src/js/funct
 
 var _buildURL2 = _interopRequireDefault(_buildURL);
 
+var _checkRateLimit = __webpack_require__(/*! ../functions/checkRateLimit */ "./src/js/functions/checkRateLimit.js");
+
+var _checkRateLimit2 = _interopRequireDefault(_checkRateLimit);
+
 var _getHeaders = __webpack_require__(/*! ../functions/getHeaders */ "./src/js/functions/getHeaders.js");
 
 var _getHeaders2 = _interopRequireDefault(_getHeaders);
@@ -41344,21 +41391,23 @@ var PhotoList = function (_React$Component) {
 								response = _context.sent;
 								ok = response.ok;
 
+								(0, _checkRateLimit2.default)(response.headers);
+
 								if (!ok) {
-									_context.next = 43;
+									_context.next = 44;
 									break;
 								}
 
-								_context.next = 22;
+								_context.next = 23;
 								return response.json();
 
-							case 22:
+							case 23:
 								data = _context.sent;
 								_context.t0 = search_type;
-								_context.next = _context.t0 === "term" ? 26 : _context.t0 === "id" ? 33 : 40;
+								_context.next = _context.t0 === "term" ? 27 : _context.t0 === "id" ? 34 : 41;
 								break;
 
-							case 26:
+							case 27:
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data, true);
 
 
@@ -41375,9 +41424,9 @@ var PhotoList = function (_React$Component) {
 									search_filters: _filters2.default[this.provider].search
 								});
 
-								return _context.abrupt("break", 40);
+								return _context.abrupt("break", 41);
 
-							case 33:
+							case 34:
 								// Convert return data to array.
 								photoArray = [];
 
@@ -41402,9 +41451,9 @@ var PhotoList = function (_React$Component) {
 								this.show_search_filters = false;
 								this.results = photoArray;
 								this.setState({ results: self.results });
-								return _context.abrupt("break", 40);
+								return _context.abrupt("break", 41);
 
-							case 40:
+							case 41:
 
 								// Delay for effect.
 								setTimeout(function () {
@@ -41412,10 +41461,10 @@ var PhotoList = function (_React$Component) {
 									photoTarget.classList.remove("loading");
 									self.isLoading = false;
 								}, this.delay);
-								_context.next = 51;
+								_context.next = 52;
 								break;
 
-							case 43:
+							case 44:
 								// Error handling.
 
 								// Reset all search parameters.
@@ -41430,7 +41479,7 @@ var PhotoList = function (_React$Component) {
 								this.results = [];
 								this.setState({ results: this.results });
 
-							case 51:
+							case 52:
 							case "end":
 								return _context.stop();
 						}
@@ -41496,17 +41545,19 @@ var PhotoList = function (_React$Component) {
 								response = _context2.sent;
 								ok = response.ok, status = response.status, statusText = response.statusText;
 
+								(0, _checkRateLimit2.default)(response.headers);
+
 								// Status OK.
 
 								if (!ok) {
-									_context2.next = 26;
+									_context2.next = 27;
 									break;
 								}
 
-								_context2.next = 19;
+								_context2.next = 20;
 								return response.json();
 
-							case 19:
+							case 20:
 								data = _context2.sent;
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data);
 
@@ -41524,15 +41575,15 @@ var PhotoList = function (_React$Component) {
 										filters: _filters2.default[this.provider].filters
 									});
 								}
-								_context2.next = 29;
+								_context2.next = 30;
 								break;
 
-							case 26:
+							case 27:
 								console.warn("Error: " + status + " - " + statusText);
 								this.photoTarget.current.classList.remove("loading");
 								this.isLoading = false;
 
-							case 29:
+							case 30:
 
 								// Delay loading animatons for effect.
 								setTimeout(function () {
@@ -41540,7 +41591,7 @@ var PhotoList = function (_React$Component) {
 									self.isLoading = false;
 								}, self.delay);
 
-							case 30:
+							case 31:
 							case "end":
 								return _context2.stop();
 						}
@@ -41600,17 +41651,19 @@ var PhotoList = function (_React$Component) {
 								response = _context3.sent;
 								ok = response.ok, status = response.status, statusText = response.statusText;
 
+								(0, _checkRateLimit2.default)(response.headers);
+
 								// Status OK.
 
 								if (!ok) {
-									_context3.next = 27;
+									_context3.next = 28;
 									break;
 								}
 
-								_context3.next = 19;
+								_context3.next = 20;
 								return response.json();
 
-							case 19:
+							case 20:
 								data = _context3.sent;
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data, this.is_search);
 
@@ -41627,14 +41680,14 @@ var PhotoList = function (_React$Component) {
 
 								this.checkTotalResults(data.length); // Check for returned data.
 								this.setState({ results: this.results }); // Update Props.
-								_context3.next = 29;
+								_context3.next = 30;
 								break;
 
-							case 27:
+							case 28:
 								console.warn("Error: " + status + " - " + statusText);
 								self.isLoading = false;
 
-							case 29:
+							case 30:
 							case "end":
 								return _context3.stop();
 						}
@@ -41773,7 +41826,7 @@ var PhotoList = function (_React$Component) {
 
 							case 4:
 								if (!_API2.default[provider].requires_key) {
-									_context4.next = 24;
+									_context4.next = 25;
 									break;
 								}
 
@@ -41789,8 +41842,10 @@ var PhotoList = function (_React$Component) {
 								ok = response.ok;
 								status = response.status;
 
+								(0, _checkRateLimit2.default)(response.headers);
+
 								if (!(!ok || status === 400 || status === 401 || status === 500 || status === 404)) {
-									_context4.next = 17;
+									_context4.next = 18;
 									break;
 								}
 
@@ -41799,12 +41854,12 @@ var PhotoList = function (_React$Component) {
 								document.body.classList.add("overflow-hidden");
 								return _context4.abrupt("return");
 
-							case 17:
-								_context4.next = 24;
+							case 18:
+								_context4.next = 25;
 								break;
 
-							case 19:
-								_context4.prev = 19;
+							case 20:
+								_context4.prev = 20;
 								_context4.t0 = _context4["catch"](7);
 
 								// Catch all other errors.
@@ -41812,7 +41867,7 @@ var PhotoList = function (_React$Component) {
 								document.body.classList.add("overflow-hidden");
 								return _context4.abrupt("return");
 
-							case 24:
+							case 25:
 
 								// Remove active from buttons.
 								this.providerNav.current.querySelectorAll("button").forEach(function (button) {
@@ -41838,12 +41893,12 @@ var PhotoList = function (_React$Component) {
 								this.view = "latest";
 								this.getPhotos(this.view, true, true);
 
-							case 36:
+							case 37:
 							case "end":
 								return _context4.stop();
 						}
 					}
-				}, _callee4, this, [[7, 19]]);
+				}, _callee4, this, [[7, 20]]);
 			}));
 
 			function switchProvider(_x5) {
@@ -42387,7 +42442,7 @@ module.exports = {
 		per_page: "20"
 	},
 	unsplash: {
-		requires_key: false,
+		requires_key: true,
 		auth_headers: false,
 		new: false,
 		api_var: "client_id",
@@ -42492,7 +42547,7 @@ module.exports = {
 			order: {
 				label: "orderby",
 				default: "popular",
-				filters: ["latest", "popular"]
+				filters: ["popular", "latest"]
 			},
 			image_type: {
 				label: "type",
@@ -42648,6 +42703,37 @@ function capitalizeFirstLetter(str) {
 
 /***/ }),
 
+/***/ "./src/js/functions/checkRateLimit.js":
+/*!********************************************!*\
+  !*** ./src/js/functions/checkRateLimit.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = checkRateLimit;
+/**
+ * Check the `x-ratelimit-remaining` headers to confirm the API is available.
+ *
+ * @param  {object}  headers  The request headers object.
+ */
+function checkRateLimit(headers) {
+	if (!headers) {
+		return "";
+	}
+	var remaining = headers.get("x-ratelimit-remaining");
+	if (parseInt(remaining) < 2) {
+		alert(instant_img_localize.api_ratelimit_msg);
+	}
+}
+
+/***/ }),
+
 /***/ "./src/js/functions/consoleStatus.js":
 /*!*******************************************!*\
   !*** ./src/js/functions/consoleStatus.js ***!
@@ -42755,6 +42841,7 @@ function getHeaders(provider) {
 	var headers = {};
 	switch (provider) {
 		case "pexels":
+			console.log("dedw");
 			headers = {
 				Authorization: api_key
 			};
@@ -43355,7 +43442,7 @@ function unsplashDownload(vars, id) {
 
 	fetch(url).then(function (data) {
 		return data.json();
-	}).then(function (data) {
+	}).then(function () {
 		// Success, nothing else happens here
 		console.log("Image download successsfully triggered at Unsplash.");
 	}).catch(function (error) {
@@ -43453,6 +43540,10 @@ var _buildURL = __webpack_require__(/*! ./functions/buildURL */ "./src/js/functi
 
 var _buildURL2 = _interopRequireDefault(_buildURL);
 
+var _checkRateLimit = __webpack_require__(/*! ./functions/checkRateLimit */ "./src/js/functions/checkRateLimit.js");
+
+var _checkRateLimit2 = _interopRequireDefault(_checkRateLimit);
+
 var _consoleStatus = __webpack_require__(/*! ./functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
 
 var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
@@ -43490,6 +43581,80 @@ var provider = (0, _getProvider2.default)();
 function GetPhotos() {
 	var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 	var orderby = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _API2.default.defaults.order;
+
+	var initialize = function () {
+		var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+			var headers, response, ok, data, app, initWrap;
+			return regeneratorRuntime.wrap(function _callee$(_context) {
+				while (1) {
+					switch (_context.prev = _context.next) {
+						case 0:
+							// Create fetch request.
+							headers = (0, _getHeaders2.default)(provider);
+							_context.next = 3;
+							return fetch(url, { headers: headers });
+
+						case 3:
+							response = _context.sent;
+							ok = response.ok;
+
+							(0, _checkRateLimit2.default)(response.headers);
+
+							_context.prev = 6;
+
+							if (!ok) {
+								_context.next = 13;
+								break;
+							}
+
+							_context.next = 10;
+							return response.json();
+
+						case 10:
+							data = _context.sent;
+							app = document.getElementById("app");
+
+							_reactDom2.default.render(_react2.default.createElement(_PhotoList2.default, {
+								container: app,
+								editor: "classic",
+								results: data,
+								page: page,
+								orderby: orderby,
+								provider: provider
+							}), app);
+
+						case 13:
+							_context.next = 18;
+							break;
+
+						case 15:
+							_context.prev = 15;
+							_context.t0 = _context["catch"](6);
+
+							console.log(_context.t0);
+
+						case 18:
+
+							// Remove init button (if required).
+							initWrap = container.querySelector(".initialize-wrap");
+
+							if (typeof initWrap != "undefined" && initWrap != null) {
+								initWrap.parentNode.removeChild(initWrap);
+							}
+
+						case 20:
+						case "end":
+							return _context.stop();
+					}
+				}
+			}, _callee, this, [[6, 15]]);
+		}));
+
+		return function initialize() {
+			return _ref.apply(this, arguments);
+		};
+	}();
+
 	var provider = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _API2.default.defaults.provider;
 
 	var container = document.querySelector(".instant-img-container");
@@ -43498,42 +43663,17 @@ function GetPhotos() {
 	var params = (0, _getQueryParams2.default)(provider);
 	var url = (0, _buildURL2.default)(_API2.default[provider].photo_api, params);
 
-	function initialize() {
-		// Create fetch request.
-		var headers = (0, _getHeaders2.default)(provider);
-		fetch(url, { headers: headers }).then(function (data) {
-			return data.json();
-		}).then(function (data) {
-			var app = document.getElementById("app");
-			_reactDom2.default.render(_react2.default.createElement(_PhotoList2.default, {
-				container: app,
-				editor: "classic",
-				results: data,
-				page: page,
-				orderby: orderby,
-				provider: provider
-			}), app);
-		}).catch(function (error) {
-			console.log(error);
-		});
-
-		// Remove init button (if required).
-		var initWrap = container.querySelector(".initialize-wrap");
-		if (typeof initWrap != "undefined" && initWrap != null) {
-			initWrap.parentNode.removeChild(initWrap);
-		}
-	}
 	initialize();
 }
 
 /**
  * Dispatch an initial fetch request to confirm the default API key is valid.
  */
-_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
 	var defaultProvider, defaultOrder, api_required, headers, response, ok, status;
-	return regeneratorRuntime.wrap(function _callee$(_context) {
+	return regeneratorRuntime.wrap(function _callee2$(_context2) {
 		while (1) {
-			switch (_context.prev = _context.next) {
+			switch (_context2.prev = _context2.next) {
 				case 0:
 					defaultProvider = _API2.default.defaults.provider;
 					defaultOrder = _API2.default.defaults.order;
@@ -43542,17 +43682,17 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
 					// Send test API request to confirm API key is functional.
 
 					if (!api_required) {
-						_context.next = 18;
+						_context2.next = 18;
 						break;
 					}
 
-					_context.prev = 4;
+					_context2.prev = 4;
 					headers = (0, _getHeaders2.default)(provider);
-					_context.next = 8;
+					_context2.next = 8;
 					return fetch((0, _buildTestURL2.default)(provider), { headers: headers });
 
 				case 8:
-					response = _context.sent;
+					response = _context2.sent;
 
 
 					// Handle response.
@@ -43569,18 +43709,18 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
 						// Render console warning.
 						(0, _consoleStatus2.default)(provider, status);
 					}
-					_context.next = 16;
+					_context2.next = 16;
 					break;
 
 				case 13:
-					_context.prev = 13;
-					_context.t0 = _context["catch"](4);
+					_context2.prev = 13;
+					_context2.t0 = _context2["catch"](4);
 
 					// API Error: Fallback to default provider.
 					GetPhotos(1, defaultOrder, defaultProvider);
 
 				case 16:
-					_context.next = 19;
+					_context2.next = 19;
 					break;
 
 				case 18:
@@ -43589,10 +43729,10 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
 
 				case 19:
 				case "end":
-					return _context.stop();
+					return _context2.stop();
 			}
 		}
-	}, _callee, undefined, [[4, 13]]);
+	}, _callee2, undefined, [[4, 13]]);
 }))();
 
 /***/ })
