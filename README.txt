@@ -88,11 +88,10 @@ Some hosts lock down their servers and you may be required to update your php.in
 No, there is no need to sign up from an Unsplash account to access the photos server via Instant Images.
 
 = Do I need an account at Pixabay? =
-Yes, Pixabay access requires an API key. You can get this by signing up for a free account at [Pixabay](https://pixabay.com/).
-
+No, we provide an API for you to use, however you can get your own by signing up for a free account at [Pixabay](https://pixabay.com/).
 
 = Do I need an account at Pexels? =
-Yes, Pexels access requires an API key. You can get this by signing up for a free account at [Pexels](https://pexels.com/).
+No, we provide an API for you to use, however you can get your own by signing up for a free account at [Pexels](https://pexels.com/).
 
 
 == Installation ==
