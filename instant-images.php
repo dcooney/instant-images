@@ -199,7 +199,7 @@ class InstantImages {
 
 		// Unsplash API.
 		if ( defined( 'INSTANT_IMAGES_UNSPLASH_KEY' ) ) {
-			$unsplash_api = INSTANT_IMAGES_PIXABAY_KEY;
+			$unsplash_api = INSTANT_IMAGES_UNSPLASH_KEY;
 		} else {
 			$unsplash_api = isset( $options['unsplash_api'] ) ? $options['unsplash_api'] : '';
 			$unsplash_api = empty( $unsplash_api ) ? INSTANT_IMAGES_UNSPLASH_APP_ID : $unsplash_api; // If empty, set to default key.
