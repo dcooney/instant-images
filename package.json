@@ -12,7 +12,7 @@
    "license": "ISC",
    "dependencies": {
       "a11yarrows": "^1.0.9",
-      "axios": "^0.21.2",
+      "axios": "^0.27.2",
       "classnames": "^2.3.1",
       "es6-promise": "^4.1.1",
       "focus-trap-react": "^8.9.0",

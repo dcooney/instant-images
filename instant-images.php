@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 4.6.1
+ * Version: 4.6.2
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'INSTANT_IMAGES_VERSION', '4.6.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'January 14, 2022' );
+define( 'INSTANT_IMAGES_VERSION', '4.6.2' );
+define( 'INSTANT_IMAGES_RELEASE', 'June 24, 2022' );
 
 /**
  * Activation hook
@@ -199,7 +199,7 @@ class InstantImages {
 
 		// Unsplash API.
 		if ( defined( 'INSTANT_IMAGES_UNSPLASH_KEY' ) ) {
-			$unsplash_api = INSTANT_IMAGES_PIXABAY_KEY;
+			$unsplash_api = INSTANT_IMAGES_UNSPLASH_KEY;
 		} else {
 			$unsplash_api = isset( $options['unsplash_api'] ) ? $options['unsplash_api'] : '';
 			$unsplash_api = empty( $unsplash_api ) ? INSTANT_IMAGES_UNSPLASH_APP_ID : $unsplash_api; // If empty, set to default key.
