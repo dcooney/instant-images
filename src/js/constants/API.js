@@ -2,7 +2,7 @@ module.exports = {
 	defaults: {
 		provider: "unsplash",
 		order: "latest",
-		per_page: "20",
+		per_page: "20"
 	},
 	unsplash: {
 		requires_key: true,
@@ -14,7 +14,7 @@ module.exports = {
 		photo_api: "https://api.unsplash.com/photos/",
 		search_api: "https://api.unsplash.com/search/photos/",
 		search_var: "query",
-		arr_key: "results",
+		arr_key: "results"
 	},
 	pixabay: {
 		requires_key: true,
@@ -25,7 +25,7 @@ module.exports = {
 		photo_api: "https://pixabay.com/api/",
 		search_api: "https://pixabay.com/api/",
 		search_var: "q",
-		arr_key: "hits",
+		arr_key: "hits"
 	},
 	pexels: {
 		requires_key: true,
@@ -36,6 +36,6 @@ module.exports = {
 		photo_api: "https://api.pexels.com/v1/curated/",
 		search_api: "https://api.pexels.com/v1/search/",
 		search_var: "query",
-		arr_key: "photos",
-	},
+		arr_key: "photos"
+	}
 };

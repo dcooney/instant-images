@@ -131,7 +131,6 @@ How to install Instant Images.
 
 == Changelog ==
 
-
 = 4.6.2 - June 24, 2022 =
 UPDATE: Updated all packages for security updates.
 FIX: Fixed issue with Unsplash API variable declaration.
