@@ -97,7 +97,7 @@ class InstantImages {
 			[
 				'name'         => 'Unsplash',
 				'slug'         => 'unsplash',
-				'requires_key' => false,
+				'requires_key' => true,
 				'url'          => 'https://unsplash.com/developers',
 				'constant'     => 'INSTANT_IMAGES_UNSPLASH_KEY',
 			],
@@ -217,7 +217,7 @@ class InstantImages {
 			$pexels_api = INSTANT_IMAGES_PEXELS_KEY;
 		} else {
 			$pexels_api = isset( $options['pexels_api'] ) ? $options['pexels_api'] : '';
-			$pexels_api = empty( $pexels_api ) ? INSTANT_IMAGES_PIXABAY_APP_ID : $pexels_api; // If empty, set to default key.
+			$pexels_api = empty( $pexels_api ) ? INSTANT_IMAGES_PEXELS_APP_ID : $pexels_api; // If empty, set to default key.
 		}
 
 		wp_localize_script(
@@ -234,10 +234,11 @@ class InstantImages {
 				'download_width'          => esc_html( $download_w ),
 				'download_height'         => esc_html( $download_h ),
 				'query_debug'             => apply_filters( 'instant_images_query_debug', false ),
-				'unsplash_app_id'         => INSTANT_IMAGES_UNSPLASH_APP_ID,
+				'unsplash_app_id'         => $unsplash_api,
 				'unsplash_default_app_id' => INSTANT_IMAGES_UNSPLASH_APP_ID,
 				'unsplash_url'            => 'https://unsplash.com',
 				'unsplash_api_url'        => 'https://unsplash.com/developers',
+				'unsplash_api_desc'       => __( 'Access to images from Unsplash requires a valid API key. API keys are available for free, just sign up for a Developer account at Unsplash, enter your API key below and you\'re good to go!', 'instant-images' ),
 				'unsplash_content_filter' => apply_filters( 'instant_images_unsplash_content_filter', 'low' ),
 				'pixabay_app_id'          => $pixabay_api,
 				'pixabay_default_app_id'  => INSTANT_IMAGES_PIXABAY_APP_ID,
@@ -255,6 +256,7 @@ class InstantImages {
 				'error_restapi_desc'      => __( 'Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images' ),
 				'photo_by'                => __( 'Photo by', 'instant-images' ),
 				'view_all'                => __( 'View All Photos by', 'instant-images' ),
+				'on'                      => __( 'on', 'instant-images' ),
 				'upload'                  => __( 'Click Image to Upload', 'instant-images' ),
 				'upload_btn'              => __( 'Click to Upload', 'instant-images' ),
 				'full_size'               => __( 'View Full Size', 'instant-images' ),

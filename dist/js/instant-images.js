@@ -45288,7 +45288,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function generateAttribution(provider, url, name) {
 	var provider_url = provider + "_url";
 	var referral = "utm_source=wordpress-instant-images&utm_medium=referral";
-	var attribution = instant_img_localize.photo_by + " " + " " + "<a href=\"" + url + "\" rel=\"nofollow\">" + name + "</a> on <a href=\"" + instant_img_localize[provider_url] + "/?" + referral + "\">" + (0, _capitalizeFirstLetter2.default)(provider) + "</a>";
+	var attribution = instant_img_localize.photo_by + " " + " " + "<a href=\"" + url + "\" rel=\"nofollow\">" + name + "</a> " + instant_img_localize.on + " <a href=\"" + instant_img_localize[provider_url] + "/?" + referral + "\">" + (0, _capitalizeFirstLetter2.default)(provider) + "</a>";
 
 	return attribution;
 }
