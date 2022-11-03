@@ -42232,6 +42232,7 @@ var PhotoList = function (_React$Component) {
 
 		// Results state.
 		_this.results = (0, _getResults2.default)(_this.provider, _this.arr_key, _this.props.results);
+
 		_this.state = {
 			results: _this.results,
 			filters: _filters2.default[_this.provider].filters,
@@ -43850,7 +43851,6 @@ function getHeaders(provider) {
 	var headers = {};
 	switch (provider) {
 		case "pexels":
-			console.log("dedw");
 			headers = {
 				Authorization: api_key
 			};

@@ -9,7 +9,7 @@ import getHeaders from "../functions/getHeaders";
 import getQueryParams from "../functions/getQueryParams";
 import getResults, {
 	getResultById,
-	getSearchTotalByProvider,
+	getSearchTotalByProvider
 } from "../functions/getResults";
 import searchByID from "../functions/searchByID";
 import APILightbox from "./APILightbox";
@@ -45,12 +45,13 @@ class PhotoList extends React.Component {
 			this.arr_key,
 			this.props.results
 		);
+
 		this.state = {
 			results: this.results,
 			filters: FILTERS[this.provider].filters,
 			search_filters: FILTERS[this.provider].search,
 			restapi_error: false,
-			api_lightbox: false,
+			api_lightbox: false
 		};
 
 		this.filters = {};
@@ -181,7 +182,7 @@ class PhotoList extends React.Component {
 			search_url = searchByID(this, term);
 		} else {
 			search_query = {
-				[this.api_provider.search_var]: this.search_term,
+				[this.api_provider.search_var]: this.search_term
 			};
 		}
 
@@ -189,7 +190,7 @@ class PhotoList extends React.Component {
 		const search_params = {
 			...search_query,
 			...this.search_filters,
-			...{ page: this.page },
+			...{ page: this.page }
 		};
 		const params = getQueryParams(this.provider, search_params);
 		const url = buildURL(search_url, params);
@@ -226,7 +227,7 @@ class PhotoList extends React.Component {
 					this.results = results;
 					this.setState({
 						results: this.results,
-						search_filters: FILTERS[this.provider].search,
+						search_filters: FILTERS[this.provider].search
 					});
 
 					break;
@@ -263,7 +264,7 @@ class PhotoList extends React.Component {
 			}
 
 			// Delay for effect.
-			setTimeout(function () {
+			setTimeout(function() {
 				input.classList.remove("searching");
 				photoTarget.classList.remove("loading");
 				self.isLoading = false;
@@ -326,12 +327,12 @@ class PhotoList extends React.Component {
 			// Set results state.
 			if (!switcher) {
 				this.setState({
-					results: results,
+					results: results
 				});
 			} else {
 				this.setState({
 					results: results,
-					filters: FILTERS[this.provider].filters,
+					filters: FILTERS[this.provider].filters
 				});
 			}
 		} else {
@@ -341,7 +342,7 @@ class PhotoList extends React.Component {
 		}
 
 		// Delay loading animatons for effect.
-		setTimeout(function () {
+		setTimeout(function() {
 			self.photoTarget.current.classList.remove("loading");
 			self.isLoading = false;
 		}, self.delay);
@@ -362,7 +363,7 @@ class PhotoList extends React.Component {
 		let search_query = {};
 		if (this.is_search) {
 			search_query = {
-				[this.api_provider.search_var]: this.search_term,
+				[this.api_provider.search_var]: this.search_term
 			};
 		}
 
@@ -372,7 +373,7 @@ class PhotoList extends React.Component {
 		const loadmore_params = {
 			...filters,
 			...search_query,
-			...{ page: this.page },
+			...{ page: this.page }
 		};
 		const params = getQueryParams(this.provider, loadmore_params);
 		const url = buildURL(loadmore_url, params);
@@ -400,7 +401,7 @@ class PhotoList extends React.Component {
 
 			// Loop result & push items into array.
 			results &&
-				results.map((data) => {
+				results.map(data => {
 					self.results.push(data);
 				});
 
@@ -458,7 +459,7 @@ class PhotoList extends React.Component {
 			"button.filter-dropdown--button"
 		);
 		if (filters) {
-			filters.forEach((button) => {
+			filters.forEach(button => {
 				button.disabled = this.is_search ? true : false;
 			});
 		}
@@ -551,7 +552,7 @@ class PhotoList extends React.Component {
 		}
 
 		// Remove active from buttons.
-		this.providerNav.current.querySelectorAll("button").forEach((button) => {
+		this.providerNav.current.querySelectorAll("button").forEach(button => {
 			button.classList.remove("active");
 		});
 
@@ -586,11 +587,11 @@ class PhotoList extends React.Component {
 		}
 		const self = this;
 		const photoListWrapper = self.photoTarget.current;
-		imagesLoaded(photoListWrapper, function () {
+		imagesLoaded(photoListWrapper, function() {
 			self.msnry = new Masonry(photoListWrapper, {
-				itemSelector: ".photo",
+				itemSelector: ".photo"
 			});
-			self.photoTarget.current.querySelectorAll(".photo").forEach((el) => {
+			self.photoTarget.current.querySelectorAll(".photo").forEach(el => {
 				el.classList.add("in-view");
 			});
 		});
@@ -627,7 +628,7 @@ class PhotoList extends React.Component {
 	 */
 	doneLoading() {
 		const self = this;
-		setTimeout(function () {
+		setTimeout(function() {
 			self.isLoading = false;
 			self.container.classList.remove("loading");
 		}, self.delay);
@@ -655,7 +656,7 @@ class PhotoList extends React.Component {
 		}
 
 		// Delay Tooltip Reveal.
-		this.tooltipInterval = setInterval(function () {
+		this.tooltipInterval = setInterval(function() {
 			clearInterval(self.tooltipInterval);
 			tooltip.innerHTML = target.dataset.title; // Tooltip content.
 
@@ -664,7 +665,7 @@ class PhotoList extends React.Component {
 			tooltip.style.left = `${left}px`;
 			tooltip.style.top = `${top}px`;
 
-			setTimeout(function () {
+			setTimeout(function() {
 				tooltip.classList.add("over");
 			}, self.delay);
 		}, 750);
@@ -694,7 +695,7 @@ class PhotoList extends React.Component {
 		restAPITest.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
 		restAPITest.setRequestHeader("Content-Type", "application/json");
 		restAPITest.send();
-		restAPITest.onload = function () {
+		restAPITest.onload = function() {
 			if (restAPITest.status >= 200 && restAPITest.status < 400) {
 				const response = JSON.parse(restAPITest.response);
 				const success = response.success;
@@ -706,7 +707,7 @@ class PhotoList extends React.Component {
 				self.setState({ restapi_error: true });
 			}
 		};
-		restAPITest.onerror = function (errorMsg) {
+		restAPITest.onerror = function(errorMsg) {
 			console.log(errorMsg);
 			self.setState({ restapi_error: true });
 		};
@@ -745,7 +746,7 @@ class PhotoList extends React.Component {
 							<div key={`provider-${iterator}`}>
 								<button
 									data-provider={provider.toLowerCase()}
-									onClick={(e) => this.switchProvider(e)}
+									onClick={e => this.switchProvider(e)}
 									className={
 										this.provider === provider.toLowerCase()
 											? "provider-nav--btn active"
@@ -797,7 +798,7 @@ class PhotoList extends React.Component {
 						className="control-nav--search search-field"
 						id="search-bar"
 					>
-						<form onSubmit={(e) => this.search(e)} autoComplete="off">
+						<form onSubmit={e => this.search(e)} autoComplete="off">
 							<label htmlFor="photo-search" className="offscreen">
 								{instant_img_localize.search_label}
 							</label>

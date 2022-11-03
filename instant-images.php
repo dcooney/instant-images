@@ -307,6 +307,8 @@ class InstantImages {
 				'api_ratelimit_msg'       => __( 'The API rate limit has been exceeded for this image provider. Please add a new API key or try again later.', 'instant-images' ),
 				'get_api_key'             => __( 'Get API Key', 'instant-images' ),
 				'use_instant_images_key'  => __( 'Reset Default Key', 'instant-images' ),
+				'error_on_load_title'     => __( 'An unknown error has occured while accessing the photos', 'instant-images' ),
+				'error_on_load'           => __( 'Check your API keys and the Default Provider set under the Instant Images settings panel.', 'instant-images' ),
 				'filters'                 => array(
 					'select'      => __( '-- Select --', 'instant-images' ),
 					'orderby'     => __( 'Order:', 'instant-images' ),
