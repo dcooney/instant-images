@@ -8,7 +8,7 @@
  */
 export default function getProp(provider, result, attribute) {
 	let value = "";
-	const referral = "?utm_source=wordpress-instant-images&utm_medium=referral";
+	const referral = "utm_source=wordpress-instant-images&utm_medium=referral";
 	switch (attribute) {
 		case "thumb":
 			if (provider === "pixabay") {
