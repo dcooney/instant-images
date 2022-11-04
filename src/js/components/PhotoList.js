@@ -322,6 +322,7 @@ class PhotoList extends React.Component {
 			const results = getResults(this.provider, this.arr_key, data);
 			this.checkTotalResults(results.length); // Check for returned data.
 			this.results = results; // Update Props.
+			console.log(data);
 
 			// Set results state.
 			if (!switcher) {

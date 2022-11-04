@@ -171,7 +171,7 @@ export default function getProp(provider, result, attribute) {
 				value = result.alt;
 			}
 			if (provider === "openverse") {
-				value = false;
+				value = result.alt_description;
 			}
 			break;
 	}

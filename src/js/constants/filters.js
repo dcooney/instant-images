@@ -1,6 +1,7 @@
 module.exports = {
 	openverse: {
-		filters: {}
+		filters: {},
+		search: {}
 	},
 	pexels: {
 		filters: {

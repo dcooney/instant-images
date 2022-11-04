@@ -2339,6 +2339,12 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
           background-size: 20px 20px;
 }
 
+[data-provider="openverse"] {
+  background: url(../img/openverse.svg) no-repeat 10px center;
+  -webkit-background-size: 20px 20px;
+          background-size: 20px 20px;
+}
+
 .media-frame-content .instant-img-container .api-lightbox {
   position: fixed;
 }

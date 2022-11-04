@@ -41215,7 +41215,6 @@ var Photo = function (_React$Component) {
 		_this.api_key = instant_img_localize[_this.provider + "_app_id"];
 
 		var result = _this.props.result;
-		console.log(result);
 		_this.id = result.id;
 		_this.thumb = (0, _getProp2.default)(_this.provider, result, "thumb");
 		_this.img = (0, _getProp2.default)(_this.provider, result, "img");
@@ -42560,7 +42559,7 @@ var PhotoList = function (_React$Component) {
 								// Status OK.
 
 								if (!ok) {
-									_context2.next = 27;
+									_context2.next = 28;
 									break;
 								}
 
@@ -42573,6 +42572,7 @@ var PhotoList = function (_React$Component) {
 
 								this.checkTotalResults(results.length); // Check for returned data.
 								this.results = results; // Update Props.
+								console.log(data);
 
 								// Set results state.
 								if (!switcher) {
@@ -42585,15 +42585,15 @@ var PhotoList = function (_React$Component) {
 										filters: _filters2.default[this.provider].filters
 									});
 								}
-								_context2.next = 30;
+								_context2.next = 31;
 								break;
 
-							case 27:
+							case 28:
 								console.warn("Error: " + status + " - " + statusText);
 								this.photoTarget.current.classList.remove("loading");
 								this.isLoading = false;
 
-							case 30:
+							case 31:
 
 								// Delay loading animatons for effect.
 								setTimeout(function () {
@@ -42601,7 +42601,7 @@ var PhotoList = function (_React$Component) {
 									self.isLoading = false;
 								}, self.delay);
 
-							case 31:
+							case 32:
 							case "end":
 								return _context2.stop();
 						}
@@ -43498,7 +43498,7 @@ module.exports = {
 		api_query_var: "",
 		photo_api: "https://api.openverse.engineering/v1/images",
 		search_api: "https://api.openverse.engineering/v1/images",
-		search_var: "query",
+		search_var: "q",
 		arr_key: "results"
 	}
 };
@@ -43517,7 +43517,8 @@ module.exports = {
 
 module.exports = {
 	openverse: {
-		filters: {}
+		filters: {},
+		search: {}
 	},
 	pexels: {
 		filters: {
@@ -44071,7 +44072,7 @@ function getProp(provider, result, attribute) {
 				value = result.alt;
 			}
 			if (provider === "openverse") {
-				value = false;
+				value = result.alt_description;
 			}
 			break;
 	}
@@ -44304,10 +44305,12 @@ function getResultById(provider, key, data) {
 function getSearchTotalByProvider(provider, obj) {
 	var total = "";
 	switch (provider) {
+		case "openverse":
+			total = obj.result_count ? obj.result_count : 0;
+			break;
 		case "pexels":
 			total = obj.total_results;
 			break;
-
 		default:
 			total = obj.total;
 			break;

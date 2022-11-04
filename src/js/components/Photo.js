@@ -15,7 +15,6 @@ class Photo extends React.Component {
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 
 		const result = this.props.result;
-		console.log(result);
 		this.id = result.id;
 		this.thumb = getProp(this.provider, result, "thumb");
 		this.img = getProp(this.provider, result, "img");

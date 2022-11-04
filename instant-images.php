@@ -118,6 +118,14 @@ class InstantImages {
 				'download_url' => 'https://images.pexels.com',
 				'constant'     => 'INSTANT_IMAGES_PEXELS_KEY',
 			],
+			[
+				'name'         => 'Openverse',
+				'slug'         => 'openverse',
+				'requires_key' => false,
+				'url'          => 'https://api.openverse.engineering/v1/#section/Register-and-Authenticate/Register-for-a-key',
+				'download_url' => 'https://api.openverse.engineering/',
+				'constant'     => '',
+			],
 		];
 		return $providers;
 	}

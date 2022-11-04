@@ -51,7 +51,7 @@ module.exports = {
 		api_query_var: "",
 		photo_api: "https://api.openverse.engineering/v1/images",
 		search_api: "https://api.openverse.engineering/v1/images",
-		search_var: "query",
+		search_var: "q",
 		arr_key: "results"
 	}
 };

@@ -69,10 +69,12 @@ export function getResultById(provider, key, data) {
 export function getSearchTotalByProvider(provider, obj) {
 	let total = "";
 	switch (provider) {
+		case "openverse":
+			total = obj.result_count ? obj.result_count : 0;
+			break;
 		case "pexels":
 			total = obj.total_results;
 			break;
-
 		default:
 			total = obj.total;
 			break;
