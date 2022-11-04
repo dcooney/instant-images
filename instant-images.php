@@ -416,7 +416,7 @@ class InstantImages {
 	 * Set up plugin constants.
 	 *
 	 * @since 2.0
-	 * @author dcooney
+	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	private function constants() {
 		define( 'INSTANT_IMAGES_TITLE', 'Instant Images' );
@@ -439,7 +439,7 @@ class InstantImages {
 	 * @param array $links current links.
 	 * @since 2.0
 	 * @return {Array} $mylinks
-	 * @author dcooney
+	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public function instant_images_add_action_links( $links ) {
 		$mylinks = array( '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">Upload Photos</a>' );
@@ -453,7 +453,7 @@ class InstantImages {
  *
  * @since 2.0
  * @return $instant_images
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  */
 function instant_images() {
 	global $instant_images;

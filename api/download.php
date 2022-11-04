@@ -3,7 +3,7 @@
  * Custom /ownload API route for download and adding images to media library.
  *
  * @since 3.0
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */
 
@@ -32,7 +32,7 @@ add_action(
  * @param WP_REST_Request $request Rest request object.
  * @return $response
  * @since 3.0
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */
 function instant_images_download( WP_REST_Request $request ) {
@@ -178,7 +178,7 @@ function instant_images_download( WP_REST_Request $request ) {
  * @param  string $max_height The max height of the image.
  * @return string             The image path.
  * @since 4.6
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */
 function instant_images_generate_image_url( $provider, $url, $max_width, $max_height ) {
@@ -220,7 +220,7 @@ function instant_images_generate_image_url( $provider, $url, $max_width, $max_he
  * @param  string $url The url to the remote image.
  * @return bool        Whether the remote image exists.
  * @since 3.0
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */
 function instant_images_remote_file_exists( $url ) {
@@ -233,7 +233,7 @@ function instant_images_remote_file_exists( $url ) {
  *
  * @param string $filename the image filename.
  * @since 3.0
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */
 function instant_images_resize_download( $filename ) {

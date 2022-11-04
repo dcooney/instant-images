@@ -3,7 +3,7 @@
  * Custom /settings route to update plugin settings.
  *
  * @since 4.5
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */
 
@@ -31,7 +31,7 @@ add_action(
  *
  * @param WP_REST_Request $request API request.
  * @since 4.5
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */
 function instant_images_settings( WP_REST_Request $request ) {
