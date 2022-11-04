@@ -3,7 +3,7 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: unsplash, pixabay, pexels, stock photo, prototyping, photos, media library, image upload, upload, free photos
 Requires at least: 4.0
-Tested up to: 6.0
+Tested up to: 6.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -130,6 +130,12 @@ How to install Instant Images.
 6. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 4.6.3 - November 04, 2022 =
+UPDATE: Improved load handling of default provider.
+FIX: Security fix for issue for authenticated users.
+FIX: Fixed issue default Pexels API key.
+FIX: Fixed issue with photo attribution text and localization.
 
 = 4.6.2 - June 24, 2022 =
 UPDATE: Updated all packages for security updates.

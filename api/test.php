@@ -3,7 +3,7 @@
  * Custom /test route to text REST API access.
  *
  * @since 3.0
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */
 
@@ -31,7 +31,7 @@ add_action(
  *
  * @param WP_REST_Request $request API request.
  * @since 3.2
- * @author dcooney
+ * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */
 function instant_images_test( WP_REST_Request $request ) {

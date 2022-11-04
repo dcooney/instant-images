@@ -571,3 +571,18 @@
 		}
 	}
 }
+
+.instant-img-container{
+	.onload-warning{
+		text-align: center;
+		max-width: 600px;
+		margin: 0 auto;
+		padding: 20px;
+		h3{
+			margin-bottom: 10px;
+			span{
+				text-transform: uppercase;
+			}
+		}
+	}
+}

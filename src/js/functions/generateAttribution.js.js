@@ -10,10 +10,12 @@ import capitalizeFirstLetter from "./capitalizeFirstLetter";
  */
 export default function generateAttribution(provider, url, name) {
 	const provider_url = `${provider}_url`;
-	const referral = "?utm_source=wordpress-instant-images&utm_medium=referral";
+	const referral = "utm_source=wordpress-instant-images&utm_medium=referral";
 	const attribution = `${
 		instant_img_localize.photo_by
-	} <a href="${url}" rel="nofollow">${name}</a> on <a href="${
+	} ${" "}<a href="${url}" rel="nofollow">${name}</a> ${
+		instant_img_localize.on
+	} <a href="${
 		instant_img_localize[provider_url]
 	}/?${referral}">${capitalizeFirstLetter(provider)}</a>`;
 

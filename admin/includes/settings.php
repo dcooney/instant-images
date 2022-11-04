@@ -203,9 +203,6 @@ function instant_images_default_provider() {
 		<?php foreach ( $providers as $provider ) { ?>
 			<option value="<?php echo esc_html( $provider['slug'] ); ?>" <?php selected( esc_html( $provider['slug'] ), $options['default_provider'] ); ?>>
 				<?php echo esc_html( $provider['name'] ); ?>
-				<?php if ( $provider['requires_key'] ) { ?>
-					<?php // esc_attr_e( 'API Key Required', 'instant-images' ); ?>
-				<?php } ?>
 			</option>
 		<?php } ?>
 	</select>
@@ -225,8 +222,8 @@ function instant_images_api_key_callback() {
 
 	?>
 	<div class="ii-api-desc">
-		<p><strong><?php _e( 'API Keys', 'instant-images' ); ?></strong></p>
-		<p><?php _e( 'Replace the API keys provided by Instant Images with your own. Leave empty to restore the default keys.', 'instant-images' ); ?><br/>
+		<p><strong><?php esc_attr_e( 'API Keys', 'instant-images' ); ?></strong></p>
+		<p><?php esc_attr_e( 'Replace the API keys provided by Instant Images with your own. Leave empty to restore default plugin keys.', 'instant-images' ); ?><br/>
 	</div>
 	<?php
 	foreach ( $providers as $provider ) {
@@ -253,6 +250,11 @@ function instant_images_api_key_callback() {
 					<span class="desc">&rarr; <a href="<?php echo wp_kses_post( $url ); ?>" target="_blank"><?php esc_attr_e( 'Get Key', 'instant-images' ); ?></a></span>
 				</div>
 				<input type="text" id="<?php echo esc_html( $key ); ?>" name="instant_img_settings[<?php echo esc_html( $key ); ?>]" value="<?php echo wp_kses_post( $options[ $key ] ); ?>" <?php echo defined( $constant ) ? ' readonly="readonly"' : ''; ?>>
+				<?php
+				if ( defined( $constant ) ) {
+					?>
+				<span class="ii-api-contsant"><?php esc_attr_e( 'API key has been set via site constant.', 'instant-images' ); ?></span>
+				<?php } ?>
 			</div>
 			<?php
 		}
