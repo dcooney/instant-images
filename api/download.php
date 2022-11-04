@@ -123,7 +123,7 @@ function instant_images_download( WP_REST_Request $request ) {
 		wp_update_attachment_metadata( $image_id, $attach_data );
 
 		/**
-		 * Instant Images Core Hook
+		 * Instant Images Core Hook.
 		 * Fired after a successful image upload to media library.
 		 *
 		 * @since 4.4.0
@@ -137,10 +137,6 @@ function instant_images_download( WP_REST_Request $request ) {
 				'attachment_url' => wp_get_attachment_url( $image_id ),
 			)
 		);
-
-		// Resize original image to max size (set in Instant Images settings).
-		// @deprecated in .
-		// instant_images_resize_download( $name ); .
 
 		// Success.
 		$response = array(
@@ -186,8 +182,22 @@ function instant_images_download( WP_REST_Request $request ) {
  * @package InstantImages
  */
 function instant_images_generate_image_url( $provider, $url, $max_width, $max_height ) {
-	$image_url = '';
+	$download_urls = InstantImages::instant_img_get_download_urls();
+	$matched       = false;
 
+	// To prevent misuse, loop all potential API urls to match the target url.
+	// If the URL for the image to be downloaded is not found, bail early.
+	foreach ( $download_urls as $string ) {
+		if ( strpos( $url, $string ) !== false ) {
+			$matched = true;
+		}
+	}
+
+	if ( ! $matched ) {
+		return false;
+	}
+
+	$image_url = '';
 	switch ( $provider ) {
 		case 'unsplash':
 			$image_url = $url . '&fit=clip&w=' . $max_width . '&h=' . $max_height;

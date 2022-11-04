@@ -99,6 +99,7 @@ class InstantImages {
 				'slug'         => 'unsplash',
 				'requires_key' => true,
 				'url'          => 'https://unsplash.com/developers',
+				'download_url' => 'https://images.unsplash.com',
 				'constant'     => 'INSTANT_IMAGES_UNSPLASH_KEY',
 			],
 			[
@@ -106,6 +107,7 @@ class InstantImages {
 				'slug'         => 'pixabay',
 				'requires_key' => true,
 				'url'          => 'https://pixabay.com/service/about/api/',
+				'download_url' => 'https://pixabay.com',
 				'constant'     => 'INSTANT_IMAGES_PIXABAY_KEY',
 			],
 			[
@@ -113,10 +115,25 @@ class InstantImages {
 				'slug'         => 'pexels',
 				'requires_key' => true,
 				'url'          => 'https://www.pexels.com/join-consumer/',
+				'download_url' => 'https://images.pexels.com',
 				'constant'     => 'INSTANT_IMAGES_PEXELS_KEY',
 			],
 		];
 		return $providers;
+	}
+
+	/**
+	 * Get a list of potential download URLs to increase security of download functionality.
+	 *
+	 * @return array The array of urls.
+	 */
+	public static function instant_img_get_download_urls() {
+		$providers = self::instant_img_get_providers();
+		$urls      = [];
+		foreach ( $providers as $provider ) {
+			$urls[] = $provider['download_url'];
+		}
+		return $urls;
 	}
 
 	/**
