@@ -15,6 +15,7 @@ class Photo extends React.Component {
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 
 		const result = this.props.result;
+		console.log(result);
 		this.id = result.id;
 		this.thumb = getProp(this.provider, result, "thumb");
 		this.img = getProp(this.provider, result, "img");
@@ -61,7 +62,7 @@ class Photo extends React.Component {
 			filename: this.filename,
 			title: this.title,
 			alt: this.alt,
-			caption: this.caption,
+			caption: this.caption
 		};
 
 		// Refs.
@@ -102,10 +103,10 @@ class Photo extends React.Component {
 		// Status messaging
 		notice.innerHTML = instant_img_localize.saving;
 
-		setTimeout(function () {
+		setTimeout(function() {
 			// Change notice after 3 seconds
 			notice.innerHTML = instant_img_localize.resizing;
-			setTimeout(function () {
+			setTimeout(function() {
 				// Change notice again after 5 seconds (Still resizing...)
 				notice.innerHTML = instant_img_localize.resizing_still;
 			}, 5000);
@@ -124,20 +125,20 @@ class Photo extends React.Component {
 			title: target.getAttribute("data-title"),
 			alt: target.getAttribute("data-alt"),
 			caption: target.getAttribute("data-caption"),
-			parent_id: instant_img_localize.parent_id,
+			parent_id: instant_img_localize.parent_id
 		};
 
 		// Config Params
 		const config = {
 			headers: {
 				"X-WP-Nonce": instant_img_localize.nonce,
-				"Content-Type": "application/json",
-			},
+				"Content-Type": "application/json"
+			}
 		};
 
 		axios
 			.post(api, JSON.stringify(data), config)
-			.then(function (res) {
+			.then(function(res) {
 				const response = res.data;
 
 				if (response) {
@@ -209,7 +210,7 @@ class Photo extends React.Component {
 					);
 				}
 			})
-			.catch(function (error) {
+			.catch(function(error) {
 				console.log(error);
 			});
 	}
@@ -271,7 +272,7 @@ class Photo extends React.Component {
 		this.inProgress = false;
 
 		// Remove uploaded and success states after 5 seconds.
-		setTimeout(function () {
+		setTimeout(function() {
 			photo.classList.remove("uploaded");
 			target.classList.remove("success");
 		}, 5000);
@@ -323,7 +324,7 @@ class Photo extends React.Component {
 			}
 
 			// Delay to allow for tab switching
-			setTimeout(function () {
+			setTimeout(function() {
 				if (wp.media.frame.content.get() !== null) {
 					//this forces a refresh of the content
 					wp.media.frame.content.get().collection._requery(true);
@@ -385,7 +386,7 @@ class Photo extends React.Component {
 		self.editScreen.current.classList.add("editing");
 
 		// Set focus on edit screen
-		setTimeout(function () {
+		setTimeout(function() {
 			self.editScreen.current.focus({ preventScroll: true });
 		}, 150);
 	}
@@ -401,22 +402,22 @@ class Photo extends React.Component {
 
 		if (target === "filename") {
 			this.setState({
-				filename: e.target.value,
+				filename: e.target.value
 			});
 		}
 		if (target === "title") {
 			this.setState({
-				title: e.target.value,
+				title: e.target.value
 			});
 		}
 		if (target === "alt") {
 			this.setState({
-				alt: e.target.value,
+				alt: e.target.value
 			});
 		}
 		if (target === "caption") {
 			this.setState({
-				caption: e.target.value,
+				caption: e.target.value
 			});
 		}
 	}
@@ -465,21 +466,21 @@ class Photo extends React.Component {
 		);
 		filename.value = filename.dataset.original;
 		this.setState({
-			filename: filename.value,
+			filename: filename.value
 		});
 
 		// Title
 		const title = this.photo.current.querySelector('input[name="title"]');
 		title.value = title.dataset.original;
 		this.setState({
-			title: title.value,
+			title: title.value
 		});
 
 		// Alt
 		const alt = this.photo.current.querySelector('input[name="alt"]');
 		alt.value = alt.dataset.original;
 		this.setState({
-			alt: alt.value,
+			alt: alt.value
 		});
 
 		// Caption
@@ -488,7 +489,7 @@ class Photo extends React.Component {
 		);
 		caption.value = caption.dataset.original;
 		this.setState({
-			caption: caption.value,
+			caption: caption.value
 		});
 
 		// Hide edit screen
@@ -525,7 +526,7 @@ class Photo extends React.Component {
 		const self = this;
 		this.captionRef.current.value = this.attribution;
 		this.setState({
-			caption: self.attribution,
+			caption: self.attribution
 		});
 	}
 
@@ -550,7 +551,7 @@ class Photo extends React.Component {
 							data-alt={this.state.alt}
 							data-caption={this.state.caption}
 							title={instant_img_localize.upload}
-							onClick={(e) => this.download(e)}
+							onClick={e => this.download(e)}
 						>
 							<img src={this.img} alt="" />
 							<div className="status" />
@@ -587,9 +588,9 @@ class Photo extends React.Component {
 										type="button"
 										className="set-featured fade"
 										data-title={instant_img_localize.set_as_featured}
-										onMouseEnter={(e) => this.showTooltip(e)}
-										onMouseLeave={(e) => this.hideTooltip(e)}
-										onClick={(e) => this.setFeaturedImageClick(e)}
+										onMouseEnter={e => this.showTooltip(e)}
+										onMouseLeave={e => this.hideTooltip(e)}
+										onClick={e => this.setFeaturedImageClick(e)}
 									>
 										<i
 											className="fa fa-picture-o"
@@ -605,9 +606,9 @@ class Photo extends React.Component {
 										type="button"
 										className="insert fade"
 										data-title={instant_img_localize.insert_into_post}
-										onMouseEnter={(e) => this.showTooltip(e)}
-										onMouseLeave={(e) => this.hideTooltip(e)}
-										onClick={(e) => this.insertImageIntoPost(e)}
+										onMouseEnter={e => this.showTooltip(e)}
+										onMouseLeave={e => this.hideTooltip(e)}
+										onClick={e => this.insertImageIntoPost(e)}
 									>
 										<i className="fa fa-plus" aria-hidden="true"></i>
 										<span className="offscreen">
@@ -620,8 +621,8 @@ class Photo extends React.Component {
 									href="#"
 									className="edit-photo-admin fade"
 									data-title={instant_img_localize.edit_upload}
-									onMouseEnter={(e) => this.showTooltip(e)}
-									onMouseLeave={(e) => this.hideTooltip(e)}
+									onMouseEnter={e => this.showTooltip(e)}
+									onMouseLeave={e => this.hideTooltip(e)}
 								>
 									<i className="fa fa-pencil" aria-hidden="true"></i>
 									<span className="offscreen">
@@ -633,9 +634,9 @@ class Photo extends React.Component {
 									type="button"
 									className="edit-photo fade"
 									data-title={instant_img_localize.edit_details}
-									onMouseEnter={(e) => this.showTooltip(e)}
-									onMouseLeave={(e) => this.hideTooltip(e)}
-									onClick={(e) => this.showEditScreen(e)}
+									onMouseEnter={e => this.showTooltip(e)}
+									onMouseLeave={e => this.hideTooltip(e)}
+									onClick={e => this.showEditScreen(e)}
 								>
 									<i className="fa fa-cog" aria-hidden="true"></i>
 									<span className="offscreen">
@@ -650,8 +651,8 @@ class Photo extends React.Component {
 								<span
 									className="likes tooltip--above"
 									data-title={this.likes + " " + likeTxt}
-									onMouseEnter={(e) => this.showTooltip(e)}
-									onMouseLeave={(e) => this.hideTooltip(e)}
+									onMouseEnter={e => this.showTooltip(e)}
+									onMouseLeave={e => this.hideTooltip(e)}
 								>
 									<i
 										className="fa fa-heart heart-like"
@@ -666,8 +667,8 @@ class Photo extends React.Component {
 								data-title={`${
 									instant_img_localize.open_external
 								} ${capitalizeFirstLetter(this.provider)}`}
-								onMouseEnter={(e) => this.showTooltip(e)}
-								onMouseLeave={(e) => this.hideTooltip(e)}
+								onMouseEnter={e => this.showTooltip(e)}
+								onMouseLeave={e => this.hideTooltip(e)}
 								target="_blank"
 							>
 								<i
@@ -704,7 +705,7 @@ class Photo extends React.Component {
 								data-original={this.filename}
 								placeholder={this.filename}
 								value={this.state.filename}
-								onChange={(e) => this.handleEditChange(e)}
+								onChange={e => this.handleEditChange(e)}
 							/>
 							<em>.jpg</em>
 						</label>
@@ -716,7 +717,7 @@ class Photo extends React.Component {
 								data-original={this.title}
 								placeholder={this.title}
 								value={this.state.title || ""}
-								onChange={(e) => this.handleEditChange(e)}
+								onChange={e => this.handleEditChange(e)}
 							/>
 						</label>
 						<label>
@@ -726,7 +727,7 @@ class Photo extends React.Component {
 								name="alt"
 								data-original={this.alt}
 								value={this.state.alt || ""}
-								onChange={(e) => this.handleEditChange(e)}
+								onChange={e => this.handleEditChange(e)}
 							/>
 						</label>
 						<label>
@@ -735,14 +736,14 @@ class Photo extends React.Component {
 								rows="4"
 								name="caption"
 								data-original=""
-								onChange={(e) => this.handleEditChange(e)}
+								onChange={e => this.handleEditChange(e)}
 								value={this.state.caption || ""}
 								ref={this.captionRef}
 							></textarea>
 						</label>
 						<div className="add-attribution-row">
 							<button
-								onClick={(e) => this.addAttribution(e)}
+								onClick={e => this.addAttribution(e)}
 								type="button"
 							>
 								{instant_img_localize.attribution}
@@ -752,7 +753,7 @@ class Photo extends React.Component {
 							<button
 								type="button"
 								className="button"
-								onClick={(e) => this.cancelEditChange(e)}
+								onClick={e => this.cancelEditChange(e)}
 							>
 								{instant_img_localize.cancel}
 							</button>{" "}

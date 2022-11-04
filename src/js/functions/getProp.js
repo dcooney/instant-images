@@ -20,6 +20,9 @@ export default function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = result.src.tiny;
 			}
+			if (provider === "openverse") {
+				value = result.thumbnail;
+			}
 			break;
 
 		case "img":
@@ -31,6 +34,9 @@ export default function getProp(provider, result, attribute) {
 			}
 			if (provider === "pexels") {
 				value = result.src.large;
+			}
+			if (provider === "openverse") {
+				value = result.url;
 			}
 			break;
 
@@ -44,6 +50,9 @@ export default function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = result.src.original;
 			}
+			if (provider === "openverse") {
+				value = result.url;
+			}
 			break;
 
 		case "author":
@@ -55,6 +64,9 @@ export default function getProp(provider, result, attribute) {
 			}
 			if (provider === "pexels") {
 				value = result.photographer;
+			}
+			if (provider === "openverse") {
+				value = result.creator;
 			}
 			break;
 
@@ -68,6 +80,9 @@ export default function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = result.photographer_id;
 			}
+			if (provider === "openverse") {
+				value = result.creator;
+			}
 			break;
 
 		case "name":
@@ -80,6 +95,9 @@ export default function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = result.photographer;
 			}
+			if (provider === "openverse") {
+				value = result.creator;
+			}
 			break;
 
 		case "user_photo":
@@ -90,6 +108,9 @@ export default function getProp(provider, result, attribute) {
 				value = result.user.profile_image.small;
 			}
 			if (provider === "pexels") {
+				value = false;
+			}
+			if (provider === "openverse") {
 				value = false;
 			}
 			break;
@@ -104,6 +125,9 @@ export default function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = `${result.photographer_url}?${referral}`;
 			}
+			if (provider === "openverse") {
+				value = `${result.creator_url}?${referral}`;
+			}
 			break;
 
 		case "link":
@@ -114,6 +138,9 @@ export default function getProp(provider, result, attribute) {
 				value = result.links.html;
 			}
 			if (provider === "pexels") {
+				value = result.url;
+			}
+			if (provider === "openverse") {
 				value = result.url;
 			}
 			break;
@@ -128,6 +155,9 @@ export default function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = false;
 			}
+			if (provider === "openverse") {
+				value = false;
+			}
 			break;
 
 		case "alt":
@@ -139,6 +169,9 @@ export default function getProp(provider, result, attribute) {
 			}
 			if (provider === "pexels") {
 				value = result.alt;
+			}
+			if (provider === "openverse") {
+				value = false;
 			}
 			break;
 	}

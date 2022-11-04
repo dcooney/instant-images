@@ -40959,81 +40959,6 @@ exports.default = Filter;
 
 /***/ }),
 
-/***/ "./src/js/components/LoadFail.js":
-/*!***************************************!*\
-  !*** ./src/js/components/LoadFail.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var LoadFail = function (_React$Component) {
-	_inherits(LoadFail, _React$Component);
-
-	function LoadFail(props) {
-		_classCallCheck(this, LoadFail);
-
-		var _this = _possibleConstructorReturn(this, (LoadFail.__proto__ || Object.getPrototypeOf(LoadFail)).call(this, props));
-
-		_this.provider = _this.props.provider;
-
-		var title = instant_img_localize.error_on_load_title;
-		_this.title = title.replace("{provider}", _this.capitalizeFirstLetter(_this.props.provider));
-		return _this;
-	}
-
-	_createClass(LoadFail, [{
-		key: "capitalizeFirstLetter",
-		value: function capitalizeFirstLetter(string) {
-			return string.charAt(0).toUpperCase() + string.slice(1);
-		}
-	}, {
-		key: "render",
-		value: function render() {
-			return _react2.default.createElement(
-				"div",
-				{ className: "onload-warning" },
-				_react2.default.createElement(
-					"h3",
-					null,
-					this.title
-				),
-				_react2.default.createElement(
-					"p",
-					null,
-					instant_img_localize.error_on_load
-				)
-			);
-		}
-	}]);
-
-	return LoadFail;
-}(_react2.default.Component);
-
-exports.default = LoadFail;
-
-/***/ }),
-
 /***/ "./src/js/components/LoadMore.js":
 /*!***************************************!*\
   !*** ./src/js/components/LoadMore.js ***!
@@ -41290,6 +41215,7 @@ var Photo = function (_React$Component) {
 		_this.api_key = instant_img_localize[_this.provider + "_app_id"];
 
 		var result = _this.props.result;
+		console.log(result);
 		_this.id = result.id;
 		_this.thumb = (0, _getProp2.default)(_this.provider, result, "thumb");
 		_this.img = (0, _getProp2.default)(_this.provider, result, "img");
@@ -42247,10 +42173,6 @@ var _Filter = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js
 
 var _Filter2 = _interopRequireDefault(_Filter);
 
-var _LoadFail = __webpack_require__(/*! ./LoadFail */ "./src/js/components/LoadFail.js");
-
-var _LoadFail2 = _interopRequireDefault(_LoadFail);
-
 var _LoadingBlock = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
 
 var _LoadingBlock2 = _interopRequireDefault(_LoadingBlock);
@@ -42298,7 +42220,7 @@ var PhotoList = function (_React$Component) {
 		// Get current provider settings.
 		var _this = _possibleConstructorReturn(this, (PhotoList.__proto__ || Object.getPrototypeOf(PhotoList)).call(this, props));
 
-		_this.providers = _API2.default.providers;
+		_this.providers = ["Unsplash", "Pixabay", "Pexels", "Openverse"];
 		_this.provider = _this.props.provider; // Unsplash, Pixabay, etc.
 		_this.api_provider = _API2.default[_this.provider]; // The API settings for the provider.
 		_this.arr_key = _this.api_provider.arr_key;
@@ -42311,7 +42233,6 @@ var PhotoList = function (_React$Component) {
 
 		// Results state.
 		_this.results = (0, _getResults2.default)(_this.provider, _this.arr_key, _this.props.results);
-
 		_this.state = {
 			results: _this.results,
 			filters: _filters2.default[_this.provider].filters,
@@ -43351,7 +43272,7 @@ var PhotoList = function (_React$Component) {
 				_react2.default.createElement(
 					"div",
 					{ id: "photos", className: "photo-target", ref: this.photoTarget },
-					this.state.results.length && this.state.results.map(function (result, iterator) {
+					this.state.results.map(function (result, iterator) {
 						return _react2.default.createElement(_Photo2.default, {
 							provider: _this4.provider,
 							result: result,
@@ -43366,7 +43287,6 @@ var PhotoList = function (_React$Component) {
 						});
 					})
 				),
-				!this.state.results.length ? _react2.default.createElement(_LoadFail2.default, { provider: this.provider }) : null,
 				this.total_results == 0 && this.is_search === true && _react2.default.createElement(_NoResults2.default, null),
 				_react2.default.createElement(_LoadingBlock2.default, null),
 				_react2.default.createElement(_LoadMore2.default, { loadMorePhotos: this.loadMorePhotos.bind(this) }),
@@ -43531,7 +43451,7 @@ module.exports = {
 		order: "latest",
 		per_page: "20"
 	},
-	providers: ["Unsplash", "Pixabay", "Pexels"],
+	providers: ["Unsplash", "Pixabay", "Pexels", "Openverse"],
 	unsplash: {
 		name: "Unsplash",
 		requires_key: true,
@@ -43568,6 +43488,18 @@ module.exports = {
 		search_api: "https://api.pexels.com/v1/search/",
 		search_var: "query",
 		arr_key: "photos"
+	},
+	openverse: {
+		name: "Openverse",
+		requires_key: false,
+		auth_headers: false,
+		new: true,
+		api_var: "",
+		api_query_var: "",
+		photo_api: "https://api.openverse.engineering/v1/images",
+		search_api: "https://api.openverse.engineering/v1/images",
+		search_var: "query",
+		arr_key: "results"
 	}
 };
 
@@ -43584,6 +43516,9 @@ module.exports = {
 
 
 module.exports = {
+	openverse: {
+		filters: {}
+	},
 	pexels: {
 		filters: {
 			order_by: {
@@ -43985,6 +43920,9 @@ function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = result.src.tiny;
 			}
+			if (provider === "openverse") {
+				value = result.thumbnail;
+			}
 			break;
 
 		case "img":
@@ -43996,6 +43934,9 @@ function getProp(provider, result, attribute) {
 			}
 			if (provider === "pexels") {
 				value = result.src.large;
+			}
+			if (provider === "openverse") {
+				value = result.url;
 			}
 			break;
 
@@ -44009,6 +43950,9 @@ function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = result.src.original;
 			}
+			if (provider === "openverse") {
+				value = result.url;
+			}
 			break;
 
 		case "author":
@@ -44020,6 +43964,9 @@ function getProp(provider, result, attribute) {
 			}
 			if (provider === "pexels") {
 				value = result.photographer;
+			}
+			if (provider === "openverse") {
+				value = result.creator;
 			}
 			break;
 
@@ -44033,6 +43980,9 @@ function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = result.photographer_id;
 			}
+			if (provider === "openverse") {
+				value = result.creator;
+			}
 			break;
 
 		case "name":
@@ -44045,6 +43995,9 @@ function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = result.photographer;
 			}
+			if (provider === "openverse") {
+				value = result.creator;
+			}
 			break;
 
 		case "user_photo":
@@ -44055,6 +44008,9 @@ function getProp(provider, result, attribute) {
 				value = result.user.profile_image.small;
 			}
 			if (provider === "pexels") {
+				value = false;
+			}
+			if (provider === "openverse") {
 				value = false;
 			}
 			break;
@@ -44069,6 +44025,9 @@ function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = result.photographer_url + "?" + referral;
 			}
+			if (provider === "openverse") {
+				value = result.creator_url + "?" + referral;
+			}
 			break;
 
 		case "link":
@@ -44079,6 +44038,9 @@ function getProp(provider, result, attribute) {
 				value = result.links.html;
 			}
 			if (provider === "pexels") {
+				value = result.url;
+			}
+			if (provider === "openverse") {
 				value = result.url;
 			}
 			break;
@@ -44093,6 +44055,9 @@ function getProp(provider, result, attribute) {
 			if (provider === "pexels") {
 				value = false;
 			}
+			if (provider === "openverse") {
+				value = false;
+			}
 			break;
 
 		case "alt":
@@ -44104,6 +44069,9 @@ function getProp(provider, result, attribute) {
 			}
 			if (provider === "pexels") {
 				value = result.alt;
+			}
+			if (provider === "openverse") {
+				value = false;
 			}
 			break;
 	}

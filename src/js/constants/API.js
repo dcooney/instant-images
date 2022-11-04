@@ -4,7 +4,7 @@ module.exports = {
 		order: "latest",
 		per_page: "20"
 	},
-	providers: ["Unsplash", "Pixabay", "Pexels"],
+	providers: ["Unsplash", "Pixabay", "Pexels", "Openverse"],
 	unsplash: {
 		name: "Unsplash",
 		requires_key: true,
@@ -41,5 +41,17 @@ module.exports = {
 		search_api: "https://api.pexels.com/v1/search/",
 		search_var: "query",
 		arr_key: "photos"
+	},
+	openverse: {
+		name: "Openverse",
+		requires_key: false,
+		auth_headers: false,
+		new: true,
+		api_var: "",
+		api_query_var: "",
+		photo_api: "https://api.openverse.engineering/v1/images",
+		search_api: "https://api.openverse.engineering/v1/images",
+		search_var: "query",
+		arr_key: "results"
 	}
 };
