@@ -4,7 +4,9 @@ module.exports = {
 		order: "latest",
 		per_page: "20"
 	},
+	providers: ["Unsplash", "Pixabay", "Pexels"],
 	unsplash: {
+		name: "Unsplash",
 		requires_key: true,
 		auth_headers: false,
 		new: false,
@@ -17,9 +19,10 @@ module.exports = {
 		arr_key: "results"
 	},
 	pixabay: {
+		name: "Pixabay",
 		requires_key: true,
 		auth_headers: false,
-		new: true,
+		new: false,
 		api_var: "key",
 		api_query_var: "key=",
 		photo_api: "https://pixabay.com/api/",
@@ -28,9 +31,10 @@ module.exports = {
 		arr_key: "hits"
 	},
 	pexels: {
+		name: "Pexels",
 		requires_key: true,
 		auth_headers: true,
-		new: true,
+		new: false,
 		api_var: "",
 		api_query_var: "",
 		photo_api: "https://api.pexels.com/v1/curated/",

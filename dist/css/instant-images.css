@@ -1503,11 +1503,12 @@ body.media_page_instant-images.overflow-hidden {
   padding: 20px;
 }
 
-.instant-img-container .onload-warning span {
-  display: block;
-  font-weight: 700;
-  font-size: 18px;
+.instant-img-container .onload-warning h3 {
   margin-bottom: 10px;
+}
+
+.instant-img-container .onload-warning h3 span {
+  text-transform: uppercase;
 }
 
 .instant-images-settings {
@@ -1713,7 +1714,7 @@ body.media_page_instant-images.overflow-hidden {
 }
 
 .instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-option {
-  padding: 14px 14px 16px;
+  padding: 15px 15px 16px;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1;
   border-bottom: none;
@@ -1743,7 +1744,15 @@ body.media_page_instant-images.overflow-hidden {
 .instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-label label {
   font-size: 12px;
   text-transform: uppercase;
-  margin: 0 0 2px;
+  margin: 0 0 4px 1px;
+}
+
+.instant-images-settings .cnkt-sidebar .cta.ii-settings .ii-api-contsant {
+  display: block;
+  padding: 7px 0 0 1px;
+  font-style: italic;
+  opacity: 0.75;
+  font-size: 12px;
 }
 
 .instant-images-settings .cnkt-sidebar .cta.ii-plugins {

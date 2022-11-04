@@ -142,7 +142,7 @@
 					padding-bottom: 6px;
 				}
 				.ii-api-option {
-					padding: 14px 14px 16px;
+					padding: 15px 15px 16px;
 					background-color: $lighter_grey;
 					border: 1px solid $border;
 					border-bottom: none;
@@ -161,8 +161,15 @@
 					label {
 						font-size: 12px;
 						text-transform: uppercase;
-						margin: 0 0 2px;
+						margin: 0 0 4px 1px;
 					}
+				}
+				.ii-api-contsant{
+					display: block;
+					padding: 7px 0 0 1px;
+					font-style: italic;
+					opacity: 0.75;
+					font-size: 12px;
 				}
 			}
 			// Plugins
