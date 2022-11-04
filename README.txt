@@ -131,6 +131,12 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 4.6.3 - November 04, 2022 =
+UPDATE: Improved load handling of default provider.
+FIX: Security fix for issue for authenticated users.
+FIX: Fixed issue default Pexels API key.
+FIX: Fixed issue with photo attribution text and localization.
+
 = 4.6.2 - June 24, 2022 =
 UPDATE: Updated all packages for security updates.
 FIX: Fixed issue with Unsplash API variable declaration.
