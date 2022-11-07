@@ -43751,7 +43751,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = buildURL;
 /**
- * Build the API query parameters
+ * Build the API query parameters.
  *
  * @param  {string}  url     The base API URL.
  * @param  {object}  params  The current params object.
@@ -43761,6 +43761,9 @@ function buildURL(url, params) {
 	if (!url) {
 		return "";
 	}
+
+	url = "http://localhost:3000/api/images";
+	//url = "https://instant-images-proxy.vercel.app/api/images";
 	var api_url = new URL(url);
 	Object.keys(params).forEach(function (key) {
 		api_url.searchParams.append(key, params[key]);
@@ -44185,6 +44188,7 @@ function getQueryParams(provider, filters) {
 
 	// Default params.
 	var params = {
+		provider: provider,
 		per_page: _API2.default.defaults.per_page
 	};
 

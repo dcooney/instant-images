@@ -15,12 +15,12 @@ export default function unsplashDownload(vars, id) {
 	const url = buildURL(download_url, params);
 
 	fetch(url)
-		.then((data) => data.json())
-		.then(function () {
+		.then(data => data.json())
+		.then(function() {
 			// Success, nothing else happens here
 			console.log("Image download successsfully triggered at Unsplash.");
 		})
-		.catch(function (error) {
+		.catch(function(error) {
 			console.log(error);
 		});
 }

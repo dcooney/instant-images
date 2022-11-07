@@ -14,7 +14,8 @@ export default function getQueryParams(provider, filters) {
 
 	// Default params.
 	let params = {
-		per_page: API.defaults.per_page,
+		provider: provider,
+		per_page: API.defaults.per_page
 	};
 
 	params = getAuth(params, provider);
