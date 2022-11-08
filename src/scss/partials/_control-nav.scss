@@ -119,11 +119,11 @@
 			.searchResults {
 				position: absolute;
 				right: 100.5%;
-				top: 5px;
+				top: -1px;
 				width: auto;
-				height: 30px;
-				line-height: 30px;
-				padding: 0 0 0 8px;
+				height: 40px;
+				line-height: 40px;
+				padding: 0 0 0 10px;
 				background: $purple;
 				border: 1px solid $purple_dark;
 				border-radius: 4px;

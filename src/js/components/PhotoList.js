@@ -15,7 +15,6 @@ import searchByID from "../functions/searchByID";
 import APILightbox from "./APILightbox";
 import ErrorMessage from "./ErrorMessage";
 import Filter from "./Filter";
-import LoadFail from "./LoadFail";
 import LoadingBlock from "./LoadingBlock";
 import LoadMore from "./LoadMore";
 import NoResults from "./NoResults";
@@ -861,26 +860,23 @@ class PhotoList extends React.Component {
 				)}
 
 				<div id="photos" className="photo-target" ref={this.photoTarget}>
-					{this.state.results.length &&
-						this.state.results.map((result, iterator) => (
-							<Photo
-								provider={this.provider}
-								result={result}
-								key={`${this.provider}-${result.id}-${iterator}`}
-								editor={this.editor}
-								mediaRouter={this.is_media_router}
-								blockEditor={this.is_block_editor}
-								SetFeaturedImage={this.SetFeaturedImage}
-								InsertImage={this.InsertImage}
-								showTooltip={this.showTooltip}
-								hideTooltip={this.hideTooltip}
-							/>
-						))}
+					{this.state.results.length
+						? this.state.results.map((result, iterator) => (
+								<Photo
+									provider={this.provider}
+									result={result}
+									key={`${this.provider}-${result.id}-${iterator}`}
+									editor={this.editor}
+									mediaRouter={this.is_media_router}
+									blockEditor={this.is_block_editor}
+									SetFeaturedImage={this.SetFeaturedImage}
+									InsertImage={this.InsertImage}
+									showTooltip={this.showTooltip}
+									hideTooltip={this.hideTooltip}
+								/>
+						  ))
+						: null}
 				</div>
-
-				{!this.state.results.length ? (
-					<LoadFail provider={this.provider} />
-				) : null}
 
 				{this.total_results == 0 && this.is_search === true && (
 					<NoResults />

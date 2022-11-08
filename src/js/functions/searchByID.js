@@ -9,7 +9,7 @@
 export default function searchByID(options, term) {
 	const { provider, api_provider } = options;
 	const { photo_api } = api_provider;
-	const id = term.replace("id:", "");
+	const id = term.replace("id:", "").replace(/\s+/, "");
 
 	let url = "";
 	switch (provider) {

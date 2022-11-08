@@ -219,14 +219,14 @@ class InstantImages {
 			$unsplash_api = INSTANT_IMAGES_UNSPLASH_KEY;
 		} else {
 			$unsplash_api = isset( $options['unsplash_api'] ) ? $options['unsplash_api'] : '';
-			$unsplash_api = empty( $unsplash_api ) ? INSTANT_IMAGES_UNSPLASH_APP_ID : $unsplash_api; // If empty, set to default key.
+			$unsplash_api = empty( $unsplash_api ) ? '' : $unsplash_api; // If empty, set to default key.
 		}
 		// Pixabay API.
 		if ( defined( 'INSTANT_IMAGES_PIXABAY_KEY' ) ) {
 			$pixabay_api = INSTANT_IMAGES_PIXABAY_KEY;
 		} else {
 			$pixabay_api = isset( $options['pixabay_api'] ) ? $options['pixabay_api'] : '';
-			$pixabay_api = empty( $pixabay_api ) ? INSTANT_IMAGES_PIXABAY_APP_ID : $pixabay_api; // If empty, set to default key.
+			$pixabay_api = empty( $pixabay_api ) ? '' : $pixabay_api; // If empty, set to default key.
 		}
 
 		// Pexels API.
@@ -234,7 +234,7 @@ class InstantImages {
 			$pexels_api = INSTANT_IMAGES_PEXELS_KEY;
 		} else {
 			$pexels_api = isset( $options['pexels_api'] ) ? $options['pexels_api'] : '';
-			$pexels_api = empty( $pexels_api ) ? INSTANT_IMAGES_PEXELS_APP_ID : $pexels_api; // If empty, set to default key.
+			$pexels_api = empty( $pexels_api ) ? '' : $pexels_api; // If empty, set to default key.
 		}
 
 		wp_localize_script(
@@ -252,19 +252,16 @@ class InstantImages {
 				'download_height'         => esc_html( $download_h ),
 				'query_debug'             => apply_filters( 'instant_images_query_debug', false ),
 				'unsplash_app_id'         => $unsplash_api,
-				'unsplash_default_app_id' => INSTANT_IMAGES_UNSPLASH_APP_ID,
 				'unsplash_url'            => 'https://unsplash.com',
 				'unsplash_api_url'        => 'https://unsplash.com/developers',
 				'unsplash_api_desc'       => __( 'Access to images from Unsplash requires a valid API key. API keys are available for free, just sign up for a Developer account at Unsplash, enter your API key below and you\'re good to go!', 'instant-images' ),
 				'unsplash_content_filter' => apply_filters( 'instant_images_unsplash_content_filter', 'low' ),
 				'pixabay_app_id'          => $pixabay_api,
-				'pixabay_default_app_id'  => INSTANT_IMAGES_PIXABAY_APP_ID,
 				'pixabay_url'             => 'https://pixabay.com',
 				'pixabay_api_url'         => 'https://pixabay.com/service/about/api/',
 				'pixabay_api_desc'        => __( 'Access to images from Pixabay requires a valid API key. API keys are available for free, just sign up for an account at Pixabay, enter your API key below and you\'re good to go!', 'instant-images' ),
 				'pixabay_safesearch'      => apply_filters( 'instant_images_pixabay_safesearch', 'true' ),
 				'pexels_app_id'           => $pexels_api,
-				'pexels_default_app_id'   => INSTANT_IMAGES_PEXELS_APP_ID,
 				'pexels_url'              => 'https://pexels.com',
 				'pexels_api_url'          => 'https://www.pexels.com/join-consumer/',
 				'pexels_api_desc'         => __( 'Access to images from Pexels requires a valid API key. API keys are available for free, just sign up for an account at Pexels, enter your API key below and you\'re good to go!', 'instant-images' ),
@@ -428,9 +425,6 @@ class InstantImages {
 		define( 'INSTANT_IMAGES_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
 		define( 'INSTANT_IMAGES_WPADMIN_URL', admin_url( 'upload.php?page=instant-images' ) );
 		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
-		define( 'INSTANT_IMAGES_UNSPLASH_APP_ID', '5746b12f75e91c251bddf6f83bd2ad0d658122676e9bd2444e110951f9a04af8' );
-		define( 'INSTANT_IMAGES_PIXABAY_APP_ID', '23559219-67621b8a8bd93df7b6aef72a7' );
-		define( 'INSTANT_IMAGES_PEXELS_APP_ID', '563492ad6f9170000100000120aa91a03d6b495c84870df1be8e1cd8' );
 	}
 
 	/**

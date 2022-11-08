@@ -47,7 +47,12 @@ export function getAuth(params, provider) {
 	if (!has_auth || !provider) {
 		return params;
 	}
-	params[API[provider].api_var] = instant_img_localize[`${provider}_app_id`];
+
+	const app_id = instant_img_localize[`${provider}_app_id`];
+	// Pass keys if not using default keys.
+	if (app_id) {
+		params[API[provider].api_var] = app_id;
+	}
 	return params;
 }
 

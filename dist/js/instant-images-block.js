@@ -40959,81 +40959,6 @@ exports.default = Filter;
 
 /***/ }),
 
-/***/ "./src/js/components/LoadFail.js":
-/*!***************************************!*\
-  !*** ./src/js/components/LoadFail.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var LoadFail = function (_React$Component) {
-	_inherits(LoadFail, _React$Component);
-
-	function LoadFail(props) {
-		_classCallCheck(this, LoadFail);
-
-		var _this = _possibleConstructorReturn(this, (LoadFail.__proto__ || Object.getPrototypeOf(LoadFail)).call(this, props));
-
-		_this.provider = _this.props.provider;
-
-		var title = instant_img_localize.error_on_load_title;
-		_this.title = title.replace("{provider}", _this.capitalizeFirstLetter(_this.props.provider));
-		return _this;
-	}
-
-	_createClass(LoadFail, [{
-		key: "capitalizeFirstLetter",
-		value: function capitalizeFirstLetter(string) {
-			return string.charAt(0).toUpperCase() + string.slice(1);
-		}
-	}, {
-		key: "render",
-		value: function render() {
-			return _react2.default.createElement(
-				"div",
-				{ className: "onload-warning" },
-				_react2.default.createElement(
-					"h3",
-					null,
-					this.title
-				),
-				_react2.default.createElement(
-					"p",
-					null,
-					instant_img_localize.error_on_load
-				)
-			);
-		}
-	}]);
-
-	return LoadFail;
-}(_react2.default.Component);
-
-exports.default = LoadFail;
-
-/***/ }),
-
 /***/ "./src/js/components/LoadMore.js":
 /*!***************************************!*\
   !*** ./src/js/components/LoadMore.js ***!
@@ -42247,10 +42172,6 @@ var _Filter = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js
 
 var _Filter2 = _interopRequireDefault(_Filter);
 
-var _LoadFail = __webpack_require__(/*! ./LoadFail */ "./src/js/components/LoadFail.js");
-
-var _LoadFail2 = _interopRequireDefault(_LoadFail);
-
 var _LoadingBlock = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
 
 var _LoadingBlock2 = _interopRequireDefault(_LoadingBlock);
@@ -43351,7 +43272,7 @@ var PhotoList = function (_React$Component) {
 				_react2.default.createElement(
 					"div",
 					{ id: "photos", className: "photo-target", ref: this.photoTarget },
-					this.state.results.length && this.state.results.map(function (result, iterator) {
+					this.state.results.length ? this.state.results.map(function (result, iterator) {
 						return _react2.default.createElement(_Photo2.default, {
 							provider: _this4.provider,
 							result: result,
@@ -43364,9 +43285,8 @@ var PhotoList = function (_React$Component) {
 							showTooltip: _this4.showTooltip,
 							hideTooltip: _this4.hideTooltip
 						});
-					})
+					}) : null
 				),
-				!this.state.results.length ? _react2.default.createElement(_LoadFail2.default, { provider: this.provider }) : null,
 				this.total_results == 0 && this.is_search === true && _react2.default.createElement(_NoResults2.default, null),
 				_react2.default.createElement(_LoadingBlock2.default, null),
 				_react2.default.createElement(_LoadMore2.default, { loadMorePhotos: this.loadMorePhotos.bind(this) }),
@@ -43562,8 +43482,8 @@ module.exports = {
 		requires_key: true,
 		auth_headers: true,
 		new: false,
-		api_var: "",
-		api_query_var: "",
+		api_var: "key",
+		api_query_var: "key=",
 		photo_api: "https://api.pexels.com/v1/curated/",
 		search_api: "https://api.pexels.com/v1/search/",
 		search_var: "query",
@@ -43753,23 +43673,25 @@ exports.default = buildURL;
 /**
  * Build the API query parameters.
  *
- * @param  {string}  url     The base API URL.
- * @param  {object}  params  The current params object.
- * @return {string} 			  The new API URL with querystring params.
+ * @param  {string}  dest   The base API URL.
+ * @param  {object}  params The current params object.
+ * @return {string} 			 The new API URL with querystring params.
  */
-function buildURL(url, params) {
-	if (!url) {
+function buildURL(dest, params) {
+	if (!dest) {
 		return "";
 	}
 
-	url = "http://localhost:3000/api/images";
-	//url = "https://instant-images-proxy.vercel.app/api/images";
-	var api_url = new URL(url);
-	Object.keys(params).forEach(function (key) {
-		api_url.searchParams.append(key, params[key]);
-	});
+	//const proxy = "https://instant-images-proxy.vercel.app/api/images";
+	var proxy = "http://localhost:3000/api/images";
 
-	return api_url;
+	var url = new URL(proxy);
+	Object.keys(params).forEach(function (key) {
+		url.searchParams.append(key, params[key]);
+	});
+	url.searchParams.append("dest", dest);
+
+	return url;
 }
 
 /***/ }),
@@ -44221,7 +44143,12 @@ function getAuth(params, provider) {
 	if (!has_auth || !provider) {
 		return params;
 	}
-	params[_API2.default[provider].api_var] = instant_img_localize[provider + "_app_id"];
+
+	var app_id = instant_img_localize[provider + "_app_id"];
+	// Pass keys if not using default keys.
+	if (app_id) {
+		params[_API2.default[provider].api_var] = app_id;
+	}
 	return params;
 }
 
@@ -44381,7 +44308,7 @@ function searchByID(options, term) {
 	    api_provider = options.api_provider;
 	var photo_api = api_provider.photo_api;
 
-	var id = term.replace("id:", "");
+	var id = term.replace("id:", "").replace(/\s+/, "");
 
 	var url = "";
 	switch (provider) {

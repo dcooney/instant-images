@@ -629,11 +629,11 @@ body.media_page_instant-images.overflow-hidden {
 .instant-img-container .control-nav--search .searchResults {
   position: absolute;
   right: 100.5%;
-  top: 5px;
+  top: -1px;
   width: auto;
-  height: 30px;
-  line-height: 30px;
-  padding: 0 0 0 8px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 0 0 10px;
   background: #586ec6;
   border: 1px solid #455cb6;
   -webkit-border-radius: 4px;

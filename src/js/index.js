@@ -42,22 +42,22 @@ function GetPhotos(
 		checkRateLimit(response.headers);
 
 		try {
-			//if (ok) {
-			// Get response data.
-			const data = await response.json();
-			const app = document.getElementById("app");
-			ReactDOM.render(
-				<PhotoList
-					container={app}
-					editor="classic"
-					results={data}
-					page={page}
-					orderby={orderby}
-					provider={provider}
-				/>,
-				app
-			);
-			//}
+			if (ok) {
+				// Get response data.
+				const data = await response.json();
+				const app = document.getElementById("app");
+				ReactDOM.render(
+					<PhotoList
+						container={app}
+						editor="classic"
+						results={data}
+						page={page}
+						orderby={orderby}
+						provider={provider}
+					/>,
+					app
+				);
+			}
 		} catch (error) {
 			console.log(error);
 		}
