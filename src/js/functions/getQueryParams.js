@@ -43,14 +43,14 @@ export default function getQueryParams(provider, filters) {
  * @return {object} 				The fetch parameters object.
  */
 export function getAuth(params, provider) {
-	const has_auth = API[provider].api_var ? true : false;
+	const has_auth = API[provider].requires_key;
 	if (!has_auth || !provider) {
 		return params;
 	}
 
 	const app_id = instant_img_localize[`${provider}_app_id`];
-	// Pass keys if not using default keys.
 	if (app_id) {
+		// Pass API keys if not using defaults.
 		params[API[provider].api_var] = app_id;
 	}
 	return params;

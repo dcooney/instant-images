@@ -7,17 +7,35 @@
  */
 export default function buildURL(dest, params) {
 	if (!dest) {
+		// Bail early is destination URL is missing.
 		return "";
 	}
+	// Get the current provider.
+	const { provider = "unsplash" } = params;
+	delete params.provider;
 
-	//const proxy = "https://instant-images-proxy.vercel.app/api/images";
-	const proxy = "http://localhost:3000/api/images";
+	console.log(process.env);
+	const url = new URL(getProxyURL(provider)); // Build the URL.
 
-	const url = new URL(proxy);
+	// Append query params.
 	Object.keys(params).forEach(key => {
 		url.searchParams.append(key, params[key]);
 	});
 	url.searchParams.append("dest", dest);
 
 	return url;
+}
+
+/**
+ * Get the proxy URL from ENV vars.
+ *
+ * @param  {string} provider The image provider.
+ * @return {string}          The proxy URL.
+ */
+export function getProxyURL(provider) {
+	const proxy =
+		process && process.env && process.env.PROXY_URL
+			? `${process.env.PROXY_URL}${provider}`
+			: `https://proxy.getinstantimages.com/api/${provider}`;
+	return proxy;
 }

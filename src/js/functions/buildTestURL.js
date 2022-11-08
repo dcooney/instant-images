@@ -12,12 +12,15 @@ export default function buildTestURL(provider) {
 	const api = API[provider];
 	let options = {
 		per_page: 5,
-		page: 1,
+		page: 1
 	};
 
 	// Build URL.
-	let params = getQueryParams(provider);
-	params = { ...params, ...options };
+	const params = {
+		test: true,
+		...getQueryParams(provider),
+		...options
+	};
 	const url = buildURL(api.photo_api, params);
 
 	return url;
