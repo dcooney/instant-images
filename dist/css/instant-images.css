@@ -1191,7 +1191,7 @@ body.media_page_instant-images.overflow-hidden {
   width: 100%;
   background: rgba(0, 0, 0, 0.4);
   padding: 0;
-  opacity: 0.35;
+  opacity: 0.25;
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
