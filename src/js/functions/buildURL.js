@@ -12,9 +12,10 @@ export default function buildURL(dest, params) {
 	}
 	// Get the current provider.
 	const { provider = "unsplash" } = params;
+
+	// Delete provider from the params object as it doesn't need to be sent.
 	delete params.provider;
 
-	console.log(process.env);
 	const url = new URL(getProxyURL(provider)); // Build the URL.
 
 	// Append query params.

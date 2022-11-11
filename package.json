@@ -4,6 +4,7 @@
 	"description": "One Click Unsplash Uploads",
 	"main": "src/index.js",
 	"scripts": {
+		"dev": "npm run start",
 		"start": "webpack -w --mode development --config=webpack/dev.config.js",
 		"build": "webpack -p --mode production --config=webpack/prod.config.js"
 	},

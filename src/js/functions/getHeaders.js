@@ -9,9 +9,11 @@ export default function getHeaders(provider) {
 	let headers = {};
 	switch (provider) {
 		case "pexels":
-			headers = {
-				Authorization: api_key
-			};
+			if (api_key) {
+				headers = {
+					Authorization: api_key
+				};
+			}
 			break;
 
 		default:
