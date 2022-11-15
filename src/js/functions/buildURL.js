@@ -16,7 +16,8 @@ export default function buildURL(dest, params) {
 	// Delete provider from the params object as it doesn't need to be sent.
 	delete params.provider;
 
-	const url = new URL(getProxyURL(provider)); // Build the URL.
+	// Build the API URL.
+	const url = new URL(getProxyURL(provider));
 
 	// Append query params.
 	Object.keys(params).forEach(key => {

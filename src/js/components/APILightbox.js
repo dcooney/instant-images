@@ -3,7 +3,6 @@ import React from "react";
 import buildTestURL from "../functions/buildTestURL";
 import checkRateLimit from "../functions/checkRateLimit";
 import consoleStatus from "../functions/consoleStatus";
-import getHeaders from "../functions/getHeaders";
 import updatePluginSetting from "../functions/updatePluginSetting";
 
 class APILightbox extends React.Component {
@@ -16,8 +15,9 @@ class APILightbox extends React.Component {
 		this.submitRef = React.createRef();
 		this.loading = false;
 		this.state = { status: "invalid", response: "" };
-		this.afterVerifiedAPICallback =
-			this.props.afterVerifiedAPICallback.bind(this);
+		this.afterVerifiedAPICallback = this.props.afterVerifiedAPICallback.bind(
+			this
+		);
 		this.closeAPILightbox = this.props.closeAPILightbox.bind(this);
 		this.escFunction = this.escFunction.bind(this);
 	}
@@ -53,12 +53,9 @@ class APILightbox extends React.Component {
 		// Update plugin settings via REST API.
 		updatePluginSetting(`${this.provider}_api`, updateKey);
 
-		// Get authentication headers.
-		const headers = getHeaders(this.provider);
-
 		try {
 			// Fetch API data.
-			const response = await fetch(buildTestURL(self.provider), { headers });
+			const response = await fetch(buildTestURL(self.provider));
 
 			// Handle response.
 			const ok = response.ok;
@@ -70,9 +67,9 @@ class APILightbox extends React.Component {
 				// Success.
 				self.setState({
 					status: "valid",
-					response: instant_img_localize.api_success_msg,
+					response: instant_img_localize.api_success_msg
 				});
-				setTimeout(function () {
+				setTimeout(function() {
 					self.afterVerifiedAPICallback(self.provider);
 				}, 1500);
 			} else {
@@ -86,13 +83,13 @@ class APILightbox extends React.Component {
 				if (status === 400 || status === 401) {
 					// Unsplash/Pixabay incorrect API key.
 					self.setState({
-						response: instant_img_localize.api_invalid_msg,
+						response: instant_img_localize.api_invalid_msg
 					});
 				}
 				if (status === 429) {
 					// Pixabay - too many requests.
 					self.setState({
-						response: instant_img_localize.api_ratelimit_msg,
+						response: instant_img_localize.api_ratelimit_msg
 					});
 				}
 			}
@@ -106,7 +103,7 @@ class APILightbox extends React.Component {
 			consoleStatus(self.provider, 500);
 
 			self.setState({
-				response: instant_img_localize.api_invalid_msg,
+				response: instant_img_localize.api_invalid_msg
 			});
 		}
 	}
@@ -117,7 +114,7 @@ class APILightbox extends React.Component {
 	closeLightbox() {
 		const self = this;
 		this.lightbox.current.classList.remove("active");
-		setTimeout(function () {
+		setTimeout(function() {
 			self.closeAPILightbox(this.provider);
 		}, 250);
 	}
@@ -180,7 +177,7 @@ class APILightbox extends React.Component {
 				<div
 					className="api-lightbox"
 					ref={this.lightbox}
-					onClick={(e) => this.bkgClick(e)}
+					onClick={e => this.bkgClick(e)}
 					tabIndex="-1"
 				>
 					<div>
@@ -217,7 +214,7 @@ class APILightbox extends React.Component {
 									</button>
 								</p>
 							</div>
-							<form onSubmit={(e) => this.handleSubmit(e)}>
+							<form onSubmit={e => this.handleSubmit(e)}>
 								<label htmlFor="key" className="offscreen">
 									{instant_img_localize.enter_api_key}
 								</label>

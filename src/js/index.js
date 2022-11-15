@@ -6,7 +6,6 @@ import buildTestURL from "./functions/buildTestURL";
 import buildURL from "./functions/buildURL";
 import checkRateLimit from "./functions/checkRateLimit";
 import consoleStatus from "./functions/consoleStatus";
-import getHeaders from "./functions/getHeaders";
 import getProvider from "./functions/getProvider";
 import getQueryParams from "./functions/getQueryParams";
 require("es6-promise").polyfill();
@@ -36,27 +35,30 @@ function GetPhotos(
 
 	async function initialize() {
 		// Create fetch request.
-		const headers = getHeaders(provider);
-		const response = await fetch(url, { headers });
-		const { ok } = response;
-		checkRateLimit(response.headers);
+		const response = await fetch(url);
+		const { ok, headers } = response;
+		checkRateLimit(headers);
+
+		console.log(response.statusText);
 
 		try {
 			if (ok) {
 				// Get response data.
-				const data = await response.json();
+				const results = await response.json();
 				const app = document.getElementById("app");
 				ReactDOM.render(
 					<PhotoList
 						container={app}
 						editor="classic"
-						results={data}
+						results={results}
 						page={page}
 						orderby={orderby}
 						provider={provider}
 					/>,
 					app
 				);
+			} else {
+				ReactDOM.render(<span>ERROR</span>, app);
 			}
 		} catch (error) {
 			console.log(error);
@@ -82,13 +84,12 @@ function GetPhotos(
 	// Send test API request to confirm API key is functional.
 	if (api_required) {
 		try {
-			const headers = getHeaders(provider);
-			const response = await fetch(buildTestURL(provider), { headers });
+			const response = await fetch(buildTestURL(provider));
 
 			// Handle response.
-			const { ok, status } = response;
+			const { status } = response;
 
-			if (ok) {
+			if (status === 200) {
 				// Success.
 				GetPhotos(1, defaultOrder, provider);
 			} else {

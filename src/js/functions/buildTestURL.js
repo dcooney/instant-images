@@ -21,7 +21,6 @@ export default function buildTestURL(provider) {
 		...getQueryParams(provider),
 		...options
 	};
-	const url = buildURL(api.photo_api, params);
 
-	return url;
+	return buildURL(api.photo_api, params);
 }

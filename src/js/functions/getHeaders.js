@@ -3,6 +3,7 @@
  *
  * @param  {string} provider The current provider.
  * @return {object}          The headers as an object.
+ * @deprecated 2.0
  */
 export default function getHeaders(provider) {
 	const api_key = instant_img_localize[`${provider}_app_id`];

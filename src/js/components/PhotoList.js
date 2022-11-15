@@ -5,7 +5,6 @@ import FILTERS from "../constants/filters";
 import buildTestURL from "../functions/buildTestURL";
 import buildURL from "../functions/buildURL";
 import checkRateLimit from "../functions/checkRateLimit";
-import getHeaders from "../functions/getHeaders";
 import getQueryParams from "../functions/getQueryParams";
 import getResults, {
 	getResultById,
@@ -196,12 +195,11 @@ class PhotoList extends React.Component {
 		const url = buildURL(search_url, params);
 
 		// Create fetch request.
-		const headers = getHeaders(this.provider);
-		const response = await fetch(url, { headers });
-		const { ok } = response;
+		const response = await fetch(url);
+		const { status } = response;
 		checkRateLimit(response.headers);
 
-		if (ok) {
+		if (status === 200) {
 			// Get response data.
 			const data = await response.json();
 
@@ -312,8 +310,7 @@ class PhotoList extends React.Component {
 		const url = buildURL(this.photo_api, params);
 
 		// Create fetch request.
-		const headers = getHeaders(this.provider);
-		const response = await fetch(url, { headers });
+		const response = await fetch(url);
 		const { ok, status, statusText } = response;
 		checkRateLimit(response.headers);
 
@@ -379,8 +376,7 @@ class PhotoList extends React.Component {
 		const url = buildURL(loadmore_url, params);
 
 		// Create fetch request.
-		const headers = getHeaders(this.provider);
-		const response = await fetch(url, { headers });
+		const response = await fetch(url);
 		const { ok, status, statusText } = response;
 		checkRateLimit(response.headers);
 
@@ -524,21 +520,13 @@ class PhotoList extends React.Component {
 		// Bounce if API key for provider is invalid.
 		if (API[provider].requires_key) {
 			// Get authentication headers.
-			const headers = getHeaders(provider);
 			const self = this;
 			try {
-				const response = await fetch(buildTestURL(provider), { headers });
-				const ok = response.ok;
+				const response = await fetch(buildTestURL(provider));
 				const status = response.status;
 				checkRateLimit(response.headers);
-				if (
-					!ok ||
-					status === 400 ||
-					status === 401 ||
-					status === 500 ||
-					status === 404
-				) {
-					// Catch forbidden and 404s.
+				if (status !== 200) {
+					// Catch API errors and 401s.
 					self.setState({ api_lightbox: provider }); // Show API Lightbox.
 					document.body.classList.add("overflow-hidden");
 					return;

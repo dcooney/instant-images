@@ -40234,10 +40234,6 @@ var _consoleStatus = __webpack_require__(/*! ../functions/consoleStatus */ "./sr
 
 var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
 
-var _getHeaders = __webpack_require__(/*! ../functions/getHeaders */ "./src/js/functions/getHeaders.js");
-
-var _getHeaders2 = _interopRequireDefault(_getHeaders);
-
 var _updatePluginSetting = __webpack_require__(/*! ../functions/updatePluginSetting */ "./src/js/functions/updatePluginSetting.js");
 
 var _updatePluginSetting2 = _interopRequireDefault(_updatePluginSetting);
@@ -40284,7 +40280,7 @@ var APILightbox = function (_React$Component) {
 		key: "handleSubmit",
 		value: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
-				var self, key, updateKey, settingField, headers, response, ok, status;
+				var self, key, updateKey, settingField, response, ok, status;
 				return regeneratorRuntime.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
@@ -40315,13 +40311,11 @@ var APILightbox = function (_React$Component) {
 								// Update plugin settings via REST API.
 								(0, _updatePluginSetting2.default)(this.provider + "_api", updateKey);
 
-								// Get authentication headers.
-								headers = (0, _getHeaders2.default)(this.provider);
-								_context.prev = 11;
-								_context.next = 14;
-								return fetch((0, _buildTestURL2.default)(self.provider), { headers: headers });
+								_context.prev = 10;
+								_context.next = 13;
+								return fetch((0, _buildTestURL2.default)(self.provider));
 
-							case 14:
+							case 13:
 								response = _context.sent;
 
 
@@ -40362,12 +40356,12 @@ var APILightbox = function (_React$Component) {
 										});
 									}
 								}
-								_context.next = 26;
+								_context.next = 25;
 								break;
 
-							case 21:
-								_context.prev = 21;
-								_context.t0 = _context["catch"](11);
+							case 20:
+								_context.prev = 20;
+								_context.t0 = _context["catch"](10);
 
 								// Catch all other errors.
 
@@ -40381,12 +40375,12 @@ var APILightbox = function (_React$Component) {
 									response: instant_img_localize.api_invalid_msg
 								});
 
-							case 26:
+							case 25:
 							case "end":
 								return _context.stop();
 						}
 					}
-				}, _callee, this, [[11, 21]]);
+				}, _callee, this, [[10, 20]]);
 			}));
 
 			function handleSubmit(_x) {
@@ -42144,10 +42138,6 @@ var _checkRateLimit = __webpack_require__(/*! ../functions/checkRateLimit */ "./
 
 var _checkRateLimit2 = _interopRequireDefault(_checkRateLimit);
 
-var _getHeaders = __webpack_require__(/*! ../functions/getHeaders */ "./src/js/functions/getHeaders.js");
-
-var _getHeaders2 = _interopRequireDefault(_getHeaders);
-
 var _getQueryParams = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
 
 var _getQueryParams2 = _interopRequireDefault(_getQueryParams);
@@ -42358,7 +42348,7 @@ var PhotoList = function (_React$Component) {
 		key: "doSearch",
 		value: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(term) {
-				var self, search_type, input, photoTarget, search_url, search_query, search_params, params, url, headers, response, ok, data, results, photoArray, result;
+				var self, search_type, input, photoTarget, search_url, search_query, search_params, params, url, response, status, data, results, photoArray, result;
 				return regeneratorRuntime.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
@@ -42393,31 +42383,30 @@ var PhotoList = function (_React$Component) {
 
 								// Create fetch request.
 
-								headers = (0, _getHeaders2.default)(this.provider);
-								_context.next = 17;
-								return fetch(url, { headers: headers });
+								_context.next = 16;
+								return fetch(url);
 
-							case 17:
+							case 16:
 								response = _context.sent;
-								ok = response.ok;
+								status = response.status;
 
 								(0, _checkRateLimit2.default)(response.headers);
 
-								if (!ok) {
-									_context.next = 44;
+								if (!(status === 200)) {
+									_context.next = 43;
 									break;
 								}
 
-								_context.next = 23;
+								_context.next = 22;
 								return response.json();
 
-							case 23:
+							case 22:
 								data = _context.sent;
 								_context.t0 = search_type;
-								_context.next = _context.t0 === "term" ? 27 : _context.t0 === "id" ? 34 : 41;
+								_context.next = _context.t0 === "term" ? 26 : _context.t0 === "id" ? 33 : 40;
 								break;
 
-							case 27:
+							case 26:
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data, true);
 
 
@@ -42434,9 +42423,9 @@ var PhotoList = function (_React$Component) {
 									search_filters: _filters2.default[this.provider].search
 								});
 
-								return _context.abrupt("break", 41);
+								return _context.abrupt("break", 40);
 
-							case 34:
+							case 33:
 								// Convert return data to array.
 								photoArray = [];
 
@@ -42461,9 +42450,9 @@ var PhotoList = function (_React$Component) {
 								this.show_search_filters = false;
 								this.results = photoArray;
 								this.setState({ results: self.results });
-								return _context.abrupt("break", 41);
+								return _context.abrupt("break", 40);
 
-							case 41:
+							case 40:
 
 								// Delay for effect.
 								setTimeout(function () {
@@ -42471,10 +42460,10 @@ var PhotoList = function (_React$Component) {
 									photoTarget.classList.remove("loading");
 									self.isLoading = false;
 								}, this.delay);
-								_context.next = 52;
+								_context.next = 51;
 								break;
 
-							case 44:
+							case 43:
 								// Error handling.
 
 								// Reset all search parameters.
@@ -42489,7 +42478,7 @@ var PhotoList = function (_React$Component) {
 								this.results = [];
 								this.setState({ results: this.results });
 
-							case 52:
+							case 51:
 							case "end":
 								return _context.stop();
 						}
@@ -42519,7 +42508,7 @@ var PhotoList = function (_React$Component) {
 			var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(view) {
 				var reset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 				var switcher = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-				var self, params, url, headers, response, ok, status, statusText, data, results;
+				var self, params, url, response, ok, status, statusText, data, results;
 				return regeneratorRuntime.wrap(function _callee2$(_context2) {
 					while (1) {
 						switch (_context2.prev = _context2.next) {
@@ -42547,11 +42536,10 @@ var PhotoList = function (_React$Component) {
 
 								// Create fetch request.
 
-								headers = (0, _getHeaders2.default)(this.provider);
-								_context2.next = 14;
-								return fetch(url, { headers: headers });
+								_context2.next = 13;
+								return fetch(url);
 
-							case 14:
+							case 13:
 								response = _context2.sent;
 								ok = response.ok, status = response.status, statusText = response.statusText;
 
@@ -42560,14 +42548,14 @@ var PhotoList = function (_React$Component) {
 								// Status OK.
 
 								if (!ok) {
-									_context2.next = 27;
+									_context2.next = 26;
 									break;
 								}
 
-								_context2.next = 20;
+								_context2.next = 19;
 								return response.json();
 
-							case 20:
+							case 19:
 								data = _context2.sent;
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data);
 
@@ -42585,15 +42573,15 @@ var PhotoList = function (_React$Component) {
 										filters: _filters2.default[this.provider].filters
 									});
 								}
-								_context2.next = 30;
+								_context2.next = 29;
 								break;
 
-							case 27:
+							case 26:
 								console.warn("Error: " + status + " - " + statusText);
 								this.photoTarget.current.classList.remove("loading");
 								this.isLoading = false;
 
-							case 30:
+							case 29:
 
 								// Delay loading animatons for effect.
 								setTimeout(function () {
@@ -42601,7 +42589,7 @@ var PhotoList = function (_React$Component) {
 									self.isLoading = false;
 								}, self.delay);
 
-							case 31:
+							case 30:
 							case "end":
 								return _context2.stop();
 						}
@@ -42626,7 +42614,7 @@ var PhotoList = function (_React$Component) {
 		key: "loadMorePhotos",
 		value: function () {
 			var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-				var self, search_query, loadmore_url, filters, loadmore_params, params, url, headers, response, ok, status, statusText, data, results;
+				var self, search_query, loadmore_url, filters, loadmore_params, params, url, response, ok, status, statusText, data, results;
 				return regeneratorRuntime.wrap(function _callee3$(_context3) {
 					while (1) {
 						switch (_context3.prev = _context3.next) {
@@ -42653,11 +42641,10 @@ var PhotoList = function (_React$Component) {
 
 								// Create fetch request.
 
-								headers = (0, _getHeaders2.default)(this.provider);
-								_context3.next = 14;
-								return fetch(url, { headers: headers });
+								_context3.next = 13;
+								return fetch(url);
 
-							case 14:
+							case 13:
 								response = _context3.sent;
 								ok = response.ok, status = response.status, statusText = response.statusText;
 
@@ -42666,14 +42653,14 @@ var PhotoList = function (_React$Component) {
 								// Status OK.
 
 								if (!ok) {
-									_context3.next = 28;
+									_context3.next = 27;
 									break;
 								}
 
-								_context3.next = 20;
+								_context3.next = 19;
 								return response.json();
 
-							case 20:
+							case 19:
 								data = _context3.sent;
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data, this.is_search);
 
@@ -42690,14 +42677,14 @@ var PhotoList = function (_React$Component) {
 
 								this.checkTotalResults(data.length); // Check for returned data.
 								this.setState({ results: this.results }); // Update Props.
-								_context3.next = 30;
+								_context3.next = 29;
 								break;
 
-							case 28:
+							case 27:
 								console.warn("Error: " + status + " - " + statusText);
 								self.isLoading = false;
 
-							case 30:
+							case 29:
 							case "end":
 								return _context3.stop();
 						}
@@ -42819,7 +42806,7 @@ var PhotoList = function (_React$Component) {
 		key: "switchProvider",
 		value: function () {
 			var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(e) {
-				var target, provider, headers, self, response, ok, status;
+				var target, provider, self, response, status;
 				return regeneratorRuntime.wrap(function _callee4$(_context4) {
 					while (1) {
 						switch (_context4.prev = _context4.next) {
@@ -42836,48 +42823,46 @@ var PhotoList = function (_React$Component) {
 
 							case 4:
 								if (!_API2.default[provider].requires_key) {
-									_context4.next = 25;
+									_context4.next = 23;
 									break;
 								}
 
 								// Get authentication headers.
-								headers = (0, _getHeaders2.default)(provider);
 								self = this;
-								_context4.prev = 7;
-								_context4.next = 10;
-								return fetch((0, _buildTestURL2.default)(provider), { headers: headers });
+								_context4.prev = 6;
+								_context4.next = 9;
+								return fetch((0, _buildTestURL2.default)(provider));
 
-							case 10:
+							case 9:
 								response = _context4.sent;
-								ok = response.ok;
 								status = response.status;
 
 								(0, _checkRateLimit2.default)(response.headers);
 
-								if (!(!ok || status === 400 || status === 401 || status === 500 || status === 404)) {
-									_context4.next = 18;
+								if (!(status !== 200)) {
+									_context4.next = 16;
 									break;
 								}
 
-								// Catch forbidden and 404s.
+								// Catch API errors and 401s.
 								self.setState({ api_lightbox: provider }); // Show API Lightbox.
 								document.body.classList.add("overflow-hidden");
 								return _context4.abrupt("return");
 
-							case 18:
-								_context4.next = 25;
+							case 16:
+								_context4.next = 23;
 								break;
 
-							case 20:
-								_context4.prev = 20;
-								_context4.t0 = _context4["catch"](7);
+							case 18:
+								_context4.prev = 18;
+								_context4.t0 = _context4["catch"](6);
 
 								// Catch all other errors.
 								self.setState({ api_lightbox: provider }); // Show API Lightbox.
 								document.body.classList.add("overflow-hidden");
 								return _context4.abrupt("return");
 
-							case 25:
+							case 23:
 
 								// Remove active from buttons.
 								this.providerNav.current.querySelectorAll("button").forEach(function (button) {
@@ -42903,12 +42888,12 @@ var PhotoList = function (_React$Component) {
 								this.view = "latest";
 								this.getPhotos(this.view, true, true);
 
-							case 37:
+							case 35:
 							case "end":
 								return _context4.stop();
 						}
 					}
-				}, _callee4, this, [[7, 20]]);
+				}, _callee4, this, [[6, 18]]);
 			}));
 
 			function switchProvider(_x5) {
@@ -43647,9 +43632,8 @@ function buildTestURL(provider) {
 	var params = _extends({
 		test: true
 	}, (0, _getQueryParams2.default)(provider), options);
-	var url = (0, _buildURL2.default)(api.photo_api, params);
 
-	return url;
+	return (0, _buildURL2.default)(api.photo_api, params);
 }
 
 /***/ }),
@@ -43689,7 +43673,8 @@ function buildURL(dest, params) {
 
 	delete params.provider;
 
-	var url = new URL(getProxyURL(provider)); // Build the URL.
+	// Build the API URL.
+	var url = new URL(getProxyURL(provider));
 
 	// Append query params.
 	Object.keys(params).forEach(function (key) {
@@ -43761,9 +43746,9 @@ exports.default = checkRateLimit;
  */
 function checkRateLimit(headers) {
 	if (!headers) {
-		return "";
+		return;
 	}
-	var remaining = headers.get("x-ratelimit-remaining");
+	var remaining = headers.get("X-Ratelimit-remaining");
 	if (parseInt(remaining) < 2) {
 		alert(instant_img_localize.api_ratelimit_msg);
 	}
@@ -43849,47 +43834,6 @@ function generateAttribution(provider, url, name) {
 	var attribution = instant_img_localize.photo_by + " " + " " + "<a href=\"" + url + "\" rel=\"nofollow\">" + name + "</a> " + instant_img_localize.on + " <a href=\"" + instant_img_localize[provider_url] + "/?" + referral + "\">" + (0, _capitalizeFirstLetter2.default)(provider) + "</a>";
 
 	return attribution;
-}
-
-/***/ }),
-
-/***/ "./src/js/functions/getHeaders.js":
-/*!****************************************!*\
-  !*** ./src/js/functions/getHeaders.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.default = getHeaders;
-/**
- * Build the required auth headers for the provider.
- *
- * @param  {string} provider The current provider.
- * @return {object}          The headers as an object.
- */
-function getHeaders(provider) {
-	var api_key = instant_img_localize[provider + "_app_id"];
-	var headers = {};
-	switch (provider) {
-		case "pexels":
-			if (api_key) {
-				headers = {
-					Authorization: api_key
-				};
-			}
-			break;
-
-		default:
-			break;
-	}
-
-	return headers;
 }
 
 /***/ }),

@@ -5,9 +5,9 @@
  */
 export default function checkRateLimit(headers) {
 	if (!headers) {
-		return "";
+		return;
 	}
-	const remaining = headers.get("x-ratelimit-remaining");
+	const remaining = headers.get("X-Ratelimit-remaining");
 	if (parseInt(remaining) < 2) {
 		alert(instant_img_localize.api_ratelimit_msg);
 	}
