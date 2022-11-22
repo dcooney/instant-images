@@ -4,7 +4,6 @@ import API from "../constants/API";
 import FILTERS from "../constants/filters";
 import buildTestURL from "../functions/buildTestURL";
 import buildURL from "../functions/buildURL";
-import checkRateLimit from "../functions/checkRateLimit";
 import getQueryParams from "../functions/getQueryParams";
 import getResults, {
 	getResultById,
@@ -12,12 +11,13 @@ import getResults, {
 } from "../functions/getResults";
 import searchByID from "../functions/searchByID";
 import APILightbox from "./APILightbox";
-import ErrorMessage from "./ErrorMessage";
+import ErrorLightbox from "./ErrorLightbox";
 import Filter from "./Filter";
 import LoadingBlock from "./LoadingBlock";
 import LoadMore from "./LoadMore";
 import NoResults from "./NoResults";
 import Photo from "./Photo";
+import RestAPIError from "./RestAPIError";
 import ResultsToolTip from "./ResultsToolTip";
 import Tooltip from "./Tooltip";
 const imagesLoaded = require("imagesloaded");
@@ -197,7 +197,6 @@ class PhotoList extends React.Component {
 		// Create fetch request.
 		const response = await fetch(url);
 		const { status } = response;
-		checkRateLimit(response.headers);
 
 		if (status === 200) {
 			// Get response data.
@@ -312,7 +311,6 @@ class PhotoList extends React.Component {
 		// Create fetch request.
 		const response = await fetch(url);
 		const { ok, status, statusText } = response;
-		checkRateLimit(response.headers);
 
 		// Status OK.
 		if (ok) {
@@ -378,7 +376,6 @@ class PhotoList extends React.Component {
 		// Create fetch request.
 		const response = await fetch(url);
 		const { ok, status, statusText } = response;
-		checkRateLimit(response.headers);
 
 		// Status OK.
 		if (ok) {
@@ -476,6 +473,7 @@ class PhotoList extends React.Component {
 		const button = this.providerNav.current.querySelector(
 			`button[data-provider=${provider}]`
 		);
+		console.log(button);
 		if (!button) {
 			return;
 		}
@@ -519,12 +517,10 @@ class PhotoList extends React.Component {
 		// API Checker.
 		// Bounce if API key for provider is invalid.
 		if (API[provider].requires_key) {
-			// Get authentication headers.
 			const self = this;
 			try {
 				const response = await fetch(buildTestURL(provider));
-				const status = response.status;
-				checkRateLimit(response.headers);
+				const { status } = response;
 				if (status !== 200) {
 					// Catch API errors and 401s.
 					self.setState({ api_lightbox: provider }); // Show API Lightbox.
@@ -810,7 +806,13 @@ class PhotoList extends React.Component {
 					</div>
 				</div>
 
-				{this.state.restapi_error && <ErrorMessage />}
+				{this.state.restapi_error && (
+					<RestAPIError
+						title={instant_img_localize.error_restapi}
+						desc={instant_img_localize.error_restapi_desc}
+						type="warning"
+					/>
+				)}
 
 				{this.is_search && this.editor !== "gutenberg" && (
 					<div className="search-results-header">
@@ -868,6 +870,13 @@ class PhotoList extends React.Component {
 
 				{this.total_results == 0 && this.is_search === true && (
 					<NoResults />
+				)}
+
+				{this.props.error && (
+					<ErrorLightbox
+						error={this.props.error}
+						provider={this.provider}
+					/>
 				)}
 
 				<LoadingBlock />

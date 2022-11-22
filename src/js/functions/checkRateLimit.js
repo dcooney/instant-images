@@ -2,6 +2,7 @@
  * Check the `x-ratelimit-remaining` headers to confirm the API is available.
  *
  * @param  {object}  headers  The request headers object.
+ * @deprecated 5.0
  */
 export default function checkRateLimit(headers) {
 	if (!headers) {

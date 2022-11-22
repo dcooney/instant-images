@@ -39875,10 +39875,6 @@ var _buildTestURL = __webpack_require__(/*! ../../functions/buildTestURL */ "./s
 
 var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
 
-var _checkRateLimit = __webpack_require__(/*! ../../functions/checkRateLimit */ "./src/js/functions/checkRateLimit.js");
-
-var _checkRateLimit2 = _interopRequireDefault(_checkRateLimit);
-
 var _consoleStatus = __webpack_require__(/*! ../../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
 
 var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
@@ -39938,7 +39934,7 @@ var Block = function Block() {
 						switch (_context.prev = _context.next) {
 							case 0:
 								if (!api_required) {
-									_context.next = 10;
+									_context.next = 8;
 									break;
 								}
 
@@ -39950,10 +39946,8 @@ var Block = function Block() {
 
 
 								// Handle response.
-								ok = response.ok;
-								status = response.status;
+								ok = response.ok, status = response.status;
 
-								(0, _checkRateLimit2.default)(response.headers);
 
 								if (ok) {
 									// Success.
@@ -39965,14 +39959,14 @@ var Block = function Block() {
 									// Render console warning.
 									(0, _consoleStatus2.default)(provider, status);
 								}
-								_context.next = 11;
+								_context.next = 9;
 								break;
 
-							case 10:
+							case 8:
 								// API Error: Fallback to default provider.
 								setPluginProvider(defaultProvider);
 
-							case 11:
+							case 9:
 							case "end":
 								return _context.stop();
 						}
@@ -40226,10 +40220,6 @@ var _buildTestURL = __webpack_require__(/*! ../functions/buildTestURL */ "./src/
 
 var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
 
-var _checkRateLimit = __webpack_require__(/*! ../functions/checkRateLimit */ "./src/js/functions/checkRateLimit.js");
-
-var _checkRateLimit2 = _interopRequireDefault(_checkRateLimit);
-
 var _consoleStatus = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
 
 var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
@@ -40320,12 +40310,10 @@ var APILightbox = function (_React$Component) {
 
 
 								// Handle response.
-								ok = response.ok;
-								status = response.status;
-
-								(0, _checkRateLimit2.default)(response.headers);
+								ok = response.ok, status = response.status;
 
 								// Handle response actions.
+
 								if (ok) {
 									// Success.
 									self.setState({
@@ -40356,14 +40344,12 @@ var APILightbox = function (_React$Component) {
 										});
 									}
 								}
-								_context.next = 25;
+								_context.next = 23;
 								break;
 
-							case 20:
-								_context.prev = 20;
+							case 18:
+								_context.prev = 18;
 								_context.t0 = _context["catch"](10);
-
-								// Catch all other errors.
 
 								// Error/Invalid.
 								this.setState({ status: "invalid" });
@@ -40372,15 +40358,15 @@ var APILightbox = function (_React$Component) {
 								(0, _consoleStatus2.default)(self.provider, 500);
 
 								self.setState({
-									response: instant_img_localize.api_invalid_msg
+									response: instant_img_localize.api_invalid_500_msg
 								});
 
-							case 25:
+							case 23:
 							case "end":
 								return _context.stop();
 						}
 					}
-				}, _callee, this, [[10, 20]]);
+				}, _callee, this, [[10, 18]]);
 			}));
 
 			function handleSubmit(_x) {
@@ -40611,10 +40597,10 @@ exports.default = APILightbox;
 
 /***/ }),
 
-/***/ "./src/js/components/ErrorMessage.js":
-/*!*******************************************!*\
-  !*** ./src/js/components/ErrorMessage.js ***!
-  \*******************************************/
+/***/ "./src/js/components/ErrorLightbox.js":
+/*!********************************************!*\
+  !*** ./src/js/components/ErrorLightbox.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40631,6 +40617,14 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _consoleStatus = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
+
+var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
+
+var _getErrorMessage = __webpack_require__(/*! ../functions/getErrorMessage */ "./src/js/functions/getErrorMessage.js");
+
+var _getErrorMessage2 = _interopRequireDefault(_getErrorMessage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40639,34 +40633,164 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ErrorMessage = function (_React$Component) {
-	_inherits(ErrorMessage, _React$Component);
+var ErrorLightbox = function (_React$Component) {
+	_inherits(ErrorLightbox, _React$Component);
 
-	function ErrorMessage() {
-		_classCallCheck(this, ErrorMessage);
+	function ErrorLightbox(props) {
+		_classCallCheck(this, ErrorLightbox);
 
-		return _possibleConstructorReturn(this, (ErrorMessage.__proto__ || Object.getPrototypeOf(ErrorMessage)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (ErrorLightbox.__proto__ || Object.getPrototypeOf(ErrorLightbox)).call(this, props));
+
+		_this.lightbox = _react2.default.createRef();
+		_this.error = _this.props.error;
+		_this.provider = _this.props.provider;
+		_this.escFunction = _this.escFunction.bind(_this);
+		_this.status = _this.error.status ? _this.error.status : 401;
+		(0, _consoleStatus2.default)(_this.provider, _this.status);
+		return _this;
 	}
 
-	_createClass(ErrorMessage, [{
+	/**
+  * Close the lightbox
+  */
+
+
+	_createClass(ErrorLightbox, [{
+		key: "closeLightbox",
+		value: function closeLightbox() {
+			var self = this;
+			self.lightbox.current.classList.remove("active");
+			setTimeout(function () {
+				self.lightbox.current.remove();
+			}, 275);
+		}
+
+		/**
+   * Close the lightbox with a background click.
+   */
+
+	}, {
+		key: "bkgClick",
+		value: function bkgClick(e) {
+			var target = e.target;
+			// If clicked element is the background.
+			if (target === this.lightbox.current) {
+				this.closeLightbox();
+			}
+		}
+
+		/**
+   * Escape handler.
+   *
+   * @param {Event} e The key press event.
+   */
+
+	}, {
+		key: "escFunction",
+		value: function escFunction(e) {
+			if (e.keyCode === 27) {
+				this.closeLightbox();
+			}
+		}
+
+		/**
+   * Open the API window.
+   *
+   * @param {string} url The destination URL.
+   */
+
+	}, {
+		key: "gotoURL",
+		value: function gotoURL(url) {
+			window.open(url, "_blank");
+		}
+	}, {
+		key: "componentDidMount",
+		value: function componentDidMount() {
+			document.addEventListener("keydown", this.escFunction, false);
+			this.lightbox.current.classList.add("active");
+		}
+	}, {
+		key: "componentWillUnmount",
+		value: function componentWillUnmount() {
+			document.removeEventListener("keydown", this.escFunction, false);
+		}
+	}, {
 		key: "render",
 		value: function render() {
+			var _this2 = this;
+
 			return _react2.default.createElement(
 				"div",
-				{ className: "error-messaging" },
-				_react2.default.createElement("span", {
-					dangerouslySetInnerHTML: {
-						__html: "" + instant_img_localize.error_restapi + instant_img_localize.error_restapi_desc
-					}
-				})
+				{
+					className: "api-lightbox",
+					ref: this.lightbox,
+					onClick: function onClick(e) {
+						return _this2.bkgClick(e);
+					},
+					tabIndex: "-1"
+				},
+				_react2.default.createElement(
+					"div",
+					null,
+					_react2.default.createElement(
+						"button",
+						{
+							className: "api-lightbox--close",
+							onClick: function onClick() {
+								return _this2.closeLightbox();
+							}
+						},
+						"\xD7",
+						_react2.default.createElement(
+							"span",
+							{ className: "offscreen" },
+							instant_img_localize.btnClose
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "api-lightbox--details error-lightbox" },
+						_react2.default.createElement(
+							"h3",
+							{ "data-provider": this.provider },
+							this.provider
+						),
+						_react2.default.createElement(
+							"p",
+							{ className: "callout-warning" },
+							this.status,
+							" ",
+							instant_img_localize.error
+						),
+						_react2.default.createElement(
+							"p",
+							null,
+							(0, _getErrorMessage2.default)(this.status)
+						),
+						_react2.default.createElement(
+							"p",
+							{ className: "action-controls" },
+							_react2.default.createElement(
+								"button",
+								{
+									onClick: function onClick() {
+										return _this2.gotoURL(instant_img_localize[_this2.provider + "_api_url"]);
+									}
+								},
+								instant_img_localize.get_api_key
+							)
+						)
+					)
+				)
 			);
 		}
 	}]);
 
-	return ErrorMessage;
+	return ErrorLightbox;
 }(_react2.default.Component);
 
-exports.default = ErrorMessage;
+exports.default = ErrorLightbox;
 
 /***/ }),
 
@@ -42134,10 +42258,6 @@ var _buildURL = __webpack_require__(/*! ../functions/buildURL */ "./src/js/funct
 
 var _buildURL2 = _interopRequireDefault(_buildURL);
 
-var _checkRateLimit = __webpack_require__(/*! ../functions/checkRateLimit */ "./src/js/functions/checkRateLimit.js");
-
-var _checkRateLimit2 = _interopRequireDefault(_checkRateLimit);
-
 var _getQueryParams = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
 
 var _getQueryParams2 = _interopRequireDefault(_getQueryParams);
@@ -42154,9 +42274,9 @@ var _APILightbox = __webpack_require__(/*! ./APILightbox */ "./src/js/components
 
 var _APILightbox2 = _interopRequireDefault(_APILightbox);
 
-var _ErrorMessage = __webpack_require__(/*! ./ErrorMessage */ "./src/js/components/ErrorMessage.js");
+var _ErrorLightbox = __webpack_require__(/*! ./ErrorLightbox */ "./src/js/components/ErrorLightbox.js");
 
-var _ErrorMessage2 = _interopRequireDefault(_ErrorMessage);
+var _ErrorLightbox2 = _interopRequireDefault(_ErrorLightbox);
 
 var _Filter = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
 
@@ -42177,6 +42297,10 @@ var _NoResults2 = _interopRequireDefault(_NoResults);
 var _Photo = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
 
 var _Photo2 = _interopRequireDefault(_Photo);
+
+var _RestAPIError = __webpack_require__(/*! ./RestAPIError */ "./src/js/components/RestAPIError.js");
+
+var _RestAPIError2 = _interopRequireDefault(_RestAPIError);
 
 var _ResultsToolTip = __webpack_require__(/*! ./ResultsToolTip */ "./src/js/components/ResultsToolTip.js");
 
@@ -42390,23 +42514,21 @@ var PhotoList = function (_React$Component) {
 								response = _context.sent;
 								status = response.status;
 
-								(0, _checkRateLimit2.default)(response.headers);
-
 								if (!(status === 200)) {
-									_context.next = 43;
+									_context.next = 42;
 									break;
 								}
 
-								_context.next = 22;
+								_context.next = 21;
 								return response.json();
 
-							case 22:
+							case 21:
 								data = _context.sent;
 								_context.t0 = search_type;
-								_context.next = _context.t0 === "term" ? 26 : _context.t0 === "id" ? 33 : 40;
+								_context.next = _context.t0 === "term" ? 25 : _context.t0 === "id" ? 32 : 39;
 								break;
 
-							case 26:
+							case 25:
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data, true);
 
 
@@ -42423,9 +42545,9 @@ var PhotoList = function (_React$Component) {
 									search_filters: _filters2.default[this.provider].search
 								});
 
-								return _context.abrupt("break", 40);
+								return _context.abrupt("break", 39);
 
-							case 33:
+							case 32:
 								// Convert return data to array.
 								photoArray = [];
 
@@ -42450,9 +42572,9 @@ var PhotoList = function (_React$Component) {
 								this.show_search_filters = false;
 								this.results = photoArray;
 								this.setState({ results: self.results });
-								return _context.abrupt("break", 40);
+								return _context.abrupt("break", 39);
 
-							case 40:
+							case 39:
 
 								// Delay for effect.
 								setTimeout(function () {
@@ -42460,10 +42582,10 @@ var PhotoList = function (_React$Component) {
 									photoTarget.classList.remove("loading");
 									self.isLoading = false;
 								}, this.delay);
-								_context.next = 51;
+								_context.next = 50;
 								break;
 
-							case 43:
+							case 42:
 								// Error handling.
 
 								// Reset all search parameters.
@@ -42478,7 +42600,7 @@ var PhotoList = function (_React$Component) {
 								this.results = [];
 								this.setState({ results: this.results });
 
-							case 51:
+							case 50:
 							case "end":
 								return _context.stop();
 						}
@@ -42543,19 +42665,17 @@ var PhotoList = function (_React$Component) {
 								response = _context2.sent;
 								ok = response.ok, status = response.status, statusText = response.statusText;
 
-								(0, _checkRateLimit2.default)(response.headers);
-
 								// Status OK.
 
 								if (!ok) {
-									_context2.next = 26;
+									_context2.next = 25;
 									break;
 								}
 
-								_context2.next = 19;
+								_context2.next = 18;
 								return response.json();
 
-							case 19:
+							case 18:
 								data = _context2.sent;
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data);
 
@@ -42573,15 +42693,15 @@ var PhotoList = function (_React$Component) {
 										filters: _filters2.default[this.provider].filters
 									});
 								}
-								_context2.next = 29;
+								_context2.next = 28;
 								break;
 
-							case 26:
+							case 25:
 								console.warn("Error: " + status + " - " + statusText);
 								this.photoTarget.current.classList.remove("loading");
 								this.isLoading = false;
 
-							case 29:
+							case 28:
 
 								// Delay loading animatons for effect.
 								setTimeout(function () {
@@ -42589,7 +42709,7 @@ var PhotoList = function (_React$Component) {
 									self.isLoading = false;
 								}, self.delay);
 
-							case 30:
+							case 29:
 							case "end":
 								return _context2.stop();
 						}
@@ -42648,19 +42768,17 @@ var PhotoList = function (_React$Component) {
 								response = _context3.sent;
 								ok = response.ok, status = response.status, statusText = response.statusText;
 
-								(0, _checkRateLimit2.default)(response.headers);
-
 								// Status OK.
 
 								if (!ok) {
-									_context3.next = 27;
+									_context3.next = 26;
 									break;
 								}
 
-								_context3.next = 19;
+								_context3.next = 18;
 								return response.json();
 
-							case 19:
+							case 18:
 								data = _context3.sent;
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data, this.is_search);
 
@@ -42677,14 +42795,14 @@ var PhotoList = function (_React$Component) {
 
 								this.checkTotalResults(data.length); // Check for returned data.
 								this.setState({ results: this.results }); // Update Props.
-								_context3.next = 29;
+								_context3.next = 28;
 								break;
 
-							case 27:
+							case 26:
 								console.warn("Error: " + status + " - " + statusText);
 								self.isLoading = false;
 
-							case 29:
+							case 28:
 							case "end":
 								return _context3.stop();
 						}
@@ -42768,6 +42886,7 @@ var PhotoList = function (_React$Component) {
 		key: "afterVerifiedAPICallback",
 		value: function afterVerifiedAPICallback(provider) {
 			var button = this.providerNav.current.querySelector("button[data-provider=" + provider + "]");
+			console.log(button);
 			if (!button) {
 				return;
 			}
@@ -42823,11 +42942,10 @@ var PhotoList = function (_React$Component) {
 
 							case 4:
 								if (!_API2.default[provider].requires_key) {
-									_context4.next = 23;
+									_context4.next = 22;
 									break;
 								}
 
-								// Get authentication headers.
 								self = this;
 								_context4.prev = 6;
 								_context4.next = 9;
@@ -42837,10 +42955,8 @@ var PhotoList = function (_React$Component) {
 								response = _context4.sent;
 								status = response.status;
 
-								(0, _checkRateLimit2.default)(response.headers);
-
 								if (!(status !== 200)) {
-									_context4.next = 16;
+									_context4.next = 15;
 									break;
 								}
 
@@ -42849,12 +42965,12 @@ var PhotoList = function (_React$Component) {
 								document.body.classList.add("overflow-hidden");
 								return _context4.abrupt("return");
 
-							case 16:
-								_context4.next = 23;
+							case 15:
+								_context4.next = 22;
 								break;
 
-							case 18:
-								_context4.prev = 18;
+							case 17:
+								_context4.prev = 17;
 								_context4.t0 = _context4["catch"](6);
 
 								// Catch all other errors.
@@ -42862,7 +42978,7 @@ var PhotoList = function (_React$Component) {
 								document.body.classList.add("overflow-hidden");
 								return _context4.abrupt("return");
 
-							case 23:
+							case 22:
 
 								// Remove active from buttons.
 								this.providerNav.current.querySelectorAll("button").forEach(function (button) {
@@ -42888,12 +43004,12 @@ var PhotoList = function (_React$Component) {
 								this.view = "latest";
 								this.getPhotos(this.view, true, true);
 
-							case 35:
+							case 34:
 							case "end":
 								return _context4.stop();
 						}
 					}
-				}, _callee4, this, [[6, 18]]);
+				}, _callee4, this, [[6, 17]]);
 			}));
 
 			function switchProvider(_x5) {
@@ -43201,7 +43317,11 @@ var PhotoList = function (_React$Component) {
 						)
 					)
 				),
-				this.state.restapi_error && _react2.default.createElement(_ErrorMessage2.default, null),
+				this.state.restapi_error && _react2.default.createElement(_RestAPIError2.default, {
+					title: instant_img_localize.error_restapi,
+					desc: instant_img_localize.error_restapi_desc,
+					type: "warning"
+				}),
 				this.is_search && this.editor !== "gutenberg" && _react2.default.createElement(
 					"div",
 					{ className: "search-results-header" },
@@ -43273,6 +43393,10 @@ var PhotoList = function (_React$Component) {
 					}) : null
 				),
 				this.total_results == 0 && this.is_search === true && _react2.default.createElement(_NoResults2.default, null),
+				this.props.error && _react2.default.createElement(_ErrorLightbox2.default, {
+					error: this.props.error,
+					provider: this.provider
+				}),
 				_react2.default.createElement(_LoadingBlock2.default, null),
 				_react2.default.createElement(_LoadMore2.default, { loadMorePhotos: this.loadMorePhotos.bind(this) }),
 				_react2.default.createElement(_Tooltip2.default, null)
@@ -43284,6 +43408,62 @@ var PhotoList = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = PhotoList;
+
+/***/ }),
+
+/***/ "./src/js/components/RestAPIError.js":
+/*!*******************************************!*\
+  !*** ./src/js/components/RestAPIError.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RestAPIError = function (_React$Component) {
+	_inherits(RestAPIError, _React$Component);
+
+	function RestAPIError() {
+		_classCallCheck(this, RestAPIError);
+
+		return _possibleConstructorReturn(this, (RestAPIError.__proto__ || Object.getPrototypeOf(RestAPIError)).apply(this, arguments));
+	}
+
+	_createClass(RestAPIError, [{
+		key: "render",
+		value: function render() {
+			return _react2.default.createElement("div", {
+				className: "error-messaging",
+				dangerouslySetInnerHTML: {
+					__html: "<strong>" + instant_img_localize.error_restapi + "</strong>" + instant_img_localize.error_restapi_desc
+				}
+			});
+		}
+	}]);
+
+	return RestAPIError;
+}(_react2.default.Component);
+
+exports.default = RestAPIError;
 
 /***/ }),
 
@@ -43725,37 +43905,6 @@ function capitalizeFirstLetter(str) {
 
 /***/ }),
 
-/***/ "./src/js/functions/checkRateLimit.js":
-/*!********************************************!*\
-  !*** ./src/js/functions/checkRateLimit.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.default = checkRateLimit;
-/**
- * Check the `x-ratelimit-remaining` headers to confirm the API is available.
- *
- * @param  {object}  headers  The request headers object.
- */
-function checkRateLimit(headers) {
-	if (!headers) {
-		return;
-	}
-	var remaining = headers.get("X-Ratelimit-remaining");
-	if (parseInt(remaining) < 2) {
-		alert(instant_img_localize.api_ratelimit_msg);
-	}
-}
-
-/***/ }),
-
 /***/ "./src/js/functions/consoleStatus.js":
 /*!*******************************************!*\
   !*** ./src/js/functions/consoleStatus.js ***!
@@ -43775,6 +43924,10 @@ var _capitalizeFirstLetter = __webpack_require__(/*! ./capitalizeFirstLetter */ 
 
 var _capitalizeFirstLetter2 = _interopRequireDefault(_capitalizeFirstLetter);
 
+var _getErrorMessage = __webpack_require__(/*! ./getErrorMessage */ "./src/js/functions/getErrorMessage.js");
+
+var _getErrorMessage2 = _interopRequireDefault(_getErrorMessage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -43784,16 +43937,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {string} status The API status.
  */
 function consoleStatus(provider) {
-	var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+	var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
 
 	var local = instant_img_localize;
-	if (status === 400 || status === 401) {
-		// Unsplash/Pixabay incorrect API key.
-		console.warn("[" + local.instant_images + " - " + status + " Error] " + (0, _capitalizeFirstLetter2.default)(provider) + ": " + local.api_invalid_msg);
-	}
-	if (status === 429) {
-		// Pixabay - too many requests.
-		console.warn("[" + local.instant_images + " - " + status + " Error] " + (0, _capitalizeFirstLetter2.default)(provider) + ": " + local.api_ratelimit_msg);
+	var message = (0, _getErrorMessage2.default)(status);
+	switch (status) {
+		case 400:
+		case 401:
+		case 500:
+			// Unsplash/Pixabay/Pexels incorrect API key.
+			console.warn("[" + local.instant_images + " - " + status + " Error] " + (0, _capitalizeFirstLetter2.default)(provider) + ": " + message);
+			break;
+
+		case 429:
+			/**
+    * Pixabay, Pexels - too many requests.
+    * @see https://www.pexels.com/api/documentation/#statistics
+    * @see https://pixabay.com/api/docs/#api_rate_limit
+    */
+			console.warn("[" + local.instant_images + " - " + status + " Error] " + (0, _capitalizeFirstLetter2.default)(provider) + ": " + message);
+			break;
+		default:
+			break;
 	}
 }
 
@@ -43834,6 +43999,60 @@ function generateAttribution(provider, url, name) {
 	var attribution = instant_img_localize.photo_by + " " + " " + "<a href=\"" + url + "\" rel=\"nofollow\">" + name + "</a> " + instant_img_localize.on + " <a href=\"" + instant_img_localize[provider_url] + "/?" + referral + "\">" + (0, _capitalizeFirstLetter2.default)(provider) + "</a>";
 
 	return attribution;
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/getErrorMessage.js":
+/*!*********************************************!*\
+  !*** ./src/js/functions/getErrorMessage.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = getErrorMessage;
+/**
+ * Get the correct error message by status code.
+ *
+ * @param  {string} provider The API service provider.
+ * @param  {string} status   The API status.
+ * @return {string}          The error message.
+ */
+function getErrorMessage() {
+	var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 200;
+
+	var local = instant_img_localize;
+	switch (status) {
+		case 400:
+		case 401:
+			// Unsplash/Pixabay/Pexels incorrect API key.
+			return local.api_invalid_msg;
+
+		case 429:
+			/**
+    * Pixabay, Pexels - too many requests.
+    * @see https://www.pexels.com/api/documentation/#statistics
+    * @see https://pixabay.com/api/docs/#api_rate_limit
+    */
+			return local.api_ratelimit_msg;
+
+		case 500:
+		case 503:
+			// Internal server error.
+			return local.api_invalid_500_msg;
+
+		case 501:
+			// Missing params.
+			return local.api_invalid_501_msg;
+		default:
+			break;
+	}
 }
 
 /***/ }),

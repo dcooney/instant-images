@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import PhotoList from "./components/PhotoList";
 import API from "./constants/API";
 import buildTestURL from "./functions/buildTestURL";
-import checkRateLimit from "./functions/checkRateLimit";
 import consoleStatus from "./functions/consoleStatus";
 import getProvider from "./functions/getProvider";
 require("es6-promise").polyfill();
@@ -26,8 +25,8 @@ wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend({
 		routerView.set({
 			instantimages: {
 				text: instant_img_localize.instant_images,
-				priority: 120,
-			},
+				priority: 120
+			}
 		});
 	},
 
@@ -53,7 +52,7 @@ wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend({
 
 	getFrame(id) {
 		return this.states.findWhere({ id });
-	},
+	}
 });
 
 wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
@@ -63,8 +62,8 @@ wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
 		routerView.set({
 			instantimages: {
 				text: instant_img_localize.instant_images,
-				priority: 120,
-			},
+				priority: 120
+			}
 		});
 	},
 
@@ -90,7 +89,7 @@ wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
 
 	getFrame(id) {
 		return this.states.findWhere({ id });
-	},
+	}
 });
 
 // Render Instant Images
@@ -124,7 +123,7 @@ const instantImagesMediaTab = () => {
  *
  * @param {Element} element The Instant Images HTML element to initialize.
  */
-const getMediaModalProvider = async (element) => {
+const getMediaModalProvider = async element => {
 	// Get provider and options from settings.
 	const provider = getProvider();
 	const defaultProvider = API.defaults.provider;
@@ -135,9 +134,7 @@ const getMediaModalProvider = async (element) => {
 		const response = await fetch(buildTestURL(provider));
 
 		// Handle response.
-		const ok = response.ok;
-		const status = response.status;
-		checkRateLimit(response.headers);
+		const { ok, status } = response;
 
 		if (ok) {
 			// Success.
@@ -197,10 +194,10 @@ const createWrapperHTML = () => {
 };
 
 // Document Ready
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function($) {
 	if (wp.media) {
 		// Open
-		wp.media.view.Modal.prototype.on("open", function () {
+		wp.media.view.Modal.prototype.on("open", function() {
 			if (!activeFrame) {
 				return false;
 			}
@@ -216,7 +213,7 @@ jQuery(document).ready(function ($) {
 		$(document).on(
 			"click",
 			".media-router button.media-menu-item",
-			function () {
+			function() {
 				const selectedTab = activeFrame.querySelector(
 					".media-router button.media-menu-item.active"
 				);

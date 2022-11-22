@@ -101,27 +101,35 @@ body.media_page_instant-images.overflow-hidden {
 }
 
 .instant-img-container .error-messaging {
-  padding: 20px 20px 20px 60px;
-  -webkit-border-radius: 3px;
-          border-radius: 3px;
+  padding: 22px 22px 22px 60px;
+  -webkit-border-radius: 4px;
+          border-radius: 4px;
   background: #da4444;
   color: #fff;
   font-size: 13px;
-  line-height: 1.5;
-  margin-bottom: 25px;
+  line-height: 1.75;
+  margin: 15px;
   display: block;
   position: relative;
+  -webkit-box-shadow: 0 8px 16px rgba(48, 63, 122, 0.175);
+          box-shadow: 0 8px 16px rgba(48, 63, 122, 0.175);
+}
+
+.instant-img-container .error-messaging.warning {
+  background-color: #cfa345;
+}
+
+.instant-img-container .error-messaging strong {
+  font-size: 15px;
+  display: block;
 }
 
 .instant-img-container .error-messaging:before {
   font-family: "FontAwesome";
   content: "\F06A";
   display: block;
-  left: 17px;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
+  left: 18px;
+  top: 18px;
   position: absolute;
   font-size: 32px;
   opacity: 0.75;
@@ -2380,23 +2388,24 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 }
 
 .instant-img-container .api-lightbox > div {
-  max-width: 450px;
+  max-width: 425px;
   width: 100%;
   padding: 0;
   background-color: #fff;
-  border: 1px solid #e1e1e1;
   -webkit-border-radius: 5px;
           border-radius: 5px;
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
-          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   position: relative;
-  -webkit-transform: scale(0.95);
-      -ms-transform: scale(0.95);
-          transform: scale(0.95);
+  top: -15px;
+  -webkit-transform: scale(0.9);
+      -ms-transform: scale(0.9);
+          transform: scale(0.9);
   opacity: 0;
-  -webkit-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  overflow: hidden;
 }
 
 .instant-img-container .api-lightbox > div > div {
@@ -2408,6 +2417,10 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   padding: 25px;
   padding-bottom: 20px;
   position: relative;
+}
+
+.instant-img-container .api-lightbox--details.error-lightbox {
+  padding: 35px;
 }
 
 .instant-img-container .api-lightbox--details:after, .instant-img-container .api-lightbox--details:before {
@@ -2440,13 +2453,19 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   line-height: 18px;
   padding: 0 0 0 25px;
   text-transform: uppercase;
-  margin: 0 0 10px;
+  margin: 0 0 15px;
   background-position: left center;
 }
 
 .instant-img-container .api-lightbox--details p {
   margin: 10px 0 0;
   font-size: 13px;
+}
+
+.instant-img-container .api-lightbox--details p.callout-warning {
+  font-size: 50px;
+  font-weight: 900;
+  opacity: 0.35;
 }
 
 .instant-img-container .api-lightbox--details p.action-controls {
@@ -2575,7 +2594,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 }
 
 .instant-img-container .api-lightbox--input-wrap span.invalid i {
-  color: #d4aa4d;
+  color: #cfa345;
 }
 
 .instant-img-container .api-lightbox--input-wrap span.valid i {

@@ -1,7 +1,6 @@
 import FocusTrap from "focus-trap-react";
 import React from "react";
 import buildTestURL from "../functions/buildTestURL";
-import checkRateLimit from "../functions/checkRateLimit";
 import consoleStatus from "../functions/consoleStatus";
 import updatePluginSetting from "../functions/updatePluginSetting";
 
@@ -58,9 +57,7 @@ class APILightbox extends React.Component {
 			const response = await fetch(buildTestURL(self.provider));
 
 			// Handle response.
-			const ok = response.ok;
-			const status = response.status;
-			checkRateLimit(response.headers);
+			const { ok, status } = response;
 
 			// Handle response actions.
 			if (ok) {
@@ -94,8 +91,6 @@ class APILightbox extends React.Component {
 				}
 			}
 		} catch (error) {
-			// Catch all other errors.
-
 			// Error/Invalid.
 			this.setState({ status: "invalid" });
 
@@ -103,7 +98,7 @@ class APILightbox extends React.Component {
 			consoleStatus(self.provider, 500);
 
 			self.setState({
-				response: instant_img_localize.api_invalid_msg
+				response: instant_img_localize.api_invalid_500_msg
 			});
 		}
 	}

@@ -2,10 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PhotoList from "./components/PhotoList";
 import API from "./constants/API";
-import buildTestURL from "./functions/buildTestURL";
 import buildURL from "./functions/buildURL";
-import checkRateLimit from "./functions/checkRateLimit";
-import consoleStatus from "./functions/consoleStatus";
 import getProvider from "./functions/getProvider";
 import getQueryParams from "./functions/getQueryParams";
 require("es6-promise").polyfill();
@@ -36,30 +33,24 @@ function GetPhotos(
 	async function initialize() {
 		// Create fetch request.
 		const response = await fetch(url);
-		const { ok, headers } = response;
-		checkRateLimit(headers);
-
-		console.log(response.statusText);
 
 		try {
-			if (ok) {
-				// Get response data.
-				const results = await response.json();
-				const app = document.getElementById("app");
-				ReactDOM.render(
-					<PhotoList
-						container={app}
-						editor="classic"
-						results={results}
-						page={page}
-						orderby={orderby}
-						provider={provider}
-					/>,
-					app
-				);
-			} else {
-				ReactDOM.render(<span>ERROR</span>, app);
-			}
+			// Get response data.
+			const results = await response.json();
+			const { error = null } = results;
+			const app = document.getElementById("app");
+			ReactDOM.render(
+				<PhotoList
+					container={app}
+					editor="classic"
+					results={results}
+					page={page}
+					orderby={orderby}
+					provider={provider}
+					error={error}
+				/>,
+				document.getElementById("app")
+			);
 		} catch (error) {
 			console.log(error);
 		}
@@ -77,34 +68,6 @@ function GetPhotos(
  * Dispatch an initial fetch request to confirm the default API key is valid.
  */
 (async () => {
-	const defaultProvider = API.defaults.provider;
 	const defaultOrder = API.defaults.order;
-	const api_required = API[provider].requires_key;
-
-	// Send test API request to confirm API key is functional.
-	if (api_required) {
-		try {
-			const response = await fetch(buildTestURL(provider));
-
-			// Handle response.
-			const { status } = response;
-
-			if (status === 200) {
-				// Success.
-				GetPhotos(1, defaultOrder, provider);
-			} else {
-				// Status Error: Fallback to default provider.
-				GetPhotos(1, defaultOrder, defaultProvider);
-
-				// Render console warning.
-				consoleStatus(provider, status);
-			}
-		} catch (error) {
-			// API Error: Fallback to default provider.
-			GetPhotos(1, defaultOrder, defaultProvider);
-		}
-	} else {
-		// API Error: Fallback to default provider.
-		GetPhotos(1, defaultOrder, defaultProvider);
-	}
+	GetPhotos(1, defaultOrder, provider);
 })();
