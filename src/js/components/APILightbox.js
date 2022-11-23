@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import FocusTrap from "focus-trap-react";
 import React from "react";
 import buildTestURL from "../functions/buildTestURL";
@@ -247,7 +248,10 @@ class APILightbox extends React.Component {
 								</div>
 								{this.state.response && (
 									<p
-										className={`api-lightbox--response ${this.state.status}`}
+										className={classNames(
+											"api-lightbox--response",
+											this.state.status
+										)}
 									>
 										{this.state.response}
 									</p>

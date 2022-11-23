@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import PhotoList from "./components/PhotoList";
 import API from "./constants/API";
 import buildURL from "./functions/buildURL";
+import consoleStatus from "./functions/consoleStatus";
 import getProvider from "./functions/getProvider";
 import getQueryParams from "./functions/getQueryParams";
 require("es6-promise").polyfill();
@@ -33,6 +34,7 @@ function GetPhotos(
 	async function initialize() {
 		// Create fetch request.
 		const response = await fetch(url);
+		const { status } = response;
 
 		try {
 			// Get response data.
@@ -52,7 +54,7 @@ function GetPhotos(
 				document.getElementById("app")
 			);
 		} catch (error) {
-			console.log(error);
+			consoleStatus(provider, status);
 		}
 
 		// Remove init button (if required).

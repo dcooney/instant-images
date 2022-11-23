@@ -262,7 +262,7 @@ body.media_page_instant-images.overflow-hidden {
   padding: 25px 0;
   text-align: center;
   display: none;
-  border-top: 1px solid #efefef;
+  border-top: 1px solid #ddd;
 }
 
 .instant-img-container .load-more-wrap button {
@@ -516,6 +516,7 @@ body.media_page_instant-images.overflow-hidden {
   opacity: 0.55;
   -webkit-filter: blur(1px);
           filter: blur(1px);
+  pointer-events: none;
 }
 
 .instant-img-container .control-nav--filters-wrap.inactive i {
@@ -620,6 +621,13 @@ body.media_page_instant-images.overflow-hidden {
   .instant-img-container .control-nav--search {
     width: 35%;
   }
+}
+
+.instant-img-container .control-nav--search.inactive {
+  opacity: 0.55;
+  -webkit-filter: blur(1px);
+          filter: blur(1px);
+  pointer-events: none;
 }
 
 @media screen and (max-width: 800px) {
@@ -758,6 +766,10 @@ body.media_page_instant-images.overflow-hidden {
   background-repeat: no-repeat;
 }
 
+.instant-img-container .control-nav--search input[disabled] {
+  cursor: not-allowed;
+}
+
 .instant-img-container .control-nav--search input:focus {
   border-color: #999;
   -webkit-box-shadow: 0 0 1px 5px rgba(0, 0, 0, 0.025);
@@ -802,6 +814,10 @@ body.media_page_instant-images.overflow-hidden {
 
 .instant-img-container .control-nav--search button[type="submit"]:hover, .instant-img-container .control-nav--search button[type="submit"]:focus {
   opacity: 1;
+}
+
+.instant-img-container .control-nav--search button[type="submit"][disabled] {
+  cursor: not-allowed;
 }
 
 .instant-img-container .control-nav--search input[type="search"]::-webkit-input-placeholder {
@@ -2140,6 +2156,10 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   width: 100%;
 }
 
+.media-frame-router button#menu-item-instantimages.active {
+  background-color: #f7f7f7;
+}
+
 .media-frame-content .instant-img-container .load-more-wrap {
   display: block;
 }
@@ -2244,14 +2264,6 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   }
 }
 
-.media-frame-router button#menu-item-instantimages.active {
-  background-color: #f7f7f7;
-}
-
-.media-frame-content .instant-img-container .load-more-wrap {
-  display: block;
-}
-
 .provider-nav {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2351,11 +2363,18 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   position: fixed;
 }
 
+.media-frame-content .instant-img-container .api-lightbox > div {
+  top: 0;
+}
+
 .components-panel .instant-img-container .api-lightbox {
-  height: 100%;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+}
+
+.components-panel .instant-img-container .api-lightbox > div {
+  top: 0;
 }
 
 .instant-img-container .api-lightbox {
@@ -2388,7 +2407,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 }
 
 .instant-img-container .api-lightbox > div {
-  max-width: 425px;
+  max-width: 450px;
   width: 100%;
   padding: 0;
   background-color: #fff;
@@ -2419,10 +2438,6 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   position: relative;
 }
 
-.instant-img-container .api-lightbox--details.error-lightbox {
-  padding: 35px;
-}
-
 .instant-img-container .api-lightbox--details:after, .instant-img-container .api-lightbox--details:before {
   top: 100%;
   left: 50px;
@@ -2451,7 +2466,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 .instant-img-container .api-lightbox--details h3 {
   font-size: 16px;
   line-height: 18px;
-  padding: 0 0 0 25px;
+  padding: 0 0 0 28px;
   text-transform: uppercase;
   margin: 0 0 15px;
   background-position: left center;
@@ -2463,9 +2478,21 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 }
 
 .instant-img-container .api-lightbox--details p.callout-warning {
-  font-size: 50px;
+  font-size: 34px;
   font-weight: 900;
   opacity: 0.35;
+}
+
+.instant-img-container .api-lightbox--details p.more-info {
+  padding: 10px;
+  background-color: #fffadc;
+  margin: 15px 0;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  border: 1px solid #efefef;
+  width: 105%;
+  position: relative;
+  left: -2.5%;
 }
 
 .instant-img-container .api-lightbox--details p.action-controls {

@@ -78,5 +78,7 @@ export function getSearchTotalByProvider(provider, obj) {
 			break;
 	}
 
+	// Set total to 0 if undefined.
+	total = total === undefined ? 0 : total;
 	return total;
 }

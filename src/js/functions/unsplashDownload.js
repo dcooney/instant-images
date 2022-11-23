@@ -21,6 +21,6 @@ export default function unsplashDownload(vars, id) {
 			console.log("Image download successsfully triggered at Unsplash.");
 		})
 		.catch(function(error) {
-			console.log(error);
+			console.warn(error);
 		});
 }

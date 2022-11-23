@@ -41684,6 +41684,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _focusTrapReact = __webpack_require__(/*! focus-trap-react */ "./node_modules/focus-trap-react/dist/focus-trap-react.js");
 
 var _focusTrapReact2 = _interopRequireDefault(_focusTrapReact);
@@ -42049,7 +42053,7 @@ var APILightbox = function (_React$Component) {
 								this.state.response && _react2.default.createElement(
 									"p",
 									{
-										className: "api-lightbox--response " + this.state.status
+										className: (0, _classnames2.default)("api-lightbox--response", this.state.status)
 									},
 									this.state.response
 								),
@@ -42089,6 +42093,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
@@ -42121,7 +42129,7 @@ var ErrorLightbox = function (_React$Component) {
 		_this.error = _this.props.error;
 		_this.provider = _this.props.provider;
 		_this.escFunction = _this.escFunction.bind(_this);
-		_this.status = _this.error.status ? _this.error.status : 401;
+		_this.status = _this.error && _this.error.status ? _this.error.status : null;
 		(0, _consoleStatus2.default)(_this.provider, _this.status);
 		return _this;
 	}
@@ -42137,7 +42145,7 @@ var ErrorLightbox = function (_React$Component) {
 			var self = this;
 			self.lightbox.current.classList.remove("active");
 			setTimeout(function () {
-				self.lightbox.current.remove();
+				self.lightbox.current && self.lightbox.current.remove();
 			}, 275);
 		}
 
@@ -42184,7 +42192,6 @@ var ErrorLightbox = function (_React$Component) {
 		key: "componentDidMount",
 		value: function componentDidMount() {
 			document.addEventListener("keydown", this.escFunction, false);
-			this.lightbox.current.classList.add("active");
 		}
 	}, {
 		key: "componentWillUnmount",
@@ -42197,64 +42204,87 @@ var ErrorLightbox = function (_React$Component) {
 			var _this2 = this;
 
 			return _react2.default.createElement(
-				"div",
-				{
-					className: "api-lightbox",
-					ref: this.lightbox,
-					onClick: function onClick(e) {
-						return _this2.bkgClick(e);
-					},
-					tabIndex: "-1"
-				},
-				_react2.default.createElement(
+				_react2.default.Fragment,
+				null,
+				this.error && this.status && _react2.default.createElement(
 					"div",
-					null,
-					_react2.default.createElement(
-						"button",
-						{
-							className: "api-lightbox--close",
-							onClick: function onClick() {
-								return _this2.closeLightbox();
-							}
+					{
+						className: (0, _classnames2.default)("api-lightbox", "active"),
+						ref: this.lightbox,
+						onClick: function onClick(e) {
+							return _this2.bkgClick(e);
 						},
-						"\xD7",
-						_react2.default.createElement(
-							"span",
-							{ className: "offscreen" },
-							instant_img_localize.btnClose
-						)
-					),
+						tabIndex: "-1"
+					},
 					_react2.default.createElement(
 						"div",
-						{ className: "api-lightbox--details error-lightbox" },
+						null,
 						_react2.default.createElement(
-							"h3",
-							{ "data-provider": this.provider },
-							this.provider
-						),
-						_react2.default.createElement(
-							"p",
-							{ className: "callout-warning" },
-							this.status,
-							" ",
-							instant_img_localize.error
-						),
-						_react2.default.createElement(
-							"p",
-							null,
-							(0, _getErrorMessage2.default)(this.status)
-						),
-						_react2.default.createElement(
-							"p",
-							{ className: "action-controls" },
+							"button",
+							{
+								className: "api-lightbox--close",
+								onClick: function onClick() {
+									return _this2.closeLightbox();
+								}
+							},
+							"\xD7",
 							_react2.default.createElement(
-								"button",
-								{
-									onClick: function onClick() {
-										return _this2.gotoURL(instant_img_localize[_this2.provider + "_api_url"]);
-									}
-								},
-								instant_img_localize.get_api_key
+								"span",
+								{ className: "offscreen" },
+								instant_img_localize.btnClose
+							)
+						),
+						_react2.default.createElement(
+							"div",
+							{
+								className: (0, _classnames2.default)("api-lightbox--details", "error-lightbox")
+							},
+							_react2.default.createElement(
+								"h3",
+								{ "data-provider": this.provider },
+								this.provider
+							),
+							_react2.default.createElement(
+								"p",
+								{ className: "callout-warning" },
+								this.status,
+								" ",
+								instant_img_localize.error
+							),
+							_react2.default.createElement(
+								"p",
+								null,
+								(0, _getErrorMessage2.default)(this.status)
+							),
+							_react2.default.createElement(
+								"p",
+								{ className: "more-info" },
+								instant_img_localize.api_default_provider
+							),
+							_react2.default.createElement(
+								"p",
+								{ className: "action-controls" },
+								_react2.default.createElement(
+									"button",
+									{
+										onClick: function onClick() {
+											return _this2.gotoURL(instant_img_localize[_this2.provider + "_api_url"]);
+										}
+									},
+									instant_img_localize.get_api_key
+								),
+								_react2.default.createElement(
+									"span",
+									null,
+									"|"
+								),
+								_react2.default.createElement(
+									"button",
+									{ onClick: function onClick() {
+											return _this2.closeLightbox();
+										} },
+									instant_img_localize.btnCloseWindow
+								)
 							)
 						)
 					)
@@ -42982,7 +43012,7 @@ var Photo = function (_React$Component) {
 					self.uploadError(target, photo, notice, instant_img_localize.error_upload);
 				}
 			}).catch(function (error) {
-				console.log(error);
+				console.warn(error);
 			});
 		}
 
@@ -43710,6 +43740,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _masonryLayout = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
 
 var _masonryLayout2 = _interopRequireDefault(_masonryLayout);
@@ -43733,6 +43767,10 @@ var _buildTestURL2 = _interopRequireDefault(_buildTestURL);
 var _buildURL = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
 
 var _buildURL2 = _interopRequireDefault(_buildURL);
+
+var _consoleStatus = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
+
+var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
 
 var _getQueryParams = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
 
@@ -43819,6 +43857,8 @@ var PhotoList = function (_React$Component) {
 		_this.api_key = instant_img_localize[_this.provider + "_app_id"];
 		_this.photo_api = _this.api_provider.photo_api;
 		_this.search_api = _this.api_provider.search_api;
+
+		_this.api_error = _this.props.error;
 
 		// Results state.
 		_this.results = (0, _getResults2.default)(_this.provider, _this.arr_key, _this.props.results);
@@ -43989,12 +44029,7 @@ var PhotoList = function (_React$Component) {
 							case 16:
 								response = _context.sent;
 								status = response.status;
-
-								if (!(status === 200)) {
-									_context.next = 42;
-									break;
-								}
-
+								_context.prev = 18;
 								_context.next = 21;
 								return response.json();
 
@@ -44058,10 +44093,13 @@ var PhotoList = function (_React$Component) {
 									photoTarget.classList.remove("loading");
 									self.isLoading = false;
 								}, this.delay);
-								_context.next = 50;
+								_context.next = 53;
 								break;
 
 							case 42:
+								_context.prev = 42;
+								_context.t1 = _context["catch"](18);
+
 								// Error handling.
 
 								// Reset all search parameters.
@@ -44075,13 +44113,14 @@ var PhotoList = function (_React$Component) {
 								// Update Props.
 								this.results = [];
 								this.setState({ results: this.results });
+								(0, _consoleStatus2.default)(this.provider, status);
 
-							case 50:
+							case 53:
 							case "end":
 								return _context.stop();
 						}
 					}
-				}, _callee, this);
+				}, _callee, this, [[18, 42]]);
 			}));
 
 			function doSearch(_x) {
@@ -44106,7 +44145,9 @@ var PhotoList = function (_React$Component) {
 			var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(view) {
 				var reset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 				var switcher = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-				var self, params, url, response, ok, status, statusText, data, results;
+
+				var self, params, url, response, status, data, _data$error, error, results;
+
 				return regeneratorRuntime.wrap(function _callee2$(_context2) {
 					while (1) {
 						switch (_context2.prev = _context2.next) {
@@ -44139,24 +44180,22 @@ var PhotoList = function (_React$Component) {
 
 							case 13:
 								response = _context2.sent;
-								ok = response.ok, status = response.status, statusText = response.statusText;
+								status = response.status;
 
 								// Status OK.
 
-								if (!ok) {
-									_context2.next = 25;
-									break;
-								}
-
+								_context2.prev = 15;
 								_context2.next = 18;
 								return response.json();
 
 							case 18:
 								data = _context2.sent;
+								_data$error = data.error, error = _data$error === undefined ? null : _data$error;
 								results = (0, _getResults2.default)(this.provider, this.arr_key, data);
 
 								this.checkTotalResults(results.length); // Check for returned data.
 								this.results = results; // Update Props.
+								this.api_error = error;
 
 								// Set results state.
 								if (!switcher) {
@@ -44169,15 +44208,18 @@ var PhotoList = function (_React$Component) {
 										filters: _filters2.default[this.provider].filters
 									});
 								}
-								_context2.next = 28;
+								_context2.next = 32;
 								break;
 
-							case 25:
-								console.warn("Error: " + status + " - " + statusText);
+							case 27:
+								_context2.prev = 27;
+								_context2.t0 = _context2["catch"](15);
+
+								(0, _consoleStatus2.default)(this.provider, status);
 								this.photoTarget.current.classList.remove("loading");
 								this.isLoading = false;
 
-							case 28:
+							case 32:
 
 								// Delay loading animatons for effect.
 								setTimeout(function () {
@@ -44185,12 +44227,12 @@ var PhotoList = function (_React$Component) {
 									self.isLoading = false;
 								}, self.delay);
 
-							case 29:
+							case 33:
 							case "end":
 								return _context2.stop();
 						}
 					}
-				}, _callee2, this);
+				}, _callee2, this, [[15, 27]]);
 			}));
 
 			function getPhotos(_x4) {
@@ -44210,7 +44252,7 @@ var PhotoList = function (_React$Component) {
 		key: "loadMorePhotos",
 		value: function () {
 			var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-				var self, search_query, loadmore_url, filters, loadmore_params, params, url, response, ok, status, statusText, data, results;
+				var self, search_query, loadmore_url, filters, loadmore_params, params, url, response, status, data, results;
 				return regeneratorRuntime.wrap(function _callee3$(_context3) {
 					while (1) {
 						switch (_context3.prev = _context3.next) {
@@ -44242,15 +44284,8 @@ var PhotoList = function (_React$Component) {
 
 							case 13:
 								response = _context3.sent;
-								ok = response.ok, status = response.status, statusText = response.statusText;
-
-								// Status OK.
-
-								if (!ok) {
-									_context3.next = 26;
-									break;
-								}
-
+								status = response.status;
+								_context3.prev = 15;
 								_context3.next = 18;
 								return response.json();
 
@@ -44270,20 +44305,23 @@ var PhotoList = function (_React$Component) {
 								});
 
 								this.checkTotalResults(data.length); // Check for returned data.
-								this.setState({ results: this.results }); // Update Props.
-								_context3.next = 28;
+								this.setState({ results: this.results });
+								_context3.next = 30;
 								break;
 
 							case 26:
-								console.warn("Error: " + status + " - " + statusText);
+								_context3.prev = 26;
+								_context3.t0 = _context3["catch"](15);
+
+								(0, _consoleStatus2.default)(this.provider, status);
 								self.isLoading = false;
 
-							case 28:
+							case 30:
 							case "end":
 								return _context3.stop();
 						}
 					}
-				}, _callee3, this);
+				}, _callee3, this, [[15, 26]]);
 			}));
 
 			function loadMorePhotos() {
@@ -44362,7 +44400,6 @@ var PhotoList = function (_React$Component) {
 		key: "afterVerifiedAPICallback",
 		value: function afterVerifiedAPICallback(provider) {
 			var button = this.providerNav.current.querySelector("button[data-provider=" + provider + "]");
-			console.log(button);
 			if (!button) {
 				return;
 			}
@@ -44537,7 +44574,7 @@ var PhotoList = function (_React$Component) {
 		}
 
 		/**
-   * A checker to determine is there are remaining search results.
+   * A checker to determine if there are remaining search results.
    *
    * @param {number} num Total search results.
    * @since 3.0
@@ -44546,7 +44583,7 @@ var PhotoList = function (_React$Component) {
 	}, {
 		key: "checkTotalResults",
 		value: function checkTotalResults(num) {
-			this.isDone = parseInt(num) === 0 ? true : false;
+			this.isDone = parseInt(num) === 0 || num === undefined ? true : false;
 		}
 
 		/**
@@ -44648,7 +44685,7 @@ var PhotoList = function (_React$Component) {
 				}
 			};
 			restAPITest.onerror = function (errorMsg) {
-				console.log(errorMsg);
+				console.warn(errorMsg);
 				self.setState({ restapi_error: true });
 			};
 		}
@@ -44675,12 +44712,8 @@ var PhotoList = function (_React$Component) {
 			this.container.classList.remove("loading");
 			this.wrapper.classList.add("loaded");
 
-			if (this.is_block_editor || this.is_media_router) {
-				// Gutenberg || Media Popup
-				this.page = 0;
-				this.loadMorePhotos();
-			} else {
-				// Add scroll event
+			// Not Gutenberg and Media Popup add scroll listener.
+			if (!this.is_block_editor && !this.is_media_router) {
 				window.addEventListener("scroll", function () {
 					return _this3.onScroll();
 				});
@@ -44718,7 +44751,7 @@ var PhotoList = function (_React$Component) {
 								_API2.default[provider.toLowerCase()].new && _react2.default.createElement(
 									"span",
 									{ className: "provider-nav--new" },
-									"New"
+									instant_img_localize.new
 								)
 							)
 						);
@@ -44735,7 +44768,7 @@ var PhotoList = function (_React$Component) {
 					_react2.default.createElement(
 						"div",
 						{
-							className: "control-nav--filters-wrap",
+							className: (0, _classnames2.default)("control-nav--filters-wrap", this.api_error ? "inactive" : null),
 							ref: this.filterGroups
 						},
 						Object.entries(this.state.filters).length && _react2.default.createElement(
@@ -44759,7 +44792,7 @@ var PhotoList = function (_React$Component) {
 					_react2.default.createElement(
 						"div",
 						{
-							className: "control-nav--search search-field",
+							className: (0, _classnames2.default)("control-nav--search", "search-field", this.api_error ? "inactive" : null),
 							id: "search-bar"
 						},
 						_react2.default.createElement(
@@ -44776,11 +44809,16 @@ var PhotoList = function (_React$Component) {
 								type: "search",
 								id: "photo-search",
 								placeholder: instant_img_localize.search,
-								ref: this.photoSearch
+								ref: this.photoSearch,
+								disabled: this.api_error
 							}),
 							_react2.default.createElement(
 								"button",
-								{ type: "submit", id: "photo-search-submit" },
+								{
+									type: "submit",
+									id: "photo-search-submit",
+									disabled: this.api_error
+								},
 								_react2.default.createElement("i", { className: "fa fa-search" })
 							),
 							_react2.default.createElement(_ResultsToolTip2.default, {
@@ -44868,13 +44906,13 @@ var PhotoList = function (_React$Component) {
 						});
 					}) : null
 				),
-				this.total_results == 0 && this.is_search === true && _react2.default.createElement(_NoResults2.default, null),
-				this.props.error && _react2.default.createElement(_ErrorLightbox2.default, {
-					error: this.props.error,
-					provider: this.provider
+				this.total_results < 1 && this.is_search === true && _react2.default.createElement(_NoResults2.default, {
+					total: this.total_results,
+					is_search: this.is_search
 				}),
 				_react2.default.createElement(_LoadingBlock2.default, null),
 				_react2.default.createElement(_LoadMore2.default, { loadMorePhotos: this.loadMorePhotos.bind(this) }),
+				_react2.default.createElement(_ErrorLightbox2.default, { error: this.api_error, provider: this.provider }),
 				_react2.default.createElement(_Tooltip2.default, null)
 			);
 		}
@@ -45935,6 +45973,8 @@ function getSearchTotalByProvider(provider, obj) {
 			break;
 	}
 
+	// Set total to 0 if undefined.
+	total = total === undefined ? 0 : total;
 	return total;
 }
 
@@ -46129,7 +46169,7 @@ function unsplashDownload(vars, id) {
 		// Success, nothing else happens here
 		console.log("Image download successsfully triggered at Unsplash.");
 	}).catch(function (error) {
-		console.log(error);
+		console.warn(error);
 	});
 }
 
@@ -46183,7 +46223,7 @@ function updatePluginSetting(setting, value) {
 	_axios2.default.post(api, JSON.stringify(data), config).then(function (res) {
 		var response = res.data;
 	}).catch(function (error) {
-		console.log(error);
+		console.warn(error);
 	});
 }
 
@@ -46219,6 +46259,10 @@ var _buildURL = __webpack_require__(/*! ./functions/buildURL */ "./src/js/functi
 
 var _buildURL2 = _interopRequireDefault(_buildURL);
 
+var _consoleStatus = __webpack_require__(/*! ./functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
+
+var _consoleStatus2 = _interopRequireDefault(_consoleStatus);
+
 var _getProvider = __webpack_require__(/*! ./functions/getProvider */ "./src/js/functions/getProvider.js");
 
 var _getProvider2 = _interopRequireDefault(_getProvider);
@@ -46251,7 +46295,7 @@ function GetPhotos() {
 
 	var initialize = function () {
 		var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-			var response, results, _results$error, error, app, initWrap;
+			var response, status, results, _results$error, error, app, initWrap;
 
 			return regeneratorRuntime.wrap(function _callee$(_context) {
 				while (1) {
@@ -46262,11 +46306,12 @@ function GetPhotos() {
 
 						case 2:
 							response = _context.sent;
-							_context.prev = 3;
-							_context.next = 6;
+							status = response.status;
+							_context.prev = 4;
+							_context.next = 7;
 							return response.json();
 
-						case 6:
+						case 7:
 							results = _context.sent;
 							_results$error = results.error, error = _results$error === undefined ? null : _results$error;
 							app = document.getElementById("app");
@@ -46280,16 +46325,16 @@ function GetPhotos() {
 								provider: provider,
 								error: error
 							}), document.getElementById("app"));
-							_context.next = 15;
+							_context.next = 16;
 							break;
 
-						case 12:
-							_context.prev = 12;
-							_context.t0 = _context["catch"](3);
+						case 13:
+							_context.prev = 13;
+							_context.t0 = _context["catch"](4);
 
-							console.log(_context.t0);
+							(0, _consoleStatus2.default)(provider, status);
 
-						case 15:
+						case 16:
 
 							// Remove init button (if required).
 							initWrap = container.querySelector(".initialize-wrap");
@@ -46298,12 +46343,12 @@ function GetPhotos() {
 								initWrap.parentNode.removeChild(initWrap);
 							}
 
-						case 17:
+						case 18:
 						case "end":
 							return _context.stop();
 					}
 				}
-			}, _callee, this, [[3, 12]]);
+			}, _callee, this, [[4, 13]]);
 		}));
 
 		return function initialize() {

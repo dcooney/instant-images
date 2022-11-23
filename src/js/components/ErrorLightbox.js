@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 import consoleStatus from "../functions/consoleStatus";
 import getErrorMessage from "../functions/getErrorMessage";
@@ -9,7 +10,7 @@ class ErrorLightbox extends React.Component {
 		this.error = this.props.error;
 		this.provider = this.props.provider;
 		this.escFunction = this.escFunction.bind(this);
-		this.status = this.error.status ? this.error.status : 401;
+		this.status = this.error && this.error.status ? this.error.status : null;
 		consoleStatus(this.provider, this.status);
 	}
 
@@ -20,7 +21,7 @@ class ErrorLightbox extends React.Component {
 		const self = this;
 		self.lightbox.current.classList.remove("active");
 		setTimeout(function() {
-			self.lightbox.current.remove();
+			self.lightbox.current && self.lightbox.current.remove();
 		}, 275);
 	}
 
@@ -57,7 +58,6 @@ class ErrorLightbox extends React.Component {
 
 	componentDidMount() {
 		document.addEventListener("keydown", this.escFunction, false);
-		this.lightbox.current.classList.add("active");
 	}
 
 	componentWillUnmount() {
@@ -66,43 +66,61 @@ class ErrorLightbox extends React.Component {
 
 	render() {
 		return (
-			<div
-				className="api-lightbox"
-				ref={this.lightbox}
-				onClick={e => this.bkgClick(e)}
-				tabIndex="-1"
-			>
-				<div>
-					<button
-						className="api-lightbox--close"
-						onClick={() => this.closeLightbox()}
+			<React.Fragment>
+				{this.error && this.status && (
+					<div
+						className={classNames("api-lightbox", "active")}
+						ref={this.lightbox}
+						onClick={e => this.bkgClick(e)}
+						tabIndex="-1"
 					>
-						&times;
-						<span className="offscreen">
-							{instant_img_localize.btnClose}
-						</span>
-					</button>
-
-					<div className="api-lightbox--details error-lightbox">
-						<h3 data-provider={this.provider}>{this.provider}</h3>
-						<p className="callout-warning">
-							{this.status} {instant_img_localize.error}
-						</p>
-						<p>{getErrorMessage(this.status)}</p>
-						<p className="action-controls">
+						<div>
 							<button
-								onClick={() =>
-									this.gotoURL(
-										instant_img_localize[`${this.provider}_api_url`]
-									)
-								}
+								className="api-lightbox--close"
+								onClick={() => this.closeLightbox()}
 							>
-								{instant_img_localize.get_api_key}
+								&times;
+								<span className="offscreen">
+									{instant_img_localize.btnClose}
+								</span>
 							</button>
-						</p>
+
+							<div
+								className={classNames(
+									"api-lightbox--details",
+									"error-lightbox"
+								)}
+							>
+								<h3 data-provider={this.provider}>{this.provider}</h3>
+								<p className="callout-warning">
+									{this.status} {instant_img_localize.error}
+								</p>
+								<p>{getErrorMessage(this.status)}</p>
+								<p className="more-info">
+									{instant_img_localize.api_default_provider}
+								</p>
+								<p className="action-controls">
+									<button
+										onClick={() =>
+											this.gotoURL(
+												instant_img_localize[
+													`${this.provider}_api_url`
+												]
+											)
+										}
+									>
+										{instant_img_localize.get_api_key}
+									</button>
+									<span>|</span>
+									<button onClick={() => this.closeLightbox()}>
+										{instant_img_localize.btnCloseWindow}
+									</button>
+								</p>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
+				)}
+			</React.Fragment>
 		);
 	}
 }

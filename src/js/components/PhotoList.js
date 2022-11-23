@@ -1,9 +1,11 @@
+import classNames from "classnames";
 import Masonry from "masonry-layout";
 import React from "react";
 import API from "../constants/API";
 import FILTERS from "../constants/filters";
 import buildTestURL from "../functions/buildTestURL";
 import buildURL from "../functions/buildURL";
+import consoleStatus from "../functions/consoleStatus";
 import getQueryParams from "../functions/getQueryParams";
 import getResults, {
 	getResultById,
@@ -37,6 +39,8 @@ class PhotoList extends React.Component {
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 		this.photo_api = this.api_provider.photo_api;
 		this.search_api = this.api_provider.search_api;
+
+		this.api_error = this.props.error;
 
 		// Results state.
 		this.results = getResults(
@@ -198,7 +202,7 @@ class PhotoList extends React.Component {
 		const response = await fetch(url);
 		const { status } = response;
 
-		if (status === 200) {
+		try {
 			// Get response data.
 			const data = await response.json();
 
@@ -266,7 +270,7 @@ class PhotoList extends React.Component {
 				photoTarget.classList.remove("loading");
 				self.isLoading = false;
 			}, this.delay);
-		} else {
+		} catch (error) {
 			// Error handling.
 
 			// Reset all search parameters.
@@ -280,6 +284,7 @@ class PhotoList extends React.Component {
 			// Update Props.
 			this.results = [];
 			this.setState({ results: this.results });
+			consoleStatus(this.provider, status);
 		}
 	}
 
@@ -310,14 +315,17 @@ class PhotoList extends React.Component {
 
 		// Create fetch request.
 		const response = await fetch(url);
-		const { ok, status, statusText } = response;
+		const { status } = response;
 
 		// Status OK.
-		if (ok) {
+		try {
 			const data = await response.json();
+			const { error = null } = data;
+
 			const results = getResults(this.provider, this.arr_key, data);
 			this.checkTotalResults(results.length); // Check for returned data.
 			this.results = results; // Update Props.
+			this.api_error = error;
 
 			// Set results state.
 			if (!switcher) {
@@ -330,8 +338,8 @@ class PhotoList extends React.Component {
 					filters: FILTERS[this.provider].filters
 				});
 			}
-		} else {
-			console.warn(`Error: ${status} - ${statusText}`);
+		} catch (error) {
+			consoleStatus(this.provider, status);
 			this.photoTarget.current.classList.remove("loading");
 			this.isLoading = false;
 		}
@@ -375,10 +383,9 @@ class PhotoList extends React.Component {
 
 		// Create fetch request.
 		const response = await fetch(url);
-		const { ok, status, statusText } = response;
+		const { status } = response;
 
-		// Status OK.
-		if (ok) {
+		try {
 			const data = await response.json();
 			let results = getResults(
 				this.provider,
@@ -399,9 +406,9 @@ class PhotoList extends React.Component {
 				});
 
 			this.checkTotalResults(data.length); // Check for returned data.
-			this.setState({ results: this.results }); // Update Props.
-		} else {
-			console.warn(`Error: ${status} - ${statusText}`);
+			this.setState({ results: this.results });
+		} catch (error) {
+			consoleStatus(this.provider, status);
 			self.isLoading = false;
 		}
 	}
@@ -473,7 +480,6 @@ class PhotoList extends React.Component {
 		const button = this.providerNav.current.querySelector(
 			`button[data-provider=${provider}]`
 		);
-		console.log(button);
 		if (!button) {
 			return;
 		}
@@ -596,13 +602,13 @@ class PhotoList extends React.Component {
 	}
 
 	/**
-	 * A checker to determine is there are remaining search results.
+	 * A checker to determine if there are remaining search results.
 	 *
 	 * @param {number} num Total search results.
 	 * @since 3.0
 	 */
 	checkTotalResults(num) {
-		this.isDone = parseInt(num) === 0 ? true : false;
+		this.isDone = parseInt(num) === 0 || num === undefined ? true : false;
 	}
 
 	/**
@@ -692,7 +698,7 @@ class PhotoList extends React.Component {
 			}
 		};
 		restAPITest.onerror = function(errorMsg) {
-			console.log(errorMsg);
+			console.warn(errorMsg);
 			self.setState({ restapi_error: true });
 		};
 	}
@@ -711,12 +717,8 @@ class PhotoList extends React.Component {
 		this.container.classList.remove("loading");
 		this.wrapper.classList.add("loaded");
 
-		if (this.is_block_editor || this.is_media_router) {
-			// Gutenberg || Media Popup
-			this.page = 0;
-			this.loadMorePhotos();
-		} else {
-			// Add scroll event
+		// Not Gutenberg and Media Popup add scroll listener.
+		if (!this.is_block_editor && !this.is_media_router) {
 			window.addEventListener("scroll", () => this.onScroll());
 		}
 	}
@@ -739,7 +741,9 @@ class PhotoList extends React.Component {
 								>
 									<span>{provider}</span>
 									{API[provider.toLowerCase()].new && (
-										<span className="provider-nav--new">New</span>
+										<span className="provider-nav--new">
+											{instant_img_localize.new}
+										</span>
 									)}
 								</button>
 							</div>
@@ -759,7 +763,10 @@ class PhotoList extends React.Component {
 
 				<div className="control-nav" ref={this.controlNav}>
 					<div
-						className="control-nav--filters-wrap"
+						className={classNames(
+							"control-nav--filters-wrap",
+							this.api_error ? "inactive" : null
+						)}
 						ref={this.filterGroups}
 					>
 						{Object.entries(this.state.filters).length && (
@@ -778,8 +785,13 @@ class PhotoList extends React.Component {
 							</div>
 						)}
 					</div>
+
 					<div
-						className="control-nav--search search-field"
+						className={classNames(
+							"control-nav--search",
+							"search-field",
+							this.api_error ? "inactive" : null
+						)}
 						id="search-bar"
 					>
 						<form onSubmit={e => this.search(e)} autoComplete="off">
@@ -791,8 +803,13 @@ class PhotoList extends React.Component {
 								id="photo-search"
 								placeholder={instant_img_localize.search}
 								ref={this.photoSearch}
+								disabled={this.api_error}
 							/>
-							<button type="submit" id="photo-search-submit">
+							<button
+								type="submit"
+								id="photo-search-submit"
+								disabled={this.api_error}
+							>
 								<i className="fa fa-search"></i>
 							</button>
 							<ResultsToolTip
@@ -867,20 +884,15 @@ class PhotoList extends React.Component {
 						  ))
 						: null}
 				</div>
-
-				{this.total_results == 0 && this.is_search === true && (
-					<NoResults />
-				)}
-
-				{this.props.error && (
-					<ErrorLightbox
-						error={this.props.error}
-						provider={this.provider}
+				{this.total_results < 1 && this.is_search === true && (
+					<NoResults
+						total={this.total_results}
+						is_search={this.is_search}
 					/>
 				)}
-
 				<LoadingBlock />
 				<LoadMore loadMorePhotos={this.loadMorePhotos.bind(this)} />
+				<ErrorLightbox error={this.api_error} provider={this.provider} />
 				<Tooltip />
 			</div>
 		);
