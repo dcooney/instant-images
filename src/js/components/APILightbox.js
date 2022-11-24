@@ -2,6 +2,7 @@ import classNames from "classnames";
 import FocusTrap from "focus-trap-react";
 import React from "react";
 import buildTestURL from "../functions/buildTestURL";
+import checkRateLimit from "../functions/checkRateLimit";
 import consoleStatus from "../functions/consoleStatus";
 import updatePluginSetting from "../functions/updatePluginSetting";
 
@@ -58,7 +59,8 @@ class APILightbox extends React.Component {
 			const response = await fetch(buildTestURL(self.provider));
 
 			// Handle response.
-			const { ok, status } = response;
+			const { ok, status, headers } = response;
+			checkRateLimit(headers);
 
 			// Handle response actions.
 			if (ok) {

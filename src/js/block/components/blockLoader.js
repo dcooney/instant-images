@@ -2,6 +2,7 @@ import React from "react";
 import PhotoList from "../../components/PhotoList";
 import API from "../../constants/API";
 import buildURL from "../../functions/buildURL";
+import checkRateLimit from "../../functions/checkRateLimit";
 import consoleStatus from "../../functions/consoleStatus";
 import getProvider from "../../functions/getProvider";
 import getQueryParams from "../../functions/getQueryParams";
@@ -29,7 +30,8 @@ const BlockLoader = () => {
 
 			// Create fetch request.
 			const response = await fetch(url);
-			const { status } = response;
+			const { status, headers } = response;
+			checkRateLimit(headers);
 
 			try {
 				// Get response data.

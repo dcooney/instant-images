@@ -5,6 +5,7 @@ import API from "../constants/API";
 import FILTERS from "../constants/filters";
 import buildTestURL from "../functions/buildTestURL";
 import buildURL from "../functions/buildURL";
+import checkRateLimit from "../functions/checkRateLimit";
 import consoleStatus from "../functions/consoleStatus";
 import getQueryParams from "../functions/getQueryParams";
 import getResults, {
@@ -200,12 +201,14 @@ class PhotoList extends React.Component {
 
 		// Create fetch request.
 		const response = await fetch(url);
-		const { status } = response;
+		const { status, headers } = response;
+		checkRateLimit(headers);
 
 		try {
 			// Get response data.
 			const data = await response.json();
 
+			// Switch search types. Term or ID.
 			switch (search_type) {
 				case "term":
 					const results = getResults(
@@ -271,8 +274,6 @@ class PhotoList extends React.Component {
 				self.isLoading = false;
 			}, this.delay);
 		} catch (error) {
-			// Error handling.
-
 			// Reset all search parameters.
 			this.isDone = true;
 			this.isLoading = false;
@@ -315,12 +316,13 @@ class PhotoList extends React.Component {
 
 		// Create fetch request.
 		const response = await fetch(url);
-		const { status } = response;
+		const { status, headers } = response;
+		checkRateLimit(headers);
 
 		// Status OK.
 		try {
 			const data = await response.json();
-			const { error = null } = data;
+			const { error = null } = data; // Get error reporting.
 
 			const results = getResults(this.provider, this.arr_key, data);
 			this.checkTotalResults(results.length); // Check for returned data.
@@ -383,7 +385,8 @@ class PhotoList extends React.Component {
 
 		// Create fetch request.
 		const response = await fetch(url);
-		const { status } = response;
+		const { status, headers } = response;
+		checkRateLimit(headers);
 
 		try {
 			const data = await response.json();
@@ -405,7 +408,10 @@ class PhotoList extends React.Component {
 					self.results.push(data);
 				});
 
-			this.checkTotalResults(data.length); // Check for returned data.
+			// Check the total results.
+			this.checkTotalResults(results.length);
+
+			// Set results state.
 			this.setState({ results: this.results });
 		} catch (error) {
 			consoleStatus(this.provider, status);
@@ -526,7 +532,9 @@ class PhotoList extends React.Component {
 			const self = this;
 			try {
 				const response = await fetch(buildTestURL(provider));
-				const { status } = response;
+				const { status, headers } = response;
+				checkRateLimit(headers);
+
 				if (status !== 200) {
 					// Catch API errors and 401s.
 					self.setState({ api_lightbox: provider }); // Show API Lightbox.
