@@ -14,6 +14,18 @@
 			<ul>
 				<li>
 					<p>
+						<strong>Proxy Server</strong>
+						All API requests to Unsplash, Pexels and Pixabay are now served through our custom proxy server (proxy.getinstantimages.com).
+					</p>
+				</li>
+				<li>
+					<p>
+						<strong>Image ID Search</strong>
+						Added support for searching individual photos by image ID - searching <code>id:{photo_id}</code> will return a single result.<br/><br/>e.g. <code>id:YiUi00uqKk8</code>
+					</p>
+				</li>
+				<li>
+					<p>
 						<strong>Pixabay & Pexels</strong>
 						We've added support for <a href="https://pixabay.com/" target="_blank">Pixabay</a> and <a href="https://pexels.com/" target="_blank">Pexels</a> image APIs.
 					</p>
@@ -40,12 +52,6 @@
 					<p>
 						<strong>User Roles</strong>
 						Added the <code>instant_images_user_role</code> filter hook to allow for complete control over user capabilities.
-					</p>
-				</li>
-				<li>
-					<p>
-						<strong>Image ID Search</strong>
-						Added support for searching individual photos by image ID - searching <code>id:{photo_id}</code> will return a single result.<br/><br/>e.g. <code>id:YiUi00uqKk8</code>
 					</p>
 				</li>
 			</ul>

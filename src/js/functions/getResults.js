@@ -12,8 +12,8 @@ export default function getResults(provider, key, data, is_search) {
 	if (!data) {
 		return [];
 	}
-	let results = [];
 
+	let results = [];
 	switch (provider) {
 		case "unsplash":
 			if (is_search) {

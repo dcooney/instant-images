@@ -1,14 +1,14 @@
 === Instant Images - One Click Unsplash, Pixabay and Pexels Uploads ===
 Contributors: dcooney, connekthq
-Donate link: https://connekthq.com/donate/
-Tags: unsplash, pixabay, pexels, stock photo, prototyping, photos, media library, image upload, upload, free photos
+Donate link: <https://connekthq.com/donate/>
+Tags: Unsplash, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 6.1
 Stable tag: 5.0
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
-One click uploads of photos from Unsplash, Pixabay and Pexels directly to your WordPress media library.
+One click image uploads from Unsplash, Pixabay and Pexels directly to your WordPress media library.
 
 == Description ==
 
@@ -16,7 +16,7 @@ Instantly upload photos from Unsplash, Pixabay or Pexels to your website without
 
 **Instant Images** is the fastest and easiest way to upload high quality FREE photos from [unsplash.com](http://unsplash.com) and [Pixabay](http://pixabay.com) directly to your media library.
 
-[youtube https://www.youtube.com/watch?v=s6Q7Kfi2f1c]
+[youtube <https://www.youtube.com/watch?v=s6Q7Kfi2f1c>]
 
 The perfect tool for users who want to save time and frustration by uploading images directly inside their WordPress installation and for developers who want to prototype and develop using real world imagery.
 
@@ -93,7 +93,6 @@ No, we provide an API for you to use, however you can get your own by signing up
 = Do I need an account at Pexels? =
 No, we provide an API for you to use, however you can get your own by signing up for a free account at [Pexels](https://pexels.com/).
 
-
 == Installation ==
 
 How to install Instant Images.
@@ -131,6 +130,11 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 5.0 - November 26, 2022 =
+NEW: All API requests to Unsplash, Pexels and Pixabay are now served through our custom proxy server (proxy.getinstantimages.com).
+UPDATE: Improved error handling and reporting.
+UPDATE: Removal of hard coded API Keys from plugin.
+
 = 4.6.3 - November 04, 2022 =
 UPDATE: Improved load handling of default provider.
 FIX: Security fix for issue for authenticated users.
@@ -162,7 +166,6 @@ UPDATE: Revamped filtering menus and orientation options.
 UPDATE: Other UI/UX updates to make the plugin more visually appealing.
 UPDATE: Improved plugin accessibility across various sections.
 
-
 = 4.5.0 - October 28, 2021 =
 NEW: 🎉 Pixabay! We've added support for [Pixabay](https://pixabay.com) images. This requires a valid API key.
 NEW: Added button to auto-generate Photo attribution in image caption.
@@ -170,55 +173,55 @@ NEW: Added uninstaller script to remove plugin settings.
 UPDATE: Updated styling and functionality of photo detail editor.
 UPDATE: Various UI/UX updates.
 
-
 = 4.4.0.3 - July 30, 2021 =
-* Fix: WP 5.8 issue resolved - added fix for Instant Images causing the Widget Block Editor to fail due to JS error.
-* Update: Code clean up.
 
+- Fix: WP 5.8 issue resolved - added fix for Instant Images causing the Widget Block Editor to fail due to JS error.
+- Update: Code clean up.
 
 = 4.4.0.2 - June 7, 2021 =
- * Fix: Added fix for CSS conflict causing issues in the WordPress menus section.
- * Fix: Removed browser console error with regards `activeFrame.querySelector is not a function` that could appear when creating a gallery.
- * Updated: Improved coding standard and overall code quality.
 
+- Fix: Added fix for CSS conflict causing issues in the WordPress menus section.
+- Fix: Removed browser console error with regards `activeFrame.querySelector is not a function` that could appear when creating a gallery.
+- Updated: Improved coding standard and overall code quality.
 
 = 4.4.0.1 - May 3, 2021 =
-* UPDATE - Updated Instant Images settings page to sanitize inputs before saving.
 
+- UPDATE - Updated Instant Images settings page to sanitize inputs before saving.
 
 = 4.4.0 - March 26, 2021 =
-* UPDATE - 🎉 Massive improvement to image download speeds by [dynamically resizing](https://unsplash.com/documentation#dynamically-resizable-images) the initial download before sending image to media library.
-  * Intitial testing revealed up to 4x faster download speeds than previous version of Instant Images 🤯.
-* NEW - Added `instant_images_after_upload` hook that is dispatch after a successful upload allowing users to hook into the attachment and run custom functionality.
-* UPDATE - Upgraded Axios JS libray to `0.21.1`.
 
+- UPDATE - 🎉 Massive improvement to image download speeds by [dynamically resizing](https://unsplash.com/documentation#dynamically-resizable-images) the initial download before sending image to media library.
+  - Intitial testing revealed up to 4x faster download speeds than previous version of Instant Images 🤯.
+- NEW - Added `instant_images_after_upload` hook that is dispatch after a successful upload allowing users to hook into the attachment and run custom functionality.
+- UPDATE - Upgraded Axios JS libray to `0.21.1`.
 
 = 4.3.5 - August 14, 2020 =
-* FIX - Fixed issue with WP 5.5 and REST API warning messages when `WP_DEBUG` is `true`.
-* FIX - Fixed issue with undefined `$suffix` variable when `WP_DEBUG` is `true`.
 
+- FIX - Fixed issue with WP 5.5 and REST API warning messages when `WP_DEBUG` is `true`.
+- FIX - Fixed issue with undefined `$suffix` variable when `WP_DEBUG` is `true`.
 
 = 4.3.4 - August 11, 2020 =
-* FIX - Fixed issue with Yoast SEO meta boxes not appearing in Classic Editor.
-* UPDATE - Code cleanup and some refactoring of media enqueue scripts.
 
+- FIX - Fixed issue with Yoast SEO meta boxes not appearing in Classic Editor.
+- UPDATE - Code cleanup and some refactoring of media enqueue scripts.
 
 = 4.3.3 - August 10, 2020 =
-* NEW - Adding Instant Images tab to Media Modal windows everywhere, including page builders and taxonomy terms pages.
-* NEW - Added new plugin setting to hide the Instant Images tab in the Media Modals
 
+- NEW - Adding Instant Images tab to Media Modal windows everywhere, including page builders and taxonomy terms pages.
+- NEW - Added new plugin setting to hide the Instant Images tab in the Media Modals
 
 = 4.3.2 - May 28, 2020 =
+
 - UPDATE - Switched REST API methods to `POST` requests from `PUT`. This will hopefully reduce issues users are having with `PUT` being disabled on their servers.
 - UPDATE - Added Instant Images media button back to Classic Editor post screen.
 
-
 = 4.3.1 - April 13, 2020 =
+
 - FIX - Fixed issue with Instant Images causing Yoast SEO metabox to not show correctly in the classic WordPress editor. Not really sure why, but the Instant Images JS dependencies seemed to interfere with Yoast.
 - FIX - Added user privileges checks to the new Media Modal functionality.
 
-
 = 4.3.0 - April 9, 2020 =
+
 - NEW - Adding `Instant Images` tab to the WordPress Media Modal.
 - NEW - When images are uploaded directly to a post the current Post ID is attached to the upload as the parent post.
 - NEW - Adding default alt text directly from Unsplash API.
@@ -226,24 +229,24 @@ UPDATE: Various UI/UX updates.
 - UPDATE - Switching tab navigation from `<a/> to`<button/>` for better accessibility.
 - FIX - Added a fix for JS error regarding `PluginSidebar` registration on non-gutenberg editor pages.
 
-
 = 4.2.0 - December 14, 2019 =
+
 - NEW - Added image orientation search filter
 - FIX - Fixed issue with instant images being rendered in Gutenberg editor for users without permissions.
 - UPDATE - Updated WordPress role requirement from `edit_theme_options` to [`upload_files`](https://wordpress.org/support/article/roles-and-capabilities/#upload_files).
 
-
 = 4.1.0 - July 23, 2019 =
+
 - NEW - Added support for updating image title prior to upload.
 - NEW - Added link to edit image after upload process completes.
 - UPDATE - Updated functionality to trigger photo upload immediately after triggering a `Save` when editing image metadata.
 
-
 = 4.0.1 - April 18, 2019 =
+
 - FIX - Fixed issue where Instant Images sidebar plugin would not appear in Gutenberg if removed as a pinned item.
 
-
 = 4.0.0 - February 12, 2019 =
+
 - 4.0 adds Gutenberg support. You can now access instant images directly from inside the block editor.
 - NEW - Added Instant Images to Gutenberg as a Plugin Sidebar.
 - NEW - Added Gutenberg featured image support.

@@ -2234,7 +2234,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   z-index: 0;
   top: 50%;
   left: 50%;
-  font-size: 85px;
+  font-size: 125px;
   opacity: 0.1;
   -webkit-transform: translateY(-50%) translateX(-50%);
       -ms-transform: translateY(-50%) translateX(-50%);

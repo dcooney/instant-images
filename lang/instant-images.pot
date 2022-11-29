@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-23T20:50:16+00:00\n"
+"POT-Creation-Date: 2022-11-26T02:51:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: instant-images\n"
@@ -57,25 +57,25 @@ msgstr ""
 msgid "The latest Instant Images updates."
 msgstr ""
 
-#: admin/includes/page-settings.php:57
+#: admin/includes/page-settings.php:63
 #: admin/includes/settings.php:30
 msgid "Global Settings"
 msgstr ""
 
-#: admin/includes/page-settings.php:58
+#: admin/includes/page-settings.php:64
 #: admin/includes/settings.php:100
 msgid "Manage your media upload settings."
 msgstr ""
 
-#: admin/includes/page-settings.php:69
+#: admin/includes/page-settings.php:75
 msgid "Save Settings"
 msgstr ""
 
-#: admin/includes/page-settings.php:93
+#: admin/includes/page-settings.php:99
 msgid "Our Plugins"
 msgstr ""
 
-#: admin/includes/page-settings.php:94
+#: admin/includes/page-settings.php:100
 msgid "Check out some of our other WordPress plugins."
 msgstr ""
 
@@ -410,7 +410,7 @@ msgid "The API rate limit has been exceeded for this image provider. Please add 
 msgstr ""
 
 #: instant-images.php:326
-msgid "You're seeing this message because the default image provider has thrown an error. Switch the Default Provider in the Instant Images settings or check the API key."
+msgid "You're seeing this message because the default image provider has thrown an error. Switch the Default Provider in the Instant Images settings or check the API key is valid."
 msgstr ""
 
 #: instant-images.php:327
