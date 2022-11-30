@@ -329,6 +329,8 @@ class InstantImages {
 				'error_on_load_title'     => __( 'An unknown error has occured while accessing {provider}', 'instant-images' ),
 				'error_on_load'           => __( 'Check your API keys are valid and the Default Provider set under the Instant Images settings panel.', 'instant-images' ),
 				'error'                   => __( 'Error', 'instant-images' ),
+				'ad'                      => __( 'Ad', 'instant-images' ),
+				'advertisement'           => __( 'Advertisement', 'instant-images' ),
 				'filters'                 => array(
 					'select'      => __( '-- Select --', 'instant-images' ),
 					'orderby'     => __( 'Order:', 'instant-images' ),

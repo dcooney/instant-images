@@ -79,13 +79,11 @@
 				}
 			}
 		}
-
 		&:focus-within {
 			.user-controls {
 				opacity: 1;
 			}
 		}
-
 		a.upload {
 			display: block;
 			position: relative;
@@ -433,6 +431,64 @@
 			&.has-error {
 				top: -40px;
 				opacity: 0;
+			}
+		}
+		// Advertisement block.
+		&.feature{
+			cursor: pointer;
+			&:hover,
+			&:focus-within{
+				text-decoration: underline;
+				.photo--wrap {
+					border-color: #ccc;
+				}
+			}
+			.photo--wrap{
+				padding: 5px;
+				border: 1px solid $border;
+				border-radius: $radius_sm;
+				transition: border 0.25s ease;
+				.flag{
+					position: absolute;
+					right: 3px;
+					top: 3px;
+					font-size: 11px;
+					background-color: $yellow;
+					z-index: 10;
+					padding: 5px;
+					border-radius: $radius;
+					line-height: 1;
+				}
+				.img-wrap{
+					img{
+						display: block;
+						border-radius: $radius;
+					}
+				}
+				.feature-title{
+					display: flex;
+					align-items: center;
+					width: 100%;
+					padding: 8px 3px 3px;
+					img{
+						border-radius: 100%;
+						width: 25px;
+						height: 25px;
+						object-fit: cover;
+						margin-right: 6px;
+					}
+					span{
+						flex: 1;
+						display: block;
+						width: 100%;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						font-size: 13px;
+						font-weight: 600;
+						line-height: 25px;
+					}
+				}
 			}
 		}
 	}

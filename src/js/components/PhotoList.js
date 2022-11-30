@@ -13,6 +13,7 @@ import getResults, {
 	getSearchTotalByProvider
 } from "../functions/getResults";
 import searchByID from "../functions/searchByID";
+import Advertisement from "./Advertisement";
 import APILightbox from "./APILightbox";
 import ErrorLightbox from "./ErrorLightbox";
 import Filter from "./Filter";
@@ -877,18 +878,27 @@ class PhotoList extends React.Component {
 				<div id="photos" className="photo-target" ref={this.photoTarget}>
 					{this.state.results.length
 						? this.state.results.map((result, iterator) => (
-								<Photo
-									provider={this.provider}
-									result={result}
+								<React.Fragment
 									key={`${this.provider}-${result.id}-${iterator}`}
-									editor={this.editor}
-									mediaRouter={this.is_media_router}
-									blockEditor={this.is_block_editor}
-									SetFeaturedImage={this.SetFeaturedImage}
-									InsertImage={this.InsertImage}
-									showTooltip={this.showTooltip}
-									hideTooltip={this.hideTooltip}
-								/>
+								>
+									{result &&
+									result.type &&
+									result.type === "instant-images-ad" ? (
+										<Advertisement result={result} />
+									) : (
+										<Photo
+											provider={this.provider}
+											result={result}
+											editor={this.editor}
+											mediaRouter={this.is_media_router}
+											blockEditor={this.is_block_editor}
+											SetFeaturedImage={this.SetFeaturedImage}
+											InsertImage={this.InsertImage}
+											showTooltip={this.showTooltip}
+											hideTooltip={this.hideTooltip}
+										/>
+									)}
+								</React.Fragment>
 						  ))
 						: null}
 				</div>

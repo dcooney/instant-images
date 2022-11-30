@@ -40649,6 +40649,128 @@ exports.default = APILightbox;
 
 /***/ }),
 
+/***/ "./src/js/components/Advertisement.js":
+/*!********************************************!*\
+  !*** ./src/js/components/Advertisement.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Advertisement = function (_React$Component) {
+	_inherits(Advertisement, _React$Component);
+
+	function Advertisement(props) {
+		_classCallCheck(this, Advertisement);
+
+		var _this = _possibleConstructorReturn(this, (Advertisement.__proto__ || Object.getPrototypeOf(Advertisement)).call(this, props));
+
+		var result = _this.props.result;
+		var _result$data = result.data,
+		    data = _result$data === undefined ? null : _result$data;
+
+		_this.url = data.url ? data.url : "";
+		_this.title = data.title ? data.title : "";
+		_this.desc = data.description ? data.description : "";
+		_this.avatar = data.avatar ? data.avatar : "";
+		var _data$image = data.image,
+		    image = _data$image === undefined ? null : _data$image;
+
+		_this.image = image.src ? image.src : "";
+		_this.alt = image.alt ? image.alt : "";
+
+		// Refs.
+		_this.photo = _react2.default.createRef();
+		_this.link = _react2.default.createRef();
+		return _this;
+	}
+
+	_createClass(Advertisement, [{
+		key: "render",
+		value: function render() {
+			var _this2 = this;
+
+			return _react2.default.createElement(
+				_react2.default.Fragment,
+				null,
+				this.image && this.url ? _react2.default.createElement(
+					"article",
+					{
+						className: "photo feature",
+						title: this.desc,
+						ref: this.photo,
+						onClick: function onClick() {
+							return _this2.link.current.click();
+						}
+					},
+					_react2.default.createElement(
+						"div",
+						{ className: "photo--wrap" },
+						_react2.default.createElement(
+							"span",
+							{
+								className: "flag",
+								title: instant_img_localize.advertisement
+							},
+							instant_img_localize.ad
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "img-wrap" },
+							_react2.default.createElement(
+								"a",
+								{
+									className: "loaded",
+									href: this.url,
+									target: "_blank",
+									ref: this.link
+								},
+								_react2.default.createElement("img", { src: this.image, alt: this.alt })
+							)
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "feature-title" },
+							this.avatar && _react2.default.createElement("img", { src: this.avatar, alt: this.title }),
+							_react2.default.createElement(
+								"span",
+								null,
+								this.title
+							)
+						)
+					)
+				) : null
+			);
+		}
+	}]);
+
+	return Advertisement;
+}(_react2.default.Component);
+
+exports.default = Advertisement;
+
+/***/ }),
+
 /***/ "./src/js/components/ErrorLightbox.js":
 /*!********************************************!*\
   !*** ./src/js/components/ErrorLightbox.js ***!
@@ -42360,6 +42482,10 @@ var _searchByID = __webpack_require__(/*! ../functions/searchByID */ "./src/js/f
 
 var _searchByID2 = _interopRequireDefault(_searchByID);
 
+var _Advertisement = __webpack_require__(/*! ./Advertisement */ "./src/js/components/Advertisement.js");
+
+var _Advertisement2 = _interopRequireDefault(_Advertisement);
+
 var _APILightbox = __webpack_require__(/*! ./APILightbox */ "./src/js/components/APILightbox.js");
 
 var _APILightbox2 = _interopRequireDefault(_APILightbox);
@@ -43479,18 +43605,23 @@ var PhotoList = function (_React$Component) {
 					"div",
 					{ id: "photos", className: "photo-target", ref: this.photoTarget },
 					this.state.results.length ? this.state.results.map(function (result, iterator) {
-						return _react2.default.createElement(_Photo2.default, {
-							provider: _this4.provider,
-							result: result,
-							key: _this4.provider + "-" + result.id + "-" + iterator,
-							editor: _this4.editor,
-							mediaRouter: _this4.is_media_router,
-							blockEditor: _this4.is_block_editor,
-							SetFeaturedImage: _this4.SetFeaturedImage,
-							InsertImage: _this4.InsertImage,
-							showTooltip: _this4.showTooltip,
-							hideTooltip: _this4.hideTooltip
-						});
+						return _react2.default.createElement(
+							_react2.default.Fragment,
+							{
+								key: _this4.provider + "-" + result.id + "-" + iterator
+							},
+							result && result.type && result.type === "instant-images-ad" ? _react2.default.createElement(_Advertisement2.default, { result: result }) : _react2.default.createElement(_Photo2.default, {
+								provider: _this4.provider,
+								result: result,
+								editor: _this4.editor,
+								mediaRouter: _this4.is_media_router,
+								blockEditor: _this4.is_block_editor,
+								SetFeaturedImage: _this4.SetFeaturedImage,
+								InsertImage: _this4.InsertImage,
+								showTooltip: _this4.showTooltip,
+								hideTooltip: _this4.hideTooltip
+							})
+						);
 					}) : null
 				),
 				this.total_results < 1 && this.is_search === true && _react2.default.createElement(_NoResults2.default, {

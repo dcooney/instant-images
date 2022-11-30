@@ -41,7 +41,6 @@ function GetPhotos(
 		try {
 			// Get response data.
 			const results = await response.json();
-			console.log(results);
 			const { error = null } = results;
 			const app = document.getElementById("app");
 			ReactDOM.render(
