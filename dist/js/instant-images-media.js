@@ -44152,7 +44152,9 @@ var PhotoList = function (_React$Component) {
 								}
 
 								// Build URL.
-								search_params = _extends({}, search_query, this.search_filters, { page: this.page });
+								search_params = _extends({
+									search: true
+								}, search_query, this.search_filters, { page: this.page });
 								params = (0, _getQueryParams2.default)(this.provider, search_params);
 								url = (0, _buildURL2.default)(search_url, params);
 
@@ -44411,7 +44413,9 @@ var PhotoList = function (_React$Component) {
 								// Build URL.
 								loadmore_url = this.is_search ? this.search_api : this.photo_api;
 								filters = this.is_search ? this.search_filters : this.filters;
-								loadmore_params = _extends({}, filters, search_query, { page: this.page });
+								loadmore_params = _extends({
+									search: this.is_search
+								}, filters, search_query, { page: this.page });
 								params = (0, _getQueryParams2.default)(this.provider, loadmore_params);
 								url = (0, _buildURL2.default)(loadmore_url, params);
 

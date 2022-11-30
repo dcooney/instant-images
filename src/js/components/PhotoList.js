@@ -193,6 +193,7 @@ class PhotoList extends React.Component {
 
 		// Build URL.
 		const search_params = {
+			search: true,
 			...search_query,
 			...this.search_filters,
 			...{ page: this.page }
@@ -377,6 +378,7 @@ class PhotoList extends React.Component {
 		const loadmore_url = this.is_search ? this.search_api : this.photo_api;
 		const filters = this.is_search ? this.search_filters : this.filters;
 		const loadmore_params = {
+			search: this.is_search,
 			...filters,
 			...search_query,
 			...{ page: this.page }
