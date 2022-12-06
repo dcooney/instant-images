@@ -43959,6 +43959,10 @@ var _Tooltip = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip
 
 var _Tooltip2 = _interopRequireDefault(_Tooltip);
 
+var _UpgradeNag = __webpack_require__(/*! ./UpgradeNag */ "./src/js/components/UpgradeNag.js");
+
+var _UpgradeNag2 = _interopRequireDefault(_UpgradeNag);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -44907,6 +44911,7 @@ var PhotoList = function (_React$Component) {
 						);
 					})
 				),
+				_react2.default.createElement(_UpgradeNag2.default, null),
 				this.state.api_lightbox && _react2.default.createElement(_APILightbox2.default, {
 					provider: this.state.api_lightbox,
 					afterVerifiedAPICallback: this.afterVerifiedAPICallback.bind(this),
@@ -45266,6 +45271,140 @@ var Tooltip = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Tooltip;
+
+/***/ }),
+
+/***/ "./src/js/components/UpgradeNag.js":
+/*!*****************************************!*\
+  !*** ./src/js/components/UpgradeNag.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UpgradeNag = function (_React$Component) {
+	_inherits(UpgradeNag, _React$Component);
+
+	function UpgradeNag(props) {
+		_classCallCheck(this, UpgradeNag);
+
+		var _this = _possibleConstructorReturn(this, (UpgradeNag.__proto__ || Object.getPrototypeOf(UpgradeNag)).call(this, props));
+
+		_this.ref = _react2.default.createRef();
+		return _this;
+	}
+
+	/**
+  * Dismiss Notice.
+  *
+  * @since 3.2
+  */
+
+
+	_createClass(UpgradeNag, [{
+		key: "dismiss",
+		value: function dismiss() {
+			var self = this;
+			var url = instant_img_localize.root + "instant-images/v5_upgrade_dismissal/"; // REST Route
+			var request = new XMLHttpRequest();
+			request.open("POST", url, true);
+			request.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
+			request.setRequestHeader("Content-Type", "application/json");
+			request.send();
+			request.onload = function () {
+				if (request.status === 200) {
+					if (self.ref.current) {
+						self.ref.current.remove();
+					}
+				}
+			};
+			request.onerror = function (errorMsg) {
+				console.warn(errorMsg);
+			};
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			var _this2 = this;
+
+			return _react2.default.createElement(
+				_react2.default.Fragment,
+				null,
+				!instant_img_localize.v5_upgrade_notice.transient ? _react2.default.createElement(
+					"div",
+					{
+						className: "upgrade-notice notice notice-warning",
+						ref: this.ref
+					},
+					_react2.default.createElement(
+						"p",
+						null,
+						instant_img_localize.v5_upgrade_notice.text,
+						_react2.default.createElement("br", null),
+						_react2.default.createElement(
+							"span",
+							null,
+							_react2.default.createElement(
+								"a",
+								{
+									href: "https://connekthq.com/plugins/instant-images/terms-of-use/",
+									target: "_blank"
+								},
+								instant_img_localize.v5_upgrade_notice.terms
+							),
+							" ",
+							"|",
+							" ",
+							_react2.default.createElement(
+								"a",
+								{
+									href: "https://connekthq.com/plugins/instant-images/privacy-policy/",
+									target: "_blank"
+								},
+								instant_img_localize.v5_upgrade_notice.privacy
+							)
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						null,
+						_react2.default.createElement(
+							"button",
+							{ className: "button", onClick: function onClick() {
+									return _this2.dismiss();
+								} },
+							instant_img_localize.v5_upgrade_notice.dismiss
+						)
+					)
+				) : null
+			);
+		}
+	}]);
+
+	return UpgradeNag;
+}(_react2.default.Component);
+
+exports.default = UpgradeNag;
 
 /***/ }),
 

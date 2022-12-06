@@ -15,13 +15,13 @@
 				<li>
 					<p>
 						<strong>Proxy Server</strong>
-						All API requests to Unsplash, Pexels and Pixabay are now served through our custom proxy server (proxy.getinstantimages.com).
+						All API requests to Unsplash, Pexels and Pixabay are now routed through our custom proxy server (proxy.getinstantimages.com).
 					</p>
 				</li>
 				<li>
 					<p>
 						<strong>Privacy and Terms</strong>
-						 Please take a moment and read our updated <a href="https://connekthq.com/plugins/instant-images/privacy-policy/" target="_blank">Privacy Policy</a> and <a href="https://connekthq.com/plugins/instant-images/terms-of-use/" target="_blank">Terms of Use</a>.
+						Please take a moment and read our updated <a href="https://connekthq.com/plugins/instant-images/privacy-policy/" target="_blank">Privacy Policy</a> and <a href="https://connekthq.com/plugins/instant-images/terms-of-use/" target="_blank">Terms of Use</a>.
 					</p>
 				</li>
 				<li>

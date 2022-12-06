@@ -2018,6 +2018,10 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   display: block;
 }
 
+.components-panel .instant-img-container .notice.upgrade-notice {
+  margin: 10px;
+}
+
 .components-panel .no-results {
   padding: 40px;
 }
@@ -2972,6 +2976,40 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 
 .search-results-header .control-nav--filters-wrap {
   margin: 0 0 15px;
+}
+
+.instant-img-container .notice.upgrade-notice {
+  margin: 20px 0 0;
+  padding: 15px;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  background-color: #f7f7f7;
+  -webkit-box-shadow: 0 8px 16px rgba(48, 63, 122, 0.175);
+          box-shadow: 0 8px 16px rgba(48, 63, 122, 0.175);
+}
+
+.instant-img-container .notice.upgrade-notice p {
+  padding: 0;
+  margin: 0 0 15px;
+  font-size: 13px;
+}
+
+.instant-img-container .notice.upgrade-notice p span {
+  display: block;
+  padding-top: 5px;
+}
+
+.instant-img-container .notice.upgrade-notice > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+}
+
+.instant-img-container .notice.upgrade-notice > div .button {
+  margin-right: 5px;
 }
 
 /*# sourceMappingURL=instant-images.css.map*/

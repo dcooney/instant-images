@@ -323,7 +323,7 @@ class InstantImages {
 				'api_invalid_500_msg'     => __( 'An internal server error has occured - please try again.', 'instant-images' ),
 				'api_invalid_501_msg'     => __( 'No image provider or destination URL set.', 'instant-images' ),
 				'api_ratelimit_msg'       => __( 'The API rate limit has been exceeded for this image provider. Please add a new API key or try again later.', 'instant-images' ),
-				'api_default_provider'    => __( 'You\'re seeing this message because the default image provider has thrown an error. Switch the Default Provider in the Instant Images settings or check the API key is valid.', 'instant-images' ),
+				'api_default_provider'    => __( 'You\'re seeing this message because the default image provider has thrown an error. Switch the Default Provider in the Instant Images settings or check that the API key is valid.', 'instant-images' ),
 				'get_api_key'             => __( 'Get API Key', 'instant-images' ),
 				'use_instant_images_key'  => __( 'Reset Default Key', 'instant-images' ),
 				'error_on_load_title'     => __( 'An unknown error has occured while accessing {provider}', 'instant-images' ),
@@ -331,7 +331,14 @@ class InstantImages {
 				'error'                   => __( 'Error', 'instant-images' ),
 				'ad'                      => __( 'Ad', 'instant-images' ),
 				'advertisement'           => __( 'Advertisement', 'instant-images' ),
-				'filters'                 => array(
+				'v5_upgrade_notice'       => [
+					'transient' => get_transient( 'instant_images_v5_upgrade_notice' ),
+					'text'      => __( 'Disclaimer: API requests to the image providers (Unsplash, Pexels and Pixabay) are now routed through our custom Instant Images proxy server.', 'instant-images' ),
+					'privacy'   => __( 'Privacy Policy', 'instant-images' ),
+					'terms'     => __( 'Terms of Use', 'instant-images' ),
+					'dismiss'   => __( 'Dismiss', 'instant-images' ),
+				],
+				'filters'                 => [
 					'select'      => __( '-- Select --', 'instant-images' ),
 					'orderby'     => __( 'Order:', 'instant-images' ),
 					'type'        => __( 'Type:', 'instant-images' ),
@@ -339,7 +346,7 @@ class InstantImages {
 					'colors'      => __( 'Colors:', 'instant-images' ),
 					'orientation' => __( 'Orientation:', 'instant-images' ),
 					'size'        => __( 'Size:', 'instant-images' ),
-				),
+				],
 			)
 		);
 	}
@@ -360,6 +367,7 @@ class InstantImages {
 		require_once 'api/test.php';
 		require_once 'api/download.php';
 		require_once 'api/settings.php';
+		require_once 'api/v5-upgrade.php';
 	}
 
 	/**
@@ -444,7 +452,7 @@ class InstantImages {
 	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public function instant_images_add_action_links( $links ) {
-		$mylinks = array( '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">Upload Photos</a>' );
+		$mylinks = array( '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Photos', 'instant-images' ) . '</a>' );
 		return array_merge( $mylinks, $links );
 	}
 

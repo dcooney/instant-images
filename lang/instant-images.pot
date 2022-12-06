@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-26T02:51:02+00:00\n"
+"POT-Creation-Date: 2022-12-06T14:18:30+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: instant-images\n"
@@ -57,25 +57,25 @@ msgstr ""
 msgid "The latest Instant Images updates."
 msgstr ""
 
-#: admin/includes/page-settings.php:63
+#: admin/includes/page-settings.php:69
 #: admin/includes/settings.php:30
 msgid "Global Settings"
 msgstr ""
 
-#: admin/includes/page-settings.php:64
+#: admin/includes/page-settings.php:70
 #: admin/includes/settings.php:100
 msgid "Manage your media upload settings."
 msgstr ""
 
-#: admin/includes/page-settings.php:75
+#: admin/includes/page-settings.php:81
 msgid "Save Settings"
 msgstr ""
 
-#: admin/includes/page-settings.php:99
+#: admin/includes/page-settings.php:105
 msgid "Our Plugins"
 msgstr ""
 
-#: admin/includes/page-settings.php:100
+#: admin/includes/page-settings.php:106
 msgid "Check out some of our other WordPress plugins."
 msgstr ""
 
@@ -410,7 +410,7 @@ msgid "The API rate limit has been exceeded for this image provider. Please add 
 msgstr ""
 
 #: instant-images.php:326
-msgid "You're seeing this message because the default image provider has thrown an error. Switch the Default Provider in the Instant Images settings or check the API key is valid."
+msgid "You're seeing this message because the default image provider has thrown an error. Switch the Default Provider in the Instant Images settings or check that the API key is valid."
 msgstr ""
 
 #: instant-images.php:327
@@ -433,30 +433,42 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: instant-images.php:333
-msgid "-- Select --"
+#: instant-images.php:332
+msgid "Ad"
 msgstr ""
 
-#: instant-images.php:334
-msgid "Order:"
+#: instant-images.php:333
+msgid "Advertisement"
 msgstr ""
 
 #: instant-images.php:335
-msgid "Type:"
+msgid "-- Select --"
 msgstr ""
 
 #: instant-images.php:336
-msgid "Category:"
+msgid "Order:"
 msgstr ""
 
 #: instant-images.php:337
-msgid "Colors:"
+msgid "Type:"
 msgstr ""
 
 #: instant-images.php:338
-msgid "Orientation:"
+msgid "Category:"
 msgstr ""
 
 #: instant-images.php:339
+msgid "Colors:"
+msgstr ""
+
+#: instant-images.php:340
+msgid "Orientation:"
+msgstr ""
+
+#: instant-images.php:341
 msgid "Size:"
+msgstr ""
+
+#: instant-images.php:447
+msgid " Get Photos"
 msgstr ""
