@@ -15,7 +15,7 @@
 				<li>
 					<p>
 						<strong>Proxy Server</strong>
-						All API requests to Unsplash, Pexels and Pixabay are now routed through our custom proxy server (proxy.getinstantimages.com).
+						All API requests to Unsplash, Pexels and Pixabay are now routed through our custom proxy server at <a href="https://proxy.getinstantimages.com" target="_blank">proxy.getinstantimages.com</a>.
 					</p>
 				</li>
 				<li>

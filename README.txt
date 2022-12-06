@@ -12,9 +12,9 @@ One click image uploads from Unsplash, Pixabay and Pexels directly to your WordP
 
 == Description ==
 
-Instantly upload photos from Unsplash, Pixabay or Pexels to your website without leaving WordPress!
+Instantly upload photos from Unsplash, Pixabay or Pexels to your website all without ever leaving WordPress!
 
-**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [unsplash.com](http://unsplash.com) and [Pixabay](http://pixabay.com) directly to your media library.
+**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [unsplash.com](http://unsplash.com), [Pixabay](http://pixabay.com) and [Pexels](http://pexels.com) directly to your media library.
 
 [youtube <https://www.youtube.com/watch?v=s6Q7Kfi2f1c>]
 
@@ -34,16 +34,19 @@ The perfect tool for users who want to save time and frustration by uploading im
 - **Edit Image Metadata** - Easily edit image filename, alt text and caption prior to uploading to your media library.
 - **Accessibility** - Automatically include a relevant alt description for screen readers, visually reduced users, and SEO.
 - **Easy to Use** - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
-- **No Unsplash Account Needed** - An Unsplash account is not required for use of this plugin. Just activate and you're ready to go.
+- **No Accounts Needed** - An account on any service provider is not required for use of this plugin. Just activate and you're ready to go.
 
 ---
 
-= Tested Browsers =
+= Proxy Server =
+Instant Images routes all API requests to service providers (Unsplash, Pexels Pixabay) through our custom proxy server at [proxy.getinstantimages.com](https://proxy.getinstantimages.com).
 
-- Firefox (Mac + PC)
-- Chrome (Mac + PC)
-- Safari (Mac)
-- IE 11 >
+Maintaining a proxy server for Instant Images allows us to keep API keys hidden from public view and ensures image data returned from the providers is returned in a normalized format for display in WordPress.
+
+Please take a moment and read our Terms of Use and Privacy Policy for when using our proxy service:
+
+- [Terms of Use](https://connekthq.com/plugins/instant-images/terms-of-use/)
+- [Privacy Policy](https://connekthq.com/plugins/instant-images/privacy-policy/)
 
 ---
 

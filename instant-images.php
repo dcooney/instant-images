@@ -333,7 +333,7 @@ class InstantImages {
 				'advertisement'           => __( 'Advertisement', 'instant-images' ),
 				'v5_upgrade_notice'       => [
 					'transient' => get_transient( 'instant_images_v5_upgrade_notice' ),
-					'text'      => __( 'Disclaimer: API requests to the image providers (Unsplash, Pexels and Pixabay) are now routed through our custom Instant Images proxy server.', 'instant-images' ),
+					'text'      => __( 'Disclaimer: All API requests to the service providers (Unsplash, Pexels and Pixabay) are now routed through our custom Instant Images proxy server.', 'instant-images' ),
 					'privacy'   => __( 'Privacy Policy', 'instant-images' ),
 					'terms'     => __( 'Terms of Use', 'instant-images' ),
 					'dismiss'   => __( 'Dismiss', 'instant-images' ),
