@@ -15,11 +15,11 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	exit;
 }
 
 define( 'INSTANT_IMAGES_VERSION', '5.0' );
-define( 'INSTANT_IMAGES_RELEASE', 'November 23, 2022' );
+define( 'INSTANT_IMAGES_RELEASE', 'December 6, 2022' );
 
 /**
  * Activation hook
