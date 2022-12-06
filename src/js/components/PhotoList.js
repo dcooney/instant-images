@@ -24,7 +24,7 @@ import Photo from "./Photo";
 import RestAPIError from "./RestAPIError";
 import ResultsToolTip from "./ResultsToolTip";
 import Tooltip from "./Tooltip";
-import UpgradeNag from "./UpgradeNag";
+import UpgradeNotice from "./UpgradeNotice";
 const imagesLoaded = require("imagesloaded");
 
 class PhotoList extends React.Component {
@@ -763,7 +763,7 @@ class PhotoList extends React.Component {
 					</nav>
 				)}
 
-				<UpgradeNag />
+				<UpgradeNotice />
 
 				{this.state.api_lightbox && (
 					<APILightbox

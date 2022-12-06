@@ -1,6 +1,6 @@
 import React from "react";
 
-class UpgradeNag extends React.Component {
+class UpgradeNotice extends React.Component {
 	constructor(props) {
 		super(props);
 		this.ref = React.createRef();
@@ -41,9 +41,17 @@ class UpgradeNag extends React.Component {
 						ref={this.ref}
 					>
 						<p>
-							{instant_img_localize.v5_upgrade_notice.text}
+							<strong>
+								{instant_img_localize.v5_upgrade_notice.disclaimer}
+							</strong>
 							<br />
-							<span>
+							<span
+								dangerouslySetInnerHTML={{
+									__html: instant_img_localize.v5_upgrade_notice.text
+								}}
+							/>
+							<br />
+							<span class="links">
 								<a
 									href="https://connekthq.com/plugins/instant-images/terms-of-use/"
 									target="_blank"
@@ -71,4 +79,4 @@ class UpgradeNag extends React.Component {
 	}
 }
 
-export default UpgradeNag;
+export default UpgradeNotice;

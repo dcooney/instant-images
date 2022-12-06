@@ -332,11 +332,13 @@ class InstantImages {
 				'ad'                      => __( 'Ad', 'instant-images' ),
 				'advertisement'           => __( 'Advertisement', 'instant-images' ),
 				'v5_upgrade_notice'       => [
-					'transient' => get_transient( 'instant_images_v5_upgrade_notice' ),
-					'text'      => __( 'Disclaimer: All API requests to the service providers (Unsplash, Pexels and Pixabay) are now routed through our custom Instant Images proxy server.', 'instant-images' ),
-					'privacy'   => __( 'Privacy Policy', 'instant-images' ),
-					'terms'     => __( 'Terms of Use', 'instant-images' ),
-					'dismiss'   => __( 'Dismiss', 'instant-images' ),
+					'transient'  => get_transient( 'instant_images_v5_upgrade_notice' ),
+					'disclaimer' => __( 'Disclaimer', 'instant-images' ),
+					// translators: Instant Images upgrade notice.
+					'text'       => sprintf( __( 'As of Instant Images 5.0, all API requests to service providers (Unsplash, Pexels and Pixabay) are now routed through our custom %1$sInstant Images Proxy%2$s server.', 'instant-images' ), '<a href="https://connekthq.com/plugins/instant-images/faqs/#what-is-the-instant-images-proxy-server" target="_blank">', '</a>' ),
+					'privacy'    => __( 'Privacy Policy', 'instant-images' ),
+					'terms'      => __( 'Terms of Use', 'instant-images' ),
+					'dismiss'    => __( 'Dismiss Notice', 'instant-images' ),
 				],
 				'filters'                 => [
 					'select'      => __( '-- Select --', 'instant-images' ),

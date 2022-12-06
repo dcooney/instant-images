@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-12-06T19:35:55+00:00\n"
+"POT-Creation-Date: 2022-12-06T20:45:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: instant-images\n"
@@ -442,49 +442,54 @@ msgid "Advertisement"
 msgstr ""
 
 #: instant-images.php:336
-msgid "Disclaimer: All API requests to the service providers (Unsplash, Pexels and Pixabay) are now routed through our custom Instant Images proxy server."
+msgid "Disclaimer"
 msgstr ""
 
-#: instant-images.php:337
-msgid "Privacy Policy"
-msgstr ""
-
+#. translators: Instant Images upgrade notice.
 #: instant-images.php:338
-msgid "Terms of Use"
+msgid "As of Instant Images 5.0, all API requests to service providers (Unsplash, Pexels and Pixabay) are now routed through our custom %1$sInstant Images Proxy%2$s server."
 msgstr ""
 
 #: instant-images.php:339
-msgid "Dismiss"
+msgid "Privacy Policy"
 msgstr ""
 
-#: instant-images.php:342
-msgid "-- Select --"
+#: instant-images.php:340
+msgid "Terms of Use"
 msgstr ""
 
-#: instant-images.php:343
-msgid "Order:"
+#: instant-images.php:341
+msgid "Dismiss Notice"
 msgstr ""
 
 #: instant-images.php:344
-msgid "Type:"
+msgid "-- Select --"
 msgstr ""
 
 #: instant-images.php:345
-msgid "Category:"
+msgid "Order:"
 msgstr ""
 
 #: instant-images.php:346
-msgid "Colors:"
+msgid "Type:"
 msgstr ""
 
 #: instant-images.php:347
-msgid "Orientation:"
+msgid "Category:"
 msgstr ""
 
 #: instant-images.php:348
+msgid "Colors:"
+msgstr ""
+
+#: instant-images.php:349
+msgid "Orientation:"
+msgstr ""
+
+#: instant-images.php:350
 msgid "Size:"
 msgstr ""
 
-#: instant-images.php:455
+#: instant-images.php:457
 msgid " Get Photos"
 msgstr ""

@@ -2994,9 +2994,9 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   font-size: 13px;
 }
 
-.instant-img-container .notice.upgrade-notice p span {
+.instant-img-container .notice.upgrade-notice p span.links {
   display: block;
-  padding-top: 5px;
+  padding-top: 10px;
 }
 
 .instant-img-container .notice.upgrade-notice > div {
