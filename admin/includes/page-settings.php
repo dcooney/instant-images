@@ -20,6 +20,12 @@
 				</li>
 				<li>
 					<p>
+						<strong>Privacy and Terms</strong>
+						 Please take a moment and read our updated <a href="https://connekthq.com/plugins/instant-images/privacy-policy/" target="_blank">Privacy Policy</a> and <a href="https://connekthq.com/plugins/instant-images/terms-of-use/" target="_blank">Terms of Use</a>.
+					</p>
+				</li>
+				<li>
+					<p>
 						<strong>Image ID Search</strong>
 						Added support for searching individual photos by image ID - searching <code>id:{photo_id}</code> will return a single result.<br/><br/>e.g. <code>id:YiUi00uqKk8</code>
 					</p>
