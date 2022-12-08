@@ -185,10 +185,16 @@ function instant_images_generate_image_url( $provider, $url, $max_width, $max_he
 	$download_urls = InstantImages::instant_img_get_download_urls();
 	$matched       = false;
 
+	// Parse $url to create URL array.
+	$host = wp_parse_url( $url );
+
+	// Construct a host url from the parsed $url. e.g. https://images.unsplash.com.
+	$host = $host['scheme'] . '://' . $host['host'];
+
 	// To prevent misuse, loop all potential API urls to match the target url.
 	// If the URL for the image to be downloaded is not found, bail early.
 	foreach ( $download_urls as $string ) {
-		if ( strpos( $url, $string ) !== false ) {
+		if ( $host === $string ) {
 			$matched = true;
 		}
 	}

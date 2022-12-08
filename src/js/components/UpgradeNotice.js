@@ -51,7 +51,7 @@ class UpgradeNotice extends React.Component {
 								}}
 							/>
 							<br />
-							<span class="links">
+							<span className="links">
 								<a
 									href="https://connekthq.com/plugins/instant-images/terms-of-use/"
 									target="_blank"

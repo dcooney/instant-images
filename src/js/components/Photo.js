@@ -197,13 +197,12 @@ class Photo extends React.Component {
 						}
 					} else {
 						// Error
-						self.uploadError(target, photo, notice, msg);
+						self.uploadError(target, notice, msg);
 					}
 				} else {
 					// Error
 					self.uploadError(
 						target,
-						photo,
 						notice,
 						instant_img_localize.error_upload
 					);
@@ -343,8 +342,7 @@ class Photo extends React.Component {
 	/**
 	 * Function runs when error occurs on upload or resize.
 	 *
-	 * @param {Element} target Current clicked item/
-	 * @param {Element} photo  The `.photo` element.
+	 * @param {Element} target Current clicked item.
 	 * @param {Element} notice The notice element.
 	 * @param {string}  msg    Error Msg.
 	 * @since 3.0

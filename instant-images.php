@@ -129,10 +129,7 @@ class InstantImages {
 	 */
 	public static function instant_img_get_download_urls() {
 		$providers = self::instant_img_get_providers();
-		$urls      = [];
-		foreach ( $providers as $provider ) {
-			$urls[] = $provider['download_url'];
-		}
+		$urls      = wp_list_pluck( $providers, 'download_url' );
 		return $urls;
 	}
 
