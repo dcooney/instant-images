@@ -30,7 +30,7 @@ function GetPhotos(
 
 	// Build URL.
 	const params = getQueryParams(provider);
-	const url = buildURL(API[provider].photo_api, params);
+	const url = buildURL("photos", params);
 
 	async function initialize() {
 		// Create fetch request.

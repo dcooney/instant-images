@@ -14,15 +14,18 @@ export default function searchByID(options, term) {
 	let url = "";
 	switch (provider) {
 		case "unsplash":
-			url = `${photo_api}${id}`; // https://api.unsplash.com/photos/{PHOTO_ID}
+			// https://api.unsplash.com/photos/{PHOTO_ID}
+			url = `${photo_api}${id}`;
 			break;
 
 		case "pixabay":
-			url = `${photo_api}?id=${id}`; // https://pixabay.com/api/?id={PHOTO_ID}
+			// https://pixabay.com/api/?id={PHOTO_ID}
+			url = `${photo_api}?id=${id}`;
 			break;
 
 		case "pexels":
-			url = `${photo_api.replace("curated", "photos")}/${id}`; // https://api.pexels.com/v1/photos/{PHOTO_ID}
+			// https://api.pexels.com/v1/photos/{PHOTO_ID}
+			url = `${photo_api.replace("curated", "photos")}/${id}`;
 			break;
 	}
 

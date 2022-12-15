@@ -13,7 +13,7 @@ export default function generateAttribution(provider, url, name) {
 	const referral = "utm_source=wordpress-instant-images&utm_medium=referral";
 	const attribution = `${
 		instant_img_localize.photo_by
-	} ${" "}<a href="${url}" rel="nofollow">${name}</a> ${
+	}${" "}<a href="${url}" rel="nofollow">${name}</a> ${
 		instant_img_localize.on
 	} <a href="${
 		instant_img_localize[provider_url]

@@ -8,11 +8,7 @@ import buildURL from "../functions/buildURL";
 import checkRateLimit from "../functions/checkRateLimit";
 import consoleStatus from "../functions/consoleStatus";
 import getQueryParams from "../functions/getQueryParams";
-import getResults, {
-	getResultById,
-	getSearchTotalByProvider
-} from "../functions/getResults";
-import searchByID from "../functions/searchByID";
+import getResults, { getSearchTotal } from "../functions/getResults";
 import Advertisement from "./Advertisement";
 import APILightbox from "./APILightbox";
 import ErrorLightbox from "./ErrorLightbox";
@@ -35,7 +31,6 @@ class PhotoList extends React.Component {
 		this.providers = API.providers;
 		this.provider = this.props.provider; // Unsplash, Pixabay, etc.
 		this.api_provider = API[this.provider]; // The API settings for the provider.
-		this.arr_key = this.api_provider.arr_key;
 		this.per_page = API.defaults.per_page;
 
 		// API Vars.
@@ -46,11 +41,7 @@ class PhotoList extends React.Component {
 		this.api_error = this.props.error;
 
 		// Results state.
-		this.results = getResults(
-			this.provider,
-			this.arr_key,
-			this.props.results
-		);
+		this.results = getResults(this.props.results);
 
 		this.state = {
 			results: this.results,
@@ -110,6 +101,8 @@ class PhotoList extends React.Component {
 			this.wrapper = this.props.container.closest(".instant-images-wrapper");
 			this.container.classList.add("loading");
 		}
+
+		this.escFunction = this.escFunction.bind(this);
 	}
 
 	/**
@@ -180,27 +173,26 @@ class PhotoList extends React.Component {
 		this.page = 1; // Reset current page num.
 		this.toggleFilters(); // Disable filters.
 
-		// Build API URL.
-		let search_url = this.search_api;
+		// Get search query.
 		let search_query = {};
-
 		if (search_type === "id") {
-			search_url = searchByID(this, term);
+			search_query = {
+				id: this.search_term.replace("id:", "").replace(/\s+/, "")
+			};
 		} else {
 			search_query = {
-				[this.api_provider.search_var]: this.search_term
+				term: this.search_term
 			};
 		}
 
 		// Build URL.
 		const search_params = {
-			search: true,
 			...search_query,
 			...this.search_filters,
 			...{ page: this.page }
 		};
 		const params = getQueryParams(this.provider, search_params);
-		const url = buildURL(search_url, params);
+		const url = buildURL("search", params);
 
 		// Create fetch request.
 		const response = await fetch(url);
@@ -210,65 +202,20 @@ class PhotoList extends React.Component {
 		try {
 			// Get response data.
 			const data = await response.json();
+			const results = getResults(data);
 
-			// Switch search types. Term or ID.
-			switch (search_type) {
-				case "term":
-					const results = getResults(
-						this.provider,
-						this.arr_key,
-						data,
-						true
-					);
+			this.total_results = getSearchTotal(data);
 
-					this.total_results = getSearchTotalByProvider(
-						this.provider,
-						data
-					);
+			// Check for returned data.
+			this.checkTotalResults(results.length);
 
-					// Check for returned data.
-					this.checkTotalResults(results.length);
-
-					// Update Props.
-					this.show_search_filters = this.total_results > 0 ? true : false;
-					this.results = results;
-					this.setState({
-						results: this.results,
-						search_filters: FILTERS[this.provider].search
-					});
-
-					break;
-
-				case "id":
-					// Convert return data to array.
-					const photoArray = [];
-
-					// Get results via ID.
-					const result = getResultById(
-						this.provider,
-						this.arr_key,
-						data,
-						true
-					);
-
-					// Data comes back differently in a search by ID.
-					if (data.errors) {
-						// If error was returned (Unsplash Only).
-						this.total_results = 0;
-						this.checkTotalResults("0");
-					} else {
-						// No errors, display results
-						photoArray.push(result);
-						this.total_results = 1;
-						this.checkTotalResults("1");
-						this.isDone = true;
-					}
-
-					this.show_search_filters = false;
-					this.results = photoArray;
-					this.setState({ results: self.results });
-					break;
-			}
+			// Update Props.
+			this.show_search_filters = this.total_results > 0 ? true : false;
+			this.results = results;
+			this.setState({
+				results: this.results,
+				search_filters: FILTERS[this.provider].search
+			});
 
 			// Delay for effect.
 			setTimeout(function() {
@@ -315,7 +262,7 @@ class PhotoList extends React.Component {
 
 		// Build URL.
 		const params = getQueryParams(this.provider, this.filters);
-		const url = buildURL(this.photo_api, params);
+		const url = buildURL("photos", params);
 
 		// Create fetch request.
 		const response = await fetch(url);
@@ -327,7 +274,7 @@ class PhotoList extends React.Component {
 			const data = await response.json();
 			const { error = null } = data; // Get error reporting.
 
-			const results = getResults(this.provider, this.arr_key, data);
+			const results = getResults(data);
 			this.checkTotalResults(results.length); // Check for returned data.
 			this.results = results; // Update Props.
 			this.api_error = error;
@@ -376,16 +323,15 @@ class PhotoList extends React.Component {
 		}
 
 		// Build URL.
-		const loadmore_url = this.is_search ? this.search_api : this.photo_api;
+		const type = this.is_search ? "search" : "photos";
 		const filters = this.is_search ? this.search_filters : this.filters;
 		const loadmore_params = {
-			search: this.is_search,
 			...filters,
 			...search_query,
 			...{ page: this.page }
 		};
 		const params = getQueryParams(this.provider, loadmore_params);
-		const url = buildURL(loadmore_url, params);
+		const url = buildURL(type, params);
 
 		// Create fetch request.
 		const response = await fetch(url);
@@ -394,12 +340,7 @@ class PhotoList extends React.Component {
 
 		try {
 			const data = await response.json();
-			let results = getResults(
-				this.provider,
-				this.arr_key,
-				data,
-				this.is_search
-			);
+			let results = getResults(data);
 
 			// Unsplash search results are returned in different JSON format
 			if (this.is_search && this.provider === "unsplash") {
@@ -564,7 +505,6 @@ class PhotoList extends React.Component {
 		// Update API provider params.
 		this.provider = provider;
 		this.api_provider = API[this.provider];
-		this.arr_key = this.api_provider.arr_key;
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 		this.photo_api = this.api_provider.photo_api;
 		this.search_api = this.api_provider.search_api;
@@ -715,6 +655,25 @@ class PhotoList extends React.Component {
 		};
 	}
 
+	/**
+	 * Escape handler to close edit windows on photos.
+	 *
+	 * @param {Event} e The key event.
+	 */
+	escFunction(e) {
+		const { key } = e;
+		if (key === "Escape") {
+			const editing = this.photoTarget.current.querySelectorAll(
+				".edit-screen.editing"
+			);
+			if (editing) {
+				[...editing].forEach(element => {
+					element && element.classList.remove("editing");
+				});
+			}
+		}
+	}
+
 	// Component Updated
 	componentDidUpdate() {
 		this.renderLayout();
@@ -728,11 +687,14 @@ class PhotoList extends React.Component {
 		this.test();
 		this.container.classList.remove("loading");
 		this.wrapper.classList.add("loaded");
+		const self = this;
 
 		// Not Gutenberg and Media Popup add scroll listener.
 		if (!this.is_block_editor && !this.is_media_router) {
 			window.addEventListener("scroll", () => this.onScroll());
 		}
+
+		document.addEventListener("keydown", this.escFunction, false);
 	}
 
 	render() {
@@ -847,7 +809,7 @@ class PhotoList extends React.Component {
 
 				{this.is_search && this.editor !== "gutenberg" && (
 					<div className="search-results-header">
-						<h2>{this.search_term}</h2>
+						<h2>{this.search_term.replace("id:", "ID: ")}</h2>
 						<div className="search-results-header--text">
 							{`${this.total_results} ${instant_img_localize.search_results}`}{" "}
 							<strong>{`${this.search_term}`}</strong>

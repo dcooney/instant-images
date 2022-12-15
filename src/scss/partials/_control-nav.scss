@@ -225,7 +225,7 @@
 				}
 				&:focus {
 					border-color: $text_light;
-					box-shadow: 0 0 1px 5px rgba(#000, 0.025);
+					box-shadow: 0 0 1px 5px rgba(#000, 0.035);
 				}
 				&.searching {
 					background-image: url("../img/ajax-loader.gif");

@@ -111,10 +111,12 @@ class APILightbox extends React.Component {
 	 */
 	closeLightbox() {
 		const self = this;
-		this.lightbox.current.classList.remove("active");
-		setTimeout(function() {
-			self.closeAPILightbox(this.provider);
-		}, 250);
+		if (self.lightbox.current) {
+			this.lightbox.current.classList.remove("active");
+			setTimeout(function() {
+				self.closeAPILightbox(this.provider);
+			}, 250);
+		}
 	}
 
 	/**
@@ -134,7 +136,8 @@ class APILightbox extends React.Component {
 	 * @param {Event} e The key press event.
 	 */
 	escFunction(e) {
-		if (e.keyCode === 27) {
+		const { key } = e;
+		if (key === "Escape") {
 			this.closeLightbox();
 		}
 	}

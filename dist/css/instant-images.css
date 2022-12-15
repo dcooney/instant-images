@@ -772,8 +772,8 @@ body.media_page_instant-images.overflow-hidden {
 
 .instant-img-container .control-nav--search input:focus {
   border-color: #999;
-  -webkit-box-shadow: 0 0 1px 5px rgba(0, 0, 0, 0.025);
-          box-shadow: 0 0 1px 5px rgba(0, 0, 0, 0.025);
+  -webkit-box-shadow: 0 0 1px 5px rgba(0, 0, 0, 0.035);
+          box-shadow: 0 0 1px 5px rgba(0, 0, 0, 0.035);
 }
 
 .instant-img-container .control-nav--search input.searching {
@@ -2937,8 +2937,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   line-height: 1;
   padding: 0;
   margin: 0 0 5px;
-  text-transform: capitalize;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 @media screen and (max-width: 800px) {

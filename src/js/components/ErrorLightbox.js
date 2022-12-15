@@ -19,10 +19,12 @@ class ErrorLightbox extends React.Component {
 	 */
 	closeLightbox() {
 		const self = this;
-		self.lightbox.current.classList.remove("active");
-		setTimeout(function() {
-			self.lightbox.current && self.lightbox.current.remove();
-		}, 275);
+		if (self.lightbox.current) {
+			self.lightbox.current.classList.remove("active");
+			setTimeout(function() {
+				self.lightbox.current && self.lightbox.current.remove();
+			}, 275);
+		}
 	}
 
 	/**
@@ -42,7 +44,8 @@ class ErrorLightbox extends React.Component {
 	 * @param {Event} e The key press event.
 	 */
 	escFunction(e) {
-		if (e.keyCode === 27) {
+		const { key } = e;
+		if (key === "Escape") {
 			this.closeLightbox();
 		}
 	}

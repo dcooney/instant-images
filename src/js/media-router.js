@@ -131,7 +131,7 @@ const getMediaModalProvider = async element => {
 
 	// Build URL.
 	const params = getQueryParams(provider);
-	const url = buildURL(API[provider].photo_api, params);
+	const url = buildURL("photos", params);
 
 	// Create fetch request.
 	const response = await fetch(url);

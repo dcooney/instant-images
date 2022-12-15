@@ -1,13 +1,13 @@
 /**
  * Build the API query parameters.
  *
- * @param  {string}  dest   The base API URL.
- * @param  {object}  params The current params object.
- * @return {string} 			 The new API URL with querystring params.
+ * @param  {string} type   The query type (search, photos, id).
+ * @param  {object} params The current params object.
+ * @return {string} 		   The new API URL with querystring params.
  */
-export default function buildURL(dest, params) {
-	if (!dest) {
-		// Bail early is destination URL is missing.
+export default function buildURL(type, params) {
+	if (!type) {
+		// Bail early if API query type is missing.
 		return "";
 	}
 	// Get the current provider.
@@ -19,11 +19,13 @@ export default function buildURL(dest, params) {
 	// Build the API URL.
 	const url = new URL(getProxyURL(provider));
 
+	// Add `type` to params.
+	url.searchParams.append("type", type);
+
 	// Append query params.
 	Object.keys(params).forEach(key => {
 		url.searchParams.append(key, params[key]);
 	});
-	url.searchParams.append("dest", dest);
 
 	return url;
 }

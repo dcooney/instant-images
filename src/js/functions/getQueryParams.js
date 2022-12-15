@@ -18,9 +18,9 @@ export default function getQueryParams(provider, filters) {
 		per_page: API.defaults.per_page
 	};
 
-	params = getAuth(params, provider);
 	params = getContentSafety(params, provider);
 	params = { ...params, ...filters };
+	params = getAuth(params, provider);
 
 	/**
 	 * Display query params in the browser console.
@@ -34,13 +34,11 @@ export default function getQueryParams(provider, filters) {
 }
 
 /**
- * Set the photo safety for indicating that only images suitable for all ages should be returned.
- * @see https://unsplash.com/documentation#content-safety
- * @see https://pixabay.com/api/docs/
+ * Get auth keys and append to API query request.
  *
- * @param  {object}  params   The current params object.
- * @param  {string}  provider The current service provider.
- * @return {object} 				The fetch parameters object.
+ * @param  {object} params   The current params object.
+ * @param  {string} provider The current service provider.
+ * @return {object}          The auth parameter object.
  */
 export function getAuth(params, provider) {
 	const has_auth = API[provider].requires_key;
