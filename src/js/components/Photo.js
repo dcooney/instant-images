@@ -19,14 +19,14 @@ class Photo extends React.Component {
 		this.full = result && result.urls && result.urls.full;
 		this.download_url = result && result.urls && result.urls.download_url;
 		this.username = result && result.user && result.user.username;
-		this.img_title = `${instant_img_localize.photo_by} ${this.username}`;
+		this.name = result && result.user && result.user.name;
+		this.img_title = `${instant_img_localize.photo_by} ${this.name}`;
 		this.filename = this.id;
 		this.title = this.img_title;
 		this.alt = result && result.urls && result.urls.alt;
 		this.alt = result.alt === null ? "" : this.alt;
 		this.caption = "";
 
-		this.name = result && result.user && result.user.name;
 		this.user_photo = result && result.user && result.user.photo;
 		this.user_url = result && result.user && result.user.url;
 		this.permalink = result && result.permalink;

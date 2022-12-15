@@ -42975,14 +42975,14 @@ var Photo = function (_React$Component) {
 		_this.full = result && result.urls && result.urls.full;
 		_this.download_url = result && result.urls && result.urls.download_url;
 		_this.username = result && result.user && result.user.username;
-		_this.img_title = instant_img_localize.photo_by + " " + _this.username;
+		_this.name = result && result.user && result.user.name;
+		_this.img_title = instant_img_localize.photo_by + " " + _this.name;
 		_this.filename = _this.id;
 		_this.title = _this.img_title;
 		_this.alt = result && result.urls && result.urls.alt;
 		_this.alt = result.alt === null ? "" : _this.alt;
 		_this.caption = "";
 
-		_this.name = result && result.user && result.user.name;
 		_this.user_photo = result && result.user && result.user.photo;
 		_this.user_url = result && result.user && result.user.url;
 		_this.permalink = result && result.permalink;
