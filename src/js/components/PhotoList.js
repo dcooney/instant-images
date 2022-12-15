@@ -210,7 +210,7 @@ class PhotoList extends React.Component {
 			this.checkTotalResults(results.length);
 
 			// Update Props.
-			this.show_search_filters = this.total_results > 0 ? true : false;
+			this.show_search_filters = this.total_results > 1 ? true : false;
 			this.results = results;
 			this.setState({
 				results: this.results,
@@ -318,7 +318,7 @@ class PhotoList extends React.Component {
 		let search_query = {};
 		if (this.is_search) {
 			search_query = {
-				[this.api_provider.search_var]: this.search_term
+				term: this.search_term
 			};
 		}
 
@@ -326,8 +326,8 @@ class PhotoList extends React.Component {
 		const type = this.is_search ? "search" : "photos";
 		const filters = this.is_search ? this.search_filters : this.filters;
 		const loadmore_params = {
-			...filters,
 			...search_query,
+			...filters,
 			...{ page: this.page }
 		};
 		const params = getQueryParams(this.provider, loadmore_params);

@@ -42532,8 +42532,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42756,7 +42754,7 @@ var PhotoList = function (_React$Component) {
 								this.checkTotalResults(results.length);
 
 								// Update Props.
-								this.show_search_filters = this.total_results > 0 ? true : false;
+								this.show_search_filters = this.total_results > 1 ? true : false;
 								this.results = results;
 								this.setState({
 									results: this.results,
@@ -42943,13 +42941,15 @@ var PhotoList = function (_React$Component) {
 								search_query = {};
 
 								if (this.is_search) {
-									search_query = _defineProperty({}, this.api_provider.search_var, this.search_term);
+									search_query = {
+										term: this.search_term
+									};
 								}
 
 								// Build URL.
 								type = this.is_search ? "search" : "photos";
 								filters = this.is_search ? this.search_filters : this.filters;
-								loadmore_params = _extends({}, filters, search_query, { page: this.page });
+								loadmore_params = _extends({}, search_query, filters, { page: this.page });
 								params = (0, _getQueryParams2.default)(this.provider, loadmore_params);
 								url = (0, _buildURL2.default)(type, params);
 
@@ -43992,33 +43992,21 @@ module.exports = {
 	unsplash: {
 		name: "Unsplash",
 		requires_key: true,
-		auth_headers: false,
 		new: false,
 		api_var: "client_id",
-		collections_api: "https://api.unsplash.com/collections/",
-		photo_api: "https://api.unsplash.com/photos/",
-		search_api: "https://api.unsplash.com/search/photos/",
-		search_var: "query"
+		collections_api: "https://api.unsplash.com/collections/"
 	},
 	pixabay: {
 		name: "Pixabay",
 		requires_key: true,
-		auth_headers: false,
 		new: false,
-		api_var: "key",
-		photo_api: "https://pixabay.com/api/",
-		search_api: "https://pixabay.com/api/",
-		search_var: "q"
+		api_var: "key"
 	},
 	pexels: {
 		name: "Pexels",
 		requires_key: true,
-		auth_headers: true,
 		new: false,
-		api_var: "key",
-		photo_api: "https://api.pexels.com/v1/curated/",
-		search_api: "https://api.pexels.com/v1/search/",
-		search_var: "query"
+		api_var: "key"
 	}
 };
 
@@ -44516,23 +44504,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Build the API query parameters
  *
- * @param  {string}  provider  The current service provider.
- * @param  {object}  filters   Optional query filters to append to base params.
- * @return {object} 				 Parameters used for the fetch request.
+ * @param  {string} provider    The current service provider.
+ * @param  {object} queryParams Optional query parameters to append to base params.
+ * @return {object} 				  Parameters used for the fetch request.
  */
-function getQueryParams(provider, filters) {
+function getQueryParams(provider, queryParams) {
 	if (!provider) {
 		return {};
 	}
 
-	// Default params.
+	// Construct per page amount.
+	var per_page = queryParams && queryParams.id ? 1 : _API2.default.defaults.per_page;
+
+	// Set default params.
 	var params = {
 		provider: provider,
-		per_page: _API2.default.defaults.per_page
+		per_page: per_page
 	};
 
+	// Append additional params.
 	params = getContentSafety(params, provider);
-	params = _extends({}, params, filters);
+	params = _extends({}, params, queryParams);
 	params = getAuth(params, provider);
 
 	/**
@@ -44669,10 +44661,8 @@ function getResultById(provider, key, data) {
  * @return {string}      The total results.
  */
 function getSearchTotal(data) {
-	var total = data.total;
-
-	// Set total to 0 if undefined.
-	return total === undefined ? 0 : total;
+	// Return 0 if undefined or null.
+	return data.total === undefined || data.total === null ? 0 : data.total;
 }
 
 /***/ }),

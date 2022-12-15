@@ -51,8 +51,6 @@ export function getResultById(provider, key, data) {
  * @return {string}      The total results.
  */
 export function getSearchTotal(data) {
-	let total = data.total;
-
-	// Set total to 0 if undefined.
-	return total === undefined ? 0 : total;
+	// Return 0 if undefined or null.
+	return data.total === undefined || data.total === null ? 0 : data.total;
 }

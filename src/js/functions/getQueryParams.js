@@ -3,23 +3,27 @@ import API from "../constants/API";
 /**
  * Build the API query parameters
  *
- * @param  {string}  provider  The current service provider.
- * @param  {object}  filters   Optional query filters to append to base params.
- * @return {object} 				 Parameters used for the fetch request.
+ * @param  {string} provider    The current service provider.
+ * @param  {object} queryParams Optional query parameters to append to base params.
+ * @return {object} 				  Parameters used for the fetch request.
  */
-export default function getQueryParams(provider, filters) {
+export default function getQueryParams(provider, queryParams) {
 	if (!provider) {
 		return {};
 	}
 
-	// Default params.
+	// Construct per page amount.
+	const per_page = queryParams && queryParams.id ? 1 : API.defaults.per_page;
+
+	// Set default params.
 	let params = {
 		provider: provider,
-		per_page: API.defaults.per_page
+		per_page: per_page
 	};
 
+	// Append additional params.
 	params = getContentSafety(params, provider);
-	params = { ...params, ...filters };
+	params = { ...params, ...queryParams };
 	params = getAuth(params, provider);
 
 	/**
