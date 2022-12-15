@@ -16,6 +16,17 @@ export default function getResults(data) {
 }
 
 /**
+ * Get the total search results.
+ *
+ * @param  {object} data The search data object.
+ * @return {string}      The total results.
+ */
+export function getSearchTotal(data) {
+	// Return 0 if undefined or null.
+	return data.total === undefined || data.total === null ? 0 : data.total;
+}
+
+/**
  * Get results by photo ID.
  *
  * @param  {string} provider The current service provider.
@@ -42,15 +53,4 @@ export function getResultById(provider, key, data) {
 	}
 
 	return result;
-}
-
-/**
- * Get the total search results.
- *
- * @param  {object} data The search data object.
- * @return {string}      The total results.
- */
-export function getSearchTotal(data) {
-	// Return 0 if undefined or null.
-	return data.total === undefined || data.total === null ? 0 : data.total;
 }

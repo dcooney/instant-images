@@ -46034,8 +46034,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.default = getResults;
-exports.getResultById = getResultById;
 exports.getSearchTotal = getSearchTotal;
+exports.getResultById = getResultById;
 
 var _API = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
 
@@ -46056,6 +46056,17 @@ function getResults(data) {
 
 	var results = data[_API2.default.defaults.arr_key] || [];
 	return results;
+}
+
+/**
+ * Get the total search results.
+ *
+ * @param  {object} data The search data object.
+ * @return {string}      The total results.
+ */
+function getSearchTotal(data) {
+	// Return 0 if undefined or null.
+	return data.total === undefined || data.total === null ? 0 : data.total;
 }
 
 /**
@@ -46085,17 +46096,6 @@ function getResultById(provider, key, data) {
 	}
 
 	return result;
-}
-
-/**
- * Get the total search results.
- *
- * @param  {object} data The search data object.
- * @return {string}      The total results.
- */
-function getSearchTotal(data) {
-	// Return 0 if undefined or null.
-	return data.total === undefined || data.total === null ? 0 : data.total;
 }
 
 /***/ }),
