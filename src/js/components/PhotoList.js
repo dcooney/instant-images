@@ -119,6 +119,7 @@ class PhotoList extends React.Component {
 		if (term.length > 2) {
 			input.classList.add("searching");
 			this.search_term = term;
+			this.search_filters = {};
 			this.is_search = true;
 			this.doSearch(this.search_term);
 		} else {
@@ -176,10 +177,12 @@ class PhotoList extends React.Component {
 		// Get search query.
 		let search_query = {};
 		if (search_type === "id") {
+			this.show_search_filters = false;
 			search_query = {
 				id: this.search_term.replace("id:", "").replace(/\s+/, "")
 			};
 		} else {
+			this.show_search_filters = true;
 			search_query = {
 				term: this.search_term
 			};
@@ -210,7 +213,8 @@ class PhotoList extends React.Component {
 			this.checkTotalResults(results.length);
 
 			// Update Props.
-			this.show_search_filters = this.total_results > 1 ? true : false;
+			this.search_filters;
+			//this.show_search_filters = this.total_results > 1 ? true : false;
 			this.results = results;
 			this.setState({
 				results: this.results,
@@ -674,26 +678,26 @@ class PhotoList extends React.Component {
 		}
 	}
 
-	// Component Updated
+	// Component Updated.
 	componentDidUpdate() {
 		this.renderLayout();
 		this.doneLoading();
 	}
 
-	// Component Init
+	// Component Mount.
 	componentDidMount() {
 		this.renderLayout();
 		this.doneLoading();
 		this.test();
 		this.container.classList.remove("loading");
 		this.wrapper.classList.add("loaded");
-		const self = this;
 
 		// Not Gutenberg and Media Popup add scroll listener.
 		if (!this.is_block_editor && !this.is_media_router) {
 			window.addEventListener("scroll", () => this.onScroll());
 		}
 
+		// Add escape listener.
 		document.addEventListener("keydown", this.escFunction, false);
 	}
 
