@@ -15,10 +15,11 @@ class Filter extends React.Component {
 		this.closeMenuOutside = this.closeMenuOutside.bind(this);
 		this.focusOutside = this.focusOutside.bind(this);
 		this.escClick = this.escClick.bind(this);
+		this.reset = this.reset.bind(this);
 		this.isColor = this.filterKey === "colors" || this.filterKey === "color";
 		this.state = {
 			expanded: false,
-			selected: this.data.default,
+			selected: this.data.default
 		};
 	}
 
@@ -96,14 +97,20 @@ class Filter extends React.Component {
 		const newValue = this.state.selected !== value ? value : this.default;
 
 		this.setState({
-			selected: newValue,
+			selected: newValue
 		});
 		this.clickHandler(filter, newValue);
 
 		// Delay for effect.
-		setTimeout(function () {
+		setTimeout(function() {
 			self.trigger.click();
 		}, 100);
+	}
+
+	reset() {
+		this.setState({
+			selected: this.default
+		});
 	}
 
 	/**
@@ -127,7 +134,7 @@ class Filter extends React.Component {
 	componentDidMount() {
 		// Initiate arrow menus.
 		a11yarrows.init(this.dropdown, {
-			selector: "button",
+			selector: "button"
 		});
 
 		// Check for focus outside.
@@ -146,7 +153,7 @@ class Filter extends React.Component {
 			<div
 				className="filter-dropdown"
 				id={this.id}
-				ref={(element) => {
+				ref={element => {
 					this.dropdown = element;
 				}}
 			>
@@ -154,7 +161,7 @@ class Filter extends React.Component {
 					onClick={this.toggleMenu}
 					className="filter-dropdown--button"
 					aria-expanded={this.state.expanded ? "true" : "false"}
-					ref={(element) => {
+					ref={element => {
 						this.trigger = element;
 					}}
 				>
@@ -162,7 +169,7 @@ class Filter extends React.Component {
 						{instant_img_localize.filters[this.data.label]}
 					</span>
 					<span className="filter-dropdown--button-selected">
-						{this.state.selected}
+						{this.state.selected.replace(/_/g, " ")}
 						<i className="fa fa-caret-down" aria-hidden="true"></i>
 					</span>
 				</button>
@@ -173,7 +180,7 @@ class Filter extends React.Component {
 					)}
 					data-key={this.filterKey}
 					aria-hidden={this.state.expanded ? "false" : "true"}
-					ref={(element) => {
+					ref={element => {
 						this.menu = element;
 					}}
 				>

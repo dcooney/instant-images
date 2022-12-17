@@ -9,6 +9,7 @@ import checkRateLimit from "../functions/checkRateLimit";
 import consoleStatus from "../functions/consoleStatus";
 import getQueryParams from "../functions/getQueryParams";
 import getResults, { getSearchTotal } from "../functions/getResults";
+import isObjectEmpty from "../functions/isObjectEmpty";
 import Advertisement from "./Advertisement";
 import APILightbox from "./APILightbox";
 import ErrorLightbox from "./ErrorLightbox";
@@ -75,6 +76,7 @@ class PhotoList extends React.Component {
 		this.controlNav = React.createRef();
 		this.photoSearch = React.createRef();
 		this.filterGroups = React.createRef();
+		this.filterRef = [];
 
 		// Editor props.
 		this.editor = this.props.editor ? this.props.editor : "classic";
@@ -105,6 +107,12 @@ class PhotoList extends React.Component {
 		this.escFunction = this.escFunction.bind(this);
 	}
 
+	resetFilters() {
+		this.filterRef.forEach(filter => {
+			filter.reset();
+		});
+	}
+
 	/**
 	 * Trigger Search.
 	 *
@@ -115,6 +123,8 @@ class PhotoList extends React.Component {
 		event.preventDefault();
 		const input = this.photoSearch.current;
 		const term = input.value;
+
+		this.resetFilters();
 
 		if (term.length > 2) {
 			input.classList.add("searching");
@@ -207,14 +217,17 @@ class PhotoList extends React.Component {
 			const data = await response.json();
 			const results = getResults(data);
 
+			// Check returned data.
 			this.total_results = getSearchTotal(data);
-
-			// Check for returned data.
 			this.checkTotalResults(results.length);
 
+			// Hide search filters if no results and not filtering.
+			this.show_search_filters =
+				this.total_results < 1 && isObjectEmpty(this.search_filters)
+					? false
+					: true;
+
 			// Update Props.
-			this.search_filters;
-			//this.show_search_filters = this.total_results > 1 ? true : false;
 			this.results = results;
 			this.setState({
 				results: this.results,
@@ -830,9 +843,12 @@ class PhotoList extends React.Component {
 								<div className="control-nav--filters-wrap">
 									<div className="control-nav--filters">
 										{Object.entries(this.state.search_filters).map(
-											([key, filter], i) => (
+											([key, filter], index) => (
 												<Filter
-													key={`${key}-${i}`}
+													ref={ref =>
+														(this.filterRef[index] = ref)
+													}
+													key={`${key}-${index}`}
 													filterKey={key}
 													provider={this.provider}
 													data={filter}
