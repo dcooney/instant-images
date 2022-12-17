@@ -56,7 +56,6 @@ function GetPhotos(
 				document.getElementById("app")
 			);
 		} catch (error) {
-			console.log(error);
 			consoleStatus(provider, status);
 		}
 

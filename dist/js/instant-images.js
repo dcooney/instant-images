@@ -46460,17 +46460,16 @@ function GetPhotos() {
 								provider: provider,
 								error: error
 							}), document.getElementById("app"));
-							_context.next = 18;
+							_context.next = 17;
 							break;
 
 						case 14:
 							_context.prev = 14;
 							_context.t0 = _context["catch"](5);
 
-							console.log(_context.t0);
 							(0, _consoleStatus2.default)(provider, status);
 
-						case 18:
+						case 17:
 
 							// Remove init button (if required).
 							initWrap = container.querySelector(".initialize-wrap");
@@ -46479,7 +46478,7 @@ function GetPhotos() {
 								initWrap.parentNode.removeChild(initWrap);
 							}
 
-						case 20:
+						case 19:
 						case "end":
 							return _context.stop();
 					}
