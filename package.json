@@ -1,8 +1,26 @@
 {
 	"name": "instant-images",
-	"version": "1.0.0",
-	"description": "One Click Unsplash Uploads",
+	"version": "5.0.0",
+	"description": "One-click uploads from Unsplash, Pixabay and Pexels directly to your WordPress media library.",
+	"author": "connekthq.com <support@connekthq.com>",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"WordPress",
+		"plugin"
+	],
+	"homepage": "https://wordpress.org/plugins/instant-images/",
 	"main": "src/index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dcooney/instant-images"
+	},
+	"bugs": {
+		"url": "https://github.com/dcooney/instant-images/issues"
+	},
+	"engines": {
+		"node": ">=16",
+		"npm": ">=8"
+	},
 	"scripts": {
 		"dev": "npm run start",
 		"start": "webpack -w --mode development --define process.env.PROXY_URL='\"http://localhost:3000/api/\"' --config=webpack/dev.config.js",
@@ -10,9 +28,6 @@
 		"build": "webpack -p --mode production --config=webpack/prod.config.js && npm run build:pot",
 		"build:pot": "composer run pot"
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
 	"dependencies": {
 		"a11yarrows": "^1.0.9",
 		"axios": "^0.27.2",
