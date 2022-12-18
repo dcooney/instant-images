@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PhotoList from "./components/PhotoList";
 import API from "./constants/API";
-import buildTestURL from "./functions/buildTestURL";
+import buildURL from "./functions/buildURL";
 import checkRateLimit from "./functions/checkRateLimit";
 import consoleStatus from "./functions/consoleStatus";
 import getProvider from "./functions/getProvider";
+import getQueryParams from "./functions/getQueryParams";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 require("./functions/helpers");
@@ -26,8 +27,8 @@ wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend({
 		routerView.set({
 			instantimages: {
 				text: instant_img_localize.instant_images,
-				priority: 120,
-			},
+				priority: 120
+			}
 		});
 	},
 
@@ -53,7 +54,7 @@ wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend({
 
 	getFrame(id) {
 		return this.states.findWhere({ id });
-	},
+	}
 });
 
 wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
@@ -63,8 +64,8 @@ wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
 		routerView.set({
 			instantimages: {
 				text: instant_img_localize.instant_images,
-				priority: 120,
-			},
+				priority: 120
+			}
 		});
 	},
 
@@ -90,7 +91,7 @@ wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
 
 	getFrame(id) {
 		return this.states.findWhere({ id });
-	},
+	}
 });
 
 // Render Instant Images
@@ -124,49 +125,44 @@ const instantImagesMediaTab = () => {
  *
  * @param {Element} element The Instant Images HTML element to initialize.
  */
-const getMediaModalProvider = async (element) => {
+const getMediaModalProvider = async element => {
 	// Get provider and options from settings.
 	const provider = getProvider();
-	const defaultProvider = API.defaults.provider;
-	const api_required = API[provider].requires_key;
 
-	// Send test API request to confirm API key is functional.
-	if (api_required) {
-		const response = await fetch(buildTestURL(provider));
+	// Build URL.
+	const params = getQueryParams(provider);
+	const url = buildURL("photos", params);
 
-		// Handle response.
-		const ok = response.ok;
-		const status = response.status;
-		checkRateLimit(response.headers);
+	// Create fetch request.
+	const response = await fetch(url);
+	const { status, headers } = response;
+	checkRateLimit(headers);
 
-		if (ok) {
-			// Success.
-			renderPhotoList(element, provider);
-		} else {
-			// Status Error: Fallback to default provider.
-			renderPhotoList(element, defaultProvider);
-
-			// Render console warning.
-			consoleStatus(provider, status);
-		}
-	} else {
-		// API Error: Fallback to default provider.
-		renderPhotoList(element, provider);
+	try {
+		const results = await response.json();
+		const { error = null } = results;
+		renderPhotoList(element, provider, results, error);
+	} catch (error) {
+		consoleStatus(provider, status);
 	}
 };
 
 /**
  * Render the main PhotoList Instant Images component.
  *
- * @param {Element} element  The Instant Images HTML element to initialize.
- * @param {string}  provider The verified provider.
- * @return {Element}         The PhotoList component.
+ * @param  {Element}     element  The Instant Images HTML element to initialize.
+ * @param  {string}      provider The verified provider.
+ * @param  {array}       results  The API results.
+ * @param  {object|null} error    The API error object.
+ * @return {Element}              The PhotoList component.
  */
-const renderPhotoList = (element, provider) => {
+const renderPhotoList = (element, provider, results, error) => {
 	ReactDOM.render(
 		<PhotoList
 			container={element}
 			editor="media-router"
+			results={results}
+			error={error}
 			page={1}
 			orderby={API.defaults.order}
 			provider={provider}
@@ -197,10 +193,10 @@ const createWrapperHTML = () => {
 };
 
 // Document Ready
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function($) {
 	if (wp.media) {
 		// Open
-		wp.media.view.Modal.prototype.on("open", function () {
+		wp.media.view.Modal.prototype.on("open", function() {
 			if (!activeFrame) {
 				return false;
 			}
@@ -216,7 +212,7 @@ jQuery(document).ready(function ($) {
 		$(document).on(
 			"click",
 			".media-router button.media-menu-item",
-			function () {
+			function() {
 				const selectedTab = activeFrame.querySelector(
 					".media-router button.media-menu-item.active"
 				);

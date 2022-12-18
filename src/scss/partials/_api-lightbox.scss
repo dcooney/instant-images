@@ -3,6 +3,9 @@
 	.instant-img-container {
 		.api-lightbox {
 			position: fixed;
+			& > div {
+				top: 0;
+			}
 		}
 	}
 }
@@ -11,8 +14,11 @@
 .components-panel {
 	.instant-img-container {
 		.api-lightbox {
-			height: 100%;
+			//height: 100%;
 			align-items: flex-start;
+			& > div {
+				top: 0;
+			}
 		}
 	}
 }
@@ -45,13 +51,14 @@
 			width: 100%;
 			padding: 0;
 			background-color: #fff;
-			border: 1px solid $border;
 			border-radius: 5px;
-			box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 			position: relative;
-			transform: scale(0.95);
+			top: -15px;
+			transform: scale(0.9);
 			opacity: 0;
-			transition: all 0.3s ease-in-out;
+			transition: all 0.25s ease-in-out;
+			overflow: hidden;
 			& > div {
 				position: relative;
 			}
@@ -88,14 +95,29 @@
 			h3 {
 				font-size: 16px;
 				line-height: 18px;
-				padding: 0 0 0 25px;
+				padding: 0 0 0 28px;
 				text-transform: uppercase;
-				margin: 0 0 10px;
+				margin: 0 0 15px;
 				background-position: left center;
 			}
 			p {
 				margin: 10px 0 0;
 				font-size: 13px;
+				&.callout-warning{
+					font-size: 34px;
+					font-weight: 900;
+					opacity: 0.35;
+				}
+				&.more-info{
+					padding: 10px;
+					background-color: $yellow_bkg;
+					margin: 15px 0;
+					border-radius: $radius;
+					border: 1px solid $grey;
+					width: 105%;
+					position: relative;
+					left: -2.5%;
+				}
 				&.action-controls {
 					display: flex;
 					align-items: center;

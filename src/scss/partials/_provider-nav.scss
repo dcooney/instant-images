@@ -1,17 +1,3 @@
-// Media Modal.
-.media-frame-router {
-	button#menu-item-instantimages.active {
-		background-color: $lighter_grey;
-	}
-}
-.media-frame-content {
-	.instant-img-container {
-		.load-more-wrap {
-			display: block;
-		}
-	}
-}
-
 // Instant Images Plugin Page.
 .provider-nav {
 	display: flex;

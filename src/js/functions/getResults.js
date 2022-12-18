@@ -1,43 +1,39 @@
+import API from "../constants/API";
+
 /**
- * Access the results of different providers.
- * Unsplash and Pixabay return results in different object formats.
+ * Pluck `results` from the API response.
  *
- * @param  {string}  provider  The current service provider.
- * @param  {string}  key       The match key to access.
- * @param  {Array}   data      The photo array.
- * @param  {Boolean} is_search Is this a search request.
- * @return {Array} 				 The photos as an array.
+ * @param  {object} data The API results object.
+ * @return {array} 		 The results as an array.
  */
-export default function getResults(provider, key, data, is_search) {
+export default function getResults(data) {
 	if (!data) {
 		return [];
 	}
-	let results = [];
 
-	switch (provider) {
-		case "unsplash":
-			if (is_search) {
-				results = data[key] || [];
-			} else {
-				results = data || [];
-			}
-			break;
-
-		default:
-			results = data[key] || [];
-			break;
-	}
-
+	const results = data[API.defaults.arr_key] || [];
 	return results;
+}
+
+/**
+ * Get the total search results.
+ *
+ * @param  {object} data The search data object.
+ * @return {string}      The total results.
+ */
+export function getSearchTotal(data) {
+	// Return 0 if undefined or null.
+	return data.total === undefined || data.total === null ? 0 : data.total;
 }
 
 /**
  * Get results by photo ID.
  *
- * @param  {string}  provider  The current service provider.
- * @param  {string}  key       The match key to access.
- * @param  {Array}   data      The photo array.
- * @return {Array} 				 The photos as an array.
+ * @param  {string} provider The current service provider.
+ * @param  {string} key      The match key to access.
+ * @param  {object} data     The API results object.
+ * @return {Array} 			  The results as an array.
+ * @deprecated 5.0
  */
 export function getResultById(provider, key, data) {
 	if (!data) {
@@ -57,26 +53,4 @@ export function getResultById(provider, key, data) {
 	}
 
 	return result;
-}
-
-/**
- * Get the total search results by provider.
- *
- * @param  {string} provider The current service provider.
- * @param  {object} obj      The search data object.
- * @return {string}          The total results.
- */
-export function getSearchTotalByProvider(provider, obj) {
-	let total = "";
-	switch (provider) {
-		case "pexels":
-			total = obj.total_results;
-			break;
-
-		default:
-			total = obj.total;
-			break;
-	}
-
-	return total;
 }

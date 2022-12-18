@@ -28,6 +28,7 @@
 			&.inactive {
 				opacity: 0.55;
 				filter: blur(1px);
+				pointer-events: none;
 				i {
 					opacity: 0.4 !important;
 				}
@@ -107,6 +108,11 @@
 			margin-left: auto;
 			padding: 0 0 0 20px;
 			position: relative;
+			&.inactive{
+				opacity: 0.55;
+				filter: blur(1px);
+				pointer-events: none;
+			}
 			@media screen and (max-width: $small) {
 				width: 100%;
 				display: block;
@@ -119,11 +125,11 @@
 			.searchResults {
 				position: absolute;
 				right: 100.5%;
-				top: 5px;
+				top: -1px;
 				width: auto;
-				height: 30px;
-				line-height: 30px;
-				padding: 0 0 0 8px;
+				height: 40px;
+				line-height: 40px;
+				padding: 0 0 0 10px;
 				background: $purple;
 				border: 1px solid $purple_dark;
 				border-radius: 4px;
@@ -214,9 +220,12 @@
 				transition: border 0.25s ease;
 				background-position: right 10px center;
 				background-repeat: no-repeat;
+				&[disabled] {
+					cursor: not-allowed;
+				}
 				&:focus {
 					border-color: $text_light;
-					box-shadow: 0 0 1px 5px rgba(#000, 0.025);
+					box-shadow: 0 0 1px 5px rgba(#000, 0.035);
 				}
 				&.searching {
 					background-image: url("../img/ajax-loader.gif");
@@ -251,6 +260,9 @@
 				&:hover,
 				&:focus {
 					opacity: 1;
+				}
+				&[disabled] {
+					cursor: not-allowed;
 				}
 			}
 			input[type="search"]::-webkit-input-placeholder {

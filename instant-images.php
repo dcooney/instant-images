@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 4.6.3
+ * Version: 5.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -15,11 +15,11 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '4.6.3' );
-define( 'INSTANT_IMAGES_RELEASE', 'November 04, 2022' );
+define( 'INSTANT_IMAGES_VERSION', '5.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'December 18, 2022' );
 
 /**
  * Activation hook
@@ -129,10 +129,7 @@ class InstantImages {
 	 */
 	public static function instant_img_get_download_urls() {
 		$providers = self::instant_img_get_providers();
-		$urls      = [];
-		foreach ( $providers as $provider ) {
-			$urls[] = $provider['download_url'];
-		}
+		$urls      = wp_list_pluck( $providers, 'download_url' );
 		return $urls;
 	}
 
@@ -219,14 +216,14 @@ class InstantImages {
 			$unsplash_api = INSTANT_IMAGES_UNSPLASH_KEY;
 		} else {
 			$unsplash_api = isset( $options['unsplash_api'] ) ? $options['unsplash_api'] : '';
-			$unsplash_api = empty( $unsplash_api ) ? INSTANT_IMAGES_UNSPLASH_APP_ID : $unsplash_api; // If empty, set to default key.
+			$unsplash_api = empty( $unsplash_api ) ? '' : $unsplash_api; // If empty, set to default key.
 		}
 		// Pixabay API.
 		if ( defined( 'INSTANT_IMAGES_PIXABAY_KEY' ) ) {
 			$pixabay_api = INSTANT_IMAGES_PIXABAY_KEY;
 		} else {
 			$pixabay_api = isset( $options['pixabay_api'] ) ? $options['pixabay_api'] : '';
-			$pixabay_api = empty( $pixabay_api ) ? INSTANT_IMAGES_PIXABAY_APP_ID : $pixabay_api; // If empty, set to default key.
+			$pixabay_api = empty( $pixabay_api ) ? '' : $pixabay_api; // If empty, set to default key.
 		}
 
 		// Pexels API.
@@ -234,7 +231,7 @@ class InstantImages {
 			$pexels_api = INSTANT_IMAGES_PEXELS_KEY;
 		} else {
 			$pexels_api = isset( $options['pexels_api'] ) ? $options['pexels_api'] : '';
-			$pexels_api = empty( $pexels_api ) ? INSTANT_IMAGES_PEXELS_APP_ID : $pexels_api; // If empty, set to default key.
+			$pexels_api = empty( $pexels_api ) ? '' : $pexels_api; // If empty, set to default key.
 		}
 
 		wp_localize_script(
@@ -242,6 +239,7 @@ class InstantImages {
 			'instant_img_localize',
 			array(
 				'instant_images'          => __( 'Instant Images', 'instant-images' ),
+				'version'                 => INSTANT_IMAGES_VERSION,
 				'root'                    => esc_url_raw( rest_url() ),
 				'nonce'                   => wp_create_nonce( 'wp_rest' ),
 				'ajax_url'                => admin_url( 'admin-ajax.php' ),
@@ -252,24 +250,21 @@ class InstantImages {
 				'download_height'         => esc_html( $download_h ),
 				'query_debug'             => apply_filters( 'instant_images_query_debug', false ),
 				'unsplash_app_id'         => $unsplash_api,
-				'unsplash_default_app_id' => INSTANT_IMAGES_UNSPLASH_APP_ID,
 				'unsplash_url'            => 'https://unsplash.com',
 				'unsplash_api_url'        => 'https://unsplash.com/developers',
 				'unsplash_api_desc'       => __( 'Access to images from Unsplash requires a valid API key. API keys are available for free, just sign up for a Developer account at Unsplash, enter your API key below and you\'re good to go!', 'instant-images' ),
 				'unsplash_content_filter' => apply_filters( 'instant_images_unsplash_content_filter', 'low' ),
 				'pixabay_app_id'          => $pixabay_api,
-				'pixabay_default_app_id'  => INSTANT_IMAGES_PIXABAY_APP_ID,
 				'pixabay_url'             => 'https://pixabay.com',
 				'pixabay_api_url'         => 'https://pixabay.com/service/about/api/',
 				'pixabay_api_desc'        => __( 'Access to images from Pixabay requires a valid API key. API keys are available for free, just sign up for an account at Pixabay, enter your API key below and you\'re good to go!', 'instant-images' ),
 				'pixabay_safesearch'      => apply_filters( 'instant_images_pixabay_safesearch', 'true' ),
 				'pexels_app_id'           => $pexels_api,
-				'pexels_default_app_id'   => INSTANT_IMAGES_PEXELS_APP_ID,
 				'pexels_url'              => 'https://pexels.com',
 				'pexels_api_url'          => 'https://www.pexels.com/join-consumer/',
 				'pexels_api_desc'         => __( 'Access to images from Pexels requires a valid API key. API keys are available for free, just sign up for an account at Pexels, enter your API key below and you\'re good to go!', 'instant-images' ),
 				'error_upload'            => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
-				'error_restapi'           => '<strong>' . __( 'There was an error accessing the WP REST API.', 'instant-images' ) . '</strong><br/>',
+				'error_restapi'           => __( 'There was an error accessing the WP REST API.', 'instant-images' ),
 				'error_restapi_desc'      => __( 'Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images' ),
 				'photo_by'                => __( 'Photo by', 'instant-images' ),
 				'view_all'                => __( 'View All Photos by', 'instant-images' ),
@@ -282,8 +277,9 @@ class InstantImages {
 				'saving'                  => __( 'Downloading image...', 'instant-images' ),
 				'resizing'                => __( 'Creating image sizes...', 'instant-images' ),
 				'resizing_still'          => __( 'Still resizing...', 'instant-images' ),
-				'no_results'              => __( 'Sorry, nothing matched your query', 'instant-images' ),
-				'no_results_desc'         => __( 'Try adjusting your search criteria', 'instant-images' ),
+				'no_results'              => __( 'Nothing matched your search query.', 'instant-images' ),
+				'no_results_desc'         => __( 'Try adjusting your criteria and searching again.', 'instant-images' ),
+				'new'                     => __( 'New', 'instant-images' ),
 				'latest'                  => __( 'New', 'instant-images' ),
 				'oldest'                  => __( 'Oldest', 'instant-images' ),
 				'popular'                 => __( 'Popular', 'instant-images' ),
@@ -293,7 +289,7 @@ class InstantImages {
 				'load_more'               => __( 'Load More Images', 'instant-images' ),
 				'search'                  => __( 'Search for Toronto + Coffee etc...', 'instant-images' ),
 				'search_label'            => __( 'Search', 'instant-images' ),
-				'search_results'          => __( 'images found for', 'instant-images' ),
+				'search_results'          => __( 'image(s) found for', 'instant-images' ),
 				'clear_search'            => __( 'Clear Search', 'instant-images' ),
 				'open_external'           => __( 'Open image on', 'instant-images' ),
 				'set_as_featured'         => __( 'Set as Featured Image', 'instant-images' ),
@@ -315,18 +311,36 @@ class InstantImages {
 				'horizontal'              => __( 'Horizontal', 'instant-images' ),
 				'vertical'                => __( 'Vertical', 'instant-images' ),
 				'attribution'             => __( 'Add Photo Attribution', 'instant-images' ),
+				'btnCloseWindow'          => __( 'Close Window', 'instant-images' ),
 				'btnClose'                => __( 'Close', 'instant-images' ),
 				'btnVerify'               => __( 'Verify', 'instant-images' ),
 				'enter_api_key'           => __( 'Enter API Key', 'instant-images' ),
 				'api_key_invalid'         => __( 'The API Key is Invalid', 'instant-images' ),
 				'api_success_msg'         => __( 'API key has been successfully validated!', 'instant-images' ),
-				'api_invalid_msg'         => __( 'API key entered is not valid - try again.', 'instant-images' ),
+				'api_invalid_msg'         => __( 'The API key is not valid for this provider - enter a new API Key and try again.', 'instant-images' ),
+				'api_invalid_403_msg'     => __( 'Missing API parameter - we are unable to complete the request at this time.', 'instant-images' ),
+				'api_invalid_404_msg'     => __( 'The Instant Images Proxy is not configured for the requested provider.', 'instant-images' ),
+				'api_invalid_500_msg'     => __( 'An internal server error has occured - please try again.', 'instant-images' ),
+				'api_invalid_501_msg'     => __( 'No image provider or destination URL set.', 'instant-images' ),
 				'api_ratelimit_msg'       => __( 'The API rate limit has been exceeded for this image provider. Please add a new API key or try again later.', 'instant-images' ),
+				'api_default_provider'    => __( 'You\'re seeing this message because the default image provider has thrown an error. Switch the default provider in the Instant Images settings or check that you\'re using a valid API key.', 'instant-images' ),
 				'get_api_key'             => __( 'Get API Key', 'instant-images' ),
 				'use_instant_images_key'  => __( 'Reset Default Key', 'instant-images' ),
 				'error_on_load_title'     => __( 'An unknown error has occured while accessing {provider}', 'instant-images' ),
 				'error_on_load'           => __( 'Check your API keys are valid and the Default Provider set under the Instant Images settings panel.', 'instant-images' ),
-				'filters'                 => array(
+				'error'                   => __( 'Error', 'instant-images' ),
+				'ad'                      => __( 'Ad', 'instant-images' ),
+				'advertisement'           => __( 'Advertisement', 'instant-images' ),
+				'v5_upgrade_notice'       => [
+					'transient'  => get_transient( 'instant_images_v5_upgrade_notice' ),
+					'disclaimer' => __( 'Disclaimer', 'instant-images' ),
+					// translators: Instant Images upgrade notice.
+					'text'       => sprintf( __( 'As of Instant Images 5.0, all API requests to service providers (Unsplash, Pexels and Pixabay) are now routed through our custom %1$sInstant Images Proxy%2$s server.', 'instant-images' ), '<a href="https://connekthq.com/plugins/instant-images/faqs/#what-is-the-instant-images-proxy-server" target="_blank">', '</a>' ),
+					'privacy'    => __( 'Privacy Policy', 'instant-images' ),
+					'terms'      => __( 'Terms of Use', 'instant-images' ),
+					'dismiss'    => __( 'Dismiss Notice', 'instant-images' ),
+				],
+				'filters'                 => [
 					'select'      => __( '-- Select --', 'instant-images' ),
 					'orderby'     => __( 'Order:', 'instant-images' ),
 					'type'        => __( 'Type:', 'instant-images' ),
@@ -334,7 +348,7 @@ class InstantImages {
 					'colors'      => __( 'Colors:', 'instant-images' ),
 					'orientation' => __( 'Orientation:', 'instant-images' ),
 					'size'        => __( 'Size:', 'instant-images' ),
-				),
+				],
 			)
 		);
 	}
@@ -355,6 +369,7 @@ class InstantImages {
 		require_once 'api/test.php';
 		require_once 'api/download.php';
 		require_once 'api/settings.php';
+		require_once 'api/v5-upgrade.php';
 	}
 
 	/**
@@ -428,9 +443,6 @@ class InstantImages {
 		define( 'INSTANT_IMAGES_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
 		define( 'INSTANT_IMAGES_WPADMIN_URL', admin_url( 'upload.php?page=instant-images' ) );
 		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
-		define( 'INSTANT_IMAGES_UNSPLASH_APP_ID', '5746b12f75e91c251bddf6f83bd2ad0d658122676e9bd2444e110951f9a04af8' );
-		define( 'INSTANT_IMAGES_PIXABAY_APP_ID', '23559219-67621b8a8bd93df7b6aef72a7' );
-		define( 'INSTANT_IMAGES_PEXELS_APP_ID', '563492ad6f9170000100000120aa91a03d6b495c84870df1be8e1cd8' );
 	}
 
 	/**
@@ -442,7 +454,7 @@ class InstantImages {
 	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public function instant_images_add_action_links( $links ) {
-		$mylinks = array( '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">Upload Photos</a>' );
+		$mylinks = array( '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Photos', 'instant-images' ) . '</a>' );
 		return array_merge( $mylinks, $links );
 	}
 

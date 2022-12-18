@@ -1,4 +1,4 @@
-$gb_border: #ddd;
+
 
 body.loading {
 	.instant-img-container {
@@ -33,6 +33,9 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 	.instant-img-container {
 		.load-more-wrap {
 			display: block;
+		}
+		.notice.upgrade-notice {
+			margin: 10px;
 		}
 	}
 	.no-results {

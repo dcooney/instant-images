@@ -1,4 +1,3 @@
-import API from "../constants/API";
 import buildURL from "./buildURL";
 import getQueryParams from "./getQueryParams";
 
@@ -9,16 +8,17 @@ import getQueryParams from "./getQueryParams";
  * @return {string}           The API URL.
  */
 export default function buildTestURL(provider) {
-	const api = API[provider];
 	let options = {
 		per_page: 5,
-		page: 1,
+		page: 1
 	};
 
 	// Build URL.
-	let params = getQueryParams(provider);
-	params = { ...params, ...options };
-	const url = buildURL(api.photo_api, params);
+	const params = {
+		test: true,
+		...getQueryParams(provider),
+		...options
+	};
 
-	return url;
+	return buildURL("photos", params);
 }

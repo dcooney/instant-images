@@ -78,22 +78,29 @@ body.media_page_instant-images {
 	}
 
 	.error-messaging {
-		padding: 20px 20px 20px 60px;
-		border-radius: 3px;
+		padding: 22px 22px 22px 60px;
+		border-radius: 4px;
 		background: #da4444;
 		color: #fff;
 		font-size: 13px;
-		line-height: 1.5;
-		margin-bottom: 25px;
+		line-height: 1.75;
+		margin: 15px;
 		display: block;
 		position: relative;
+		box-shadow: $shadow;
+		&.warning{
+			background-color: $warn;
+		}
+		strong{
+			font-size: 15px;
+			display: block;
+		}
 		&:before {
 			font-family: "FontAwesome";
 			content: "\f06a";
 			display: block;
-			left: 17px;
-			top: 50%;
-			transform: translateY(-50%);
+			left: 18px;
+			top: 18px;
 			position: absolute;
 			font-size: 32px;
 			opacity: 0.75;
@@ -208,7 +215,7 @@ body.media_page_instant-images {
 		padding: 25px 0;
 		text-align: center;
 		display: none;
-		border-top: 1px solid $grey;
+		border-top: 1px solid $gb_border;
 
 		button {
 			display: inline-block;
