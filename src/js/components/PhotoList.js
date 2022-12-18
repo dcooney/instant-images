@@ -223,7 +223,7 @@ class PhotoList extends React.Component {
 
 			// Hide search filters if no results and not filtering.
 			this.show_search_filters =
-				this.total_results < 1 && isObjectEmpty(this.search_filters)
+				this.total_results < 2 && isObjectEmpty(this.search_filters)
 					? false
 					: true;
 

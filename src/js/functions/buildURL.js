@@ -27,6 +27,9 @@ export default function buildURL(type, params) {
 		url.searchParams.append(key, params[key]);
 	});
 
+	// Add `version` to params.
+	url.searchParams.append("version", instant_img_localize.version);
+
 	return url;
 }
 

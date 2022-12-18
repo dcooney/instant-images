@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'INSTANT_IMAGES_VERSION', '5.0' );
-define( 'INSTANT_IMAGES_RELEASE', 'December 6, 2022' );
+define( 'INSTANT_IMAGES_RELEASE', 'December 18, 2022' );
 
 /**
  * Activation hook
@@ -239,6 +239,7 @@ class InstantImages {
 			'instant_img_localize',
 			array(
 				'instant_images'          => __( 'Instant Images', 'instant-images' ),
+				'version'                 => INSTANT_IMAGES_VERSION,
 				'root'                    => esc_url_raw( rest_url() ),
 				'nonce'                   => wp_create_nonce( 'wp_rest' ),
 				'ajax_url'                => admin_url( 'admin-ajax.php' ),
@@ -317,6 +318,8 @@ class InstantImages {
 				'api_key_invalid'         => __( 'The API Key is Invalid', 'instant-images' ),
 				'api_success_msg'         => __( 'API key has been successfully validated!', 'instant-images' ),
 				'api_invalid_msg'         => __( 'The API key is not valid for this provider - enter a new API Key and try again.', 'instant-images' ),
+				'api_invalid_403_msg'     => __( 'Missing API parameter - we are unable to complete the request at this time.', 'instant-images' ),
+				'api_invalid_404_msg'     => __( 'The Instant Images Proxy is not configured for the requested provider.', 'instant-images' ),
 				'api_invalid_500_msg'     => __( 'An internal server error has occured - please try again.', 'instant-images' ),
 				'api_invalid_501_msg'     => __( 'No image provider or destination URL set.', 'instant-images' ),
 				'api_ratelimit_msg'       => __( 'The API rate limit has been exceeded for this image provider. Please add a new API key or try again later.', 'instant-images' ),

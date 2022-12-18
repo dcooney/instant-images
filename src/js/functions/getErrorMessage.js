@@ -13,6 +13,12 @@ export default function getErrorMessage(status = 200) {
 			// Unsplash/Pixabay/Pexels incorrect API key.
 			return local.api_invalid_msg;
 
+		case 403:
+			return local.api_invalid_403_msg;
+
+		case 404:
+			return local.api_invalid_404_msg;
+
 		case 429:
 			/**
 			 * Pixabay, Pexels - too many requests.
