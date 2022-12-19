@@ -10,7 +10,6 @@ import consoleStatus from "../functions/consoleStatus";
 import getQueryParams from "../functions/getQueryParams";
 import getResults, { getSearchTotal } from "../functions/getResults";
 import isObjectEmpty from "../functions/isObjectEmpty";
-import Advertisement from "./Advertisement";
 import APILightbox from "./APILightbox";
 import ErrorLightbox from "./ErrorLightbox";
 import Filter from "./Filter";
@@ -20,6 +19,7 @@ import NoResults from "./NoResults";
 import Photo from "./Photo";
 import RestAPIError from "./RestAPIError";
 import ResultsToolTip from "./ResultsToolTip";
+import Sponsor from "./Sponsor";
 import Tooltip from "./Tooltip";
 import UpgradeNotice from "./UpgradeNotice";
 const imagesLoaded = require("imagesloaded");
@@ -108,9 +108,13 @@ class PhotoList extends React.Component {
 	}
 
 	resetFilters() {
-		this.filterRef.forEach(filter => {
-			filter.reset();
-		});
+		if (this.filterRef && this.filterRef.length) {
+			this.filterRef.forEach(filter => {
+				if (filter) {
+					filter.reset();
+				}
+			});
+		}
 	}
 
 	/**
@@ -200,9 +204,9 @@ class PhotoList extends React.Component {
 
 		// Build URL.
 		const search_params = {
+			...{ page: this.page },
 			...search_query,
-			...this.search_filters,
-			...{ page: this.page }
+			...this.search_filters
 		};
 		const params = getQueryParams(this.provider, search_params);
 		const url = buildURL("search", params);
@@ -343,9 +347,9 @@ class PhotoList extends React.Component {
 		const type = this.is_search ? "search" : "photos";
 		const filters = this.is_search ? this.search_filters : this.filters;
 		const loadmore_params = {
+			...{ page: this.page },
 			...search_query,
-			...filters,
-			...{ page: this.page }
+			...filters
 		};
 		const params = getQueryParams(this.provider, loadmore_params);
 		const url = buildURL(type, params);
@@ -871,7 +875,7 @@ class PhotoList extends React.Component {
 									{result &&
 									result.type &&
 									result.type === "instant-images-ad" ? (
-										<Advertisement result={result} />
+										<Sponsor result={result} />
 									) : (
 										<Photo
 											provider={this.provider}

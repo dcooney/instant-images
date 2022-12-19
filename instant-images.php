@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'INSTANT_IMAGES_VERSION', '5.0' );
-define( 'INSTANT_IMAGES_RELEASE', 'December 18, 2022' );
+define( 'INSTANT_IMAGES_RELEASE', 'December 19, 2022' );
 
 /**
  * Activation hook

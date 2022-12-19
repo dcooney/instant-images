@@ -133,7 +133,7 @@ How to install Instant Images.
 
 == Changelog ==
 
-= 5.0 - December 18, 2022 =
+= 5.0 - December 19, 2022 =
 NEW: All API requests to Unsplash, Pexels and Pixabay are now routed through our custom proxy server (proxy.getinstantimages.com). Read our terms of service and privacy policy for more information.
 UPDATE: Improved error handling and reporting.
 UPDATE: Removal of hard coded API Keys from plugin.

@@ -1,6 +1,6 @@
 import React from "react";
 
-class Advertisement extends React.Component {
+class Sponsor extends React.Component {
 	constructor(props) {
 		super(props);
 		const result = this.props.result;
@@ -59,4 +59,4 @@ class Advertisement extends React.Component {
 	}
 }
 
-export default Advertisement;
+export default Sponsor;
