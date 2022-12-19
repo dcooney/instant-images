@@ -363,11 +363,6 @@ class PhotoList extends React.Component {
 			const data = await response.json();
 			let results = getResults(data);
 
-			// Unsplash search results are returned in different JSON format
-			if (this.is_search && this.provider === "unsplash") {
-				results = data.results;
-			}
-
 			// Loop result & push items into array.
 			results &&
 				results.map(data => {
