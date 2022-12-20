@@ -14,7 +14,7 @@ One click image uploads from Unsplash, Pixabay and Pexels directly to your WordP
 
 Instantly upload photos from Unsplash, Pixabay or Pexels to your website all without ever leaving WordPress!
 
-**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [unsplash.com](http://unsplash.com), [Pixabay](http://pixabay.com) and [Pexels](http://pexels.com) directly to your media library.
+**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [Unsplash](http://unsplash.com), [Pixabay](http://pixabay.com) and [Pexels](http://pexels.com) directly to your media library.
 
 [youtube <https://www.youtube.com/watch?v=s6Q7Kfi2f1c>]
 
@@ -39,7 +39,7 @@ The perfect tool for users who want to save time and frustration by uploading im
 ---
 
 = Proxy Server =
-Instant Images routes all API requests to service providers (Unsplash, Pexels Pixabay) through our custom proxy server at [proxy.getinstantimages.com](https://proxy.getinstantimages.com).
+Instant Images routes all API requests to service providers (Unsplash, Pexels, Pixabay etc.) through our custom proxy server at [proxy.getinstantimages.com](https://proxy.getinstantimages.com).
 
 Maintaining a proxy server for Instant Images allows us to keep API keys hidden from public view and ensures image data returned from the providers is returned in a normalized format for display in WordPress.
 

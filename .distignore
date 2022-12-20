@@ -17,6 +17,7 @@
 .babelrc
 .jshintrc
 .editorconfig
+.nvmrc
 .phpcs.xml
 package-lock.json
 package.json
