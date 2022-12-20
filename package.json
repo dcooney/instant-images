@@ -25,7 +25,7 @@
 		"dev": "npm run start",
 		"start": "webpack -w --mode development --define process.env.PROXY_URL='\"http://localhost:3000/api/\"' --config=webpack/dev.config.js",
 		"proxy": "webpack -w --mode development --define process.env.PROXY_URL='\"https://proxy.getinstantimages.com/api/\"' --config=webpack/dev.config.js",
-		"build": "webpack -p --mode production --config=webpack/prod.config.js && npm run build:pot",
+		"build": "webpack -p --mode production --define process.env.PROXY_URL='\"https://proxy.getinstantimages.com/api/\"' --config=webpack/prod.config.js",
 		"build:pot": "composer run pot"
 	},
 	"dependencies": {
