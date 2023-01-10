@@ -135,6 +135,7 @@ How to install Instant Images.
 
 = 5.0.1 - January 10, 2023 =
 * HOTFIX: Adding a temporary hotfix to patch issues with the Pexels API and the Instant Images Proxy server.
+  Note: This fix is still not perfect but the integration is working again when a valid API is present.
 
 = 5.0 - December 19, 2022 =
 NEW: All API requests to Unsplash, Pexels and Pixabay are now routed through our custom proxy server (proxy.getinstantimages.com). Read our terms of service and privacy policy for more information.
