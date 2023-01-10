@@ -4,7 +4,7 @@ Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 6.1
-Stable tag: 5.0
+Stable tag: 5.0.1
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -132,6 +132,9 @@ How to install Instant Images.
 6. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 5.0.1 - January 10, 2023 =
+* HOTFIX: Adding a temporary hotfix to patch issues with the Pexels API and the Instant Images Proxy server.
 
 = 5.0 - December 19, 2022 =
 NEW: All API requests to Unsplash, Pexels and Pixabay are now routed through our custom proxy server (proxy.getinstantimages.com). Read our terms of service and privacy policy for more information.
