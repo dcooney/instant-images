@@ -17,7 +17,7 @@ export default function buildURL(type, params) {
 	delete params.provider;
 
 	// Build the API URL.
-	const url = new URL(getProxyURL(provider));
+	const url = new URL(getProxyURL(provider, params));
 
 	// Add `type` to params.
 	url.searchParams.append("type", type);
@@ -37,9 +37,19 @@ export default function buildURL(type, params) {
  * Get the proxy URL from ENV vars.
  *
  * @param  {string} provider The image provider.
+ * @param  {array}  params   The query params.
  * @return {string}          The proxy URL.
  */
-export function getProxyURL(provider) {
+export function getProxyURL(provider, params) {
+	if (provider === "pexels") {
+		// Bail early if pexels.
+		if (params.term) {
+			// Pexels search.
+			return `https://api.pexels.com/v1/search?query=${params.term}`;
+		}
+		return "https://api.pexels.com/v1/curated";
+	}
+
 	const proxy =
 		process && process.env && process.env.PROXY_URL
 			? `${process.env.PROXY_URL}${provider}`

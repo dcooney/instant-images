@@ -5,7 +5,6 @@
  * @param {object} result    The photo object.
  * @param {string} attribute The attribute to match.
  * @return {string}          The value as a string.
- * @deprecated 5.0
  */
 export default function getProp(provider, result, attribute) {
 	let value = "";
