@@ -4,6 +4,7 @@ import React from "react";
 import buildTestURL from "../functions/buildTestURL";
 import checkRateLimit from "../functions/checkRateLimit";
 import consoleStatus from "../functions/consoleStatus";
+import getHeaders from "../functions/getHeaders";
 import updatePluginSetting from "../functions/updatePluginSetting";
 
 class APILightbox extends React.Component {
@@ -56,7 +57,10 @@ class APILightbox extends React.Component {
 
 		try {
 			// Fetch API data.
-			const response = await fetch(buildTestURL(self.provider));
+			const response = await fetch(
+				buildTestURL(self.provider),
+				getHeaders(this.provider)
+			);
 
 			// Handle response.
 			const { ok, status, headers } = response;

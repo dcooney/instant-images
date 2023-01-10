@@ -23,6 +23,7 @@ module.exports = {
 		name: "Pexels",
 		requires_key: true,
 		new: false,
-		api_var: "key"
+		api_var: "key",
+		key: "563492ad6f9170000100000120aa91a03d6b495c84870df1be8e1cd8"
 	}
 };

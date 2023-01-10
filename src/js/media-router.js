@@ -5,6 +5,7 @@ import API from "./constants/API";
 import buildURL from "./functions/buildURL";
 import checkRateLimit from "./functions/checkRateLimit";
 import consoleStatus from "./functions/consoleStatus";
+import getHeaders from "./functions/getHeaders";
 import getProvider from "./functions/getProvider";
 import getQueryParams from "./functions/getQueryParams";
 require("es6-promise").polyfill();
@@ -134,7 +135,7 @@ const getMediaModalProvider = async element => {
 	const url = buildURL("photos", params);
 
 	// Create fetch request.
-	const response = await fetch(url);
+	const response = await fetch(url, getHeaders(provider));
 	const { status, headers } = response;
 	checkRateLimit(headers);
 
