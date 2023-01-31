@@ -611,6 +611,9 @@
 			margin: 0;
 			height: 35px;
 			line-height: 35px;
+			&[name=filename]{
+				padding-right: 45px;
+			}
 		}
 		em {
 			position: absolute;

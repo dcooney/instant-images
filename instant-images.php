@@ -14,6 +14,15 @@
  * @package InstantImages
  */
 
+/*
+* NEW: Added Openverse support.
+* NEW: Added Description field to save data into the Post Content WP field.
+
+
+TODO:
+- Image extensions. How to detemine what the extension is for upload.
+*/
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -117,6 +126,14 @@ class InstantImages {
 				'url'          => 'https://www.pexels.com/join-consumer/',
 				'download_url' => 'https://images.pexels.com',
 				'constant'     => 'INSTANT_IMAGES_PEXELS_KEY',
+			],
+			[
+				'name'         => 'Openverse',
+				'slug'         => 'openverse',
+				'requires_key' => false,
+				'url'          => 'https://api.openverse.engineering/v1/#section/Register-and-Authenticate/Register-for-a-key',
+				'download_url' => 'https://api.openverse.engineering/',
+				'constant'     => '',
 			],
 		];
 		return $providers;
@@ -299,6 +316,7 @@ class InstantImages {
 				'edit_title'              => __( 'Title', 'instant-images' ),
 				'edit_alt'                => __( 'Alt Text', 'instant-images' ),
 				'edit_caption'            => __( 'Caption', 'instant-images' ),
+				'edit_description'        => __( 'Description', 'instant-images' ),
 				'edit_upload'             => __( 'Edit Attachment Details', 'instant-images' ),
 				'edit_details'            => __( 'Edit Image Details', 'instant-images' ),
 				'edit_details_intro'      => __( 'Update image details prior to uploading.', 'instant-images' ),
@@ -342,13 +360,15 @@ class InstantImages {
 					'dismiss'    => __( 'Dismiss Notice', 'instant-images' ),
 				],
 				'filters'                 => [
-					'select'      => __( '-- Select --', 'instant-images' ),
-					'orderby'     => __( 'Order:', 'instant-images' ),
-					'type'        => __( 'Type:', 'instant-images' ),
-					'category'    => __( 'Category:', 'instant-images' ),
-					'colors'      => __( 'Colors:', 'instant-images' ),
-					'orientation' => __( 'Orientation:', 'instant-images' ),
-					'size'        => __( 'Size:', 'instant-images' ),
+					'select'       => __( '-- Select --', 'instant-images' ),
+					'orderby'      => __( 'Order:', 'instant-images' ),
+					'type'         => __( 'Type:', 'instant-images' ),
+					'category'     => __( 'Category:', 'instant-images' ),
+					'colors'       => __( 'Colors:', 'instant-images' ),
+					'orientation'  => __( 'Orientation:', 'instant-images' ),
+					'size'         => __( 'Size:', 'instant-images' ),
+					'extension'    => __( 'Extension:', 'instant-images' ),
+					'license_type' => __( 'License Type:', 'instant-images' ),
 				],
 			)
 		);

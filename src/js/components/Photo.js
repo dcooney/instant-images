@@ -17,15 +17,20 @@ class Photo extends React.Component {
 		this.thumb = result && result.urls && result.urls.thumb;
 		this.img = result && result.urls && result.urls.img;
 		this.full = result && result.urls && result.urls.full;
+		this.extension = result && result.extension ? result.extension : "jpg";
 		this.download_url = result && result.urls && result.urls.download_url;
 		this.username = result && result.user && result.user.username;
 		this.name = result && result.user && result.user.name;
 		this.img_title = `${instant_img_localize.photo_by} ${this.name}`;
 		this.filename = this.id;
 		this.title = this.img_title;
-		this.alt = result && result.urls && result.urls.alt;
+
+		this.alt = result && result.alt;
 		this.alt = result.alt === null ? "" : this.alt;
-		this.caption = "";
+		this.caption = result && result.caption;
+		this.caption = result.caption === null ? "" : this.caption;
+		this.description = result && result.description;
+		this.description = result.description === null ? "" : this.description;
 
 		this.user_photo = result && result.user && result.user.photo;
 		this.user_url = result && result.user && result.user.url;
@@ -60,6 +65,7 @@ class Photo extends React.Component {
 			title: this.title,
 			alt: this.alt,
 			caption: this.caption,
+			description: this.description,
 		};
 
 		// Refs.
@@ -117,11 +123,13 @@ class Photo extends React.Component {
 			provider: this.provider,
 			id: target.getAttribute("data-id"),
 			image_url: target.getAttribute("data-url"),
-			filename: target.getAttribute("data-id") + ".jpg",
+			filename: target.getAttribute("data-id"),
+			extension: this.extension,
 			custom_filename: target.getAttribute("data-filename"),
 			title: target.getAttribute("data-title"),
 			alt: target.getAttribute("data-alt"),
 			caption: target.getAttribute("data-caption"),
+			description: target.getAttribute("data-description"),
 			parent_id: instant_img_localize.parent_id,
 			lang: instant_img_localize.lang,
 		};
@@ -142,7 +150,6 @@ class Photo extends React.Component {
 				if (response) {
 					// Successful response from server
 					const success = response.success;
-					const id = response.id;
 					const attachment = response.attachment;
 					const admin_url = response.admin_url;
 					const msg = response.msg;
@@ -488,6 +495,15 @@ class Photo extends React.Component {
 			caption: caption.value,
 		});
 
+		// Description
+		const description = this.photo.current.querySelector(
+			'textarea[name="description"]'
+		);
+		description.value = description.dataset.original;
+		this.setState({
+			description: description.value,
+		});
+
 		// Hide edit screen
 		this.editScreen.current.classList.remove("editing");
 
@@ -519,10 +535,15 @@ class Photo extends React.Component {
 	 */
 	addAttribution(e) {
 		e.preventDefault();
-		const self = this;
-		this.captionRef.current.value = this.attribution;
+
+		const attribution = this.attribution;
+
+		// Set form value.
+		this.captionRef.current.value = attribution;
+
+		// Set the state.
 		this.setState({
-			caption: self.attribution,
+			caption: attribution,
 		});
 	}
 
@@ -546,6 +567,7 @@ class Photo extends React.Component {
 							data-title={this.state.title}
 							data-alt={this.state.alt}
 							data-caption={this.state.caption}
+							data-description={this.state.description}
 							title={instant_img_localize.upload}
 							onClick={(e) => this.download(e)}
 						>
@@ -703,7 +725,7 @@ class Photo extends React.Component {
 								value={this.state.filename}
 								onChange={(e) => this.handleEditChange(e)}
 							/>
-							<em>.jpg</em>
+							<em>.{this.extension}</em>
 						</label>
 						<label>
 							<span>{instant_img_localize.edit_title}:</span>
@@ -731,20 +753,32 @@ class Photo extends React.Component {
 							<textarea
 								rows="4"
 								name="caption"
-								data-original=""
+								data-original={this.caption}
 								onChange={(e) => this.handleEditChange(e)}
 								value={this.state.caption || ""}
 								ref={this.captionRef}
 							></textarea>
 						</label>
-						<div className="add-attribution-row">
-							<button
-								onClick={(e) => this.addAttribution(e)}
-								type="button"
-							>
-								{instant_img_localize.attribution}
-							</button>
-						</div>
+						<label>
+							<span>{instant_img_localize.edit_description}:</span>
+							<textarea
+								rows="4"
+								name="description"
+								data-original={this.description}
+								onChange={(e) => this.handleEditChange(e)}
+								value={this.state.description || ""}
+							></textarea>
+						</label>
+						{this.provider !== "openverse" ? (
+							<div className="add-attribution-row">
+								<button
+									onClick={(e) => this.addAttribution(e)}
+									type="button"
+								>
+									{instant_img_localize.attribution}
+								</button>
+							</div>
+						) : null}
 						<div className="edit-screen--controls">
 							<button
 								type="button"

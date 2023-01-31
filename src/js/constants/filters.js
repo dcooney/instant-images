@@ -1,17 +1,63 @@
 module.exports = {
+	openverse: {
+		filters: {
+			aspect_ratio: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "square", "tall", "wide"],
+			},
+			category: {
+				label: "category",
+				default: "all",
+				filters: ["all", "digitized_artwork", "illustration", "photograph"],
+			},
+			extension: {
+				label: "extension",
+				default: "all",
+				filters: ["all", "JPG", "GIF", "PNG", "SVG"],
+			},
+			license_type: {
+				label: "license_type",
+				default: "all",
+				filters: ["all", "all-cc", "commercial", "modification"],
+			},
+		},
+		search: {
+			aspect_ratio: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "square", "tall", "wide"],
+			},
+			category: {
+				label: "category",
+				default: "all",
+				filters: ["all", "digitized_artwork", "illustration", "photograph"],
+			},
+			extension: {
+				label: "extension",
+				default: "all",
+				filters: ["all", "JPG", "GIF", "PNG"],
+			},
+			license_type: {
+				label: "license_type",
+				default: "all",
+				filters: ["all", "all-cc", "commercial", "modification"],
+			},
+		},
+	},
 	pexels: {
 		filters: {
 			order_by: {
 				label: "orderby",
 				default: "curated",
-				filters: ["curated"]
-			}
+				filters: ["curated"],
+			},
 		},
 		search: {
 			orientation: {
 				label: "orientation",
 				default: "all",
-				filters: ["all", "landscape", "portrait", "square"]
+				filters: ["all", "landscape", "portrait", "square"],
 			},
 			color: {
 				label: "colors",
@@ -29,34 +75,34 @@ module.exports = {
 					"brown",
 					"black",
 					"gray",
-					"white"
-				]
+					"white",
+				],
 			},
 			size: {
 				label: "size",
 				default: "all",
-				filters: ["all", "large", "medium", "small"]
-			}
-		}
+				filters: ["all", "large", "medium", "small"],
+			},
+		},
 	},
 	unsplash: {
 		filters: {
 			order_by: {
 				label: "orderby",
 				default: "latest",
-				filters: ["latest", "popular", "oldest"]
-			}
+				filters: ["latest", "popular", "oldest"],
+			},
 		},
 		search: {
 			order_by: {
 				label: "orderby",
 				default: "relevance",
-				filters: ["relevance", "latest"]
+				filters: ["relevance", "latest"],
 			},
 			orientation: {
 				label: "orientation",
 				default: "all",
-				filters: ["all", "landscape", "portrait", "squarish"]
+				filters: ["all", "landscape", "portrait", "squarish"],
 			},
 			color: {
 				label: "colors",
@@ -73,22 +119,22 @@ module.exports = {
 					"magenta",
 					"green",
 					"teal",
-					"blue"
-				]
-			}
-		}
+					"blue",
+				],
+			},
+		},
 	},
 	pixabay: {
 		filters: {
 			order: {
 				label: "orderby",
 				default: "popular",
-				filters: ["popular", "latest"]
+				filters: ["popular", "latest"],
 			},
 			image_type: {
 				label: "type",
 				default: "all",
-				filters: ["all", "photo", "illustration", "vector"]
+				filters: ["all", "photo", "illustration", "vector"],
 			},
 			category: {
 				label: "category",
@@ -114,8 +160,8 @@ module.exports = {
 					"travel",
 					"buildings",
 					"business",
-					"music"
-				]
+					"music",
+				],
 			},
 			colors: {
 				label: "colors",
@@ -135,14 +181,14 @@ module.exports = {
 					"gray",
 					"black",
 					"brown",
-					"transparent"
-				]
+					"transparent",
+				],
 			},
 			orientation: {
 				label: "orientation",
 				default: "all",
-				filters: ["all", "horizontal", "vertical"]
-			}
+				filters: ["all", "horizontal", "vertical"],
+			},
 		},
 		search: {
 			colors: {
@@ -163,14 +209,14 @@ module.exports = {
 					"gray",
 					"black",
 					"brown",
-					"transparent"
-				]
+					"transparent",
+				],
 			},
 			orientation: {
 				label: "orientation",
 				default: "all",
-				filters: ["all", "horizontal", "vertical"]
-			}
-		}
-	}
+				filters: ["all", "horizontal", "vertical"],
+			},
+		},
+	},
 };

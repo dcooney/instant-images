@@ -41434,15 +41434,20 @@ var Photo = function (_React$Component) {
 		_this.thumb = result && result.urls && result.urls.thumb;
 		_this.img = result && result.urls && result.urls.img;
 		_this.full = result && result.urls && result.urls.full;
+		_this.extension = result && result.extension ? result.extension : "jpg";
 		_this.download_url = result && result.urls && result.urls.download_url;
 		_this.username = result && result.user && result.user.username;
 		_this.name = result && result.user && result.user.name;
 		_this.img_title = instant_img_localize.photo_by + " " + _this.name;
 		_this.filename = _this.id;
 		_this.title = _this.img_title;
-		_this.alt = result && result.urls && result.urls.alt;
+
+		_this.alt = result && result.alt;
 		_this.alt = result.alt === null ? "" : _this.alt;
-		_this.caption = "";
+		_this.caption = result && result.caption;
+		_this.caption = result.caption === null ? "" : _this.caption;
+		_this.description = result && result.description;
+		_this.description = result.description === null ? "" : _this.description;
 
 		_this.user_photo = result && result.user && result.user.photo;
 		_this.user_url = result && result.user && result.user.url;
@@ -41472,7 +41477,8 @@ var Photo = function (_React$Component) {
 			filename: _this.filename,
 			title: _this.title,
 			alt: _this.alt,
-			caption: _this.caption
+			caption: _this.caption,
+			description: _this.description
 		};
 
 		// Refs.
@@ -41535,11 +41541,13 @@ var Photo = function (_React$Component) {
 				provider: this.provider,
 				id: target.getAttribute("data-id"),
 				image_url: target.getAttribute("data-url"),
-				filename: target.getAttribute("data-id") + ".jpg",
+				filename: target.getAttribute("data-id"),
+				extension: this.extension,
 				custom_filename: target.getAttribute("data-filename"),
 				title: target.getAttribute("data-title"),
 				alt: target.getAttribute("data-alt"),
 				caption: target.getAttribute("data-caption"),
+				description: target.getAttribute("data-description"),
 				parent_id: instant_img_localize.parent_id,
 				lang: instant_img_localize.lang
 			};
@@ -41558,7 +41566,6 @@ var Photo = function (_React$Component) {
 				if (response) {
 					// Successful response from server
 					var success = response.success;
-					var id = response.id;
 					var attachment = response.attachment;
 					var admin_url = response.admin_url;
 					var msg = response.msg;
@@ -41901,6 +41908,13 @@ var Photo = function (_React$Component) {
 				caption: caption.value
 			});
 
+			// Description
+			var description = this.photo.current.querySelector('textarea[name="description"]');
+			description.value = description.dataset.original;
+			this.setState({
+				description: description.value
+			});
+
 			// Hide edit screen
 			this.editScreen.current.classList.remove("editing");
 
@@ -41938,10 +41952,15 @@ var Photo = function (_React$Component) {
 		key: "addAttribution",
 		value: function addAttribution(e) {
 			e.preventDefault();
-			var self = this;
-			this.captionRef.current.value = this.attribution;
+
+			var attribution = this.attribution;
+
+			// Set form value.
+			this.captionRef.current.value = attribution;
+
+			// Set the state.
 			this.setState({
-				caption: self.attribution
+				caption: attribution
 			});
 		}
 	}, {
@@ -41972,6 +41991,7 @@ var Photo = function (_React$Component) {
 								"data-title": this.state.title,
 								"data-alt": this.state.alt,
 								"data-caption": this.state.caption,
+								"data-description": this.state.description,
 								title: instant_img_localize.upload,
 								onClick: function onClick(e) {
 									return _this2.download(e);
@@ -42194,7 +42214,8 @@ var Photo = function (_React$Component) {
 							_react2.default.createElement(
 								"em",
 								null,
-								".jpg"
+								".",
+								this.extension
 							)
 						),
 						_react2.default.createElement(
@@ -42248,7 +42269,7 @@ var Photo = function (_React$Component) {
 							_react2.default.createElement("textarea", {
 								rows: "4",
 								name: "caption",
-								"data-original": "",
+								"data-original": this.caption,
 								onChange: function onChange(e) {
 									return _this2.handleEditChange(e);
 								},
@@ -42257,6 +42278,25 @@ var Photo = function (_React$Component) {
 							})
 						),
 						_react2.default.createElement(
+							"label",
+							null,
+							_react2.default.createElement(
+								"span",
+								null,
+								instant_img_localize.edit_description,
+								":"
+							),
+							_react2.default.createElement("textarea", {
+								rows: "4",
+								name: "description",
+								"data-original": this.description,
+								onChange: function onChange(e) {
+									return _this2.handleEditChange(e);
+								},
+								value: this.state.description || ""
+							})
+						),
+						this.provider !== "openverse" ? _react2.default.createElement(
 							"div",
 							{ className: "add-attribution-row" },
 							_react2.default.createElement(
@@ -42269,7 +42309,7 @@ var Photo = function (_React$Component) {
 								},
 								instant_img_localize.attribution
 							)
-						),
+						) : null,
 						_react2.default.createElement(
 							"div",
 							{ className: "edit-screen--controls" },
@@ -43888,7 +43928,7 @@ module.exports = {
 		per_page: "20",
 		arr_key: "results"
 	},
-	providers: ["Unsplash", "Pixabay", "Pexels"],
+	providers: ["Unsplash", "Pixabay", "Pexels", "Openverse"],
 	unsplash: {
 		name: "Unsplash",
 		requires_key: true,
@@ -43908,6 +43948,13 @@ module.exports = {
 		new: false,
 		api_var: "key",
 		key: "563492ad6f9170000100000120aa91a03d6b495c84870df1be8e1cd8"
+	},
+	openverse: {
+		name: "Openverse",
+		requires_key: false,
+		new: true,
+		api_var: "key",
+		key: ""
 	}
 };
 
@@ -43924,6 +43971,52 @@ module.exports = {
 
 
 module.exports = {
+	openverse: {
+		filters: {
+			aspect_ratio: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "square", "tall", "wide"]
+			},
+			category: {
+				label: "category",
+				default: "all",
+				filters: ["all", "digitized_artwork", "illustration", "photograph"]
+			},
+			extension: {
+				label: "extension",
+				default: "all",
+				filters: ["all", "JPG", "GIF", "PNG", "SVG"]
+			},
+			license_type: {
+				label: "license_type",
+				default: "all",
+				filters: ["all", "all-cc", "commercial", "modification"]
+			}
+		},
+		search: {
+			aspect_ratio: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "square", "tall", "wide"]
+			},
+			category: {
+				label: "category",
+				default: "all",
+				filters: ["all", "digitized_artwork", "illustration", "photograph"]
+			},
+			extension: {
+				label: "extension",
+				default: "all",
+				filters: ["all", "JPG", "GIF", "PNG"]
+			},
+			license_type: {
+				label: "license_type",
+				default: "all",
+				filters: ["all", "all-cc", "commercial", "modification"]
+			}
+		}
+	},
 	pexels: {
 		filters: {
 			order_by: {
@@ -44140,7 +44233,7 @@ function getProxyURL(provider, params) {
 		return "https://api.pexels.com/v1/curated";
 	}
 
-	var proxy = process && process.env && "https://proxy.getinstantimages.com/api/" ? "" + "https://proxy.getinstantimages.com/api/" + provider : "https://proxy.getinstantimages.com/api/" + provider;
+	var proxy = process && process.env && "http://localhost:3000/api/" ? "" + "http://localhost:3000/api/" + provider : "https://proxy.getinstantimages.com/api/" + provider;
 	return proxy;
 }
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
@@ -44471,18 +44564,6 @@ function getProp(provider, result, attribute) {
 			}
 			if (provider === "pexels") {
 				value = result.src.original;
-			}
-			break;
-
-		case "author":
-			if (provider === "pixabay") {
-				value = result.user;
-			}
-			if (provider === "unsplash") {
-				value = result.user.name;
-			}
-			if (provider === "pexels") {
-				value = result.photographer;
 			}
 			break;
 

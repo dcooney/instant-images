@@ -1582,6 +1582,10 @@ body.media_page_instant-images.overflow-hidden {
   line-height: 35px;
 }
 
+#photos .edit-screen input[name=filename] {
+  padding-right: 45px;
+}
+
 #photos .edit-screen em {
   position: absolute;
   bottom: 15px;
@@ -2436,6 +2440,12 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 
 [data-provider="pexels"] {
   background: url(../img/pexels.svg) no-repeat 10px center;
+  -webkit-background-size: 20px 20px;
+          background-size: 20px 20px;
+}
+
+[data-provider="openverse"] {
+  background: url(../img/openverse.svg) no-repeat 10px center;
   -webkit-background-size: 20px 20px;
           background-size: 20px 20px;
 }
