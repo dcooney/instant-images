@@ -63,7 +63,6 @@ function instant_images_download( WP_REST_Request $request ) {
 	$data = json_decode( $request->get_body(), true ); // Get contents of request body.
 
 	if ( $data ) {
-
 		$provider  = $data['provider'];
 		$id        = $data['id']; // Image ID.
 		$image_url = instant_images_generate_image_url( $provider, $data['image_url'], $max_width, $max_height ); // Image URL.
@@ -72,8 +71,12 @@ function instant_images_download( WP_REST_Request $request ) {
 		$alt       = sanitize_text_field( $data['alt'] ); // Alt text.
 		$caption   = wp_kses_post( $data['caption'] ); // Caption text.
 		$cfilename = sanitize_title( $data['custom_filename'] ); // Custom filename.
-		$parent_id = ( $data['parent_id'] ) ? sanitize_title( $data['parent_id'] ) : 0; // Parent post ID.
-		$name      = ( ! empty( $cfilename ) ) ? $cfilename . '.jpg' : $filename; // Actual filename.
+		$lang      = sanitize_text_field( $data['lang'] ); // Media language.
+
+		echo $lang;
+
+		$parent_id = $data['parent_id'] ? sanitize_title( $data['parent_id'] ) : 0; // Parent post ID.
+		$name      = ! empty( $cfilename ) ? $cfilename . '.jpg' : $filename; // Actual filename.
 
 		// Check if remote file exists.
 		if ( ! instant_images_remote_file_exists( $image_url ) ) {
@@ -117,6 +120,11 @@ function instant_images_download( WP_REST_Request $request ) {
 
 		// Add Alt Text as Post Meta.
 		update_post_meta( $image_id, '_wp_attachment_image_alt', $alt );
+
+		// Set media language.
+		if ( $lang && function_exists( 'pll_set_post_language' ) ) {
+			pll_set_post_language( $image_id, $lang ); // Polylang.
+		}
 
 		// Generate Metadata.
 		$attach_data = wp_generate_attachment_metadata( $image_id, $mirror['file'] );
