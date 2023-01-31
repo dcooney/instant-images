@@ -73,8 +73,6 @@ function instant_images_download( WP_REST_Request $request ) {
 		$cfilename = sanitize_title( $data['custom_filename'] ); // Custom filename.
 		$lang      = sanitize_text_field( $data['lang'] ); // Media language.
 
-		echo $lang;
-
 		$parent_id = $data['parent_id'] ? sanitize_title( $data['parent_id'] ) : 0; // Parent post ID.
 		$name      = ! empty( $cfilename ) ? $cfilename . '.jpg' : $filename; // Actual filename.
 
