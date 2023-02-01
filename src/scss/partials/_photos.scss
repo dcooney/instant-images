@@ -31,11 +31,13 @@
 	.photo {
 		width: 20%;
 		margin: 0;
-		padding: 0 5px 10px;
+		padding: 0 3px 6px;
 		opacity: 0;
-		transition: opacity 0.3s ease;
+		transition: opacity 0.45s ease;
 		&--wrap {
 			position: relative;
+			border-radius: $radius;
+			overflow: hidden;
 		}
 		&.in-view {
 			opacity: 1;
@@ -116,7 +118,7 @@
 				width: 60px;
 				height: 60px;
 				line-height: 60px;
-				border-radius: 4px;
+				border-radius: $radius;
 				position: absolute;
 				left: 50%;
 				top: 50%;
@@ -288,7 +290,7 @@
 				}
 			}
 			a {
-				margin-left: 2px;
+				margin-left: 5px;
 				&:hover,
 				&:focus {
 					background-color: #fff;
@@ -446,7 +448,7 @@
 			.photo--wrap{
 				padding: 5px;
 				border: 1px solid $border;
-				border-radius: $radius_sm;
+				border-radius: $radius;
 				transition: border 0.25s ease;
 				.flag{
 					position: absolute;
@@ -601,7 +603,7 @@
 			line-height: 1;
 		}
 		textarea {
-			resize: none;
+			//resize: none;
 			font-size: 12px;
 			line-height: 1.35;
 		}

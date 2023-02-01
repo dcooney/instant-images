@@ -1,35 +1,9 @@
 module.exports = {
 	openverse: {
-		filters: {
-			aspect_ratio: {
-				label: "orientation",
-				default: "all",
-				filters: ["all", "square", "tall", "wide"],
-			},
-			category: {
-				label: "category",
-				default: "all",
-				filters: ["all", "digitized_artwork", "illustration", "photograph"],
-			},
-			extension: {
-				label: "extension",
-				default: "all",
-				filters: ["all", "JPG", "GIF", "PNG", "SVG"],
-			},
-			license_type: {
-				label: "license_type",
-				default: "all",
-				filters: ["all", "all-cc", "commercial", "modification"],
-			},
-		},
+		filters: {},
 		search: {
-			aspect_ratio: {
-				label: "orientation",
-				default: "all",
-				filters: ["all", "square", "tall", "wide"],
-			},
 			category: {
-				label: "category",
+				label: "type",
 				default: "all",
 				filters: ["all", "digitized_artwork", "illustration", "photograph"],
 			},
@@ -37,6 +11,16 @@ module.exports = {
 				label: "extension",
 				default: "all",
 				filters: ["all", "JPG", "GIF", "PNG"],
+			},
+			aspect_ratio: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "square", "tall", "wide"],
+			},
+			size: {
+				label: "size",
+				default: "all",
+				filters: ["all", "small", "medium", "large"],
 			},
 			license_type: {
 				label: "license_type",

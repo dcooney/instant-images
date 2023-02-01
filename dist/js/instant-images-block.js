@@ -41402,10 +41402,6 @@ var _capitalizeFirstLetter = __webpack_require__(/*! ../functions/capitalizeFirs
 
 var _capitalizeFirstLetter2 = _interopRequireDefault(_capitalizeFirstLetter);
 
-var _generateAttribution = __webpack_require__(/*! ../functions/generateAttribution.js */ "./src/js/functions/generateAttribution.js.js");
-
-var _generateAttribution2 = _interopRequireDefault(_generateAttribution);
-
 var _unsplashDownload = __webpack_require__(/*! ../functions/unsplashDownload */ "./src/js/functions/unsplashDownload.js");
 
 var _unsplashDownload2 = _interopRequireDefault(_unsplashDownload);
@@ -41431,29 +41427,24 @@ var Photo = function (_React$Component) {
 
 		var result = _this.props.result;
 		_this.id = result.id;
+		_this.filename = _this.id;
 		_this.thumb = result && result.urls && result.urls.thumb;
 		_this.img = result && result.urls && result.urls.img;
 		_this.full = result && result.urls && result.urls.full;
 		_this.extension = result && result.extension ? result.extension : "jpg";
 		_this.download_url = result && result.urls && result.urls.download_url;
-		_this.username = result && result.user && result.user.username;
-		_this.name = result && result.user && result.user.name;
-		_this.img_title = instant_img_localize.photo_by + " " + _this.name;
-		_this.filename = _this.id;
-		_this.title = _this.img_title;
-
-		_this.alt = result && result.alt;
-		_this.alt = result.alt === null ? "" : _this.alt;
-		_this.caption = result && result.caption;
-		_this.caption = result.caption === null ? "" : _this.caption;
-		_this.description = result && result.description;
-		_this.description = result.description === null ? "" : _this.description;
-
+		_this.user_id = result && result.user && result.user.id;
+		_this.user_name = result && result.user && result.user.name;
 		_this.user_photo = result && result.user && result.user.photo;
 		_this.user_url = result && result.user && result.user.url;
+
+		_this.title = result && result.title ? result.title : "";
+		_this.alt = result && result.alt ? result.alt : "";
+		_this.caption = result && result.caption ? result.caption : "";
+
 		_this.permalink = result && result.permalink;
 		_this.likes = result && result.likes;
-		_this.attribution = (0, _generateAttribution2.default)(_this.provider, _this.user_url, _this.name);
+		_this.attribution = result && result.attribution ? result.attribution : "";
 
 		_this.view_all = instant_img_localize.view_all;
 		_this.inProgress = false;
@@ -41477,8 +41468,7 @@ var Photo = function (_React$Component) {
 			filename: _this.filename,
 			title: _this.title,
 			alt: _this.alt,
-			caption: _this.caption,
-			description: _this.description
+			caption: _this.caption
 		};
 
 		// Refs.
@@ -41547,7 +41537,6 @@ var Photo = function (_React$Component) {
 				title: target.getAttribute("data-title"),
 				alt: target.getAttribute("data-alt"),
 				caption: target.getAttribute("data-caption"),
-				description: target.getAttribute("data-description"),
 				parent_id: instant_img_localize.parent_id,
 				lang: instant_img_localize.lang
 			};
@@ -41845,11 +41834,6 @@ var Photo = function (_React$Component) {
 					caption: e.target.value
 				});
 			}
-			if (target === "description") {
-				this.setState({
-					description: e.target.value
-				});
-			}
 		}
 
 		/**
@@ -41920,13 +41904,6 @@ var Photo = function (_React$Component) {
 			caption.value = caption.dataset.original;
 			this.setState({
 				caption: caption.value
-			});
-
-			// Description
-			var description = this.photo.current.querySelector('textarea[name="description"]');
-			description.value = description.dataset.original;
-			this.setState({
-				description: description.value
 			});
 
 			// Hide edit screen
@@ -42005,7 +41982,6 @@ var Photo = function (_React$Component) {
 								"data-title": this.state.title,
 								"data-alt": this.state.alt,
 								"data-caption": this.state.caption,
-								"data-description": this.state.description,
 								title: instant_img_localize.upload,
 								onClick: function onClick(e) {
 									return _this2.download(e);
@@ -42023,8 +41999,9 @@ var Photo = function (_React$Component) {
 								{
 									className: "user fade",
 									href: this.user_url,
+									rel: "noopener noreferrer",
 									target: "_blank",
-									title: this.provider === "unsplash" ? this.view_all + " @ " + this.username : this.view_all + " " + this.name
+									title: this.view_all + " @ " + this.user_name
 								},
 								_react2.default.createElement(
 									"div",
@@ -42033,7 +42010,7 @@ var Photo = function (_React$Component) {
 										className: "user-wrap--photo",
 										src: this.user_photo
 									}),
-									this.provider === "unsplash" ? this.username : this.name
+									this.user_name
 								)
 							),
 							_react2.default.createElement(
@@ -42167,6 +42144,7 @@ var Photo = function (_React$Component) {
 									onMouseLeave: function onMouseLeave(e) {
 										return _this2.hideTooltip(e);
 									},
+									rel: "noopener noreferrer",
 									target: "_blank"
 								},
 								_react2.default.createElement("i", {
@@ -42286,7 +42264,7 @@ var Photo = function (_React$Component) {
 								ref: this.captionRef
 							})
 						),
-						this.provider !== "openverse" ? _react2.default.createElement(
+						this.attribution ? _react2.default.createElement(
 							"div",
 							{ className: "add-attribution-row" },
 							_react2.default.createElement(
@@ -42300,25 +42278,6 @@ var Photo = function (_React$Component) {
 								instant_img_localize.attribution
 							)
 						) : null,
-						_react2.default.createElement(
-							"label",
-							null,
-							_react2.default.createElement(
-								"span",
-								null,
-								instant_img_localize.edit_description,
-								":"
-							),
-							_react2.default.createElement("textarea", {
-								rows: "4",
-								name: "description",
-								"data-original": this.description,
-								onChange: function onChange(e) {
-									return _this2.handleEditChange(e);
-								},
-								value: this.state.description || ""
-							})
-						),
 						_react2.default.createElement(
 							"div",
 							{ className: "edit-screen--controls" },
@@ -43447,7 +43406,7 @@ var PhotoList = function (_React$Component) {
 							className: (0, _classnames2.default)("control-nav--filters-wrap", this.api_error ? "inactive" : null),
 							ref: this.filterGroups
 						},
-						Object.entries(this.state.filters).length && _react2.default.createElement(
+						Object.entries(this.state.filters).length ? _react2.default.createElement(
 							"div",
 							{ className: "control-nav--filters" },
 							Object.entries(this.state.filters).map(function (_ref5, i) {
@@ -43463,7 +43422,7 @@ var PhotoList = function (_React$Component) {
 									"function": _this4.filterPhotos.bind(_this4)
 								});
 							})
-						)
+						) : null
 					),
 					_react2.default.createElement(
 						"div",
@@ -43981,36 +43940,10 @@ module.exports = {
 
 module.exports = {
 	openverse: {
-		filters: {
-			aspect_ratio: {
-				label: "orientation",
-				default: "all",
-				filters: ["all", "square", "tall", "wide"]
-			},
-			category: {
-				label: "category",
-				default: "all",
-				filters: ["all", "digitized_artwork", "illustration", "photograph"]
-			},
-			extension: {
-				label: "extension",
-				default: "all",
-				filters: ["all", "JPG", "GIF", "PNG", "SVG"]
-			},
-			license_type: {
-				label: "license_type",
-				default: "all",
-				filters: ["all", "all-cc", "commercial", "modification"]
-			}
-		},
+		filters: {},
 		search: {
-			aspect_ratio: {
-				label: "orientation",
-				default: "all",
-				filters: ["all", "square", "tall", "wide"]
-			},
 			category: {
-				label: "category",
+				label: "type",
 				default: "all",
 				filters: ["all", "digitized_artwork", "illustration", "photograph"]
 			},
@@ -44018,6 +43951,16 @@ module.exports = {
 				label: "extension",
 				default: "all",
 				filters: ["all", "JPG", "GIF", "PNG"]
+			},
+			aspect_ratio: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "square", "tall", "wide"]
+			},
+			size: {
+				label: "size",
+				default: "all",
+				filters: ["all", "small", "medium", "large"]
 			},
 			license_type: {
 				label: "license_type",
@@ -44362,45 +44305,6 @@ function consoleStatus(provider) {
 		default:
 			break;
 	}
-}
-
-/***/ }),
-
-/***/ "./src/js/functions/generateAttribution.js.js":
-/*!****************************************************!*\
-  !*** ./src/js/functions/generateAttribution.js.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.default = generateAttribution;
-
-var _capitalizeFirstLetter = __webpack_require__(/*! ./capitalizeFirstLetter */ "./src/js/functions/capitalizeFirstLetter.js");
-
-var _capitalizeFirstLetter2 = _interopRequireDefault(_capitalizeFirstLetter);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Get the API URL for searches by ID.
- *
- * @param  {string} provider  The service provider.
- * @param  {string} url       The user url.
- * @param  {string} name      The user name.
- * @return {string}           The raw attribution HTML.
- */
-function generateAttribution(provider, url, name) {
-	var provider_url = provider + "_url";
-	var referral = "utm_source=wordpress-instant-images&utm_medium=referral";
-	var attribution = instant_img_localize.photo_by + " " + "<a href=\"" + url + "\" rel=\"nofollow\">" + name + "</a> " + instant_img_localize.on + " <a href=\"" + instant_img_localize[provider_url] + "/?" + referral + "\">" + (0, _capitalizeFirstLetter2.default)(provider) + "</a>";
-
-	return attribution;
 }
 
 /***/ }),
@@ -44801,7 +44705,13 @@ function getContentSafety(params, provider) {
 
 		case "pixabay":
 			if (instant_img_localize.pixabay_safesearch) {
-				params.safesearch = instant_img_localize.pixabay_safesearch;
+				params.safesearch = "true";
+			}
+			break;
+
+		case "openverse":
+			if (instant_img_localize.openverse_mature) {
+				params.mature = "true";
 			}
 			break;
 	}

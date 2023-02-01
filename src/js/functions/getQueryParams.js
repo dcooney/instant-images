@@ -18,7 +18,7 @@ export default function getQueryParams(provider, queryParams) {
 	// Set default params.
 	let params = {
 		provider: provider,
-		per_page: per_page
+		per_page: per_page,
 	};
 
 	// Append additional params.
@@ -78,7 +78,13 @@ export function getContentSafety(params, provider) {
 
 		case "pixabay":
 			if (instant_img_localize.pixabay_safesearch) {
-				params.safesearch = instant_img_localize.pixabay_safesearch;
+				params.safesearch = "true";
+			}
+			break;
+
+		case "openverse":
+			if (instant_img_localize.openverse_mature) {
+				params.mature = "true";
 			}
 			break;
 	}

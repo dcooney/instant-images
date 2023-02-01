@@ -17,6 +17,13 @@
 /*
 * NEW: Added Openverse support.
 * NEW: Added Description field to save data into the Post Content WP field.
+* NEW: Added mime type checker to make sure the file type is allowed before uploading.
+* UPDATE: Better attribution handling.
+* UPDATE: Various admin UI/UX tweaks and updated.
+
+TODO:
+- Create photo attribution variables on the server side. [DONE]
+- Only allow search with Openverse. The listing sucks.
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -272,11 +279,12 @@ class InstantImages {
 				'pixabay_url'             => 'https://pixabay.com',
 				'pixabay_api_url'         => 'https://pixabay.com/service/about/api/',
 				'pixabay_api_desc'        => __( 'Access to images from Pixabay requires a valid API key. API keys are available for free, just sign up for an account at Pixabay, enter your API key below and you\'re good to go!', 'instant-images' ),
-				'pixabay_safesearch'      => apply_filters( 'instant_images_pixabay_safesearch', 'true' ),
+				'pixabay_safesearch'      => apply_filters( 'instant_images_pixabay_safesearch', true ),
 				'pexels_app_id'           => $pexels_api,
 				'pexels_url'              => 'https://pexels.com',
 				'pexels_api_url'          => 'https://www.pexels.com/join-consumer/',
 				'pexels_api_desc'         => __( 'Access to images from Pexels requires a valid API key. API keys are available for free, just sign up for an account at Pexels, enter your API key below and you\'re good to go!', 'instant-images' ),
+				'openverse_mature'        => apply_filters( 'instant_images_openverse_mature', false ),
 				'error_upload'            => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
 				'error_restapi'           => __( 'There was an error accessing the WP REST API.', 'instant-images' ),
 				'error_restapi_desc'      => __( 'Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images' ),
@@ -305,7 +313,7 @@ class InstantImages {
 				'search_label'            => __( 'Search', 'instant-images' ),
 				'search_results'          => __( 'image(s) found for', 'instant-images' ),
 				'clear_search'            => __( 'Clear Search', 'instant-images' ),
-				'open_external'           => __( 'Open image on', 'instant-images' ),
+				'open_external'           => __( 'View on', 'instant-images' ),
 				'set_as_featured'         => __( 'Set as Featured Image', 'instant-images' ),
 				'insert_into_post'        => __( 'Insert Into Post', 'instant-images' ),
 				'edit_filename'           => __( 'Filename', 'instant-images' ),

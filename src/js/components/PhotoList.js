@@ -781,7 +781,7 @@ class PhotoList extends React.Component {
 						)}
 						ref={this.filterGroups}
 					>
-						{Object.entries(this.state.filters).length && (
+						{Object.entries(this.state.filters).length ? (
 							<div className="control-nav--filters">
 								{Object.entries(this.state.filters).map(
 									([key, filter], i) => (
@@ -795,7 +795,7 @@ class PhotoList extends React.Component {
 									)
 								)}
 							</div>
-						)}
+						) : null}
 					</div>
 
 					<div

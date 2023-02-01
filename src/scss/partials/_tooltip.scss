@@ -12,12 +12,13 @@
 		visibility: hidden;
 		margin-top: -37px;
 		font-size: 12px;
-		color: $text_light;
+		color: rgba($text, 0.75);
 		text-align: center;
 		line-height: 1;
 		border-radius: 2px;
 		box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-		transition: opacity 0.15s ease;
+		transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+		transform: scale(0.8);
 		&:after {
 			top: 100%;
 			right: 17px;
@@ -32,10 +33,6 @@
 			border-width: 5px;
 			margin-left: -5px;
 		}
-		&.over {
-			opacity: 0.9;
-			visibility: visible;
-		}
 		&.above {
 			margin-top: 37px;
 			&:after {
@@ -43,6 +40,11 @@
 				border-top: none;
 				border-bottom-color: #ffffff;
 			}
+		}
+		&.over {
+			transform: scale(1);
+			opacity: 0.9;
+			visibility: visible;
 		}
 	}
 }

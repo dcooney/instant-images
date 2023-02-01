@@ -2,7 +2,6 @@ import axios from "axios";
 import React from "react";
 import API from "../constants/API.js";
 import capitalizeFirstLetter from "../functions/capitalizeFirstLetter";
-import generateAttribution from "../functions/generateAttribution.js";
 import unsplashDownload from "../functions/unsplashDownload";
 
 class Photo extends React.Component {
@@ -14,33 +13,24 @@ class Photo extends React.Component {
 
 		const result = this.props.result;
 		this.id = result.id;
+		this.filename = this.id;
 		this.thumb = result && result.urls && result.urls.thumb;
 		this.img = result && result.urls && result.urls.img;
 		this.full = result && result.urls && result.urls.full;
 		this.extension = result && result.extension ? result.extension : "jpg";
 		this.download_url = result && result.urls && result.urls.download_url;
-		this.username = result && result.user && result.user.username;
-		this.name = result && result.user && result.user.name;
-		this.img_title = `${instant_img_localize.photo_by} ${this.name}`;
-		this.filename = this.id;
-		this.title = this.img_title;
-
-		this.alt = result && result.alt;
-		this.alt = result.alt === null ? "" : this.alt;
-		this.caption = result && result.caption;
-		this.caption = result.caption === null ? "" : this.caption;
-		this.description = result && result.description;
-		this.description = result.description === null ? "" : this.description;
-
+		this.user_id = result && result.user && result.user.id;
+		this.user_name = result && result.user && result.user.name;
 		this.user_photo = result && result.user && result.user.photo;
 		this.user_url = result && result.user && result.user.url;
+
+		this.title = result && result.title ? result.title : "";
+		this.alt = result && result.alt ? result.alt : "";
+		this.caption = result && result.caption ? result.caption : "";
+
 		this.permalink = result && result.permalink;
 		this.likes = result && result.likes;
-		this.attribution = generateAttribution(
-			this.provider,
-			this.user_url,
-			this.name
-		);
+		this.attribution = result && result.attribution ? result.attribution : "";
 
 		this.view_all = instant_img_localize.view_all;
 		this.inProgress = false;
@@ -65,7 +55,6 @@ class Photo extends React.Component {
 			title: this.title,
 			alt: this.alt,
 			caption: this.caption,
-			description: this.description,
 		};
 
 		// Refs.
@@ -129,7 +118,6 @@ class Photo extends React.Component {
 			title: target.getAttribute("data-title"),
 			alt: target.getAttribute("data-alt"),
 			caption: target.getAttribute("data-caption"),
-			description: target.getAttribute("data-description"),
 			parent_id: instant_img_localize.parent_id,
 			lang: instant_img_localize.lang,
 		};
@@ -432,11 +420,6 @@ class Photo extends React.Component {
 				caption: e.target.value,
 			});
 		}
-		if (target === "description") {
-			this.setState({
-				description: e.target.value,
-			});
-		}
 	}
 
 	/**
@@ -509,15 +492,6 @@ class Photo extends React.Component {
 			caption: caption.value,
 		});
 
-		// Description
-		const description = this.photo.current.querySelector(
-			'textarea[name="description"]'
-		);
-		description.value = description.dataset.original;
-		this.setState({
-			description: description.value,
-		});
-
 		// Hide edit screen
 		this.editScreen.current.classList.remove("editing");
 
@@ -581,7 +555,6 @@ class Photo extends React.Component {
 							data-title={this.state.title}
 							data-alt={this.state.alt}
 							data-caption={this.state.caption}
-							data-description={this.state.description}
 							title={instant_img_localize.upload}
 							onClick={(e) => this.download(e)}
 						>
@@ -595,12 +568,9 @@ class Photo extends React.Component {
 							<a
 								className="user fade"
 								href={this.user_url}
+								rel="noopener noreferrer"
 								target="_blank"
-								title={
-									this.provider === "unsplash"
-										? `${this.view_all} @ ${this.username}`
-										: `${this.view_all} ${this.name}`
-								}
+								title={`${this.view_all} @ ${this.user_name}`}
 							>
 								<div className="user-wrap">
 									{this.user_photo && this.user_photo.length > 0 && (
@@ -609,9 +579,7 @@ class Photo extends React.Component {
 											src={this.user_photo}
 										/>
 									)}
-									{this.provider === "unsplash"
-										? this.username
-										: this.name}
+									{this.user_name}
 								</div>
 							</a>
 							<div className="photo-options">
@@ -701,6 +669,7 @@ class Photo extends React.Component {
 								} ${capitalizeFirstLetter(this.provider)}`}
 								onMouseEnter={(e) => this.showTooltip(e)}
 								onMouseLeave={(e) => this.hideTooltip(e)}
+								rel="noopener noreferrer"
 								target="_blank"
 							>
 								<i
@@ -772,7 +741,7 @@ class Photo extends React.Component {
 								ref={this.captionRef}
 							></textarea>
 						</label>
-						{this.provider !== "openverse" ? (
+						{this.attribution ? (
 							<div className="add-attribution-row">
 								<button
 									onClick={(e) => this.addAttribution(e)}
@@ -782,16 +751,6 @@ class Photo extends React.Component {
 								</button>
 							</div>
 						) : null}
-						<label>
-							<span>{instant_img_localize.edit_description}:</span>
-							<textarea
-								rows="4"
-								name="description"
-								data-original={this.description}
-								onChange={(e) => this.handleEditChange(e)}
-								value={this.state.description || ""}
-							></textarea>
-						</label>
 						<div className="edit-screen--controls">
 							<button
 								type="button"

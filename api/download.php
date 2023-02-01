@@ -70,7 +70,7 @@ function instant_images_download( WP_REST_Request $request ) {
 		$title       = sanitize_text_field( $data['title'] ); // Title.
 		$alt         = sanitize_text_field( $data['alt'] ); // Alt text.
 		$caption     = wp_kses_post( $data['caption'] ); // Caption text.
-		$description = wp_kses_post( $data['description'] ); // Description/Post Content.
+		$description = ''; // Description/Post Content.
 		$cfilename   = sanitize_title( $data['custom_filename'] ); // Custom filename.
 		$lang        = sanitize_text_field( $data['lang'] ); // Media language.
 		$parent_id   = $data['parent_id'] ? sanitize_title( $data['parent_id'] ) : 0; // Parent post ID.
@@ -78,12 +78,35 @@ function instant_images_download( WP_REST_Request $request ) {
 		$name = ! empty( $cfilename ) ? $cfilename : $filename; // Actual filename.
 		$name = $name . '.' . $extension; // Add file extension.
 
-		// Check if remote file exists.
+		$has_error = false;
+		$error_msg = '';
+
+		/**
+		 * Check if file mime type is allowed.
+		 *
+		 * @see https://developer.wordpress.org/reference/functions/wp_check_filetype/
+		 */
+		$file_type = wp_check_filetype( $image_url );
+		if ( ! $file_type || ! $file_type['ext'] ) {
+			$has_error = true;
+
+			// translators: File extension.
+			$error_msg = sprintf( esc_attr__( 'File mime type (.%1$s) is not allowed. Use the `upload_mimes` WP hook to add support for this mine type.', 'instant-images' ), $extension );
+		}
+
+		/**
+		 * Check if file exists on remote server.
+		 */
 		if ( ! instant_images_remote_file_exists( $image_url ) ) {
-			// Errorhandling.
+			$has_error = true;
+			$error_msg = __( 'Image file does not exist on remote server or there was an error accessing the file.', 'instant-images' );
+		}
+
+		// Handle errors.
+		if ( $has_error ) {
 			$response = [
 				'success'    => false,
-				'msg'        => __( 'Image does not exist or there was an error accessing the remote file.', 'instant-images' ),
+				'msg'        => $error_msg,
 				'id'         => $id,
 				'attachment' => '',
 				'admin_url'  => admin_url(),

@@ -1,4 +1,4 @@
-import capitalizeFirstLetter from "./capitalizeFirstLetter";
+import capitalizeFirstLetter from "../capitalizeFirstLetter";
 
 /**
  * Get the API URL for searches by ID.
@@ -7,17 +7,18 @@ import capitalizeFirstLetter from "./capitalizeFirstLetter";
  * @param  {string} url       The user url.
  * @param  {string} name      The user name.
  * @return {string}           The raw attribution HTML.
+ * @deprecated 5.1.0
  */
 export default function generateAttribution(provider, url, name) {
 	const provider_url = `${provider}_url`;
-	const referral = "utm_source=wordpress-instant-images&utm_medium=referral";
+	// const ref = "utm_source=wordpress-instant-images&utm_medium=referral";
+	const loc = instant_img_localize;
+
 	const attribution = `${
-		instant_img_localize.photo_by
-	}${" "}<a href="${url}" rel="nofollow">${name}</a> ${
-		instant_img_localize.on
-	} <a href="${
-		instant_img_localize[provider_url]
-	}/?${referral}">${capitalizeFirstLetter(provider)}</a>`;
+		loc.photo_by
+	}${" "}<a href="${url}" rel="noopener noreferrer">${name}</a> ${
+		loc.on
+	} <a href="${loc[provider_url]}">${capitalizeFirstLetter(provider)}</a>`;
 
 	return attribution;
 }
