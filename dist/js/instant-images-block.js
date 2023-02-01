@@ -43943,7 +43943,7 @@ module.exports = {
 			source: {
 				label: "source",
 				default: "WordPress",
-				filters: ["WordPress", "Flickr", "Nasa", "RawPixel", "SpaceX", "StockSnap", "Wikimedia"]
+				filters: ["WordPress", "Flickr", "Nasa", "SpaceX", "StockSnap"]
 			},
 			aspect_ratio: {
 				label: "orientation",
