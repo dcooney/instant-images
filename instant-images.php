@@ -372,6 +372,7 @@ class InstantImages {
 					'size'         => __( 'Size:', 'instant-images' ),
 					'extension'    => __( 'Extension:', 'instant-images' ),
 					'license_type' => __( 'License Type:', 'instant-images' ),
+					'source'       => __( 'Source:', 'instant-images' ),
 				],
 			)
 		);

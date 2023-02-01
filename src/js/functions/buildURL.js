@@ -13,7 +13,7 @@ export default function buildURL(type, params) {
 	// Get the current provider.
 	const { provider = "unsplash" } = params;
 
-	// Delete provider from the params object as it doesn't need to be sent.
+	// Delete provider from the params. it doesn't need to be sent.
 	delete params.provider;
 
 	// Build the API URL.
@@ -23,9 +23,14 @@ export default function buildURL(type, params) {
 	url.searchParams.append("type", type);
 
 	// Append query params.
-	Object.keys(params).forEach(key => {
+	Object.keys(params).forEach((key) => {
 		url.searchParams.append(key, params[key]);
 	});
+
+	if (provider === "openverse" && type === "photos" && !params.source) {
+		// Add `wordpress` as the default `source` for openverse.
+		url.searchParams.append("source", "wordpress");
+	}
 
 	// Add `version` to params.
 	url.searchParams.append("version", instant_img_localize.version);

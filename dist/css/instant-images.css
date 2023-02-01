@@ -2836,12 +2836,6 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   font-size: 14px;
 }
 
-@media screen and (min-width: 1500px) {
-  .filter-dropdown--button {
-    font-size: 15px;
-  }
-}
-
 .filter-dropdown--button span.filter-dropdown--button-label {
   padding-right: 3px;
 }

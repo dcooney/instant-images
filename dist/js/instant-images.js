@@ -42858,7 +42858,6 @@ var Photo = function (_React$Component) {
 		_this.id = result.id;
 		_this.filename = _this.id;
 		_this.thumb = result && result.urls && result.urls.thumb;
-		_this.img = result && result.urls && result.urls.img;
 		_this.full = result && result.urls && result.urls.full;
 		_this.extension = result && result.extension ? result.extension : "jpg";
 		_this.download_url = result && result.urls && result.urls.download_url;
@@ -43416,7 +43415,7 @@ var Photo = function (_React$Component) {
 									return _this2.download(e);
 								}
 							},
-							_react2.default.createElement("img", { src: this.img, alt: "" }),
+							_react2.default.createElement("img", { src: this.thumb, alt: this.alt }),
 							_react2.default.createElement("div", { className: "status" })
 						),
 						_react2.default.createElement("div", { className: "notice-msg", ref: this.noticeMsg }),
@@ -45369,7 +45368,18 @@ module.exports = {
 
 module.exports = {
 	openverse: {
-		filters: {},
+		filters: {
+			source: {
+				label: "source",
+				default: "WordPress",
+				filters: ["WordPress", "Flickr", "Nasa", "RawPixel", "SpaceX", "StockSnap", "Wikimedia"]
+			},
+			aspect_ratio: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "square", "tall", "wide"]
+			}
+		},
 		search: {
 			category: {
 				label: "type",
@@ -45379,7 +45389,7 @@ module.exports = {
 			extension: {
 				label: "extension",
 				default: "all",
-				filters: ["all", "JPG", "GIF", "PNG"]
+				filters: ["all", "JPG", "GIF", "PNG", "SVG"]
 			},
 			aspect_ratio: {
 				label: "orientation",
@@ -45394,7 +45404,7 @@ module.exports = {
 			license_type: {
 				label: "license_type",
 				default: "all",
-				filters: ["all", "all-cc", "commercial", "modification"]
+				filters: ["all", "commercial", "modification"]
 			}
 		}
 	},
@@ -45576,7 +45586,7 @@ function buildURL(type, params) {
 	var _params$provider = params.provider,
 	    provider = _params$provider === undefined ? "unsplash" : _params$provider;
 
-	// Delete provider from the params object as it doesn't need to be sent.
+	// Delete provider from the params. it doesn't need to be sent.
 
 	delete params.provider;
 
@@ -45590,6 +45600,11 @@ function buildURL(type, params) {
 	Object.keys(params).forEach(function (key) {
 		url.searchParams.append(key, params[key]);
 	});
+
+	if (provider === "openverse" && type === "photos" && !params.source) {
+		// Add `wordpress` as the default `source` for openverse.
+		url.searchParams.append("source", "wordpress");
+	}
 
 	// Add `version` to params.
 	url.searchParams.append("version", instant_img_localize.version);

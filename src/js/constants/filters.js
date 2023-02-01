@@ -1,6 +1,25 @@
 module.exports = {
 	openverse: {
-		filters: {},
+		filters: {
+			source: {
+				label: "source",
+				default: "WordPress",
+				filters: [
+					"WordPress",
+					"Flickr",
+					"Nasa",
+					"RawPixel",
+					"SpaceX",
+					"StockSnap",
+					"Wikimedia",
+				],
+			},
+			aspect_ratio: {
+				label: "orientation",
+				default: "all",
+				filters: ["all", "square", "tall", "wide"],
+			},
+		},
 		search: {
 			category: {
 				label: "type",
@@ -10,7 +29,7 @@ module.exports = {
 			extension: {
 				label: "extension",
 				default: "all",
-				filters: ["all", "JPG", "GIF", "PNG"],
+				filters: ["all", "JPG", "GIF", "PNG", "SVG"],
 			},
 			aspect_ratio: {
 				label: "orientation",
@@ -25,7 +44,7 @@ module.exports = {
 			license_type: {
 				label: "license_type",
 				default: "all",
-				filters: ["all", "all-cc", "commercial", "modification"],
+				filters: ["all", "commercial", "modification"],
 			},
 		},
 	},

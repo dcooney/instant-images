@@ -15,7 +15,6 @@ class Photo extends React.Component {
 		this.id = result.id;
 		this.filename = this.id;
 		this.thumb = result && result.urls && result.urls.thumb;
-		this.img = result && result.urls && result.urls.img;
 		this.full = result && result.urls && result.urls.full;
 		this.extension = result && result.extension ? result.extension : "jpg";
 		this.download_url = result && result.urls && result.urls.download_url;
@@ -558,7 +557,7 @@ class Photo extends React.Component {
 							title={instant_img_localize.upload}
 							onClick={(e) => this.download(e)}
 						>
-							<img src={this.img} alt="" />
+							<img src={this.thumb} alt={this.alt} />
 							<div className="status" />
 						</a>
 
