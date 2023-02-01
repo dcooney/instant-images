@@ -536,16 +536,16 @@
 			padding: 10px;
 			border-radius: 3px 3px 0 0;
 			> div {
-				padding: 5px 15px 5px 5px;
+				padding: 10px 15px 10px 5px;
 				flex: 1;
 
 				&.preview {
-					width: 30%;
+					width: 25%;
 					padding: 0;
 					background-size: cover;
 					background-position: center;
 					background-repeat: no-repeat;
-					border-radius: 2px;
+					border-radius: 3px;
 					flex: none;
 					//transform: rotate(-2deg);
 				}
@@ -557,7 +557,7 @@
 				color: $text_light;
 				&.heading {
 					color: #222;
-					margin: 0 0 3px;
+					margin: 0;
 					font-weight: 600;
 					text-transform: uppercase;
 				}

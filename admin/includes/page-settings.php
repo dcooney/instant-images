@@ -14,6 +14,12 @@
 			<ul>
 				<li>
 					<p>
+						<strong>Openverse</strong>
+						We've added support for <a href="https://wordpress.org/openverse/" target="_blank">Openverse</a> image API.
+					</p>
+				</li>
+				<li>
+					<p>
 						<strong>Proxy Server</strong>
 						All API requests to Unsplash, Pexels and Pixabay are now routed through our custom proxy server at <a href="https://proxy.getinstantimages.com" target="_blank">proxy.getinstantimages.com</a>.
 					</p>

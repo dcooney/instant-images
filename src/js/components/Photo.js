@@ -385,6 +385,15 @@ class Photo extends React.Component {
 		const self = this;
 		this.hideTooltip(e);
 
+		// Get all open edit screens.
+		const openEdits = document.querySelectorAll(".edit-screen.editing");
+		if (openEdits) {
+			// Close open edit screens.
+			openEdits.forEach((edit) => {
+				edit.classList.remove("editing");
+			});
+		}
+
 		// Show edit screen
 		self.editScreen.current.classList.add("editing");
 
@@ -421,6 +430,11 @@ class Photo extends React.Component {
 		if (target === "caption") {
 			this.setState({
 				caption: e.target.value,
+			});
+		}
+		if (target === "description") {
+			this.setState({
+				description: e.target.value,
 			});
 		}
 	}
@@ -708,7 +722,6 @@ class Photo extends React.Component {
 								<p className="heading">
 									{instant_img_localize.edit_details}
 								</p>
-								<p>{instant_img_localize.edit_details_intro}</p>
 							</div>
 							<div
 								className="preview"
@@ -759,16 +772,6 @@ class Photo extends React.Component {
 								ref={this.captionRef}
 							></textarea>
 						</label>
-						<label>
-							<span>{instant_img_localize.edit_description}:</span>
-							<textarea
-								rows="4"
-								name="description"
-								data-original={this.description}
-								onChange={(e) => this.handleEditChange(e)}
-								value={this.state.description || ""}
-							></textarea>
-						</label>
 						{this.provider !== "openverse" ? (
 							<div className="add-attribution-row">
 								<button
@@ -779,6 +782,16 @@ class Photo extends React.Component {
 								</button>
 							</div>
 						) : null}
+						<label>
+							<span>{instant_img_localize.edit_description}:</span>
+							<textarea
+								rows="4"
+								name="description"
+								data-original={this.description}
+								onChange={(e) => this.handleEditChange(e)}
+								value={this.state.description || ""}
+							></textarea>
+						</label>
 						<div className="edit-screen--controls">
 							<button
 								type="button"

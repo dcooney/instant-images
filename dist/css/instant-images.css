@@ -1493,21 +1493,21 @@ body.media_page_instant-images.overflow-hidden {
 }
 
 #photos .edit-screen--title > div {
-  padding: 5px 15px 5px 5px;
+  padding: 10px 15px 10px 5px;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
 }
 
 #photos .edit-screen--title > div.preview {
-  width: 30%;
+  width: 25%;
   padding: 0;
   -webkit-background-size: cover;
           background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  -webkit-border-radius: 2px;
-          border-radius: 2px;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
   -webkit-box-flex: 0;
       -ms-flex: none;
           flex: none;
@@ -1522,7 +1522,7 @@ body.media_page_instant-images.overflow-hidden {
 
 #photos .edit-screen--title p.heading {
   color: #222;
-  margin: 0 0 3px;
+  margin: 0;
   font-weight: 600;
   text-transform: uppercase;
 }

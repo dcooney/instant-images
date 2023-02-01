@@ -17,10 +17,6 @@
 /*
 * NEW: Added Openverse support.
 * NEW: Added Description field to save data into the Post Content WP field.
-
-
-TODO:
-- Image extensions. How to detemine what the extension is for upload.
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -319,7 +315,6 @@ class InstantImages {
 				'edit_description'        => __( 'Description', 'instant-images' ),
 				'edit_upload'             => __( 'Edit Attachment Details', 'instant-images' ),
 				'edit_details'            => __( 'Edit Image Details', 'instant-images' ),
-				'edit_details_intro'      => __( 'Update image details prior to uploading.', 'instant-images' ),
 				'cancel'                  => __( 'Cancel', 'instant-images' ),
 				'save'                    => __( 'Save', 'instant-images' ),
 				'upload_now'              => __( 'Upload', 'instant-images' ),

@@ -41795,6 +41795,15 @@ var Photo = function (_React$Component) {
 			var self = this;
 			this.hideTooltip(e);
 
+			// Get all open edit screens.
+			var openEdits = document.querySelectorAll(".edit-screen.editing");
+			if (openEdits) {
+				// Close open edit screens.
+				openEdits.forEach(function (edit) {
+					edit.classList.remove("editing");
+				});
+			}
+
 			// Show edit screen
 			self.editScreen.current.classList.add("editing");
 
@@ -41834,6 +41843,11 @@ var Photo = function (_React$Component) {
 			if (target === "caption") {
 				this.setState({
 					caption: e.target.value
+				});
+			}
+			if (target === "description") {
+				this.setState({
+					description: e.target.value
 				});
 			}
 		}
@@ -42180,11 +42194,6 @@ var Photo = function (_React$Component) {
 									"p",
 									{ className: "heading" },
 									instant_img_localize.edit_details
-								),
-								_react2.default.createElement(
-									"p",
-									null,
-									instant_img_localize.edit_details_intro
 								)
 							),
 							_react2.default.createElement("div", {
@@ -42277,6 +42286,20 @@ var Photo = function (_React$Component) {
 								ref: this.captionRef
 							})
 						),
+						this.provider !== "openverse" ? _react2.default.createElement(
+							"div",
+							{ className: "add-attribution-row" },
+							_react2.default.createElement(
+								"button",
+								{
+									onClick: function onClick(e) {
+										return _this2.addAttribution(e);
+									},
+									type: "button"
+								},
+								instant_img_localize.attribution
+							)
+						) : null,
 						_react2.default.createElement(
 							"label",
 							null,
@@ -42296,20 +42319,6 @@ var Photo = function (_React$Component) {
 								value: this.state.description || ""
 							})
 						),
-						this.provider !== "openverse" ? _react2.default.createElement(
-							"div",
-							{ className: "add-attribution-row" },
-							_react2.default.createElement(
-								"button",
-								{
-									onClick: function onClick(e) {
-										return _this2.addAttribution(e);
-									},
-									type: "button"
-								},
-								instant_img_localize.attribution
-							)
-						) : null,
 						_react2.default.createElement(
 							"div",
 							{ className: "edit-screen--controls" },

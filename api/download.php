@@ -66,6 +66,7 @@ function instant_images_download( WP_REST_Request $request ) {
 		$id          = $data['id']; // Image ID.
 		$image_url   = instant_images_generate_image_url( $provider, $data['image_url'], $max_width, $max_height ); // Image URL.
 		$filename    = sanitize_text_field( $data['filename'] ); // The filename.
+		$extension   = sanitize_text_field( $data['extension'] ); // File extension.
 		$title       = sanitize_text_field( $data['title'] ); // Title.
 		$alt         = sanitize_text_field( $data['alt'] ); // Alt text.
 		$caption     = wp_kses_post( $data['caption'] ); // Caption text.
@@ -73,12 +74,9 @@ function instant_images_download( WP_REST_Request $request ) {
 		$cfilename   = sanitize_title( $data['custom_filename'] ); // Custom filename.
 		$lang        = sanitize_text_field( $data['lang'] ); // Media language.
 		$parent_id   = $data['parent_id'] ? sanitize_title( $data['parent_id'] ) : 0; // Parent post ID.
-		$extension   = sanitize_text_field( $data['extension'] ); // Get file extension.
 
-		$name  = ! empty( $cfilename ) ? $cfilename : $filename; // Actual filename.
-		$name .= '.' . $extension;
-
-		echo $name;
+		$name = ! empty( $cfilename ) ? $cfilename : $filename; // Actual filename.
+		$name = $name . '.' . $extension; // Add file extension.
 
 		// Check if remote file exists.
 		if ( ! instant_images_remote_file_exists( $image_url ) ) {
