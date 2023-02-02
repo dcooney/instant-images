@@ -7,11 +7,9 @@ import buildTestURL from "../functions/buildTestURL";
 import buildURL from "../functions/buildURL";
 import checkRateLimit from "../functions/checkRateLimit";
 import consoleStatus from "../functions/consoleStatus";
-import getHeaders from "../functions/getHeaders";
 import getQueryParams from "../functions/getQueryParams";
 import getResults, { getSearchTotal } from "../functions/getResults";
 import isObjectEmpty from "../functions/isObjectEmpty";
-import { getPexelsResults, getPexelsSearchTotal } from "../functions/pexels";
 import APILightbox from "./APILightbox";
 import ErrorLightbox from "./ErrorLightbox";
 import Filter from "./Filter";
@@ -43,11 +41,7 @@ class PhotoList extends React.Component {
 		this.api_error = this.props.error;
 
 		// Results state.
-		if (this.provider === "pexels") {
-			this.results = getPexelsResults(this.props.results);
-		} else {
-			this.results = getResults(this.props.results);
-		}
+		this.results = getResults(this.props.results);
 
 		this.state = {
 			results: this.results,
@@ -217,23 +211,17 @@ class PhotoList extends React.Component {
 		const url = buildURL("search", params);
 
 		// Create fetch request.
-		const response = await fetch(url, getHeaders(this.provider));
+		const response = await fetch(url);
 		const { status, headers } = response;
 		checkRateLimit(headers);
 
 		try {
 			// Get response data.
 			const data = await response.json();
-			const results =
-				this.provider === "pexels"
-					? getPexelsResults(data)
-					: getResults(data);
+			const results = getResults(data);
 
 			// Check returned data.
-			this.total_results =
-				this.provider === "pexels"
-					? getPexelsSearchTotal(data, search_type)
-					: getSearchTotal(data);
+			this.total_results = getSearchTotal(data);
 
 			this.checkTotalResults(results.length);
 
@@ -298,7 +286,7 @@ class PhotoList extends React.Component {
 		const url = buildURL("photos", params);
 
 		// Create fetch request.
-		const response = await fetch(url, getHeaders(this.provider));
+		const response = await fetch(url);
 		const { status, headers } = response;
 		checkRateLimit(headers);
 
@@ -307,10 +295,7 @@ class PhotoList extends React.Component {
 			const data = await response.json();
 			const { error = null } = data; // Get error reporting.
 
-			const results =
-				this.provider === "pexels"
-					? getPexelsResults(data)
-					: getResults(data);
+			const results = getResults(data);
 
 			this.checkTotalResults(results.length); // Check for returned data.
 			this.results = results; // Update Props.
@@ -371,16 +356,13 @@ class PhotoList extends React.Component {
 		const url = buildURL(type, params);
 
 		// Create fetch request.
-		const response = await fetch(url, getHeaders(this.provider));
+		const response = await fetch(url);
 		const { status, headers } = response;
 		checkRateLimit(headers);
 
 		try {
 			const data = await response.json();
-			let results =
-				this.provider === "pexels"
-					? getPexelsResults(data)
-					: getResults(data);
+			let results = getResults(data);
 
 			// Loop result & push items into array.
 			results &&
@@ -511,10 +493,7 @@ class PhotoList extends React.Component {
 		if (API[provider].requires_key) {
 			const self = this;
 			try {
-				const response = await fetch(
-					buildTestURL(provider),
-					getHeaders(provider)
-				);
+				const response = await fetch(buildTestURL(provider));
 				const { status, headers } = response;
 				checkRateLimit(headers);
 

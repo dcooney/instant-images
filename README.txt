@@ -4,7 +4,7 @@ Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Pixabay, Pexels, Openverse, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 6.1
-Stable tag: 5.1.0
+Stable tag: 5.1.0.1
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -135,6 +135,11 @@ How to install Instant Images.
 6. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 5.1.0.1 - February 2, 2023 =
+* HOTFIX: Fixed issue with mime type check not always working correctly. Reverted change for now.
+* UPDATE: Pexels is using the Proxy server again after fixing the caching issues.
+
 
 = 5.1.0 - February 2, 2023 =
 * NEW: Added Openverse support.
