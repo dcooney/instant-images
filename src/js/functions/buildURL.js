@@ -45,15 +45,6 @@ export default function buildURL(type, params) {
  * @return {string}          The proxy URL.
  */
 export function getProxyURL(provider, params) {
-	if (provider === "pexels") {
-		// Bail early if pexels.
-		if (params.term) {
-			// Pexels search.
-			return `https://api.pexels.com/v1/search?query=${params.term}`;
-		}
-		return "https://api.pexels.com/v1/curated";
-	}
-
 	const proxy =
 		process && process.env && process.env.PROXY_URL
 			? `${process.env.PROXY_URL}${provider}`

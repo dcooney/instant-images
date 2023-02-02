@@ -5,6 +5,7 @@ import API from "../constants/API";
  *
  * @param  {string} provider The current provider.
  * @return {object}          The headers as an object.
+ * @deprecated 5.1.1
  */
 export default function getHeaders(provider) {
 	if (provider !== "pexels") {
@@ -21,7 +22,7 @@ export default function getHeaders(provider) {
 	// Return the auth header with key.
 	return {
 		headers: {
-			Authorization: key
-		}
+			Authorization: key,
+		},
 	};
 }
