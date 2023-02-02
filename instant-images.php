@@ -7,31 +7,19 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 5.0.1
+ * Version: 5.1.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
  * @package InstantImages
  */
 
-/*
-* NEW: Added Openverse support.
-* NEW: Added Description field to save data into the Post Content WP field.
-* NEW: Added mime type checker to make sure the file type is allowed before uploading.
-* UPDATE: Better attribution handling.
-* UPDATE: Various admin UI/UX tweaks and updated.
-
-TODO:
-- Create photo attribution variables on the server side. [DONE]
-- Only allow search with Openverse. The listing sucks. [DONE]
-*/
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '5.0.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'January 10, 2023' );
+define( 'INSTANT_IMAGES_VERSION', '5.1.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'February 2, 2023' );
 
 /**
  * Activation hook

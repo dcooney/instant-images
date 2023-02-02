@@ -1,20 +1,20 @@
 === Instant Images - One Click Unsplash, Pixabay and Pexels Uploads ===
 Contributors: dcooney, connekthq
 Donate link: <https://connekthq.com/donate/>
-Tags: Unsplash, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
+Tags: Unsplash, Pixabay, Pexels, Openverse, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 6.1
-Stable tag: 5.0.1
+Stable tag: 5.1.0
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
-One click image uploads from Unsplash, Pixabay and Pexels directly to your WordPress media library.
+One click image uploads from Unsplash, Pixabay, Pexels & Openverse directly to your WordPress media library.
 
 == Description ==
 
-Instantly upload photos from Unsplash, Pixabay or Pexels to your website all without ever leaving WordPress!
+Instantly upload photos from Unsplash, Pixabay Pexels or Openverse to your website all without ever leaving WordPress!
 
-**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [Unsplash](http://unsplash.com), [Pixabay](http://pixabay.com) and [Pexels](http://pexels.com) directly to your media library.
+**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [Unsplash](http://unsplash.com), [Pixabay](http://pixabay.com) [Pexels](http://pexels.com) and [Openverse](http://pexels.com) directly to your media library.
 
 [youtube <https://www.youtube.com/watch?v=s6Q7Kfi2f1c>]
 
@@ -39,7 +39,7 @@ The perfect tool for users who want to save time and frustration by uploading im
 ---
 
 = Proxy Server =
-Instant Images routes all API requests to service providers (Unsplash, Pexels, Pixabay etc.) through our custom proxy server at [proxy.getinstantimages.com](https://proxy.getinstantimages.com).
+Instant Images routes all API requests to service providers (Unsplash, Pexels, Pixabay, Openverse etc.) through our custom proxy server at [proxy.getinstantimages.com](https://proxy.getinstantimages.com).
 
 Maintaining a proxy server for Instant Images allows us to keep API keys hidden from public view and ensures image data returned from the providers is returned in a normalized format for display in WordPress.
 
@@ -74,7 +74,7 @@ e.g. `id:YiUi00uqKk8`
 Unfortunately, there are a number of reasons why Instant Images may not work in your current hosting/server environment. Please read through the [FAQ on our website](https://connekthq.com/plugins/instant-images/#faqs) to view some potential causes.
 
 = Can I update the filename or metadata prior to upload? =
-Yes, click the `cog` (options) icon in the bottom corner of the image to bring up an edit screen where you can modify the filename, title, alt and caption before the image is uploaded.
+Yes, click the `options` (cog) icon in the bottom corner of the image to bring up an edit screen where you can modify the filename, title, alt and caption before the image is uploaded.
 
 = Are the images upload to the Media Library? =
 Yes, once clicked, the images are processed on the server then uploaded to the Media Library into the various sizes set in your theme.
@@ -95,6 +95,9 @@ No, we provide an API for you to use, however you can get your own by signing up
 
 = Do I need an account at Pexels? =
 No, we provide an API for you to use, however you can get your own by signing up for a free account at [Pexels](https://pexels.com/).
+
+= Do I need an account at Openverse? =
+No, an Openverse account is not required.
 
 == Installation ==
 
@@ -132,6 +135,14 @@ How to install Instant Images.
 6. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 5.1.0 - February 2, 2023 =
+* NEW: Added Openverse support.
+* NEW: Added Description field to save data into the Post Content WP field.
+* NEW: Added mime type checker to make sure the file type is allowed before uploading.
+* UPDATE: Better attribution handling.
+* UPDATE: Various admin UI/UX tweaks and updated.
+
 
 = 5.0.1 - January 10, 2023 =
 * HOTFIX: Adding a temporary hotfix to patch issues with the Pexels API and the Instant Images Proxy server.
