@@ -1,20 +1,20 @@
 === Instant Images - One Click Unsplash, Pixabay and Pexels Uploads ===
 Contributors: dcooney, connekthq
 Donate link: <https://connekthq.com/donate/>
-Tags: Unsplash, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
+Tags: Unsplash, Pixabay, Pexels, Openverse, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 6.1
-Stable tag: 5.0.1
+Stable tag: 5.1.0
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
-One click image uploads from Unsplash, Pixabay and Pexels directly to your WordPress media library.
+One click image uploads from Unsplash, Pixabay, Pexels & Openverse directly to your WordPress media library.
 
 == Description ==
 
-Instantly upload photos from Unsplash, Pixabay or Pexels to your website all without ever leaving WordPress!
+Instantly upload photos from Unsplash, Pixabay Pexels or Openverse to your website all without ever leaving WordPress!
 
-**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [Unsplash](http://unsplash.com), [Pixabay](http://pixabay.com) and [Pexels](http://pexels.com) directly to your media library.
+**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [Unsplash](http://unsplash.com), [Pixabay](http://pixabay.com) [Pexels](http://pexels.com) and [Openverse](http://pexels.com) directly to your media library.
 
 [youtube <https://www.youtube.com/watch?v=s6Q7Kfi2f1c>]
 
@@ -39,7 +39,7 @@ The perfect tool for users who want to save time and frustration by uploading im
 ---
 
 = Proxy Server =
-Instant Images routes all API requests to service providers (Unsplash, Pexels, Pixabay etc.) through our custom proxy server at [proxy.getinstantimages.com](https://proxy.getinstantimages.com).
+Instant Images routes all API requests to service providers (Unsplash, Pexels, Pixabay, Openverse etc.) through our custom proxy server at [proxy.getinstantimages.com](https://proxy.getinstantimages.com).
 
 Maintaining a proxy server for Instant Images allows us to keep API keys hidden from public view and ensures image data returned from the providers is returned in a normalized format for display in WordPress.
 
@@ -74,7 +74,7 @@ e.g. `id:YiUi00uqKk8`
 Unfortunately, there are a number of reasons why Instant Images may not work in your current hosting/server environment. Please read through the [FAQ on our website](https://connekthq.com/plugins/instant-images/#faqs) to view some potential causes.
 
 = Can I update the filename or metadata prior to upload? =
-Yes, click the `cog` (options) icon in the bottom corner of the image to bring up an edit screen where you can modify the filename, title, alt and caption before the image is uploaded.
+Yes, click the `options` (cog) icon in the bottom corner of the image to bring up an edit screen where you can modify the filename, title, alt and caption before the image is uploaded.
 
 = Are the images upload to the Media Library? =
 Yes, once clicked, the images are processed on the server then uploaded to the Media Library into the various sizes set in your theme.
@@ -95,6 +95,9 @@ No, we provide an API for you to use, however you can get your own by signing up
 
 = Do I need an account at Pexels? =
 No, we provide an API for you to use, however you can get your own by signing up for a free account at [Pexels](https://pexels.com/).
+
+= Do I need an account at Openverse? =
+No, an Openverse account is not required.
 
 == Installation ==
 
@@ -133,53 +136,61 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 5.1.0 - February 2, 2023 =
+* NEW: Added Openverse support.
+* NEW: Added Description field to save data into the Post Content WP field.
+* NEW: Added mime type checker to make sure the file type is allowed before uploading.
+* UPDATE: Better attribution handling.
+* UPDATE: Various admin UI/UX tweaks and updated.
+
+
 = 5.0.1 - January 10, 2023 =
 * HOTFIX: Adding a temporary hotfix to patch issues with the Pexels API and the Instant Images Proxy server.
   Note: This fix is still not perfect but the integration is working again when a valid API is present.
 
 = 5.0 - December 19, 2022 =
-NEW: All API requests to Unsplash, Pexels and Pixabay are now routed through our custom proxy server (proxy.getinstantimages.com). Read our terms of service and privacy policy for more information.
-UPDATE: Improved error handling and reporting.
-UPDATE: Removal of hard coded API Keys from plugin.
-UPDATE: Fixed issue where search filters wouldn't reset after a new search.
+* NEW: All API requests to Unsplash, Pexels and Pixabay are now routed through our custom proxy server (proxy.getinstantimages.com). Read our terms of service and privacy policy for more information.
+* UPDATE: Improved error handling and reporting.
+* UPDATE: Removal of hard coded API Keys from plugin.
+* UPDATE: Fixed issue where search filters wouldn't reset after a new search.
 
 = 4.6.3 - November 04, 2022 =
-UPDATE: Improved load handling of default provider.
-FIX: Security fix for issue for authenticated users.
-FIX: Fixed issue default Pexels API key.
-FIX: Fixed issue with photo attribution text and localization.
+* UPDATE: Improved load handling of default provider.
+* FIX: Security fix for issue for authenticated users.
+* FIX: Fixed issue default Pexels API key.
+* FIX: Fixed issue with photo attribution text and localization.
 
 = 4.6.2 - June 24, 2022 =
-UPDATE: Updated all packages for security updates.
-FIX: Fixed issue with Unsplash API variable declaration.
+* UPDATE: Updated all packages for security updates.
+* FIX: Fixed issue with Unsplash API variable declaration.
 
 = 4.6.1 - January 14, 2022 =
-NEW: Added default API keys for all API providers 🎉 . Default API keys can still be overwritten in the plugin settings shouls you want to use your own key.
-NEW: Added rate-limit checker to determine the status of the API and display an alert warning if the limit has been exceeded.
+* NEW: Added default API keys for all API providers 🎉 . Default API keys can still be overwritten in the plugin settings shouls you want to use your own key.
+* NEW: Added rate-limit checker to determine the status of the API and display an alert warning if the limit has been exceeded.
 
 = 4.6.0.1 - January 3, 2022 =
-HOTFIX: Hotfix for accidentaly `delete_options` function left in whilst testing. Sorry about that!
+* HOTFIX: Hotfix for accidentaly `delete_options` function left in whilst testing. Sorry about that!
 
 = 4.6.0 - January 2, 2022 =
-NEW: Added Pexels integration. This requires a valid API key.
-FIX: Fixed issue with filtering Unsplash search results by 'all'.
-FIX: Various admin UI/UX updates and tweaks to improve the look and feel.
+* NEW: Added Pexels integration. This requires a valid API key.
+* FIX: Fixed issue with filtering Unsplash search results by 'all'.
+* FIX: Various admin UI/UX updates and tweaks to improve the look and feel.
 
 = 4.5.1 - December 27, 2021 =
-NEW: Added Pixabay photo filters (Type, Category, Colors and Orientation).
-NEW: Added Unsplash search filters for Color, Orientation and Order.
-NEW: Added new `instant_images_pixabay_safesearch` & `instant_images_unsplash_content_filter` filters that allow for modifying the flags the indicate the types of suitable images that should be returned. Get more information in our [FAQ](https://connekthq.com/plugins/instant-images/faqs/#can-i-ensure-only-photos-safe-for-work-are-returned-in-the-photo-listings).
-NEW: Added Pixabay API constant that allows for setting Pixabay API key via site constant. e.g. `define( 'INSTANT_IMAGES_PIXABAY_KEY', 'YOUR-KEY-HERE' );`
-UPDATE: Revamped filtering menus and orientation options.
-UPDATE: Other UI/UX updates to make the plugin more visually appealing.
-UPDATE: Improved plugin accessibility across various sections.
+* NEW: Added Pixabay photo filters (Type, Category, Colors and Orientation).
+* NEW: Added Unsplash search filters for Color, Orientation and Order.
+* NEW: Added new `instant_images_pixabay_safesearch` & `instant_images_unsplash_content_filter` filters that allow for modifying the flags the indicate the types of suitable images that should be returned. Get more information in our [FAQ](https://connekthq.com/plugins/instant-images/faqs/#can-i-ensure-only-photos-safe-for-work-are-returned-in-the-photo-listings).
+* NEW: Added Pixabay API constant that allows for setting Pixabay API key via site constant. e.g. `define( 'INSTANT_IMAGES_PIXABAY_KEY', 'YOUR-KEY-HERE' );`
+* UPDATE: Revamped filtering menus and orientation options.
+* UPDATE: Other UI/UX updates to make the plugin more visually appealing.
+* UPDATE: Improved plugin accessibility across various sections.
 
 = 4.5.0 - October 28, 2021 =
-NEW: 🎉 Pixabay! We've added support for [Pixabay](https://pixabay.com) images. This requires a valid API key.
-NEW: Added button to auto-generate Photo attribution in image caption.
-NEW: Added uninstaller script to remove plugin settings.
-UPDATE: Updated styling and functionality of photo detail editor.
-UPDATE: Various UI/UX updates.
+* NEW: 🎉 Pixabay! We've added support for [Pixabay](https://pixabay.com) images. This requires a valid API key.
+* NEW: Added button to auto-generate Photo attribution in image caption.
+* NEW: Added uninstaller script to remove plugin settings.
+* UPDATE: Updated styling and functionality of photo detail editor.
+* UPDATE: Various UI/UX updates.
 
 = 4.4.0.3 - July 30, 2021 =
 

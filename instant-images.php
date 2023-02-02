@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 5.0.1
+ * Version: 5.1.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '5.0.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'January 10, 2023' );
+define( 'INSTANT_IMAGES_VERSION', '5.1.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'February 2, 2023' );
 
 /**
  * Activation hook
@@ -117,6 +117,14 @@ class InstantImages {
 				'url'          => 'https://www.pexels.com/join-consumer/',
 				'download_url' => 'https://images.pexels.com',
 				'constant'     => 'INSTANT_IMAGES_PEXELS_KEY',
+			],
+			[
+				'name'         => 'Openverse',
+				'slug'         => 'openverse',
+				'requires_key' => false,
+				'url'          => 'https://api.openverse.engineering/v1/#section/Register-and-Authenticate/Register-for-a-key',
+				'download_url' => 'https://api.openverse.engineering/',
+				'constant'     => '',
 			],
 		];
 		return $providers;
@@ -244,7 +252,8 @@ class InstantImages {
 				'nonce'                   => wp_create_nonce( 'wp_rest' ),
 				'ajax_url'                => admin_url( 'admin-ajax.php' ),
 				'admin_nonce'             => wp_create_nonce( 'instant_img_nonce' ),
-				'parent_id'               => ( $post ) ? $post->ID : 0,
+				'parent_id'               => $post ? $post->ID : 0,
+				'lang'                    => function_exists( 'pll_current_language' ) ? pll_current_language() : '',
 				'default_provider'        => $default_provider,
 				'download_width'          => esc_html( $download_w ),
 				'download_height'         => esc_html( $download_h ),
@@ -258,11 +267,12 @@ class InstantImages {
 				'pixabay_url'             => 'https://pixabay.com',
 				'pixabay_api_url'         => 'https://pixabay.com/service/about/api/',
 				'pixabay_api_desc'        => __( 'Access to images from Pixabay requires a valid API key. API keys are available for free, just sign up for an account at Pixabay, enter your API key below and you\'re good to go!', 'instant-images' ),
-				'pixabay_safesearch'      => apply_filters( 'instant_images_pixabay_safesearch', 'true' ),
+				'pixabay_safesearch'      => apply_filters( 'instant_images_pixabay_safesearch', true ),
 				'pexels_app_id'           => $pexels_api,
 				'pexels_url'              => 'https://pexels.com',
 				'pexels_api_url'          => 'https://www.pexels.com/join-consumer/',
 				'pexels_api_desc'         => __( 'Access to images from Pexels requires a valid API key. API keys are available for free, just sign up for an account at Pexels, enter your API key below and you\'re good to go!', 'instant-images' ),
+				'openverse_mature'        => apply_filters( 'instant_images_openverse_mature', false ),
 				'error_upload'            => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
 				'error_restapi'           => __( 'There was an error accessing the WP REST API.', 'instant-images' ),
 				'error_restapi_desc'      => __( 'Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images' ),
@@ -291,16 +301,16 @@ class InstantImages {
 				'search_label'            => __( 'Search', 'instant-images' ),
 				'search_results'          => __( 'image(s) found for', 'instant-images' ),
 				'clear_search'            => __( 'Clear Search', 'instant-images' ),
-				'open_external'           => __( 'Open image on', 'instant-images' ),
+				'open_external'           => __( 'View on', 'instant-images' ),
 				'set_as_featured'         => __( 'Set as Featured Image', 'instant-images' ),
 				'insert_into_post'        => __( 'Insert Into Post', 'instant-images' ),
 				'edit_filename'           => __( 'Filename', 'instant-images' ),
 				'edit_title'              => __( 'Title', 'instant-images' ),
 				'edit_alt'                => __( 'Alt Text', 'instant-images' ),
 				'edit_caption'            => __( 'Caption', 'instant-images' ),
+				'edit_description'        => __( 'Description', 'instant-images' ),
 				'edit_upload'             => __( 'Edit Attachment Details', 'instant-images' ),
 				'edit_details'            => __( 'Edit Image Details', 'instant-images' ),
-				'edit_details_intro'      => __( 'Update image details prior to uploading.', 'instant-images' ),
 				'cancel'                  => __( 'Cancel', 'instant-images' ),
 				'save'                    => __( 'Save', 'instant-images' ),
 				'upload_now'              => __( 'Upload', 'instant-images' ),
@@ -341,13 +351,17 @@ class InstantImages {
 					'dismiss'    => __( 'Dismiss Notice', 'instant-images' ),
 				],
 				'filters'                 => [
-					'select'      => __( '-- Select --', 'instant-images' ),
-					'orderby'     => __( 'Order:', 'instant-images' ),
-					'type'        => __( 'Type:', 'instant-images' ),
-					'category'    => __( 'Category:', 'instant-images' ),
-					'colors'      => __( 'Colors:', 'instant-images' ),
-					'orientation' => __( 'Orientation:', 'instant-images' ),
-					'size'        => __( 'Size:', 'instant-images' ),
+					'select'       => __( '-- Select --', 'instant-images' ),
+					'orderby'      => __( 'Order:', 'instant-images' ),
+					'type'         => __( 'Type:', 'instant-images' ),
+					'category'     => __( 'Category:', 'instant-images' ),
+					'colors'       => __( 'Colors:', 'instant-images' ),
+					'orientation'  => __( 'Orientation:', 'instant-images' ),
+					'size'         => __( 'Size:', 'instant-images' ),
+					'extension'    => __( 'Extension:', 'instant-images' ),
+					'license_type' => __( 'License Type:', 'instant-images' ),
+					'license'      => __( 'License:', 'instant-images' ),
+					'source'       => __( 'Source:', 'instant-images' ),
 				],
 			)
 		);

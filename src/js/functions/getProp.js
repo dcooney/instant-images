@@ -46,18 +46,6 @@ export default function getProp(provider, result, attribute) {
 			}
 			break;
 
-		case "author":
-			if (provider === "pixabay") {
-				value = result.user;
-			}
-			if (provider === "unsplash") {
-				value = result.user.name;
-			}
-			if (provider === "pexels") {
-				value = result.photographer;
-			}
-			break;
-
 		case "user":
 			if (provider === "pixabay") {
 				value = result.user_id;

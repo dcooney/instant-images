@@ -1,5 +1,10 @@
 import React from "react";
 
+/**
+ * Upgrade notice component.
+ *
+ * @deprecated 5.1.0
+ */
 class UpgradeNotice extends React.Component {
 	constructor(props) {
 		super(props);
@@ -20,14 +25,14 @@ class UpgradeNotice extends React.Component {
 		request.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
 		request.setRequestHeader("Content-Type", "application/json");
 		request.send();
-		request.onload = function() {
+		request.onload = function () {
 			if (request.status === 200) {
 				if (self.ref.current) {
 					self.ref.current.remove();
 				}
 			}
 		};
-		request.onerror = function(errorMsg) {
+		request.onerror = function (errorMsg) {
 			console.warn(errorMsg);
 		};
 	}
@@ -47,7 +52,7 @@ class UpgradeNotice extends React.Component {
 							<br />
 							<span
 								dangerouslySetInnerHTML={{
-									__html: instant_img_localize.v5_upgrade_notice.text
+									__html: instant_img_localize.v5_upgrade_notice.text,
 								}}
 							/>
 							<br />

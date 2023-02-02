@@ -709,7 +709,7 @@ body.media_page_instant-images.overflow-hidden {
   left: 100%;
   top: 50%;
   border: solid transparent;
-  content: " ";
+  content: "";
   height: 0;
   width: 0;
   position: absolute;
@@ -734,6 +734,17 @@ body.media_page_instant-images.overflow-hidden {
 .instant-img-container .control-nav--search .searchResults.hide {
   opacity: 0;
   visibility: hidden;
+}
+
+@media screen and (max-width: 800px) {
+  .instant-img-container .control-nav--search .searchResults {
+    right: 0;
+    -webkit-border-radius: 0 9999px 9999px 0;
+            border-radius: 0 9999px 9999px 0;
+  }
+  .instant-img-container .control-nav--search .searchResults:after, .instant-img-container .control-nav--search .searchResults:before {
+    display: none;
+  }
 }
 
 .instant-img-container .control-nav--search form {
@@ -882,15 +893,18 @@ body.media_page_instant-images.overflow-hidden {
 #photos .photo {
   width: 20%;
   margin: 0;
-  padding: 0 5px 10px;
+  padding: 0 3px 6px;
   opacity: 0;
-  -webkit-transition: opacity 0.3s ease;
-  -o-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
+  -webkit-transition: opacity 0.45s ease;
+  -o-transition: opacity 0.45s ease;
+  transition: opacity 0.45s ease;
 }
 
 #photos .photo--wrap {
   position: relative;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  overflow: hidden;
 }
 
 #photos .photo.in-view {
@@ -994,8 +1008,8 @@ body.media_page_instant-images.overflow-hidden {
   width: 60px;
   height: 60px;
   line-height: 60px;
-  -webkit-border-radius: 4px;
-          border-radius: 4px;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1193,7 +1207,7 @@ body.media_page_instant-images.overflow-hidden {
 }
 
 #photos .photo .options a {
-  margin-left: 2px;
+  margin-left: 5px;
 }
 
 #photos .photo .options a:hover, #photos .photo .options a:focus {
@@ -1369,8 +1383,8 @@ body.media_page_instant-images.overflow-hidden {
 #photos .photo.feature .photo--wrap {
   padding: 5px;
   border: 1px solid #e1e1e1;
-  -webkit-border-radius: 1px;
-          border-radius: 1px;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
   -webkit-transition: border 0.25s ease;
   -o-transition: border 0.25s ease;
   transition: border 0.25s ease;
@@ -1493,21 +1507,21 @@ body.media_page_instant-images.overflow-hidden {
 }
 
 #photos .edit-screen--title > div {
-  padding: 5px 15px 5px 5px;
+  padding: 10px 15px 10px 5px;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
 }
 
 #photos .edit-screen--title > div.preview {
-  width: 30%;
+  width: 25%;
   padding: 0;
   -webkit-background-size: cover;
           background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  -webkit-border-radius: 2px;
-          border-radius: 2px;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
   -webkit-box-flex: 0;
       -ms-flex: none;
           flex: none;
@@ -1522,7 +1536,7 @@ body.media_page_instant-images.overflow-hidden {
 
 #photos .edit-screen--title p.heading {
   color: #222;
-  margin: 0 0 3px;
+  margin: 0;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -1569,7 +1583,6 @@ body.media_page_instant-images.overflow-hidden {
 }
 
 #photos .edit-screen textarea {
-  resize: none;
   font-size: 12px;
   line-height: 1.35;
 }
@@ -1580,6 +1593,10 @@ body.media_page_instant-images.overflow-hidden {
   margin: 0;
   height: 35px;
   line-height: 35px;
+}
+
+#photos .edit-screen input[name=filename] {
+  padding-right: 45px;
 }
 
 #photos .edit-screen em {
@@ -2258,16 +2275,21 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   visibility: hidden;
   margin-top: -37px;
   font-size: 12px;
-  color: #999;
+  color: rgba(51, 51, 51, 0.75);
   text-align: center;
   line-height: 1;
   -webkit-border-radius: 2px;
           border-radius: 2px;
   -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
           box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-  -webkit-transition: opacity 0.15s ease;
-  -o-transition: opacity 0.15s ease;
-  transition: opacity 0.15s ease;
+  -webkit-transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, -webkit-transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56);
+  transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, -webkit-transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56);
+  -o-transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+  transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+  transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, -webkit-transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56);
+  -webkit-transform: scale(0.8);
+      -ms-transform: scale(0.8);
+          transform: scale(0.8);
 }
 
 .instant-img-container #tooltip:after {
@@ -2285,11 +2307,6 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   margin-left: -5px;
 }
 
-.instant-img-container #tooltip.over {
-  opacity: 0.9;
-  visibility: visible;
-}
-
 .instant-img-container #tooltip.above {
   margin-top: 37px;
 }
@@ -2298,6 +2315,14 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   top: -5px;
   border-top: none;
   border-bottom-color: #ffffff;
+}
+
+.instant-img-container #tooltip.over {
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
+  opacity: 0.9;
+  visibility: visible;
 }
 
 .no-results {
@@ -2436,6 +2461,12 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 
 [data-provider="pexels"] {
   background: url(../img/pexels.svg) no-repeat 10px center;
+  -webkit-background-size: 20px 20px;
+          background-size: 20px 20px;
+}
+
+[data-provider="openverse"] {
+  background: url(../img/openverse.svg) no-repeat 10px center;
   -webkit-background-size: 20px 20px;
           background-size: 20px 20px;
 }
@@ -2814,12 +2845,6 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
   color: #999;
   width: 100%;
   font-size: 14px;
-}
-
-@media screen and (min-width: 1500px) {
-  .filter-dropdown--button {
-    font-size: 15px;
-  }
 }
 
 .filter-dropdown--button span.filter-dropdown--button-label {

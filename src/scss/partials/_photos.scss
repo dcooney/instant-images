@@ -31,11 +31,13 @@
 	.photo {
 		width: 20%;
 		margin: 0;
-		padding: 0 5px 10px;
+		padding: 0 3px 6px;
 		opacity: 0;
-		transition: opacity 0.3s ease;
+		transition: opacity 0.45s ease;
 		&--wrap {
 			position: relative;
+			border-radius: $radius;
+			overflow: hidden;
 		}
 		&.in-view {
 			opacity: 1;
@@ -116,7 +118,7 @@
 				width: 60px;
 				height: 60px;
 				line-height: 60px;
-				border-radius: 4px;
+				border-radius: $radius;
 				position: absolute;
 				left: 50%;
 				top: 50%;
@@ -288,7 +290,7 @@
 				}
 			}
 			a {
-				margin-left: 2px;
+				margin-left: 5px;
 				&:hover,
 				&:focus {
 					background-color: #fff;
@@ -446,7 +448,7 @@
 			.photo--wrap{
 				padding: 5px;
 				border: 1px solid $border;
-				border-radius: $radius_sm;
+				border-radius: $radius;
 				transition: border 0.25s ease;
 				.flag{
 					position: absolute;
@@ -536,16 +538,16 @@
 			padding: 10px;
 			border-radius: 3px 3px 0 0;
 			> div {
-				padding: 5px 15px 5px 5px;
+				padding: 10px 15px 10px 5px;
 				flex: 1;
 
 				&.preview {
-					width: 30%;
+					width: 25%;
 					padding: 0;
 					background-size: cover;
 					background-position: center;
 					background-repeat: no-repeat;
-					border-radius: 2px;
+					border-radius: 3px;
 					flex: none;
 					//transform: rotate(-2deg);
 				}
@@ -557,7 +559,7 @@
 				color: $text_light;
 				&.heading {
 					color: #222;
-					margin: 0 0 3px;
+					margin: 0;
 					font-weight: 600;
 					text-transform: uppercase;
 				}
@@ -601,7 +603,7 @@
 			line-height: 1;
 		}
 		textarea {
-			resize: none;
+			//resize: none;
 			font-size: 12px;
 			line-height: 1.35;
 		}
@@ -611,6 +613,9 @@
 			margin: 0;
 			height: 35px;
 			line-height: 35px;
+			&[name=filename]{
+				padding-right: 45px;
+			}
 		}
 		em {
 			position: absolute;
