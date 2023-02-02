@@ -86,7 +86,7 @@ function instant_images_download( WP_REST_Request $request ) {
 			/**
 			 * Remove querystring from the URL.
 			 *
-			 * e.g. photo.jpg?size=lg -> photo.jpg
+			 * Example: photo.jpg?size=lg -> photo.jpg.
 			 */
 			$url = strtok( $image_url, '?' );
 
