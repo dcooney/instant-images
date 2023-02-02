@@ -28,10 +28,19 @@ module.exports = {
 				default: "all",
 				filters: ["all", "square", "tall", "wide"],
 			},
-			size: {
-				label: "size",
+			license: {
+				label: "license",
 				default: "all",
-				filters: ["all", "small", "medium", "large"],
+				filters: [
+					"all",
+					"BY",
+					"BY-NC",
+					"BY-NC-ND",
+					"BY-NC-SA",
+					"BY-ND",
+					"BY-SA",
+					"CC0",
+				],
 			},
 			license_type: {
 				label: "license_type",

@@ -14,10 +14,15 @@ class Photo extends React.Component {
 		const result = this.props.result;
 		this.id = result.id;
 		this.filename = this.id;
+		this.permalink = result && result.permalink;
+		this.extension = result && result.extension ? result.extension : "jpg";
+		this.likes = result && result.likes;
+		this.attribution = result && result.attribution ? result.attribution : "";
+
 		this.thumb = result && result.urls && result.urls.thumb;
 		this.full = result && result.urls && result.urls.full;
-		this.extension = result && result.extension ? result.extension : "jpg";
 		this.download_url = result && result.urls && result.urls.download_url;
+
 		this.user_id = result && result.user && result.user.id;
 		this.user_name = result && result.user && result.user.name;
 		this.user_photo = result && result.user && result.user.photo;
@@ -27,11 +32,6 @@ class Photo extends React.Component {
 		this.alt = result && result.alt ? result.alt : "";
 		this.caption = result && result.caption ? result.caption : "";
 
-		this.permalink = result && result.permalink;
-		this.likes = result && result.likes;
-		this.attribution = result && result.attribution ? result.attribution : "";
-
-		this.view_all = instant_img_localize.view_all;
 		this.inProgress = false;
 		this.container = document.querySelector(".instant-img-container");
 		this.showTooltip = this.props.showTooltip.bind(this);
@@ -569,7 +569,7 @@ class Photo extends React.Component {
 								href={this.user_url}
 								rel="noopener noreferrer"
 								target="_blank"
-								title={`${this.view_all} @ ${this.user_name}`}
+								title={`${instant_img_localize.view_all} @ ${this.user_name}`}
 							>
 								<div className="user-wrap">
 									{this.user_photo && this.user_photo.length > 0 && (

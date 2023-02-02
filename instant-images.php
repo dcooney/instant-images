@@ -23,7 +23,7 @@
 
 TODO:
 - Create photo attribution variables on the server side. [DONE]
-- Only allow search with Openverse. The listing sucks.
+- Only allow search with Openverse. The listing sucks. [DONE]
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -372,6 +372,7 @@ class InstantImages {
 					'size'         => __( 'Size:', 'instant-images' ),
 					'extension'    => __( 'Extension:', 'instant-images' ),
 					'license_type' => __( 'License Type:', 'instant-images' ),
+					'license'      => __( 'License:', 'instant-images' ),
 					'source'       => __( 'Source:', 'instant-images' ),
 				],
 			)

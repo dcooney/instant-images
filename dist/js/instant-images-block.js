@@ -41428,10 +41428,15 @@ var Photo = function (_React$Component) {
 		var result = _this.props.result;
 		_this.id = result.id;
 		_this.filename = _this.id;
+		_this.permalink = result && result.permalink;
+		_this.extension = result && result.extension ? result.extension : "jpg";
+		_this.likes = result && result.likes;
+		_this.attribution = result && result.attribution ? result.attribution : "";
+
 		_this.thumb = result && result.urls && result.urls.thumb;
 		_this.full = result && result.urls && result.urls.full;
-		_this.extension = result && result.extension ? result.extension : "jpg";
 		_this.download_url = result && result.urls && result.urls.download_url;
+
 		_this.user_id = result && result.user && result.user.id;
 		_this.user_name = result && result.user && result.user.name;
 		_this.user_photo = result && result.user && result.user.photo;
@@ -41441,11 +41446,6 @@ var Photo = function (_React$Component) {
 		_this.alt = result && result.alt ? result.alt : "";
 		_this.caption = result && result.caption ? result.caption : "";
 
-		_this.permalink = result && result.permalink;
-		_this.likes = result && result.likes;
-		_this.attribution = result && result.attribution ? result.attribution : "";
-
-		_this.view_all = instant_img_localize.view_all;
 		_this.inProgress = false;
 		_this.container = document.querySelector(".instant-img-container");
 		_this.showTooltip = _this.props.showTooltip.bind(_this);
@@ -42000,7 +42000,7 @@ var Photo = function (_React$Component) {
 									href: this.user_url,
 									rel: "noopener noreferrer",
 									target: "_blank",
-									title: this.view_all + " @ " + this.user_name
+									title: instant_img_localize.view_all + " @ " + this.user_name
 								},
 								_react2.default.createElement(
 									"div",
@@ -43967,10 +43967,10 @@ module.exports = {
 				default: "all",
 				filters: ["all", "square", "tall", "wide"]
 			},
-			size: {
-				label: "size",
+			license: {
+				label: "license",
 				default: "all",
-				filters: ["all", "small", "medium", "large"]
+				filters: ["all", "BY", "BY-NC", "BY-NC-ND", "BY-NC-SA", "BY-ND", "BY-SA", "CC0"]
 			},
 			license_type: {
 				label: "license_type",
@@ -44141,6 +44141,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = buildURL;
 exports.getProxyURL = getProxyURL;
+
+var _openverse = __webpack_require__(/*! ./openverse */ "./src/js/functions/openverse.js");
+
 /**
  * Build the API query parameters.
  *
@@ -44154,12 +44157,15 @@ function buildURL(type, params) {
 		return "";
 	}
 	// Get the current provider.
-	var _params$provider = params.provider,
+	var _params = params,
+	    _params$provider = _params.provider,
 	    provider = _params$provider === undefined ? "unsplash" : _params$provider;
 
-	// Delete provider from the params. it doesn't need to be sent.
+	// Provider doesn't need to be sent.
 
 	delete params.provider;
+
+	params = provider === "openverse" ? (0, _openverse.openverseParams)(type, params) : params;
 
 	// Build the API URL.
 	var url = new URL(getProxyURL(provider, params));
@@ -44171,11 +44177,6 @@ function buildURL(type, params) {
 	Object.keys(params).forEach(function (key) {
 		url.searchParams.append(key, params[key]);
 	});
-
-	if (provider === "openverse" && type === "photos" && !params.source) {
-		// Add `wordpress` as the default `source` for openverse.
-		url.searchParams.append("source", "wordpress");
-	}
 
 	// Add `version` to params.
 	url.searchParams.append("version", instant_img_localize.version);
@@ -44840,6 +44841,43 @@ function isObjectEmpty(obj) {
     return true;
   }
   return Object.keys(obj).length === 0;
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/openverse.js":
+/*!***************************************!*\
+  !*** ./src/js/functions/openverse.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.openverseParams = openverseParams;
+/**
+ * Format the params for openverse.
+ *
+ * @param  {string} type   Query type (search, photos, id).
+ * @param  {object} params Query params object.
+ * @return {object} 		   Updated params.
+ */
+function openverseParams(type, params) {
+	if (type === "photos" && !params.source) {
+		// Add `wordpress` as the default `source` for openverse.
+		params["source"] = "wordpress";
+	}
+	if (type === "search") {
+		// Exlude these sources from search.
+		var excluded = "500px, rawpixel, wikimedia";
+		params["excluded_source"] = excluded;
+	}
+
+	return params;
 }
 
 /***/ }),

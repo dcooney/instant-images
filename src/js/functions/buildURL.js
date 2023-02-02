@@ -1,3 +1,5 @@
+import { openverseParams } from "./openverse";
+
 /**
  * Build the API query parameters.
  *
@@ -13,8 +15,10 @@ export default function buildURL(type, params) {
 	// Get the current provider.
 	const { provider = "unsplash" } = params;
 
-	// Delete provider from the params. it doesn't need to be sent.
+	// Provider doesn't need to be sent.
 	delete params.provider;
+
+	params = provider === "openverse" ? openverseParams(type, params) : params;
 
 	// Build the API URL.
 	const url = new URL(getProxyURL(provider, params));
@@ -26,11 +30,6 @@ export default function buildURL(type, params) {
 	Object.keys(params).forEach((key) => {
 		url.searchParams.append(key, params[key]);
 	});
-
-	if (provider === "openverse" && type === "photos" && !params.source) {
-		// Add `wordpress` as the default `source` for openverse.
-		url.searchParams.append("source", "wordpress");
-	}
 
 	// Add `version` to params.
 	url.searchParams.append("version", instant_img_localize.version);
