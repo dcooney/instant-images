@@ -1,10 +1,10 @@
 # Instant Images
 
-One-click uploads from [Unsplash](https://unslash.com), [Pixabay](https://pixabay.com) and [Pexels](https://pexels.com) directly to your WordPress media library.
+One-click uploads from [Unsplash](https://unslash.com), [Pixabay](https://pixabay.com), [Pexels](https://pexels.com) and [Openverse](https://wordpress.org/openverse/) directly to your WordPress media library.
 
 ![Instant Images Banner](https://github.com/dcooney/instant-images/blob/main/.wordpress-org/banner-772x250.jpg?raw=true)
 
-Instant Images is the fastest and easiest way to upload high quality FREE photos from Unsplash, Pixabay and Pexels directly to your media library.
+Instant Images is the fastest and easiest way to upload high quality FREE photos from Unsplash, Pixabay, Pexels and Openverse directly to your media library.
 
 **[View on WordPress](https://wordpress.org/plugins/instant-images/)**
 
