@@ -82,17 +82,26 @@ function instant_images_download( WP_REST_Request $request ) {
 		$error_msg = '';
 
 		if ( $provider !== 'unsplash' ) {
+
+			/**
+			 * Remove querystring from the URL.
+			 *
+			 * e.g. photo.jpg?size=lg -> photo.jpg
+			 */
+			$url = strtok( $image_url, '?' );
+
 			/**
 			 * Check if file mime type is allowed.
 			 *
 			 * @see https://developer.wordpress.org/reference/functions/wp_check_filetype/
 			 */
-			$file_type = wp_check_filetype( $image_url );
+			$file_type = wp_check_filetype( $url );
+
 			if ( ! $file_type || ! $file_type['ext'] && $provider ) {
-				// $has_error = true;
+				$has_error = true;
 
 				// translators: File extension.
-				// $error_msg = sprintf( esc_attr__( 'File mime type (.%1$s) is not allowed. Use the `upload_mimes` WP hook to add support for this mine type.', 'instant-images' ), $extension );
+				$error_msg = sprintf( esc_attr__( 'File mime type (.%1$s) is not allowed. Use the `upload_mimes` WP hook to add support for this mine type.', 'instant-images' ), $extension );
 			}
 		}
 
