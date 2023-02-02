@@ -14,7 +14,7 @@ One click image uploads from Unsplash, Pixabay, Pexels & Openverse directly to y
 
 Instantly upload photos from Unsplash, Pixabay Pexels or Openverse to your website all without ever leaving WordPress!
 
-**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [Unsplash](http://unsplash.com), [Pixabay](http://pixabay.com) [Pexels](http://pexels.com) and [Openverse](http://pexels.com) directly to your media library.
+**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [Unsplash](http://unsplash.com), [Pixabay](http://pixabay.com) [Pexels](http://pexels.com) and [Openverse](https://wordpress.org/openverse/) directly to your media library.
 
 [youtube <https://www.youtube.com/watch?v=s6Q7Kfi2f1c>]
 
