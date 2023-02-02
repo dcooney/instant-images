@@ -149,48 +149,48 @@ How to install Instant Images.
   Note: This fix is still not perfect but the integration is working again when a valid API is present.
 
 = 5.0 - December 19, 2022 =
-NEW: All API requests to Unsplash, Pexels and Pixabay are now routed through our custom proxy server (proxy.getinstantimages.com). Read our terms of service and privacy policy for more information.
-UPDATE: Improved error handling and reporting.
-UPDATE: Removal of hard coded API Keys from plugin.
-UPDATE: Fixed issue where search filters wouldn't reset after a new search.
+* NEW: All API requests to Unsplash, Pexels and Pixabay are now routed through our custom proxy server (proxy.getinstantimages.com). Read our terms of service and privacy policy for more information.
+* UPDATE: Improved error handling and reporting.
+* UPDATE: Removal of hard coded API Keys from plugin.
+* UPDATE: Fixed issue where search filters wouldn't reset after a new search.
 
 = 4.6.3 - November 04, 2022 =
-UPDATE: Improved load handling of default provider.
-FIX: Security fix for issue for authenticated users.
-FIX: Fixed issue default Pexels API key.
-FIX: Fixed issue with photo attribution text and localization.
+* UPDATE: Improved load handling of default provider.
+* FIX: Security fix for issue for authenticated users.
+* FIX: Fixed issue default Pexels API key.
+* FIX: Fixed issue with photo attribution text and localization.
 
 = 4.6.2 - June 24, 2022 =
-UPDATE: Updated all packages for security updates.
-FIX: Fixed issue with Unsplash API variable declaration.
+* UPDATE: Updated all packages for security updates.
+* FIX: Fixed issue with Unsplash API variable declaration.
 
 = 4.6.1 - January 14, 2022 =
-NEW: Added default API keys for all API providers 🎉 . Default API keys can still be overwritten in the plugin settings shouls you want to use your own key.
-NEW: Added rate-limit checker to determine the status of the API and display an alert warning if the limit has been exceeded.
+* NEW: Added default API keys for all API providers 🎉 . Default API keys can still be overwritten in the plugin settings shouls you want to use your own key.
+* NEW: Added rate-limit checker to determine the status of the API and display an alert warning if the limit has been exceeded.
 
 = 4.6.0.1 - January 3, 2022 =
-HOTFIX: Hotfix for accidentaly `delete_options` function left in whilst testing. Sorry about that!
+* HOTFIX: Hotfix for accidentaly `delete_options` function left in whilst testing. Sorry about that!
 
 = 4.6.0 - January 2, 2022 =
-NEW: Added Pexels integration. This requires a valid API key.
-FIX: Fixed issue with filtering Unsplash search results by 'all'.
-FIX: Various admin UI/UX updates and tweaks to improve the look and feel.
+* NEW: Added Pexels integration. This requires a valid API key.
+* FIX: Fixed issue with filtering Unsplash search results by 'all'.
+* FIX: Various admin UI/UX updates and tweaks to improve the look and feel.
 
 = 4.5.1 - December 27, 2021 =
-NEW: Added Pixabay photo filters (Type, Category, Colors and Orientation).
-NEW: Added Unsplash search filters for Color, Orientation and Order.
-NEW: Added new `instant_images_pixabay_safesearch` & `instant_images_unsplash_content_filter` filters that allow for modifying the flags the indicate the types of suitable images that should be returned. Get more information in our [FAQ](https://connekthq.com/plugins/instant-images/faqs/#can-i-ensure-only-photos-safe-for-work-are-returned-in-the-photo-listings).
-NEW: Added Pixabay API constant that allows for setting Pixabay API key via site constant. e.g. `define( 'INSTANT_IMAGES_PIXABAY_KEY', 'YOUR-KEY-HERE' );`
-UPDATE: Revamped filtering menus and orientation options.
-UPDATE: Other UI/UX updates to make the plugin more visually appealing.
-UPDATE: Improved plugin accessibility across various sections.
+* NEW: Added Pixabay photo filters (Type, Category, Colors and Orientation).
+* NEW: Added Unsplash search filters for Color, Orientation and Order.
+* NEW: Added new `instant_images_pixabay_safesearch` & `instant_images_unsplash_content_filter` filters that allow for modifying the flags the indicate the types of suitable images that should be returned. Get more information in our [FAQ](https://connekthq.com/plugins/instant-images/faqs/#can-i-ensure-only-photos-safe-for-work-are-returned-in-the-photo-listings).
+* NEW: Added Pixabay API constant that allows for setting Pixabay API key via site constant. e.g. `define( 'INSTANT_IMAGES_PIXABAY_KEY', 'YOUR-KEY-HERE' );`
+* UPDATE: Revamped filtering menus and orientation options.
+* UPDATE: Other UI/UX updates to make the plugin more visually appealing.
+* UPDATE: Improved plugin accessibility across various sections.
 
 = 4.5.0 - October 28, 2021 =
-NEW: 🎉 Pixabay! We've added support for [Pixabay](https://pixabay.com) images. This requires a valid API key.
-NEW: Added button to auto-generate Photo attribution in image caption.
-NEW: Added uninstaller script to remove plugin settings.
-UPDATE: Updated styling and functionality of photo detail editor.
-UPDATE: Various UI/UX updates.
+* NEW: 🎉 Pixabay! We've added support for [Pixabay](https://pixabay.com) images. This requires a valid API key.
+* NEW: Added button to auto-generate Photo attribution in image caption.
+* NEW: Added uninstaller script to remove plugin settings.
+* UPDATE: Updated styling and functionality of photo detail editor.
+* UPDATE: Various UI/UX updates.
 
 = 4.4.0.3 - July 30, 2021 =
 
