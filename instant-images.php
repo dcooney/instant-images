@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Instant Images
  * Plugin URI: https://connekthq.com/plugins/instant-images/
- * Description: One click photo uploads directly to your media library from Unsplash, Pixabay and Pexels.
+ * Description: One click photo uploads directly to your media library from Unsplash, Pixabay, Pexels and Openverse.
  * Author: Darren Cooney
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
