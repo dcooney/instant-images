@@ -43877,7 +43877,7 @@ module.exports = {
 		per_page: "20",
 		arr_key: "results"
 	},
-	providers: ["Unsplash", "Pixabay", "Pexels", "Openverse"],
+	providers: ["Unsplash", "Openverse", "Pixabay", "Pexels"],
 	unsplash: {
 		name: "Unsplash",
 		requires_key: true,

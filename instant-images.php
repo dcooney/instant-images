@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Instant Images
  * Plugin URI: https://connekthq.com/plugins/instant-images/
- * Description: One click photo uploads directly to your media library from Unsplash, Pixabay, Pexels and Openverse.
+ * Description: One click photo uploads directly to your media library from Unsplash, Openverse, Pixabay and Pexels.
  * Author: Darren Cooney
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
@@ -103,6 +103,14 @@ class InstantImages {
 				'constant'     => 'INSTANT_IMAGES_UNSPLASH_KEY',
 			],
 			[
+				'name'         => 'Openverse',
+				'slug'         => 'openverse',
+				'requires_key' => false,
+				'url'          => 'https://api.openverse.engineering/v1/#section/Register-and-Authenticate/Register-for-a-key',
+				'download_url' => 'https://api.openverse.engineering/',
+				'constant'     => '',
+			],
+			[
 				'name'         => 'Pixabay',
 				'slug'         => 'pixabay',
 				'requires_key' => true,
@@ -117,14 +125,6 @@ class InstantImages {
 				'url'          => 'https://www.pexels.com/join-consumer/',
 				'download_url' => 'https://images.pexels.com',
 				'constant'     => 'INSTANT_IMAGES_PEXELS_KEY',
-			],
-			[
-				'name'         => 'Openverse',
-				'slug'         => 'openverse',
-				'requires_key' => false,
-				'url'          => 'https://api.openverse.engineering/v1/#section/Register-and-Authenticate/Register-for-a-key',
-				'download_url' => 'https://api.openverse.engineering/',
-				'constant'     => '',
 			],
 		];
 		return $providers;

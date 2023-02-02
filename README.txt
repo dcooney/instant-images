@@ -1,20 +1,20 @@
 === Instant Images - One Click Unsplash, Pixabay, Pexels and Openverse Uploads ===
 Contributors: dcooney, connekthq
 Donate link: <https://connekthq.com/donate/>
-Tags: Unsplash, Pixabay, Pexels, Openverse, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
+Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 6.1
 Stable tag: 5.1.0.1
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
-One click image uploads from Unsplash, Pixabay, Pexels & Openverse directly to your WordPress media library.
+One click image uploads from Unsplash, Openverse, Pixabay, & Pexels directly to your WordPress media library.
 
 == Description ==
 
-Instantly upload photos from Unsplash, Pixabay Pexels or Openverse to your website all without ever leaving WordPress!
+Instantly upload photos from Unsplash, Openverse, Pixabay or Pexels to your website all without ever leaving WordPress!
 
-**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [Unsplash](http://unsplash.com), [Pixabay](http://pixabay.com) [Pexels](http://pexels.com) and [Openverse](https://wordpress.org/openverse/) directly to your media library.
+**Instant Images** is the fastest and easiest way to upload high quality FREE photos from [Unsplash](http://unsplash.com), [Openverse](https://wordpress.org/openverse/), [Pixabay](http://pixabay.com) & [Pexels](http://pexels.com) directly to your media library.
 
 [youtube <https://www.youtube.com/watch?v=s6Q7Kfi2f1c>]
 
