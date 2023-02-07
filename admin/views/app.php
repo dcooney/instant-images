@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			// translators: Instant Images tagline.
 			$instant_images_tagline = __( 'One click photo uploads from %1$s, %2$s, %3$s and %4$s.', 'instant-images' );
 			// @codingStandardsIgnoreStart
-			echo sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">Unsplash</a>', '<a href="https://pixabay.com/" target="_blank">Pixabay</a>', '<a href="https://pexels.com/" target="_blank">Pexels</a>', '<a href="https://wordpress.org/openverse" target="_blank">Openverse</a>' );
+			echo sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">Unsplash</a>', '<a href="https://wordpress.org/openverse" target="_blank">Openverse</a>', '<a href="https://pixabay.com/" target="_blank">Pixabay</a>', '<a href="https://pexels.com/" target="_blank">Pexels</a>' );
 			// @codingStandardsIgnoreEnd
 		?>
 	</h1>

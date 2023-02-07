@@ -1,4 +1,4 @@
-=== Instant Images - One Click Image Uploads from Unsplash, Openverse Pixabay and Pexels ===
+=== Instant Images - One Click Image Uploads from Unsplash, Openverse, Pixabay and Pexels ===
 Contributors: dcooney, connekthq
 Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
