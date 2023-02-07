@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import PhotoList from "./components/PhotoList";
 import API from "./constants/API";
 import buildURL from "./functions/buildURL";
@@ -43,7 +43,8 @@ function GetPhotos(
 			const results = await response.json();
 			const { error = null } = results;
 			const app = document.getElementById("app");
-			ReactDOM.render(
+			const root = createRoot(app);
+			root.render(
 				<PhotoList
 					container={app}
 					editor="classic"
@@ -52,8 +53,7 @@ function GetPhotos(
 					orderby={orderby}
 					provider={provider}
 					error={error}
-				/>,
-				document.getElementById("app")
+				/>
 			);
 		} catch (error) {
 			consoleStatus(provider, status);

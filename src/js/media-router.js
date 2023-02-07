@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import PhotoList from "./components/PhotoList";
 import API from "./constants/API";
 import buildURL from "./functions/buildURL";
@@ -157,7 +157,8 @@ const getMediaModalProvider = async (element) => {
  * @return {Element}              The PhotoList component.
  */
 const renderPhotoList = (element, provider, results, error) => {
-	ReactDOM.render(
+	const root = createRoot(element);
+	root.render(
 		<PhotoList
 			container={element}
 			editor="media-router"
@@ -166,8 +167,7 @@ const renderPhotoList = (element, provider, results, error) => {
 			page={1}
 			orderby={API.defaults.order}
 			provider={provider}
-		/>,
-		element
+		/>
 	);
 };
 
