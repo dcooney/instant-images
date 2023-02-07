@@ -40672,6 +40672,40 @@ if (
 
 /***/ }),
 
+/***/ "./node_modules/react-dom/client.js":
+/*!******************************************!*\
+  !*** ./node_modules/react-dom/client.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var m = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+if (false) {} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  exports.createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+  exports.hydrateRoot = function(c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.hydrateRoot(c, h, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/react-dom/index.js":
 /*!*****************************************!*\
   !*** ./node_modules/react-dom/index.js ***!
@@ -50232,9 +50266,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _client = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 
 var _PhotoList = __webpack_require__(/*! ./components/PhotoList */ "./src/js/components/PhotoList.js");
 
@@ -50454,7 +50486,8 @@ var getMediaModalProvider = function () {
  * @return {Element}              The PhotoList component.
  */
 var renderPhotoList = function renderPhotoList(element, provider, results, error) {
-	_reactDom2.default.render(_react2.default.createElement(_PhotoList2.default, {
+	var root = (0, _client.createRoot)(element);
+	root.render(_react2.default.createElement(_PhotoList2.default, {
 		container: element,
 		editor: "media-router",
 		results: results,
@@ -50462,7 +50495,7 @@ var renderPhotoList = function renderPhotoList(element, provider, results, error
 		page: 1,
 		orderby: _API2.default.defaults.order,
 		provider: provider
-	}), element);
+	}));
 };
 
 /**

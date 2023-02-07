@@ -40672,6 +40672,40 @@ if (
 
 /***/ }),
 
+/***/ "./node_modules/react-dom/client.js":
+/*!******************************************!*\
+  !*** ./node_modules/react-dom/client.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var m = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+if (false) {} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  exports.createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+  exports.hydrateRoot = function(c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.hydrateRoot(c, h, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/react-dom/index.js":
 /*!*****************************************!*\
   !*** ./node_modules/react-dom/index.js ***!
@@ -50232,9 +50266,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _client = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 
 var _PhotoList = __webpack_require__(/*! ./components/PhotoList */ "./src/js/components/PhotoList.js");
 
@@ -50288,7 +50320,7 @@ function GetPhotos() {
 
 	var initialize = function () {
 		var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-			var response, status, headers, results, _results$error, error, app, initWrap;
+			var response, status, headers, results, _results$error, error, app, root, initWrap;
 
 			return regeneratorRuntime.wrap(function _callee$(_context) {
 				while (1) {
@@ -50311,8 +50343,9 @@ function GetPhotos() {
 							results = _context.sent;
 							_results$error = results.error, error = _results$error === undefined ? null : _results$error;
 							app = document.getElementById("app");
+							root = (0, _client.createRoot)(app);
 
-							_reactDom2.default.render(_react2.default.createElement(_PhotoList2.default, {
+							root.render(_react2.default.createElement(_PhotoList2.default, {
 								container: app,
 								editor: "classic",
 								results: results,
@@ -50320,17 +50353,17 @@ function GetPhotos() {
 								orderby: orderby,
 								provider: provider,
 								error: error
-							}), document.getElementById("app"));
-							_context.next = 17;
+							}));
+							_context.next = 18;
 							break;
 
-						case 14:
-							_context.prev = 14;
+						case 15:
+							_context.prev = 15;
 							_context.t0 = _context["catch"](5);
 
 							(0, _consoleStatus2.default)(provider, status);
 
-						case 17:
+						case 18:
 
 							// Remove init button (if required).
 							initWrap = container.querySelector(".initialize-wrap");
@@ -50339,12 +50372,12 @@ function GetPhotos() {
 								initWrap.parentNode.removeChild(initWrap);
 							}
 
-						case 19:
+						case 20:
 						case "end":
 							return _context.stop();
 					}
 				}
-			}, _callee, this, [[5, 14]]);
+			}, _callee, this, [[5, 15]]);
 		}));
 
 		return function initialize() {

@@ -12,6 +12,7 @@ import getProp from "./getProp";
  *
  * @param  {object} data The API data.
  * @return {array}       An array of object containing the formatted results.
+ * @deprecated 5.1.0
  */
 export function getPexelsResults(data) {
 	const results = data && data["photos"];
@@ -23,7 +24,7 @@ export function getPexelsResults(data) {
 	// Create the results object.
 	const obj =
 		results.length &&
-		results.map(result => {
+		results.map((result) => {
 			return {
 				id: result.id,
 				permalink: getProp("pexels", result, "link"),
@@ -33,14 +34,14 @@ export function getPexelsResults(data) {
 					img: getProp("pexels", result, "img"),
 					full: getProp("pexels", result, "full_size"),
 					alt: getProp("pexels", result, "likes"),
-					download_url: false
+					download_url: false,
 				},
 				user: {
 					username: getProp("pexels", result, "user"),
 					name: getProp("pexels", result, "name"),
 					photo: false,
-					url: getProp("pexels", result, "user_url")
-				}
+					url: getProp("pexels", result, "user_url"),
+				},
 			};
 		});
 
@@ -53,6 +54,7 @@ export function getPexelsResults(data) {
  * @param {array} data The photo array data.
  * @param {string} search_type The search type.
  * @return {string} The total results.
+ * @deprecated 5.1.0
  */
 export function getPexelsSearchTotal(data, search_type) {
 	if (!data) {
