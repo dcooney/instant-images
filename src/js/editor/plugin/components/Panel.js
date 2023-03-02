@@ -1,16 +1,20 @@
-import React from "react";
-import PhotoList from "../../components/PhotoList";
-import API from "../../constants/API";
-import buildURL from "../../functions/buildURL";
-import checkRateLimit from "../../functions/checkRateLimit";
-import consoleStatus from "../../functions/consoleStatus";
-import getProvider from "../../functions/getProvider";
-import getQueryParams from "../../functions/getQueryParams";
-import InsertImage from "./utils/insertImage";
-import SetFeaturedImage from "./utils/setFeaturedImage";
+import PhotoList from "../../../components/PhotoList";
+import API from "../../../constants/API";
+import buildURL from "../../../functions/buildURL";
+import checkRateLimit from "../../../functions/checkRateLimit";
+import consoleStatus from "../../../functions/consoleStatus";
+import getProvider from "../../../functions/getProvider";
+import getQueryParams from "../../../functions/getQueryParams";
+import InsertImage from "../utils/insertImage";
+import SetFeaturedImage from "../utils/setFeaturedImage";
 const { useState, useEffect } = wp.element;
 
-const BlockLoader = () => {
+/**
+ * The image listing panel for the plugin sidebar.
+ *
+ * @returns {JSX.Element} The Panel component.
+ */
+export default function Panel() {
 	const [data, setData] = useState({});
 
 	// Get provider and options from settings.
@@ -63,5 +67,4 @@ const BlockLoader = () => {
 			) : null}
 		</div>
 	);
-};
-export default BlockLoader;
+}

@@ -1,9 +1,8 @@
-# EditorConfig helps developers define and maintain consistent
-# coding styles between different editors and IDEs
+# This file is for unifying the coding style for different editors and IDEs
 # editorconfig.org
 
-# PHP PSR-2 Coding Standards
-# http://www.php-fig.org/psr/psr-2/
+# WordPress Coding Standards
+# https://make.wordpress.org/core/handbook/coding-standards/
 
 root = true
 
@@ -13,4 +12,10 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = tab
-indent_size = 3
+
+[*.yml]
+indent_style = space
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false

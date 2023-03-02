@@ -3,15 +3,15 @@ const common = require("../webpack.config.js");
 const { DefinePlugin } = require("webpack");
 
 /**
- * Webpack config (Prod mode).
- * This mode is used during production and plugin development.
+ * Webpack config (Proxy mode).
+ * This mode is used during proxy development.
  *
  * @see https://webpack.js.org/guides/production/
  */
 module.exports = merge(common, {
 	plugins: [
 		new DefinePlugin({
-			PROXY_URL: JSON.stringify("https://proxy.getinstantimages.com/api/"),
+			PROXY_URL: JSON.stringify("http://localhost:3000/api/"),
 		}),
 	],
 });

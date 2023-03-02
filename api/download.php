@@ -230,6 +230,17 @@ function instant_images_generate_image_url( $provider, $url, $max_width, $max_he
 		return false;
 	}
 
+	$server_ip = $_SERVER['SERVER_ADDR']; // Server IP.
+	$server_name = $_SERVER['SERVER_NAME']; // Server base URL.
+
+	/**
+	 * Security check.
+	 * Note: Check for local server IP or site URL in image URL.
+	 */
+	if ( false !== strpos( $url, $server_ip ) || false !== strpos( $url, $server_name ) ) {
+		return false;
+	}
+
 	$image_url = '';
 	switch ( $provider ) {
 		case 'unsplash':

@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import Masonry from "masonry-layout";
-import React from "react";
 import API from "../constants/API";
 import FILTERS from "../constants/filters";
 import buildTestURL from "../functions/buildTestURL";
@@ -80,8 +79,7 @@ class PhotoList extends React.Component {
 		// Editor props.
 		this.editor = this.props.editor ? this.props.editor : "classic";
 		this.is_block_editor = this.props.editor === "gutenberg" ? true : false;
-		this.is_media_router =
-			this.props.editor === "media-router" ? true : false;
+		this.is_media_router = this.props.editor === "media-router" ? true : false;
 		this.SetFeaturedImage = this.props.SetFeaturedImage
 			? this.props.SetFeaturedImage.bind(this)
 			: "";
@@ -96,9 +94,7 @@ class PhotoList extends React.Component {
 			this.wrapper = document.querySelector("body");
 		} else {
 			// Post Edit Screens and Plugin Screen
-			this.container = this.props.container.closest(
-				".instant-img-container"
-			);
+			this.container = this.props.container.closest(".instant-img-container");
 			this.wrapper = this.props.container.closest(".instant-images-wrapper");
 			this.container.classList.add("loading");
 		}
@@ -745,9 +741,7 @@ class PhotoList extends React.Component {
 				{this.state.api_lightbox && (
 					<APILightbox
 						provider={this.state.api_lightbox}
-						afterVerifiedAPICallback={this.afterVerifiedAPICallback.bind(
-							this
-						)}
+						afterVerifiedAPICallback={this.afterVerifiedAPICallback.bind(this)}
 						closeAPILightbox={this.closeAPILightbox.bind(this)}
 					/>
 				)}
@@ -762,17 +756,15 @@ class PhotoList extends React.Component {
 					>
 						{Object.entries(this.state.filters).length ? (
 							<div className="control-nav--filters">
-								{Object.entries(this.state.filters).map(
-									([key, filter], i) => (
-										<Filter
-											key={`${key}-${this.provider}-${i}`}
-											filterKey={key}
-											provider={this.provider}
-											data={filter}
-											function={this.filterPhotos.bind(this)}
-										/>
-									)
-								)}
+								{Object.entries(this.state.filters).map(([key, filter], i) => (
+									<Filter
+										key={`${key}-${this.provider}-${i}`}
+										filterKey={key}
+										provider={this.provider}
+										data={filter}
+										function={this.filterPhotos.bind(this)}
+									/>
+								))}
 							</div>
 						) : null}
 					</div>
@@ -843,9 +835,7 @@ class PhotoList extends React.Component {
 										{Object.entries(this.state.search_filters).map(
 											([key, filter], index) => (
 												<Filter
-													ref={(ref) =>
-														(this.filterRef[index] = ref)
-													}
+													ref={(ref) => (this.filterRef[index] = ref)}
 													key={`${key}-${index}`}
 													filterKey={key}
 													provider={this.provider}
@@ -888,10 +878,7 @@ class PhotoList extends React.Component {
 						: null}
 				</div>
 				{this.total_results < 1 && this.is_search === true && (
-					<NoResults
-						total={this.total_results}
-						is_search={this.is_search}
-					/>
+					<NoResults total={this.total_results} is_search={this.is_search} />
 				)}
 				<LoadingBlock />
 				<LoadMore loadMorePhotos={this.loadMorePhotos.bind(this)} />

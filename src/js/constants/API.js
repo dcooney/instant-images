@@ -1,4 +1,5 @@
 module.exports = {
+	proxy: PROXY_URL || "https://proxy.getinstantimages.com/api/",
 	defaults: {
 		provider: "unsplash",
 		order: "latest",

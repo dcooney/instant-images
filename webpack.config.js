@@ -1,67 +1,15 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const path = require("path");
-const dir = "dist";
-
+const defaults = require("@wordpress/scripts/config/webpack.config");
+const { DefinePlugin } = require("webpack");
+/**
+ * Webpack config (Development mode)
+ *
+ * @see https://developer.wordpress.org/block-editor/packages/packages-scripts/#provide-your-own-webpack-config
+ */
 module.exports = {
+	...defaults,
 	entry: {
 		"instant-images": "./src/js/index.js",
-		"instant-images-media": "./src/js/media-router.js",
-		"instant-images-styles": "./src/scss/style.scss",
-		"instant-images-block": "./src/js/block/index.js"
+		"media-modal": "./src/js/media-modal.js",
+		"plugin-sidebar": "./src/js/plugin-sidebar.js",
 	},
-	output: {
-		path: path.join(__dirname, dir),
-		filename: "js/[name].js"
-	},
-	watch: true,
-	module: {
-		rules: [
-			{
-				test: /.jsx?$/,
-				loader: "babel-loader",
-				exclude: /node_modules/,
-				query: {
-					presets: ["es2015", "react"]
-				}
-			},
-			{
-				test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
-				loader: "file-loader",
-				options: {
-					name: "img/[name].[ext]",
-					publicPath: "../"
-				}
-			},
-			{
-				test: /\.scss$/,
-				use: ExtractTextPlugin.extract({
-					fallback: "style-loader",
-					use: [
-						{
-							loader: "css-loader",
-							options: {
-								sourceMap: true
-							}
-						},
-						{
-							loader: "postcss-loader",
-							options: {
-								sourceMap: true
-							}
-						},
-						{
-							loader: "sass-loader",
-							options: {
-								sourceMap: true,
-								outputStyle: "expanded"
-							}
-						}
-					]
-				}),
-				exclude: /node_modules/
-			}
-		]
-	},
-
-	plugins: []
 };

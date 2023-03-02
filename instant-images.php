@@ -148,14 +148,10 @@ class InstantImages {
 	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public function instant_img_block_plugin_enqueue() {
-
 		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets' ] ) ) {
-
-			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries for SCRIPT_DEBUG.
-
 			wp_enqueue_script(
-				'instant-images-block',
-				INSTANT_IMAGES_URL . 'dist/js/instant-images-block' . $suffix . '.js',
+				'instant-images-plugin-sidebar',
+				INSTANT_IMAGES_URL . 'build/plugin-sidebar.js',
 				'',
 				INSTANT_IMAGES_VERSION,
 				true
@@ -163,13 +159,12 @@ class InstantImages {
 
 			wp_enqueue_style(
 				'admin-instant-images',
-				INSTANT_IMAGES_URL . 'dist/css/instant-images' . $suffix . '.css',
+				INSTANT_IMAGES_URL . 'build/style-instant-images.css',
 				array( 'wp-edit-post' ),
 				INSTANT_IMAGES_VERSION
 			);
 
-			$this::instant_img_localize( 'instant-images-block' );
-
+			$this::instant_img_localize( 'instant-images-plugin-sidebar' );
 		}
 	}
 
@@ -180,15 +175,13 @@ class InstantImages {
 	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public function instant_img_wp_media_enqueue() {
-
-		$suffix   = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries for SCRIPT_DEBUG.
 		$show_tab = $this::instant_img_show_tab( 'media_modal_display' );  // Show Tab Setting.
 
 		if ( $this::instant_img_has_access() && $show_tab ) {
 
 			wp_enqueue_script(
-				'instant-images-media-router',
-				INSTANT_IMAGES_URL . 'dist/js/instant-images-media' . $suffix . '.js',
+				'instant-images-media-modal',
+				INSTANT_IMAGES_URL . 'build/media-modal.js',
 				'',
 				INSTANT_IMAGES_VERSION,
 				true
@@ -196,11 +189,11 @@ class InstantImages {
 
 			wp_enqueue_style(
 				'admin-instant-images',
-				INSTANT_IMAGES_URL . 'dist/css/instant-images' . $suffix . '.css',
+				INSTANT_IMAGES_URL . 'build/style-instant-images.css',
 				'',
 				INSTANT_IMAGES_VERSION
 			);
-			$this::instant_img_localize( 'instant-images-media-router' );
+			$this::instant_img_localize( 'instant-images-media-modal' );
 		}
 	}
 

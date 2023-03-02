@@ -1,5 +1,4 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
+import { render } from "@wordpress/element";
 import PhotoList from "./components/PhotoList";
 import API from "./constants/API";
 import buildURL from "./functions/buildURL";
@@ -7,8 +6,6 @@ import checkRateLimit from "./functions/checkRateLimit";
 import consoleStatus from "./functions/consoleStatus";
 import getProvider from "./functions/getProvider";
 import getQueryParams from "./functions/getQueryParams";
-require("es6-promise").polyfill();
-require("isomorphic-fetch");
 require("./functions/helpers");
 
 // Global vars
@@ -157,8 +154,7 @@ const getMediaModalProvider = async (element) => {
  * @return {Element}              The PhotoList component.
  */
 const renderPhotoList = (element, provider, results, error) => {
-	const root = createRoot(element);
-	root.render(
+	render(
 		<PhotoList
 			container={element}
 			editor="media-router"
@@ -167,7 +163,8 @@ const renderPhotoList = (element, provider, results, error) => {
 			page={1}
 			orderby={API.defaults.order}
 			provider={provider}
-		/>
+		/>,
+		element
 	);
 };
 

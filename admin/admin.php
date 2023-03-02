@@ -68,17 +68,12 @@ function instant_images_enqueue_scripts() {
  * @author ConnektMedia <support@connekthq.com>
  */
 function instant_images_scripts() {
-	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
-	wp_enqueue_style( 'admin-instant-images', INSTANT_IMAGES_URL . 'dist/css/instant-images' . $suffix . '.css', '', INSTANT_IMAGES_VERSION );
+	wp_enqueue_style( 'admin-instant-images', INSTANT_IMAGES_URL . 'build/style-instant-images".css', '', INSTANT_IMAGES_VERSION );
 	wp_enqueue_script( 'jquery', true, '', INSTANT_IMAGES_VERSION, false );
 	wp_enqueue_script( 'jquery-form', true, '', INSTANT_IMAGES_VERSION, false );
-
-	wp_enqueue_script( 'instant-images-react', INSTANT_IMAGES_URL . 'dist/js/instant-images' . $suffix . '.js', '', INSTANT_IMAGES_VERSION, true );
+	wp_enqueue_script( 'instant-images-react', INSTANT_IMAGES_URL . 'build/instant-images".js', '', INSTANT_IMAGES_VERSION, true );
 	wp_enqueue_script( 'instant-images', INSTANT_IMAGES_ADMIN_URL . 'assets/js/admin.js', 'jquery', INSTANT_IMAGES_VERSION, true );
-
 	InstantImages::instant_img_localize();
-
 }
 
 /**

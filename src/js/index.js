@@ -1,5 +1,4 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
+import { render } from "@wordpress/element";
 import PhotoList from "./components/PhotoList";
 import API from "./constants/API";
 import buildURL from "./functions/buildURL";
@@ -7,21 +6,21 @@ import checkRateLimit from "./functions/checkRateLimit";
 import consoleStatus from "./functions/consoleStatus";
 import getProvider from "./functions/getProvider";
 import getQueryParams from "./functions/getQueryParams";
-require("es6-promise").polyfill();
-require("isomorphic-fetch");
 require("./functions/helpers");
 
+import "../scss/style.scss";
+
 // Get provider from settings.
-const provider = getProvider();
+const defaultProvider = getProvider();
 
 /**
  * Get the initial set of photos.
  *
- * @param {Number} page     The start page.
+ * @param {number} page     The start page.
  * @param {string} orderby  The default order.
  * @param {string} provider The current service provider.
  */
-function GetPhotos(
+function getImages(
 	page = 1,
 	orderby = API.defaults.order,
 	provider = API.defaults.provider
@@ -43,8 +42,7 @@ function GetPhotos(
 			const results = await response.json();
 			const { error = null } = results;
 			const app = document.getElementById("app");
-			const root = createRoot(app);
-			root.render(
+			render(
 				<PhotoList
 					container={app}
 					editor="classic"
@@ -53,7 +51,8 @@ function GetPhotos(
 					orderby={orderby}
 					provider={provider}
 					error={error}
-				/>
+				/>,
+				app
 			);
 		} catch (error) {
 			consoleStatus(provider, status);
@@ -73,5 +72,5 @@ function GetPhotos(
  */
 (async () => {
 	const defaultOrder = API.defaults.order;
-	GetPhotos(1, defaultOrder, provider);
+	getImages(1, defaultOrder, defaultProvider);
 })();

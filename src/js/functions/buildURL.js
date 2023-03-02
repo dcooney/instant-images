@@ -1,3 +1,4 @@
+import API from "../constants/API";
 import { openverseParams } from "./openverse";
 
 /**
@@ -21,7 +22,7 @@ export default function buildURL(type, params) {
 	params = provider === "openverse" ? openverseParams(type, params) : params;
 
 	// Build the API URL.
-	const url = new URL(getProxyURL(provider, params));
+	const url = new URL(getProxyURL(provider));
 
 	// Add `type` to params.
 	url.searchParams.append("type", type);
@@ -41,13 +42,9 @@ export default function buildURL(type, params) {
  * Get the proxy URL from ENV vars.
  *
  * @param  {string} provider The image provider.
- * @param  {array}  params   The query params.
  * @return {string}          The proxy URL.
  */
-export function getProxyURL(provider, params) {
-	const proxy =
-		process && process.env && process.env.PROXY_URL
-			? `${process.env.PROXY_URL}${provider}`
-			: `https://proxy.getinstantimages.com/api/${provider}`;
-	return proxy;
+export function getProxyURL(provider) {
+	const { proxy = "https://proxy.getinstantimages.com/api/" } = API;
+	return `${proxy}${provider}`;
 }
