@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import React from "react";
 import consoleStatus from "../functions/consoleStatus";
 import getErrorMessage from "../functions/getErrorMessage";
 
@@ -21,7 +20,7 @@ class ErrorLightbox extends React.Component {
 		const self = this;
 		if (self.lightbox.current) {
 			self.lightbox.current.classList.remove("active");
-			setTimeout(function() {
+			setTimeout(function () {
 				self.lightbox.current && self.lightbox.current.remove();
 			}, 275);
 		}
@@ -74,7 +73,7 @@ class ErrorLightbox extends React.Component {
 					<div
 						className={classNames("api-lightbox", "active")}
 						ref={this.lightbox}
-						onClick={e => this.bkgClick(e)}
+						onClick={(e) => this.bkgClick(e)}
 						tabIndex="-1"
 					>
 						<div>
@@ -106,9 +105,7 @@ class ErrorLightbox extends React.Component {
 									<button
 										onClick={() =>
 											this.gotoURL(
-												instant_img_localize[
-													`${this.provider}_api_url`
-												]
+												instant_img_localize[`${this.provider}_api_url`]
 											)
 										}
 									>

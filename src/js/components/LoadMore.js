@@ -1,5 +1,3 @@
-import React from "react";
-
 class LoadMore extends React.Component {
 	constructor(props) {
 		super(props);

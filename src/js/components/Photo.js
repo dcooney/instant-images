@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react";
 import API from "../constants/API.js";
 import capitalizeFirstLetter from "../functions/capitalizeFirstLetter";
 import unsplashDownload from "../functions/unsplashDownload";
@@ -18,6 +17,7 @@ class Photo extends React.Component {
 		this.extension = result && result.extension ? result.extension : "jpg";
 		this.likes = result && result.likes;
 		this.attribution = result && result.attribution ? result.attribution : "";
+		this.dimensions = result?.dimensions ? result.dimensions : "";
 
 		this.thumb = result && result.urls && result.urls.thumb;
 		this.full = result && result.urls && result.urls.full;
@@ -146,13 +146,7 @@ class Photo extends React.Component {
 						let edit_url = `${admin_url}post.php?post=${attachment.id}&action=edit`;
 
 						// Success/Upload Complete
-						self.uploadComplete(
-							target,
-							photo,
-							msg,
-							edit_url,
-							attachment.id
-						);
+						self.uploadComplete(target, photo, msg, edit_url, attachment.id);
 
 						// Trigger a download at Unsplash.
 						if (self.provider === "unsplash" && self.download_url) {
@@ -194,11 +188,7 @@ class Photo extends React.Component {
 					}
 				} else {
 					// Error
-					self.uploadError(
-						target,
-						notice,
-						instant_img_localize.error_upload
-					);
+					self.uploadError(target, notice, instant_img_localize.error_upload);
 				}
 			})
 			.catch(function (error) {
@@ -440,9 +430,7 @@ class Photo extends React.Component {
 		this.alt = alt.value;
 
 		// Caption
-		let caption = this.photo.current.querySelector(
-			'textarea[name="caption"]'
-		);
+		let caption = this.photo.current.querySelector('textarea[name="caption"]');
 		this.caption = caption.value;
 
 		// Hide edit screen.
@@ -460,9 +448,7 @@ class Photo extends React.Component {
 	 */
 	cancelEditChange(e) {
 		// Filename
-		const filename = this.photo.current.querySelector(
-			'input[name="filename"]'
-		);
+		const filename = this.photo.current.querySelector('input[name="filename"]');
 		filename.value = filename.dataset.original;
 		this.setState({
 			filename: filename.value,
@@ -573,10 +559,7 @@ class Photo extends React.Component {
 							>
 								<div className="user-wrap">
 									{this.user_photo && this.user_photo.length > 0 && (
-										<img
-											className="user-wrap--photo"
-											src={this.user_photo}
-										/>
+										<img className="user-wrap--photo" src={this.user_photo} />
 									)}
 									{this.user_name}
 								</div>
@@ -591,10 +574,7 @@ class Photo extends React.Component {
 										onMouseLeave={(e) => this.hideTooltip(e)}
 										onClick={(e) => this.setFeaturedImageClick(e)}
 									>
-										<i
-											className="fa fa-picture-o"
-											aria-hidden="true"
-										></i>
+										<i className="fa fa-picture-o" aria-hidden="true"></i>
 										<span className="offscreen">
 											{instant_img_localize.set_as_featured}
 										</span>
@@ -653,10 +633,7 @@ class Photo extends React.Component {
 									onMouseEnter={(e) => this.showTooltip(e)}
 									onMouseLeave={(e) => this.hideTooltip(e)}
 								>
-									<i
-										className="fa fa-heart heart-like"
-										aria-hidden="true"
-									></i>{" "}
+									<i className="fa fa-heart heart-like" aria-hidden="true"></i>{" "}
 									{this.likes}
 								</span>
 							) : null}
@@ -671,10 +648,7 @@ class Photo extends React.Component {
 								rel="noopener noreferrer"
 								target="_blank"
 							>
-								<i
-									className="fa fa-external-link"
-									aria-hidden="true"
-								></i>
+								<i className="fa fa-external-link" aria-hidden="true"></i>
 								<span className="offscreen">
 									{`${
 										instant_img_localize.open_external
@@ -687,9 +661,10 @@ class Photo extends React.Component {
 					<div className="edit-screen" tabIndex="0" ref={this.editScreen}>
 						<div className="edit-screen--title">
 							<div>
-								<p className="heading">
-									{instant_img_localize.edit_details}
-								</p>
+								<p className="heading">{instant_img_localize.edit_details}</p>
+								{this.dimensions && this.dimensions.length > 0 && (
+									<p className="dimensions">{this.dimensions}</p>
+								)}
 							</div>
 							<div
 								className="preview"
@@ -742,10 +717,7 @@ class Photo extends React.Component {
 						</label>
 						{this.attribution ? (
 							<div className="add-attribution-row">
-								<button
-									onClick={(e) => this.addAttribution(e)}
-									type="button"
-								>
+								<button onClick={(e) => this.addAttribution(e)} type="button">
 									{instant_img_localize.attribution}
 								</button>
 							</div>

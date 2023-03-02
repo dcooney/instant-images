@@ -1,5 +1,3 @@
-import React from "react";
-
 class LoadingBlock extends React.Component {
 	render() {
 		return <div className="loading-block" />;

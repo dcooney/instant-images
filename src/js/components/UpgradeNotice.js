@@ -1,5 +1,3 @@
-import React from "react";
-
 /**
  * Upgrade notice component.
  *
@@ -41,10 +39,7 @@ class UpgradeNotice extends React.Component {
 		return (
 			<React.Fragment>
 				{!instant_img_localize.v5_upgrade_notice.transient ? (
-					<div
-						className="upgrade-notice notice notice-warning"
-						ref={this.ref}
-					>
+					<div className="upgrade-notice notice notice-warning" ref={this.ref}>
 						<p>
 							<strong>
 								{instant_img_localize.v5_upgrade_notice.disclaimer}

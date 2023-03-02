@@ -1,5 +1,3 @@
-import React from "react";
-
 class ResultsToolTip extends React.Component {
 	constructor(props) {
 		super(props);
@@ -9,9 +7,7 @@ class ResultsToolTip extends React.Component {
 	render() {
 		return (
 			<div
-				className={
-					this.props.isSearch ? "searchResults" : "searchResults hide"
-				}
+				className={this.props.isSearch ? "searchResults" : "searchResults hide"}
 			>
 				<span title={this.props.title}>{this.props.total}</span>
 				<button
@@ -20,9 +16,7 @@ class ResultsToolTip extends React.Component {
 					onClick={() => this.getPhotos("latest")}
 				>
 					x
-					<span className="offscreen">
-						{instant_img_localize.clear_search}
-					</span>
+					<span className="offscreen">{instant_img_localize.clear_search}</span>
 				</button>
 			</div>
 		);

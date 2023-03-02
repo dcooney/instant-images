@@ -1211,6 +1211,9 @@ body.media_page_instant-images.overflow-hidden {
   font-weight: 600;
   text-transform: uppercase;
 }
+#photos .edit-screen--title p.dimensions {
+  font-size: 11px;
+}
 #photos .edit-screen label,
 #photos .edit-screen .add-attribution-row {
   margin: 0;

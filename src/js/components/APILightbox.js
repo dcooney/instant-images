@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import FocusTrap from "focus-trap-react";
-import React from "react";
 import buildTestURL from "../functions/buildTestURL";
 import checkRateLimit from "../functions/checkRateLimit";
 import consoleStatus from "../functions/consoleStatus";
@@ -193,16 +192,12 @@ class APILightbox extends React.Component {
 							</button>
 							<div className="api-lightbox--details">
 								<h3 data-provider={this.provider}>{this.provider}</h3>
-								<p>
-									{instant_img_localize[`${this.provider}_api_desc`]}
-								</p>
+								<p>{instant_img_localize[`${this.provider}_api_desc`]}</p>
 								<p className="action-controls">
 									<button
 										onClick={() =>
 											this.gotoURL(
-												instant_img_localize[
-													`${this.provider}_api_url`
-												]
+												instant_img_localize[`${this.provider}_api_url`]
 											)
 										}
 									>
@@ -219,10 +214,7 @@ class APILightbox extends React.Component {
 									{instant_img_localize.enter_api_key}
 								</label>
 								<div className="api-lightbox--input-wrap">
-									<span
-										className={this.state.status}
-										title={title && title}
-									>
+									<span className={this.state.status} title={title && title}>
 										{this.state.status === "invalid" && (
 											<i
 												className="fa fa-exclamation-triangle"
@@ -230,10 +222,7 @@ class APILightbox extends React.Component {
 											></i>
 										)}
 										{this.state.status === "valid" && (
-											<i
-												className="fa fa-check-circle"
-												aria-hidden="true"
-											></i>
+											<i className="fa fa-check-circle" aria-hidden="true"></i>
 										)}
 										{this.state.status === "loading" && (
 											<i

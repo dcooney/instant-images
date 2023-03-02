@@ -1,5 +1,3 @@
-import React from "react";
-
 class Sponsor extends React.Component {
 	constructor(props) {
 		super(props);
@@ -29,10 +27,7 @@ class Sponsor extends React.Component {
 						onClick={() => this.link.current.click()}
 					>
 						<div className="photo--wrap">
-							<span
-								className="flag"
-								title={instant_img_localize.advertisement}
-							>
+							<span className="flag" title={instant_img_localize.advertisement}>
 								{instant_img_localize.ad}
 							</span>
 							<div className="img-wrap">
@@ -46,9 +41,7 @@ class Sponsor extends React.Component {
 								</a>
 							</div>
 							<div className="feature-title">
-								{this.avatar && (
-									<img src={this.avatar} alt={this.title} />
-								)}
+								{this.avatar && <img src={this.avatar} alt={this.title} />}
 								<span>{this.title}</span>
 							</div>
 						</div>

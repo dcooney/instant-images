@@ -1,6 +1,5 @@
 import * as a11yarrows from "a11yarrows";
 import cn from "classnames";
-import React from "react";
 
 class Filter extends React.Component {
 	constructor(props) {
@@ -19,7 +18,7 @@ class Filter extends React.Component {
 		this.isColor = this.filterKey === "colors" || this.filterKey === "color";
 		this.state = {
 			expanded: false,
-			selected: this.data.default
+			selected: this.data.default,
 		};
 	}
 
@@ -97,19 +96,19 @@ class Filter extends React.Component {
 		const newValue = this.state.selected !== value ? value : this.default;
 
 		this.setState({
-			selected: newValue
+			selected: newValue,
 		});
 		this.clickHandler(filter, newValue);
 
 		// Delay for effect.
-		setTimeout(function() {
+		setTimeout(function () {
 			self.trigger.click();
 		}, 100);
 	}
 
 	reset() {
 		this.setState({
-			selected: this.default
+			selected: this.default,
 		});
 	}
 
@@ -134,7 +133,7 @@ class Filter extends React.Component {
 	componentDidMount() {
 		// Initiate arrow menus.
 		a11yarrows.init(this.dropdown, {
-			selector: "button"
+			selector: "button",
 		});
 
 		// Check for focus outside.
@@ -153,7 +152,7 @@ class Filter extends React.Component {
 			<div
 				className="filter-dropdown"
 				id={this.id}
-				ref={element => {
+				ref={(element) => {
 					this.dropdown = element;
 				}}
 			>
@@ -161,7 +160,7 @@ class Filter extends React.Component {
 					onClick={this.toggleMenu}
 					className="filter-dropdown--button"
 					aria-expanded={this.state.expanded ? "true" : "false"}
-					ref={element => {
+					ref={(element) => {
 						this.trigger = element;
 					}}
 				>
@@ -180,7 +179,7 @@ class Filter extends React.Component {
 					)}
 					data-key={this.filterKey}
 					aria-hidden={this.state.expanded ? "false" : "true"}
-					ref={element => {
+					ref={(element) => {
 						this.menu = element;
 					}}
 				>
@@ -195,9 +194,7 @@ class Filter extends React.Component {
 								onClick={() => this.click(this.filterKey, value)}
 							>
 								{value.replace(/_/g, " ")}
-								{value !== "all" &&
-								value !== "transparent" &&
-								this.isColor ? (
+								{value !== "all" && value !== "transparent" && this.isColor ? (
 									<span
 										className="_color"
 										style={{ color: this.convertColor(value) }}
