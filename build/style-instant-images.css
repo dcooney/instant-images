@@ -1784,7 +1784,6 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   display: block;
 }
 .instant-img-container #tooltip {
-  display: inline-block;
   padding: 8px 10px;
   background: #fff;
   position: fixed;
@@ -1804,11 +1803,11 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
   transform: scale(0.8);
 }
-.instant-img-container #tooltip:after {
+.instant-img-container #tooltip::after {
   top: 100%;
   right: 17px;
   border: solid transparent;
-  content: " ";
+  content: "";
   height: 0;
   width: 0;
   position: absolute;

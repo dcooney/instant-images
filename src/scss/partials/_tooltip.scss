@@ -1,6 +1,5 @@
 .instant-img-container {
 	#tooltip {
-		display: inline-block;
 		padding: 8px 10px;
 		background: #fff;
 		position: fixed;
@@ -19,11 +18,11 @@
 		box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 		transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
 		transform: scale(0.8);
-		&:after {
+		&::after {
 			top: 100%;
 			right: 17px;
 			border: solid transparent;
-			content: " ";
+			content: '';
 			height: 0;
 			width: 0;
 			position: absolute;

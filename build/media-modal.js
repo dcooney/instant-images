@@ -3246,37 +3246,19 @@ var LoadMore = /*#__PURE__*/function (_React$Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-var LoadingBlock = /*#__PURE__*/function (_React$Component) {
-  _inherits(LoadingBlock, _React$Component);
-  var _super = _createSuper(LoadingBlock);
-  function LoadingBlock() {
-    _classCallCheck(this, LoadingBlock);
-    return _super.apply(this, arguments);
-  }
-  _createClass(LoadingBlock, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/React.createElement("div", {
-        className: "loading-block"
-      });
-    }
-  }]);
-  return LoadingBlock;
-}(React.Component);
-/* harmony default export */ __webpack_exports__["default"] = (LoadingBlock);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ LoadingBlock; }
+/* harmony export */ });
+/**
+ * Render the LoadingBlock component.
+ *
+ * @returns {JSX.Element} The LoadingBlock component.
+ */
+function LoadingBlock() {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "loading-block"
+  });
+}
 
 /***/ }),
 
@@ -5338,37 +5320,19 @@ var Sponsor = /*#__PURE__*/function (_React$Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-var Tooltip = /*#__PURE__*/function (_React$Component) {
-  _inherits(Tooltip, _React$Component);
-  var _super = _createSuper(Tooltip);
-  function Tooltip() {
-    _classCallCheck(this, Tooltip);
-    return _super.apply(this, arguments);
-  }
-  _createClass(Tooltip, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/React.createElement("div", {
-        id: "tooltip"
-      });
-    }
-  }]);
-  return Tooltip;
-}(React.Component);
-/* harmony default export */ __webpack_exports__["default"] = (Tooltip);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Tooltip; }
+/* harmony export */ });
+/**
+ * Render the Tooltip component.
+ *
+ * @returns {JSX.Element} The Tooltip component.
+ */
+function Tooltip() {
+  return /*#__PURE__*/React.createElement("div", {
+    id: "tooltip"
+  });
+}
 
 /***/ }),
 
@@ -5380,6 +5344,7 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
 
 module.exports = {
   proxy: "https://proxy.getinstantimages.com/api/" || 0,
+  // eslint-disable-line
   defaults: {
     provider: "unsplash",
     order: "latest",
@@ -12086,8 +12051,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__(/*! ./functions/helpers */ "./src/js/functions/helpers.js");
 
 // Global vars
-var activeFrameId = "";
-var activeFrame = "";
+var activeFrameId = '';
+var activeFrame = '';
 
 // Load MediaFrame deps
 var oldMediaFrame = wp.media.view.MediaFrame.Post;
@@ -12108,14 +12073,12 @@ wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend({
   // Handlers
   bindHandlers: function bindHandlers() {
     oldMediaFrameSelect.prototype.bindHandlers.apply(this, arguments);
-    this.on("content:create:instantimages", this.frameContent, this);
+    this.on('content:create:instantimages', this.frameContent, this);
   },
   /**
    * Render callback for the content region in the `browse` mode.
-   *
-   * @param {wp.media.controller.Region} contentRegion
    */
-  frameContent: function frameContent(contentRegion) {
+  frameContent: function frameContent() {
     var state = this.state();
     // Get active frame
     if (state) {
@@ -12123,6 +12086,11 @@ wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend({
       activeFrame = state.frame.el;
     }
   },
+  /**
+   * Get the current frame.
+   *
+   * @param {string} id The ID.
+   */
   getFrame: function getFrame(id) {
     return this.states.findWhere({
       id: id
@@ -12143,14 +12111,12 @@ wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
   // Handlers
   bindHandlers: function bindHandlers() {
     oldMediaFrame.prototype.bindHandlers.apply(this, arguments);
-    this.on("content:create:instantimages", this.frameContent, this);
+    this.on('content:create:instantimages', this.frameContent, this);
   },
   /**
    * Render callback for the content region in the `browse` mode.
-   *
-   * @param {wp.media.controller.Region} contentRegion
    */
-  frameContent: function frameContent(contentRegion) {
+  frameContent: function frameContent() {
     var state = this.state();
     // Get active frame
     if (state) {
@@ -12167,21 +12133,20 @@ wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
 
 // Render Instant Images
 var instantImagesMediaTab = function instantImagesMediaTab() {
-  var html = createWrapperHTML(); // Create HTML wrapper
-
   if (!activeFrame) {
     return false; // Exit if not a frame.
   }
 
-  var modal = activeFrame.querySelector(".media-frame-content"); // Get all media modals
+  var html = createWrapperHTML(); // Create HTML wrapper
+  var modal = activeFrame.querySelector('.media-frame-content'); // Get all media modals
   if (!modal) {
     return false; // Exit if not modal.
   }
 
-  modal.innerHTML = ""; // Clear any existing modals.
+  modal.innerHTML = ''; // Clear any existing modals.
   modal.appendChild(html); // Append Instant Images to modal.
 
-  var element = modal.querySelector("#instant-images-media-router-" + activeFrameId);
+  var element = modal.querySelector('#instant-images-media-router-' + activeFrameId);
   if (!element) {
     return false; // Exit if not element.
   }
@@ -12203,7 +12168,7 @@ var getMediaModalProvider = /*#__PURE__*/function () {
           // Get provider and options from settings.
           provider = (0,_functions_getProvider__WEBPACK_IMPORTED_MODULE_6__["default"])(); // Build URL.
           params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(provider);
-          url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_3__["default"])("photos", params); // Create fetch request.
+          url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_3__["default"])('photos', params); // Create fetch request.
           _context.next = 5;
           return fetch(url);
         case 5:
@@ -12261,12 +12226,12 @@ var renderPhotoList = function renderPhotoList(element, provider, results, error
  * @return {Element} Create the HTML markup for the media modal.
  */
 var createWrapperHTML = function createWrapperHTML() {
-  var wrapper = document.createElement("div");
-  wrapper.classList.add("instant-img-container");
-  var container = document.createElement("div");
-  container.classList.add("instant-images-wrapper");
-  var frame = document.createElement("div");
-  frame.setAttribute("id", "instant-images-media-router-" + activeFrameId);
+  var wrapper = document.createElement('div');
+  wrapper.classList.add('instant-img-container');
+  var container = document.createElement('div');
+  container.classList.add('instant-images-wrapper');
+  var frame = document.createElement('div');
+  frame.setAttribute('id', 'instant-images-media-router-' + activeFrameId);
   container.appendChild(frame);
   wrapper.appendChild(container);
   return wrapper;
@@ -12276,20 +12241,20 @@ var createWrapperHTML = function createWrapperHTML() {
 jQuery(document).ready(function ($) {
   if (wp.media) {
     // Open
-    wp.media.view.Modal.prototype.on("open", function () {
+    wp.media.view.Modal.prototype.on('open', function () {
       if (!activeFrame) {
         return false;
       }
-      var selectedTab = activeFrame.querySelector(".media-router button.media-menu-item.active");
-      if (selectedTab && selectedTab.id === "menu-item-instantimages") {
+      var selectedTab = activeFrame.querySelector('.media-router button.media-menu-item.active');
+      if (selectedTab && selectedTab.id === 'menu-item-instantimages') {
         instantImagesMediaTab();
       }
     });
 
     // Click Handler
-    $(document).on("click", ".media-router button.media-menu-item", function () {
-      var selectedTab = activeFrame.querySelector(".media-router button.media-menu-item.active");
-      if (selectedTab && selectedTab.id === "menu-item-instantimages") {
+    $(document).on('click', '.media-router button.media-menu-item', function () {
+      var selectedTab = activeFrame.querySelector('.media-router button.media-menu-item.active');
+      if (selectedTab && selectedTab.id === 'menu-item-instantimages') {
         instantImagesMediaTab();
       }
     });

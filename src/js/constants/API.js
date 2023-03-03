@@ -1,5 +1,5 @@
 module.exports = {
-	proxy: PROXY_URL || "https://proxy.getinstantimages.com/api/",
+	proxy: PROXY_URL || "https://proxy.getinstantimages.com/api/", // eslint-disable-line
 	defaults: {
 		provider: "unsplash",
 		order: "latest",

@@ -1,6 +1,8 @@
-class Tooltip extends React.Component {
-	render() {
-		return <div id="tooltip" />;
-	}
+/**
+ * Render the Tooltip component.
+ *
+ * @returns {JSX.Element} The Tooltip component.
+ */
+export default function Tooltip() {
+	return <div id="tooltip" />;
 }
-export default Tooltip;

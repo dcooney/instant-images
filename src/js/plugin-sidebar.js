@@ -1,12 +1,12 @@
-import Plugin from "./editor/plugin";
-import Menu from "./editor/plugin/components/Menu";
+import Plugin from './editor/plugin';
+import Menu from './editor/plugin/components/Menu';
 const { Fragment } = wp.element;
 const { registerPlugin } = wp.plugins;
 
 /**
  * Instant Images as a Gutenberg Plugin Sidebar.
  *
- * @returns {JSX.Element}
+ * @return {JSX.Element} The InstantImagesPlugin component.
  */
 const InstantImagesPlugin = () => (
 	<Fragment>
@@ -16,6 +16,6 @@ const InstantImagesPlugin = () => (
 );
 
 // Register the sidebar plugin.
-registerPlugin("instant-images", {
+registerPlugin( 'instant-images', {
 	render: InstantImagesPlugin,
-});
+} );

@@ -1,10 +1,9 @@
 const { dispatch } = wp.data;
 
 /**
- * Set image as featured,
+ * Set image as featured image in Gutenberg.
  *
- * @param {string} imageId The attachment ID
- * @returns
+ * @param {string} imageId The attachment ID.
  */
 const SetFeaturedImage = (imageId) => {
 	if (imageId === null) {

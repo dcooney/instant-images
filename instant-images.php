@@ -385,7 +385,6 @@ class InstantImages {
 		require_once 'api/test.php';
 		require_once 'api/download.php';
 		require_once 'api/settings.php';
-		require_once 'api/v5-upgrade.php';
 	}
 
 	/**
