@@ -3369,6 +3369,7 @@ var Photo = /*#__PURE__*/function (_React$Component) {
     _this.extension = result && result.extension ? result.extension : "jpg";
     _this.likes = result && result.likes;
     _this.attribution = result && result.attribution ? result.attribution : "";
+    _this.auto_attribution = instant_img_localize.auto_attribution === "1" ? true : false;
     _this.dimensions = result !== null && result !== void 0 && result.dimensions ? result.dimensions : "";
     _this.thumb = result && result.urls && result.urls.thumb;
     _this.full = result && result.urls && result.urls.full;
@@ -3379,7 +3380,9 @@ var Photo = /*#__PURE__*/function (_React$Component) {
     _this.user_url = result && result.user && result.user.url;
     _this.title = result && result.title ? result.title : "";
     _this.alt = result && result.alt ? result.alt : "";
-    _this.caption = result && result.caption ? result.caption : "";
+    _this.caption = result !== null && result !== void 0 && result.caption ? result.caption : "";
+    _this.caption = _this.auto_attribution ? _this.attribution : _this.caption; // Set auto attributions.
+
     _this.inProgress = false;
     _this.container = document.querySelector(".instant-img-container");
     _this.showTooltip = _this.props.showTooltip.bind(_assertThisInitialized(_this));
@@ -5376,7 +5379,7 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
 /***/ (function(module) {
 
 module.exports = {
-  proxy: "http://localhost:3000/api/" || 0,
+  proxy: "https://proxy.getinstantimages.com/api/" || 0,
   defaults: {
     provider: "unsplash",
     order: "latest",

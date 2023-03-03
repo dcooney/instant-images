@@ -78,7 +78,16 @@ function instant_images_admin_init() {
 		}
 	}
 
-	// Button Display.
+	// Auto captions.
+	add_settings_field(
+		'auto_attribution',
+		__( 'Auto Captions/Attribution', 'instant-images' ),
+		'instant_images_auto_attribution_callback',
+		'instant-images',
+		'unsplash_general_settings'
+	);
+
+	// Media Modal.
 	add_settings_field(
 		'media_modal_display',
 		__( 'Media Tab', 'instant-images' ),
@@ -160,6 +169,30 @@ function instant_images_height_callback() {
 }
 
 /**
+ * Automatically add image attribution to captions.
+ *
+ * @author ConnektMedia <support@connekthq.com>
+ * @since 5.1.1
+ */
+function instant_images_auto_attribution_callback() {
+	$options = get_option( 'instant_img_settings' );
+	if ( ! isset( $options['auto_attribution'] ) ) {
+		$options['auto_attribution'] = '0';
+	}
+
+	$html = '<label style="cursor: default;"><strong>' . esc_attr__( 'Image Attribution', 'instant-images' ) . '</strong></label>';
+	$html .= '<label for="auto_attribution" class="cnkt-checkbox-wrap">';
+	$html .= '<input type="hidden" name="instant_img_settings[auto_attribution]" value="0" />';
+	$html .= '<input type="checkbox" name="instant_img_settings[auto_attribution]" id="auto_attribution" value="1"' . ( $options['auto_attribution'] ? ' checked="checked"' : '' ) . ' />';
+	$html .= __( 'Automatically add image attribution (as captions) when uploading images.', 'instant-images' );
+	$html .= '</label>';
+
+	// @codingStandardsIgnoreStart
+	echo $html;
+	// @codingStandardsIgnoreEnd
+}
+
+/**
  * Show the Instant Images Tab in Media Modal.
  *
  * @author ConnektMedia <support@connekthq.com>
@@ -171,8 +204,8 @@ function instant_images_tab_display_callback() {
 		$options['media_modal_display'] = '0';
 	}
 
-	$html  = '<label style="cursor: default;"><strong>' . esc_attr__( 'Media Modal:', 'instant-images' ) . '</strong></label>';
-	$html .= '<label for="media_modal_display">';
+	$html = '<label style="cursor: default;"><strong>' . esc_attr__( 'Media Modal', 'instant-images' ) . '</strong></label>';
+	$html .= '<label for="media_modal_display" class="cnkt-checkbox-wrap">';
 	$html .= '<input type="hidden" name="instant_img_settings[media_modal_display]" value="0" />';
 	$html .= '<input type="checkbox" name="instant_img_settings[media_modal_display]" id="media_modal_display" value="1"' . ( $options['media_modal_display'] ? ' checked="checked"' : '' ) . ' />';
 	$html .= __( 'Hide Instant Images tab in Media Modal windows.', 'instant-images' );

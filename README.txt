@@ -137,9 +137,8 @@ How to install Instant Images.
 1. Dashboard - Browse, search and upload images to your WordPress media library
 2. Search - Find and upload images for any subject in a matter of seconds!
 3. Image Metadata - Easily edit image filename, alt text and caption prior to uploading to your media library.
-4. Post/Page Edit - Unsplash images in a lightbox on your post edit/new/post pages.
-5. Gutenberg post edit screens. Add as featured image, insert into post or just upload photo.
-6. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
+4. Gutenberg post edit screens. Add as featured image, insert into post or just upload photo.
+5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
 

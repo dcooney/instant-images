@@ -284,6 +284,18 @@ body.media_page_instant-images {
 	border: none;
 	position: relative;
 	top: -5px;
+
+	& .cnkt-checkbox-wrap{
+		display: flex;
+		flex-wrap: nowrap;
+		width: 100%;
+		padding: 3px 0;
+
+		& input{
+			margin-top: 0;
+			margin-right: 8px;
+		}
+	}
 }
 .cnkt-sidebar .form-table td,
 .cnkt-sidebar .form-table label,

@@ -17,6 +17,8 @@ class Photo extends React.Component {
 		this.extension = result && result.extension ? result.extension : "jpg";
 		this.likes = result && result.likes;
 		this.attribution = result && result.attribution ? result.attribution : "";
+		this.auto_attribution =
+			instant_img_localize.auto_attribution === "1" ? true : false;
 		this.dimensions = result?.dimensions ? result.dimensions : "";
 
 		this.thumb = result && result.urls && result.urls.thumb;
@@ -30,7 +32,8 @@ class Photo extends React.Component {
 
 		this.title = result && result.title ? result.title : "";
 		this.alt = result && result.alt ? result.alt : "";
-		this.caption = result && result.caption ? result.caption : "";
+		this.caption = result?.caption ? result.caption : "";
+		this.caption = this.auto_attribution ? this.attribution : this.caption; // Set auto attributions.
 
 		this.inProgress = false;
 		this.container = document.querySelector(".instant-img-container");

@@ -283,6 +283,16 @@ body.media_page_instant-images.overflow-hidden {
   position: relative;
   top: -5px;
 }
+.cnkt-sidebar .form-table .cnkt-checkbox-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  padding: 3px 0;
+}
+.cnkt-sidebar .form-table .cnkt-checkbox-wrap input {
+  margin-top: 0;
+  margin-right: 8px;
+}
 .cnkt-sidebar .form-table td,
 .cnkt-sidebar .form-table label,
 .cnkt-sidebar .form-table p {

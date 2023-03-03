@@ -14,6 +14,13 @@
  * @package InstantImages
  */
 
+/*
+NEW: Added new setting to automatically add image attribution as captions.
+UPDATE: Various code refactoring and build process update.
+UPDATE: Adding mime type checking based on current allowed uploads.
+FIX: Security fixes.
+*/
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -211,6 +218,7 @@ class InstantImages {
 		$download_w       = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
 		$download_h       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
 		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
+		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Default provider.
 
 		// Unsplash API.
 		if ( defined( 'INSTANT_IMAGES_UNSPLASH_KEY' ) ) {
@@ -246,6 +254,7 @@ class InstantImages {
 				'ajax_url'                => admin_url( 'admin-ajax.php' ),
 				'admin_nonce'             => wp_create_nonce( 'instant_img_nonce' ),
 				'parent_id'               => $post ? $post->ID : 0,
+				'auto_attribution'        => $auto_attribution,
 				'lang'                    => function_exists( 'pll_current_language' ) ? pll_current_language() : '',
 				'default_provider'        => $default_provider,
 				'download_width'          => esc_html( $download_w ),
