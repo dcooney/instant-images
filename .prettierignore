@@ -1,7 +1,0 @@
-*.min.{js,jsx,ts,tsx,md,html,json,yml}
-!/.*.{js,jsx,ts,tsx,md,html,json,yml}
-.*.{js,jsx,ts,tsx,md,html,json,yml}
-
-build/
-node_modules/
-vendor/

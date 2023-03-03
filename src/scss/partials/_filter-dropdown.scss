@@ -5,7 +5,7 @@
 		border: none;
 		text-align: left;
 		color: $text_light;
-		&:not(disabled) {
+		&:not[disabled] {
 			cursor: pointer;
 		}
 	}
@@ -42,8 +42,7 @@
 		visibility: hidden;
 		opacity: 0;
 		transform: scale(0.9);
-		transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56),
-			opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+		transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
 		padding: 10px;
 		background-color: #fff;
 		border: 1px solid $border;
@@ -71,9 +70,9 @@
 			padding: 8px 5px;
 			transition: all 0.25 ease;
 			font-size: 14px;
-			&:before {
-				font-family: "FontAwesome";
-				content: "\f00c";
+			&::before {
+				font-family: 'FontAwesome';
+				content: '\f00c';
 				display: block;
 				color: $input;
 				opacity: 0.4;
@@ -82,27 +81,27 @@
 			&:hover,
 			&:focus {
 				color: $text;
-				&:before {
+				&::before {
 					opacity: 0.75;
 				}
 			}
 			&.selected {
 				color: $text;
-				&:before {
+				&::before {
 					color: $text;
 					opacity: 0.75;
 				}
 			}
 		}
-		&[data-key="colors"],
-		&[data-key="color"] {
+		&[data-key='colors'],
+		&[data-key='color'] {
 			button {
 				._color {
 					margin-left: auto;
 					width: 14px;
 					height: 14px;
 					border-radius: 50%;
-					background-color: currentColor;
+					background-color: currentcolor;
 					box-shadow: 0 0 0 1px rgba(#000, 0.075);
 				}
 			}

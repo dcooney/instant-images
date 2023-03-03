@@ -69,24 +69,24 @@
 			padding: 25px;
 			padding-bottom: 20px;
 			position: relative;
-			&:after,
-			&:before {
+			&::after,
+			&::before {
 				top: 100%;
 				left: 50px;
 				border: solid transparent;
-				content: "";
+				content: '';
 				height: 0;
 				width: 0;
 				position: absolute;
 				pointer-events: none;
 			}
-			&:after {
+			&::after {
 				border-color: rgba(255, 255, 255, 0);
 				border-top-color: #ffffff;
 				border-width: 10px;
 				margin-left: -10px;
 			}
-			&:before {
+			&::before {
 				border-color: rgba(194, 225, 245, 0);
 				border-top-color: $border;
 				border-width: 11px;
@@ -103,12 +103,12 @@
 			p {
 				margin: 10px 0 0;
 				font-size: 13px;
-				&.callout-warning{
+				&.callout-warning {
 					font-size: 34px;
 					font-weight: 900;
 					opacity: 0.35;
 				}
-				&.more-info{
+				&.more-info {
 					padding: 10px;
 					background-color: $yellow_bkg;
 					margin: 15px 0;
@@ -150,7 +150,7 @@
 		&--close {
 			position: absolute;
 			z-index: 1;
-			right: 0px;
+			right: 0;
 			top: 0;
 			border: none;
 			background-color: transparent;
@@ -175,7 +175,7 @@
 		}
 
 		label,
-		button[type="submit"] {
+		button[type='submit'] {
 			font-size: 12px;
 			text-transform: uppercase;
 			font-weight: 600;
@@ -264,7 +264,7 @@
 				}
 			}
 		}
-		button[type="submit"] {
+		button[type='submit'] {
 			width: 100%;
 			border: none;
 			background-color: $purple;

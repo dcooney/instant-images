@@ -1,7 +1,0 @@
-*.min.js
-!/.*.js
-
-build/
-dist/
-node_modules/
-vendor/

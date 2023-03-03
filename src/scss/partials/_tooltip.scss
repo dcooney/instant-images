@@ -28,16 +28,16 @@
 			position: absolute;
 			pointer-events: none;
 			border-color: rgba(255, 255, 255, 0);
-			border-top-color: #ffffff;
+			border-top-color: #fff;
 			border-width: 5px;
 			margin-left: -5px;
 		}
 		&.above {
 			margin-top: 37px;
-			&:after {
+			&::after {
 				top: -5px;
 				border-top: none;
-				border-bottom-color: #ffffff;
+				border-bottom-color: #fff;
 			}
 		}
 		&.over {

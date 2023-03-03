@@ -1,5 +1,5 @@
-import Plugin from './editor/plugin';
-import Menu from './editor/plugin/components/Menu';
+import Plugin from "./editor/plugin";
+import Menu from "./editor/plugin/components/Menu";
 const { Fragment } = wp.element;
 const { registerPlugin } = wp.plugins;
 
@@ -16,6 +16,6 @@ const InstantImagesPlugin = () => (
 );
 
 // Register the sidebar plugin.
-registerPlugin( 'instant-images', {
+registerPlugin("instant-images", {
 	render: InstantImagesPlugin,
-} );
+});
