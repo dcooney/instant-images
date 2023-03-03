@@ -5,8 +5,10 @@
 		border: none;
 		text-align: left;
 		color: $text_light;
-		&:not[disabled] {
-			cursor: pointer;
+		cursor: pointer;
+		&[disabled] {
+			cursor: default;
+			pointer-events: none;
 		}
 	}
 	&--button {

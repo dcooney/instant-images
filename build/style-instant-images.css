@@ -2199,9 +2199,11 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   border: none;
   text-align: left;
   color: #999;
-}
-.filter-dropdown button:not[disabled] {
   cursor: pointer;
+}
+.filter-dropdown button[disabled] {
+  cursor: default;
+  pointer-events: none;
 }
 .filter-dropdown--button {
   display: flex;
