@@ -230,7 +230,7 @@ function instant_images_generate_image_url( $provider, $url, $max_width, $max_he
 		return false;
 	}
 
-	$server_ip = $_SERVER['SERVER_ADDR']; // Server IP.
+	$server_ip   = $_SERVER['SERVER_ADDR']; // Server IP.
 	$server_name = $_SERVER['SERVER_NAME']; // Server base URL.
 
 	/**

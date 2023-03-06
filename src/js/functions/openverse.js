@@ -6,14 +6,14 @@
  * @return {object} 		   Updated params.
  */
 export function openverseParams(type, params) {
-	if (type === "photos" && !params.source) {
+	if (type === 'photos' && !params.source) {
 		// Add `wordpress` as the default `source` for openverse.
-		params["source"] = "wordpress";
+		params['source'] = 'wordpress';
 	}
-	if (type === "search") {
+	if (type === 'search') {
 		// Exlude these sources from search.
-		const excluded = "500px, rawpixel, wikimedia";
-		params["excluded_source"] = excluded;
+		const excluded = '500px, rawpixel';
+		params['excluded_source'] = excluded;
 	}
 
 	return params;

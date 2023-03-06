@@ -1,12 +1,12 @@
-import PhotoList from "../../../components/PhotoList";
-import API from "../../../constants/API";
-import buildURL from "../../../functions/buildURL";
-import checkRateLimit from "../../../functions/checkRateLimit";
-import consoleStatus from "../../../functions/consoleStatus";
-import getProvider from "../../../functions/getProvider";
-import getQueryParams from "../../../functions/getQueryParams";
-import InsertImage from "../utils/insertImage";
-import SetFeaturedImage from "../utils/setFeaturedImage";
+import PhotoList from '../../../components/PhotoList';
+import API from '../../../constants/API';
+import buildURL from '../../../functions/buildURL';
+import consoleStatus from '../../../functions/consoleStatus';
+import getProvider from '../../../functions/getProvider';
+import getQueryParams from '../../../functions/getQueryParams';
+import { checkRateLimit } from '../../../functions/helpers';
+import InsertImage from '../utils/insertImage';
+import SetFeaturedImage from '../utils/setFeaturedImage';
 const { useState, useEffect } = wp.element;
 
 /**
@@ -30,7 +30,7 @@ export default function Panel() {
 		async function initialize() {
 			// Build URL.
 			const params = getQueryParams(provider);
-			const url = buildURL("photos", params);
+			const url = buildURL('photos', params);
 
 			// Create fetch request.
 			const response = await fetch(url);

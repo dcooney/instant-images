@@ -1,5 +1,5 @@
-import buildURL from "./buildURL";
-import { getAuth } from "./getQueryParams";
+import buildURL from './buildURL';
+import { getAuth } from './getQueryParams';
 
 /**
  * Function to trigger an image download at unsplash.com.
@@ -11,17 +11,17 @@ import { getAuth } from "./getQueryParams";
  * @updated 5.0
  */
 export default function unsplashDownload(download_url) {
-	const params = getAuth({}, "unsplash");
+	const params = getAuth({}, 'unsplash');
 	params.download_url = download_url; // Append download URL to query params.
-	const url = buildURL("photos", params);
+	const url = buildURL('photos', params);
 
 	fetch(url)
-		.then(data => data.json())
-		.then(function() {
+		.then((data) => data.json())
+		.then(function () {
 			// Success, nothing else happens here
-			console.log("Image download successsfully triggered at Unsplash.");
+			console.log('Image download successsfully triggered at Unsplash.');
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			console.warn(error);
 		});
 }

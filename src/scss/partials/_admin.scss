@@ -317,10 +317,13 @@ body.media_page_instant-images {
 }
 .instant-img-container .form-table td {
 	border-top: 0;
-	padding: 0 0 10px;
+	padding: 0 0 15px;
 	float: left;
 	width: 100%;
 	margin: 0;
+	&:empty {
+		padding: 0;
+	}
 }
 .cnkt-sidebar .form-table .form-msg,
 .cnkt-main .form-msg {
@@ -369,7 +372,7 @@ body.media_page_instant-images {
 	padding-top: 5px;
 }
 .instant-img-container label {
-	padding: 5px 0;
+	padding: 5px 0 7px;
 }
 #unsplash-form-options h2,
 #unsplash-form-options p.desc {

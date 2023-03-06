@@ -1,26 +1,25 @@
-import classNames from "classnames";
-import Masonry from "masonry-layout";
-import API from "../constants/API";
-import FILTERS from "../constants/filters";
-import buildTestURL from "../functions/buildTestURL";
-import buildURL from "../functions/buildURL";
-import checkRateLimit from "../functions/checkRateLimit";
-import consoleStatus from "../functions/consoleStatus";
-import getQueryParams from "../functions/getQueryParams";
-import getResults, { getSearchTotal } from "../functions/getResults";
-import isObjectEmpty from "../functions/isObjectEmpty";
-import APILightbox from "./APILightbox";
-import ErrorLightbox from "./ErrorLightbox";
-import Filter from "./Filter";
-import LoadingBlock from "./LoadingBlock";
-import LoadMore from "./LoadMore";
-import NoResults from "./NoResults";
-import Photo from "./Photo";
-import RestAPIError from "./RestAPIError";
-import ResultsToolTip from "./ResultsToolTip";
-import Sponsor from "./Sponsor";
-import Tooltip from "./Tooltip";
-const imagesLoaded = require("imagesloaded");
+import classNames from 'classnames';
+import Masonry from 'masonry-layout';
+import API from '../constants/API';
+import FILTERS from '../constants/filters';
+import buildURL, { buildTestURL } from '../functions/buildURL';
+import { checkRateLimit } from '../functions/helpers';
+import consoleStatus from '../functions/consoleStatus';
+import getQueryParams from '../functions/getQueryParams';
+import getResults, { getSearchTotal } from '../functions/getResults';
+import { isObjectEmpty } from '../functions/helpers';
+import APILightbox from './APILightbox';
+import ErrorLightbox from './ErrorLightbox';
+import Filter from './Filter';
+import LoadingBlock from './LoadingBlock';
+import LoadMore from './LoadMore';
+import NoResults from './NoResults';
+import Photo from './Photo';
+import RestAPIError from './RestAPIError';
+import ResultsToolTip from './ResultsToolTip';
+import Sponsor from './Sponsor';
+import Tooltip from './Tooltip';
+const imagesLoaded = require('imagesloaded');
 
 class PhotoList extends React.Component {
 	constructor(props) {
@@ -58,14 +57,14 @@ class PhotoList extends React.Component {
 		this.page = this.props.page; // Page
 
 		this.is_search = false;
-		this.search_term = "";
+		this.search_term = '';
 		this.total_results = 0;
-		this.view = "";
+		this.view = '';
 		this.isLoading = false; // Loading flag.
 		this.isDone = false; // Done flag.
-		this.errorMsg = "";
-		this.msnry = "";
-		this.tooltipInterval = "";
+		this.errorMsg = '';
+		this.msnry = '';
+		this.tooltipInterval = '';
 		this.delay = 250;
 
 		// Refs.
@@ -77,26 +76,22 @@ class PhotoList extends React.Component {
 		this.filterRef = [];
 
 		// Editor props.
-		this.editor = this.props.editor ? this.props.editor : "classic";
-		this.is_block_editor = this.props.editor === "gutenberg" ? true : false;
-		this.is_media_router = this.props.editor === "media-router" ? true : false;
-		this.SetFeaturedImage = this.props.SetFeaturedImage
-			? this.props.SetFeaturedImage.bind(this)
-			: "";
-		this.InsertImage = this.props.InsertImage
-			? this.props.InsertImage.bind(this)
-			: "";
+		this.editor = this.props.editor ? this.props.editor : 'classic';
+		this.is_block_editor = this.props.editor === 'gutenberg' ? true : false;
+		this.is_media_router = this.props.editor === 'media-router' ? true : false;
+		this.SetFeaturedImage = this.props.SetFeaturedImage ? this.props.SetFeaturedImage.bind(this) : '';
+		this.InsertImage = this.props.InsertImage ? this.props.InsertImage.bind(this) : '';
 
 		if (this.is_block_editor) {
 			// Gutenberg Sidebar Only
-			this.container = document.querySelector("body");
-			this.container.classList.add("loading");
-			this.wrapper = document.querySelector("body");
+			this.container = document.querySelector('body');
+			this.container.classList.add('loading');
+			this.wrapper = document.querySelector('body');
 		} else {
 			// Post Edit Screens and Plugin Screen
-			this.container = this.props.container.closest(".instant-img-container");
-			this.wrapper = this.props.container.closest(".instant-images-wrapper");
-			this.container.classList.add("loading");
+			this.container = this.props.container.closest('.instant-img-container');
+			this.wrapper = this.props.container.closest('.instant-images-wrapper');
+			this.container.classList.add('loading');
 		}
 
 		this.escFunction = this.escFunction.bind(this);
@@ -126,7 +121,7 @@ class PhotoList extends React.Component {
 		this.resetFilters();
 
 		if (term.length > 2) {
-			input.classList.add("searching");
+			input.classList.add('searching');
 			this.search_term = term;
 			this.search_filters = {};
 			this.is_search = true;
@@ -142,10 +137,10 @@ class PhotoList extends React.Component {
 	 * @since 3.0
 	 */
 	clearSearch() {
-		this.photoSearch.current.value = "";
+		this.photoSearch.current.value = '';
 		this.total_results = 0;
 		this.is_search = false;
-		this.search_term = "";
+		this.search_term = '';
 		this.search_filters = {}; // Reset search filters.
 		this.toggleFilters(); // Re-enable filters.
 	}
@@ -160,7 +155,7 @@ class PhotoList extends React.Component {
 	controlsClick(e, view) {
 		const target = e.currentTarget;
 		this.view = view;
-		if (!target.classList.contains("active")) {
+		if (!target.classList.contains('active')) {
 			this.getPhotos(view);
 		}
 	}
@@ -173,22 +168,22 @@ class PhotoList extends React.Component {
 	 */
 	async doSearch(term) {
 		const self = this;
-		const search_type = term.substring(0, 3) === "id:" ? "id" : "term";
+		const search_type = term.substring(0, 3) === 'id:' ? 'id' : 'term';
 		const input = this.photoSearch.current;
 		const photoTarget = this.photoTarget.current;
 
 		// Set loading variables and options.
-		photoTarget.classList.add("loading");
+		photoTarget.classList.add('loading');
 		this.isLoading = true;
 		this.page = 1; // Reset current page num.
 		this.toggleFilters(); // Disable filters.
 
 		// Get search query.
 		let search_query = {};
-		if (search_type === "id") {
+		if (search_type === 'id') {
 			this.show_search_filters = false;
 			search_query = {
-				id: this.search_term.replace("id:", "").replace(/\s+/, ""),
+				id: this.search_term.replace('id:', '').replace(/\s+/, ''),
 			};
 		} else {
 			this.show_search_filters = true;
@@ -204,7 +199,7 @@ class PhotoList extends React.Component {
 			...this.search_filters,
 		};
 		const params = getQueryParams(this.provider, search_params);
-		const url = buildURL("search", params);
+		const url = buildURL('search', params);
 
 		// Create fetch request.
 		const response = await fetch(url);
@@ -222,10 +217,7 @@ class PhotoList extends React.Component {
 			this.checkTotalResults(results.length);
 
 			// Hide search filters if no results and not filtering.
-			this.show_search_filters =
-				this.total_results < 2 && isObjectEmpty(this.search_filters)
-					? false
-					: true;
+			this.show_search_filters = this.total_results < 2 && isObjectEmpty(this.search_filters) ? false : true;
 
 			// Update Props.
 			this.results = results;
@@ -236,8 +228,8 @@ class PhotoList extends React.Component {
 
 			// Delay for effect.
 			setTimeout(function () {
-				input.classList.remove("searching");
-				photoTarget.classList.remove("loading");
+				input.classList.remove('searching');
+				photoTarget.classList.remove('loading');
 				self.isLoading = false;
 			}, this.delay);
 		} catch (error) {
@@ -246,8 +238,8 @@ class PhotoList extends React.Component {
 			this.isLoading = false;
 			this.show_search_filters = false;
 			this.total_results = 0;
-			input.classList.remove("searching");
-			photoTarget.classList.remove("loading");
+			input.classList.remove('searching');
+			photoTarget.classList.remove('loading');
 
 			// Update Props.
 			this.results = [];
@@ -270,7 +262,7 @@ class PhotoList extends React.Component {
 		}
 
 		const self = this;
-		this.photoTarget.current.classList.add("loading");
+		this.photoTarget.current.classList.add('loading');
 		this.isLoading = true;
 		this.page = 1;
 		this.orderby = view;
@@ -279,7 +271,7 @@ class PhotoList extends React.Component {
 
 		// Build URL.
 		const params = getQueryParams(this.provider, this.filters);
-		const url = buildURL("photos", params);
+		const url = buildURL('photos', params);
 
 		// Create fetch request.
 		const response = await fetch(url);
@@ -310,13 +302,13 @@ class PhotoList extends React.Component {
 			}
 		} catch (error) {
 			consoleStatus(this.provider, status);
-			this.photoTarget.current.classList.remove("loading");
+			this.photoTarget.current.classList.remove('loading');
 			this.isLoading = false;
 		}
 
 		// Delay loading animatons for effect.
 		setTimeout(function () {
-			self.photoTarget.current.classList.remove("loading");
+			self.photoTarget.current.classList.remove('loading');
 			self.isLoading = false;
 		}, self.delay);
 	}
@@ -328,7 +320,7 @@ class PhotoList extends React.Component {
 	 */
 	async loadMorePhotos() {
 		const self = this;
-		this.container.classList.add("loading");
+		this.container.classList.add('loading');
 		this.isLoading = true;
 		this.page = parseInt(this.page) + 1;
 
@@ -341,7 +333,7 @@ class PhotoList extends React.Component {
 		}
 
 		// Build URL.
-		const type = this.is_search ? "search" : "photos";
+		const type = this.is_search ? 'search' : 'photos';
 		const filters = this.is_search ? this.search_filters : this.filters;
 		const loadmore_params = {
 			...{ page: this.page },
@@ -384,11 +376,7 @@ class PhotoList extends React.Component {
 	 * @param {string} value  The value to filter.
 	 */
 	filterPhotos(filter, value) {
-		if (
-			(this.filters[filter] && value === "#") ||
-			value === "" ||
-			value === "all"
-		) {
+		if ((this.filters[filter] && value === '#') || value === '' || value === 'all') {
 			delete this.filters[filter];
 		} else {
 			this.filters[filter] = value;
@@ -403,11 +391,7 @@ class PhotoList extends React.Component {
 	 * @param {string} value  The value to filter.
 	 */
 	filterSearch(filter, value) {
-		if (
-			(this.search_filters[filter] && value === "#") ||
-			value === "" ||
-			value === "all"
-		) {
+		if ((this.search_filters[filter] && value === '#') || value === '' || value === 'all') {
 			delete this.search_filters[filter];
 		} else {
 			this.search_filters[filter] = value;
@@ -419,18 +403,16 @@ class PhotoList extends React.Component {
 	 * Toggle the active state of all filters.
 	 */
 	toggleFilters() {
-		const filters = this.filterGroups.current.querySelectorAll(
-			"button.filter-dropdown--button"
-		);
+		const filters = this.filterGroups.current.querySelectorAll('button.filter-dropdown--button');
 		if (filters) {
 			filters.forEach((button) => {
 				button.disabled = this.is_search ? true : false;
 			});
 		}
 		if (this.is_search) {
-			this.filterGroups.current.classList.add("inactive");
+			this.filterGroups.current.classList.add('inactive');
 		} else {
-			this.filterGroups.current.classList.remove("inactive");
+			this.filterGroups.current.classList.remove('inactive');
 		}
 	}
 
@@ -441,14 +423,12 @@ class PhotoList extends React.Component {
 	 * @since 4.5
 	 */
 	afterVerifiedAPICallback(provider) {
-		const button = this.providerNav.current.querySelector(
-			`button[data-provider=${provider}]`
-		);
+		const button = this.providerNav.current.querySelector(`button[data-provider=${provider}]`);
 		if (!button) {
 			return;
 		}
 		this.setState({ api_lightbox: false }); // Close the lightbox.
-		document.body.classList.remove("overflow-hidden");
+		document.body.classList.remove('overflow-hidden');
 		button.click();
 	}
 
@@ -459,12 +439,10 @@ class PhotoList extends React.Component {
 	 */
 	closeAPILightbox(provider) {
 		this.setState({ api_lightbox: false }); // Close the lightbox.
-		document.body.classList.remove("overflow-hidden");
+		document.body.classList.remove('overflow-hidden');
 
 		// Set focus on previous provider button.
-		const target = this.providerNav.current.querySelector(
-			`button[data-provider=${provider}]`
-		);
+		const target = this.providerNav.current.querySelector(`button[data-provider=${provider}]`);
 		if (target) {
 			target.focus({ preventScroll: true });
 		}
@@ -496,24 +474,24 @@ class PhotoList extends React.Component {
 				if (status !== 200) {
 					// Catch API errors and 401s.
 					self.setState({ api_lightbox: provider }); // Show API Lightbox.
-					document.body.classList.add("overflow-hidden");
+					document.body.classList.add('overflow-hidden');
 					return;
 				}
 			} catch (error) {
 				// Catch all other errors.
 				self.setState({ api_lightbox: provider }); // Show API Lightbox.
-				document.body.classList.add("overflow-hidden");
+				document.body.classList.add('overflow-hidden');
 				return;
 			}
 		}
 
 		// Remove active from buttons.
-		this.providerNav.current.querySelectorAll("button").forEach((button) => {
-			button.classList.remove("active");
+		this.providerNav.current.querySelectorAll('button').forEach((button) => {
+			button.classList.remove('active');
 		});
 
 		// Select active button.
-		target.classList.add("active");
+		target.classList.add('active');
 
 		// Update API provider params.
 		this.provider = provider;
@@ -527,7 +505,7 @@ class PhotoList extends React.Component {
 		this.search_filters = {};
 
 		// Finally, fetch the photos.
-		this.view = "latest";
+		this.view = 'latest';
 		this.getPhotos(this.view, true, true);
 	}
 
@@ -544,10 +522,10 @@ class PhotoList extends React.Component {
 		const photoListWrapper = self.photoTarget.current;
 		imagesLoaded(photoListWrapper, function () {
 			self.msnry = new Masonry(photoListWrapper, {
-				itemSelector: ".photo",
+				itemSelector: '.photo',
 			});
-			self.photoTarget.current.querySelectorAll(".photo").forEach((el) => {
-				el.classList.add("in-view");
+			self.photoTarget.current.querySelectorAll('.photo').forEach((el) => {
+				el.classList.add('in-view');
 			});
 		});
 	}
@@ -585,7 +563,7 @@ class PhotoList extends React.Component {
 		const self = this;
 		setTimeout(function () {
 			self.isLoading = false;
-			self.container.classList.remove("loading");
+			self.container.classList.remove('loading');
 		}, self.delay);
 	}
 
@@ -601,13 +579,13 @@ class PhotoList extends React.Component {
 		const rect = target.getBoundingClientRect();
 		let left = Math.round(rect.left);
 		const top = Math.round(rect.top);
-		const tooltip = this.container.querySelector("#tooltip");
-		tooltip.classList.remove("over");
+		const tooltip = this.container.querySelector('#tooltip');
+		tooltip.classList.remove('over');
 
-		if (target.classList.contains("tooltip--above")) {
-			tooltip.classList.add("above");
+		if (target.classList.contains('tooltip--above')) {
+			tooltip.classList.add('above');
 		} else {
-			tooltip.classList.remove("above");
+			tooltip.classList.remove('above');
 		}
 
 		// Delay Tooltip Reveal.
@@ -621,7 +599,7 @@ class PhotoList extends React.Component {
 			tooltip.style.top = `${top}px`;
 
 			setTimeout(function () {
-				tooltip.classList.add("over");
+				tooltip.classList.add('over');
 			}, self.delay);
 		}, 750);
 	}
@@ -633,8 +611,8 @@ class PhotoList extends React.Component {
 	 */
 	hideTooltip() {
 		clearInterval(this.tooltipInterval);
-		const tooltip = this.container.querySelector("#tooltip");
-		tooltip.classList.remove("over");
+		const tooltip = this.container.querySelector('#tooltip');
+		tooltip.classList.remove('over');
 	}
 
 	/**
@@ -644,11 +622,11 @@ class PhotoList extends React.Component {
 	 */
 	test() {
 		const self = this;
-		const testURL = instant_img_localize.root + "instant-images/test/"; // REST Route
+		const testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route
 		const restAPITest = new XMLHttpRequest();
-		restAPITest.open("POST", testURL, true);
-		restAPITest.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
-		restAPITest.setRequestHeader("Content-Type", "application/json");
+		restAPITest.open('POST', testURL, true);
+		restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
+		restAPITest.setRequestHeader('Content-Type', 'application/json');
 		restAPITest.send();
 		restAPITest.onload = function () {
 			if (restAPITest.status >= 200 && restAPITest.status < 400) {
@@ -675,13 +653,11 @@ class PhotoList extends React.Component {
 	 */
 	escFunction(e) {
 		const { key } = e;
-		if (key === "Escape") {
-			const editing = this.photoTarget.current.querySelectorAll(
-				".edit-screen.editing"
-			);
+		if (key === 'Escape') {
+			const editing = this.photoTarget.current.querySelectorAll('.edit-screen.editing');
 			if (editing) {
 				[...editing].forEach((element) => {
-					element && element.classList.remove("editing");
+					element && element.classList.remove('editing');
 				});
 			}
 		}
@@ -698,16 +674,16 @@ class PhotoList extends React.Component {
 		this.renderLayout();
 		this.doneLoading();
 		this.test();
-		this.container.classList.remove("loading");
-		this.wrapper.classList.add("loaded");
+		this.container.classList.remove('loading');
+		this.wrapper.classList.add('loaded');
 
 		// Not Gutenberg and Media Popup add scroll listener.
 		if (!this.is_block_editor && !this.is_media_router) {
-			window.addEventListener("scroll", () => this.onScroll());
+			window.addEventListener('scroll', () => this.onScroll());
 		}
 
 		// Add escape listener.
-		document.addEventListener("keydown", this.escFunction, false);
+		document.addEventListener('keydown', this.escFunction, false);
 	}
 
 	render() {
@@ -720,18 +696,10 @@ class PhotoList extends React.Component {
 								<button
 									data-provider={provider.toLowerCase()}
 									onClick={(e) => this.switchProvider(e)}
-									className={
-										this.provider === provider.toLowerCase()
-											? "provider-nav--btn active"
-											: "provider-nav--btn"
-									}
+									className={this.provider === provider.toLowerCase() ? 'provider-nav--btn active' : 'provider-nav--btn'}
 								>
 									<span>{provider}</span>
-									{API[provider.toLowerCase()].new && (
-										<span className="provider-nav--new">
-											{instant_img_localize.new}
-										</span>
-									)}
+									{API[provider.toLowerCase()].new && <span className="provider-nav--new">{instant_img_localize.new}</span>}
 								</button>
 							</div>
 						))}
@@ -747,52 +715,23 @@ class PhotoList extends React.Component {
 				)}
 
 				<div className="control-nav" ref={this.controlNav}>
-					<div
-						className={classNames(
-							"control-nav--filters-wrap",
-							this.api_error ? "inactive" : null
-						)}
-						ref={this.filterGroups}
-					>
+					<div className={classNames('control-nav--filters-wrap', this.api_error ? 'inactive' : null)} ref={this.filterGroups}>
 						{Object.entries(this.state.filters).length ? (
 							<div className="control-nav--filters">
 								{Object.entries(this.state.filters).map(([key, filter], i) => (
-									<Filter
-										key={`${key}-${this.provider}-${i}`}
-										filterKey={key}
-										provider={this.provider}
-										data={filter}
-										function={this.filterPhotos.bind(this)}
-									/>
+									<Filter key={`${key}-${this.provider}-${i}`} filterKey={key} provider={this.provider} data={filter} function={this.filterPhotos.bind(this)} />
 								))}
 							</div>
 						) : null}
 					</div>
 
-					<div
-						className={classNames(
-							"control-nav--search",
-							"search-field",
-							this.api_error ? "inactive" : null
-						)}
-						id="search-bar"
-					>
+					<div className={classNames('control-nav--search', 'search-field', this.api_error ? 'inactive' : null)} id="search-bar">
 						<form onSubmit={(e) => this.search(e)} autoComplete="off">
 							<label htmlFor="photo-search" className="offscreen">
 								{instant_img_localize.search_label}
 							</label>
-							<input
-								type="search"
-								id="photo-search"
-								placeholder={instant_img_localize.search}
-								ref={this.photoSearch}
-								disabled={this.api_error}
-							/>
-							<button
-								type="submit"
-								id="photo-search-submit"
-								disabled={this.api_error}
-							>
+							<input type="search" id="photo-search" placeholder={instant_img_localize.search} ref={this.photoSearch} disabled={this.api_error} />
+							<button type="submit" id="photo-search-submit" disabled={this.api_error}>
 								<i className="fa fa-search"></i>
 							</button>
 							<ResultsToolTip
@@ -806,59 +745,42 @@ class PhotoList extends React.Component {
 					</div>
 				</div>
 
-				{this.state.restapi_error && (
-					<RestAPIError
-						title={instant_img_localize.error_restapi}
-						desc={instant_img_localize.error_restapi_desc}
-						type="warning"
-					/>
-				)}
+				{this.state.restapi_error && <RestAPIError title={instant_img_localize.error_restapi} desc={instant_img_localize.error_restapi_desc} type="warning" />}
 
-				{this.is_search && this.editor !== "gutenberg" && (
+				{this.is_search && this.editor !== 'gutenberg' && (
 					<div className="search-results-header">
-						<h2>{this.search_term.replace("id:", "ID: ")}</h2>
+						<h2>{this.search_term.replace('id:', 'ID: ')}</h2>
 						<div className="search-results-header--text">
-							{`${this.total_results} ${instant_img_localize.search_results}`}{" "}
-							<strong>{`${this.search_term}`}</strong>
-							{" - "}
-							<button
-								title={instant_img_localize.clear_search}
-								onClick={() => this.getPhotos("latest")}
-							>
+							{`${this.total_results} ${instant_img_localize.search_results}`} <strong>{`${this.search_term}`}</strong>
+							{' - '}
+							<button title={instant_img_localize.clear_search} onClick={() => this.getPhotos('latest')}>
 								{instant_img_localize.clear_search}
 							</button>
 						</div>
-						{this.show_search_filters &&
-							Object.entries(this.state.search_filters).length && (
-								<div className="control-nav--filters-wrap">
-									<div className="control-nav--filters">
-										{Object.entries(this.state.search_filters).map(
-											([key, filter], index) => (
-												<Filter
-													ref={(ref) => (this.filterRef[index] = ref)}
-													key={`${key}-${index}`}
-													filterKey={key}
-													provider={this.provider}
-													data={filter}
-													function={this.filterSearch.bind(this)}
-												/>
-											)
-										)}
-									</div>
+						{this.show_search_filters && Object.entries(this.state.search_filters).length && (
+							<div className="control-nav--filters-wrap">
+								<div className="control-nav--filters">
+									{Object.entries(this.state.search_filters).map(([key, filter], index) => (
+										<Filter
+											ref={(ref) => (this.filterRef[index] = ref)}
+											key={`${key}-${index}`}
+											filterKey={key}
+											provider={this.provider}
+											data={filter}
+											function={this.filterSearch.bind(this)}
+										/>
+									))}
 								</div>
-							)}
+							</div>
+						)}
 					</div>
 				)}
 
 				<div id="photos" className="photo-target" ref={this.photoTarget}>
 					{this.state.results.length
 						? this.state.results.map((result, iterator) => (
-								<React.Fragment
-									key={`${this.provider}-${result.id}-${iterator}`}
-								>
-									{result &&
-									result.type &&
-									result.type === "instant-images-ad" ? (
+								<React.Fragment key={`${this.provider}-${result.id}-${iterator}`}>
+									{result && result.type && result.type === 'instant-images-ad' ? (
 										<Sponsor result={result} />
 									) : (
 										<Photo
@@ -877,9 +799,7 @@ class PhotoList extends React.Component {
 						  ))
 						: null}
 				</div>
-				{this.total_results < 1 && this.is_search === true && (
-					<NoResults total={this.total_results} is_search={this.is_search} />
-				)}
+				{this.total_results < 1 && this.is_search === true && <NoResults total={this.total_results} is_search={this.is_search} />}
 				<LoadingBlock />
 				<LoadMore loadMorePhotos={this.loadMorePhotos.bind(this)} />
 				<ErrorLightbox error={this.api_error} provider={this.provider} />

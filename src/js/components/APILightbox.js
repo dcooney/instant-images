@@ -1,60 +1,53 @@
-import classNames from "classnames";
-import FocusTrap from "focus-trap-react";
-import buildTestURL from "../functions/buildTestURL";
-import checkRateLimit from "../functions/checkRateLimit";
-import consoleStatus from "../functions/consoleStatus";
-import updatePluginSetting from "../functions/updatePluginSetting";
+import { createRef, useEffect, useState } from '@wordpress/element';
+import classNames from 'classnames';
+import FocusTrap from 'focus-trap-react';
+import { buildTestURL } from '../functions/buildURL';
+import consoleStatus from '../functions/consoleStatus';
+import { checkRateLimit } from '../functions/helpers';
+import updatePluginSetting from '../functions/updatePluginSetting';
 
-class APILightbox extends React.Component {
-	constructor(props) {
-		super(props);
-		this.lightbox = React.createRef();
-		this.provider = this.props.provider;
-		this.api_key = instant_img_localize[`${this.provider}_app_id`];
-		this.inputRef = React.createRef();
-		this.submitRef = React.createRef();
-		this.loading = false;
-		this.state = { status: "invalid", response: "" };
-		this.afterVerifiedAPICallback =
-			this.props.afterVerifiedAPICallback.bind(this);
-		this.closeAPILightbox = this.props.closeAPILightbox.bind(this);
-		this.escFunction = this.escFunction.bind(this);
-	}
+/**
+ * Render the APILightbox component.
+ * Note: Component is display when switching providers and the API is invalid.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The APILightbox component.
+ */
+export default function APILightbox(props) {
+	const { provider, afterVerifiedAPICallback, closeAPILightbox } = props;
+	const [apiStatus, setAPIStatus] = useState('invalid');
+	const [response, setResponse] = useState('');
+
+	const lightbox = createRef();
+	const inputRef = createRef();
+	const submitRef = createRef();
+	const api_key = instant_img_localize[`${provider}_app_id`];
+	const title = apiStatus === 'invalid' ? instant_img_localize.api_key_invalid : '';
 
 	/**
 	 * Handler for the form submission.
 	 *
 	 * @param {Event} e The form event.
 	 */
-	async handleSubmit(e) {
+	async function handleSubmit(e) {
 		e.preventDefault();
-		const self = this;
+		setAPIStatus('loading');
 
-		this.setState({ status: "loading" });
-
-		let key = this.inputRef.current.value;
-		const updateKey = key;
-		if (!key) {
-			key = instant_img_localize[`${this.provider}_default_app_id`];
-		}
-
-		// Set localized variable.
-		instant_img_localize[`${this.provider}_app_id`] = key;
+		const key = inputRef?.current?.value; // Get API key value.
+		instant_img_localize[`${provider}_app_id`] = key; // Set API key to localized variable.
 
 		// Update the matching provider API key in the Instant Images settings.
-		const settingField = document.querySelector(
-			`input[name="instant_img_settings[${this.provider}_api]"]`
-		);
+		const settingField = document.querySelector(`input[name="instant_img_settings[${provider}_api]"]`);
 		if (settingField) {
-			settingField.value = updateKey;
+			settingField.value = key;
 		}
 
 		// Update plugin settings via REST API.
-		updatePluginSetting(`${this.provider}_api`, updateKey);
+		updatePluginSetting(`${provider}_api`, key);
 
 		try {
 			// Fetch API data.
-			const response = await fetch(buildTestURL(self.provider));
+			const response = await fetch(buildTestURL(provider));
 
 			// Handle response.
 			const { ok, status, headers } = response;
@@ -63,56 +56,38 @@ class APILightbox extends React.Component {
 			// Handle response actions.
 			if (ok) {
 				// Success.
-				self.setState({
-					status: "valid",
-					response: instant_img_localize.api_success_msg,
-				});
+				setAPIStatus('valid');
+				setResponse(instant_img_localize.api_success_msg);
 				setTimeout(function () {
-					self.afterVerifiedAPICallback(self.provider);
+					afterVerifiedAPICallback(provider);
 				}, 1500);
 			} else {
-				// Error/Invalid.
-				this.setState({ status: "invalid" });
+				setAPIStatus('invalid'); // Error/Invalid.
 
-				// Render console warning.
-				consoleStatus(self.provider, status);
+				consoleStatus(provider, status); // Render console warning.
 
-				// Set response state.
 				if (status === 400 || status === 401) {
-					// Unsplash/Pixabay incorrect API key.
-					self.setState({
-						response: instant_img_localize.api_invalid_msg,
-					});
+					setResponse(instant_img_localize.api_invalid_msg); // Unsplash/Pixabay incorrect API key.
 				}
 				if (status === 429) {
-					// Pixabay - too many requests.
-					self.setState({
-						response: instant_img_localize.api_ratelimit_msg,
-					});
+					setResponse(instant_img_localize.api_ratelimit_msg); // Pixabay - too many requests.
 				}
 			}
 		} catch (error) {
-			// Error/Invalid.
-			this.setState({ status: "invalid" });
-
-			// Render console warning.
-			consoleStatus(self.provider, 500);
-
-			self.setState({
-				response: instant_img_localize.api_invalid_500_msg,
-			});
+			setAPIStatus('invalid'); // Error/Invalid.
+			consoleStatus(provider, 500); // Render console warning.
+			setResponse(instant_img_localize.api_invalid_500_msg);
 		}
 	}
 
 	/**
 	 * Close the lightbox
 	 */
-	closeLightbox() {
-		const self = this;
-		if (self.lightbox.current) {
-			this.lightbox.current.classList.remove("active");
+	function closeLightbox() {
+		if (lightbox?.current) {
+			lightbox.current.classList.remove('active');
 			setTimeout(function () {
-				self.closeAPILightbox(this.provider);
+				closeAPILightbox(provider);
 			}, 250);
 		}
 	}
@@ -120,11 +95,11 @@ class APILightbox extends React.Component {
 	/**
 	 * Close the lightbox with a background click.
 	 */
-	bkgClick(e) {
+	function bkgClick(e) {
 		const target = e.target;
 		// If clicked element is the background.
-		if (target === this.lightbox.current) {
-			this.closeLightbox();
+		if (target === lightbox?.current) {
+			closeLightbox();
 		}
 	}
 
@@ -133,10 +108,10 @@ class APILightbox extends React.Component {
 	 *
 	 * @param {Event} e The key press event.
 	 */
-	escFunction(e) {
+	function escFunction(e) {
 		const { key } = e;
-		if (key === "Escape") {
-			this.closeLightbox();
+		if (key === 'Escape') {
+			closeLightbox();
 		}
 	}
 
@@ -145,119 +120,66 @@ class APILightbox extends React.Component {
 	 *
 	 * @param {string} url The destination URL.
 	 */
-	gotoURL(url) {
-		window.open(url, "_blank");
+	function gotoURL(url) {
+		window.open(url, '_blank');
 	}
 
 	/**
 	 * Reset the key to use Instant Images default.
 	 */
-	useDefaultKey() {
-		this.inputRef.current.value = "";
-		this.submitRef.current.click();
+	function useDefaultKey() {
+		inputRef.current.value = '';
+		setTimeout(function () {
+			submitRef.current.click();
+		}, 25);
 	}
 
-	componentDidMount() {
-		document.addEventListener("keydown", this.escFunction, false);
-		this.lightbox.current.classList.add("active");
-	}
+	useEffect(() => {
+		document.addEventListener('keydown', escFunction, false);
+		lightbox.current.classList.add('active');
+		return () => {
+			document.removeEventListener('keydown', escFunction, false);
+		};
+	}, []);
 
-	componentWillUnmount() {
-		document.removeEventListener("keydown", this.escFunction, false);
-	}
-
-	render() {
-		const title =
-			this.state.status === "invalid"
-				? instant_img_localize.api_key_invalid
-				: "";
-		return (
-			<FocusTrap>
-				<div
-					className="api-lightbox"
-					ref={this.lightbox}
-					onClick={(e) => this.bkgClick(e)}
-					tabIndex="-1"
-				>
+	return (
+		<FocusTrap>
+			<div className="api-lightbox" ref={lightbox} onClick={(e) => bkgClick(e)} tabIndex="-1">
+				<div>
 					<div>
-						<div>
-							<button
-								className="api-lightbox--close"
-								onClick={() => this.closeLightbox()}
-							>
-								&times;
-								<span className="offscreen">
-									{instant_img_localize.btnClose}
-								</span>
-							</button>
-							<div className="api-lightbox--details">
-								<h3 data-provider={this.provider}>{this.provider}</h3>
-								<p>{instant_img_localize[`${this.provider}_api_desc`]}</p>
-								<p className="action-controls">
-									<button
-										onClick={() =>
-											this.gotoURL(
-												instant_img_localize[`${this.provider}_api_url`]
-											)
-										}
-									>
-										{instant_img_localize.get_api_key}
-									</button>
-									<span>|</span>
-									<button onClick={() => this.useDefaultKey()}>
-										{instant_img_localize.use_instant_images_key}
-									</button>
-								</p>
-							</div>
-							<form onSubmit={(e) => this.handleSubmit(e)}>
-								<label htmlFor="key" className="offscreen">
-									{instant_img_localize.enter_api_key}
-								</label>
-								<div className="api-lightbox--input-wrap">
-									<span className={this.state.status} title={title && title}>
-										{this.state.status === "invalid" && (
-											<i
-												className="fa fa-exclamation-triangle"
-												aria-hidden="true"
-											></i>
-										)}
-										{this.state.status === "valid" && (
-											<i className="fa fa-check-circle" aria-hidden="true"></i>
-										)}
-										{this.state.status === "loading" && (
-											<i
-												className="fa fa-spinner fa-spin"
-												aria-hidden="true"
-											></i>
-										)}
-									</span>
-									<input
-										type="text"
-										id="key"
-										ref={this.inputRef}
-										placeholder="Enter API Key"
-										defaultValue={this.api_key}
-									></input>
-								</div>
-								{this.state.response && (
-									<p
-										className={classNames(
-											"api-lightbox--response",
-											this.state.status
-										)}
-									>
-										{this.state.response}
-									</p>
-								)}
-								<button type="submit" ref={this.submitRef}>
-									{instant_img_localize.btnVerify}
-								</button>
-							</form>
+						<button className="api-lightbox--close" onClick={() => closeLightbox()}>
+							&times;
+							<span className="offscreen">{instant_img_localize.btnClose}</span>
+						</button>
+						<div className="api-lightbox--details">
+							<h3 data-provider={provider}>{provider}</h3>
+							<p>{instant_img_localize[`${provider}_api_desc`]}</p>
+							<p className="action-controls">
+								<button onClick={() => gotoURL(instant_img_localize[`${provider}_api_url`])}>{instant_img_localize.get_api_key}</button>
+								<span>|</span>
+								<button onClick={() => useDefaultKey()}>{instant_img_localize.use_instant_images_key}</button>
+							</p>
 						</div>
+						<form onSubmit={(e) => handleSubmit(e)}>
+							<label htmlFor="key" className="offscreen">
+								{instant_img_localize.enter_api_key}
+							</label>
+							<div className="api-lightbox--input-wrap">
+								<span className={apiStatus} title={title && title}>
+									{apiStatus === 'invalid' && <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>}
+									{apiStatus === 'valid' && <i className="fa fa-check-circle" aria-hidden="true"></i>}
+									{apiStatus === 'loading' && <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>}
+								</span>
+								<input type="text" id="key" ref={inputRef} placeholder="Enter API Key" defaultValue={api_key}></input>
+							</div>
+							{response && <p className={classNames('api-lightbox--response', apiStatus)}>{response}</p>}
+							<button type="submit" ref={submitRef}>
+								{instant_img_localize.btnVerify}
+							</button>
+						</form>
 					</div>
 				</div>
-			</FocusTrap>
-		);
-	}
+			</div>
+		</FocusTrap>
+	);
 }
-export default APILightbox;

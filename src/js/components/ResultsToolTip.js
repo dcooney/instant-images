@@ -1,25 +1,17 @@
-class ResultsToolTip extends React.Component {
-	constructor(props) {
-		super(props);
-		this.getPhotos = this.props.getPhotos.bind(this);
-	}
-
-	render() {
-		return (
-			<div
-				className={this.props.isSearch ? "searchResults" : "searchResults hide"}
-			>
-				<span title={this.props.title}>{this.props.total}</span>
-				<button
-					type="button"
-					title={instant_img_localize.clear_search}
-					onClick={() => this.getPhotos("latest")}
-				>
-					x
-					<span className="offscreen">{instant_img_localize.clear_search}</span>
-				</button>
-			</div>
-		);
-	}
+/**
+ * Render the ResultsToolTip component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The ResultsToolTip component.
+ */
+export default function ResultsToolTip(props) {
+	const { isSearch, title, total, getPhotos } = props;
+	return (
+		<div className={isSearch ? 'searchResults' : 'searchResults hide'}>
+			<span title={title}>{total}</span>
+			<button type="button" title={instant_img_localize.clear_search} onClick={() => getPhotos('latest')}>
+				x<span className="offscreen">{instant_img_localize.clear_search}</span>
+			</button>
+		</div>
+	);
 }
-export default ResultsToolTip;

@@ -147,7 +147,7 @@ function instant_images_width_callback() {
 		$options['unsplash_download_w'] = '1600';
 	}
 
-	echo '<label for="instant_img_settings[unsplash_download_w]"><strong>' . esc_attr__( 'Max Image Upload Width:', 'instant-images' ) . '</strong></label>';
+	echo '<label for="instant_img_settings[unsplash_download_w]"><strong>' . esc_attr__( 'Max Image Upload Width', 'instant-images' ) . '</strong></label>';
 	echo '<input type="number" id="instant_img_settings[unsplash_download_w]" name="instant_img_settings[unsplash_download_w]" value="' . esc_attr( $options['unsplash_download_w'] ) . '" class="sm" step="20" max="4800" /> ';
 }
 
@@ -164,7 +164,7 @@ function instant_images_height_callback() {
 		$options['unsplash_download_h'] = '1200';
 	}
 
-	echo '<label for="instant_img_settings[unsplash_download_h]"><strong>' . esc_attr__( 'Max Image Upload Height:', 'instant-images' ) . '</strong></label>';
+	echo '<label for="instant_img_settings[unsplash_download_h]"><strong>' . esc_attr__( 'Max Image Upload Height', 'instant-images' ) . '</strong></label>';
 	echo '<input type="number" id="instant_img_settings[unsplash_download_h]" name="instant_img_settings[unsplash_download_h]" value="' . esc_attr( $options['unsplash_download_h'] ) . '" class="sm" step="20" max="4800" /> ';
 }
 
@@ -180,7 +180,7 @@ function instant_images_auto_attribution_callback() {
 		$options['auto_attribution'] = '0';
 	}
 
-	$html = '<label style="cursor: default;"><strong>' . esc_attr__( 'Image Attribution', 'instant-images' ) . '</strong></label>';
+	$html  = '<label style="cursor: default;"><strong>' . esc_attr__( 'Image Attribution', 'instant-images' ) . '</strong></label>';
 	$html .= '<label for="auto_attribution" class="cnkt-checkbox-wrap">';
 	$html .= '<input type="hidden" name="instant_img_settings[auto_attribution]" value="0" />';
 	$html .= '<input type="checkbox" name="instant_img_settings[auto_attribution]" id="auto_attribution" value="1"' . ( $options['auto_attribution'] ? ' checked="checked"' : '' ) . ' />';
@@ -204,7 +204,7 @@ function instant_images_tab_display_callback() {
 		$options['media_modal_display'] = '0';
 	}
 
-	$html = '<label style="cursor: default;"><strong>' . esc_attr__( 'Media Modal', 'instant-images' ) . '</strong></label>';
+	$html  = '<label style="cursor: default;"><strong>' . esc_attr__( 'Media Modal', 'instant-images' ) . '</strong></label>';
 	$html .= '<label for="media_modal_display" class="cnkt-checkbox-wrap">';
 	$html .= '<input type="hidden" name="instant_img_settings[media_modal_display]" value="0" />';
 	$html .= '<input type="checkbox" name="instant_img_settings[media_modal_display]" id="media_modal_display" value="1"' . ( $options['media_modal_display'] ? ' checked="checked"' : '' ) . ' />';
@@ -230,7 +230,7 @@ function instant_images_default_provider() {
 	}
 	?>
 	<label for="default_provider" style="cursor: default; margin-bottom: 3px;">
-		<strong><?php esc_attr_e( 'Default Provider:', 'instant-images' ); ?></strong>
+		<strong><?php esc_attr_e( 'Default Provider', 'instant-images' ); ?></strong>
 	</label>
 	<select id="default_provider" name="instant_img_settings[default_provider]">
 		<?php foreach ( $providers as $provider ) { ?>
