@@ -63,7 +63,6 @@ export default function APILightbox(props) {
 				}, 1500);
 			} else {
 				setAPIStatus('invalid'); // Error/Invalid.
-
 				consoleStatus(provider, status); // Render console warning.
 
 				if (status === 400 || status === 401) {
