@@ -1,4 +1,4 @@
-import { createRef, useEffect, useState } from '@wordpress/element';
+import { useRef, useEffect, useState } from '@wordpress/element';
 import classNames from 'classnames';
 import FocusTrap from 'focus-trap-react';
 import { buildTestURL } from '../functions/buildURL';
@@ -18,9 +18,9 @@ export default function APILightbox(props) {
 	const [apiStatus, setAPIStatus] = useState('invalid');
 	const [response, setResponse] = useState('');
 
-	const lightbox = createRef();
-	const inputRef = createRef();
-	const submitRef = createRef();
+	const lightbox = useRef();
+	const inputRef = useRef();
+	const submitRef = useRef();
 	const api_key = instant_img_localize[`${provider}_app_id`];
 	const title = apiStatus === 'invalid' ? instant_img_localize.api_key_invalid : '';
 

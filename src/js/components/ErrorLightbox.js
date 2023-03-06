@@ -1,4 +1,4 @@
-import { createRef, Fragment, useEffect } from '@wordpress/element';
+import { useRef, Fragment, useEffect } from '@wordpress/element';
 import classNames from 'classnames';
 import consoleStatus from '../functions/consoleStatus';
 import getErrorMessage from '../functions/getErrorMessage';
@@ -12,9 +12,8 @@ import getErrorMessage from '../functions/getErrorMessage';
  */
 export default function ErrorLightbox(props) {
 	const { error, provider } = props;
-	const lightbox = createRef();
+	const lightbox = useRef();
 	const status = error?.status ? error.status : null;
-	consoleStatus(provider, status);
 
 	/**
 	 * Close the lightbox

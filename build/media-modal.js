@@ -2530,9 +2530,9 @@ function APILightbox(props) {
     _useState4 = _slicedToArray(_useState3, 2),
     response = _useState4[0],
     setResponse = _useState4[1];
-  var lightbox = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRef)();
-  var inputRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRef)();
-  var submitRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRef)();
+  var lightbox = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var inputRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var submitRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var api_key = instant_img_localize["".concat(provider, "_app_id")];
   var title = apiStatus === 'invalid' ? instant_img_localize.api_key_invalid : '';
 
@@ -2586,7 +2586,6 @@ function APILightbox(props) {
               }, 1500);
             } else {
               setAPIStatus('invalid'); // Error/Invalid.
-
               (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_4__["default"])(provider, status); // Render console warning.
 
               if (status === 400 || status === 401) {
@@ -2767,9 +2766,8 @@ __webpack_require__.r(__webpack_exports__);
 function ErrorLightbox(props) {
   var error = props.error,
     provider = props.provider;
-  var lightbox = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRef)();
+  var lightbox = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var status = error !== null && error !== void 0 && error.status ? error.status : null;
-  (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_2__["default"])(provider, status);
 
   /**
    * Close the lightbox
@@ -2866,249 +2864,191 @@ function ErrorLightbox(props) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ Filter)
 /* harmony export */ });
-/* harmony import */ var a11yarrows__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! a11yarrows */ "./node_modules/a11yarrows/dist/a11yarrows.min.js");
-/* harmony import */ var a11yarrows__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(a11yarrows__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var a11yarrows__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! a11yarrows */ "./node_modules/a11yarrows/dist/a11yarrows.min.js");
+/* harmony import */ var a11yarrows__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(a11yarrows__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
-var Filter = /*#__PURE__*/function (_React$Component) {
-  _inherits(Filter, _React$Component);
-  var _super = _createSuper(Filter);
-  function Filter(props) {
-    var _this;
-    _classCallCheck(this, Filter);
-    _this = _super.call(this, props);
-    _this.data = _this.props.data;
-    _this["default"] = _this.data["default"];
-    _this.filterKey = _this.props.filterKey;
-    _this.provider = _this.props.provider;
-    _this.id = "".concat(_this.provider, "-").concat(_this.filterKey);
-    _this.clickHandler = _this.props["function"].bind(_assertThisInitialized(_this));
-    _this.toggleMenu = _this.toggleMenu.bind(_assertThisInitialized(_this));
-    _this.closeMenuOutside = _this.closeMenuOutside.bind(_assertThisInitialized(_this));
-    _this.focusOutside = _this.focusOutside.bind(_assertThisInitialized(_this));
-    _this.escClick = _this.escClick.bind(_assertThisInitialized(_this));
-    _this.reset = _this.reset.bind(_assertThisInitialized(_this));
-    _this.isColor = _this.filterKey === "colors" || _this.filterKey === "color";
-    _this.state = {
-      expanded: false,
-      selected: _this.data["default"]
-    };
-    return _this;
-  }
+
+
+/**
+ * Render the Filter component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The Filter component.
+ */
+function Filter(props) {
+  var _data$filters;
+  var data = props.data,
+    filterKey = props.filterKey,
+    clickHandler = props["function"],
+    provider = props.provider;
+  var defaultValue = data === null || data === void 0 ? void 0 : data["default"];
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    expanded = _useState2[0],
+    setExpanded = _useState2[1];
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(defaultValue),
+    _useState4 = _slicedToArray(_useState3, 2),
+    selected = _useState4[0],
+    setSelected = _useState4[1];
+  var dropdown = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var button = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var menu = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var id = "".concat(provider, "-").concat(filterKey);
+  var isColor = filterKey === 'colors' || filterKey === 'color';
 
   /**
    * Toggle menu open/closed.
    *
    * @param {Event} event The click event.
    */
-  _createClass(Filter, [{
-    key: "toggleMenu",
-    value: function toggleMenu(event) {
-      var _this2 = this;
-      event.preventDefault();
+  function toggleMenu(event) {
+    event.preventDefault();
 
-      // If disabled, don't open menu.
-      var target = event.currentTarget;
-      if (target.disabled) {
-        return false;
+    // If disabled, don't open menu.
+    var target = event.currentTarget;
+    if (target.disabled) {
+      return false;
+    }
+    if (expanded) {
+      setExpanded(false);
+      document.removeEventListener('click', closeMenuOutside);
+    } else {
+      setExpanded(true);
+      document.addEventListener('click', closeMenuOutside);
+    }
+  }
+
+  /**
+   * Close menu when clicking outside.
+   *
+   * @param {Event} event The click event.
+   */
+  function closeMenuOutside(event) {
+    var _menu$current, _button$current;
+    if (!(menu !== null && menu !== void 0 && (_menu$current = menu.current) !== null && _menu$current !== void 0 && _menu$current.contains(event.target)) && !(button !== null && button !== void 0 && (_button$current = button.current) !== null && _button$current !== void 0 && _button$current.contains(event.target))) {
+      setExpanded(false);
+      document.removeEventListener('click', closeMenuOutside);
+    }
+  }
+
+  /**
+   * Checks for focus outside of component.
+   *
+   * @param {Event} event The click event.
+   */
+  function focusOutside(event) {
+    if (!(dropdown !== null && dropdown !== void 0 && dropdown.current.contains(event.target))) {
+      closeMenuOutside(event);
+    }
+  }
+
+  /**
+   * Detect esc key press.
+   *
+   * @param {Event} event The click event.
+   */
+  function escClick(event) {
+    if (event.key === 'Escape') {
+      setExpanded(false);
+    }
+  }
+
+  /**
+   * Click handler for the filter buttons.
+   *
+   * @param {string} filter The current filter key.
+   * @param {string} value  The value to filter.
+   */
+  function click(filter, value) {
+    var newValue = selected !== value ? value : defaultValue;
+    setSelected(newValue);
+    clickHandler(filter, newValue);
+
+    // Delay for effect.
+    setTimeout(function () {
+      button === null || button === void 0 ? void 0 : button.current.click();
+    }, 100);
+  }
+
+  /**
+   * Convert a color to a CSS value.
+   * @see https://www.w3schools.com/colors/colors_names.asp
+   *
+   * @param  {string} color The current color.
+   * @return {string}       The color.
+   */
+  function convertColor(color) {
+    if (color === 'lilac') {
+      color = 'DarkViolet';
+    }
+    if (color === 'grayscale' || color === 'black_and_white') {
+      color = 'LightGray';
+    }
+    return color;
+  }
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    // Initiate arrow menus.
+    a11yarrows__WEBPACK_IMPORTED_MODULE_1__.init(dropdown === null || dropdown === void 0 ? void 0 : dropdown.current, {
+      selector: 'button'
+    });
+
+    // Check for focus outside.
+    document.addEventListener('keyup', focusOutside);
+    document.addEventListener('keydown', escClick);
+    return function () {
+      document.removeEventListener('keyup', focusOutside);
+      document.removeEventListener('keydown', escClick);
+    };
+  }, []);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "filter-dropdown",
+    id: id,
+    ref: dropdown
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: toggleMenu,
+    className: "filter-dropdown--button",
+    "aria-expanded": expanded ? 'true' : 'false',
+    ref: button
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "filter-dropdown--button-label"
+  }, instant_img_localize.filters[data === null || data === void 0 ? void 0 : data.label]), /*#__PURE__*/React.createElement("span", {
+    className: "filter-dropdown--button-selected"
+  }, selected.replace(/_/g, ' '), /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-caret-down",
+    "aria-hidden": "true"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('filter-dropdown--menu', expanded ? 'expanded' : null),
+    "data-key": filterKey,
+    "aria-hidden": expanded ? 'false' : 'true',
+    ref: menu
+  }, (data === null || data === void 0 ? void 0 : (_data$filters = data.filters) === null || _data$filters === void 0 ? void 0 : _data$filters.length) && data.filters.map(function (value, key) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: key,
+      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('filter-dropdown--item', selected === value ? 'selected' : null),
+      onClick: function onClick() {
+        return click(filterKey, value);
       }
-      if (this.state.expanded) {
-        this.setState({
-          expanded: false
-        }, function () {
-          document.removeEventListener("click", _this2.closeMenuOutside);
-        });
-      } else {
-        this.setState({
-          expanded: true
-        }, function () {
-          document.addEventListener("click", _this2.closeMenuOutside);
-        });
+    }, value.replace(/_/g, ' '), value !== 'all' && value !== 'transparent' && isColor ? /*#__PURE__*/React.createElement("span", {
+      className: "_color",
+      style: {
+        color: convertColor(value)
       }
-    }
-
-    /**
-     * Close menu when clicking outside.
-     *
-     * @param {Event} event The click event.
-     */
-  }, {
-    key: "closeMenuOutside",
-    value: function closeMenuOutside(event) {
-      var _this3 = this;
-      if (!this.menu.contains(event.target) && !this.trigger.contains(event.target)) {
-        this.setState({
-          expanded: false
-        }, function () {
-          document.removeEventListener("click", _this3.closeMenuOutside);
-        });
-      }
-    }
-
-    /**
-     * Checks for focus outside of component.
-     *
-     * @param {Event} event The click event.
-     */
-  }, {
-    key: "focusOutside",
-    value: function focusOutside(event) {
-      if (!this.dropdown.contains(event.target)) {
-        this.closeMenuOutside(event);
-      }
-    }
-
-    /**
-     * Detect esc key press.
-     *
-     * @param {Event} event The click event.
-     */
-  }, {
-    key: "escClick",
-    value: function escClick(event) {
-      if (event.key === "Escape") {
-        this.setState({
-          expanded: false
-        });
-      }
-    }
-
-    /**
-     * Click handler for the filter buttons.
-     *
-     * @param {string} filter The current filter key.
-     * @param {string} value  The value to filter.
-     */
-  }, {
-    key: "click",
-    value: function click(filter, value) {
-      var self = this;
-      var newValue = this.state.selected !== value ? value : this["default"];
-      this.setState({
-        selected: newValue
-      });
-      this.clickHandler(filter, newValue);
-
-      // Delay for effect.
-      setTimeout(function () {
-        self.trigger.click();
-      }, 100);
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      this.setState({
-        selected: this["default"]
-      });
-    }
-
-    /**
-     * Convert a color to a CSS value.
-     * @see https://www.w3schools.com/colors/colors_names.asp
-     *
-     * @param  {string} color The current color.
-     * @return {string}       The color.
-     */
-  }, {
-    key: "convertColor",
-    value: function convertColor(color) {
-      if (color === "lilac") {
-        color = "DarkViolet";
-      }
-      if (color === "grayscale" || color === "black_and_white") {
-        color = "LightGray";
-      }
-      return color;
-    }
-
-    // Initiate functions on mount.
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      // Initiate arrow menus.
-      a11yarrows__WEBPACK_IMPORTED_MODULE_0__.init(this.dropdown, {
-        selector: "button"
-      });
-
-      // Check for focus outside.
-      document.addEventListener("keyup", this.focusOutside);
-      document.addEventListener("keydown", this.escClick);
-    }
-
-    // Functions to run on unmount.
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      document.removeEventListener("keyup", this.focusOutside);
-      document.removeEventListener("keydown", this.escClick);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this4 = this;
-      return /*#__PURE__*/React.createElement("div", {
-        className: "filter-dropdown",
-        id: this.id,
-        ref: function ref(element) {
-          _this4.dropdown = element;
-        }
-      }, /*#__PURE__*/React.createElement("button", {
-        onClick: this.toggleMenu,
-        className: "filter-dropdown--button",
-        "aria-expanded": this.state.expanded ? "true" : "false",
-        ref: function ref(element) {
-          _this4.trigger = element;
-        }
-      }, /*#__PURE__*/React.createElement("span", {
-        className: "filter-dropdown--button-label"
-      }, instant_img_localize.filters[this.data.label]), /*#__PURE__*/React.createElement("span", {
-        className: "filter-dropdown--button-selected"
-      }, this.state.selected.replace(/_/g, " "), /*#__PURE__*/React.createElement("i", {
-        className: "fa fa-caret-down",
-        "aria-hidden": "true"
-      }))), /*#__PURE__*/React.createElement("div", {
-        className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("filter-dropdown--menu", this.state.expanded ? "expanded" : null),
-        "data-key": this.filterKey,
-        "aria-hidden": this.state.expanded ? "false" : "true",
-        ref: function ref(element) {
-          _this4.menu = element;
-        }
-      }, this.data.filters && this.data.filters.map(function (value, key) {
-        return /*#__PURE__*/React.createElement("button", {
-          key: key,
-          className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("filter-dropdown--item", _this4.state.selected === value ? "selected" : null),
-          onClick: function onClick() {
-            return _this4.click(_this4.filterKey, value);
-          }
-        }, value.replace(/_/g, " "), value !== "all" && value !== "transparent" && _this4.isColor ? /*#__PURE__*/React.createElement("span", {
-          className: "_color",
-          style: {
-            color: _this4.convertColor(value)
-          }
-        }) : null);
-      })));
-    }
-  }]);
-  return Filter;
-}(React.Component);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Filter);
+    }) : null);
+  })));
+}
 
 /***/ }),
 
