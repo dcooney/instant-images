@@ -20,9 +20,11 @@ export default function Photo(props) {
 	const user_photo = user?.photo;
 	const user_url = user?.url;
 
+	const container = document.querySelector('.instant-img-container');
 	const likeDisplay = parseInt(likes) === 1 ? instant_img_localize.likes : instant_img_localize.likes_plural;
 	const auto_attribution = instant_img_localize.auto_attribution === '1' ? true : false;
 	const imageCaption = auto_attribution ? attribution : caption; // Set auto attribution.
+	let inProgress = false;
 
 	// Photo state.
 	const [imageDetails, setImageDetails] = useState({
@@ -39,19 +41,13 @@ export default function Photo(props) {
 	const captionRef = useRef();
 	const noticeMsg = useRef();
 
-	let inProgress = false;
-	const container = document.querySelector('.instant-img-container');
-
-	// this.showTooltip = this.props.showTooltip.bind(this);
-	// this.hideTooltip = this.props.hideTooltip.bind(this);
-
-	// Gutenberg Sidebar
+	// Gutenberg Sidebar.
 	const setAsFeaturedImage = false;
 	const insertIntoPost = false;
 	const is_media_router = mediaRouter;
 	const is_block_editor = blockEditor;
 
-	// Display controls in Gutenberg Sidebar Only
+	// Display controls in Gutenberg Sidebar Only.
 	const displayGutenbergControl = is_block_editor ? true : false;
 
 	/**

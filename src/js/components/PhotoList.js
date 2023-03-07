@@ -1,3 +1,4 @@
+import { Fragment, useRef, useState } from '@wordpress/element';
 import classNames from 'classnames';
 import Masonry from 'masonry-layout';
 import API from '../constants/API';
@@ -21,6 +22,12 @@ import Sponsor from './Sponsor';
 import Tooltip from './Tooltip';
 const imagesLoaded = require('imagesloaded');
 
+/**
+ * Render the PhotoList component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The PhotoList component.
+ */
 class PhotoList extends React.Component {
 	constructor(props) {
 		super(props);
@@ -35,7 +42,6 @@ class PhotoList extends React.Component {
 		this.api_key = instant_img_localize[`${this.provider}_app_id`];
 		this.photo_api = this.api_provider.photo_api;
 		this.search_api = this.api_provider.search_api;
-
 		this.api_error = this.props.error;
 
 		// Results state.
@@ -95,6 +101,8 @@ class PhotoList extends React.Component {
 		}
 
 		this.escFunction = this.escFunction.bind(this);
+
+		const meow = this;
 	}
 
 	resetFilters() {

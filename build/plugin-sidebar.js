@@ -3201,9 +3201,11 @@ function Photo(props) {
   var user_name = user === null || user === void 0 ? void 0 : user.name;
   var user_photo = user === null || user === void 0 ? void 0 : user.photo;
   var user_url = user === null || user === void 0 ? void 0 : user.url;
+  var container = document.querySelector('.instant-img-container');
   var likeDisplay = parseInt(likes) === 1 ? instant_img_localize.likes : instant_img_localize.likes_plural;
   var auto_attribution = instant_img_localize.auto_attribution === '1' ? true : false;
   var imageCaption = auto_attribution ? attribution : caption; // Set auto attribution.
+  var inProgress = false;
 
   // Photo state.
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
@@ -3222,19 +3224,14 @@ function Photo(props) {
   var editScreen = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var captionRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var noticeMsg = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var inProgress = false;
-  var container = document.querySelector('.instant-img-container');
 
-  // this.showTooltip = this.props.showTooltip.bind(this);
-  // this.hideTooltip = this.props.hideTooltip.bind(this);
-
-  // Gutenberg Sidebar
+  // Gutenberg Sidebar.
   var setAsFeaturedImage = false;
   var insertIntoPost = false;
   var is_media_router = mediaRouter;
   var is_block_editor = blockEditor;
 
-  // Display controls in Gutenberg Sidebar Only
+  // Display controls in Gutenberg Sidebar Only.
   var displayGutenbergControl = is_block_editor ? true : false;
 
   /**
@@ -3849,30 +3846,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
-/* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(masonry_layout__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
-/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_constants_filters__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
-/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
-/* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
-/* harmony import */ var _functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
-/* harmony import */ var _functions_getResults__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
-/* harmony import */ var _APILightbox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./APILightbox */ "./src/js/components/APILightbox.js");
-/* harmony import */ var _ErrorLightbox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ErrorLightbox */ "./src/js/components/ErrorLightbox.js");
-/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
-/* harmony import */ var _LoadingBlock__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
-/* harmony import */ var _LoadMore__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./LoadMore */ "./src/js/components/LoadMore.js");
-/* harmony import */ var _NoResults__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
-/* harmony import */ var _Photo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
-/* harmony import */ var _RestAPIError__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./RestAPIError */ "./src/js/components/RestAPIError.js");
-/* harmony import */ var _ResultsToolTip__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./ResultsToolTip */ "./src/js/components/ResultsToolTip.js");
-/* harmony import */ var _Sponsor__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Sponsor */ "./src/js/components/Sponsor.js");
-/* harmony import */ var _Tooltip__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip.js");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
+/* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(masonry_layout__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
+/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_constants_filters__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
+/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
+/* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
+/* harmony import */ var _functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
+/* harmony import */ var _functions_getResults__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
+/* harmony import */ var _APILightbox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./APILightbox */ "./src/js/components/APILightbox.js");
+/* harmony import */ var _ErrorLightbox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ErrorLightbox */ "./src/js/components/ErrorLightbox.js");
+/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
+/* harmony import */ var _LoadingBlock__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
+/* harmony import */ var _LoadMore__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./LoadMore */ "./src/js/components/LoadMore.js");
+/* harmony import */ var _NoResults__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
+/* harmony import */ var _Photo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
+/* harmony import */ var _RestAPIError__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./RestAPIError */ "./src/js/components/RestAPIError.js");
+/* harmony import */ var _ResultsToolTip__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ResultsToolTip */ "./src/js/components/ResultsToolTip.js");
+/* harmony import */ var _Sponsor__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Sponsor */ "./src/js/components/Sponsor.js");
+/* harmony import */ var _Tooltip__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -3923,7 +3922,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var imagesLoaded = __webpack_require__(/*! imagesloaded */ "./node_modules/imagesloaded/imagesloaded.js");
+
+/**
+ * Render the PhotoList component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The PhotoList component.
+ */
 var PhotoList = /*#__PURE__*/function (_React$Component) {
   _inherits(PhotoList, _React$Component);
   var _super = _createSuper(PhotoList);
@@ -3933,10 +3940,10 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
 
     // Get current provider settings.
-    _this.providers = (_constants_API__WEBPACK_IMPORTED_MODULE_2___default().providers);
+    _this.providers = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default().providers);
     _this.provider = _this.props.provider; // Unsplash, Pixabay, etc.
-    _this.api_provider = (_constants_API__WEBPACK_IMPORTED_MODULE_2___default())[_this.provider]; // The API settings for the provider.
-    _this.per_page = (_constants_API__WEBPACK_IMPORTED_MODULE_2___default().defaults.per_page);
+    _this.api_provider = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[_this.provider]; // The API settings for the provider.
+    _this.per_page = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default().defaults.per_page);
 
     // API Vars.
     _this.api_key = instant_img_localize["".concat(_this.provider, "_app_id")];
@@ -3945,11 +3952,11 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
     _this.api_error = _this.props.error;
 
     // Results state.
-    _this.results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_this.props.results);
+    _this.results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_this.props.results);
     _this.state = {
       results: _this.results,
-      filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_3___default())[_this.provider].filters,
-      search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_3___default())[_this.provider].search,
+      filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[_this.provider].filters,
+      search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[_this.provider].search,
       restapi_error: false,
       api_lightbox: false
     };
@@ -3996,6 +4003,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
       _this.container.classList.add('loading');
     }
     _this.escFunction = _this.escFunction.bind(_assertThisInitialized(_this));
+    var meow = _assertThisInitialized(_this);
     return _this;
   }
   _createClass(PhotoList, [{
@@ -4108,31 +4116,31 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
               search_params = _objectSpread(_objectSpread(_objectSpread({}, {
                 page: this.page
               }), search_query), this.search_filters);
-              params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(this.provider, search_params);
-              url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_4__["default"])('search', params); // Create fetch request.
+              params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(this.provider, search_params);
+              url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('search', params); // Create fetch request.
               _context.next = 15;
               return fetch(url);
             case 15:
               response = _context.sent;
               status = response.status, headers = response.headers;
-              (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.checkRateLimit)(headers);
+              (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
               _context.prev = 18;
               _context.next = 21;
               return response.json();
             case 21:
               data = _context.sent;
-              results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(data); // Check returned data.
-              this.total_results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__.getSearchTotal)(data);
+              results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(data); // Check returned data.
+              this.total_results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__.getSearchTotal)(data);
               this.checkTotalResults(results.length);
 
               // Hide search filters if no results and not filtering.
-              this.show_search_filters = this.total_results < 2 && (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.isObjectEmpty)(this.search_filters) ? false : true;
+              this.show_search_filters = this.total_results < 2 && (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.isObjectEmpty)(this.search_filters) ? false : true;
 
               // Update Props.
               this.results = results;
               this.setState({
                 results: this.results,
-                search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_3___default())[this.provider].search
+                search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[this.provider].search
               });
 
               // Delay for effect.
@@ -4159,7 +4167,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
               this.setState({
                 results: this.results
               });
-              (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(this.provider, status);
+              (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(this.provider, status);
             case 42:
             case "end":
               return _context.stop();
@@ -4216,14 +4224,14 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
               this.clearSearch();
 
               // Build URL.
-              params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(this.provider, this.filters);
-              url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_4__["default"])('photos', params); // Create fetch request.
+              params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(this.provider, this.filters);
+              url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('photos', params); // Create fetch request.
               _context2.next = 15;
               return fetch(url);
             case 15:
               response = _context2.sent;
               status = response.status, headers = response.headers;
-              (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.checkRateLimit)(headers);
+              (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
 
               // Status OK.
               _context2.prev = 18;
@@ -4232,7 +4240,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
             case 21:
               data = _context2.sent;
               _data$error = data.error, error = _data$error === void 0 ? null : _data$error; // Get error reporting.
-              results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(data);
+              results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(data);
               this.checkTotalResults(results.length); // Check for returned data.
               this.results = results; // Update Props.
               this.api_error = error;
@@ -4245,7 +4253,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
               } else {
                 this.setState({
                   results: results,
-                  filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_3___default())[this.provider].filters
+                  filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[this.provider].filters
                 });
               }
               _context2.next = 35;
@@ -4253,7 +4261,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
             case 30:
               _context2.prev = 30;
               _context2.t0 = _context2["catch"](18);
-              (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(this.provider, status);
+              (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(this.provider, status);
               this.photoTarget.current.classList.remove('loading');
               this.isLoading = false;
             case 35:
@@ -4305,20 +4313,20 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
               loadmore_params = _objectSpread(_objectSpread(_objectSpread({}, {
                 page: this.page
               }), search_query), filters);
-              params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(this.provider, loadmore_params);
-              url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_4__["default"])(type, params); // Create fetch request.
+              params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(this.provider, loadmore_params);
+              url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])(type, params); // Create fetch request.
               _context3.next = 13;
               return fetch(url);
             case 13:
               response = _context3.sent;
               status = response.status, headers = response.headers;
-              (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.checkRateLimit)(headers);
+              (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
               _context3.prev = 16;
               _context3.next = 19;
               return response.json();
             case 19:
               data = _context3.sent;
-              results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(data); // Loop result & push items into array.
+              results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(data); // Loop result & push items into array.
               results && results.map(function (data) {
                 self.results.push(data);
               });
@@ -4335,7 +4343,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
             case 26:
               _context3.prev = 26;
               _context3.t0 = _context3["catch"](16);
-              (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(this.provider, status);
+              (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(this.provider, status);
               self.isLoading = false;
             case 30:
             case "end":
@@ -4466,18 +4474,18 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
               }
               return _context4.abrupt("return", false);
             case 4:
-              if (!(_constants_API__WEBPACK_IMPORTED_MODULE_2___default())[provider].requires_key) {
+              if (!(_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider].requires_key) {
                 _context4.next = 23;
                 break;
               }
               self = this;
               _context4.prev = 6;
               _context4.next = 9;
-              return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_4__.buildTestURL)(provider));
+              return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__.buildTestURL)(provider));
             case 9:
               response = _context4.sent;
               status = response.status, headers = response.headers;
-              (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.checkRateLimit)(headers);
+              (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
               if (!(status !== 200)) {
                 _context4.next = 16;
                 break;
@@ -4511,7 +4519,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
 
               // Update API provider params.
               this.provider = provider;
-              this.api_provider = (_constants_API__WEBPACK_IMPORTED_MODULE_2___default())[this.provider];
+              this.api_provider = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[this.provider];
               this.api_key = instant_img_localize["".concat(this.provider, "_app_id")];
               this.photo_api = this.api_provider.photo_api;
               this.search_api = this.api_provider.search_api;
@@ -4548,7 +4556,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
       var self = this;
       var photoListWrapper = self.photoTarget.current;
       imagesLoaded(photoListWrapper, function () {
-        self.msnry = new (masonry_layout__WEBPACK_IMPORTED_MODULE_1___default())(photoListWrapper, {
+        self.msnry = new (masonry_layout__WEBPACK_IMPORTED_MODULE_2___default())(photoListWrapper, {
           itemSelector: '.photo'
         });
         self.photoTarget.current.querySelectorAll('.photo').forEach(function (el) {
@@ -4756,10 +4764,10 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
             return _this4.switchProvider(e);
           },
           className: _this4.provider === provider.toLowerCase() ? 'provider-nav--btn active' : 'provider-nav--btn'
-        }, /*#__PURE__*/React.createElement("span", null, provider), (_constants_API__WEBPACK_IMPORTED_MODULE_2___default())[provider.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {
+        }, /*#__PURE__*/React.createElement("span", null, provider), (_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {
           className: "provider-nav--new"
         }, instant_img_localize["new"])));
-      })), this.state.api_lightbox && /*#__PURE__*/React.createElement(_APILightbox__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      })), this.state.api_lightbox && /*#__PURE__*/React.createElement(_APILightbox__WEBPACK_IMPORTED_MODULE_10__["default"], {
         provider: this.state.api_lightbox,
         afterVerifiedAPICallback: this.afterVerifiedAPICallback.bind(this),
         closeAPILightbox: this.closeAPILightbox.bind(this)
@@ -4767,7 +4775,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
         className: "control-nav",
         ref: this.controlNav
       }, /*#__PURE__*/React.createElement("div", {
-        className: classnames__WEBPACK_IMPORTED_MODULE_0___default()('control-nav--filters-wrap', this.api_error ? 'inactive' : null),
+        className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--filters-wrap', this.api_error ? 'inactive' : null),
         ref: this.filterGroups
       }, Object.entries(this.state.filters).length ? /*#__PURE__*/React.createElement("div", {
         className: "control-nav--filters"
@@ -4775,7 +4783,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
         var _ref2 = _slicedToArray(_ref, 2),
           key = _ref2[0],
           filter = _ref2[1];
-        return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_12__["default"], {
           key: "".concat(key, "-").concat(_this4.provider, "-").concat(i),
           filterKey: key,
           provider: _this4.provider,
@@ -4783,7 +4791,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
           "function": _this4.filterPhotos.bind(_this4)
         });
       })) : null), /*#__PURE__*/React.createElement("div", {
-        className: classnames__WEBPACK_IMPORTED_MODULE_0___default()('control-nav--search', 'search-field', this.api_error ? 'inactive' : null),
+        className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--search', 'search-field', this.api_error ? 'inactive' : null),
         id: "search-bar"
       }, /*#__PURE__*/React.createElement("form", {
         onSubmit: function onSubmit(e) {
@@ -4805,13 +4813,13 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
         disabled: this.api_error
       }, /*#__PURE__*/React.createElement("i", {
         className: "fa fa-search"
-      })), /*#__PURE__*/React.createElement(_ResultsToolTip__WEBPACK_IMPORTED_MODULE_17__["default"], {
+      })), /*#__PURE__*/React.createElement(_ResultsToolTip__WEBPACK_IMPORTED_MODULE_18__["default"], {
         container: this.container,
         getPhotos: this.getPhotos.bind(this),
         isSearch: this.is_search,
         total: this.total_results,
         title: "".concat(this.total_results, " ").concat(instant_img_localize.search_results, " ").concat(this.search_term)
-      })))), this.state.restapi_error && /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_16__["default"], {
+      })))), this.state.restapi_error && /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_17__["default"], {
         title: instant_img_localize.error_restapi,
         desc: instant_img_localize.error_restapi_desc,
         type: "warning"
@@ -4832,7 +4840,7 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
         var _ref4 = _slicedToArray(_ref3, 2),
           key = _ref4[0],
           filter = _ref4[1];
-        return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_12__["default"], {
           ref: function ref(_ref5) {
             return _this4.filterRef[index] = _ref5;
           },
@@ -4849,9 +4857,9 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
       }, this.state.results.length ? this.state.results.map(function (result, iterator) {
         return /*#__PURE__*/React.createElement(React.Fragment, {
           key: "".concat(_this4.provider, "-").concat(result.id, "-").concat(iterator)
-        }, result && result.type && result.type === 'instant-images-ad' ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_18__["default"], {
+        }, result && result.type && result.type === 'instant-images-ad' ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_19__["default"], {
           result: result
-        }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_15__["default"], {
+        }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_16__["default"], {
           provider: _this4.provider,
           result: result,
           mediaRouter: _this4.is_media_router,
@@ -4861,15 +4869,15 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
           showTooltip: _this4.showTooltip,
           hideTooltip: _this4.hideTooltip
         }));
-      }) : null), this.total_results < 1 && this.is_search === true && /*#__PURE__*/React.createElement(_NoResults__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }) : null), this.total_results < 1 && this.is_search === true && /*#__PURE__*/React.createElement(_NoResults__WEBPACK_IMPORTED_MODULE_15__["default"], {
         total: this.total_results,
         is_search: this.is_search
-      }), /*#__PURE__*/React.createElement(_LoadingBlock__WEBPACK_IMPORTED_MODULE_12__["default"], null), /*#__PURE__*/React.createElement(_LoadMore__WEBPACK_IMPORTED_MODULE_13__["default"], {
+      }), /*#__PURE__*/React.createElement(_LoadingBlock__WEBPACK_IMPORTED_MODULE_13__["default"], null), /*#__PURE__*/React.createElement(_LoadMore__WEBPACK_IMPORTED_MODULE_14__["default"], {
         loadMorePhotos: this.loadMorePhotos.bind(this)
-      }), /*#__PURE__*/React.createElement(_ErrorLightbox__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      }), /*#__PURE__*/React.createElement(_ErrorLightbox__WEBPACK_IMPORTED_MODULE_11__["default"], {
         error: this.api_error,
         provider: this.provider
-      }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_19__["default"], null));
+      }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_20__["default"], null));
     }
   }]);
   return PhotoList;

@@ -5,18 +5,13 @@
 /src
 /webpack
 /vendor
-/dist/css/instant-images.css.map
-/dist/js/instant-images-block.js.map
-/dist/js/instant-images-media.js.map
-/dist/js/instant-images-styles.js
-/dist/js/instant-images-styles.js.map
-/dist/js/instant-images-styles.min.js
-/dist/js/instant-images.js.map
+/build
 .distignore
 .gitignore
 .babelrc
 .jshintrc
 .editorconfig
+.prettierrc.js
 .nvmrc
 .phpcs.xml
 package-lock.json
@@ -27,4 +22,8 @@ postcss.config.js
 webpack.config.js
 README.md
 CONTRIBUTING.md
+.browserlistrc
+.stylelintignore
+.stylelintrc.json
+babel.config.json
 
