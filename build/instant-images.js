@@ -2520,8 +2520,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  */
 function APILightbox(props) {
   var provider = props.provider,
-    afterVerifiedAPICallback = props.afterVerifiedAPICallback,
-    closeAPILightbox = props.closeAPILightbox;
+    afterVerifiedAPICallback = props["function"],
+    closeAPILightbox = props["function"];
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('invalid'),
     _useState2 = _slicedToArray(_useState, 2),
     apiStatus = _useState2[0],
@@ -3141,93 +3141,101 @@ function NoResults() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ Photo)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _constants_API_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/API.js */ "./src/js/constants/API.js");
-/* harmony import */ var _constants_API_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_constants_API_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
 /* harmony import */ var _functions_unsplashDownload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../functions/unsplashDownload */ "./src/js/functions/unsplashDownload.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
 
-var Photo = /*#__PURE__*/function (_React$Component) {
-  _inherits(Photo, _React$Component);
-  var _super = _createSuper(Photo);
-  function Photo(props) {
-    var _this;
-    _classCallCheck(this, Photo);
-    _this = _super.call(this, props);
-    _this.provider = _this.props.provider;
-    _this.api_provider = (_constants_API_js__WEBPACK_IMPORTED_MODULE_1___default())[_this.provider];
-    var result = _this.props.result;
-    _this.id = result.id;
-    _this.filename = _this.id;
-    _this.permalink = result && result.permalink;
-    _this.extension = result && result.extension ? result.extension : 'jpg';
-    _this.likes = result && result.likes;
-    _this.attribution = result && result.attribution ? result.attribution : '';
-    _this.auto_attribution = instant_img_localize.auto_attribution === '1' ? true : false;
-    _this.dimensions = result !== null && result !== void 0 && result.dimensions ? result.dimensions : '';
-    _this.thumb = result && result.urls && result.urls.thumb;
-    _this.full = result && result.urls && result.urls.full;
-    _this.download_url = result && result.urls && result.urls.download_url;
-    _this.user_id = result && result.user && result.user.id;
-    _this.user_name = result && result.user && result.user.name;
-    _this.user_photo = result && result.user && result.user.photo;
-    _this.user_url = result && result.user && result.user.url;
-    _this.title = result && result.title ? result.title : '';
-    _this.alt = result && result.alt ? result.alt : '';
-    _this.caption = result !== null && result !== void 0 && result.caption ? result.caption : '';
-    _this.caption = _this.auto_attribution ? _this.attribution : _this.caption; // Set auto attributions.
 
-    _this.inProgress = false;
-    _this.container = document.querySelector('.instant-img-container');
-    _this.showTooltip = _this.props.showTooltip.bind(_assertThisInitialized(_this));
-    _this.hideTooltip = _this.props.hideTooltip.bind(_assertThisInitialized(_this));
+/**
+ * Render the Photo component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The Photo component.
+ */
+function Photo(props) {
+  var provider = props.provider,
+    result = props.result,
+    mediaRouter = props.mediaRouter,
+    blockEditor = props.blockEditor,
+    SetFeaturedImage = props.SetFeaturedImage,
+    InsertImage = props.InsertImage,
+    showTooltip = props.showTooltip,
+    hideTooltip = props.hideTooltip;
+  var id = result.id,
+    permalink = result.permalink,
+    title = result.title,
+    alt = result.alt,
+    caption = result.caption,
+    _result$extension = result.extension,
+    extension = _result$extension === void 0 ? 'jpg' : _result$extension,
+    likes = result.likes,
+    attribution = result.attribution,
+    dimensions = result.dimensions,
+    urls = result.urls,
+    user = result.user;
+  var thumb = urls.thumb,
+    full = urls.full,
+    download_url = urls.download_url;
+  var filename = id;
+  var user_name = user === null || user === void 0 ? void 0 : user.name;
+  var user_photo = user === null || user === void 0 ? void 0 : user.photo;
+  var user_url = user === null || user === void 0 ? void 0 : user.url;
+  var likeDisplay = parseInt(likes) === 1 ? instant_img_localize.likes : instant_img_localize.likes_plural;
+  var auto_attribution = instant_img_localize.auto_attribution === '1' ? true : false;
+  var imageCaption = auto_attribution ? attribution : caption; // Set auto attribution.
 
-    // Gutenberg Sidebar
-    _this.setAsFeaturedImage = false;
-    _this.insertIntoPost = false;
-    _this.is_media_router = _this.props.mediaRouter;
-    _this.is_block_editor = _this.props.blockEditor;
-    _this.SetFeaturedImage = _this.props.SetFeaturedImage;
-    _this.InsertImage = _this.props.InsertImage;
+  // Photo state.
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      filename: filename,
+      title: title,
+      alt: alt,
+      caption: imageCaption
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    imageDetails = _useState2[0],
+    setImageDetails = _useState2[1];
 
-    // Display controls in Gutenberg Sidebar Only
-    _this.displayGutenbergControl = _this.is_block_editor ? true : false;
+  // Refs.
+  var photo = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var photoUpload = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var editScreen = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var captionRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var noticeMsg = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var inProgress = false;
+  var container = document.querySelector('.instant-img-container');
 
-    // Photo state
-    _this.state = {
-      filename: _this.filename,
-      title: _this.title,
-      alt: _this.alt,
-      caption: _this.caption
-    };
+  // this.showTooltip = this.props.showTooltip.bind(this);
+  // this.hideTooltip = this.props.hideTooltip.bind(this);
 
-    // Refs.
-    _this.photo = React.createRef();
-    _this.photoUpload = React.createRef();
-    _this.editScreen = React.createRef();
-    _this.captionRef = React.createRef();
-    _this.noticeMsg = React.createRef();
-    return _this;
-  }
+  // Gutenberg Sidebar
+  var setAsFeaturedImage = false;
+  var insertIntoPost = false;
+  var is_media_router = mediaRouter;
+  var is_block_editor = blockEditor;
+
+  // Display controls in Gutenberg Sidebar Only
+  var displayGutenbergControl = is_block_editor ? true : false;
 
   /**
    * Function to trigger the image download.
@@ -3235,684 +3243,598 @@ var Photo = /*#__PURE__*/function (_React$Component) {
    * @param {Element} e The current download item.
    * @since 4.3
    */
-  _createClass(Photo, [{
-    key: "download",
-    value: function download(e) {
-      e.preventDefault();
-      var self = this;
-      var target = e.currentTarget;
-      var photo = self.photo.current;
-      var notice = self.noticeMsg.current;
-      if (!target.classList.contains('upload')) {
-        // If target is .download-photo, switch target definition
-        target = self.photoUpload.current; // a.upload.
-      }
+  function download(e) {
+    e.preventDefault();
+    var target = e.currentTarget;
+    var notice = noticeMsg.current;
+    if (!target.classList.contains('upload')) {
+      // If target is .download-photo, switch target definition
+      target = photoUpload.current; // a.upload.
+    }
 
-      if (target.classList.contains('success') || this.inProgress) {
-        return false; // Exit if already uploaded or in progress.
-      }
+    if (target.classList.contains('success') || inProgress) {
+      return false; // Exit if already uploaded or in progress.
+    }
 
-      this.inProgress = true;
-      target.classList.add('uploading');
-      photo.classList.add('in-progress');
+    inProgress = true;
+    target.classList.add('uploading');
+    photo.current.classList.add('in-progress');
 
-      // Status messaging
-      notice.innerHTML = instant_img_localize.saving;
+    // Status messaging
+    notice.innerHTML = instant_img_localize.saving;
+    setTimeout(function () {
+      // Change notice after 3 seconds
+      notice.innerHTML = instant_img_localize.resizing;
       setTimeout(function () {
-        // Change notice after 3 seconds
-        notice.innerHTML = instant_img_localize.resizing;
-        setTimeout(function () {
-          // Change notice again after 5 seconds (Still resizing...)
-          notice.innerHTML = instant_img_localize.resizing_still;
-        }, 5000);
-      }, 3000);
+        // Change notice again after 5 seconds (Still resizing...)
+        notice.innerHTML = instant_img_localize.resizing_still;
+      }, 5000);
+    }, 3000);
 
-      // API URL
-      var api = instant_img_localize.root + 'instant-images/download/';
+    // API URL
+    var api = instant_img_localize.root + 'instant-images/download/';
 
-      // Data Params
-      var data = {
-        provider: this.provider,
-        id: target.getAttribute('data-id'),
-        image_url: target.getAttribute('data-url'),
-        filename: target.getAttribute('data-id'),
-        extension: this.extension,
-        custom_filename: target.getAttribute('data-filename'),
-        title: target.getAttribute('data-title'),
-        alt: target.getAttribute('data-alt'),
-        caption: target.getAttribute('data-caption'),
-        parent_id: instant_img_localize.parent_id,
-        lang: instant_img_localize.lang
-      };
+    // Data Params
+    var data = {
+      provider: provider,
+      id: target.getAttribute('data-id'),
+      image_url: target.getAttribute('data-url'),
+      filename: target.getAttribute('data-id'),
+      extension: extension,
+      custom_filename: target.getAttribute('data-filename'),
+      title: target.getAttribute('data-title'),
+      alt: target.getAttribute('data-alt'),
+      caption: target.getAttribute('data-caption'),
+      parent_id: instant_img_localize.parent_id,
+      lang: instant_img_localize.lang
+    };
 
-      // Config Params
-      var config = {
-        headers: {
-          'X-WP-Nonce': instant_img_localize.nonce,
-          'Content-Type': 'application/json'
-        }
-      };
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(api, JSON.stringify(data), config).then(function (res) {
-        var response = res.data;
-        if (response) {
-          // Successful response from server
-          var success = response.success;
-          var attachment = response.attachment;
-          var admin_url = response.admin_url;
-          var msg = response.msg;
-          if (success) {
-            // Edit URL
-            var edit_url = "".concat(admin_url, "post.php?post=").concat(attachment.id, "&action=edit");
+    // Config Params
+    var config = {
+      headers: {
+        'X-WP-Nonce': instant_img_localize.nonce,
+        'Content-Type': 'application/json'
+      }
+    };
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post(api, JSON.stringify(data), config).then(function (res) {
+      var response = res.data;
+      if (response) {
+        // Successful response from server
+        var success = response.success;
+        var attachment = response.attachment;
+        var admin_url = response.admin_url;
+        var msg = response.msg;
+        if (success) {
+          var edit_url = "".concat(admin_url, "post.php?post=").concat(attachment.id, "&action=edit"); // Edit URL.
+          uploadComplete(target, msg, edit_url, attachment.id); // Success/Upload Complete
 
-            // Success/Upload Complete
-            self.uploadComplete(target, photo, msg, edit_url, attachment.id);
+          // Trigger a download at Unsplash.
+          if (provider === 'unsplash' && download_url) {
+            (0,_functions_unsplashDownload__WEBPACK_IMPORTED_MODULE_3__["default"])(download_url);
+          }
 
-            // Trigger a download at Unsplash.
-            if (self.provider === 'unsplash' && self.download_url) {
-              (0,_functions_unsplashDownload__WEBPACK_IMPORTED_MODULE_3__["default"])(self.download_url);
+          // Set Featured Image [Gutenberg Sidebar]
+          if (displayGutenbergControl && setAsFeaturedImage) {
+            SetFeaturedImage(attachment.id);
+            false, _readOnlyError("setAsFeaturedImage");
+            closeMediaModal();
+          }
+
+          // Insert Image [Gutenberg Sidebar]
+          if (displayGutenbergControl && insertIntoPost) {
+            if (attachment.url) {
+              InsertImage(attachment.url, attachment.caption, attachment.alt);
+              closeMediaModal();
             }
+            false, _readOnlyError("insertIntoPost");
+          }
 
-            // Set Featured Image [Gutenberg Sidebar]
-            if (self.displayGutenbergControl && self.setAsFeaturedImage) {
-              self.SetFeaturedImage(attachment.id);
-              self.setAsFeaturedImage = false;
-              self.closeMediaModal();
-            }
-
-            // Insert Image [Gutenberg Sidebar]
-            if (self.displayGutenbergControl && self.insertIntoPost) {
-              if (attachment.url) {
-                self.InsertImage(attachment.url, attachment.caption, attachment.alt);
-                self.closeMediaModal();
-              }
-              self.insertIntoPost = false;
-            }
-
-            // If is media popup, redirect user to media-upload settings
-            if (self.container.dataset.mediaPopup === 'true' && !self.is_block_editor) {
-              window.location = 'media-upload.php?type=image&tab=library&attachment_id=' + attachment.id;
-            }
-          } else {
-            // Error
-            self.uploadError(target, notice, msg);
+          // If is media popup, redirect user to media-upload settings
+          if (container.dataset.mediaPopup === 'true' && !is_block_editor) {
+            window.location = 'media-upload.php?type=image&tab=library&attachment_id=' + attachment.id;
           }
         } else {
           // Error
-          self.uploadError(target, notice, instant_img_localize.error_upload);
+          uploadError(target, notice, msg);
         }
-      })["catch"](function (error) {
-        console.warn(error);
+      } else {
+        // Error
+        uploadError(target, notice, instant_img_localize.error_upload);
+      }
+    })["catch"](function (error) {
+      console.warn(error);
+    });
+  }
+
+  /**
+   * Function used to trigger a download and then set as featured image
+   *
+   * @param {Element} e The clicked element.
+   * @since 4.0
+   */
+  function setFeaturedImageClick(e) {
+    hideTooltip(e);
+    var photo = photoUpload.current;
+    if (photo) {
+      true, _readOnlyError("setAsFeaturedImage");
+      photo.current.click();
+    }
+  }
+
+  /**
+   * Function used to insert an image directly into the block (Gutenberg) editor.
+   *
+   * @param {Element} e The clicked element.
+   * @since 4.0
+   */
+  function insertImageIntoPost(e) {
+    hideTooltip(e);
+    var photo = photoUpload.current;
+    if (photo) {
+      true, _readOnlyError("insertIntoPost");
+      photo.current.click();
+    }
+  }
+
+  /**
+   * Upload complete function.
+   *
+   * @param {Element} target Clicked item.
+   * @param {string}  msg    Success Msg.
+   * @param {string}  url    Attachment edit link.
+   * @param {string}  id     Attachment id.
+   * @since 3.0
+   */
+  function uploadComplete(target, msg, url, id) {
+    setImageTitle(target, msg);
+    photo.current.classList.remove('in-progress');
+    photo.current.classList.add('uploaded');
+    photo.current.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
+    photo.current.querySelector('.edit-photo-admin').style.display = 'inline-block'; // Show edit-photo-admin button
+    photo.current.querySelector('.edit-photo-admin').href = url; // Add admin edit link
+    photo.current.querySelector('.edit-photo-admin').target = '_balnk'; // Add new window
+
+    target.classList.remove('uploading');
+    target.classList.remove('resizing');
+    target.classList.add('success');
+    inProgress = false;
+
+    // Remove uploaded and success states after 5 seconds.
+    setTimeout(function () {
+      photo.current.classList.remove('uploaded');
+      target.classList.remove('success');
+    }, 5000);
+
+    // Gutenberg Sidebar
+    if (is_block_editor) {
+      photo.current.querySelector('.insert').style.display = 'none'; // Hide insert button
+      photo.current.querySelector('.set-featured').style.display = 'none'; // Hide set-featured button
+    }
+
+    // Media Router
+    refreshMediaRouter(id);
+
+    /**
+     * Deprecated in Instant Images 4.3.
+     * Was previously used in the Media Popup Context.
+     * Refresh Media Library contents on edit pages
+     */
+    if (container.classList.contains('editor')) {
+      if (typeof wp.media != 'undefined') {
+        if (wp.media.frame.content.get() !== null) {
+          wp.media.frame.content.get().collection.props.set({
+            ignore: +new Date()
+          });
+          wp.media.frame.content.get().options.selection.reset();
+        } else {
+          wp.media.frame.library.props.set({
+            ignore: +new Date()
+          });
+        }
+      }
+    }
+  }
+
+  /**
+   * Refresh Media Modal and select item after it's been uploaded.
+   *
+   * @param {string} id The media modal ID.
+   * @since 4.3
+   */
+  function refreshMediaRouter(id) {
+    if (is_media_router && wp.media && wp.media.frame && wp.media.frame.el) {
+      var mediaModal = wp.media.frame.el;
+      var mediaTab = mediaModal.querySelector('#menu-item-browse');
+      if (mediaTab) {
+        // Open the 'Media Library' tab.
+        mediaTab.click();
+      }
+
+      // Delay to allow for tab switching
+      setTimeout(function () {
+        if (wp.media.frame.content.get() !== null) {
+          // Force a refresh of the mdeia modal content.
+          wp.media.frame.content.get().collection._requery(true);
+        }
+
+        // Select the attached that was just uploaded.
+        var selection = wp.media.frame.state().get('selection');
+        var selected = parseInt(id);
+        selection.reset(selected ? [wp.media.attachment(selected)] : []);
+      }, 100);
+    }
+  }
+
+  /**
+   * Function runs when error occurs on upload or resize.
+   *
+   * @param {Element} target Current clicked item.
+   * @param {Element} notice The notice element.
+   * @param {string}  msg    Error Msg.
+   * @since 3.0
+   */
+  function uploadError(target, notice, msg) {
+    target.classList.remove('uploading');
+    target.classList.remove('resizing');
+    target.classList.add('errors');
+    setImageTitle(target, msg);
+    inProgress = false;
+    notice.classList.add('has-error');
+    console.warn(msg);
+  }
+
+  /**
+   * Set the title attribute of target.
+   *
+   * @param {Element} e   The current clicked element.
+   * @param {string}  msg The title Msg from JSON.
+   * @since 3.0
+   */
+  function setImageTitle(target, msg) {
+    target.setAttribute('title', msg); // Remove 'Click to upload...', set new value
+  }
+
+  /**
+   * Displays the edit screen.
+   *
+   * @param {Element} e The target element.
+   * @since 3.2
+   */
+  function showEditScreen(e) {
+    e.preventDefault();
+    hideTooltip(e);
+
+    // Get all open edit screens and close them.
+    var openEdits = document.querySelectorAll('.edit-screen.editing');
+    if (openEdits) {
+      openEdits.forEach(function (edit) {
+        edit.classList.remove('editing');
       });
     }
 
-    /**
-     * Function used to trigger a download and then set as featured image
-     *
-     * @param {Element} e The clicked element.
-     * @since 4.0
-     */
-  }, {
-    key: "setFeaturedImageClick",
-    value: function setFeaturedImageClick(e) {
-      this.hideTooltip(e);
-      var photo = this.photoUpload.current;
-      if (photo) {
-        this.setAsFeaturedImage = true;
-        photo.click();
-      }
-    }
+    // Show edit screen
+    editScreen.current.classList.add('editing');
 
-    /**
-     * Function used to insert an image directly into the block (Gutenberg) editor.
-     *
-     * @param {Element} e The clicked element.
-     * @since 4.0
-     */
-  }, {
-    key: "insertImageIntoPost",
-    value: function insertImageIntoPost(e) {
-      this.hideTooltip(e);
-      var photo = this.photoUpload.current;
-      if (photo) {
-        this.insertIntoPost = true;
-        photo.click();
-      }
-    }
+    // Set focus on edit screen
+    setTimeout(function () {
+      editScreen.current.focus({
+        preventScroll: true
+      });
+    }, 150);
+  }
 
-    /**
-     * Function runs when upload has completed.
-     *
-     * @param {Element} target The clicked item.
-     * @param {Element} photo  The `.photo` element.
-     * @param {string}  msg    The Success Msg.
-     * @param {string}  url    The attachment edit link.
-     * @param {string}  id     The attachment id.
-     * @since 3.0
-     */
-  }, {
-    key: "uploadComplete",
-    value: function uploadComplete(target, photo, msg, url, id) {
-      this.setImageTitle(target, msg);
-      photo.classList.remove('in-progress');
-      photo.classList.add('uploaded');
-      photo.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
-      photo.querySelector('.edit-photo-admin').style.display = 'inline-block'; // Show edit-photo-admin button
-      photo.querySelector('.edit-photo-admin').href = url; // Add admin edit link
-      photo.querySelector('.edit-photo-admin').target = '_balnk'; // Add new window
-
-      target.classList.remove('uploading');
-      target.classList.remove('resizing');
-      target.classList.add('success');
-      this.inProgress = false;
-
-      // Remove uploaded and success states after 5 seconds.
-      setTimeout(function () {
-        photo.classList.remove('uploaded');
-        target.classList.remove('success');
-      }, 5000);
-
-      // Gutenberg Sidebar
-      if (this.is_block_editor) {
-        photo.querySelector('.insert').style.display = 'none'; // Hide insert button
-        photo.querySelector('.set-featured').style.display = 'none'; // Hide set-featured button
-      }
-
-      // Media Router
-      this.mediaRouter(id);
-
-      // Deprecated in 4.3
-      // Was previously used in the Media Popup Context.
-      // Refresh Media Library contents on edit pages
-      if (this.container.classList.contains('editor')) {
-        if (typeof wp.media != 'undefined') {
-          if (wp.media.frame.content.get() !== null) {
-            wp.media.frame.content.get().collection.props.set({
-              ignore: +new Date()
-            });
-            wp.media.frame.content.get().options.selection.reset();
-          } else {
-            wp.media.frame.library.props.set({
-              ignore: +new Date()
-            });
-          }
-        }
-      }
-    }
-
-    /**
-     * Refresh Media Modal and select item after it's been uploaded
-     *
-     * @param {string} id The media modal ID.
-     * @since 4.3
-     */
-  }, {
-    key: "mediaRouter",
-    value: function mediaRouter(id) {
-      if (this.is_media_router && wp.media && wp.media.frame && wp.media.frame.el) {
-        var mediaModal = wp.media.frame.el;
-        var mediaTab = mediaModal.querySelector('#menu-item-browse');
-        if (mediaTab) {
-          // Open the 'Media Library' tab
-          mediaTab.click();
-        }
-
-        // Delay to allow for tab switching
-        setTimeout(function () {
-          if (wp.media.frame.content.get() !== null) {
-            //this forces a refresh of the content
-            wp.media.frame.content.get().collection._requery(true);
-
-            //optional: reset selection
-            //wp.media.frame.content.get().options.selection.reset();
-          }
-
-          // Select the attached that was just uploaded.
-          var selection = wp.media.frame.state().get('selection');
-          var selected = parseInt(id);
-          selection.reset(selected ? [wp.media.attachment(selected)] : []);
-        }, 150);
-      }
-    }
-
-    /**
-     * Function runs when error occurs on upload or resize.
-     *
-     * @param {Element} target Current clicked item.
-     * @param {Element} notice The notice element.
-     * @param {string}  msg    Error Msg.
-     * @since 3.0
-     */
-  }, {
-    key: "uploadError",
-    value: function uploadError(target, notice, msg) {
-      target.classList.remove('uploading');
-      target.classList.remove('resizing');
-      target.classList.add('errors');
-      this.setImageTitle(target, msg);
-      this.inProgress = false;
-      notice.classList.add('has-error');
-      console.warn(msg);
-    }
-
-    /**
-     * Set the title attribute of target.
-     *
-     * @param {Element} e   The current clicked element.
-     * @param {string}  msg The title Msg from JSON.
-     * @since 3.0
-     */
-  }, {
-    key: "setImageTitle",
-    value: function setImageTitle(target, msg) {
-      target.setAttribute('title', msg); // Remove 'Click to upload...', set new value
-    }
-
-    /**
-     * Displays the edit screen.
-     *
-     * @param {Element} e The target element.
-     * @since 3.2
-     */
-  }, {
-    key: "showEditScreen",
-    value: function showEditScreen(e) {
-      e.preventDefault();
-      var self = this;
-      this.hideTooltip(e);
-
-      // Get all open edit screens.
-      var openEdits = document.querySelectorAll('.edit-screen.editing');
-      if (openEdits) {
-        // Close open edit screens.
-        openEdits.forEach(function (edit) {
-          edit.classList.remove('editing');
-        });
-      }
-
-      // Show edit screen
-      self.editScreen.current.classList.add('editing');
-
-      // Set focus on edit screen
-      setTimeout(function () {
-        self.editScreen.current.focus({
-          preventScroll: true
-        });
-      }, 150);
-    }
-
-    /**
-     * Handles the change event for the edit screen.
-     *
-     * @param {Element} e The target element.
-     * @since 3.2
-     */
-  }, {
-    key: "handleEditChange",
-    value: function handleEditChange(e) {
-      var target = e.target.name;
-      if (target === 'filename') {
-        this.setState({
+  /**
+   * Handles the change event for the edit screen.
+   *
+   * @param {Element} e The target element.
+   * @since 3.2
+   */
+  function handleEditChange(e) {
+    var target = e.target.name;
+    switch (target) {
+      case 'filename':
+        setImageDetails(_objectSpread(_objectSpread({}, imageDetails), {}, {
           filename: e.target.value
-        });
-      }
-      if (target === 'title') {
-        this.setState({
+        }));
+        break;
+      case 'title':
+        setImageDetails(_objectSpread(_objectSpread({}, imageDetails), {}, {
           title: e.target.value
-        });
-      }
-      if (target === 'alt') {
-        this.setState({
+        }));
+        break;
+      case 'alt':
+        setImageDetails(_objectSpread(_objectSpread({}, imageDetails), {}, {
           alt: e.target.value
-        });
-      }
-      if (target === 'caption') {
-        this.setState({
+        }));
+        break;
+      case 'caption':
+        setImageDetails(_objectSpread(_objectSpread({}, imageDetails), {}, {
           caption: e.target.value
-        });
+        }));
+        break;
+    }
+  }
+
+  /**
+   * Handles the Upload event from the edit screen.
+   *
+   * @since 3.2
+   */
+  function uploadNow() {
+    editScreen.current.classList.remove('editing'); // Hide edit screen.
+    photoUpload.current.click(); // Trigger photo click.
+  }
+
+  /**
+   * Cancel event for the edit screen.
+   *
+   * @since 3.2
+   */
+  function cancelEdit() {
+    // Reset image state.
+    setImageDetails({
+      filename: filename,
+      title: title,
+      alt: alt,
+      caption: caption
+    });
+
+    // Hide edit screen
+    editScreen.current.classList.remove('editing');
+
+    // Set focus back on photo.
+    photoUpload.current.focus({
+      preventScrol: true
+    });
+  }
+
+  /**
+   * Close the media modal after an action.
+   *
+   * @since 4.3
+   */
+  function closeMediaModal() {
+    var mediaModal = document.querySelector('.media-modal');
+    if (mediaModal) {
+      var closeBtn = mediaModal.querySelector('button.media-modal-close');
+      if (!closeBtn) {
+        return false;
       }
+      closeBtn.click();
     }
+  }
 
-    /**
-     * Handles the save event for the edit screen
-     *
-     * @since 3.2
-     */
-  }, {
-    key: "saveEditChange",
-    value: function saveEditChange() {
-      // Filename
-      var filename = this.photo.current.querySelector('input[name="filename"]');
-      this.filename = filename.value;
+  /**
+   * Handles adding attribution for images.
+   *
+   * @param {Element} e The target element.
+   * @since 4.5
+   */
+  function addAttribution(e) {
+    e.preventDefault();
+    captionRef.current.value = attribution; // Set form value.
+    setImageDetails(_objectSpread(_objectSpread({}, imageDetails), {}, {
+      caption: attribution
+    })); // Set caption state.
+  }
 
-      // Title
-      var title = this.photo.current.querySelector('input[name="title"]');
-      this.title = title.value;
-
-      // Alt
-      var alt = this.photo.current.querySelector('input[name="alt"]');
-      this.alt = alt.value;
-
-      // Caption
-      var caption = this.photo.current.querySelector('textarea[name="caption"]');
-      this.caption = caption.value;
-
-      // Hide edit screen.
-      this.editScreen.current.classList.remove('editing');
-
-      // Trigger photo click.
-      this.photoUpload.current.click();
+  return /*#__PURE__*/React.createElement("article", {
+    className: "photo",
+    ref: photo
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "photo--wrap"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "img-wrap"
+  }, /*#__PURE__*/React.createElement("a", {
+    className: "upload loaded",
+    href: full,
+    ref: photoUpload,
+    "data-id": id,
+    "data-url": full,
+    "data-filename": imageDetails.filename,
+    "data-title": imageDetails.title,
+    "data-alt": imageDetails.alt,
+    "data-caption": imageDetails.caption,
+    title: instant_img_localize.upload,
+    onClick: function onClick(e) {
+      return download(e);
     }
-
-    /**
-     * Handles the cancel event for the edit screen.
-     *
-     * @param {Element} e The target element.
-     * @since 3.2
-     */
-  }, {
-    key: "cancelEditChange",
-    value: function cancelEditChange(e) {
-      // Filename
-      var filename = this.photo.current.querySelector('input[name="filename"]');
-      filename.value = filename.dataset.original;
-      this.setState({
-        filename: filename.value
-      });
-
-      // Title
-      var title = this.photo.current.querySelector('input[name="title"]');
-      title.value = title.dataset.original;
-      this.setState({
-        title: title.value
-      });
-
-      // Alt
-      var alt = this.photo.current.querySelector('input[name="alt"]');
-      alt.value = alt.dataset.original;
-      this.setState({
-        alt: alt.value
-      });
-
-      // Caption
-      var caption = this.photo.current.querySelector('textarea[name="caption"]');
-      caption.value = caption.dataset.original;
-      this.setState({
-        caption: caption.value
-      });
-
-      // Hide edit screen
-      this.editScreen.current.classList.remove('editing');
-
-      // Set focus back on photo.
-      this.photoUpload.current.focus({
-        preventScrol: true
-      });
+  }, /*#__PURE__*/React.createElement("img", {
+    src: thumb,
+    alt: alt
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "status"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "notice-msg",
+    ref: noticeMsg
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "user-controls"
+  }, /*#__PURE__*/React.createElement("a", {
+    className: "user fade",
+    href: user_url,
+    rel: "noopener noreferrer",
+    target: "_blank",
+    title: "".concat(instant_img_localize.view_all, " @ ").concat(user_name)
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "user-wrap"
+  }, (user_photo === null || user_photo === void 0 ? void 0 : user_photo.length) > 0 && /*#__PURE__*/React.createElement("img", {
+    className: "user-wrap--photo",
+    src: user_photo
+  }), user_name)), /*#__PURE__*/React.createElement("div", {
+    className: "photo-options"
+  }, displayGutenbergControl && /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "set-featured fade",
+    "data-title": instant_img_localize.set_as_featured,
+    onMouseEnter: function onMouseEnter(e) {
+      return showTooltip(e);
+    },
+    onMouseLeave: function onMouseLeave(e) {
+      return hideTooltip(e);
+    },
+    onClick: function onClick(e) {
+      return setFeaturedImageClick(e);
     }
-
-    /**
-     * Close the media modal after an action.
-     *
-     * @since 4.3
-     */
-  }, {
-    key: "closeMediaModal",
-    value: function closeMediaModal() {
-      var mediaModal = document.querySelector('.media-modal');
-      if (mediaModal) {
-        var closeBtn = mediaModal.querySelector('button.media-modal-close');
-        if (!closeBtn) {
-          return false;
-        }
-        closeBtn.click();
-      }
+  }, /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-picture-o",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "offscreen"
+  }, instant_img_localize.set_as_featured)), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "insert fade",
+    "data-title": instant_img_localize.insert_into_post,
+    onMouseEnter: function onMouseEnter(e) {
+      return showTooltip(e);
+    },
+    onMouseLeave: function onMouseLeave(e) {
+      return hideTooltip(e);
+    },
+    onClick: function onClick(e) {
+      return insertImageIntoPost(e);
     }
-
-    /**
-     * Handles adding attribution for images.
-     *
-     * @param {Element} e The target element.
-     * @since 4.5
-     */
-  }, {
-    key: "addAttribution",
-    value: function addAttribution(e) {
-      e.preventDefault();
-      var attribution = this.attribution;
-
-      // Set form value.
-      this.captionRef.current.value = attribution;
-
-      // Set the state.
-      this.setState({
-        caption: attribution
-      });
+  }, /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-plus",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "offscreen"
+  }, instant_img_localize.insert_into_post))), /*#__PURE__*/React.createElement("a", {
+    href: "#",
+    className: "edit-photo-admin fade",
+    "data-title": instant_img_localize.edit_upload,
+    onMouseEnter: function onMouseEnter(e) {
+      return showTooltip(e);
+    },
+    onMouseLeave: function onMouseLeave(e) {
+      return hideTooltip(e);
     }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-      var likeTxt = parseInt(this.likes) === 1 ? instant_img_localize.likes : instant_img_localize.likes_plural;
-      return /*#__PURE__*/React.createElement("article", {
-        className: "photo",
-        ref: this.photo
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "photo--wrap"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "img-wrap"
-      }, /*#__PURE__*/React.createElement("a", {
-        className: "upload loaded",
-        href: this.full,
-        ref: this.photoUpload,
-        "data-id": this.id,
-        "data-url": this.full,
-        "data-filename": this.state.filename,
-        "data-title": this.state.title,
-        "data-alt": this.state.alt,
-        "data-caption": this.state.caption,
-        title: instant_img_localize.upload,
-        onClick: function onClick(e) {
-          return _this2.download(e);
-        }
-      }, /*#__PURE__*/React.createElement("img", {
-        src: this.thumb,
-        alt: this.alt
-      }), /*#__PURE__*/React.createElement("div", {
-        className: "status"
-      })), /*#__PURE__*/React.createElement("div", {
-        className: "notice-msg",
-        ref: this.noticeMsg
-      }), /*#__PURE__*/React.createElement("div", {
-        className: "user-controls"
-      }, /*#__PURE__*/React.createElement("a", {
-        className: "user fade",
-        href: this.user_url,
-        rel: "noopener noreferrer",
-        target: "_blank",
-        title: "".concat(instant_img_localize.view_all, " @ ").concat(this.user_name)
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "user-wrap"
-      }, this.user_photo && this.user_photo.length > 0 && /*#__PURE__*/React.createElement("img", {
-        className: "user-wrap--photo",
-        src: this.user_photo
-      }), this.user_name)), /*#__PURE__*/React.createElement("div", {
-        className: "photo-options"
-      }, this.displayGutenbergControl && /*#__PURE__*/React.createElement("button", {
-        type: "button",
-        className: "set-featured fade",
-        "data-title": instant_img_localize.set_as_featured,
-        onMouseEnter: function onMouseEnter(e) {
-          return _this2.showTooltip(e);
-        },
-        onMouseLeave: function onMouseLeave(e) {
-          return _this2.hideTooltip(e);
-        },
-        onClick: function onClick(e) {
-          return _this2.setFeaturedImageClick(e);
-        }
-      }, /*#__PURE__*/React.createElement("i", {
-        className: "fa fa-picture-o",
-        "aria-hidden": "true"
-      }), /*#__PURE__*/React.createElement("span", {
-        className: "offscreen"
-      }, instant_img_localize.set_as_featured)), this.displayGutenbergControl && /*#__PURE__*/React.createElement("button", {
-        type: "button",
-        className: "insert fade",
-        "data-title": instant_img_localize.insert_into_post,
-        onMouseEnter: function onMouseEnter(e) {
-          return _this2.showTooltip(e);
-        },
-        onMouseLeave: function onMouseLeave(e) {
-          return _this2.hideTooltip(e);
-        },
-        onClick: function onClick(e) {
-          return _this2.insertImageIntoPost(e);
-        }
-      }, /*#__PURE__*/React.createElement("i", {
-        className: "fa fa-plus",
-        "aria-hidden": "true"
-      }), /*#__PURE__*/React.createElement("span", {
-        className: "offscreen"
-      }, instant_img_localize.insert_into_post)), /*#__PURE__*/React.createElement("a", {
-        href: "#",
-        className: "edit-photo-admin fade",
-        "data-title": instant_img_localize.edit_upload,
-        onMouseEnter: function onMouseEnter(e) {
-          return _this2.showTooltip(e);
-        },
-        onMouseLeave: function onMouseLeave(e) {
-          return _this2.hideTooltip(e);
-        }
-      }, /*#__PURE__*/React.createElement("i", {
-        className: "fa fa-pencil",
-        "aria-hidden": "true"
-      }), /*#__PURE__*/React.createElement("span", {
-        className: "offscreen"
-      }, instant_img_localize.edit_upload)), /*#__PURE__*/React.createElement("button", {
-        type: "button",
-        className: "edit-photo fade",
-        "data-title": instant_img_localize.edit_details,
-        onMouseEnter: function onMouseEnter(e) {
-          return _this2.showTooltip(e);
-        },
-        onMouseLeave: function onMouseLeave(e) {
-          return _this2.hideTooltip(e);
-        },
-        onClick: function onClick(e) {
-          return _this2.showEditScreen(e);
-        }
-      }, /*#__PURE__*/React.createElement("i", {
-        className: "fa fa-cog",
-        "aria-hidden": "true"
-      }), /*#__PURE__*/React.createElement("span", {
-        className: "offscreen"
-      }, instant_img_localize.edit_details)))), /*#__PURE__*/React.createElement("div", {
-        className: "options"
-      }, this.likes ? /*#__PURE__*/React.createElement("span", {
-        className: "likes tooltip--above",
-        "data-title": this.likes + ' ' + likeTxt,
-        onMouseEnter: function onMouseEnter(e) {
-          return _this2.showTooltip(e);
-        },
-        onMouseLeave: function onMouseLeave(e) {
-          return _this2.hideTooltip(e);
-        }
-      }, /*#__PURE__*/React.createElement("i", {
-        className: "fa fa-heart heart-like",
-        "aria-hidden": "true"
-      }), " ", this.likes) : null, /*#__PURE__*/React.createElement("a", {
-        className: "tooltip--above",
-        href: this.permalink,
-        "data-title": "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.capitalizeFirstLetter)(this.provider)),
-        onMouseEnter: function onMouseEnter(e) {
-          return _this2.showTooltip(e);
-        },
-        onMouseLeave: function onMouseLeave(e) {
-          return _this2.hideTooltip(e);
-        },
-        rel: "noopener noreferrer",
-        target: "_blank"
-      }, /*#__PURE__*/React.createElement("i", {
-        className: "fa fa-external-link",
-        "aria-hidden": "true"
-      }), /*#__PURE__*/React.createElement("span", {
-        className: "offscreen"
-      }, "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.capitalizeFirstLetter)(this.provider)))))), /*#__PURE__*/React.createElement("div", {
-        className: "edit-screen",
-        tabIndex: "0",
-        ref: this.editScreen
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "edit-screen--title"
-      }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
-        className: "heading"
-      }, instant_img_localize.edit_details), this.dimensions && this.dimensions.length > 0 && /*#__PURE__*/React.createElement("p", {
-        className: "dimensions"
-      }, this.dimensions)), /*#__PURE__*/React.createElement("div", {
-        className: "preview",
-        style: {
-          backgroundImage: "url(".concat(this.thumb, ")")
-        }
-      })), /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("span", null, instant_img_localize.edit_filename, ":"), /*#__PURE__*/React.createElement("input", {
-        type: "text",
-        name: "filename",
-        "data-original": this.filename,
-        placeholder: this.filename,
-        value: this.state.filename,
-        onChange: function onChange(e) {
-          return _this2.handleEditChange(e);
-        }
-      }), /*#__PURE__*/React.createElement("em", null, ".", this.extension)), /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("span", null, instant_img_localize.edit_title, ":"), /*#__PURE__*/React.createElement("input", {
-        type: "text",
-        name: "title",
-        "data-original": this.title,
-        placeholder: this.title,
-        value: this.state.title || '',
-        onChange: function onChange(e) {
-          return _this2.handleEditChange(e);
-        }
-      })), /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("span", null, instant_img_localize.edit_alt, ":"), /*#__PURE__*/React.createElement("input", {
-        type: "text",
-        name: "alt",
-        "data-original": this.alt,
-        value: this.state.alt || '',
-        onChange: function onChange(e) {
-          return _this2.handleEditChange(e);
-        }
-      })), /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("span", null, instant_img_localize.edit_caption, ":"), /*#__PURE__*/React.createElement("textarea", {
-        rows: "4",
-        name: "caption",
-        "data-original": this.caption,
-        onChange: function onChange(e) {
-          return _this2.handleEditChange(e);
-        },
-        value: this.state.caption || '',
-        ref: this.captionRef
-      })), this.attribution ? /*#__PURE__*/React.createElement("div", {
-        className: "add-attribution-row"
-      }, /*#__PURE__*/React.createElement("button", {
-        onClick: function onClick(e) {
-          return _this2.addAttribution(e);
-        },
-        type: "button"
-      }, instant_img_localize.attribution)) : null, /*#__PURE__*/React.createElement("div", {
-        className: "edit-screen--controls"
-      }, /*#__PURE__*/React.createElement("button", {
-        type: "button",
-        className: "button",
-        onClick: function onClick(e) {
-          return _this2.cancelEditChange(e);
-        }
-      }, instant_img_localize.cancel), ' ', "\xA0", /*#__PURE__*/React.createElement("button", {
-        type: "button",
-        className: "button button-primary",
-        onClick: function onClick() {
-          return _this2.saveEditChange();
-        }
-      }, instant_img_localize.upload_now)))));
+  }, /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-pencil",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "offscreen"
+  }, instant_img_localize.edit_upload)), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "edit-photo fade",
+    "data-title": instant_img_localize.edit_details,
+    onMouseEnter: function onMouseEnter(e) {
+      return showTooltip(e);
+    },
+    onMouseLeave: function onMouseLeave(e) {
+      return hideTooltip(e);
+    },
+    onClick: function onClick(e) {
+      return showEditScreen(e);
     }
-  }]);
-  return Photo;
-}(React.Component);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Photo);
+  }, /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-cog",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "offscreen"
+  }, instant_img_localize.edit_details)))), /*#__PURE__*/React.createElement("div", {
+    className: "options"
+  }, likes ? /*#__PURE__*/React.createElement("span", {
+    className: "likes tooltip--above",
+    "data-title": likes + ' ' + likeDisplay,
+    onMouseEnter: function onMouseEnter(e) {
+      return showTooltip(e);
+    },
+    onMouseLeave: function onMouseLeave(e) {
+      return hideTooltip(e);
+    }
+  }, /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-heart heart-like",
+    "aria-hidden": "true"
+  }), " ", likes) : null, /*#__PURE__*/React.createElement("a", {
+    className: "tooltip--above",
+    href: permalink,
+    "data-title": "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.capitalizeFirstLetter)(provider)),
+    onMouseEnter: function onMouseEnter(e) {
+      return showTooltip(e);
+    },
+    onMouseLeave: function onMouseLeave(e) {
+      return hideTooltip(e);
+    },
+    rel: "noopener noreferrer",
+    target: "_blank"
+  }, /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-external-link",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "offscreen"
+  }, "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.capitalizeFirstLetter)(provider)))))), /*#__PURE__*/React.createElement("div", {
+    className: "edit-screen",
+    tabIndex: "0",
+    ref: editScreen
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "edit-screen--title"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+    className: "heading"
+  }, instant_img_localize.edit_details), dimensions && dimensions.length > 0 && /*#__PURE__*/React.createElement("p", {
+    className: "dimensions"
+  }, dimensions)), /*#__PURE__*/React.createElement("div", {
+    className: "preview",
+    style: {
+      backgroundImage: "url(".concat(thumb, ")")
+    }
+  })), /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("span", null, instant_img_localize.edit_filename, ":"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    name: "filename",
+    "data-original": filename,
+    placeholder: imageDetails.filename,
+    value: imageDetails.filename,
+    onChange: function onChange(e) {
+      return handleEditChange(e);
+    }
+  }), /*#__PURE__*/React.createElement("em", null, ".", extension)), /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("span", null, instant_img_localize.edit_title, ":"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    name: "title",
+    "data-original": title,
+    placeholder: title,
+    value: imageDetails.title || '',
+    onChange: function onChange(e) {
+      return handleEditChange(e);
+    }
+  })), /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("span", null, instant_img_localize.edit_alt, ":"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    name: "alt",
+    "data-original": alt,
+    value: imageDetails.alt || '',
+    onChange: function onChange(e) {
+      return handleEditChange(e);
+    }
+  })), /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("span", null, instant_img_localize.edit_caption, ":"), /*#__PURE__*/React.createElement("textarea", {
+    rows: "4",
+    name: "caption",
+    "data-original": imageCaption,
+    onChange: function onChange(e) {
+      return handleEditChange(e);
+    },
+    value: imageDetails.caption || '',
+    ref: captionRef
+  })), attribution ? /*#__PURE__*/React.createElement("div", {
+    className: "add-attribution-row"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick(e) {
+      return addAttribution(e);
+    },
+    type: "button"
+  }, instant_img_localize.attribution)) : null, /*#__PURE__*/React.createElement("div", {
+    className: "edit-screen--controls"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "button",
+    onClick: function onClick(e) {
+      return cancelEdit(e);
+    }
+  }, instant_img_localize.cancel), ' ', "\xA0", /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "button button-primary",
+    onClick: function onClick() {
+      return uploadNow();
+    }
+  }, instant_img_localize.upload_now)))));
+}
 
 /***/ }),
 
@@ -4932,7 +4854,6 @@ var PhotoList = /*#__PURE__*/function (_React$Component) {
         }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_15__["default"], {
           provider: _this4.provider,
           result: result,
-          editor: _this4.editor,
           mediaRouter: _this4.is_media_router,
           blockEditor: _this4.is_block_editor,
           SetFeaturedImage: _this4.SetFeaturedImage,
@@ -5032,82 +4953,63 @@ function ResultsToolTip(props) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ Sponsor)
 /* harmony export */ });
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-var Sponsor = /*#__PURE__*/function (_React$Component) {
-  _inherits(Sponsor, _React$Component);
-  var _super = _createSuper(Sponsor);
-  function Sponsor(props) {
-    var _this;
-    _classCallCheck(this, Sponsor);
-    _this = _super.call(this, props);
-    var result = _this.props.result;
-    var _result$data = result.data,
-      data = _result$data === void 0 ? null : _result$data;
-    _this.url = data.url ? data.url : "";
-    _this.title = data.title ? data.title : "";
-    _this.desc = data.description ? data.description : "";
-    _this.avatar = data.avatar ? data.avatar : "";
-    var _data$image = data.image,
-      image = _data$image === void 0 ? null : _data$image;
-    _this.image = image.src ? image.src : "";
-    _this.alt = image.alt ? image.alt : "";
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 
-    // Refs.
-    _this.photo = React.createRef();
-    _this.link = React.createRef();
-    return _this;
-  }
-  _createClass(Sponsor, [{
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-      return /*#__PURE__*/React.createElement(React.Fragment, null, this.image && this.url ? /*#__PURE__*/React.createElement("article", {
-        className: "photo feature",
-        title: this.desc,
-        ref: this.photo,
-        onClick: function onClick() {
-          return _this2.link.current.click();
-        }
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "photo--wrap"
-      }, /*#__PURE__*/React.createElement("span", {
-        className: "flag",
-        title: instant_img_localize.advertisement
-      }, instant_img_localize.ad), /*#__PURE__*/React.createElement("div", {
-        className: "img-wrap"
-      }, /*#__PURE__*/React.createElement("a", {
-        className: "loaded",
-        href: this.url,
-        target: "_blank",
-        ref: this.link
-      }, /*#__PURE__*/React.createElement("img", {
-        src: this.image,
-        alt: this.alt
-      }))), /*#__PURE__*/React.createElement("div", {
-        className: "feature-title"
-      }, this.avatar && /*#__PURE__*/React.createElement("img", {
-        src: this.avatar,
-        alt: this.title
-      }), /*#__PURE__*/React.createElement("span", null, this.title)))) : null);
+
+/**
+ * Render the Sponsor component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The Sponsor component.
+ */
+function Sponsor(props) {
+  var result = props.result;
+  var _result$data = result.data,
+    data = _result$data === void 0 ? null : _result$data;
+  var url = (data === null || data === void 0 ? void 0 : data.url) || '';
+  var title = (data === null || data === void 0 ? void 0 : data.title) || '';
+  var desc = (data === null || data === void 0 ? void 0 : data.description) || '';
+  var avatar = (data === null || data === void 0 ? void 0 : data.avatar) || '';
+  var _data$image = data.image,
+    image = _data$image === void 0 ? null : _data$image;
+  var _image$src = image.src,
+    src = _image$src === void 0 ? null : _image$src,
+    _image$alt = image.alt,
+    alt = _image$alt === void 0 ? null : _image$alt;
+  var photo = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var link = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, image && url ? /*#__PURE__*/React.createElement("article", {
+    className: "photo feature",
+    title: desc,
+    ref: photo,
+    onClick: function onClick() {
+      return link.current.click();
     }
-  }]);
-  return Sponsor;
-}(React.Component);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Sponsor);
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "photo--wrap"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "flag",
+    title: instant_img_localize.advertisement
+  }, instant_img_localize.ad), /*#__PURE__*/React.createElement("div", {
+    className: "img-wrap"
+  }, /*#__PURE__*/React.createElement("a", {
+    className: "loaded",
+    href: url,
+    target: "_blank",
+    ref: link
+  }, /*#__PURE__*/React.createElement("img", {
+    src: src,
+    alt: alt
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "feature-title"
+  }, avatar && /*#__PURE__*/React.createElement("img", {
+    src: avatar,
+    alt: title
+  }), /*#__PURE__*/React.createElement("span", null, title)))) : null);
+}
 
 /***/ }),
 

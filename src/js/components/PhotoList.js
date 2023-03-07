@@ -786,7 +786,6 @@ class PhotoList extends React.Component {
 										<Photo
 											provider={this.provider}
 											result={result}
-											editor={this.editor}
 											mediaRouter={this.is_media_router}
 											blockEditor={this.is_block_editor}
 											SetFeaturedImage={this.SetFeaturedImage}

@@ -14,7 +14,7 @@ import updatePluginSetting from '../functions/updatePluginSetting';
  * @return {JSX.Element} The APILightbox component.
  */
 export default function APILightbox(props) {
-	const { provider, afterVerifiedAPICallback, closeAPILightbox } = props;
+	const { provider, function: afterVerifiedAPICallback, function: closeAPILightbox } = props;
 	const [apiStatus, setAPIStatus] = useState('invalid');
 	const [response, setResponse] = useState('');
 

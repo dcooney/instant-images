@@ -1,70 +1,58 @@
+import { Fragment, useRef, useState } from '@wordpress/element';
 import axios from 'axios';
-import API from '../constants/API.js';
 import { capitalizeFirstLetter } from '../functions/helpers';
 import unsplashDownload from '../functions/unsplashDownload';
 
-class Photo extends React.Component {
-	constructor(props) {
-		super(props);
+/**
+ * Render the Photo component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The Photo component.
+ */
+export default function Photo(props) {
+	const { provider, result, mediaRouter, blockEditor, SetFeaturedImage, InsertImage, showTooltip, hideTooltip } = props;
 
-		this.provider = this.props.provider;
-		this.api_provider = API[this.provider];
+	const { id, permalink, title, alt, caption, extension = 'jpg', likes, attribution, dimensions, urls, user } = result;
+	const { thumb, full, download_url } = urls;
 
-		const result = this.props.result;
-		this.id = result.id;
-		this.filename = this.id;
-		this.permalink = result && result.permalink;
-		this.extension = result && result.extension ? result.extension : 'jpg';
-		this.likes = result && result.likes;
-		this.attribution = result && result.attribution ? result.attribution : '';
-		this.auto_attribution = instant_img_localize.auto_attribution === '1' ? true : false;
-		this.dimensions = result?.dimensions ? result.dimensions : '';
+	const filename = id;
+	const user_name = user?.name;
+	const user_photo = user?.photo;
+	const user_url = user?.url;
 
-		this.thumb = result && result.urls && result.urls.thumb;
-		this.full = result && result.urls && result.urls.full;
-		this.download_url = result && result.urls && result.urls.download_url;
+	const likeDisplay = parseInt(likes) === 1 ? instant_img_localize.likes : instant_img_localize.likes_plural;
+	const auto_attribution = instant_img_localize.auto_attribution === '1' ? true : false;
+	const imageCaption = auto_attribution ? attribution : caption; // Set auto attribution.
 
-		this.user_id = result && result.user && result.user.id;
-		this.user_name = result && result.user && result.user.name;
-		this.user_photo = result && result.user && result.user.photo;
-		this.user_url = result && result.user && result.user.url;
+	// Photo state.
+	const [imageDetails, setImageDetails] = useState({
+		filename: filename,
+		title: title,
+		alt: alt,
+		caption: imageCaption,
+	});
 
-		this.title = result && result.title ? result.title : '';
-		this.alt = result && result.alt ? result.alt : '';
-		this.caption = result?.caption ? result.caption : '';
-		this.caption = this.auto_attribution ? this.attribution : this.caption; // Set auto attributions.
+	// Refs.
+	const photo = useRef();
+	const photoUpload = useRef();
+	const editScreen = useRef();
+	const captionRef = useRef();
+	const noticeMsg = useRef();
 
-		this.inProgress = false;
-		this.container = document.querySelector('.instant-img-container');
-		this.showTooltip = this.props.showTooltip.bind(this);
-		this.hideTooltip = this.props.hideTooltip.bind(this);
+	let inProgress = false;
+	const container = document.querySelector('.instant-img-container');
 
-		// Gutenberg Sidebar
-		this.setAsFeaturedImage = false;
-		this.insertIntoPost = false;
-		this.is_media_router = this.props.mediaRouter;
-		this.is_block_editor = this.props.blockEditor;
-		this.SetFeaturedImage = this.props.SetFeaturedImage;
-		this.InsertImage = this.props.InsertImage;
+	// this.showTooltip = this.props.showTooltip.bind(this);
+	// this.hideTooltip = this.props.hideTooltip.bind(this);
 
-		// Display controls in Gutenberg Sidebar Only
-		this.displayGutenbergControl = this.is_block_editor ? true : false;
+	// Gutenberg Sidebar
+	const setAsFeaturedImage = false;
+	const insertIntoPost = false;
+	const is_media_router = mediaRouter;
+	const is_block_editor = blockEditor;
 
-		// Photo state
-		this.state = {
-			filename: this.filename,
-			title: this.title,
-			alt: this.alt,
-			caption: this.caption,
-		};
-
-		// Refs.
-		this.photo = React.createRef();
-		this.photoUpload = React.createRef();
-		this.editScreen = React.createRef();
-		this.captionRef = React.createRef();
-		this.noticeMsg = React.createRef();
-	}
+	// Display controls in Gutenberg Sidebar Only
+	const displayGutenbergControl = is_block_editor ? true : false;
 
 	/**
 	 * Function to trigger the image download.
@@ -72,26 +60,24 @@ class Photo extends React.Component {
 	 * @param {Element} e The current download item.
 	 * @since 4.3
 	 */
-	download(e) {
+	function download(e) {
 		e.preventDefault();
-		const self = this;
 
 		let target = e.currentTarget;
-		const photo = self.photo.current;
-		const notice = self.noticeMsg.current;
+		const notice = noticeMsg.current;
 
 		if (!target.classList.contains('upload')) {
 			// If target is .download-photo, switch target definition
-			target = self.photoUpload.current; // a.upload.
+			target = photoUpload.current; // a.upload.
 		}
 
-		if (target.classList.contains('success') || this.inProgress) {
+		if (target.classList.contains('success') || inProgress) {
 			return false; // Exit if already uploaded or in progress.
 		}
 
-		this.inProgress = true;
+		inProgress = true;
 		target.classList.add('uploading');
-		photo.classList.add('in-progress');
+		photo.current.classList.add('in-progress');
 
 		// Status messaging
 		notice.innerHTML = instant_img_localize.saving;
@@ -110,11 +96,11 @@ class Photo extends React.Component {
 
 		// Data Params
 		const data = {
-			provider: this.provider,
+			provider: provider,
 			id: target.getAttribute('data-id'),
 			image_url: target.getAttribute('data-url'),
 			filename: target.getAttribute('data-id'),
-			extension: this.extension,
+			extension: extension,
 			custom_filename: target.getAttribute('data-filename'),
 			title: target.getAttribute('data-title'),
 			alt: target.getAttribute('data-alt'),
@@ -144,44 +130,41 @@ class Photo extends React.Component {
 					const msg = response.msg;
 
 					if (success) {
-						// Edit URL
-						let edit_url = `${admin_url}post.php?post=${attachment.id}&action=edit`;
-
-						// Success/Upload Complete
-						self.uploadComplete(target, photo, msg, edit_url, attachment.id);
+						const edit_url = `${admin_url}post.php?post=${attachment.id}&action=edit`; // Edit URL.
+						uploadComplete(target, msg, edit_url, attachment.id); // Success/Upload Complete
 
 						// Trigger a download at Unsplash.
-						if (self.provider === 'unsplash' && self.download_url) {
-							unsplashDownload(self.download_url);
+						if (provider === 'unsplash' && download_url) {
+							unsplashDownload(download_url);
 						}
 
 						// Set Featured Image [Gutenberg Sidebar]
-						if (self.displayGutenbergControl && self.setAsFeaturedImage) {
-							self.SetFeaturedImage(attachment.id);
-							self.setAsFeaturedImage = false;
-							self.closeMediaModal();
+						if (displayGutenbergControl && setAsFeaturedImage) {
+							SetFeaturedImage(attachment.id);
+							setAsFeaturedImage = false;
+							closeMediaModal();
 						}
 
 						// Insert Image [Gutenberg Sidebar]
-						if (self.displayGutenbergControl && self.insertIntoPost) {
+						if (displayGutenbergControl && insertIntoPost) {
 							if (attachment.url) {
-								self.InsertImage(attachment.url, attachment.caption, attachment.alt);
-								self.closeMediaModal();
+								InsertImage(attachment.url, attachment.caption, attachment.alt);
+								closeMediaModal();
 							}
-							self.insertIntoPost = false;
+							insertIntoPost = false;
 						}
 
 						// If is media popup, redirect user to media-upload settings
-						if (self.container.dataset.mediaPopup === 'true' && !self.is_block_editor) {
+						if (container.dataset.mediaPopup === 'true' && !is_block_editor) {
 							window.location = 'media-upload.php?type=image&tab=library&attachment_id=' + attachment.id;
 						}
 					} else {
 						// Error
-						self.uploadError(target, notice, msg);
+						uploadError(target, notice, msg);
 					}
 				} else {
 					// Error
-					self.uploadError(target, notice, instant_img_localize.error_upload);
+					uploadError(target, notice, instant_img_localize.error_upload);
 				}
 			})
 			.catch(function (error) {
@@ -195,12 +178,12 @@ class Photo extends React.Component {
 	 * @param {Element} e The clicked element.
 	 * @since 4.0
 	 */
-	setFeaturedImageClick(e) {
-		this.hideTooltip(e);
-		const photo = this.photoUpload.current;
+	function setFeaturedImageClick(e) {
+		hideTooltip(e);
+		const photo = photoUpload.current;
 		if (photo) {
-			this.setAsFeaturedImage = true;
-			photo.click();
+			setAsFeaturedImage = true;
+			photo.current.click();
 		}
 	}
 
@@ -210,60 +193,61 @@ class Photo extends React.Component {
 	 * @param {Element} e The clicked element.
 	 * @since 4.0
 	 */
-	insertImageIntoPost(e) {
-		this.hideTooltip(e);
-		const photo = this.photoUpload.current;
+	function insertImageIntoPost(e) {
+		hideTooltip(e);
+		const photo = photoUpload.current;
 		if (photo) {
-			this.insertIntoPost = true;
-			photo.click();
+			insertIntoPost = true;
+			photo.current.click();
 		}
 	}
 
 	/**
-	 * Function runs when upload has completed.
+	 * Upload complete function.
 	 *
-	 * @param {Element} target The clicked item.
-	 * @param {Element} photo  The `.photo` element.
-	 * @param {string}  msg    The Success Msg.
-	 * @param {string}  url    The attachment edit link.
-	 * @param {string}  id     The attachment id.
+	 * @param {Element} target Clicked item.
+	 * @param {string}  msg    Success Msg.
+	 * @param {string}  url    Attachment edit link.
+	 * @param {string}  id     Attachment id.
 	 * @since 3.0
 	 */
-	uploadComplete(target, photo, msg, url, id) {
-		this.setImageTitle(target, msg);
+	function uploadComplete(target, msg, url, id) {
+		setImageTitle(target, msg);
 
-		photo.classList.remove('in-progress');
-		photo.classList.add('uploaded');
+		photo.current.classList.remove('in-progress');
+		photo.current.classList.add('uploaded');
 
-		photo.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
-		photo.querySelector('.edit-photo-admin').style.display = 'inline-block'; // Show edit-photo-admin button
-		photo.querySelector('.edit-photo-admin').href = url; // Add admin edit link
-		photo.querySelector('.edit-photo-admin').target = '_balnk'; // Add new window
+		photo.current.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
+		photo.current.querySelector('.edit-photo-admin').style.display = 'inline-block'; // Show edit-photo-admin button
+		photo.current.querySelector('.edit-photo-admin').href = url; // Add admin edit link
+		photo.current.querySelector('.edit-photo-admin').target = '_balnk'; // Add new window
 
 		target.classList.remove('uploading');
 		target.classList.remove('resizing');
 		target.classList.add('success');
-		this.inProgress = false;
+		inProgress = false;
 
 		// Remove uploaded and success states after 5 seconds.
 		setTimeout(function () {
-			photo.classList.remove('uploaded');
+			photo.current.classList.remove('uploaded');
 			target.classList.remove('success');
 		}, 5000);
 
 		// Gutenberg Sidebar
-		if (this.is_block_editor) {
-			photo.querySelector('.insert').style.display = 'none'; // Hide insert button
-			photo.querySelector('.set-featured').style.display = 'none'; // Hide set-featured button
+		if (is_block_editor) {
+			photo.current.querySelector('.insert').style.display = 'none'; // Hide insert button
+			photo.current.querySelector('.set-featured').style.display = 'none'; // Hide set-featured button
 		}
 
 		// Media Router
-		this.mediaRouter(id);
+		refreshMediaRouter(id);
 
-		// Deprecated in 4.3
-		// Was previously used in the Media Popup Context.
-		// Refresh Media Library contents on edit pages
-		if (this.container.classList.contains('editor')) {
+		/**
+		 * Deprecated in Instant Images 4.3.
+		 * Was previously used in the Media Popup Context.
+		 * Refresh Media Library contents on edit pages
+		 */
+		if (container.classList.contains('editor')) {
 			if (typeof wp.media != 'undefined') {
 				if (wp.media.frame.content.get() !== null) {
 					wp.media.frame.content.get().collection.props.set({ ignore: +new Date() });
@@ -276,35 +260,32 @@ class Photo extends React.Component {
 	}
 
 	/**
-	 * Refresh Media Modal and select item after it's been uploaded
+	 * Refresh Media Modal and select item after it's been uploaded.
 	 *
 	 * @param {string} id The media modal ID.
 	 * @since 4.3
 	 */
-	mediaRouter(id) {
-		if (this.is_media_router && wp.media && wp.media.frame && wp.media.frame.el) {
-			let mediaModal = wp.media.frame.el;
-			let mediaTab = mediaModal.querySelector('#menu-item-browse');
+	function refreshMediaRouter(id) {
+		if (is_media_router && wp.media && wp.media.frame && wp.media.frame.el) {
+			const mediaModal = wp.media.frame.el;
+			const mediaTab = mediaModal.querySelector('#menu-item-browse');
 			if (mediaTab) {
-				// Open the 'Media Library' tab
+				// Open the 'Media Library' tab.
 				mediaTab.click();
 			}
 
 			// Delay to allow for tab switching
 			setTimeout(function () {
 				if (wp.media.frame.content.get() !== null) {
-					//this forces a refresh of the content
+					// Force a refresh of the mdeia modal content.
 					wp.media.frame.content.get().collection._requery(true);
-
-					//optional: reset selection
-					//wp.media.frame.content.get().options.selection.reset();
 				}
 
 				// Select the attached that was just uploaded.
-				var selection = wp.media.frame.state().get('selection');
-				var selected = parseInt(id);
+				const selection = wp.media.frame.state().get('selection');
+				const selected = parseInt(id);
 				selection.reset(selected ? [wp.media.attachment(selected)] : []);
-			}, 150);
+			}, 100);
 		}
 	}
 
@@ -316,12 +297,12 @@ class Photo extends React.Component {
 	 * @param {string}  msg    Error Msg.
 	 * @since 3.0
 	 */
-	uploadError(target, notice, msg) {
+	function uploadError(target, notice, msg) {
 		target.classList.remove('uploading');
 		target.classList.remove('resizing');
 		target.classList.add('errors');
-		this.setImageTitle(target, msg);
-		this.inProgress = false;
+		setImageTitle(target, msg);
+		inProgress = false;
 		notice.classList.add('has-error');
 		console.warn(msg);
 	}
@@ -333,7 +314,7 @@ class Photo extends React.Component {
 	 * @param {string}  msg The title Msg from JSON.
 	 * @since 3.0
 	 */
-	setImageTitle(target, msg) {
+	function setImageTitle(target, msg) {
 		target.setAttribute('title', msg); // Remove 'Click to upload...', set new value
 	}
 
@@ -343,26 +324,24 @@ class Photo extends React.Component {
 	 * @param {Element} e The target element.
 	 * @since 3.2
 	 */
-	showEditScreen(e) {
+	function showEditScreen(e) {
 		e.preventDefault();
-		const self = this;
-		this.hideTooltip(e);
+		hideTooltip(e);
 
-		// Get all open edit screens.
+		// Get all open edit screens and close them.
 		const openEdits = document.querySelectorAll('.edit-screen.editing');
 		if (openEdits) {
-			// Close open edit screens.
 			openEdits.forEach((edit) => {
 				edit.classList.remove('editing');
 			});
 		}
 
 		// Show edit screen
-		self.editScreen.current.classList.add('editing');
+		editScreen.current.classList.add('editing');
 
 		// Set focus on edit screen
 		setTimeout(function () {
-			self.editScreen.current.focus({ preventScroll: true });
+			editScreen.current.focus({ preventScroll: true });
 		}, 150);
 	}
 
@@ -372,100 +351,56 @@ class Photo extends React.Component {
 	 * @param {Element} e The target element.
 	 * @since 3.2
 	 */
-	handleEditChange(e) {
+	function handleEditChange(e) {
 		const target = e.target.name;
+		switch (target) {
+			case 'filename':
+				setImageDetails({ ...imageDetails, filename: e.target.value });
+				break;
 
-		if (target === 'filename') {
-			this.setState({
-				filename: e.target.value,
-			});
-		}
-		if (target === 'title') {
-			this.setState({
-				title: e.target.value,
-			});
-		}
-		if (target === 'alt') {
-			this.setState({
-				alt: e.target.value,
-			});
-		}
-		if (target === 'caption') {
-			this.setState({
-				caption: e.target.value,
-			});
+			case 'title':
+				setImageDetails({ ...imageDetails, title: e.target.value });
+				break;
+
+			case 'alt':
+				setImageDetails({ ...imageDetails, alt: e.target.value });
+				break;
+
+			case 'caption':
+				setImageDetails({ ...imageDetails, caption: e.target.value });
+				break;
 		}
 	}
 
 	/**
-	 * Handles the save event for the edit screen
+	 * Handles the Upload event from the edit screen.
 	 *
 	 * @since 3.2
 	 */
-	saveEditChange() {
-		// Filename
-		let filename = this.photo.current.querySelector('input[name="filename"]');
-		this.filename = filename.value;
-
-		// Title
-		let title = this.photo.current.querySelector('input[name="title"]');
-		this.title = title.value;
-
-		// Alt
-		let alt = this.photo.current.querySelector('input[name="alt"]');
-		this.alt = alt.value;
-
-		// Caption
-		let caption = this.photo.current.querySelector('textarea[name="caption"]');
-		this.caption = caption.value;
-
-		// Hide edit screen.
-		this.editScreen.current.classList.remove('editing');
-
-		// Trigger photo click.
-		this.photoUpload.current.click();
+	function uploadNow() {
+		editScreen.current.classList.remove('editing'); // Hide edit screen.
+		photoUpload.current.click(); // Trigger photo click.
 	}
 
 	/**
-	 * Handles the cancel event for the edit screen.
+	 * Cancel event for the edit screen.
 	 *
-	 * @param {Element} e The target element.
 	 * @since 3.2
 	 */
-	cancelEditChange(e) {
-		// Filename
-		const filename = this.photo.current.querySelector('input[name="filename"]');
-		filename.value = filename.dataset.original;
-		this.setState({
-			filename: filename.value,
-		});
-
-		// Title
-		const title = this.photo.current.querySelector('input[name="title"]');
-		title.value = title.dataset.original;
-		this.setState({
-			title: title.value,
-		});
-
-		// Alt
-		const alt = this.photo.current.querySelector('input[name="alt"]');
-		alt.value = alt.dataset.original;
-		this.setState({
-			alt: alt.value,
-		});
-
-		// Caption
-		const caption = this.photo.current.querySelector('textarea[name="caption"]');
-		caption.value = caption.dataset.original;
-		this.setState({
-			caption: caption.value,
+	function cancelEdit() {
+		// Reset image state.
+		setImageDetails({
+			filename: filename,
+			title: title,
+			alt: alt,
+			caption: caption,
 		});
 
 		// Hide edit screen
-		this.editScreen.current.classList.remove('editing');
+		editScreen.current.classList.remove('editing');
 
 		// Set focus back on photo.
-		this.photoUpload.current.focus({ preventScrol: true });
+		photoUpload.current.focus({ preventScrol: true });
 	}
 
 	/**
@@ -473,7 +408,7 @@ class Photo extends React.Component {
 	 *
 	 * @since 4.3
 	 */
-	closeMediaModal() {
+	function closeMediaModal() {
 		const mediaModal = document.querySelector('.media-modal');
 		if (mediaModal) {
 			const closeBtn = mediaModal.querySelector('button.media-modal-close');
@@ -490,205 +425,178 @@ class Photo extends React.Component {
 	 * @param {Element} e The target element.
 	 * @since 4.5
 	 */
-	addAttribution(e) {
+	function addAttribution(e) {
 		e.preventDefault();
-
-		const attribution = this.attribution;
-
-		// Set form value.
-		this.captionRef.current.value = attribution;
-
-		// Set the state.
-		this.setState({
-			caption: attribution,
-		});
+		captionRef.current.value = attribution; // Set form value.
+		setImageDetails({ ...imageDetails, caption: attribution }); // Set caption state.
 	}
 
-	render() {
-		const likeTxt = parseInt(this.likes) === 1 ? instant_img_localize.likes : instant_img_localize.likes_plural;
+	return (
+		<article className="photo" ref={photo}>
+			<div className="photo--wrap">
+				<div className="img-wrap">
+					<a
+						className="upload loaded"
+						href={full}
+						ref={photoUpload}
+						data-id={id}
+						data-url={full}
+						data-filename={imageDetails.filename}
+						data-title={imageDetails.title}
+						data-alt={imageDetails.alt}
+						data-caption={imageDetails.caption}
+						title={instant_img_localize.upload}
+						onClick={(e) => download(e)}
+					>
+						<img src={thumb} alt={alt} />
+						<div className="status" />
+					</a>
 
-		return (
-			<article className="photo" ref={this.photo}>
-				<div className="photo--wrap">
-					<div className="img-wrap">
-						<a
-							className="upload loaded"
-							href={this.full}
-							ref={this.photoUpload}
-							data-id={this.id}
-							data-url={this.full}
-							data-filename={this.state.filename}
-							data-title={this.state.title}
-							data-alt={this.state.alt}
-							data-caption={this.state.caption}
-							title={instant_img_localize.upload}
-							onClick={(e) => this.download(e)}
-						>
-							<img src={this.thumb} alt={this.alt} />
-							<div className="status" />
+					<div className="notice-msg" ref={noticeMsg} />
+
+					<div className="user-controls">
+						<a className="user fade" href={user_url} rel="noopener noreferrer" target="_blank" title={`${instant_img_localize.view_all} @ ${user_name}`}>
+							<div className="user-wrap">
+								{user_photo?.length > 0 && <img className="user-wrap--photo" src={user_photo} />}
+								{user_name}
+							</div>
 						</a>
-
-						<div className="notice-msg" ref={this.noticeMsg} />
-
-						<div className="user-controls">
-							<a
-								className="user fade"
-								href={this.user_url}
-								rel="noopener noreferrer"
-								target="_blank"
-								title={`${instant_img_localize.view_all} @ ${this.user_name}`}
-							>
-								<div className="user-wrap">
-									{this.user_photo && this.user_photo.length > 0 && <img className="user-wrap--photo" src={this.user_photo} />}
-									{this.user_name}
-								</div>
-							</a>
-							<div className="photo-options">
-								{this.displayGutenbergControl && (
+						<div className="photo-options">
+							{displayGutenbergControl && (
+								<Fragment>
 									<button
 										type="button"
 										className="set-featured fade"
 										data-title={instant_img_localize.set_as_featured}
-										onMouseEnter={(e) => this.showTooltip(e)}
-										onMouseLeave={(e) => this.hideTooltip(e)}
-										onClick={(e) => this.setFeaturedImageClick(e)}
+										onMouseEnter={(e) => showTooltip(e)}
+										onMouseLeave={(e) => hideTooltip(e)}
+										onClick={(e) => setFeaturedImageClick(e)}
 									>
 										<i className="fa fa-picture-o" aria-hidden="true"></i>
 										<span className="offscreen">{instant_img_localize.set_as_featured}</span>
 									</button>
-								)}
-								{this.displayGutenbergControl && (
 									<button
 										type="button"
 										className="insert fade"
 										data-title={instant_img_localize.insert_into_post}
-										onMouseEnter={(e) => this.showTooltip(e)}
-										onMouseLeave={(e) => this.hideTooltip(e)}
-										onClick={(e) => this.insertImageIntoPost(e)}
+										onMouseEnter={(e) => showTooltip(e)}
+										onMouseLeave={(e) => hideTooltip(e)}
+										onClick={(e) => insertImageIntoPost(e)}
 									>
 										<i className="fa fa-plus" aria-hidden="true"></i>
 										<span className="offscreen">{instant_img_localize.insert_into_post}</span>
 									</button>
-								)}
+								</Fragment>
+							)}
 
-								<a
-									href="#"
-									className="edit-photo-admin fade"
-									data-title={instant_img_localize.edit_upload}
-									onMouseEnter={(e) => this.showTooltip(e)}
-									onMouseLeave={(e) => this.hideTooltip(e)}
-								>
-									<i className="fa fa-pencil" aria-hidden="true"></i>
-									<span className="offscreen">{instant_img_localize.edit_upload}</span>
-								</a>
-
-								<button
-									type="button"
-									className="edit-photo fade"
-									data-title={instant_img_localize.edit_details}
-									onMouseEnter={(e) => this.showTooltip(e)}
-									onMouseLeave={(e) => this.hideTooltip(e)}
-									onClick={(e) => this.showEditScreen(e)}
-								>
-									<i className="fa fa-cog" aria-hidden="true"></i>
-									<span className="offscreen">{instant_img_localize.edit_details}</span>
-								</button>
-							</div>
-						</div>
-
-						<div className="options">
-							{this.likes ? (
-								<span
-									className="likes tooltip--above"
-									data-title={this.likes + ' ' + likeTxt}
-									onMouseEnter={(e) => this.showTooltip(e)}
-									onMouseLeave={(e) => this.hideTooltip(e)}
-								>
-									<i className="fa fa-heart heart-like" aria-hidden="true"></i> {this.likes}
-								</span>
-							) : null}
 							<a
-								className="tooltip--above"
-								href={this.permalink}
-								data-title={`${instant_img_localize.open_external} ${capitalizeFirstLetter(this.provider)}`}
-								onMouseEnter={(e) => this.showTooltip(e)}
-								onMouseLeave={(e) => this.hideTooltip(e)}
-								rel="noopener noreferrer"
-								target="_blank"
+								href="#"
+								className="edit-photo-admin fade"
+								data-title={instant_img_localize.edit_upload}
+								onMouseEnter={(e) => showTooltip(e)}
+								onMouseLeave={(e) => hideTooltip(e)}
 							>
-								<i className="fa fa-external-link" aria-hidden="true"></i>
-								<span className="offscreen">{`${instant_img_localize.open_external} ${capitalizeFirstLetter(this.provider)}`}</span>
+								<i className="fa fa-pencil" aria-hidden="true"></i>
+								<span className="offscreen">{instant_img_localize.edit_upload}</span>
 							</a>
-						</div>
-					</div>
 
-					<div className="edit-screen" tabIndex="0" ref={this.editScreen}>
-						<div className="edit-screen--title">
-							<div>
-								<p className="heading">{instant_img_localize.edit_details}</p>
-								{this.dimensions && this.dimensions.length > 0 && <p className="dimensions">{this.dimensions}</p>}
-							</div>
-							<div className="preview" style={{ backgroundImage: `url(${this.thumb})` }}></div>
-						</div>
-						<label>
-							<span>{instant_img_localize.edit_filename}:</span>
-							<input
-								type="text"
-								name="filename"
-								data-original={this.filename}
-								placeholder={this.filename}
-								value={this.state.filename}
-								onChange={(e) => this.handleEditChange(e)}
-							/>
-							<em>.{this.extension}</em>
-						</label>
-						<label>
-							<span>{instant_img_localize.edit_title}:</span>
-							<input
-								type="text"
-								name="title"
-								data-original={this.title}
-								placeholder={this.title}
-								value={this.state.title || ''}
-								onChange={(e) => this.handleEditChange(e)}
-							/>
-						</label>
-						<label>
-							<span>{instant_img_localize.edit_alt}:</span>
-							<input type="text" name="alt" data-original={this.alt} value={this.state.alt || ''} onChange={(e) => this.handleEditChange(e)} />
-						</label>
-						<label>
-							<span>{instant_img_localize.edit_caption}:</span>
-							<textarea
-								rows="4"
-								name="caption"
-								data-original={this.caption}
-								onChange={(e) => this.handleEditChange(e)}
-								value={this.state.caption || ''}
-								ref={this.captionRef}
-							></textarea>
-						</label>
-						{this.attribution ? (
-							<div className="add-attribution-row">
-								<button onClick={(e) => this.addAttribution(e)} type="button">
-									{instant_img_localize.attribution}
-								</button>
-							</div>
-						) : null}
-						<div className="edit-screen--controls">
-							<button type="button" className="button" onClick={(e) => this.cancelEditChange(e)}>
-								{instant_img_localize.cancel}
-							</button>{' '}
-							&nbsp;
-							<button type="button" className="button button-primary" onClick={() => this.saveEditChange()}>
-								{instant_img_localize.upload_now}
+							<button
+								type="button"
+								className="edit-photo fade"
+								data-title={instant_img_localize.edit_details}
+								onMouseEnter={(e) => showTooltip(e)}
+								onMouseLeave={(e) => hideTooltip(e)}
+								onClick={(e) => showEditScreen(e)}
+							>
+								<i className="fa fa-cog" aria-hidden="true"></i>
+								<span className="offscreen">{instant_img_localize.edit_details}</span>
 							</button>
 						</div>
 					</div>
-				</div>
-			</article>
-		);
-	}
-}
 
-export default Photo;
+					<div className="options">
+						{likes ? (
+							<span
+								className="likes tooltip--above"
+								data-title={likes + ' ' + likeDisplay}
+								onMouseEnter={(e) => showTooltip(e)}
+								onMouseLeave={(e) => hideTooltip(e)}
+							>
+								<i className="fa fa-heart heart-like" aria-hidden="true"></i> {likes}
+							</span>
+						) : null}
+						<a
+							className="tooltip--above"
+							href={permalink}
+							data-title={`${instant_img_localize.open_external} ${capitalizeFirstLetter(provider)}`}
+							onMouseEnter={(e) => showTooltip(e)}
+							onMouseLeave={(e) => hideTooltip(e)}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							<i className="fa fa-external-link" aria-hidden="true"></i>
+							<span className="offscreen">{`${instant_img_localize.open_external} ${capitalizeFirstLetter(provider)}`}</span>
+						</a>
+					</div>
+				</div>
+
+				<div className="edit-screen" tabIndex="0" ref={editScreen}>
+					<div className="edit-screen--title">
+						<div>
+							<p className="heading">{instant_img_localize.edit_details}</p>
+							{dimensions && dimensions.length > 0 && <p className="dimensions">{dimensions}</p>}
+						</div>
+						<div className="preview" style={{ backgroundImage: `url(${thumb})` }}></div>
+					</div>
+					<label>
+						<span>{instant_img_localize.edit_filename}:</span>
+						<input
+							type="text"
+							name="filename"
+							data-original={filename}
+							placeholder={imageDetails.filename}
+							value={imageDetails.filename}
+							onChange={(e) => handleEditChange(e)}
+						/>
+						<em>.{extension}</em>
+					</label>
+					<label>
+						<span>{instant_img_localize.edit_title}:</span>
+						<input type="text" name="title" data-original={title} placeholder={title} value={imageDetails.title || ''} onChange={(e) => handleEditChange(e)} />
+					</label>
+					<label>
+						<span>{instant_img_localize.edit_alt}:</span>
+						<input type="text" name="alt" data-original={alt} value={imageDetails.alt || ''} onChange={(e) => handleEditChange(e)} />
+					</label>
+					<label>
+						<span>{instant_img_localize.edit_caption}:</span>
+						<textarea
+							rows="4"
+							name="caption"
+							data-original={imageCaption}
+							onChange={(e) => handleEditChange(e)}
+							value={imageDetails.caption || ''}
+							ref={captionRef}
+						></textarea>
+					</label>
+					{attribution ? (
+						<div className="add-attribution-row">
+							<button onClick={(e) => addAttribution(e)} type="button">
+								{instant_img_localize.attribution}
+							</button>
+						</div>
+					) : null}
+					<div className="edit-screen--controls">
+						<button type="button" className="button" onClick={(e) => cancelEdit(e)}>
+							{instant_img_localize.cancel}
+						</button>{' '}
+						&nbsp;
+						<button type="button" className="button button-primary" onClick={() => uploadNow()}>
+							{instant_img_localize.upload_now}
+						</button>
+					</div>
+				</div>
+			</div>
+		</article>
+	);
+}
