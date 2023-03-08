@@ -982,7 +982,7 @@ body.media_page_instant-images.overflow-hidden {
   left: 0;
   background: rgba(0, 0, 0, 0.4);
   padding: 0;
-  opacity: 0.25;
+  opacity: 0.1;
   transition: all 0.3s ease;
 }
 #photos .photo .photo-options {

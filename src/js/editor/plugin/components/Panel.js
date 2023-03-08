@@ -5,8 +5,8 @@ import consoleStatus from '../../../functions/consoleStatus';
 import getProvider from '../../../functions/getProvider';
 import getQueryParams from '../../../functions/getQueryParams';
 import { checkRateLimit } from '../../../functions/helpers';
-import InsertImage from '../utils/insertImage';
-import SetFeaturedImage from '../utils/setFeaturedImage';
+import insertImage from '../utils/insertImage';
+import setFeaturedImage from '../utils/setFeaturedImage';
 const { useState, useEffect } = wp.element;
 
 /**
@@ -57,12 +57,12 @@ export default function Panel() {
 				<PhotoList
 					editor="gutenberg"
 					page={1}
-					results={data.results}
+					data={data.results}
 					error={data.error}
 					orderby={defaultOrder}
 					provider={provider}
-					SetFeaturedImage={SetFeaturedImage}
-					InsertImage={InsertImage}
+					setFeaturedImage={setFeaturedImage}
+					insertImage={insertImage}
 				/>
 			) : null}
 		</div>

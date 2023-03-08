@@ -10,7 +10,7 @@ import unsplashDownload from '../functions/unsplashDownload';
  * @return {JSX.Element} The Photo component.
  */
 export default function Photo(props) {
-	const { provider, result, mediaRouter, blockEditor, SetFeaturedImage, InsertImage, showTooltip, hideTooltip } = props;
+	const { provider, result, mediaRouter, blockEditor, setFeaturedImage, insertImage, showTooltip, hideTooltip } = props;
 
 	const { id, permalink, title, alt, caption, extension = 'jpg', likes, attribution, dimensions, urls, user } = result;
 	const { thumb, full, download_url } = urls;
@@ -136,7 +136,7 @@ export default function Photo(props) {
 
 						// Set Featured Image [Gutenberg Sidebar]
 						if (displayGutenbergControl && setAsFeaturedImage) {
-							SetFeaturedImage(attachment.id);
+							setFeaturedImage(attachment.id);
 							setAsFeaturedImage = false;
 							closeMediaModal();
 						}
@@ -144,7 +144,7 @@ export default function Photo(props) {
 						// Insert Image [Gutenberg Sidebar]
 						if (displayGutenbergControl && insertIntoPost) {
 							if (attachment.url) {
-								InsertImage(attachment.url, attachment.caption, attachment.alt);
+								insertImage(attachment.url, attachment.caption, attachment.alt);
 								closeMediaModal();
 							}
 							insertIntoPost = false;

@@ -5,10 +5,10 @@ const { dispatch } = wp.data;
  *
  * @param {string} imageId The attachment ID.
  */
-const SetFeaturedImage = (imageId) => {
+const setFeaturedImage = (imageId) => {
 	if (imageId === null) {
 		return false;
 	}
-	dispatch("core/editor").editPost({ featured_media: imageId });
+	dispatch('core/editor').editPost({ featured_media: imageId });
 };
-export default SetFeaturedImage;
+export default setFeaturedImage;

@@ -153,7 +153,7 @@ const getMediaModalProvider = async (element) => {
  */
 const renderPhotoList = (element, provider, results, error) => {
 	render(
-		<PhotoList container={element} editor="media-router" results={results} error={error} page={1} orderby={API.defaults.order} provider={provider} />,
+		<PhotoList editor="media-router" page={1} data={results} container={element} error={error} orderby={API.defaults.order} provider={provider} />,
 		element
 	);
 };

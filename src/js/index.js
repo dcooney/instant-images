@@ -38,7 +38,7 @@ function getImages(page = 1, orderby = API.defaults.order, provider = API.defaul
 			const results = await response.json();
 			const { error = null } = results;
 			const app = document.getElementById('app');
-			render(<PhotoList container={app} editor="classic" results={results} page={page} orderby={orderby} provider={provider} error={error} />, app);
+			render(<PhotoList editor="classic" page={page} data={results} container={app} orderby={orderby} provider={provider} error={error} />, app);
 		} catch (error) {
 			consoleStatus(provider, status);
 		}
