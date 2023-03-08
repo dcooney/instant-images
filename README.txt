@@ -137,7 +137,7 @@ How to install Instant Images.
 == Changelog ==
 
 = 5.1.0.2 - March 8, 2023 =
-* HOTFIX: Security fix to prevent misuse of download functionality.
+* HOTFIX: Security fix to prevent SSRF/misuse of download functionality.
 
 
 = 5.1.0.1 - February 2, 2023 =
