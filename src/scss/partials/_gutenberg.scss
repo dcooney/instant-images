@@ -30,7 +30,9 @@ button[aria-expanded='true'] .instant-images-sidebar-icon svg * {
 .components-panel {
 	.instant-img-container {
 		.load-more-wrap {
-			display: block;
+			button {
+				display: inline-block;
+			}
 		}
 		.notice.upgrade-notice {
 			margin: 10px;

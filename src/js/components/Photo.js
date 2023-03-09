@@ -1,6 +1,6 @@
 import { Fragment, useRef, useState } from '@wordpress/element';
 import axios from 'axios';
-import { capitalizeFirstLetter } from '../functions/helpers';
+import { capitalizeFirstLetter, hideTooltip, showTooltip } from '../functions/helpers';
 import unsplashDownload from '../functions/unsplashDownload';
 
 /**
@@ -10,7 +10,7 @@ import unsplashDownload from '../functions/unsplashDownload';
  * @return {JSX.Element} The Photo component.
  */
 export default function Photo(props) {
-	const { provider, result, mediaRouter, blockEditor, setFeaturedImage, insertImage, showTooltip, hideTooltip } = props;
+	const { provider, result, mediaRouter, blockEditor, setFeaturedImage, insertImage } = props;
 
 	const { id, permalink, title, alt, caption, extension = 'jpg', likes, attribution, dimensions, urls, user } = result;
 	const { thumb, full, download_url } = urls;

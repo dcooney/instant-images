@@ -1,5 +1,5 @@
 import { render } from '@wordpress/element';
-import PhotoList from './components/PhotoList';
+import App from './components/App';
 import API from './constants/API';
 import buildURL from './functions/buildURL';
 import { checkRateLimit } from './functions/helpers';
@@ -16,11 +16,10 @@ const defaultProvider = getProvider();
 /**
  * Get the initial set of photos.
  *
- * @param {number} page     The start page.
  * @param {string} orderby  The default order.
  * @param {string} provider The current service provider.
  */
-function getImages(page = 1, orderby = API.defaults.order, provider = API.defaults.provider) {
+function getImages(orderby = API.defaults.order, provider = API.defaults.provider) {
 	const container = document.querySelector('.instant-img-container');
 
 	// Build URL.
@@ -38,7 +37,7 @@ function getImages(page = 1, orderby = API.defaults.order, provider = API.defaul
 			const results = await response.json();
 			const { error = null } = results;
 			const app = document.getElementById('app');
-			render(<PhotoList editor="classic" page={page} data={results} container={app} orderby={orderby} provider={provider} error={error} />, app);
+			render(<App editor="classic" data={results} container={app} orderby={orderby} provider={provider} error={error} />, app);
 		} catch (error) {
 			consoleStatus(provider, status);
 		}
@@ -57,5 +56,5 @@ function getImages(page = 1, orderby = API.defaults.order, provider = API.defaul
  */
 (async () => {
 	const defaultOrder = API.defaults.order;
-	getImages(1, defaultOrder, defaultProvider);
+	getImages(defaultOrder, defaultProvider);
 })();

@@ -210,15 +210,14 @@ body.media_page_instant-images {
 
 	// Load More btn
 	.load-more-wrap {
-		margin: 1% 0 0;
-		padding: 25px 0;
+		margin: 0;
+		padding: 0;
 		text-align: center;
-		display: none;
 		border-top: 1px solid $gb_border;
 
 		button {
-			display: inline-block;
-			margin: 0;
+			display: none;
+			margin: 20px 0;
 			padding: 12px 15px;
 			font-size: 15px;
 			font-weight: 600;

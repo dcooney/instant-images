@@ -14,7 +14,7 @@ import updatePluginSetting from '../functions/updatePluginSetting';
  * @return {JSX.Element} The APILightbox component.
  */
 export default function APILightbox(props) {
-	const { provider, function: afterVerifiedAPICallback, function: closeAPILightbox } = props;
+	const { provider, afterVerifiedAPICallback, closeAPILightbox } = props;
 	const [apiStatus, setAPIStatus] = useState('invalid');
 	const [response, setResponse] = useState('');
 
@@ -86,8 +86,8 @@ export default function APILightbox(props) {
 		if (lightbox?.current) {
 			lightbox.current.classList.remove('active');
 			setTimeout(function () {
-				closeAPILightbox(provider);
-			}, 250);
+				closeAPILightbox();
+			}, 150);
 		}
 	}
 

@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState, useEffect } from '@wordpress/element';
+import { useRef, useState, useEffect } from '@wordpress/element';
 import classNames from 'classnames';
 import Masonry from 'masonry-layout';
 import API from '../constants/API';
@@ -13,24 +13,24 @@ import APILightbox from './APILightbox';
 import ErrorLightbox from './ErrorLightbox';
 import Filter from './Filter';
 import LoadingBlock from './LoadingBlock';
-import LoadMore from './LoadMore';
 import NoResults from './NoResults';
-import Photo from './Photo';
 import RestAPIError from './RestAPIError';
 import ResultsToolTip from './ResultsToolTip';
-import Sponsor from './Sponsor';
 import Tooltip from './Tooltip';
 import ProviderNav from './ProviderNav';
+import Photos from './Photos';
 const imagesLoaded = require('imagesloaded');
+import { useInView } from 'react-intersection-observer';
+let page = 1;
 
 /**
- * Render the PhotoList component.
+ * Render the InstantImages component.
  *
  * @param {Object} props The component props.
- * @return {JSX.Element} The PhotoList component.
+ * @return {JSX.Element} The InstantImages component.
  */
-export default function PhotoList(props) {
-	let { editor = 'classic', page, data, error, provider, orderby, container, setFeaturedImage, insertImage } = props;
+export default function App(props) {
+	let { editor = 'classic', data, error, provider, container, setFeaturedImage, insertImage } = props;
 
 	let api_provider = API[provider]; // The API settings for the provider.
 	const per_page = API.defaults.per_page;
@@ -44,9 +44,12 @@ export default function PhotoList(props) {
 	const loadingClass = 'loading';
 	const searchClass = 'searching';
 
-	// Results state.
+	// App state.
+	const mounted = useRef(false);
 	const [results, setResults] = useState(getResults(data));
 	const [activeProvider, setActiveProvider] = useState(provider);
+	const [loading, setLoading] = useState(true);
+	const [done, setDone] = useState(false);
 
 	const [state, setState] = useState({
 		provider: provider,
@@ -63,18 +66,15 @@ export default function PhotoList(props) {
 	let is_search = false;
 	let search_term = '';
 	let total_results = 0;
-	let view = '';
-	let isLoading = false; // Loading flag.
-	let isDone = false; // Done flag.
 	let msnry = '';
 	let tooltipInterval = '';
 	const delay = 250;
 
 	// Refs.
-	const loading = useRef(false);
-	const done = useRef(false);
+	const [loadMoreRef, inView] = useInView({
+		rootMargin: '0px 0px',
+	});
 	const photoTarget = useRef();
-	const providerNav = useRef();
 	const controlNav = useRef();
 	const photoSearch = useRef();
 	const filterGroups = useRef();
@@ -146,7 +146,6 @@ export default function PhotoList(props) {
 
 		// Set loading variables and options.
 		photoTarget.current.classList.add(loadingClass);
-		isLoading = true;
 		page = 1; // Reset current page num.
 		toggleFilters(); // Disable filters.
 
@@ -201,12 +200,11 @@ export default function PhotoList(props) {
 			setTimeout(function () {
 				photoSearch.current.classList.remove(searchClass);
 				photoTarget.current.classList.remove(loadingClass);
-				isLoading = false;
 			}, delay);
 		} catch (error) {
 			// Reset all search parameters.
-			done.current = true;
-			loading.current = false;
+			setDone(true);
+			setLoading(false);
 			show_search_filters = false;
 			total_results = 0;
 			photoSearch.current.classList.remove(searchClass);
@@ -221,24 +219,22 @@ export default function PhotoList(props) {
 	/**
 	 * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
 	 *
-	 * @param {string}  view     Current view.
 	 * @param {Boolean} reset    Is this an app reset.
 	 * @param {Boolean} switcher Is this a provider switch.
 	 * @since 3.0
 	 */
-	async function getPhotos(view, reset = false, switcher = false) {
-		if (loading.current && !reset) {
+	async function getPhotos(reset = false, switcher = false) {
+		if (loading && !reset) {
 			// Exit if loading and not an app reset
 			return;
 		}
-		setLoading();
-		clearSearch();
 
+		setLoading(true); // Set loading state.
+		clearSearch(); // Clear search results.
 		page = 1;
-		orderby = view;
 
 		// Build URL.
-		const params = getQueryParams(provider, filters);
+		const params = getQueryParams(activeProvider, filters);
 		const url = buildURL('photos', params);
 
 		// Create fetch request.
@@ -262,13 +258,12 @@ export default function PhotoList(props) {
 			}
 		} catch (error) {
 			consoleStatus(provider, status);
-			doneLoading();
+			setLoading(false);
 		}
 
 		// Delay loading animatons for effect.
 		setTimeout(function () {
-			photoTarget.current.classList.remove(loadingClass);
-			isLoading = false;
+			setLoading(false);
 		}, delay);
 	}
 
@@ -278,7 +273,7 @@ export default function PhotoList(props) {
 	 * @since 3.0
 	 */
 	async function loadMorePhotos() {
-		setLoading();
+		setLoading(true);
 		page = parseInt(page) + 1;
 
 		// Get search query.
@@ -292,7 +287,7 @@ export default function PhotoList(props) {
 			...search_query,
 			...filters,
 		};
-		const params = getQueryParams(provider, loadmore_params);
+		const params = getQueryParams(activeProvider, loadmore_params);
 		const url = buildURL(type, params);
 
 		// Create fetch request.
@@ -307,7 +302,6 @@ export default function PhotoList(props) {
 			setResults((prevState) => [...prevState, ...images]); // Push images into state.
 		} catch (error) {
 			consoleStatus(provider, status);
-			isLoading = false;
 		}
 	}
 
@@ -323,7 +317,7 @@ export default function PhotoList(props) {
 		} else {
 			filters[filter] = value;
 		}
-		getPhotos(view, true);
+		getPhotos(true);
 	}
 
 	/**
@@ -365,57 +359,46 @@ export default function PhotoList(props) {
 	 * @since 4.5
 	 */
 	function afterVerifiedAPICallback(provider) {
-		const button = providerNav.current.querySelector(`button[data-provider=${provider}]`);
-		if (!button) {
-			return;
-		}
+		setActiveProvider(provider); // Set the active provider.
 		setState({ api_lightbox: false }); // Close the lightbox.
 		document.body.classList.remove('overflow-hidden');
-		button.click();
 	}
 
 	/**
 	 * Close the API Lightbox.
-	 *
-	 * @param {string} provider The previous provider.
+	 * @since 4.5
 	 */
-	function closeAPILightbox(provider) {
+	function closeAPILightbox() {
 		setState({ api_lightbox: false }); // Close the lightbox.
 		document.body.classList.remove('overflow-hidden');
-
-		// Set focus on previous provider button.
-		const target = providerNav.current.querySelector(`button[data-provider=${provider}]`);
-		if (target) {
-			target.focus({ preventScroll: true });
-		}
 	}
 
 	/**
-	 * Toggles the service provider.
+	 * Switch API providers.
 	 *
 	 * @param {Event} e The clicked element event.
 	 * @since 4.5
 	 */
 	async function switchProvider(e) {
 		const target = e.currentTarget;
-		const newProvider = target.dataset.provider;
+		const provider = target.dataset.provider;
 
 		if (target.classList.contains('active')) {
 			// Exit if already active.
 			return;
 		}
 
-		// API Checker.
-		// Bounce if API key for provider is invalid.
-		if (API[newProvider].requires_key) {
+		// API Verification.
+		// Note: Bounce user if provider API key is not valid.
+		if (API[provider].requires_key) {
 			try {
-				const response = await fetch(buildTestURL(newProvider));
+				const response = await fetch(buildTestURL(provider));
 				const { status, headers } = response;
 				checkRateLimit(headers);
 
 				if (status !== 200) {
 					// Catch API errors and 401s.
-					setState({ api_lightbox: newProvider }); // Show API Lightbox.
+					setState({ api_lightbox: provider }); // Show API Lightbox.
 					document.body.classList.add('overflow-hidden');
 					return;
 				}
@@ -427,24 +410,35 @@ export default function PhotoList(props) {
 			}
 		}
 
+		// GO forward and toggle the providers.
+		photoTarget.current.classList.add(loadingClass);
+		setTimeout(() => {
+			// Delay for effect.
+			setActiveProvider(provider);
+		}, 150);
+
 		// Update API provider params.
-		provider = newProvider;
-		setActiveProvider(newProvider);
-		setState((prevState) => ({ ...prevState, provider }));
 
-		api_provider = API[provider];
-		api_key = instant_img_localize[`${provider}_app_id`];
-		photo_api = api_provider?.photo_api;
-		search_api = api_provider?.search_api;
+		// api_provider = API[provider];
+		// api_key = instant_img_localize[`${provider}_app_id`];
+		// photo_api = api_provider?.photo_api;
+		// search_api = api_provider?.search_api;
 
-		// Clear all filters.
-		filters = {};
-		search_filters = {};
+		// // Clear all filters.
+		// filters = {};
+		// search_filters = {};
 
-		// Finally, fetch the photos.
-		view = 'latest';
-		getPhotos(view, true, true);
+		// // Finally, fetch the photos.
+		// view = 'latest';
+		// getPhotos(view, true, true);
 	}
+
+	useEffect(() => {
+		if (!mounted.current) {
+			return;
+		}
+		getPhotos(true, true);
+	}, [activeProvider]);
 
 	/**
 	 * Renders the Masonry layout.
@@ -453,31 +447,18 @@ export default function PhotoList(props) {
 	 */
 	function renderLayout() {
 		if (is_block_editor) {
+			setLoading(false);
 			return false;
 		}
-		const photoListWrapper = photoTarget.current;
-		imagesLoaded(photoListWrapper, function () {
-			msnry = new Masonry(photoListWrapper, {
+		imagesLoaded(photoTarget.current, function () {
+			msnry = new Masonry(photoTarget.current, {
 				itemSelector: '.photo',
 			});
 			photoTarget.current.querySelectorAll('.photo').forEach((el) => {
 				el.classList.add('in-view');
 			});
+			setLoading(false);
 		});
-	}
-
-	/**
-	 * Scrolling function.
-	 *
-	 * @since 3.0
-	 */
-	function onScroll() {
-		const wHeight = window.innerHeight;
-		const scrollTop = window.pageYOffset;
-		const scrollH = document.body.scrollHeight - 250;
-		if (wHeight + scrollTop >= scrollH && !loading.current && !done.current) {
-			loadMorePhotos();
-		}
 	}
 
 	/**
@@ -487,73 +468,7 @@ export default function PhotoList(props) {
 	 * @since 3.0
 	 */
 	function checkTotalResults(num) {
-		done.current = parseInt(num) === 0 || num === undefined ? true : false;
-	}
-
-	/**
-	 * Finished loading.
-	 */
-	function doneLoading() {
-		setTimeout(function () {
-			// Delay to prevent loading to quickly.
-			loading.current = false;
-			plugin.classList.remove(loadingClass);
-		}, 750);
-	}
-
-	/**
-	 * Started loading.
-	 */
-	function setLoading() {
-		loading.current = true;
-		plugin.classList.add(loadingClass);
-	}
-
-	/**
-	 * Show the tooltip.
-	 *
-	 * @param {Event} e The clicked element event.
-	 * @since 4.3.0
-	 */
-	function showTooltip(e) {
-		const target = e.currentTarget;
-		const rect = target.getBoundingClientRect();
-		let left = Math.round(rect.left);
-		const top = Math.round(rect.top);
-		const tooltip = plugin.querySelector('#tooltip');
-		tooltip.classList.remove('over');
-
-		if (target.classList.contains('tooltip--above')) {
-			tooltip.classList.add('above');
-		} else {
-			tooltip.classList.remove('above');
-		}
-
-		// Delay Tooltip Reveal.
-		tooltipInterval = setInterval(function () {
-			clearInterval(tooltipInterval);
-			tooltip.innerHTML = target.dataset.title; // Tooltip content.
-
-			// Position Tooltip.
-			left = left - tooltip.offsetWidth + target.offsetWidth + 5;
-			tooltip.style.left = `${left}px`;
-			tooltip.style.top = `${top}px`;
-
-			setTimeout(function () {
-				tooltip.classList.add('over');
-			}, delay);
-		}, 400);
-	}
-
-	/**
-	 * Hide the tooltip.
-	 *
-	 * @since 4.3.0
-	 */
-	function hideTooltip() {
-		clearInterval(tooltipInterval);
-		const tooltip = plugin.querySelector('#tooltip');
-		tooltip.classList.remove('over');
+		setDone(parseInt(num) === 0 || num === undefined);
 	}
 
 	/**
@@ -603,28 +518,39 @@ export default function PhotoList(props) {
 		}
 	}
 
+	useEffect(() => {
+		if (mounted.current && !loading && !done) {
+			loadMorePhotos();
+		}
+	}, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
+
+	// Loading flag.
+	useEffect(() => {
+		if (loading) {
+			plugin.classList.add(loadingClass);
+		} else {
+			photoTarget.current.classList.remove(loadingClass);
+			plugin.classList.remove(loadingClass);
+		}
+	}, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
+
 	// Results update.
 	useEffect(() => {
 		renderLayout();
-		doneLoading();
-	}, [results]);
+	}, [results]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	// Page load.
 	useEffect(() => {
-		setLoading();
 		test();
 		plugin.classList.remove(loadingClass);
 		wrapper.classList.add('loaded');
-		// Not Gutenberg and Media Popup add scroll listener.
-		if (!is_block_editor && !is_media_router) {
-			window.addEventListener('scroll', onScroll);
-		}
-		document.addEventListener('keydown', escFunction, false); // Add escape listener.
+		document.addEventListener('keydown', escFunction, false); // Add global escape listener.
+		mounted.current = true;
 	}, []);
 
 	return (
 		<div id="photo-listing">
-			<ProviderNav switchProvider={switchProvider} activeProvider={activeProvider} />
+			<ProviderNav switchProvider={switchProvider} provider={activeProvider} />
 
 			{state.api_lightbox && (
 				<APILightbox provider={state.api_lightbox} afterVerifiedAPICallback={afterVerifiedAPICallback} closeAPILightbox={closeAPILightbox} />
@@ -632,13 +558,13 @@ export default function PhotoList(props) {
 
 			<div className="control-nav" ref={controlNav}>
 				<div className={classNames('control-nav--filters-wrap', api_error ? 'inactive' : null)} ref={filterGroups}>
-					{!!Object.entries(state.filters)?.length && (
+					{state?.filters && Object.entries(state.filters)?.length ? (
 						<div className="control-nav--filters">
 							{Object.entries(state.filters).map(([key, filter], i) => (
 								<Filter key={`${key}-${provider}-${i}`} filterKey={key} provider={provider} data={filter} function={filterPhotos} />
 							))}
 						</div>
-					)}
+					) : null}
 				</div>
 
 				<div className={classNames('control-nav--search', 'search-field', api_error ? 'inactive' : null)} id="search-bar">
@@ -669,7 +595,7 @@ export default function PhotoList(props) {
 					<div className="search-results-header--text">
 						{`${total_results} ${instant_img_localize.search_results}`} <strong>{`${search_term}`}</strong>
 						{' - '}
-						<button title={instant_img_localize.clear_search} onClick={() => getPhotos('latest')}>
+						<button title={instant_img_localize.clear_search} onClick={() => getPhotos()}>
 							{instant_img_localize.clear_search}
 						</button>
 					</div>
@@ -692,30 +618,24 @@ export default function PhotoList(props) {
 				</div>
 			)}
 
-			<div id="photos" className="photo-target" ref={photoTarget}>
-				{!!results?.length &&
-					results.map((result, index) => (
-						<Fragment key={`${provider}-${result.id}-${index}`}>
-							{result && result.type && result.type === 'instant-images-ad' ? (
-								<Sponsor result={result} />
-							) : (
-								<Photo
-									provider={provider}
-									result={result}
-									mediaRouter={is_media_router}
-									blockEditor={is_block_editor}
-									setFeaturedImage={setFeaturedImage}
-									insertImage={insertImage}
-									showTooltip={showTooltip}
-									hideTooltip={hideTooltip}
-								/>
-							)}
-						</Fragment>
-					))}
+			<div id="photos" ref={photoTarget}>
+				<Photos
+					provider={activeProvider}
+					results={results}
+					mediaRouter={is_media_router}
+					blockEditor={is_block_editor}
+					setFeaturedImage={setFeaturedImage}
+					insertImage={insertImage}
+				/>
 			</div>
+
 			{total_results < 1 && is_search === true && <NoResults total={total_results} is_search={is_search} />}
 			<LoadingBlock />
-			<LoadMore loadMorePhotos={loadMorePhotos} />
+			<div className="load-more-wrap" ref={loadMoreRef}>
+				<button type="button" className="button" onClick={() => loadMorePhotos()}>
+					{instant_img_localize.load_more}
+				</button>
+			</div>
 			<ErrorLightbox error={api_error} provider={provider} />
 			<Tooltip />
 		</div>

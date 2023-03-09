@@ -56,7 +56,6 @@ export default function Panel() {
 			{data && data.results ? (
 				<PhotoList
 					editor="gutenberg"
-					page={1}
 					data={data.results}
 					error={data.error}
 					orderby={defaultOrder}

@@ -2520,8 +2520,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  */
 function APILightbox(props) {
   var provider = props.provider,
-    afterVerifiedAPICallback = props["function"],
-    closeAPILightbox = props["function"];
+    afterVerifiedAPICallback = props.afterVerifiedAPICallback,
+    closeAPILightbox = props.closeAPILightbox;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('invalid'),
     _useState2 = _slicedToArray(_useState, 2),
     apiStatus = _useState2[0],
@@ -2616,8 +2616,8 @@ function APILightbox(props) {
     if (lightbox !== null && lightbox !== void 0 && lightbox.current) {
       lightbox.current.classList.remove('active');
       setTimeout(function () {
-        closeAPILightbox(provider);
-      }, 250);
+        closeAPILightbox();
+      }, 150);
     }
   }
 
@@ -3179,9 +3179,7 @@ function Photo(props) {
     mediaRouter = props.mediaRouter,
     blockEditor = props.blockEditor,
     setFeaturedImage = props.setFeaturedImage,
-    insertImage = props.insertImage,
-    showTooltip = props.showTooltip,
-    hideTooltip = props.hideTooltip;
+    insertImage = props.insertImage;
   var id = result.id,
     permalink = result.permalink,
     title = result.title,
@@ -3350,7 +3348,7 @@ function Photo(props) {
    * @since 4.0
    */
   function setFeaturedImageClick(e) {
-    hideTooltip(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     var photo = photoUpload.current;
     if (photo) {
       true, _readOnlyError("setAsFeaturedImage");
@@ -3365,7 +3363,7 @@ function Photo(props) {
    * @since 4.0
    */
   function insertImageIntoPost(e) {
-    hideTooltip(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     var photo = photoUpload.current;
     if (photo) {
       true, _readOnlyError("insertIntoPost");
@@ -3499,7 +3497,7 @@ function Photo(props) {
    */
   function showEditScreen(e) {
     e.preventDefault();
-    hideTooltip(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
 
     // Get all open edit screens and close them.
     var openEdits = document.querySelectorAll('.edit-screen.editing');
@@ -3664,10 +3662,10 @@ function Photo(props) {
     className: "set-featured fade",
     "data-title": instant_img_localize.set_as_featured,
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return setFeaturedImageClick(e);
@@ -3682,10 +3680,10 @@ function Photo(props) {
     className: "insert fade",
     "data-title": instant_img_localize.insert_into_post,
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return insertImageIntoPost(e);
@@ -3700,10 +3698,10 @@ function Photo(props) {
     className: "edit-photo-admin fade",
     "data-title": instant_img_localize.edit_upload,
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-pencil",
@@ -3715,10 +3713,10 @@ function Photo(props) {
     className: "edit-photo fade",
     "data-title": instant_img_localize.edit_details,
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return showEditScreen(e);
@@ -3734,10 +3732,10 @@ function Photo(props) {
     className: "likes tooltip--above",
     "data-title": likes + ' ' + likeDisplay,
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-heart heart-like",
@@ -3747,10 +3745,10 @@ function Photo(props) {
     href: permalink,
     "data-title": "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.capitalizeFirstLetter)(provider)),
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     },
     rel: "noopener noreferrer",
     target: "_blank"
@@ -3872,6 +3870,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ResultsToolTip__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ResultsToolTip */ "./src/js/components/ResultsToolTip.js");
 /* harmony import */ var _Sponsor__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Sponsor */ "./src/js/components/Sponsor.js");
 /* harmony import */ var _Tooltip__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip.js");
+/* harmony import */ var _ProviderNav__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ProviderNav */ "./src/js/components/ProviderNav.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -3885,13 +3884,13 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -3928,15 +3927,12 @@ function PhotoList(props) {
     editor = _props$editor === void 0 ? 'classic' : _props$editor,
     page = props.page,
     data = props.data,
-    provider = props.provider,
     error = props.error,
+    provider = props.provider,
     orderby = props.orderby,
     container = props.container,
     setFeaturedImage = props.setFeaturedImage,
     insertImage = props.insertImage;
-
-  // Get current provider settings.
-  var providers = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default().providers);
   var api_provider = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider]; // The API settings for the provider.
   var per_page = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default().defaults.per_page);
 
@@ -3953,15 +3949,20 @@ function PhotoList(props) {
     _useState2 = _slicedToArray(_useState, 2),
     results = _useState2[0],
     setResults = _useState2[1];
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(provider),
+    _useState4 = _slicedToArray(_useState3, 2),
+    activeProvider = _useState4[0],
+    setActiveProvider = _useState4[1];
+  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      provider: provider,
       filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].filters,
       search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].search,
       restapi_error: false,
       api_lightbox: false
     }),
-    _useState4 = _slicedToArray(_useState3, 2),
-    state = _useState4[0],
-    setState = _useState4[1];
+    _useState6 = _slicedToArray(_useState5, 2),
+    state = _useState6[0],
+    setState = _useState6[1];
   var filters = {};
   var search_filters = {};
   var show_search_filters = true;
@@ -4041,21 +4042,6 @@ function PhotoList(props) {
   }
 
   /**
-   * Click event for the control nav items.
-   *
-   * @param {Event} e The clicked element event.
-   * @param {string}  view  Current view.
-   * @since 4.6
-   */
-  function controlsClick(e, view) {
-    var target = e.currentTarget;
-    view = view;
-    if (!target.classList.contains('active')) {
-      getPhotos(view);
-    }
-  }
-
-  /**
    * Perform a photo search.
    *
    * @param {string} term The search term.
@@ -4074,7 +4060,7 @@ function PhotoList(props) {
    */
   function _doSearch() {
     _doSearch = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(term) {
-      var search_type, search_query, search_params, params, url, response, status, headers, _data, _results;
+      var search_type, search_query, search_params, params, url, response, status, headers, _data, images;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -4115,17 +4101,16 @@ function PhotoList(props) {
             return response.json();
           case 18:
             _data = _context.sent;
-            _results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data); // Check returned data.
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data); // Check returned data.
             total_results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__.getSearchTotal)(_data);
-            checkTotalResults(_results.length);
+            checkTotalResults(images.length);
 
             // Hide search filters if no results and not filtering.
             show_search_filters = total_results < 2 && (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.isObjectEmpty)(search_filters) ? false : true;
 
             // Update Props.
-            _results, _readOnlyError("results");
             setState({
-              results: _results,
+              results: images,
               search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].search
             });
 
@@ -4135,30 +4120,29 @@ function PhotoList(props) {
               photoTarget.current.classList.remove(loadingClass);
               isLoading = false;
             }, delay);
-            _context.next = 39;
+            _context.next = 37;
             break;
-          case 28:
-            _context.prev = 28;
+          case 27:
+            _context.prev = 27;
             _context.t0 = _context["catch"](15);
             // Reset all search parameters.
-            isDone = true;
-            isLoading = false;
+            done.current = true;
+            loading.current = false;
             show_search_filters = false;
             total_results = 0;
             photoSearch.current.classList.remove(searchClass);
             photoTarget.current.classList.remove(loadingClass);
 
             // Update Props.
-            [], _readOnlyError("results");
             setState({
               results: results
             });
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
-          case 39:
+          case 37:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[15, 28]]);
+      }, _callee, null, [[15, 27]]);
     }));
     return _doSearch.apply(this, arguments);
   }
@@ -4182,78 +4166,71 @@ function PhotoList(props) {
         _data2,
         _data2$error,
         _error,
-        _results2,
+        images,
         _args2 = arguments;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
             reset = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : false;
             switcher = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : false;
-            if (!(isLoading && !reset)) {
+            if (!(loading.current && !reset)) {
               _context2.next = 4;
               break;
             }
             return _context2.abrupt("return");
           case 4:
-            photoTarget.current.classList.add(loadingClass);
-            isLoading = true;
+            setLoading();
+            clearSearch();
             page = 1;
             orderby = view;
-            [], _readOnlyError("results");
-            clearSearch();
 
             // Build URL.
             params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(provider, filters);
             url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('photos', params); // Create fetch request.
-            _context2.next = 14;
+            _context2.next = 12;
             return fetch(url);
-          case 14:
+          case 12:
             response = _context2.sent;
             status = response.status, headers = response.headers;
             (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
 
             // Status OK.
-            _context2.prev = 17;
-            _context2.next = 20;
+            _context2.prev = 15;
+            _context2.next = 18;
             return response.json();
-          case 20:
+          case 18:
             _data2 = _context2.sent;
             _data2$error = _data2.error, _error = _data2$error === void 0 ? null : _data2$error; // Get error reporting.
-            _results2 = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data2);
-            checkTotalResults(_results2.length); // Check for returned data.
-            _results2, _readOnlyError("results"); // Update Props.
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data2);
+            checkTotalResults(images.length); // Check for returned data.
             api_error = _error;
 
             // Set results state.
             if (!switcher) {
-              setState({
-                results: _results2
-              });
+              setResults(function (prevState) {
+                return [].concat(_toConsumableArray(prevState), _toConsumableArray(images));
+              }); // Push images into state.
             } else {
-              setState({
-                results: _results2,
-                filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].filters
-              });
+              setResults(images); // Push images into state.
             }
-            _context2.next = 34;
+            _context2.next = 30;
             break;
-          case 29:
-            _context2.prev = 29;
-            _context2.t0 = _context2["catch"](17);
+          case 26:
+            _context2.prev = 26;
+            _context2.t0 = _context2["catch"](15);
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
-            photoTarget.current.classList.remove(loadingClass);
-            isLoading = false;
-          case 34:
+            doneLoading();
+          case 30:
             // Delay loading animatons for effect.
             setTimeout(function () {
               photoTarget.current.classList.remove(loadingClass);
               isLoading = false;
             }, delay);
-          case 35:
+          case 31:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[17, 29]]);
+      }, _callee2, null, [[15, 26]]);
     }));
     return _getPhotos.apply(this, arguments);
   }
@@ -4419,11 +4396,11 @@ function PhotoList(props) {
           case 0:
             target = e.currentTarget;
             newProvider = target.dataset.provider;
-            if (!(newProvider === provider)) {
+            if (!target.classList.contains('active')) {
               _context4.next = 4;
               break;
             }
-            return _context4.abrupt("return", false);
+            return _context4.abrupt("return");
           case 4:
             if (!(_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[newProvider].requires_key) {
               _context4.next = 22;
@@ -4459,16 +4436,14 @@ function PhotoList(props) {
             document.body.classList.add('overflow-hidden');
             return _context4.abrupt("return");
           case 22:
-            // Remove active from buttons.
-            providerNav.current.querySelectorAll('button').forEach(function (button) {
-              button.classList.remove('active');
-            });
-
-            // Select active button.
-            target.classList.add('active');
-
             // Update API provider params.
             provider = newProvider;
+            setActiveProvider(newProvider);
+            setState(function (prevState) {
+              return _objectSpread(_objectSpread({}, prevState), {}, {
+                provider: provider
+              });
+            });
             api_provider = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider];
             api_key = instant_img_localize["".concat(provider, "_app_id")];
             photo_api = (_api_provider3 = api_provider) === null || _api_provider3 === void 0 ? void 0 : _api_provider3.photo_api;
@@ -4664,24 +4639,11 @@ function PhotoList(props) {
     document.addEventListener('keydown', escFunction, false); // Add escape listener.
   }, []);
   return /*#__PURE__*/React.createElement("div", {
-    id: "photo-listing",
-    className: provider
-  }, !!(providers !== null && providers !== void 0 && providers.length) && /*#__PURE__*/React.createElement("nav", {
-    className: "provider-nav",
-    ref: providerNav
-  }, providers.map(function (item, iterator) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: "provider-".concat(iterator)
-    }, /*#__PURE__*/React.createElement("button", {
-      "data-provider": item.toLowerCase(),
-      onClick: function onClick(e) {
-        return switchProvider(e);
-      },
-      className: provider === item.toLowerCase() ? 'provider-nav--btn active' : 'provider-nav--btn'
-    }, /*#__PURE__*/React.createElement("span", null, item), (_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[item.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {
-      className: "provider-nav--new"
-    }, instant_img_localize["new"])));
-  })), state.api_lightbox && /*#__PURE__*/React.createElement(_APILightbox__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    id: "photo-listing"
+  }, /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_21__["default"], {
+    switchProvider: switchProvider,
+    activeProvider: activeProvider
+  }), state.api_lightbox && /*#__PURE__*/React.createElement(_APILightbox__WEBPACK_IMPORTED_MODULE_10__["default"], {
     provider: state.api_lightbox,
     afterVerifiedAPICallback: afterVerifiedAPICallback,
     closeAPILightbox: closeAPILightbox
@@ -4792,6 +4754,47 @@ function PhotoList(props) {
     error: api_error,
     provider: provider
   }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_20__["default"], null));
+}
+
+/***/ }),
+
+/***/ "./src/js/components/ProviderNav.js":
+/*!******************************************!*\
+  !*** ./src/js/components/ProviderNav.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ProviderNav)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var providers = (_constants_API__WEBPACK_IMPORTED_MODULE_1___default().providers); // Get current provider settings.
+
+function ProviderNav(_ref) {
+  var provider = _ref.provider,
+    switchProvider = _ref.switchProvider;
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(providers !== null && providers !== void 0 && providers.length) && /*#__PURE__*/React.createElement("nav", {
+    className: "provider-nav"
+  }, providers.map(function (item, iterator) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: "provider-".concat(iterator)
+    }, /*#__PURE__*/React.createElement("button", {
+      "data-provider": item.toLowerCase(),
+      onClick: function onClick(e) {
+        return switchProvider(e);
+      },
+      className: provider === item.toLowerCase() ? 'provider-nav--btn active' : 'provider-nav--btn'
+    }, /*#__PURE__*/React.createElement("span", null, item), (_constants_API__WEBPACK_IMPORTED_MODULE_1___default())[item.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {
+      className: "provider-nav--new"
+    }, instant_img_localize["new"])));
+  })));
 }
 
 /***/ }),
@@ -5330,7 +5333,6 @@ function Panel() {
     className: "instant-img-container"
   }, data && data.results ? /*#__PURE__*/React.createElement(_components_PhotoList__WEBPACK_IMPORTED_MODULE_0__["default"], {
     editor: "gutenberg",
-    page: 1,
     data: data.results,
     error: data.error,
     orderby: defaultOrder,
@@ -5876,7 +5878,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "capitalizeFirstLetter": () => (/* binding */ capitalizeFirstLetter),
 /* harmony export */   "checkRateLimit": () => (/* binding */ checkRateLimit),
-/* harmony export */   "isObjectEmpty": () => (/* binding */ isObjectEmpty)
+/* harmony export */   "hideTooltip": () => (/* binding */ hideTooltip),
+/* harmony export */   "isObjectEmpty": () => (/* binding */ isObjectEmpty),
+/* harmony export */   "showTooltip": () => (/* binding */ showTooltip)
 /* harmony export */ });
 /**
  * Check if an object is empty.
@@ -5915,6 +5919,55 @@ function checkRateLimit(headers) {
  */
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+var tooltipInterval = '';
+
+/**
+ * Show the tooltip.
+ *
+ * @param {Event} e The target tooltip element.
+ * @since 4.3.0
+ */
+function showTooltip(e) {
+  var target = e.currentTarget;
+  var rect = target.getBoundingClientRect();
+  var left = Math.round(rect.left);
+  var top = Math.round(rect.top);
+  var container = target.closest('#photo-listing');
+  var tooltip = container.querySelector('#tooltip');
+  tooltip.classList.remove('over');
+  if (target.classList.contains('tooltip--above')) {
+    tooltip.classList.add('above');
+  } else {
+    tooltip.classList.remove('above');
+  }
+
+  // Delay Tooltip Reveal.
+  tooltipInterval = setInterval(function () {
+    clearInterval(tooltipInterval);
+    tooltip.innerHTML = target.dataset.title; // Tooltip content.
+
+    // Position Tooltip.
+    left = left - tooltip.offsetWidth + target.offsetWidth + 5;
+    tooltip.style.left = "".concat(left, "px");
+    tooltip.style.top = "".concat(top, "px");
+    setTimeout(function () {
+      tooltip.classList.add('over');
+    }, 25);
+  }, 750);
+}
+
+/**
+ * Hide the tooltip.
+ *
+ * @param {Event} e The target tooltip element.
+ * @since 4.3.0
+ */
+function hideTooltip(e) {
+  clearInterval(tooltipInterval);
+  var container = e.currentTarget.closest('#photo-listing');
+  var tooltip = container.querySelector('#tooltip');
+  tooltip.classList.remove('over');
 }
 
 /***/ }),

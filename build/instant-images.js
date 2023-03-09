@@ -2520,8 +2520,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  */
 function APILightbox(props) {
   var provider = props.provider,
-    afterVerifiedAPICallback = props["function"],
-    closeAPILightbox = props["function"];
+    afterVerifiedAPICallback = props.afterVerifiedAPICallback,
+    closeAPILightbox = props.closeAPILightbox;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('invalid'),
     _useState2 = _slicedToArray(_useState, 2),
     apiStatus = _useState2[0],
@@ -2616,8 +2616,8 @@ function APILightbox(props) {
     if (lightbox !== null && lightbox !== void 0 && lightbox.current) {
       lightbox.current.classList.remove('active');
       setTimeout(function () {
-        closeAPILightbox(provider);
-      }, 250);
+        closeAPILightbox();
+      }, 150);
     }
   }
 
@@ -2730,6 +2730,856 @@ function APILightbox(props) {
     type: "submit",
     ref: submitRef
   }, instant_img_localize.btnVerify))))));
+}
+
+/***/ }),
+
+/***/ "./src/js/components/App.js":
+/*!**********************************!*\
+  !*** ./src/js/components/App.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ App)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
+/* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(masonry_layout__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
+/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_constants_filters__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
+/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
+/* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
+/* harmony import */ var _functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
+/* harmony import */ var _functions_getResults__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
+/* harmony import */ var _APILightbox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./APILightbox */ "./src/js/components/APILightbox.js");
+/* harmony import */ var _ErrorLightbox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ErrorLightbox */ "./src/js/components/ErrorLightbox.js");
+/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
+/* harmony import */ var _LoadingBlock__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
+/* harmony import */ var _NoResults__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
+/* harmony import */ var _RestAPIError__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./RestAPIError */ "./src/js/components/RestAPIError.js");
+/* harmony import */ var _ResultsToolTip__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ResultsToolTip */ "./src/js/components/ResultsToolTip.js");
+/* harmony import */ var _Tooltip__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip.js");
+/* harmony import */ var _ProviderNav__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ProviderNav */ "./src/js/components/ProviderNav.js");
+/* harmony import */ var _Photos__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Photos */ "./src/js/components/Photos.js");
+/* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! react-intersection-observer */ "./node_modules/react-intersection-observer/react-intersection-observer.modern.mjs");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var imagesLoaded = __webpack_require__(/*! imagesloaded */ "./node_modules/imagesloaded/imagesloaded.js");
+
+var page = 1;
+
+/**
+ * Render the InstantImages component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The InstantImages component.
+ */
+function App(props) {
+  var _Object$entries;
+  var _props$editor = props.editor,
+    editor = _props$editor === void 0 ? 'classic' : _props$editor,
+    data = props.data,
+    error = props.error,
+    provider = props.provider,
+    container = props.container,
+    setFeaturedImage = props.setFeaturedImage,
+    insertImage = props.insertImage;
+  var api_provider = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider]; // The API settings for the provider.
+  var per_page = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default().defaults.per_page);
+
+  // API Vars.
+  var api_key = instant_img_localize["".concat(provider, "_app_id")];
+  var photo_api = api_provider === null || api_provider === void 0 ? void 0 : api_provider.photo_api;
+  var search_api = api_provider === null || api_provider === void 0 ? void 0 : api_provider.search_api;
+  var api_error = error;
+  var loadingClass = 'loading';
+  var searchClass = 'searching';
+
+  // App state.
+  var mounted = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(false);
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(data)),
+    _useState2 = _slicedToArray(_useState, 2),
+    results = _useState2[0],
+    setResults = _useState2[1];
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(provider),
+    _useState4 = _slicedToArray(_useState3, 2),
+    activeProvider = _useState4[0],
+    setActiveProvider = _useState4[1];
+  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState6 = _slicedToArray(_useState5, 2),
+    loading = _useState6[0],
+    setLoading = _useState6[1];
+  var _useState7 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState8 = _slicedToArray(_useState7, 2),
+    done = _useState8[0],
+    setDone = _useState8[1];
+  var _useState9 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      provider: provider,
+      filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].filters,
+      search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].search,
+      restapi_error: false,
+      api_lightbox: false
+    }),
+    _useState10 = _slicedToArray(_useState9, 2),
+    state = _useState10[0],
+    setState = _useState10[1];
+  var filters = {};
+  var search_filters = {};
+  var show_search_filters = true;
+  var is_search = false;
+  var search_term = '';
+  var total_results = 0;
+  var msnry = '';
+  var tooltipInterval = '';
+  var delay = 250;
+
+  // Refs.
+  var _useInView = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_20__.useInView)({
+      rootMargin: '0px 0px'
+    }),
+    _useInView2 = _slicedToArray(_useInView, 2),
+    loadMoreRef = _useInView2[0],
+    inView = _useInView2[1];
+  var photoTarget = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var controlNav = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var photoSearch = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var filterGroups = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var filterRef = [];
+
+  // Editor props.
+  var is_block_editor = editor === 'gutenberg' ? true : false;
+  var is_media_router = editor === 'media-router' ? true : false;
+  var plugin = is_block_editor ? document.body : container.parentNode.parentNode;
+  var wrapper = is_block_editor ? document.body : plugin.querySelector('.instant-images-wrapper');
+
+  /**
+   * Reset filters.
+   */
+  function resetFilters() {
+    if (filterRef !== null && filterRef !== void 0 && filterRef.length) {
+      filterRef.forEach(function (filter) {
+        if (filter) {
+          filter.reset();
+        }
+      });
+    }
+  }
+
+  /**
+   * Trigger Search.
+   *
+   * @param {Event} event The dispatched submit event.
+   * @since 3.0
+   */
+  function search(event) {
+    event.preventDefault();
+    var input = photoSearch.current;
+    var term = input.value;
+    resetFilters();
+    if (term.length > 2) {
+      input.classList.add(searchClass);
+      search_term = term;
+      search_filters = {};
+      is_search = true;
+      doSearch(search_term);
+    } else {
+      input.focus();
+    }
+  }
+
+  /**
+   * Reset search results, settings and results view.
+   *
+   * @since 3.0
+   */
+  function clearSearch() {
+    photoSearch.current.value = '';
+    total_results = 0;
+    is_search = false;
+    search_term = '';
+    search_filters = {}; // Reset search filters.
+    toggleFilters(); // Re-enable filters.
+  }
+
+  /**
+   * Perform a photo search.
+   *
+   * @param {string} term The search term.
+   * @since 3.0
+   */
+  function doSearch(_x2) {
+    return _doSearch.apply(this, arguments);
+  }
+  /**
+   * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
+   *
+   * @param {Boolean} reset    Is this an app reset.
+   * @param {Boolean} switcher Is this a provider switch.
+   * @since 3.0
+   */
+  function _doSearch() {
+    _doSearch = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(term) {
+      var search_type, search_query, search_params, params, url, response, status, headers, _data, images;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            search_type = term.substring(0, 3) === 'id:' ? 'id' : 'term'; // Set loading variables and options.
+            photoTarget.current.classList.add(loadingClass);
+            page = 1; // Reset current page num.
+            toggleFilters(); // Disable filters.
+
+            // Get search query.
+            search_query = {};
+            if (search_type === 'id') {
+              show_search_filters = false;
+              search_query = {
+                id: search_term.replace('id:', '').replace(/\s+/, '')
+              };
+            } else {
+              show_search_filters = true;
+              search_query = {
+                term: search_term
+              };
+            }
+
+            // Build URL.
+            search_params = _objectSpread(_objectSpread(_objectSpread({}, {
+              page: page
+            }), search_query), search_filters);
+            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(provider, search_params);
+            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('search', params); // Create fetch request.
+            _context.next = 11;
+            return fetch(url);
+          case 11:
+            response = _context.sent;
+            status = response.status, headers = response.headers;
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
+            _context.prev = 14;
+            _context.next = 17;
+            return response.json();
+          case 17:
+            _data = _context.sent;
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data); // Check returned data.
+            total_results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__.getSearchTotal)(_data);
+            checkTotalResults(images.length);
+
+            // Hide search filters if no results and not filtering.
+            show_search_filters = total_results < 2 && (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.isObjectEmpty)(search_filters) ? false : true;
+
+            // Update Props.
+            setState({
+              results: images,
+              search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].search
+            });
+
+            // Delay for effect.
+            setTimeout(function () {
+              photoSearch.current.classList.remove(searchClass);
+              photoTarget.current.classList.remove(loadingClass);
+            }, delay);
+            _context.next = 36;
+            break;
+          case 26:
+            _context.prev = 26;
+            _context.t0 = _context["catch"](14);
+            // Reset all search parameters.
+            setDone(true);
+            setLoading(false);
+            show_search_filters = false;
+            total_results = 0;
+            photoSearch.current.classList.remove(searchClass);
+            photoTarget.current.classList.remove(loadingClass);
+
+            // Update Props.
+            setState({
+              results: results
+            });
+            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
+          case 36:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[14, 26]]);
+    }));
+    return _doSearch.apply(this, arguments);
+  }
+  function getPhotos() {
+    return _getPhotos.apply(this, arguments);
+  }
+  /**
+   * Load next set of photos in infinite scroll style.
+   *
+   * @since 3.0
+   */
+  function _getPhotos() {
+    _getPhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var reset,
+        switcher,
+        params,
+        url,
+        response,
+        status,
+        headers,
+        _data2,
+        _data2$error,
+        _error,
+        images,
+        _args2 = arguments;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            reset = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : false;
+            switcher = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : false;
+            if (!(loading && !reset)) {
+              _context2.next = 4;
+              break;
+            }
+            return _context2.abrupt("return");
+          case 4:
+            setLoading(true); // Set loading state.
+            clearSearch(); // Clear search results.
+            page = 1;
+
+            // Build URL.
+            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(activeProvider, filters);
+            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('photos', params); // Create fetch request.
+            _context2.next = 11;
+            return fetch(url);
+          case 11:
+            response = _context2.sent;
+            status = response.status, headers = response.headers;
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
+
+            // Status OK.
+            _context2.prev = 14;
+            _context2.next = 17;
+            return response.json();
+          case 17:
+            _data2 = _context2.sent;
+            _data2$error = _data2.error, _error = _data2$error === void 0 ? null : _data2$error; // Get error reporting.
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data2);
+            checkTotalResults(images.length); // Check for returned data.
+            api_error = _error;
+
+            // Set results state.
+            if (!switcher) {
+              setResults(function (prevState) {
+                return [].concat(_toConsumableArray(prevState), _toConsumableArray(images));
+              }); // Push images into state.
+            } else {
+              setResults(images); // Push images into state.
+            }
+            _context2.next = 29;
+            break;
+          case 25:
+            _context2.prev = 25;
+            _context2.t0 = _context2["catch"](14);
+            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
+            setLoading(false);
+          case 29:
+            // Delay loading animatons for effect.
+            setTimeout(function () {
+              setLoading(false);
+            }, delay);
+          case 30:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[14, 25]]);
+    }));
+    return _getPhotos.apply(this, arguments);
+  }
+  function loadMorePhotos() {
+    return _loadMorePhotos.apply(this, arguments);
+  }
+  /**
+   * Filter the photo listing.
+   *
+   * @param {string} filter The current filter key.
+   * @param {string} value  The value to filter.
+   */
+  function _loadMorePhotos() {
+    _loadMorePhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      var search_query, type, filters, loadmore_params, params, url, response, status, headers, _data3, images;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            setLoading(true);
+            page = parseInt(page) + 1;
+
+            // Get search query.
+            search_query = is_search ? {
+              term: search_term
+            } : {}; // Build URL.
+            type = is_search ? 'search' : 'photos';
+            filters = is_search ? search_filters : filters;
+            loadmore_params = _objectSpread(_objectSpread(_objectSpread({}, {
+              page: page
+            }), search_query), filters);
+            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(activeProvider, loadmore_params);
+            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])(type, params); // Create fetch request.
+            _context3.next = 10;
+            return fetch(url);
+          case 10:
+            response = _context3.sent;
+            status = response.status, headers = response.headers;
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
+            _context3.prev = 13;
+            _context3.next = 16;
+            return response.json();
+          case 16:
+            _data3 = _context3.sent;
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data3);
+            checkTotalResults(images.length); // Check the total results.
+            setResults(function (prevState) {
+              return [].concat(_toConsumableArray(prevState), _toConsumableArray(images));
+            }); // Push images into state.
+            _context3.next = 25;
+            break;
+          case 22:
+            _context3.prev = 22;
+            _context3.t0 = _context3["catch"](13);
+            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
+          case 25:
+          case "end":
+            return _context3.stop();
+        }
+      }, _callee3, null, [[13, 22]]);
+    }));
+    return _loadMorePhotos.apply(this, arguments);
+  }
+  function filterPhotos(filter, value) {
+    if (filters[filter] && value === '#' || value === '' || value === 'all') {
+      delete filters[filter];
+    } else {
+      filters[filter] = value;
+    }
+    getPhotos(true);
+  }
+
+  /**
+   * Filter the search results.
+   *
+   * @param {string} filter The current filter key.
+   * @param {string} value  The value to filter.
+   */
+  function filterSearch(filter, value) {
+    if (search_filters[filter] && value === '#' || value === '' || value === 'all') {
+      delete search_filters[filter];
+    } else {
+      search_filters[filter] = value;
+    }
+    doSearch(search_term);
+  }
+
+  /**
+   * Toggle the active state of all filters.
+   */
+  function toggleFilters() {
+    var filters = filterGroups.current.querySelectorAll('button.filter-dropdown--button');
+    if (filters) {
+      filters.forEach(function (button) {
+        button.disabled = is_search ? true : false;
+      });
+    }
+    if (is_search) {
+      filterGroups.current.classList.add('inactive');
+    } else {
+      filterGroups.current.classList.remove('inactive');
+    }
+  }
+
+  /**
+   * Callback after activating and verififying an API key.
+   *
+   * @param {string} provider The verified provider.
+   * @since 4.5
+   */
+  function afterVerifiedAPICallback(provider) {
+    setActiveProvider(provider); // Set the active provider.
+    setState({
+      api_lightbox: false
+    }); // Close the lightbox.
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  /**
+   * Close the API Lightbox.
+   * @since 4.5
+   */
+  function closeAPILightbox() {
+    setState({
+      api_lightbox: false
+    }); // Close the lightbox.
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  /**
+   * Switch API providers.
+   *
+   * @param {Event} e The clicked element event.
+   * @since 4.5
+   */
+  function switchProvider(_x3) {
+    return _switchProvider.apply(this, arguments);
+  }
+  function _switchProvider() {
+    _switchProvider = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
+      var target, provider, response, status, headers;
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) switch (_context4.prev = _context4.next) {
+          case 0:
+            target = e.currentTarget;
+            provider = target.dataset.provider;
+            if (!target.classList.contains('active')) {
+              _context4.next = 4;
+              break;
+            }
+            return _context4.abrupt("return");
+          case 4:
+            if (!(_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider].requires_key) {
+              _context4.next = 22;
+              break;
+            }
+            _context4.prev = 5;
+            _context4.next = 8;
+            return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__.buildTestURL)(provider));
+          case 8:
+            response = _context4.sent;
+            status = response.status, headers = response.headers;
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
+            if (!(status !== 200)) {
+              _context4.next = 15;
+              break;
+            }
+            // Catch API errors and 401s.
+            setState({
+              api_lightbox: provider
+            }); // Show API Lightbox.
+            document.body.classList.add('overflow-hidden');
+            return _context4.abrupt("return");
+          case 15:
+            _context4.next = 22;
+            break;
+          case 17:
+            _context4.prev = 17;
+            _context4.t0 = _context4["catch"](5);
+            // Catch all other errors.
+            setState({
+              api_lightbox: provider
+            }); // Show API Lightbox.
+            document.body.classList.add('overflow-hidden');
+            return _context4.abrupt("return");
+          case 22:
+            // GO forward and toggle the providers.
+            photoTarget.current.classList.add(loadingClass);
+            setTimeout(function () {
+              // Delay for effect.
+              setActiveProvider(provider);
+            }, 150);
+
+            // Update API provider params.
+
+            // api_provider = API[provider];
+            // api_key = instant_img_localize[`${provider}_app_id`];
+            // photo_api = api_provider?.photo_api;
+            // search_api = api_provider?.search_api;
+
+            // // Clear all filters.
+            // filters = {};
+            // search_filters = {};
+
+            // // Finally, fetch the photos.
+            // view = 'latest';
+            // getPhotos(view, true, true);
+          case 24:
+          case "end":
+            return _context4.stop();
+        }
+      }, _callee4, null, [[5, 17]]);
+    }));
+    return _switchProvider.apply(this, arguments);
+  }
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (!mounted.current) {
+      return;
+    }
+    getPhotos(true, true);
+  }, [activeProvider]);
+
+  /**
+   * Renders the Masonry layout.
+   *
+   * @since 3.0
+   */
+  function renderLayout() {
+    if (is_block_editor) {
+      setLoading(false);
+      return false;
+    }
+    imagesLoaded(photoTarget.current, function () {
+      msnry = new (masonry_layout__WEBPACK_IMPORTED_MODULE_2___default())(photoTarget.current, {
+        itemSelector: '.photo'
+      });
+      photoTarget.current.querySelectorAll('.photo').forEach(function (el) {
+        el.classList.add('in-view');
+      });
+      setLoading(false);
+    });
+  }
+
+  /**
+   * A checker to determine if there are remaining search results.
+   *
+   * @param {number} num Total search results.
+   * @since 3.0
+   */
+  function checkTotalResults(num) {
+    setDone(parseInt(num) === 0 || num === undefined);
+  }
+
+  /**
+   * Test access to the REST API.
+   *
+   * @since 3.2
+   */
+  function test() {
+    var testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route
+    var restAPITest = new XMLHttpRequest();
+    restAPITest.open('POST', testURL, true);
+    restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
+    restAPITest.setRequestHeader('Content-Type', 'application/json');
+    restAPITest.send();
+    restAPITest.onload = function () {
+      if (restAPITest.status >= 200 && restAPITest.status < 400) {
+        var response = JSON.parse(restAPITest.response);
+        var success = response.success;
+        if (!success) {
+          setState({
+            restapi_error: true
+          });
+        }
+      } else {
+        // Error
+        setState({
+          restapi_error: true
+        });
+      }
+    };
+    restAPITest.onerror = function (errorMsg) {
+      console.warn(errorMsg);
+      setState({
+        restapi_error: true
+      });
+    };
+  }
+
+  /**
+   * Escape handler to close edit windows on photos.
+   *
+   * @param {Event} e The key event.
+   */
+  function escFunction(e) {
+    var key = e.key;
+    if (key === 'Escape') {
+      var editing = photoTarget.current.querySelectorAll('.edit-screen.editing');
+      if (editing) {
+        _toConsumableArray(editing).forEach(function (element) {
+          element && element.classList.remove('editing');
+        });
+      }
+    }
+  }
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (mounted.current && !loading && !done) {
+      loadMorePhotos();
+    }
+  }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Loading flag.
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (loading) {
+      plugin.classList.add(loadingClass);
+    } else {
+      photoTarget.current.classList.remove(loadingClass);
+      plugin.classList.remove(loadingClass);
+    }
+  }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Results update.
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    renderLayout();
+  }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Page load.
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    test();
+    plugin.classList.remove(loadingClass);
+    wrapper.classList.add('loaded');
+    document.addEventListener('keydown', escFunction, false); // Add global escape listener.
+    mounted.current = true;
+  }, []);
+  return /*#__PURE__*/React.createElement("div", {
+    id: "photo-listing"
+  }, /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_18__["default"], {
+    switchProvider: switchProvider,
+    provider: activeProvider
+  }), state.api_lightbox && /*#__PURE__*/React.createElement(_APILightbox__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    provider: state.api_lightbox,
+    afterVerifiedAPICallback: afterVerifiedAPICallback,
+    closeAPILightbox: closeAPILightbox
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "control-nav",
+    ref: controlNav
+  }, /*#__PURE__*/React.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--filters-wrap', api_error ? 'inactive' : null),
+    ref: filterGroups
+  }, state !== null && state !== void 0 && state.filters && (_Object$entries = Object.entries(state.filters)) !== null && _Object$entries !== void 0 && _Object$entries.length ? /*#__PURE__*/React.createElement("div", {
+    className: "control-nav--filters"
+  }, Object.entries(state.filters).map(function (_ref, i) {
+    var _ref2 = _slicedToArray(_ref, 2),
+      key = _ref2[0],
+      filter = _ref2[1];
+    return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_12__["default"], {
+      key: "".concat(key, "-").concat(provider, "-").concat(i),
+      filterKey: key,
+      provider: provider,
+      data: filter,
+      "function": filterPhotos
+    });
+  })) : null), /*#__PURE__*/React.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--search', 'search-field', api_error ? 'inactive' : null),
+    id: "search-bar"
+  }, /*#__PURE__*/React.createElement("form", {
+    onSubmit: function onSubmit(e) {
+      return search(e);
+    },
+    autoComplete: "off"
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "photo-search",
+    className: "offscreen"
+  }, instant_img_localize.search_label), /*#__PURE__*/React.createElement("input", {
+    type: "search",
+    id: "photo-search",
+    placeholder: instant_img_localize.search,
+    ref: photoSearch,
+    disabled: api_error
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    id: "photo-search-submit",
+    disabled: api_error
+  }, /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-search"
+  })), /*#__PURE__*/React.createElement(_ResultsToolTip__WEBPACK_IMPORTED_MODULE_16__["default"], {
+    container: plugin,
+    getPhotos: getPhotos,
+    isSearch: is_search,
+    total: total_results,
+    title: "".concat(total_results, " ").concat(instant_img_localize.search_results, " ").concat(search_term)
+  })))), state.restapi_error && /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_15__["default"], {
+    title: instant_img_localize.error_restapi,
+    desc: instant_img_localize.error_restapi_desc,
+    type: "warning"
+  }), is_search && editor !== 'gutenberg' && /*#__PURE__*/React.createElement("div", {
+    className: "search-results-header"
+  }, /*#__PURE__*/React.createElement("h2", null, search_term.replace('id:', 'ID: ')), /*#__PURE__*/React.createElement("div", {
+    className: "search-results-header--text"
+  }, "".concat(total_results, " ").concat(instant_img_localize.search_results), " ", /*#__PURE__*/React.createElement("strong", null, "".concat(search_term)), ' - ', /*#__PURE__*/React.createElement("button", {
+    title: instant_img_localize.clear_search,
+    onClick: function onClick() {
+      return getPhotos();
+    }
+  }, instant_img_localize.clear_search)), show_search_filters && Object.entries(state.search_filters).length && /*#__PURE__*/React.createElement("div", {
+    className: "control-nav--filters-wrap"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "control-nav--filters"
+  }, Object.entries(state.search_filters).map(function (_ref3, index) {
+    var _ref4 = _slicedToArray(_ref3, 2),
+      key = _ref4[0],
+      filter = _ref4[1];
+    return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_12__["default"], {
+      ref: function ref(_ref5) {
+        return filterRef[index] = _ref5;
+      },
+      key: "".concat(key, "-").concat(index),
+      filterKey: key,
+      provider: provider,
+      data: filter,
+      "function": filterSearch
+    });
+  })))), /*#__PURE__*/React.createElement("div", {
+    id: "photos",
+    ref: photoTarget
+  }, /*#__PURE__*/React.createElement(_Photos__WEBPACK_IMPORTED_MODULE_19__["default"], {
+    provider: activeProvider,
+    results: results,
+    mediaRouter: is_media_router,
+    blockEditor: is_block_editor,
+    setFeaturedImage: setFeaturedImage,
+    insertImage: insertImage
+  })), total_results < 1 && is_search === true && /*#__PURE__*/React.createElement(_NoResults__WEBPACK_IMPORTED_MODULE_14__["default"], {
+    total: total_results,
+    is_search: is_search
+  }), /*#__PURE__*/React.createElement(_LoadingBlock__WEBPACK_IMPORTED_MODULE_13__["default"], null), /*#__PURE__*/React.createElement("div", {
+    className: "load-more-wrap",
+    ref: loadMoreRef
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "button",
+    onClick: function onClick() {
+      return loadMorePhotos();
+    }
+  }, instant_img_localize.load_more)), /*#__PURE__*/React.createElement(_ErrorLightbox__WEBPACK_IMPORTED_MODULE_11__["default"], {
+    error: api_error,
+    provider: provider
+  }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_17__["default"], null));
 }
 
 /***/ }),
@@ -3052,38 +3902,6 @@ function Filter(props) {
 
 /***/ }),
 
-/***/ "./src/js/components/LoadMore.js":
-/*!***************************************!*\
-  !*** ./src/js/components/LoadMore.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ LoadMore)
-/* harmony export */ });
-/**
- * Render the LoadMore component.
- *
- * @param {Object} props The component props.
- * @return {JSX.Element} The LoadMore component.
- */
-function LoadMore(props) {
-  var loadMorePhotos = props.loadMorePhotos;
-  return /*#__PURE__*/React.createElement("div", {
-    className: "load-more-wrap"
-  }, /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "button",
-    onClick: function onClick() {
-      return loadMorePhotos();
-    }
-  }, instant_img_localize.load_more));
-}
-
-/***/ }),
-
 /***/ "./src/js/components/LoadingBlock.js":
 /*!*******************************************!*\
   !*** ./src/js/components/LoadingBlock.js ***!
@@ -3179,9 +3997,7 @@ function Photo(props) {
     mediaRouter = props.mediaRouter,
     blockEditor = props.blockEditor,
     setFeaturedImage = props.setFeaturedImage,
-    insertImage = props.insertImage,
-    showTooltip = props.showTooltip,
-    hideTooltip = props.hideTooltip;
+    insertImage = props.insertImage;
   var id = result.id,
     permalink = result.permalink,
     title = result.title,
@@ -3350,7 +4166,7 @@ function Photo(props) {
    * @since 4.0
    */
   function setFeaturedImageClick(e) {
-    hideTooltip(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     var photo = photoUpload.current;
     if (photo) {
       true, _readOnlyError("setAsFeaturedImage");
@@ -3365,7 +4181,7 @@ function Photo(props) {
    * @since 4.0
    */
   function insertImageIntoPost(e) {
-    hideTooltip(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     var photo = photoUpload.current;
     if (photo) {
       true, _readOnlyError("insertIntoPost");
@@ -3499,7 +4315,7 @@ function Photo(props) {
    */
   function showEditScreen(e) {
     e.preventDefault();
-    hideTooltip(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
 
     // Get all open edit screens and close them.
     var openEdits = document.querySelectorAll('.edit-screen.editing');
@@ -3664,10 +4480,10 @@ function Photo(props) {
     className: "set-featured fade",
     "data-title": instant_img_localize.set_as_featured,
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return setFeaturedImageClick(e);
@@ -3682,10 +4498,10 @@ function Photo(props) {
     className: "insert fade",
     "data-title": instant_img_localize.insert_into_post,
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return insertImageIntoPost(e);
@@ -3700,10 +4516,10 @@ function Photo(props) {
     className: "edit-photo-admin fade",
     "data-title": instant_img_localize.edit_upload,
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-pencil",
@@ -3715,10 +4531,10 @@ function Photo(props) {
     className: "edit-photo fade",
     "data-title": instant_img_localize.edit_details,
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return showEditScreen(e);
@@ -3734,10 +4550,10 @@ function Photo(props) {
     className: "likes tooltip--above",
     "data-title": likes + ' ' + likeDisplay,
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-heart heart-like",
@@ -3747,10 +4563,10 @@ function Photo(props) {
     href: permalink,
     "data-title": "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.capitalizeFirstLetter)(provider)),
     onMouseEnter: function onMouseEnter(e) {
-      return showTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return hideTooltip(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
     },
     rel: "noopener noreferrer",
     target: "_blank"
@@ -3835,840 +4651,80 @@ function Photo(props) {
 
 /***/ }),
 
-/***/ "./src/js/components/PhotoList.js":
-/*!****************************************!*\
-  !*** ./src/js/components/PhotoList.js ***!
-  \****************************************/
+/***/ "./src/js/components/Photos.js":
+/*!*************************************!*\
+  !*** ./src/js/components/Photos.js ***!
+  \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ PhotoList)
+/* harmony export */   "default": () => (/* binding */ Photos)
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
-/* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(masonry_layout__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
-/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_constants_filters__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
-/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
-/* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
-/* harmony import */ var _functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
-/* harmony import */ var _functions_getResults__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
-/* harmony import */ var _APILightbox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./APILightbox */ "./src/js/components/APILightbox.js");
-/* harmony import */ var _ErrorLightbox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ErrorLightbox */ "./src/js/components/ErrorLightbox.js");
-/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
-/* harmony import */ var _LoadingBlock__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
-/* harmony import */ var _LoadMore__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./LoadMore */ "./src/js/components/LoadMore.js");
-/* harmony import */ var _NoResults__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
-/* harmony import */ var _Photo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
-/* harmony import */ var _RestAPIError__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./RestAPIError */ "./src/js/components/RestAPIError.js");
-/* harmony import */ var _ResultsToolTip__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ResultsToolTip */ "./src/js/components/ResultsToolTip.js");
-/* harmony import */ var _Sponsor__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Sponsor */ "./src/js/components/Sponsor.js");
-/* harmony import */ var _Tooltip__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/* harmony import */ var _Photo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
+/* harmony import */ var _Sponsor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sponsor */ "./src/js/components/Sponsor.js");
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var imagesLoaded = __webpack_require__(/*! imagesloaded */ "./node_modules/imagesloaded/imagesloaded.js");
 
 /**
- * Render the PhotoList component.
+ * Render the Photos component.
  *
  * @param {Object} props The component props.
- * @return {JSX.Element} The PhotoList component.
+ * @return {JSX.Element} The Photos component.
  */
-function PhotoList(props) {
-  var _api_provider, _api_provider2, _Object$entries;
-  var _props$editor = props.editor,
-    editor = _props$editor === void 0 ? 'classic' : _props$editor,
-    page = props.page,
-    data = props.data,
+function Photos(props) {
+  var results = props.results,
     provider = props.provider,
-    error = props.error,
-    orderby = props.orderby,
-    container = props.container,
+    is_media_router = props.is_media_router,
+    is_block_editor = props.is_block_editor,
     setFeaturedImage = props.setFeaturedImage,
     insertImage = props.insertImage;
-
-  // Get current provider settings.
-  var providers = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default().providers);
-  var api_provider = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider]; // The API settings for the provider.
-  var per_page = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default().defaults.per_page);
-
-  // API Vars.
-  var api_key = instant_img_localize["".concat(provider, "_app_id")];
-  var photo_api = (_api_provider = api_provider) === null || _api_provider === void 0 ? void 0 : _api_provider.photo_api;
-  var search_api = (_api_provider2 = api_provider) === null || _api_provider2 === void 0 ? void 0 : _api_provider2.search_api;
-  var api_error = error;
-  var loadingClass = 'loading';
-  var searchClass = 'searching';
-
-  // Results state.
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(data)),
-    _useState2 = _slicedToArray(_useState, 2),
-    results = _useState2[0],
-    setResults = _useState2[1];
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
-      filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].filters,
-      search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].search,
-      restapi_error: false,
-      api_lightbox: false
-    }),
-    _useState4 = _slicedToArray(_useState3, 2),
-    state = _useState4[0],
-    setState = _useState4[1];
-  var filters = {};
-  var search_filters = {};
-  var show_search_filters = true;
-  var is_search = false;
-  var search_term = '';
-  var total_results = 0;
-  var view = '';
-  var isLoading = false; // Loading flag.
-  var isDone = false; // Done flag.
-  var msnry = '';
-  var tooltipInterval = '';
-  var delay = 250;
-
-  // Refs.
-  var loading = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(false);
-  var done = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(false);
-  var photoTarget = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var providerNav = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var controlNav = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var photoSearch = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var filterGroups = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var filterRef = [];
-
-  // Editor props.
-  var is_block_editor = editor === 'gutenberg' ? true : false;
-  var is_media_router = editor === 'media-router' ? true : false;
-  var plugin = is_block_editor ? document.body : container.parentNode.parentNode;
-  var wrapper = is_block_editor ? document.body : plugin.querySelector('.instant-images-wrapper');
-
-  /**
-   * Reset filters.
-   */
-  function resetFilters() {
-    if (filterRef !== null && filterRef !== void 0 && filterRef.length) {
-      filterRef.forEach(function (filter) {
-        if (filter) {
-          filter.reset();
-        }
-      });
-    }
-  }
-
-  /**
-   * Trigger Search.
-   *
-   * @param {Event} event The dispatched submit event.
-   * @since 3.0
-   */
-  function search(event) {
-    event.preventDefault();
-    var input = photoSearch.current;
-    var term = input.value;
-    resetFilters();
-    if (term.length > 2) {
-      input.classList.add(searchClass);
-      search_term = term;
-      search_filters = {};
-      is_search = true;
-      doSearch(search_term);
-    } else {
-      input.focus();
-    }
-  }
-
-  /**
-   * Reset search results, settings and results view.
-   *
-   * @since 3.0
-   */
-  function clearSearch() {
-    photoSearch.current.value = '';
-    total_results = 0;
-    is_search = false;
-    search_term = '';
-    search_filters = {}; // Reset search filters.
-    toggleFilters(); // Re-enable filters.
-  }
-
-  /**
-   * Click event for the control nav items.
-   *
-   * @param {Event} e The clicked element event.
-   * @param {string}  view  Current view.
-   * @since 4.6
-   */
-  function controlsClick(e, view) {
-    var target = e.currentTarget;
-    view = view;
-    if (!target.classList.contains('active')) {
-      getPhotos(view);
-    }
-  }
-
-  /**
-   * Perform a photo search.
-   *
-   * @param {string} term The search term.
-   * @since 3.0
-   */
-  function doSearch(_x2) {
-    return _doSearch.apply(this, arguments);
-  }
-  /**
-   * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
-   *
-   * @param {string}  view     Current view.
-   * @param {Boolean} reset    Is this an app reset.
-   * @param {Boolean} switcher Is this a provider switch.
-   * @since 3.0
-   */
-  function _doSearch() {
-    _doSearch = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(term) {
-      var search_type, search_query, search_params, params, url, response, status, headers, _data, _results;
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            search_type = term.substring(0, 3) === 'id:' ? 'id' : 'term'; // Set loading variables and options.
-            photoTarget.current.classList.add(loadingClass);
-            isLoading = true;
-            page = 1; // Reset current page num.
-            toggleFilters(); // Disable filters.
-
-            // Get search query.
-            search_query = {};
-            if (search_type === 'id') {
-              show_search_filters = false;
-              search_query = {
-                id: search_term.replace('id:', '').replace(/\s+/, '')
-              };
-            } else {
-              show_search_filters = true;
-              search_query = {
-                term: search_term
-              };
-            }
-
-            // Build URL.
-            search_params = _objectSpread(_objectSpread(_objectSpread({}, {
-              page: page
-            }), search_query), search_filters);
-            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(provider, search_params);
-            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('search', params); // Create fetch request.
-            _context.next = 12;
-            return fetch(url);
-          case 12:
-            response = _context.sent;
-            status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
-            _context.prev = 15;
-            _context.next = 18;
-            return response.json();
-          case 18:
-            _data = _context.sent;
-            _results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data); // Check returned data.
-            total_results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__.getSearchTotal)(_data);
-            checkTotalResults(_results.length);
-
-            // Hide search filters if no results and not filtering.
-            show_search_filters = total_results < 2 && (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.isObjectEmpty)(search_filters) ? false : true;
-
-            // Update Props.
-            _results, _readOnlyError("results");
-            setState({
-              results: _results,
-              search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].search
-            });
-
-            // Delay for effect.
-            setTimeout(function () {
-              photoSearch.current.classList.remove(searchClass);
-              photoTarget.current.classList.remove(loadingClass);
-              isLoading = false;
-            }, delay);
-            _context.next = 39;
-            break;
-          case 28:
-            _context.prev = 28;
-            _context.t0 = _context["catch"](15);
-            // Reset all search parameters.
-            isDone = true;
-            isLoading = false;
-            show_search_filters = false;
-            total_results = 0;
-            photoSearch.current.classList.remove(searchClass);
-            photoTarget.current.classList.remove(loadingClass);
-
-            // Update Props.
-            [], _readOnlyError("results");
-            setState({
-              results: results
-            });
-            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
-          case 39:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee, null, [[15, 28]]);
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(results !== null && results !== void 0 && results.length) && results.map(function (result, index) {
+    return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      key: "".concat(provider, "-").concat(result.id, "-").concat(index)
+    }, result && result.type && result.type === 'instant-images-ad' ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      result: result
+    }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      provider: provider,
+      result: result,
+      mediaRouter: is_media_router,
+      blockEditor: is_block_editor,
+      setFeaturedImage: setFeaturedImage,
+      insertImage: insertImage
     }));
-    return _doSearch.apply(this, arguments);
-  }
-  function getPhotos(_x3) {
-    return _getPhotos.apply(this, arguments);
-  }
-  /**
-   * Load next set of photos in infinite scroll style.
-   *
-   * @since 3.0
-   */
-  function _getPhotos() {
-    _getPhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(view) {
-      var reset,
-        switcher,
-        params,
-        url,
-        response,
-        status,
-        headers,
-        _data2,
-        _data2$error,
-        _error,
-        _results2,
-        _args2 = arguments;
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
-          case 0:
-            reset = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : false;
-            switcher = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : false;
-            if (!(isLoading && !reset)) {
-              _context2.next = 4;
-              break;
-            }
-            return _context2.abrupt("return");
-          case 4:
-            photoTarget.current.classList.add(loadingClass);
-            isLoading = true;
-            page = 1;
-            orderby = view;
-            [], _readOnlyError("results");
-            clearSearch();
+  }));
+}
 
-            // Build URL.
-            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(provider, filters);
-            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('photos', params); // Create fetch request.
-            _context2.next = 14;
-            return fetch(url);
-          case 14:
-            response = _context2.sent;
-            status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
+/***/ }),
 
-            // Status OK.
-            _context2.prev = 17;
-            _context2.next = 20;
-            return response.json();
-          case 20:
-            _data2 = _context2.sent;
-            _data2$error = _data2.error, _error = _data2$error === void 0 ? null : _data2$error; // Get error reporting.
-            _results2 = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data2);
-            checkTotalResults(_results2.length); // Check for returned data.
-            _results2, _readOnlyError("results"); // Update Props.
-            api_error = _error;
+/***/ "./src/js/components/ProviderNav.js":
+/*!******************************************!*\
+  !*** ./src/js/components/ProviderNav.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-            // Set results state.
-            if (!switcher) {
-              setState({
-                results: _results2
-              });
-            } else {
-              setState({
-                results: _results2,
-                filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].filters
-              });
-            }
-            _context2.next = 34;
-            break;
-          case 29:
-            _context2.prev = 29;
-            _context2.t0 = _context2["catch"](17);
-            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
-            photoTarget.current.classList.remove(loadingClass);
-            isLoading = false;
-          case 34:
-            // Delay loading animatons for effect.
-            setTimeout(function () {
-              photoTarget.current.classList.remove(loadingClass);
-              isLoading = false;
-            }, delay);
-          case 35:
-          case "end":
-            return _context2.stop();
-        }
-      }, _callee2, null, [[17, 29]]);
-    }));
-    return _getPhotos.apply(this, arguments);
-  }
-  function loadMorePhotos() {
-    return _loadMorePhotos.apply(this, arguments);
-  }
-  /**
-   * Filter the photo listing.
-   *
-   * @param {string} filter The current filter key.
-   * @param {string} value  The value to filter.
-   */
-  function _loadMorePhotos() {
-    _loadMorePhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      var search_query, type, filters, loadmore_params, params, url, response, status, headers, _data3, images;
-      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-        while (1) switch (_context3.prev = _context3.next) {
-          case 0:
-            setLoading();
-            page = parseInt(page) + 1;
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ProviderNav)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_1__);
 
-            // Get search query.
-            search_query = is_search ? {
-              term: search_term
-            } : {}; // Build URL.
-            type = is_search ? 'search' : 'photos';
-            filters = is_search ? search_filters : filters;
-            loadmore_params = _objectSpread(_objectSpread(_objectSpread({}, {
-              page: page
-            }), search_query), filters);
-            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(provider, loadmore_params);
-            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])(type, params); // Create fetch request.
-            _context3.next = 10;
-            return fetch(url);
-          case 10:
-            response = _context3.sent;
-            status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
-            _context3.prev = 13;
-            _context3.next = 16;
-            return response.json();
-          case 16:
-            _data3 = _context3.sent;
-            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data3);
-            checkTotalResults(images.length); // Check the total results.
-            setResults(function (prevState) {
-              return [].concat(_toConsumableArray(prevState), _toConsumableArray(images));
-            }); // Push images into state.
-            _context3.next = 26;
-            break;
-          case 22:
-            _context3.prev = 22;
-            _context3.t0 = _context3["catch"](13);
-            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
-            isLoading = false;
-          case 26:
-          case "end":
-            return _context3.stop();
-        }
-      }, _callee3, null, [[13, 22]]);
-    }));
-    return _loadMorePhotos.apply(this, arguments);
-  }
-  function filterPhotos(filter, value) {
-    if (filters[filter] && value === '#' || value === '' || value === 'all') {
-      delete filters[filter];
-    } else {
-      filters[filter] = value;
-    }
-    getPhotos(view, true);
-  }
 
-  /**
-   * Filter the search results.
-   *
-   * @param {string} filter The current filter key.
-   * @param {string} value  The value to filter.
-   */
-  function filterSearch(filter, value) {
-    if (search_filters[filter] && value === '#' || value === '' || value === 'all') {
-      delete search_filters[filter];
-    } else {
-      search_filters[filter] = value;
-    }
-    doSearch(search_term);
-  }
+var providers = (_constants_API__WEBPACK_IMPORTED_MODULE_1___default().providers); // Get current provider settings.
 
-  /**
-   * Toggle the active state of all filters.
-   */
-  function toggleFilters() {
-    var filters = filterGroups.current.querySelectorAll('button.filter-dropdown--button');
-    if (filters) {
-      filters.forEach(function (button) {
-        button.disabled = is_search ? true : false;
-      });
-    }
-    if (is_search) {
-      filterGroups.current.classList.add('inactive');
-    } else {
-      filterGroups.current.classList.remove('inactive');
-    }
-  }
-
-  /**
-   * Callback after activating and verififying an API key.
-   *
-   * @param {string} provider The verified provider.
-   * @since 4.5
-   */
-  function afterVerifiedAPICallback(provider) {
-    var button = providerNav.current.querySelector("button[data-provider=".concat(provider, "]"));
-    if (!button) {
-      return;
-    }
-    setState({
-      api_lightbox: false
-    }); // Close the lightbox.
-    document.body.classList.remove('overflow-hidden');
-    button.click();
-  }
-
-  /**
-   * Close the API Lightbox.
-   *
-   * @param {string} provider The previous provider.
-   */
-  function closeAPILightbox(provider) {
-    setState({
-      api_lightbox: false
-    }); // Close the lightbox.
-    document.body.classList.remove('overflow-hidden');
-
-    // Set focus on previous provider button.
-    var target = providerNav.current.querySelector("button[data-provider=".concat(provider, "]"));
-    if (target) {
-      target.focus({
-        preventScroll: true
-      });
-    }
-  }
-
-  /**
-   * Toggles the service provider.
-   *
-   * @param {Event} e The clicked element event.
-   * @since 4.5
-   */
-  function switchProvider(_x4) {
-    return _switchProvider.apply(this, arguments);
-  }
-  /**
-   * Renders the Masonry layout.
-   *
-   * @since 3.0
-   */
-  function _switchProvider() {
-    _switchProvider = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
-      var _api_provider3, _api_provider4;
-      var target, newProvider, response, status, headers;
-      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-        while (1) switch (_context4.prev = _context4.next) {
-          case 0:
-            target = e.currentTarget;
-            newProvider = target.dataset.provider;
-            if (!(newProvider === provider)) {
-              _context4.next = 4;
-              break;
-            }
-            return _context4.abrupt("return", false);
-          case 4:
-            if (!(_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[newProvider].requires_key) {
-              _context4.next = 22;
-              break;
-            }
-            _context4.prev = 5;
-            _context4.next = 8;
-            return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__.buildTestURL)(newProvider));
-          case 8:
-            response = _context4.sent;
-            status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
-            if (!(status !== 200)) {
-              _context4.next = 15;
-              break;
-            }
-            // Catch API errors and 401s.
-            setState({
-              api_lightbox: newProvider
-            }); // Show API Lightbox.
-            document.body.classList.add('overflow-hidden');
-            return _context4.abrupt("return");
-          case 15:
-            _context4.next = 22;
-            break;
-          case 17:
-            _context4.prev = 17;
-            _context4.t0 = _context4["catch"](5);
-            // Catch all other errors.
-            setState({
-              api_lightbox: provider
-            }); // Show API Lightbox.
-            document.body.classList.add('overflow-hidden');
-            return _context4.abrupt("return");
-          case 22:
-            // Remove active from buttons.
-            providerNav.current.querySelectorAll('button').forEach(function (button) {
-              button.classList.remove('active');
-            });
-
-            // Select active button.
-            target.classList.add('active');
-
-            // Update API provider params.
-            provider = newProvider;
-            api_provider = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider];
-            api_key = instant_img_localize["".concat(provider, "_app_id")];
-            photo_api = (_api_provider3 = api_provider) === null || _api_provider3 === void 0 ? void 0 : _api_provider3.photo_api;
-            search_api = (_api_provider4 = api_provider) === null || _api_provider4 === void 0 ? void 0 : _api_provider4.search_api;
-
-            // Clear all filters.
-            filters = {};
-            search_filters = {};
-
-            // Finally, fetch the photos.
-            view = 'latest';
-            getPhotos(view, true, true);
-          case 33:
-          case "end":
-            return _context4.stop();
-        }
-      }, _callee4, null, [[5, 17]]);
-    }));
-    return _switchProvider.apply(this, arguments);
-  }
-  function renderLayout() {
-    if (is_block_editor) {
-      return false;
-    }
-    var photoListWrapper = photoTarget.current;
-    imagesLoaded(photoListWrapper, function () {
-      msnry = new (masonry_layout__WEBPACK_IMPORTED_MODULE_2___default())(photoListWrapper, {
-        itemSelector: '.photo'
-      });
-      photoTarget.current.querySelectorAll('.photo').forEach(function (el) {
-        el.classList.add('in-view');
-      });
-    });
-  }
-
-  /**
-   * Scrolling function.
-   *
-   * @since 3.0
-   */
-  function onScroll() {
-    var wHeight = window.innerHeight;
-    var scrollTop = window.pageYOffset;
-    var scrollH = document.body.scrollHeight - 250;
-    if (wHeight + scrollTop >= scrollH && !loading.current && !done.current) {
-      loadMorePhotos();
-    }
-  }
-
-  /**
-   * A checker to determine if there are remaining search results.
-   *
-   * @param {number} num Total search results.
-   * @since 3.0
-   */
-  function checkTotalResults(num) {
-    done.current = parseInt(num) === 0 || num === undefined ? true : false;
-  }
-
-  /**
-   * Finished loading.
-   */
-  function doneLoading() {
-    setTimeout(function () {
-      // Delay to prevent loading to quickly.
-      loading.current = false;
-      plugin.classList.remove(loadingClass);
-    }, 750);
-  }
-
-  /**
-   * Started loading.
-   */
-  function setLoading() {
-    loading.current = true;
-    plugin.classList.add(loadingClass);
-  }
-
-  /**
-   * Show the tooltip.
-   *
-   * @param {Event} e The clicked element event.
-   * @since 4.3.0
-   */
-  function showTooltip(e) {
-    var target = e.currentTarget;
-    var rect = target.getBoundingClientRect();
-    var left = Math.round(rect.left);
-    var top = Math.round(rect.top);
-    var tooltip = plugin.querySelector('#tooltip');
-    tooltip.classList.remove('over');
-    if (target.classList.contains('tooltip--above')) {
-      tooltip.classList.add('above');
-    } else {
-      tooltip.classList.remove('above');
-    }
-
-    // Delay Tooltip Reveal.
-    tooltipInterval = setInterval(function () {
-      clearInterval(tooltipInterval);
-      tooltip.innerHTML = target.dataset.title; // Tooltip content.
-
-      // Position Tooltip.
-      left = left - tooltip.offsetWidth + target.offsetWidth + 5;
-      tooltip.style.left = "".concat(left, "px");
-      tooltip.style.top = "".concat(top, "px");
-      setTimeout(function () {
-        tooltip.classList.add('over');
-      }, delay);
-    }, 400);
-  }
-
-  /**
-   * Hide the tooltip.
-   *
-   * @since 4.3.0
-   */
-  function hideTooltip() {
-    clearInterval(tooltipInterval);
-    var tooltip = plugin.querySelector('#tooltip');
-    tooltip.classList.remove('over');
-  }
-
-  /**
-   * Test access to the REST API.
-   *
-   * @since 3.2
-   */
-  function test() {
-    var testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route
-    var restAPITest = new XMLHttpRequest();
-    restAPITest.open('POST', testURL, true);
-    restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
-    restAPITest.setRequestHeader('Content-Type', 'application/json');
-    restAPITest.send();
-    restAPITest.onload = function () {
-      if (restAPITest.status >= 200 && restAPITest.status < 400) {
-        var response = JSON.parse(restAPITest.response);
-        var success = response.success;
-        if (!success) {
-          setState({
-            restapi_error: true
-          });
-        }
-      } else {
-        // Error
-        setState({
-          restapi_error: true
-        });
-      }
-    };
-    restAPITest.onerror = function (errorMsg) {
-      console.warn(errorMsg);
-      setState({
-        restapi_error: true
-      });
-    };
-  }
-
-  /**
-   * Escape handler to close edit windows on photos.
-   *
-   * @param {Event} e The key event.
-   */
-  function escFunction(e) {
-    var key = e.key;
-    if (key === 'Escape') {
-      var editing = photoTarget.current.querySelectorAll('.edit-screen.editing');
-      if (editing) {
-        _toConsumableArray(editing).forEach(function (element) {
-          element && element.classList.remove('editing');
-        });
-      }
-    }
-  }
-
-  // Results update.
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    renderLayout();
-    doneLoading();
-  }, [results]);
-
-  // Page load.
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    setLoading();
-    test();
-    plugin.classList.remove(loadingClass);
-    wrapper.classList.add('loaded');
-    // Not Gutenberg and Media Popup add scroll listener.
-    if (!is_block_editor && !is_media_router) {
-      window.addEventListener('scroll', onScroll);
-    }
-    document.addEventListener('keydown', escFunction, false); // Add escape listener.
-  }, []);
-  return /*#__PURE__*/React.createElement("div", {
-    id: "photo-listing",
-    className: provider
-  }, !!(providers !== null && providers !== void 0 && providers.length) && /*#__PURE__*/React.createElement("nav", {
-    className: "provider-nav",
-    ref: providerNav
+function ProviderNav(_ref) {
+  var provider = _ref.provider,
+    switchProvider = _ref.switchProvider;
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(providers !== null && providers !== void 0 && providers.length) && /*#__PURE__*/React.createElement("nav", {
+    className: "provider-nav"
   }, providers.map(function (item, iterator) {
     return /*#__PURE__*/React.createElement("div", {
       key: "provider-".concat(iterator)
@@ -4678,120 +4734,10 @@ function PhotoList(props) {
         return switchProvider(e);
       },
       className: provider === item.toLowerCase() ? 'provider-nav--btn active' : 'provider-nav--btn'
-    }, /*#__PURE__*/React.createElement("span", null, item), (_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[item.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement("span", null, item), (_constants_API__WEBPACK_IMPORTED_MODULE_1___default())[item.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {
       className: "provider-nav--new"
     }, instant_img_localize["new"])));
-  })), state.api_lightbox && /*#__PURE__*/React.createElement(_APILightbox__WEBPACK_IMPORTED_MODULE_10__["default"], {
-    provider: state.api_lightbox,
-    afterVerifiedAPICallback: afterVerifiedAPICallback,
-    closeAPILightbox: closeAPILightbox
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "control-nav",
-    ref: controlNav
-  }, /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--filters-wrap', api_error ? 'inactive' : null),
-    ref: filterGroups
-  }, !!((_Object$entries = Object.entries(state.filters)) !== null && _Object$entries !== void 0 && _Object$entries.length) && /*#__PURE__*/React.createElement("div", {
-    className: "control-nav--filters"
-  }, Object.entries(state.filters).map(function (_ref, i) {
-    var _ref2 = _slicedToArray(_ref, 2),
-      key = _ref2[0],
-      filter = _ref2[1];
-    return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_12__["default"], {
-      key: "".concat(key, "-").concat(provider, "-").concat(i),
-      filterKey: key,
-      provider: provider,
-      data: filter,
-      "function": filterPhotos
-    });
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--search', 'search-field', api_error ? 'inactive' : null),
-    id: "search-bar"
-  }, /*#__PURE__*/React.createElement("form", {
-    onSubmit: function onSubmit(e) {
-      return search(e);
-    },
-    autoComplete: "off"
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: "photo-search",
-    className: "offscreen"
-  }, instant_img_localize.search_label), /*#__PURE__*/React.createElement("input", {
-    type: "search",
-    id: "photo-search",
-    placeholder: instant_img_localize.search,
-    ref: photoSearch,
-    disabled: api_error
-  }), /*#__PURE__*/React.createElement("button", {
-    type: "submit",
-    id: "photo-search-submit",
-    disabled: api_error
-  }, /*#__PURE__*/React.createElement("i", {
-    className: "fa fa-search"
-  })), /*#__PURE__*/React.createElement(_ResultsToolTip__WEBPACK_IMPORTED_MODULE_18__["default"], {
-    container: plugin,
-    getPhotos: getPhotos,
-    isSearch: is_search,
-    total: total_results,
-    title: "".concat(total_results, " ").concat(instant_img_localize.search_results, " ").concat(search_term)
-  })))), state.restapi_error && /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_17__["default"], {
-    title: instant_img_localize.error_restapi,
-    desc: instant_img_localize.error_restapi_desc,
-    type: "warning"
-  }), is_search && editor !== 'gutenberg' && /*#__PURE__*/React.createElement("div", {
-    className: "search-results-header"
-  }, /*#__PURE__*/React.createElement("h2", null, search_term.replace('id:', 'ID: ')), /*#__PURE__*/React.createElement("div", {
-    className: "search-results-header--text"
-  }, "".concat(total_results, " ").concat(instant_img_localize.search_results), " ", /*#__PURE__*/React.createElement("strong", null, "".concat(search_term)), ' - ', /*#__PURE__*/React.createElement("button", {
-    title: instant_img_localize.clear_search,
-    onClick: function onClick() {
-      return getPhotos('latest');
-    }
-  }, instant_img_localize.clear_search)), show_search_filters && Object.entries(state.search_filters).length && /*#__PURE__*/React.createElement("div", {
-    className: "control-nav--filters-wrap"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "control-nav--filters"
-  }, Object.entries(state.search_filters).map(function (_ref3, index) {
-    var _ref4 = _slicedToArray(_ref3, 2),
-      key = _ref4[0],
-      filter = _ref4[1];
-    return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_12__["default"], {
-      ref: function ref(_ref5) {
-        return filterRef[index] = _ref5;
-      },
-      key: "".concat(key, "-").concat(index),
-      filterKey: key,
-      provider: provider,
-      data: filter,
-      "function": filterSearch
-    });
-  })))), /*#__PURE__*/React.createElement("div", {
-    id: "photos",
-    className: "photo-target",
-    ref: photoTarget
-  }, !!(results !== null && results !== void 0 && results.length) && results.map(function (result, index) {
-    return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-      key: "".concat(provider, "-").concat(result.id, "-").concat(index)
-    }, result && result.type && result.type === 'instant-images-ad' ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_19__["default"], {
-      result: result
-    }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_16__["default"], {
-      provider: provider,
-      result: result,
-      mediaRouter: is_media_router,
-      blockEditor: is_block_editor,
-      setFeaturedImage: setFeaturedImage,
-      insertImage: insertImage,
-      showTooltip: showTooltip,
-      hideTooltip: hideTooltip
-    }));
-  })), total_results < 1 && is_search === true && /*#__PURE__*/React.createElement(_NoResults__WEBPACK_IMPORTED_MODULE_15__["default"], {
-    total: total_results,
-    is_search: is_search
-  }), /*#__PURE__*/React.createElement(_LoadingBlock__WEBPACK_IMPORTED_MODULE_13__["default"], null), /*#__PURE__*/React.createElement(_LoadMore__WEBPACK_IMPORTED_MODULE_14__["default"], {
-    loadMorePhotos: loadMorePhotos
-  }), /*#__PURE__*/React.createElement(_ErrorLightbox__WEBPACK_IMPORTED_MODULE_11__["default"], {
-    error: api_error,
-    provider: provider
-  }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_20__["default"], null));
+  })));
 }
 
 /***/ }),
@@ -5562,7 +5508,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "capitalizeFirstLetter": () => (/* binding */ capitalizeFirstLetter),
 /* harmony export */   "checkRateLimit": () => (/* binding */ checkRateLimit),
-/* harmony export */   "isObjectEmpty": () => (/* binding */ isObjectEmpty)
+/* harmony export */   "hideTooltip": () => (/* binding */ hideTooltip),
+/* harmony export */   "isObjectEmpty": () => (/* binding */ isObjectEmpty),
+/* harmony export */   "showTooltip": () => (/* binding */ showTooltip)
 /* harmony export */ });
 /**
  * Check if an object is empty.
@@ -5601,6 +5549,55 @@ function checkRateLimit(headers) {
  */
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+var tooltipInterval = '';
+
+/**
+ * Show the tooltip.
+ *
+ * @param {Event} e The target tooltip element.
+ * @since 4.3.0
+ */
+function showTooltip(e) {
+  var target = e.currentTarget;
+  var rect = target.getBoundingClientRect();
+  var left = Math.round(rect.left);
+  var top = Math.round(rect.top);
+  var container = target.closest('#photo-listing');
+  var tooltip = container.querySelector('#tooltip');
+  tooltip.classList.remove('over');
+  if (target.classList.contains('tooltip--above')) {
+    tooltip.classList.add('above');
+  } else {
+    tooltip.classList.remove('above');
+  }
+
+  // Delay Tooltip Reveal.
+  tooltipInterval = setInterval(function () {
+    clearInterval(tooltipInterval);
+    tooltip.innerHTML = target.dataset.title; // Tooltip content.
+
+    // Position Tooltip.
+    left = left - tooltip.offsetWidth + target.offsetWidth + 5;
+    tooltip.style.left = "".concat(left, "px");
+    tooltip.style.top = "".concat(top, "px");
+    setTimeout(function () {
+      tooltip.classList.add('over');
+    }, 25);
+  }, 750);
+}
+
+/**
+ * Hide the tooltip.
+ *
+ * @param {Event} e The target tooltip element.
+ * @since 4.3.0
+ */
+function hideTooltip(e) {
+  clearInterval(tooltipInterval);
+  var container = e.currentTarget.closest('#photo-listing');
+  var tooltip = container.querySelector('#tooltip');
+  tooltip.classList.remove('over');
 }
 
 /***/ }),
@@ -5829,7 +5826,7 @@ function updatePluginSetting(setting, value) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_PhotoList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/PhotoList */ "./src/js/components/PhotoList.js");
+/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/App */ "./src/js/components/App.js");
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants/API */ "./src/js/constants/API.js");
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./functions/buildURL */ "./src/js/functions/buildURL.js");
@@ -5859,14 +5856,12 @@ var defaultProvider = (0,_functions_getProvider__WEBPACK_IMPORTED_MODULE_6__["de
 /**
  * Get the initial set of photos.
  *
- * @param {number} page     The start page.
  * @param {string} orderby  The default order.
  * @param {string} provider The current service provider.
  */
 function getImages() {
-  var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-  var orderby = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (_constants_API__WEBPACK_IMPORTED_MODULE_2___default().defaults.order);
-  var provider = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : (_constants_API__WEBPACK_IMPORTED_MODULE_2___default().defaults.provider);
+  var orderby = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_constants_API__WEBPACK_IMPORTED_MODULE_2___default().defaults.order);
+  var provider = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (_constants_API__WEBPACK_IMPORTED_MODULE_2___default().defaults.provider);
   var container = document.querySelector('.instant-img-container');
 
   // Build URL.
@@ -5894,9 +5889,8 @@ function getImages() {
             results = _context.sent;
             _results$error = results.error, error = _results$error === void 0 ? null : _results$error;
             app = document.getElementById('app');
-            (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)( /*#__PURE__*/React.createElement(_components_PhotoList__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)( /*#__PURE__*/React.createElement(_components_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
               editor: "classic",
-              page: page,
               data: results,
               container: app,
               orderby: orderby,
@@ -5935,7 +5929,7 @@ _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
     while (1) switch (_context2.prev = _context2.next) {
       case 0:
         defaultOrder = (_constants_API__WEBPACK_IMPORTED_MODULE_2___default().defaults.order);
-        getImages(1, defaultOrder, defaultProvider);
+        getImages(defaultOrder, defaultProvider);
       case 2:
       case "end":
         return _context2.stop();
@@ -11666,6 +11660,481 @@ module.exports = window["ReactDOM"];
 
 "use strict";
 module.exports = window["wp"]["element"];
+
+/***/ }),
+
+/***/ "./node_modules/react-intersection-observer/react-intersection-observer.modern.mjs":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/react-intersection-observer/react-intersection-observer.modern.mjs ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "InView": () => (/* binding */ InView),
+/* harmony export */   "defaultFallbackInView": () => (/* binding */ defaultFallbackInView),
+/* harmony export */   "observe": () => (/* binding */ observe),
+/* harmony export */   "useInView": () => (/* binding */ useInView)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+const observerMap = new Map();
+const RootIds = new WeakMap();
+let rootId = 0;
+let unsupportedValue = undefined;
+/**
+ * What should be the default behavior if the IntersectionObserver is unsupported?
+ * Ideally the polyfill has been loaded, you can have the following happen:
+ * - `undefined`: Throw an error
+ * - `true` or `false`: Set the `inView` value to this regardless of intersection state
+ * **/
+
+function defaultFallbackInView(inView) {
+  unsupportedValue = inView;
+}
+/**
+ * Generate a unique ID for the root element
+ * @param root
+ */
+
+function getRootId(root) {
+  if (!root) return '0';
+  if (RootIds.has(root)) return RootIds.get(root);
+  rootId += 1;
+  RootIds.set(root, rootId.toString());
+  return RootIds.get(root);
+}
+/**
+ * Convert the options to a string Id, based on the values.
+ * Ensures we can reuse the same observer when observing elements with the same options.
+ * @param options
+ */
+
+
+function optionsToId(options) {
+  return Object.keys(options).sort().filter(key => options[key] !== undefined).map(key => {
+    return `${key}_${key === 'root' ? getRootId(options.root) : options[key]}`;
+  }).toString();
+}
+
+function createObserver(options) {
+  // Create a unique ID for this observer instance, based on the root, root margin and threshold.
+  let id = optionsToId(options);
+  let instance = observerMap.get(id);
+
+  if (!instance) {
+    // Create a map of elements this observer is going to observe. Each element has a list of callbacks that should be triggered, once it comes into view.
+    const elements = new Map();
+    let thresholds;
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        var _elements$get;
+
+        // While it would be nice if you could just look at isIntersecting to determine if the component is inside the viewport, browsers can't agree on how to use it.
+        // -Firefox ignores `threshold` when considering `isIntersecting`, so it will never be false again if `threshold` is > 0
+        const inView = entry.isIntersecting && thresholds.some(threshold => entry.intersectionRatio >= threshold); // @ts-ignore support IntersectionObserver v2
+
+        if (options.trackVisibility && typeof entry.isVisible === 'undefined') {
+          // The browser doesn't support Intersection Observer v2, falling back to v1 behavior.
+          // @ts-ignore
+          entry.isVisible = inView;
+        }
+
+        (_elements$get = elements.get(entry.target)) == null ? void 0 : _elements$get.forEach(callback => {
+          callback(inView, entry);
+        });
+      });
+    }, options); // Ensure we have a valid thresholds array. If not, use the threshold from the options
+
+    thresholds = observer.thresholds || (Array.isArray(options.threshold) ? options.threshold : [options.threshold || 0]);
+    instance = {
+      id,
+      observer,
+      elements
+    };
+    observerMap.set(id, instance);
+  }
+
+  return instance;
+}
+/**
+ * @param element - DOM Element to observe
+ * @param callback - Callback function to trigger when intersection status changes
+ * @param options - Intersection Observer options
+ * @param fallbackInView - Fallback inView value.
+ * @return Function - Cleanup function that should be triggered to unregister the observer
+ */
+
+
+function observe(element, callback, options = {}, fallbackInView = unsupportedValue) {
+  if (typeof window.IntersectionObserver === 'undefined' && fallbackInView !== undefined) {
+    const bounds = element.getBoundingClientRect();
+    callback(fallbackInView, {
+      isIntersecting: fallbackInView,
+      target: element,
+      intersectionRatio: typeof options.threshold === 'number' ? options.threshold : 0,
+      time: 0,
+      boundingClientRect: bounds,
+      intersectionRect: bounds,
+      rootBounds: bounds
+    });
+    return () => {// Nothing to cleanup
+    };
+  } // An observer with the same options can be reused, so lets use this fact
+
+
+  const {
+    id,
+    observer,
+    elements
+  } = createObserver(options); // Register the callback listener for this element
+
+  let callbacks = elements.get(element) || [];
+
+  if (!elements.has(element)) {
+    elements.set(element, callbacks);
+  }
+
+  callbacks.push(callback);
+  observer.observe(element);
+  return function unobserve() {
+    // Remove the callback from the callback list
+    callbacks.splice(callbacks.indexOf(callback), 1);
+
+    if (callbacks.length === 0) {
+      // No more callback exists for element, so destroy it
+      elements.delete(element);
+      observer.unobserve(element);
+    }
+
+    if (elements.size === 0) {
+      // No more elements are being observer by this instance, so destroy it
+      observer.disconnect();
+      observerMap.delete(id);
+    }
+  };
+}
+
+const _excluded = ["children", "as", "triggerOnce", "threshold", "root", "rootMargin", "onChange", "skip", "trackVisibility", "delay", "initialInView", "fallbackInView"];
+
+function isPlainChildren(props) {
+  return typeof props.children !== 'function';
+}
+/**
+ ## Render props
+
+ To use the `<InView>` component, you pass it a function. It will be called
+ whenever the state changes, with the new value of `inView`. In addition to the
+ `inView` prop, children also receive a `ref` that should be set on the
+ containing DOM element. This is the element that the IntersectionObserver will
+ monitor.
+
+ If you need it, you can also access the
+ [`IntersectionObserverEntry`](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry)
+ on `entry`, giving you access to all the details about the current intersection
+ state.
+
+ ```jsx
+ import { InView } from 'react-intersection-observer';
+
+ const Component = () => (
+ <InView>
+ {({ inView, ref, entry }) => (
+      <div ref={ref}>
+        <h2>{`Header inside viewport ${inView}.`}</h2>
+      </div>
+    )}
+ </InView>
+ );
+
+ export default Component;
+ ```
+
+ ## Plain children
+
+ You can pass any element to the `<InView />`, and it will handle creating the
+ wrapping DOM element. Add a handler to the `onChange` method, and control the
+ state in your own component. Any extra props you add to `<InView>` will be
+ passed to the HTML element, allowing you set the `className`, `style`, etc.
+
+ ```jsx
+ import { InView } from 'react-intersection-observer';
+
+ const Component = () => (
+ <InView as="div" onChange={(inView, entry) => console.log('Inview:', inView)}>
+ <h2>Plain children are always rendered. Use onChange to monitor state.</h2>
+ </InView>
+ );
+
+ export default Component;
+ ```
+ */
+
+
+class InView extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
+  constructor(props) {
+    super(props);
+    this.node = null;
+    this._unobserveCb = null;
+
+    this.handleNode = node => {
+      if (this.node) {
+        // Clear the old observer, before we start observing a new element
+        this.unobserve();
+
+        if (!node && !this.props.triggerOnce && !this.props.skip) {
+          // Reset the state if we get a new node, and we aren't ignoring updates
+          this.setState({
+            inView: !!this.props.initialInView,
+            entry: undefined
+          });
+        }
+      }
+
+      this.node = node ? node : null;
+      this.observeNode();
+    };
+
+    this.handleChange = (inView, entry) => {
+      if (inView && this.props.triggerOnce) {
+        // If `triggerOnce` is true, we should stop observing the element.
+        this.unobserve();
+      }
+
+      if (!isPlainChildren(this.props)) {
+        // Store the current State, so we can pass it to the children in the next render update
+        // There's no reason to update the state for plain children, since it's not used in the rendering.
+        this.setState({
+          inView,
+          entry
+        });
+      }
+
+      if (this.props.onChange) {
+        // If the user is actively listening for onChange, always trigger it
+        this.props.onChange(inView, entry);
+      }
+    };
+
+    this.state = {
+      inView: !!props.initialInView,
+      entry: undefined
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    // If a IntersectionObserver option changed, reinit the observer
+    if (prevProps.rootMargin !== this.props.rootMargin || prevProps.root !== this.props.root || prevProps.threshold !== this.props.threshold || prevProps.skip !== this.props.skip || prevProps.trackVisibility !== this.props.trackVisibility || prevProps.delay !== this.props.delay) {
+      this.unobserve();
+      this.observeNode();
+    }
+  }
+
+  componentWillUnmount() {
+    this.unobserve();
+    this.node = null;
+  }
+
+  observeNode() {
+    if (!this.node || this.props.skip) return;
+    const {
+      threshold,
+      root,
+      rootMargin,
+      trackVisibility,
+      delay,
+      fallbackInView
+    } = this.props;
+    this._unobserveCb = observe(this.node, this.handleChange, {
+      threshold,
+      root,
+      rootMargin,
+      // @ts-ignore
+      trackVisibility,
+      // @ts-ignore
+      delay
+    }, fallbackInView);
+  }
+
+  unobserve() {
+    if (this._unobserveCb) {
+      this._unobserveCb();
+
+      this._unobserveCb = null;
+    }
+  }
+
+  render() {
+    if (!isPlainChildren(this.props)) {
+      const {
+        inView,
+        entry
+      } = this.state;
+      return this.props.children({
+        inView,
+        entry,
+        ref: this.handleNode
+      });
+    }
+
+    const _this$props = this.props,
+          {
+      children,
+      as
+    } = _this$props,
+          props = _objectWithoutPropertiesLoose(_this$props, _excluded);
+
+    return react__WEBPACK_IMPORTED_MODULE_0__.createElement(as || 'div', _extends({
+      ref: this.handleNode
+    }, props), children);
+  }
+
+}
+
+/**
+ * React Hooks make it easy to monitor the `inView` state of your components. Call
+ * the `useInView` hook with the (optional) [options](#options) you need. It will
+ * return an array containing a `ref`, the `inView` status and the current
+ * [`entry`](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry).
+ * Assign the `ref` to the DOM element you want to monitor, and the hook will
+ * report the status.
+ *
+ * @example
+ * ```jsx
+ * import React from 'react';
+ * import { useInView } from 'react-intersection-observer';
+ *
+ * const Component = () => {
+ *   const { ref, inView, entry } = useInView({
+ *       threshold: 0,
+ *   });
+ *
+ *   return (
+ *     <div ref={ref}>
+ *       <h2>{`Header inside viewport ${inView}.`}</h2>
+ *     </div>
+ *   );
+ * };
+ * ```
+ */
+
+function useInView({
+  threshold,
+  delay,
+  trackVisibility,
+  rootMargin,
+  root,
+  triggerOnce,
+  skip,
+  initialInView,
+  fallbackInView,
+  onChange
+} = {}) {
+  var _state$entry;
+
+  const [ref, setRef] = react__WEBPACK_IMPORTED_MODULE_0__.useState(null);
+  const callback = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+  const [state, setState] = react__WEBPACK_IMPORTED_MODULE_0__.useState({
+    inView: !!initialInView,
+    entry: undefined
+  }); // Store the onChange callback in a `ref`, so we can access the latest instance
+  // inside the `useEffect`, but without triggering a rerender.
+
+  callback.current = onChange;
+  react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
+    // Ensure we have node ref, and that we shouldn't skip observing
+    if (skip || !ref) return;
+    let unobserve;
+    unobserve = observe(ref, (inView, entry) => {
+      setState({
+        inView,
+        entry
+      });
+      if (callback.current) callback.current(inView, entry);
+
+      if (entry.isIntersecting && triggerOnce && unobserve) {
+        // If it should only trigger once, unobserve the element after it's inView
+        unobserve();
+        unobserve = undefined;
+      }
+    }, {
+      root,
+      rootMargin,
+      threshold,
+      // @ts-ignore
+      trackVisibility,
+      // @ts-ignore
+      delay
+    }, fallbackInView);
+    return () => {
+      if (unobserve) {
+        unobserve();
+      }
+    };
+  }, // We break the rule here, because we aren't including the actual `threshold` variable
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [// If the threshold is an array, convert it to a string, so it won't change between renders.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  Array.isArray(threshold) ? threshold.toString() : threshold, ref, root, rootMargin, triggerOnce, skip, trackVisibility, fallbackInView, delay]);
+  const entryTarget = (_state$entry = state.entry) == null ? void 0 : _state$entry.target;
+  const previousEntryTarget = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+
+  if (!ref && entryTarget && !triggerOnce && !skip && previousEntryTarget.current !== entryTarget) {
+    // If we don't have a node ref, then reset the state (unless the hook is set to only `triggerOnce` or `skip`)
+    // This ensures we correctly reflect the current state - If you aren't observing anything, then nothing is inView
+    previousEntryTarget.current = entryTarget;
+    setState({
+      inView: !!initialInView,
+      entry: undefined
+    });
+  }
+
+  const result = [setRef, state.inView, state.entry]; // Support object destructuring, by adding the specific values.
+
+  result.ref = result[0];
+  result.inView = result[1];
+  result.entry = result[2];
+  return result;
+}
+
+
+//# sourceMappingURL=react-intersection-observer.modern.mjs.map
+
 
 /***/ })
 

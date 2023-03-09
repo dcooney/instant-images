@@ -220,15 +220,14 @@ body.media_page_instant-images.overflow-hidden {
   background: url(images/ajax-loader-lg.808ea7f8.gif) no-repeat center center;
 }
 .instant-img-container .load-more-wrap {
-  margin: 1% 0 0;
-  padding: 25px 0;
+  margin: 0;
+  padding: 0;
   text-align: center;
-  display: none;
   border-top: 1px solid #ddd;
 }
 .instant-img-container .load-more-wrap button {
-  display: inline-block;
-  margin: 0;
+  display: none;
+  margin: 20px 0;
   padding: 12px 15px;
   font-size: 15px;
   font-weight: 600;
@@ -719,7 +718,7 @@ body.media_page_instant-images.overflow-hidden {
   width: calc(100% + 20px);
   height: calc(100% + 10px);
   min-height: 300px;
-  background: rgba(255, 255, 255, 0.95) url(images/ajax-loader-lg.808ea7f8.gif) no-repeat center 90px;
+  background: rgba(255, 255, 255, 0.9) url(images/ajax-loader-lg.808ea7f8.gif) no-repeat center 90px;
   z-index: 999;
   transition: all 0.25s ease;
 }
@@ -1595,8 +1594,8 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   stroke: #aabbff !important;
   fill: #aabbff !important;
 }
-.components-panel .instant-img-container .load-more-wrap {
-  display: block;
+.components-panel .instant-img-container .load-more-wrap button {
+  display: inline-block;
 }
 .components-panel .instant-img-container .notice.upgrade-notice {
   margin: 10px;
@@ -1771,8 +1770,8 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .media-frame-router button#menu-item-instantimages.active {
   background-color: #f7f7f7;
 }
-.media-frame-content .instant-img-container .load-more-wrap {
-  display: block;
+.media-frame-content .instant-img-container .load-more-wrap button {
+  display: inline-block;
 }
 .instant-img-container #tooltip {
   padding: 8px 10px;

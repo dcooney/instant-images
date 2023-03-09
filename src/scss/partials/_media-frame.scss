@@ -4,10 +4,12 @@
 		background-color: $lighter_grey;
 	}
 }
-.media-frame-content{
-	.instant-img-container{
-      .load-more-wrap{
-         display: block;
-      }
-   }
+.media-frame-content {
+	.instant-img-container {
+		.load-more-wrap {
+			button {
+				display: inline-block;
+			}
+		}
+	}
 }
