@@ -2520,8 +2520,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  */
 function APILightbox(props) {
   var provider = props.provider,
-    afterVerifiedAPICallback = props.afterVerifiedAPICallback,
     closeAPILightbox = props.closeAPILightbox;
+  if (!provider) {
+    return null;
+  }
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('invalid'),
     _useState2 = _slicedToArray(_useState, 2),
     apiStatus = _useState2[0],
@@ -2582,7 +2584,7 @@ function APILightbox(props) {
               setAPIStatus('valid');
               setResponse(instant_img_localize.api_success_msg);
               setTimeout(function () {
-                afterVerifiedAPICallback(provider);
+                closeAPILightbox(provider);
               }, 1500);
             } else {
               setAPIStatus('invalid'); // Error/Invalid.
@@ -2816,6 +2818,11 @@ var imagesLoaded = __webpack_require__(/*! imagesloaded */ "./node_modules/image
 var page = 1;
 
 /**
+ * Fix bug with double searching after No Results. The issue is the inview flag and loadmorephotos is being fired.
+ * Fix issue with double loading on initial plugin render. Issue is the loadmore is triggering after the first renderlayout();
+/*
+
+/**
  * Render the InstantImages component.
  *
  * @param {Object} props The component props.
@@ -2839,8 +2846,8 @@ function App(props) {
   var photo_api = api_provider === null || api_provider === void 0 ? void 0 : api_provider.photo_api;
   var search_api = api_provider === null || api_provider === void 0 ? void 0 : api_provider.search_api;
   var api_error = error;
-  var loadingClass = 'loading';
   var searchClass = 'searching';
+  var filters = {};
 
   // App state.
   var mounted = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(false);
@@ -2858,24 +2865,33 @@ function App(props) {
     setLoading = _useState6[1];
   var _useState7 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
-    done = _useState8[0],
-    setDone = _useState8[1];
-  var _useState9 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
-      provider: provider,
-      filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].filters,
-      search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].search,
-      restapi_error: false,
-      api_lightbox: false
-    }),
+    loadingMore = _useState8[0],
+    setLoadingMore = _useState8[1];
+  var _useState9 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState10 = _slicedToArray(_useState9, 2),
-    state = _useState10[0],
-    setState = _useState10[1];
-  var filters = {};
+    done = _useState10[0],
+    setDone = _useState10[1];
+  var _useState11 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    showAPILightbox = _useState12[0],
+    setShowAPILightbox = _useState12[1];
+  var _useState13 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      active: false,
+      term: '',
+      results: 0
+    }),
+    _useState14 = _slicedToArray(_useState13, 2),
+    search = _useState14[0],
+    setSearch = _useState14[1];
+  var _useState15 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      "default": (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[activeProvider].filters,
+      search: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[activeProvider].search
+    }),
+    _useState16 = _slicedToArray(_useState15, 2),
+    filterOptions = _useState16[0],
+    setFilterOptions = _useState16[1];
   var search_filters = {};
   var show_search_filters = true;
-  var is_search = false;
-  var search_term = '';
-  var total_results = 0;
   var msnry = '';
   var tooltipInterval = '';
   var delay = 250;
@@ -2889,7 +2905,7 @@ function App(props) {
     inView = _useInView2[1];
   var photoTarget = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var controlNav = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var photoSearch = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var searchInput = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var filterGroups = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var filterRef = [];
 
@@ -2913,24 +2929,21 @@ function App(props) {
   }
 
   /**
-   * Trigger Search.
+   * Handle the Photo Search.
    *
    * @param {Event} event The dispatched submit event.
    * @since 3.0
    */
-  function search(event) {
+  function searchHandler(event) {
     event.preventDefault();
-    var input = photoSearch.current;
-    var term = input.value;
+    var term = searchInput.current.value;
     resetFilters();
     if (term.length > 2) {
-      input.classList.add(searchClass);
-      search_term = term;
+      searchInput.current.classList.add(searchClass);
       search_filters = {};
-      is_search = true;
-      doSearch(search_term);
+      doSearch(term);
     } else {
-      input.focus();
+      searchInput.current.focus();
     }
   }
 
@@ -2940,10 +2953,12 @@ function App(props) {
    * @since 3.0
    */
   function clearSearch() {
-    photoSearch.current.value = '';
-    total_results = 0;
-    is_search = false;
-    search_term = '';
+    searchInput.current.value = '';
+    setSearch({
+      active: false,
+      term: '',
+      results: 0
+    });
     search_filters = {}; // Reset search filters.
     toggleFilters(); // Re-enable filters.
   }
@@ -2951,7 +2966,7 @@ function App(props) {
   /**
    * Perform a photo search.
    *
-   * @param {string} term The search term.
+   * @param {string} term Search term.
    * @since 3.0
    */
   function doSearch(_x2) {
@@ -2960,32 +2975,28 @@ function App(props) {
   /**
    * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
    *
-   * @param {Boolean} reset    Is this an app reset.
-   * @param {Boolean} switcher Is this a provider switch.
    * @since 3.0
    */
   function _doSearch() {
     _doSearch = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(term) {
-      var search_type, search_query, search_params, params, url, response, status, headers, _data, images;
+      var search_type, search_query, search_params, params, url, response, status, headers, _data, images, total_results;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
-            search_type = term.substring(0, 3) === 'id:' ? 'id' : 'term'; // Set loading variables and options.
-            photoTarget.current.classList.add(loadingClass);
-            page = 1; // Reset current page num.
+            setLoading(true);
             toggleFilters(); // Disable filters.
-
-            // Get search query.
+            page = 1; // Reset current page num.
+            search_type = term.substring(0, 3) === 'id:' ? 'id' : 'term'; // Get search query.
             search_query = {};
             if (search_type === 'id') {
               show_search_filters = false;
               search_query = {
-                id: search_term.replace('id:', '').replace(/\s+/, '')
+                id: term.replace('id:', '').replace(/\s+/, '')
               };
             } else {
               show_search_filters = true;
               search_query = {
-                term: search_term
+                term: term
               };
             }
 
@@ -2993,7 +3004,7 @@ function App(props) {
             search_params = _objectSpread(_objectSpread(_objectSpread({}, {
               page: page
             }), search_query), search_filters);
-            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(provider, search_params);
+            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(activeProvider, search_params);
             url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('search', params); // Create fetch request.
             _context.next = 11;
             return fetch(url);
@@ -3006,47 +3017,42 @@ function App(props) {
             return response.json();
           case 17:
             _data = _context.sent;
-            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data); // Check returned data.
-            total_results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__.getSearchTotal)(_data);
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data);
             checkTotalResults(images.length);
+            setResults(images);
+
+            // Check returned data.
+            total_results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__.getSearchTotal)(_data);
+            setSearch({
+              active: true,
+              term: term,
+              results: total_results
+            });
 
             // Hide search filters if no results and not filtering.
             show_search_filters = total_results < 2 && (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.isObjectEmpty)(search_filters) ? false : true;
 
             // Update Props.
             setState({
-              results: images,
               search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].search
             });
-
-            // Delay for effect.
-            setTimeout(function () {
-              photoSearch.current.classList.remove(searchClass);
-              photoTarget.current.classList.remove(loadingClass);
-            }, delay);
-            _context.next = 36;
+            _context.next = 33;
             break;
-          case 26:
-            _context.prev = 26;
+          case 27:
+            _context.prev = 27;
             _context.t0 = _context["catch"](14);
             // Reset all search parameters.
             setDone(true);
             setLoading(false);
             show_search_filters = false;
-            total_results = 0;
-            photoSearch.current.classList.remove(searchClass);
-            photoTarget.current.classList.remove(loadingClass);
-
-            // Update Props.
-            setState({
-              results: results
-            });
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
-          case 36:
+          case 33:
+            searchInput.current.classList.remove(searchClass);
+          case 34:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[14, 26]]);
+      }, _callee, null, [[14, 27]]);
     }));
     return _doSearch.apply(this, arguments);
   }
@@ -3060,29 +3066,16 @@ function App(props) {
    */
   function _getPhotos() {
     _getPhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var reset,
-        switcher,
-        params,
-        url,
-        response,
-        status,
-        headers,
-        _data2,
-        _data2$error,
-        _error,
-        images,
-        _args2 = arguments;
+      var params, url, response, status, headers, _data2, _data2$error, _error, images;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
-            reset = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : false;
-            switcher = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : false;
-            if (!(loading && !reset)) {
-              _context2.next = 4;
+            if (!loadingMore) {
+              _context2.next = 2;
               break;
             }
-            return _context2.abrupt("return");
-          case 4:
+            return _context2.abrupt("return", false);
+          case 2:
             setLoading(true); // Set loading state.
             clearSearch(); // Clear search results.
             page = 1;
@@ -3090,49 +3083,41 @@ function App(props) {
             // Build URL.
             params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(activeProvider, filters);
             url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('photos', params); // Create fetch request.
-            _context2.next = 11;
+            _context2.next = 9;
             return fetch(url);
-          case 11:
+          case 9:
             response = _context2.sent;
             status = response.status, headers = response.headers;
             (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
 
             // Status OK.
-            _context2.prev = 14;
-            _context2.next = 17;
+            _context2.prev = 12;
+            _context2.next = 15;
             return response.json();
-          case 17:
+          case 15:
             _data2 = _context2.sent;
             _data2$error = _data2.error, _error = _data2$error === void 0 ? null : _data2$error; // Get error reporting.
             images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data2);
-            checkTotalResults(images.length); // Check for returned data.
+            checkTotalResults(images.length);
+            setResults(images);
             api_error = _error;
-
-            // Set results state.
-            if (!switcher) {
-              setResults(function (prevState) {
-                return [].concat(_toConsumableArray(prevState), _toConsumableArray(images));
-              }); // Push images into state.
-            } else {
-              setResults(images); // Push images into state.
-            }
-            _context2.next = 29;
+            _context2.next = 27;
             break;
-          case 25:
-            _context2.prev = 25;
-            _context2.t0 = _context2["catch"](14);
+          case 23:
+            _context2.prev = 23;
+            _context2.t0 = _context2["catch"](12);
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
             setLoading(false);
-          case 29:
+          case 27:
             // Delay loading animatons for effect.
             setTimeout(function () {
               setLoading(false);
             }, delay);
-          case 30:
+          case 28:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[14, 25]]);
+      }, _callee2, null, [[12, 23]]);
     }));
     return _getPhotos.apply(this, arguments);
   }
@@ -3151,47 +3136,54 @@ function App(props) {
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
-            setLoading(true);
+            if (!(loading || loadingMore)) {
+              _context3.next = 2;
+              break;
+            }
+            return _context3.abrupt("return");
+          case 2:
+            setLoadingMore(true);
             page = parseInt(page) + 1;
 
             // Get search query.
-            search_query = is_search ? {
-              term: search_term
+            search_query = search !== null && search !== void 0 && search.active && search !== null && search !== void 0 && search.term ? {
+              term: search.term
             } : {}; // Build URL.
-            type = is_search ? 'search' : 'photos';
-            filters = is_search ? search_filters : filters;
+            type = search !== null && search !== void 0 && search.active ? 'search' : 'photos';
+            filters = search !== null && search !== void 0 && search.active ? search_filters : filters;
             loadmore_params = _objectSpread(_objectSpread(_objectSpread({}, {
               page: page
             }), search_query), filters);
             params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(activeProvider, loadmore_params);
             url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])(type, params); // Create fetch request.
-            _context3.next = 10;
+            _context3.next = 12;
             return fetch(url);
-          case 10:
+          case 12:
             response = _context3.sent;
             status = response.status, headers = response.headers;
             (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
-            _context3.prev = 13;
-            _context3.next = 16;
+            _context3.prev = 15;
+            _context3.next = 18;
             return response.json();
-          case 16:
+          case 18:
             _data3 = _context3.sent;
             images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data3);
-            checkTotalResults(images.length); // Check the total results.
+            checkTotalResults(images.length);
             setResults(function (prevState) {
               return [].concat(_toConsumableArray(prevState), _toConsumableArray(images));
-            }); // Push images into state.
-            _context3.next = 25;
+            });
+            _context3.next = 28;
             break;
-          case 22:
-            _context3.prev = 22;
-            _context3.t0 = _context3["catch"](13);
+          case 24:
+            _context3.prev = 24;
+            _context3.t0 = _context3["catch"](15);
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
-          case 25:
+            setLoadingMore(false);
+          case 28:
           case "end":
             return _context3.stop();
         }
-      }, _callee3, null, [[13, 22]]);
+      }, _callee3, null, [[15, 24]]);
     }));
     return _loadMorePhotos.apply(this, arguments);
   }
@@ -3201,7 +3193,7 @@ function App(props) {
     } else {
       filters[filter] = value;
     }
-    getPhotos(true);
+    getPhotos();
   }
 
   /**
@@ -3216,7 +3208,7 @@ function App(props) {
     } else {
       search_filters[filter] = value;
     }
-    doSearch(search_term);
+    doSearch(search === null || search === void 0 ? void 0 : search.term);
   }
 
   /**
@@ -3226,10 +3218,10 @@ function App(props) {
     var filters = filterGroups.current.querySelectorAll('button.filter-dropdown--button');
     if (filters) {
       filters.forEach(function (button) {
-        button.disabled = is_search ? true : false;
+        button.disabled = search !== null && search !== void 0 && search.active ? true : false;
       });
     }
-    if (is_search) {
+    if (search !== null && search !== void 0 && search.active) {
       filterGroups.current.classList.add('inactive');
     } else {
       filterGroups.current.classList.remove('inactive');
@@ -3237,27 +3229,17 @@ function App(props) {
   }
 
   /**
-   * Callback after activating and verififying an API key.
-   *
-   * @param {string} provider The verified provider.
-   * @since 4.5
-   */
-  function afterVerifiedAPICallback(provider) {
-    setActiveProvider(provider); // Set the active provider.
-    setState({
-      api_lightbox: false
-    }); // Close the lightbox.
-    document.body.classList.remove('overflow-hidden');
-  }
-
-  /**
    * Close the API Lightbox.
+   *
+   * @param {string} provider The provider to close the lightbox for.
    * @since 4.5
    */
   function closeAPILightbox() {
-    setState({
-      api_lightbox: false
-    }); // Close the lightbox.
+    var provider = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    if (provider) {
+      setActiveProvider(provider);
+    }
+    setShowAPILightbox(false);
     document.body.classList.remove('overflow-hidden');
   }
 
@@ -3270,6 +3252,11 @@ function App(props) {
   function switchProvider(_x3) {
     return _switchProvider.apply(this, arguments);
   }
+  /**
+   * Renders the Masonry layout.
+   *
+   * @since 3.0
+   */
   function _switchProvider() {
     _switchProvider = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
       var target, provider, response, status, headers;
@@ -3284,84 +3271,63 @@ function App(props) {
             }
             return _context4.abrupt("return");
           case 4:
+            setLoading(true);
+
+            // API Verification.
+            // Note: Bounce user if provider API key is not valid.
             if (!(_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider].requires_key) {
-              _context4.next = 22;
+              _context4.next = 23;
               break;
             }
-            _context4.prev = 5;
-            _context4.next = 8;
+            _context4.prev = 6;
+            _context4.next = 9;
             return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__.buildTestURL)(provider));
-          case 8:
+          case 9:
             response = _context4.sent;
             status = response.status, headers = response.headers;
             (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
             if (!(status !== 200)) {
-              _context4.next = 15;
+              _context4.next = 16;
               break;
             }
             // Catch API errors and 401s.
-            setState({
-              api_lightbox: provider
-            }); // Show API Lightbox.
+            setShowAPILightbox(provider); // Show API Lightbox.
             document.body.classList.add('overflow-hidden');
             return _context4.abrupt("return");
-          case 15:
-            _context4.next = 22;
+          case 16:
+            _context4.next = 23;
             break;
-          case 17:
-            _context4.prev = 17;
-            _context4.t0 = _context4["catch"](5);
+          case 18:
+            _context4.prev = 18;
+            _context4.t0 = _context4["catch"](6);
             // Catch all other errors.
-            setState({
-              api_lightbox: provider
-            }); // Show API Lightbox.
+            setShowAPILightbox(provider); // Show API Lightbox.
             document.body.classList.add('overflow-hidden');
             return _context4.abrupt("return");
-          case 22:
-            // GO forward and toggle the providers.
-            photoTarget.current.classList.add(loadingClass);
-            setTimeout(function () {
-              // Delay for effect.
-              setActiveProvider(provider);
-            }, 150);
+          case 23:
+            // Update filter options.
+            setFilterOptions({
+              "default": (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].filters,
+              search: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].search
+            });
 
-            // Update API provider params.
-
-            // api_provider = API[provider];
-            // api_key = instant_img_localize[`${provider}_app_id`];
-            // photo_api = api_provider?.photo_api;
-            // search_api = api_provider?.search_api;
-
-            // // Clear all filters.
-            // filters = {};
-            // search_filters = {};
-
-            // // Finally, fetch the photos.
-            // view = 'latest';
-            // getPhotos(view, true, true);
-          case 24:
+            // Switch the provider.
+            setActiveProvider(provider);
+          case 25:
           case "end":
             return _context4.stop();
         }
-      }, _callee4, null, [[5, 17]]);
+      }, _callee4, null, [[6, 18]]);
     }));
     return _switchProvider.apply(this, arguments);
   }
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!mounted.current) {
-      return;
-    }
-    getPhotos(true, true);
-  }, [activeProvider]);
-
-  /**
-   * Renders the Masonry layout.
-   *
-   * @since 3.0
-   */
   function renderLayout() {
     if (is_block_editor) {
-      setLoading(false);
+      setTimeout(function () {
+        // Delay to allow for rendering and set up.
+        setLoading(false);
+        setLoadingMore(false);
+      }, delay);
       return false;
     }
     imagesLoaded(photoTarget.current, function () {
@@ -3371,7 +3337,11 @@ function App(props) {
       photoTarget.current.querySelectorAll('.photo').forEach(function (el) {
         el.classList.add('in-view');
       });
-      setLoading(false);
+      setTimeout(function () {
+        // Delay to allow for rendering and set up.
+        setLoading(false);
+        setLoadingMore(false);
+      }, delay);
     });
   }
 
@@ -3383,42 +3353,6 @@ function App(props) {
    */
   function checkTotalResults(num) {
     setDone(parseInt(num) === 0 || num === undefined);
-  }
-
-  /**
-   * Test access to the REST API.
-   *
-   * @since 3.2
-   */
-  function test() {
-    var testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route
-    var restAPITest = new XMLHttpRequest();
-    restAPITest.open('POST', testURL, true);
-    restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
-    restAPITest.setRequestHeader('Content-Type', 'application/json');
-    restAPITest.send();
-    restAPITest.onload = function () {
-      if (restAPITest.status >= 200 && restAPITest.status < 400) {
-        var response = JSON.parse(restAPITest.response);
-        var success = response.success;
-        if (!success) {
-          setState({
-            restapi_error: true
-          });
-        }
-      } else {
-        // Error
-        setState({
-          restapi_error: true
-        });
-      }
-    };
-    restAPITest.onerror = function (errorMsg) {
-      console.warn(errorMsg);
-      setState({
-        restapi_error: true
-      });
-    };
   }
 
   /**
@@ -3437,61 +3371,62 @@ function App(props) {
       }
     }
   }
+
+  // Provider switch callback.
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (!mounted.current) {
+      return;
+    }
+    getPhotos();
+  }, [activeProvider]);
+
+  // Scroll in-view callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (mounted.current && !loading && !done) {
       loadMorePhotos();
     }
   }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Loading flag.
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (loading) {
-      plugin.classList.add(loadingClass);
-    } else {
-      photoTarget.current.classList.remove(loadingClass);
-      plugin.classList.remove(loadingClass);
-    }
-  }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Results update.
+  // Results callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     renderLayout();
   }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Page load.
+  // Initial page load.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    test();
-    plugin.classList.remove(loadingClass);
+    setLoading(false);
     wrapper.classList.add('loaded');
     document.addEventListener('keydown', escFunction, false); // Add global escape listener.
     mounted.current = true;
+    return function () {
+      document.removeEventListener('keydown', escFunction, false);
+      mounted.current = false;
+    };
   }, []);
-  return /*#__PURE__*/React.createElement("div", {
-    id: "photo-listing"
-  }, /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_18__["default"], {
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_18__["default"], {
     switchProvider: switchProvider,
     provider: activeProvider
-  }), state.api_lightbox && /*#__PURE__*/React.createElement(_APILightbox__WEBPACK_IMPORTED_MODULE_10__["default"], {
-    provider: state.api_lightbox,
-    afterVerifiedAPICallback: afterVerifiedAPICallback,
-    closeAPILightbox: closeAPILightbox
+  }), /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_15__["default"], {
+    title: instant_img_localize.error_restapi,
+    desc: instant_img_localize.error_restapi_desc,
+    type: "warning"
   }), /*#__PURE__*/React.createElement("div", {
     className: "control-nav",
     ref: controlNav
   }, /*#__PURE__*/React.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--filters-wrap', api_error ? 'inactive' : null),
     ref: filterGroups
-  }, state !== null && state !== void 0 && state.filters && (_Object$entries = Object.entries(state.filters)) !== null && _Object$entries !== void 0 && _Object$entries.length ? /*#__PURE__*/React.createElement("div", {
+  }, filterOptions !== null && filterOptions !== void 0 && filterOptions["default"] && (_Object$entries = Object.entries(filterOptions["default"])) !== null && _Object$entries !== void 0 && _Object$entries.length ? /*#__PURE__*/React.createElement("div", {
     className: "control-nav--filters"
-  }, Object.entries(state.filters).map(function (_ref, i) {
+  }, Object.entries(filterOptions["default"]).map(function (_ref, index) {
     var _ref2 = _slicedToArray(_ref, 2),
       key = _ref2[0],
       filter = _ref2[1];
     return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_12__["default"], {
-      key: "".concat(key, "-").concat(provider, "-").concat(i),
-      filterKey: key,
-      provider: provider,
+      key: "".concat(activeProvider, "-").concat(index, "-").concat(key),
+      provider: activeProvider,
       data: filter,
+      filterKey: key,
       "function": filterPhotos
     });
   })) : null), /*#__PURE__*/React.createElement("div", {
@@ -3499,48 +3434,46 @@ function App(props) {
     id: "search-bar"
   }, /*#__PURE__*/React.createElement("form", {
     onSubmit: function onSubmit(e) {
-      return search(e);
+      return searchHandler(e);
     },
     autoComplete: "off"
   }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: "photo-search",
+    htmlFor: "search-input",
     className: "offscreen"
   }, instant_img_localize.search_label), /*#__PURE__*/React.createElement("input", {
     type: "search",
-    id: "photo-search",
+    id: "search-input",
     placeholder: instant_img_localize.search,
-    ref: photoSearch,
+    ref: searchInput,
     disabled: api_error
   }), /*#__PURE__*/React.createElement("button", {
     type: "submit",
-    id: "photo-search-submit",
     disabled: api_error
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-search"
   })), /*#__PURE__*/React.createElement(_ResultsToolTip__WEBPACK_IMPORTED_MODULE_16__["default"], {
     container: plugin,
     getPhotos: getPhotos,
-    isSearch: is_search,
-    total: total_results,
-    title: "".concat(total_results, " ").concat(instant_img_localize.search_results, " ").concat(search_term)
-  })))), state.restapi_error && /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_15__["default"], {
-    title: instant_img_localize.error_restapi,
-    desc: instant_img_localize.error_restapi_desc,
-    type: "warning"
-  }), is_search && editor !== 'gutenberg' && /*#__PURE__*/React.createElement("div", {
+    is_search: search === null || search === void 0 ? void 0 : search.active,
+    total: search === null || search === void 0 ? void 0 : search.results,
+    title: "".concat(search === null || search === void 0 ? void 0 : search.results, " ").concat(instant_img_localize.search_results, " ").concat(search === null || search === void 0 ? void 0 : search.term)
+  })))), /*#__PURE__*/React.createElement("div", {
+    id: "photo-listing",
+    className: loading ? 'loading' : null
+  }, (search === null || search === void 0 ? void 0 : search.active) && editor !== 'gutenberg' && /*#__PURE__*/React.createElement("div", {
     className: "search-results-header"
-  }, /*#__PURE__*/React.createElement("h2", null, search_term.replace('id:', 'ID: ')), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h2", null, search === null || search === void 0 ? void 0 : search.term.replace('id:', 'ID: ')), /*#__PURE__*/React.createElement("div", {
     className: "search-results-header--text"
-  }, "".concat(total_results, " ").concat(instant_img_localize.search_results), " ", /*#__PURE__*/React.createElement("strong", null, "".concat(search_term)), ' - ', /*#__PURE__*/React.createElement("button", {
+  }, "".concat(search === null || search === void 0 ? void 0 : search.results, " ").concat(instant_img_localize.search_results), " ", /*#__PURE__*/React.createElement("strong", null, "".concat(search === null || search === void 0 ? void 0 : search.term)), ' - ', /*#__PURE__*/React.createElement("button", {
     title: instant_img_localize.clear_search,
     onClick: function onClick() {
-      return getPhotos();
+      return getPhotos(true);
     }
-  }, instant_img_localize.clear_search)), show_search_filters && Object.entries(state.search_filters).length && /*#__PURE__*/React.createElement("div", {
+  }, instant_img_localize.clear_search)), (filterOptions === null || filterOptions === void 0 ? void 0 : filterOptions.search) && Object.entries(filterOptions.search).length && /*#__PURE__*/React.createElement("div", {
     className: "control-nav--filters-wrap"
   }, /*#__PURE__*/React.createElement("div", {
     className: "control-nav--filters"
-  }, Object.entries(state.search_filters).map(function (_ref3, index) {
+  }, Object.entries(filterOptions.search).map(function (_ref3, index) {
     var _ref4 = _slicedToArray(_ref3, 2),
       key = _ref4[0],
       filter = _ref4[1];
@@ -3564,10 +3497,12 @@ function App(props) {
     blockEditor: is_block_editor,
     setFeaturedImage: setFeaturedImage,
     insertImage: insertImage
-  })), total_results < 1 && is_search === true && /*#__PURE__*/React.createElement(_NoResults__WEBPACK_IMPORTED_MODULE_14__["default"], {
-    total: total_results,
-    is_search: is_search
-  }), /*#__PURE__*/React.createElement(_LoadingBlock__WEBPACK_IMPORTED_MODULE_13__["default"], null), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement(_LoadingBlock__WEBPACK_IMPORTED_MODULE_13__["default"], {
+    loading: loadingMore
+  }), /*#__PURE__*/React.createElement(_NoResults__WEBPACK_IMPORTED_MODULE_14__["default"], {
+    total: search === null || search === void 0 ? void 0 : search.results,
+    is_search: search === null || search === void 0 ? void 0 : search.active
+  }), /*#__PURE__*/React.createElement("div", {
     className: "load-more-wrap",
     ref: loadMoreRef
   }, /*#__PURE__*/React.createElement("button", {
@@ -3576,10 +3511,13 @@ function App(props) {
     onClick: function onClick() {
       return loadMorePhotos();
     }
-  }, instant_img_localize.load_more)), /*#__PURE__*/React.createElement(_ErrorLightbox__WEBPACK_IMPORTED_MODULE_11__["default"], {
+  }, instant_img_localize.load_more)), /*#__PURE__*/React.createElement(_APILightbox__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    provider: showAPILightbox,
+    closeAPILightbox: closeAPILightbox
+  }), /*#__PURE__*/React.createElement(_ErrorLightbox__WEBPACK_IMPORTED_MODULE_11__["default"], {
     error: api_error,
-    provider: provider
-  }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_17__["default"], null));
+    provider: activeProvider
+  }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_17__["default"], null)));
 }
 
 /***/ }),
@@ -3742,7 +3680,7 @@ function Filter(props) {
   var _data$filters;
   var data = props.data,
     filterKey = props.filterKey,
-    clickHandler = props["function"],
+    handler = props["function"],
     provider = props.provider;
   var defaultValue = data === null || data === void 0 ? void 0 : data["default"];
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
@@ -3825,11 +3763,10 @@ function Filter(props) {
   function click(filter, value) {
     var newValue = selected !== value ? value : defaultValue;
     setSelected(newValue);
-    clickHandler(filter, newValue);
-
-    // Delay for effect.
+    handler(filter, newValue);
     setTimeout(function () {
-      button === null || button === void 0 ? void 0 : button.current.click();
+      var _button$current2;
+      button === null || button === void 0 ? void 0 : (_button$current2 = button.current) === null || _button$current2 === void 0 ? void 0 : _button$current2.click();
     }, 100);
   }
 
@@ -3916,9 +3853,15 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Render the LoadingBlock component.
  *
+ * @param {Object} props The component props.
+ * @param {Boolean} props.loading Is the app loading.
  * @returns {JSX.Element} The LoadingBlock component.
  */
-function LoadingBlock() {
+function LoadingBlock(_ref) {
+  var loading = _ref.loading;
+  if (!loading) {
+    return null;
+  }
   return /*#__PURE__*/React.createElement("div", {
     className: "loading-block"
   });
@@ -3940,9 +3883,18 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Render the NoResults component.
  *
+ * @param {Object} props The component props.
  * @returns {JSX.Element} The NoResults component.
  */
-function NoResults() {
+function NoResults(props) {
+  var _props$total = props.total,
+    total = _props$total === void 0 ? 0 : _props$total,
+    _props$is_search = props.is_search,
+    is_search = _props$is_search === void 0 ? false : _props$is_search;
+  if (!is_search || is_search && total > 1) {
+    // Bail if not search or search total is greater than 1.
+    return null;
+  }
   return /*#__PURE__*/React.createElement("div", {
     className: "no-results"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, instant_img_localize.no_results, " "), /*#__PURE__*/React.createElement("p", null, instant_img_localize.no_results_desc, " ")));
@@ -4753,18 +4705,64 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ RestAPIError)
 /* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 /**
  * Render the RestAPIError component.
  *
  * @return {JSX.Element} The RestAPIError component.
  */
 function RestAPIError() {
-  return /*#__PURE__*/React.createElement("div", {
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState2 = _slicedToArray(_useState, 2),
+    access = _useState2[0],
+    setAccess = _useState2[1];
+
+  /**
+   * Test users access to the REST API endpoint.
+   *
+   * @since 3.2
+   */
+  function test() {
+    var testURL = instant_img_localize.root + 'instant-images/test/';
+    var restAPITest = new XMLHttpRequest();
+    restAPITest.open('POST', testURL, true);
+    restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
+    restAPITest.setRequestHeader('Content-Type', 'application/json');
+    restAPITest.send();
+    restAPITest.onload = function () {
+      if (restAPITest.status >= 200 && restAPITest.status < 400) {
+        var response = JSON.parse(restAPITest.response);
+        var success = response.success;
+        if (!success) {
+          setAccess(false);
+        }
+      } else {
+        setAccess(false);
+      }
+    };
+    restAPITest.onerror = function (errorMsg) {
+      console.warn(errorMsg);
+      setAccess(false);
+    };
+  }
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    test();
+  }, []);
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !access ? /*#__PURE__*/React.createElement("div", {
     className: "error-messaging",
     dangerouslySetInnerHTML: {
       __html: "<strong>".concat(instant_img_localize.error_restapi, "</strong>").concat(instant_img_localize.error_restapi_desc)
     }
-  });
+  }) : null);
 }
 
 /***/ }),
@@ -4787,19 +4785,19 @@ __webpack_require__.r(__webpack_exports__);
  * @return {JSX.Element} The ResultsToolTip component.
  */
 function ResultsToolTip(props) {
-  var isSearch = props.isSearch,
+  var is_search = props.is_search,
     title = props.title,
     total = props.total,
     getPhotos = props.getPhotos;
   return /*#__PURE__*/React.createElement("div", {
-    className: isSearch ? 'searchResults' : 'searchResults hide'
+    className: is_search ? 'searchResults' : 'searchResults hide'
   }, /*#__PURE__*/React.createElement("span", {
     title: title
   }, total), /*#__PURE__*/React.createElement("button", {
     type: "button",
     title: instant_img_localize.clear_search,
     onClick: function onClick() {
-      return getPhotos('latest');
+      return getPhotos();
     }
   }, "x", /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
@@ -4908,7 +4906,7 @@ function Tooltip() {
 /***/ ((module) => {
 
 module.exports = {
-  proxy: "https://proxy.getinstantimages.com/api/" || 0,
+  proxy: "http://localhost:3000/api/" || 0,
   // eslint-disable-line
   defaults: {
     provider: "unsplash",
@@ -4958,134 +4956,134 @@ module.exports = {
   openverse: {
     filters: {
       source: {
-        label: "source",
-        "default": "WordPress",
-        filters: ["WordPress", "Flickr", "Nasa", "SpaceX", "StockSnap", "wikimedia"]
+        label: 'source',
+        "default": 'WordPress',
+        filters: ['WordPress', 'Flickr', 'Nasa', 'SpaceX', 'StockSnap', 'wikimedia']
       },
       aspect_ratio: {
-        label: "orientation",
-        "default": "all",
-        filters: ["all", "square", "tall", "wide"]
+        label: 'orientation',
+        "default": 'all',
+        filters: ['all', 'square', 'tall', 'wide']
       }
     },
     search: {
       category: {
-        label: "type",
-        "default": "all",
-        filters: ["all", "digitized_artwork", "illustration", "photograph"]
+        label: 'type',
+        "default": 'all',
+        filters: ['all', 'digitized_artwork', 'illustration', 'photograph']
       },
       extension: {
-        label: "extension",
-        "default": "all",
-        filters: ["all", "JPG", "GIF", "PNG", "SVG"]
+        label: 'extension',
+        "default": 'all',
+        filters: ['all', 'JPG', 'GIF', 'PNG', 'SVG']
       },
       aspect_ratio: {
-        label: "orientation",
-        "default": "all",
-        filters: ["all", "square", "tall", "wide"]
+        label: 'orientation',
+        "default": 'all',
+        filters: ['all', 'square', 'tall', 'wide']
       },
       license: {
-        label: "license",
-        "default": "all",
-        filters: ["all", "BY", "BY-NC", "BY-NC-ND", "BY-NC-SA", "BY-ND", "BY-SA", "CC0"]
+        label: 'license',
+        "default": 'all',
+        filters: ['all', 'BY', 'BY-NC', 'BY-NC-ND', 'BY-NC-SA', 'BY-ND', 'BY-SA', 'CC0']
       },
       license_type: {
-        label: "license_type",
-        "default": "all",
-        filters: ["all", "commercial", "modification"]
+        label: 'license_type',
+        "default": 'all',
+        filters: ['all', 'commercial', 'modification']
       }
     }
   },
   pexels: {
     filters: {
       order_by: {
-        label: "orderby",
-        "default": "curated",
-        filters: ["curated"]
+        label: 'orderby',
+        "default": 'all',
+        filters: ['all', 'curated']
       }
     },
     search: {
       orientation: {
-        label: "orientation",
-        "default": "all",
-        filters: ["all", "landscape", "portrait", "square"]
+        label: 'orientation',
+        "default": 'all',
+        filters: ['all', 'landscape', 'portrait', 'square']
       },
       color: {
-        label: "colors",
-        "default": "all",
-        filters: ["all", "red", "orange", "yellow", "green", "turquoise", "blue", "violet", "pink", "brown", "black", "gray", "white"]
+        label: 'colors',
+        "default": 'all',
+        filters: ['all', 'red', 'orange', 'yellow', 'green', 'turquoise', 'blue', 'violet', 'pink', 'brown', 'black', 'gray', 'white']
       },
       size: {
-        label: "size",
-        "default": "all",
-        filters: ["all", "large", "medium", "small"]
+        label: 'size',
+        "default": 'all',
+        filters: ['all', 'large', 'medium', 'small']
       }
     }
   },
   unsplash: {
     filters: {
       order_by: {
-        label: "orderby",
-        "default": "latest",
-        filters: ["latest", "popular", "oldest"]
+        label: 'orderby',
+        "default": 'latest',
+        filters: ['latest', 'popular', 'oldest']
       }
     },
     search: {
       order_by: {
-        label: "orderby",
-        "default": "relevance",
-        filters: ["relevance", "latest"]
+        label: 'orderby',
+        "default": 'relevance',
+        filters: ['relevance', 'latest']
       },
       orientation: {
-        label: "orientation",
-        "default": "all",
-        filters: ["all", "landscape", "portrait", "squarish"]
+        label: 'orientation',
+        "default": 'all',
+        filters: ['all', 'landscape', 'portrait', 'squarish']
       },
       color: {
-        label: "colors",
-        "default": "all",
-        filters: ["all", "black_and_white", "black", "white", "yellow", "orange", "red", "purple", "magenta", "green", "teal", "blue"]
+        label: 'colors',
+        "default": 'all',
+        filters: ['all', 'black_and_white', 'black', 'white', 'yellow', 'orange', 'red', 'purple', 'magenta', 'green', 'teal', 'blue']
       }
     }
   },
   pixabay: {
     filters: {
       order: {
-        label: "orderby",
-        "default": "popular",
-        filters: ["popular", "latest"]
+        label: 'orderby',
+        "default": 'popular',
+        filters: ['popular', 'latest']
       },
       image_type: {
-        label: "type",
-        "default": "all",
-        filters: ["all", "photo", "illustration", "vector"]
+        label: 'type',
+        "default": 'all',
+        filters: ['all', 'photo', 'illustration', 'vector']
       },
       category: {
-        label: "category",
-        "default": "all",
-        filters: ["all", "backgrounds", "fashion", "nature", "science", "education", "feelings", "health", "people", "religion", "places", "animals", "industry", "computer", "food", "sports", "transportation", "travel", "buildings", "business", "music"]
+        label: 'category',
+        "default": 'all',
+        filters: ['all', 'backgrounds', 'fashion', 'nature', 'science', 'education', 'feelings', 'health', 'people', 'religion', 'places', 'animals', 'industry', 'computer', 'food', 'sports', 'transportation', 'travel', 'buildings', 'business', 'music']
       },
       colors: {
-        label: "colors",
-        "default": "all",
-        filters: ["all", "grayscale", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown", "transparent"]
+        label: 'colors',
+        "default": 'all',
+        filters: ['all', 'grayscale', 'red', 'orange', 'yellow', 'green', 'turquoise', 'blue', 'lilac', 'pink', 'white', 'gray', 'black', 'brown', 'transparent']
       },
       orientation: {
-        label: "orientation",
-        "default": "all",
-        filters: ["all", "horizontal", "vertical"]
+        label: 'orientation',
+        "default": 'all',
+        filters: ['all', 'horizontal', 'vertical']
       }
     },
     search: {
       colors: {
-        label: "colors",
-        "default": "all",
-        filters: ["all", "grayscale", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown", "transparent"]
+        label: 'colors',
+        "default": 'all',
+        filters: ['all', 'grayscale', 'red', 'orange', 'yellow', 'green', 'turquoise', 'blue', 'lilac', 'pink', 'white', 'gray', 'black', 'brown', 'transparent']
       },
       orientation: {
-        label: "orientation",
-        "default": "all",
-        filters: ["all", "horizontal", "vertical"]
+        label: 'orientation',
+        "default": 'all',
+        filters: ['all', 'horizontal', 'vertical']
       }
     }
   }

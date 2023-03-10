@@ -9,7 +9,7 @@ import cn from 'classnames';
  * @return {JSX.Element} The Filter component.
  */
 export default function Filter(props) {
-	const { data, filterKey, function: clickHandler, provider } = props;
+	const { data, filterKey, function: handler, provider } = props;
 	const defaultValue = data?.default;
 	const [expanded, setExpanded] = useState(false);
 	const [selected, setSelected] = useState(defaultValue);
@@ -85,13 +85,11 @@ export default function Filter(props) {
 	 */
 	function click(filter, value) {
 		const newValue = selected !== value ? value : defaultValue;
-
 		setSelected(newValue);
-		clickHandler(filter, newValue);
+		handler(filter, newValue);
 
-		// Delay for effect.
-		setTimeout(function () {
-			button?.current.click();
+		setTimeout(() => {
+			button?.current?.click();
 		}, 100);
 	}
 

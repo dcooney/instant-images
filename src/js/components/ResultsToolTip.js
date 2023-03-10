@@ -5,11 +5,11 @@
  * @return {JSX.Element} The ResultsToolTip component.
  */
 export default function ResultsToolTip(props) {
-	const { isSearch, title, total, getPhotos } = props;
+	const { is_search, title, total, getPhotos } = props;
 	return (
-		<div className={isSearch ? 'searchResults' : 'searchResults hide'}>
+		<div className={is_search ? 'searchResults' : 'searchResults hide'}>
 			<span title={title}>{total}</span>
-			<button type="button" title={instant_img_localize.clear_search} onClick={() => getPhotos('latest')}>
+			<button type="button" title={instant_img_localize.clear_search} onClick={() => getPhotos()}>
 				x<span className="offscreen">{instant_img_localize.clear_search}</span>
 			</button>
 		</div>

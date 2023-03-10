@@ -1,5 +1,4 @@
-import PhotoList from '../../../components/PhotoList';
-import API from '../../../constants/API';
+import App from '../../../components/App';
 import buildURL from '../../../functions/buildURL';
 import consoleStatus from '../../../functions/consoleStatus';
 import getProvider from '../../../functions/getProvider';
@@ -19,7 +18,6 @@ export default function Panel() {
 
 	// Get provider and options from settings.
 	const provider = getProvider();
-	const defaultOrder = API.defaults.order;
 
 	useEffect(() => {
 		/**
@@ -54,15 +52,7 @@ export default function Panel() {
 	return (
 		<div className="instant-img-container">
 			{data && data.results ? (
-				<PhotoList
-					editor="gutenberg"
-					data={data.results}
-					error={data.error}
-					orderby={defaultOrder}
-					provider={provider}
-					setFeaturedImage={setFeaturedImage}
-					insertImage={insertImage}
-				/>
+				<App editor="gutenberg" data={data.results} error={data.error} provider={provider} setFeaturedImage={setFeaturedImage} insertImage={insertImage} />
 			) : null}
 		</div>
 	);

@@ -14,7 +14,11 @@ import updatePluginSetting from '../functions/updatePluginSetting';
  * @return {JSX.Element} The APILightbox component.
  */
 export default function APILightbox(props) {
-	const { provider, afterVerifiedAPICallback, closeAPILightbox } = props;
+	const { provider, closeAPILightbox } = props;
+	if (!provider) {
+		return null;
+	}
+
 	const [apiStatus, setAPIStatus] = useState('invalid');
 	const [response, setResponse] = useState('');
 
@@ -59,7 +63,7 @@ export default function APILightbox(props) {
 				setAPIStatus('valid');
 				setResponse(instant_img_localize.api_success_msg);
 				setTimeout(function () {
-					afterVerifiedAPICallback(provider);
+					closeAPILightbox(provider);
 				}, 1500);
 			} else {
 				setAPIStatus('invalid'); // Error/Invalid.

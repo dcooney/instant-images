@@ -1,9 +1,17 @@
 /**
  * Render the NoResults component.
  *
+ * @param {Object} props The component props.
  * @returns {JSX.Element} The NoResults component.
  */
-export default function NoResults() {
+export default function NoResults(props) {
+	const { total = 0, is_search = false } = props;
+
+	if (!is_search || (is_search && total > 1)) {
+		// Bail if not search or search total is greater than 1.
+		return null;
+	}
+
 	return (
 		<div className="no-results">
 			<div>

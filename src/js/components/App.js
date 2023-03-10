@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from '@wordpress/element';
+import { useRef, useState, useEffect, Fragment } from '@wordpress/element';
 import classNames from 'classnames';
 import Masonry from 'masonry-layout';
 import API from '../constants/API';
@@ -21,7 +21,13 @@ import ProviderNav from './ProviderNav';
 import Photos from './Photos';
 const imagesLoaded = require('imagesloaded');
 import { useInView } from 'react-intersection-observer';
+
 let page = 1;
+
+/**
+ * Fix bug with double searching after No Results. The issue is the inview flag and loadmorephotos is being fired.
+ * Fix issue with double loading on initial plugin render. Issue is the loadmore is triggering after the first renderlayout();
+/*
 
 /**
  * Render the InstantImages component.
@@ -41,31 +47,31 @@ export default function App(props) {
 	let search_api = api_provider?.search_api;
 	let api_error = error;
 
-	const loadingClass = 'loading';
 	const searchClass = 'searching';
+	const filters = {};
 
 	// App state.
 	const mounted = useRef(false);
 	const [results, setResults] = useState(getResults(data));
 	const [activeProvider, setActiveProvider] = useState(provider);
 	const [loading, setLoading] = useState(true);
+	const [loadingMore, setLoadingMore] = useState(false);
 	const [done, setDone] = useState(false);
+	const [showAPILightbox, setShowAPILightbox] = useState(false);
 
-	const [state, setState] = useState({
-		provider: provider,
-		filters: FILTERS[provider].filters,
-		search_filters: FILTERS[provider].search,
-		restapi_error: false,
-		api_lightbox: false,
+	const [search, setSearch] = useState({
+		active: false,
+		term: '',
+		results: 0,
 	});
 
-	let filters = {};
+	const [filterOptions, setFilterOptions] = useState({
+		default: FILTERS[activeProvider].filters,
+		search: FILTERS[activeProvider].search,
+	});
+
 	let search_filters = {};
 	let show_search_filters = true;
-
-	let is_search = false;
-	let search_term = '';
-	let total_results = 0;
 	let msnry = '';
 	let tooltipInterval = '';
 	const delay = 250;
@@ -76,7 +82,7 @@ export default function App(props) {
 	});
 	const photoTarget = useRef();
 	const controlNav = useRef();
-	const photoSearch = useRef();
+	const searchInput = useRef();
 	const filterGroups = useRef();
 	const filterRef = [];
 
@@ -100,24 +106,21 @@ export default function App(props) {
 	}
 
 	/**
-	 * Trigger Search.
+	 * Handle the Photo Search.
 	 *
 	 * @param {Event} event The dispatched submit event.
 	 * @since 3.0
 	 */
-	function search(event) {
+	function searchHandler(event) {
 		event.preventDefault();
-		const input = photoSearch.current;
-		const term = input.value;
+		const term = searchInput.current.value;
 		resetFilters();
 		if (term.length > 2) {
-			input.classList.add(searchClass);
-			search_term = term;
+			searchInput.current.classList.add(searchClass);
 			search_filters = {};
-			is_search = true;
-			doSearch(search_term);
+			doSearch(term);
 		} else {
-			input.focus();
+			searchInput.current.focus();
 		}
 	}
 
@@ -127,10 +130,12 @@ export default function App(props) {
 	 * @since 3.0
 	 */
 	function clearSearch() {
-		photoSearch.current.value = '';
-		total_results = 0;
-		is_search = false;
-		search_term = '';
+		searchInput.current.value = '';
+		setSearch({
+			active: false,
+			term: '',
+			results: 0,
+		});
 		search_filters = {}; // Reset search filters.
 		toggleFilters(); // Re-enable filters.
 	}
@@ -138,28 +143,27 @@ export default function App(props) {
 	/**
 	 * Perform a photo search.
 	 *
-	 * @param {string} term The search term.
+	 * @param {string} term Search term.
 	 * @since 3.0
 	 */
 	async function doSearch(term) {
-		const search_type = term.substring(0, 3) === 'id:' ? 'id' : 'term';
-
-		// Set loading variables and options.
-		photoTarget.current.classList.add(loadingClass);
-		page = 1; // Reset current page num.
+		setLoading(true);
 		toggleFilters(); // Disable filters.
+		page = 1; // Reset current page num.
+
+		const search_type = term.substring(0, 3) === 'id:' ? 'id' : 'term';
 
 		// Get search query.
 		let search_query = {};
 		if (search_type === 'id') {
 			show_search_filters = false;
 			search_query = {
-				id: search_term.replace('id:', '').replace(/\s+/, ''),
+				id: term.replace('id:', '').replace(/\s+/, ''),
 			};
 		} else {
 			show_search_filters = true;
 			search_query = {
-				term: search_term,
+				term: term,
 			};
 		}
 
@@ -169,7 +173,7 @@ export default function App(props) {
 			...search_query,
 			...search_filters,
 		};
-		const params = getQueryParams(provider, search_params);
+		const params = getQueryParams(activeProvider, search_params);
 		const url = buildURL('search', params);
 
 		// Create fetch request.
@@ -181,52 +185,44 @@ export default function App(props) {
 			// Get response data.
 			const data = await response.json();
 			const images = getResults(data);
+			checkTotalResults(images.length);
+			setResults(images);
 
 			// Check returned data.
-			total_results = getSearchTotal(data);
+			const total_results = getSearchTotal(data);
 
-			checkTotalResults(images.length);
+			setSearch({
+				active: true,
+				term: term,
+				results: total_results,
+			});
 
 			// Hide search filters if no results and not filtering.
 			show_search_filters = total_results < 2 && isObjectEmpty(search_filters) ? false : true;
 
 			// Update Props.
 			setState({
-				results: images,
 				search_filters: FILTERS[provider].search,
 			});
-
-			// Delay for effect.
-			setTimeout(function () {
-				photoSearch.current.classList.remove(searchClass);
-				photoTarget.current.classList.remove(loadingClass);
-			}, delay);
 		} catch (error) {
 			// Reset all search parameters.
 			setDone(true);
 			setLoading(false);
 			show_search_filters = false;
-			total_results = 0;
-			photoSearch.current.classList.remove(searchClass);
-			photoTarget.current.classList.remove(loadingClass);
-
-			// Update Props.
-			setState({ results: results });
 			consoleStatus(provider, status);
 		}
+
+		searchInput.current.classList.remove(searchClass);
 	}
 
 	/**
 	 * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
 	 *
-	 * @param {Boolean} reset    Is this an app reset.
-	 * @param {Boolean} switcher Is this a provider switch.
 	 * @since 3.0
 	 */
-	async function getPhotos(reset = false, switcher = false) {
-		if (loading && !reset) {
-			// Exit if loading and not an app reset
-			return;
+	async function getPhotos() {
+		if (loadingMore) {
+			return false;
 		}
 
 		setLoading(true); // Set loading state.
@@ -247,15 +243,9 @@ export default function App(props) {
 			const data = await response.json();
 			const { error = null } = data; // Get error reporting.
 			const images = getResults(data);
-			checkTotalResults(images.length); // Check for returned data.
+			checkTotalResults(images.length);
+			setResults(images);
 			api_error = error;
-
-			// Set results state.
-			if (!switcher) {
-				setResults((prevState) => [...prevState, ...images]); // Push images into state.
-			} else {
-				setResults(images); // Push images into state.
-			}
 		} catch (error) {
 			consoleStatus(provider, status);
 			setLoading(false);
@@ -273,15 +263,19 @@ export default function App(props) {
 	 * @since 3.0
 	 */
 	async function loadMorePhotos() {
-		setLoading(true);
+		if (loading || loadingMore) {
+			return;
+		}
+
+		setLoadingMore(true);
 		page = parseInt(page) + 1;
 
 		// Get search query.
-		const search_query = is_search ? { term: search_term } : {};
+		const search_query = search?.active && search?.term ? { term: search.term } : {};
 
 		// Build URL.
-		const type = is_search ? 'search' : 'photos';
-		const filters = is_search ? search_filters : filters;
+		const type = search?.active ? 'search' : 'photos';
+		const filters = search?.active ? search_filters : filters;
 		const loadmore_params = {
 			...{ page: page },
 			...search_query,
@@ -298,10 +292,11 @@ export default function App(props) {
 		try {
 			const data = await response.json();
 			const images = getResults(data);
-			checkTotalResults(images.length); // Check the total results.
-			setResults((prevState) => [...prevState, ...images]); // Push images into state.
+			checkTotalResults(images.length);
+			setResults((prevState) => [...prevState, ...images]);
 		} catch (error) {
 			consoleStatus(provider, status);
+			setLoadingMore(false);
 		}
 	}
 
@@ -317,7 +312,7 @@ export default function App(props) {
 		} else {
 			filters[filter] = value;
 		}
-		getPhotos(true);
+		getPhotos();
 	}
 
 	/**
@@ -332,7 +327,7 @@ export default function App(props) {
 		} else {
 			search_filters[filter] = value;
 		}
-		doSearch(search_term);
+		doSearch(search?.term);
 	}
 
 	/**
@@ -342,10 +337,10 @@ export default function App(props) {
 		const filters = filterGroups.current.querySelectorAll('button.filter-dropdown--button');
 		if (filters) {
 			filters.forEach((button) => {
-				button.disabled = is_search ? true : false;
+				button.disabled = search?.active ? true : false;
 			});
 		}
-		if (is_search) {
+		if (search?.active) {
 			filterGroups.current.classList.add('inactive');
 		} else {
 			filterGroups.current.classList.remove('inactive');
@@ -353,23 +348,16 @@ export default function App(props) {
 	}
 
 	/**
-	 * Callback after activating and verififying an API key.
-	 *
-	 * @param {string} provider The verified provider.
-	 * @since 4.5
-	 */
-	function afterVerifiedAPICallback(provider) {
-		setActiveProvider(provider); // Set the active provider.
-		setState({ api_lightbox: false }); // Close the lightbox.
-		document.body.classList.remove('overflow-hidden');
-	}
-
-	/**
 	 * Close the API Lightbox.
+	 *
+	 * @param {string} provider The provider to close the lightbox for.
 	 * @since 4.5
 	 */
-	function closeAPILightbox() {
-		setState({ api_lightbox: false }); // Close the lightbox.
+	function closeAPILightbox(provider = null) {
+		if (provider) {
+			setActiveProvider(provider);
+		}
+		setShowAPILightbox(false);
 		document.body.classList.remove('overflow-hidden');
 	}
 
@@ -388,6 +376,8 @@ export default function App(props) {
 			return;
 		}
 
+		setLoading(true);
+
 		// API Verification.
 		// Note: Bounce user if provider API key is not valid.
 		if (API[provider].requires_key) {
@@ -398,47 +388,27 @@ export default function App(props) {
 
 				if (status !== 200) {
 					// Catch API errors and 401s.
-					setState({ api_lightbox: provider }); // Show API Lightbox.
+					setShowAPILightbox(provider); // Show API Lightbox.
 					document.body.classList.add('overflow-hidden');
 					return;
 				}
 			} catch (error) {
 				// Catch all other errors.
-				setState({ api_lightbox: provider }); // Show API Lightbox.
+				setShowAPILightbox(provider); // Show API Lightbox.
 				document.body.classList.add('overflow-hidden');
 				return;
 			}
 		}
 
-		// GO forward and toggle the providers.
-		photoTarget.current.classList.add(loadingClass);
-		setTimeout(() => {
-			// Delay for effect.
-			setActiveProvider(provider);
-		}, 150);
+		// Update filter options.
+		setFilterOptions({
+			default: FILTERS[provider].filters,
+			search: FILTERS[provider].search,
+		});
 
-		// Update API provider params.
-
-		// api_provider = API[provider];
-		// api_key = instant_img_localize[`${provider}_app_id`];
-		// photo_api = api_provider?.photo_api;
-		// search_api = api_provider?.search_api;
-
-		// // Clear all filters.
-		// filters = {};
-		// search_filters = {};
-
-		// // Finally, fetch the photos.
-		// view = 'latest';
-		// getPhotos(view, true, true);
+		// Switch the provider.
+		setActiveProvider(provider);
 	}
-
-	useEffect(() => {
-		if (!mounted.current) {
-			return;
-		}
-		getPhotos(true, true);
-	}, [activeProvider]);
 
 	/**
 	 * Renders the Masonry layout.
@@ -447,9 +417,15 @@ export default function App(props) {
 	 */
 	function renderLayout() {
 		if (is_block_editor) {
-			setLoading(false);
+			setTimeout(() => {
+				// Delay to allow for rendering and set up.
+				setLoading(false);
+				setLoadingMore(false);
+			}, delay);
+
 			return false;
 		}
+
 		imagesLoaded(photoTarget.current, function () {
 			msnry = new Masonry(photoTarget.current, {
 				itemSelector: '.photo',
@@ -457,7 +433,11 @@ export default function App(props) {
 			photoTarget.current.querySelectorAll('.photo').forEach((el) => {
 				el.classList.add('in-view');
 			});
-			setLoading(false);
+			setTimeout(() => {
+				// Delay to allow for rendering and set up.
+				setLoading(false);
+				setLoadingMore(false);
+			}, delay);
 		});
 	}
 
@@ -469,36 +449,6 @@ export default function App(props) {
 	 */
 	function checkTotalResults(num) {
 		setDone(parseInt(num) === 0 || num === undefined);
-	}
-
-	/**
-	 * Test access to the REST API.
-	 *
-	 * @since 3.2
-	 */
-	function test() {
-		const testURL = instant_img_localize.root + 'instant-images/test/'; // REST Route
-		const restAPITest = new XMLHttpRequest();
-		restAPITest.open('POST', testURL, true);
-		restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
-		restAPITest.setRequestHeader('Content-Type', 'application/json');
-		restAPITest.send();
-		restAPITest.onload = function () {
-			if (restAPITest.status >= 200 && restAPITest.status < 400) {
-				const response = JSON.parse(restAPITest.response);
-				const success = response.success;
-				if (!success) {
-					setState({ restapi_error: true });
-				}
-			} else {
-				// Error
-				setState({ restapi_error: true });
-			}
-		};
-		restAPITest.onerror = function (errorMsg) {
-			console.warn(errorMsg);
-			setState({ restapi_error: true });
-		};
 	}
 
 	/**
@@ -518,126 +468,125 @@ export default function App(props) {
 		}
 	}
 
+	// Provider switch callback.
+	useEffect(() => {
+		if (!mounted.current) {
+			return;
+		}
+		getPhotos();
+	}, [activeProvider]);
+
+	// Scroll in-view callback.
 	useEffect(() => {
 		if (mounted.current && !loading && !done) {
 			loadMorePhotos();
 		}
 	}, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	// Loading flag.
-	useEffect(() => {
-		if (loading) {
-			plugin.classList.add(loadingClass);
-		} else {
-			photoTarget.current.classList.remove(loadingClass);
-			plugin.classList.remove(loadingClass);
-		}
-	}, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
-
-	// Results update.
+	// Results callback.
 	useEffect(() => {
 		renderLayout();
 	}, [results]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	// Page load.
+	// Initial page load.
 	useEffect(() => {
-		test();
-		plugin.classList.remove(loadingClass);
+		setLoading(false);
 		wrapper.classList.add('loaded');
 		document.addEventListener('keydown', escFunction, false); // Add global escape listener.
 		mounted.current = true;
+		return () => {
+			document.removeEventListener('keydown', escFunction, false);
+			mounted.current = false;
+		};
 	}, []);
 
 	return (
-		<div id="photo-listing">
+		<Fragment>
 			<ProviderNav switchProvider={switchProvider} provider={activeProvider} />
-
-			{state.api_lightbox && (
-				<APILightbox provider={state.api_lightbox} afterVerifiedAPICallback={afterVerifiedAPICallback} closeAPILightbox={closeAPILightbox} />
-			)}
+			<RestAPIError title={instant_img_localize.error_restapi} desc={instant_img_localize.error_restapi_desc} type="warning" />
 
 			<div className="control-nav" ref={controlNav}>
 				<div className={classNames('control-nav--filters-wrap', api_error ? 'inactive' : null)} ref={filterGroups}>
-					{state?.filters && Object.entries(state.filters)?.length ? (
+					{filterOptions?.default && Object.entries(filterOptions.default)?.length ? (
 						<div className="control-nav--filters">
-							{Object.entries(state.filters).map(([key, filter], i) => (
-								<Filter key={`${key}-${provider}-${i}`} filterKey={key} provider={provider} data={filter} function={filterPhotos} />
+							{Object.entries(filterOptions.default).map(([key, filter], index) => (
+								<Filter key={`${activeProvider}-${index}-${key}`} provider={activeProvider} data={filter} filterKey={key} function={filterPhotos} />
 							))}
 						</div>
 					) : null}
 				</div>
-
 				<div className={classNames('control-nav--search', 'search-field', api_error ? 'inactive' : null)} id="search-bar">
-					<form onSubmit={(e) => search(e)} autoComplete="off">
-						<label htmlFor="photo-search" className="offscreen">
+					<form onSubmit={(e) => searchHandler(e)} autoComplete="off">
+						<label htmlFor="search-input" className="offscreen">
 							{instant_img_localize.search_label}
 						</label>
-						<input type="search" id="photo-search" placeholder={instant_img_localize.search} ref={photoSearch} disabled={api_error} />
-						<button type="submit" id="photo-search-submit" disabled={api_error}>
+						<input type="search" id="search-input" placeholder={instant_img_localize.search} ref={searchInput} disabled={api_error} />
+						<button type="submit" disabled={api_error}>
 							<i className="fa fa-search"></i>
 						</button>
 						<ResultsToolTip
 							container={plugin}
 							getPhotos={getPhotos}
-							isSearch={is_search}
-							total={total_results}
-							title={`${total_results} ${instant_img_localize.search_results} ${search_term}`}
+							is_search={search?.active}
+							total={search?.results}
+							title={`${search?.results} ${instant_img_localize.search_results} ${search?.term}`}
 						/>
 					</form>
 				</div>
 			</div>
 
-			{state.restapi_error && <RestAPIError title={instant_img_localize.error_restapi} desc={instant_img_localize.error_restapi_desc} type="warning" />}
-
-			{is_search && editor !== 'gutenberg' && (
-				<div className="search-results-header">
-					<h2>{search_term.replace('id:', 'ID: ')}</h2>
-					<div className="search-results-header--text">
-						{`${total_results} ${instant_img_localize.search_results}`} <strong>{`${search_term}`}</strong>
-						{' - '}
-						<button title={instant_img_localize.clear_search} onClick={() => getPhotos()}>
-							{instant_img_localize.clear_search}
-						</button>
-					</div>
-					{show_search_filters && Object.entries(state.search_filters).length && (
-						<div className="control-nav--filters-wrap">
-							<div className="control-nav--filters">
-								{Object.entries(state.search_filters).map(([key, filter], index) => (
-									<Filter
-										ref={(ref) => (filterRef[index] = ref)}
-										key={`${key}-${index}`}
-										filterKey={key}
-										provider={provider}
-										data={filter}
-										function={filterSearch}
-									/>
-								))}
-							</div>
+			<div id="photo-listing" className={loading ? 'loading' : null}>
+				{search?.active && editor !== 'gutenberg' && (
+					<div className="search-results-header">
+						<h2>{search?.term.replace('id:', 'ID: ')}</h2>
+						<div className="search-results-header--text">
+							{`${search?.results} ${instant_img_localize.search_results}`} <strong>{`${search?.term}`}</strong>
+							{' - '}
+							<button title={instant_img_localize.clear_search} onClick={() => getPhotos(true)}>
+								{instant_img_localize.clear_search}
+							</button>
 						</div>
-					)}
+						{filterOptions?.search && Object.entries(filterOptions.search).length && (
+							<div className="control-nav--filters-wrap">
+								<div className="control-nav--filters">
+									{Object.entries(filterOptions.search).map(([key, filter], index) => (
+										<Filter
+											ref={(ref) => (filterRef[index] = ref)}
+											key={`${key}-${index}`}
+											filterKey={key}
+											provider={provider}
+											data={filter}
+											function={filterSearch}
+										/>
+									))}
+								</div>
+							</div>
+						)}
+					</div>
+				)}
+
+				<div id="photos" ref={photoTarget}>
+					<Photos
+						provider={activeProvider}
+						results={results}
+						mediaRouter={is_media_router}
+						blockEditor={is_block_editor}
+						setFeaturedImage={setFeaturedImage}
+						insertImage={insertImage}
+					/>
 				</div>
-			)}
 
-			<div id="photos" ref={photoTarget}>
-				<Photos
-					provider={activeProvider}
-					results={results}
-					mediaRouter={is_media_router}
-					blockEditor={is_block_editor}
-					setFeaturedImage={setFeaturedImage}
-					insertImage={insertImage}
-				/>
+				<LoadingBlock loading={loadingMore} />
+				<NoResults total={search?.results} is_search={search?.active} />
+				<div className="load-more-wrap" ref={loadMoreRef}>
+					<button type="button" className="button" onClick={() => loadMorePhotos()}>
+						{instant_img_localize.load_more}
+					</button>
+				</div>
+				<APILightbox provider={showAPILightbox} closeAPILightbox={closeAPILightbox} />
+				<ErrorLightbox error={api_error} provider={activeProvider} />
+				<Tooltip />
 			</div>
-
-			{total_results < 1 && is_search === true && <NoResults total={total_results} is_search={is_search} />}
-			<LoadingBlock />
-			<div className="load-more-wrap" ref={loadMoreRef}>
-				<button type="button" className="button" onClick={() => loadMorePhotos()}>
-					{instant_img_localize.load_more}
-				</button>
-			</div>
-			<ErrorLightbox error={api_error} provider={provider} />
-			<Tooltip />
-		</div>
+		</Fragment>
 	);
 }

@@ -28,10 +28,17 @@ button[aria-expanded='true'] .instant-images-sidebar-icon svg * {
 }
 
 .components-panel {
+	#photo-listing {
+		&::after {
+			width: 100%;
+			left: 0;
+		}
+	}
 	.instant-img-container {
 		.load-more-wrap {
+			//border-top: 1px solid $gb_border;
 			button {
-				display: inline-block;
+				//display: inline-block;
 			}
 		}
 		.notice.upgrade-notice {

@@ -78,12 +78,12 @@ body.media_page_instant-images {
 
 	.error-messaging {
 		padding: 22px 22px 22px 60px;
-		border-radius: 4px;
+		border-radius: $radius;
 		background: #da4444;
 		color: #fff;
 		font-size: 13px;
 		line-height: 1.75;
-		margin: 15px;
+		margin: 15px 15px 0;
 		display: block;
 		position: relative;
 		box-shadow: $shadow;
@@ -203,8 +203,7 @@ body.media_page_instant-images {
 		}
 	}
 	.loading-block {
-		display: none;
-		padding: 50px;
+		padding: 55px 0;
 		background: url('../img/ajax-loader-lg.gif') no-repeat center center;
 	}
 
@@ -213,7 +212,6 @@ body.media_page_instant-images {
 		margin: 0;
 		padding: 0;
 		text-align: center;
-		border-top: 1px solid $gb_border;
 
 		button {
 			display: none;

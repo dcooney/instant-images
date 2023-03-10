@@ -1,6 +1,5 @@
 import { render } from '@wordpress/element';
-import PhotoList from './components/PhotoList';
-import API from './constants/API';
+import App from './components/App';
 import buildURL from './functions/buildURL';
 import { checkRateLimit } from './functions/helpers';
 import consoleStatus from './functions/consoleStatus';
@@ -152,7 +151,7 @@ const getMediaModalProvider = async (element) => {
  * @return {Element}              The PhotoList component.
  */
 const renderPhotoList = (element, provider, results, error) => {
-	render(<PhotoList editor="media-router" data={results} container={element} error={error} orderby={API.defaults.order} provider={provider} />, element);
+	render(<App editor="media-router" data={results} container={element} error={error} provider={provider} />, element);
 };
 
 /**
