@@ -3,12 +3,12 @@ import Photo from './Photo';
 import Sponsor from './Sponsor';
 
 /**
- * Render the Photos component.
+ * Render the Results component.
  *
  * @param {Object} props The component props.
- * @return {JSX.Element} The Photos component.
+ * @return {JSX.Element} The Results component.
  */
-export default function Photos(props) {
+export default function Results(props) {
 	const { results, provider, is_media_router, is_block_editor, setFeaturedImage, insertImage } = props;
 	return (
 		<Fragment>

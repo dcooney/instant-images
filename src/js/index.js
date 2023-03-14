@@ -16,10 +16,9 @@ const defaultProvider = getProvider();
 /**
  * Get the initial set of photos.
  *
- * @param {string} orderby  The default order.
  * @param {string} provider The current service provider.
  */
-function getImages(orderby = API.defaults.order, provider = API.defaults.provider) {
+function getImages(provider = API.defaults.provider) {
 	const container = document.querySelector('.instant-img-container');
 
 	// Build URL.
@@ -37,15 +36,11 @@ function getImages(orderby = API.defaults.order, provider = API.defaults.provide
 			const results = await response.json();
 			const { error = null } = results;
 			const app = document.getElementById('app');
-			render(<App editor="classic" data={results} container={app} orderby={orderby} provider={provider} error={error} />, app);
+			if (app) {
+				render(<App editor="classic" data={results} container={app} provider={provider} api_error={error} />, app);
+			}
 		} catch (error) {
 			consoleStatus(provider, status);
-		}
-
-		// Remove init button (if required).
-		const initWrap = container.querySelector('.initialize-wrap');
-		if (typeof initWrap != 'undefined' && initWrap != null) {
-			initWrap.parentNode.removeChild(initWrap);
 		}
 	}
 	initialize();
@@ -55,6 +50,5 @@ function getImages(orderby = API.defaults.order, provider = API.defaults.provide
  * Dispatch an initial fetch request to confirm the default API key is valid.
  */
 (async () => {
-	const defaultOrder = API.defaults.order;
-	getImages(defaultOrder, defaultProvider);
+	getImages(defaultProvider);
 })();

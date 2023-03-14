@@ -1,6 +1,7 @@
 #photo-listing {
 	position: relative;
-	min-height: 350px;
+	min-height: 500px;
+	height: 100%;
 
 	&::after {
 		visibility: hidden;

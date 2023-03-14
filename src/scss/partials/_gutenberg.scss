@@ -28,7 +28,7 @@ button[aria-expanded='true'] .instant-images-sidebar-icon svg * {
 }
 
 .components-panel {
-	#photo-listing {
+	#photos {
 		&::after {
 			width: 100%;
 			left: 0;
@@ -36,9 +36,9 @@ button[aria-expanded='true'] .instant-images-sidebar-icon svg * {
 	}
 	.instant-img-container {
 		.load-more-wrap {
-			//border-top: 1px solid $gb_border;
+			border-top: 1px solid $gb_border;
 			button {
-				//display: inline-block;
+				display: inline-block;
 			}
 		}
 		.notice.upgrade-notice {
@@ -62,7 +62,10 @@ button[aria-expanded='true'] .instant-images-sidebar-icon svg * {
 			display: none;
 		}
 	}
-	#photos {
+	.search-header {
+		display: none;
+	}
+	#photo-listing {
 		width: 100%;
 		margin: 0;
 		padding: 5px 10px;

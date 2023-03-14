@@ -24,9 +24,9 @@
 				flex: none;
 				width: 100%;
 			}
-			transition: all 0.25s ease;
+			transition: all 0.3s ease 0.15s;
 			&.inactive {
-				opacity: 0.55;
+				opacity: 0.35;
 				filter: blur(1px);
 				pointer-events: none;
 				i {
@@ -109,7 +109,7 @@
 			padding: 0 0 0 20px;
 			position: relative;
 			&.inactive {
-				opacity: 0.55;
+				opacity: 0.35;
 				filter: blur(1px);
 				pointer-events: none;
 			}

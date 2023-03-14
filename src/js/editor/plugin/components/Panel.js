@@ -52,7 +52,7 @@ export default function Panel() {
 	return (
 		<div className="instant-img-container">
 			{data && data.results ? (
-				<App editor="gutenberg" data={data.results} error={data.error} provider={provider} setFeaturedImage={setFeaturedImage} insertImage={insertImage} />
+				<App editor="gutenberg" data={data.results} api_error={data.error} provider={provider} setFeaturedImage={setFeaturedImage} insertImage={insertImage} />
 			) : null}
 		</div>
 	);

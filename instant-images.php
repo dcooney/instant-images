@@ -183,9 +183,8 @@ class InstantImages {
 	 */
 	public function instant_img_wp_media_enqueue() {
 		$show_tab = $this::instant_img_show_tab( 'media_modal_display' );  // Show Tab Setting.
-
-		if ( $this::instant_img_has_access() && $show_tab ) {
-
+		$screen   = get_current_screen()->base;
+		if ( $this::instant_img_has_access() && $show_tab && $screen !== 'upload' ) {
 			wp_enqueue_script(
 				'instant-images-media-modal',
 				INSTANT_IMAGES_URL . 'build/media-modal.js',

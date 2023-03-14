@@ -135,14 +135,15 @@ const getMediaModalProvider = async (element) => {
 	try {
 		const results = await response.json();
 		const { error = null } = results;
-		renderPhotoList(element, provider, results, error);
+		console.log(element);
+		renderApp(element, provider, results, error);
 	} catch (error) {
 		consoleStatus(provider, status);
 	}
 };
 
 /**
- * Render the main PhotoList Instant Images component.
+ * Render the main Instant Images App component.
  *
  * @param  {Element}     element  The Instant Images HTML element to initialize.
  * @param  {string}      provider The verified provider.
@@ -150,8 +151,8 @@ const getMediaModalProvider = async (element) => {
  * @param  {object|null} error    The API error object.
  * @return {Element}              The PhotoList component.
  */
-const renderPhotoList = (element, provider, results, error) => {
-	render(<App editor="media-router" data={results} container={element} error={error} provider={provider} />, element);
+const renderApp = (element, provider, results, error) => {
+	render(<App editor="media-router" data={results} container={element} api_error={error} provider={provider} />, element);
 };
 
 /**

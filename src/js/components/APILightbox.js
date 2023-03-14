@@ -64,7 +64,7 @@ export default function APILightbox(props) {
 				setResponse(instant_img_localize.api_success_msg);
 				setTimeout(function () {
 					closeAPILightbox(provider);
-				}, 1500);
+				}, 1000);
 			} else {
 				setAPIStatus('invalid'); // Error/Invalid.
 				consoleStatus(provider, status); // Render console warning.
@@ -146,43 +146,41 @@ export default function APILightbox(props) {
 	}, []);
 
 	return (
-		<FocusTrap>
-			<div className="api-lightbox" ref={lightbox} onClick={(e) => bkgClick(e)} tabIndex="-1">
+		<div className="api-lightbox" ref={lightbox} onClick={(e) => bkgClick(e)} tabIndex="-1">
+			<div>
 				<div>
-					<div>
-						<button className="api-lightbox--close" onClick={() => closeLightbox()}>
-							&times;
-							<span className="offscreen">{instant_img_localize.btnClose}</span>
-						</button>
-						<div className="api-lightbox--details">
-							<h3 data-provider={provider}>{provider}</h3>
-							<p>{instant_img_localize[`${provider}_api_desc`]}</p>
-							<p className="action-controls">
-								<button onClick={() => gotoURL(instant_img_localize[`${provider}_api_url`])}>{instant_img_localize.get_api_key}</button>
-								<span>|</span>
-								<button onClick={() => useDefaultKey()}>{instant_img_localize.use_instant_images_key}</button>
-							</p>
-						</div>
-						<form onSubmit={(e) => handleSubmit(e)}>
-							<label htmlFor="key" className="offscreen">
-								{instant_img_localize.enter_api_key}
-							</label>
-							<div className="api-lightbox--input-wrap">
-								<span className={apiStatus} title={title && title}>
-									{apiStatus === 'invalid' && <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>}
-									{apiStatus === 'valid' && <i className="fa fa-check-circle" aria-hidden="true"></i>}
-									{apiStatus === 'loading' && <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>}
-								</span>
-								<input type="text" id="key" ref={inputRef} placeholder="Enter API Key" defaultValue={api_key}></input>
-							</div>
-							{response && <p className={classNames('api-lightbox--response', apiStatus)}>{response}</p>}
-							<button type="submit" ref={submitRef}>
-								{instant_img_localize.btnVerify}
-							</button>
-						</form>
+					<button className="api-lightbox--close" onClick={() => closeLightbox()}>
+						&times;
+						<span className="offscreen">{instant_img_localize.btnClose}</span>
+					</button>
+					<div className="api-lightbox--details">
+						<h3 data-provider={provider}>{provider}</h3>
+						<p>{instant_img_localize[`${provider}_api_desc`]}</p>
+						<p className="action-controls">
+							<button onClick={() => gotoURL(instant_img_localize[`${provider}_api_url`])}>{instant_img_localize.get_api_key}</button>
+							<span>|</span>
+							<button onClick={() => useDefaultKey()}>{instant_img_localize.use_instant_images_key}</button>
+						</p>
 					</div>
+					<form onSubmit={(e) => handleSubmit(e)}>
+						<label htmlFor="key" className="offscreen">
+							{instant_img_localize.enter_api_key}
+						</label>
+						<div className="api-lightbox--input-wrap">
+							<span className={apiStatus} title={title && title}>
+								{apiStatus === 'invalid' && <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>}
+								{apiStatus === 'valid' && <i className="fa fa-check-circle" aria-hidden="true"></i>}
+								{apiStatus === 'loading' && <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>}
+							</span>
+							<input type="text" id="key" ref={inputRef} placeholder="Enter API Key" defaultValue={api_key}></input>
+						</div>
+						{response && <p className={classNames('api-lightbox--response', apiStatus)}>{response}</p>}
+						<button type="submit" ref={submitRef}>
+							{instant_img_localize.btnVerify}
+						</button>
+					</form>
 				</div>
 			</div>
-		</FocusTrap>
+		</div>
 	);
 }

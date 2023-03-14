@@ -51,7 +51,7 @@ body.media_page_instant-images {
 	}
 	a {
 		color: $purple;
-		transition: all 0.25s ease;
+		transition: $transition;
 		&:hover {
 			color: #5568ae;
 			text-decoration: none;
@@ -219,7 +219,7 @@ body.media_page_instant-images {
 			padding: 12px 15px;
 			font-size: 15px;
 			font-weight: 600;
-			transition: all 0.1s ease;
+			transition: $transition;
 			height: auto;
 			line-height: 1;
 			cursor: pointer;

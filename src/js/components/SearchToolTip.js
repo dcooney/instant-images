@@ -1,8 +1,8 @@
 /**
- * Render the ResultsToolTip component.
+ * Render the SearchToolTip component.
  *
  * @param {Object} props The component props.
- * @return {JSX.Element} The ResultsToolTip component.
+ * @return {JSX.Element} The SearchToolTip component.
  */
 export default function ResultsToolTip(props) {
 	const { is_search, title, total, getPhotos } = props;

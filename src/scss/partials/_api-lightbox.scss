@@ -13,9 +13,10 @@
 // Gutenberg Sidebar.
 .components-panel {
 	.instant-img-container {
-		.api-lightbox {
-			//height: 100%;
+		.api-lightbox,
+		.api-lightbox.error-lightbox {
 			align-items: flex-start;
+
 			& > div {
 				top: 0;
 			}
@@ -27,18 +28,36 @@
 .instant-img-container {
 	.api-lightbox {
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		justify-content: center;
 		position: absolute;
 		z-index: 99999;
-		left: 0;
+		left: -5px;
 		top: 0;
 		right: 0;
 		bottom: 0;
-		height: 100vh;
+		height: auto;
+		border-radius: $radius_lg;
 		padding: 5%;
-		background-color: rgba(0, 0, 0, 0.75);
+		background-color: transparent;
 		font-size: 13px;
+		width: calc(100% + 10px);
+
+		&.error-lightbox {
+			align-items: center;
+			background-color: rgba(0, 0, 0, 0.5);
+			> div {
+				top: 0;
+			}
+
+			.api-lightbox--details {
+				&::before,
+				&::after {
+					display: none !important;
+				}
+			}
+		}
+
 		&.active {
 			> div {
 				transform: scale(1);
@@ -52,12 +71,12 @@
 			padding: 0;
 			background-color: #fff;
 			border-radius: 5px;
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+			box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 			position: relative;
 			top: -15px;
 			transform: scale(0.9);
 			opacity: 0;
-			transition: all 0.25s ease-in-out;
+			transition: $transition;
 			overflow: hidden;
 			& > div {
 				position: relative;
@@ -193,7 +212,7 @@
 			background-color: #fff;
 			border: 1px solid $border;
 			border-radius: $radius;
-			transition: all 0.2s ease;
+			transition: $transition;
 			&:focus-within {
 				border-color: $text_light;
 				box-shadow: 0 0 1px 4px rgba(#000, 0.065);

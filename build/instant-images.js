@@ -2585,7 +2585,7 @@ function APILightbox(props) {
               setResponse(instant_img_localize.api_success_msg);
               setTimeout(function () {
                 closeAPILightbox(provider);
-              }, 1500);
+              }, 1000);
             } else {
               setAPIStatus('invalid'); // Error/Invalid.
               (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_4__["default"])(provider, status); // Render console warning.
@@ -2671,7 +2671,7 @@ function APILightbox(props) {
       document.removeEventListener('keydown', escFunction, false);
     };
   }, []);
-  return /*#__PURE__*/React.createElement((focus_trap_react__WEBPACK_IMPORTED_MODULE_2___default()), null, /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     className: "api-lightbox",
     ref: lightbox,
     onClick: function onClick(e) {
@@ -2731,7 +2731,7 @@ function APILightbox(props) {
   }, response), /*#__PURE__*/React.createElement("button", {
     type: "submit",
     ref: submitRef
-  }, instant_img_localize.btnVerify))))));
+  }, instant_img_localize.btnVerify)))));
 }
 
 /***/ }),
@@ -2753,37 +2753,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
 /* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(masonry_layout__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! react-intersection-observer */ "./node_modules/react-intersection-observer/react-intersection-observer.modern.mjs");
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
 /* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_constants_filters__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
-/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
-/* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
-/* harmony import */ var _functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
-/* harmony import */ var _functions_getResults__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
+/* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
+/* harmony import */ var _functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
+/* harmony import */ var _functions_getResults__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
+/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
 /* harmony import */ var _APILightbox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./APILightbox */ "./src/js/components/APILightbox.js");
 /* harmony import */ var _ErrorLightbox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ErrorLightbox */ "./src/js/components/ErrorLightbox.js");
 /* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
 /* harmony import */ var _LoadingBlock__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
 /* harmony import */ var _NoResults__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
-/* harmony import */ var _RestAPIError__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./RestAPIError */ "./src/js/components/RestAPIError.js");
-/* harmony import */ var _ResultsToolTip__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ResultsToolTip */ "./src/js/components/ResultsToolTip.js");
-/* harmony import */ var _Tooltip__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip.js");
-/* harmony import */ var _ProviderNav__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ProviderNav */ "./src/js/components/ProviderNav.js");
-/* harmony import */ var _Photos__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Photos */ "./src/js/components/Photos.js");
-/* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! react-intersection-observer */ "./node_modules/react-intersection-observer/react-intersection-observer.modern.mjs");
+/* harmony import */ var _ProviderNav__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./ProviderNav */ "./src/js/components/ProviderNav.js");
+/* harmony import */ var _RestAPIError__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./RestAPIError */ "./src/js/components/RestAPIError.js");
+/* harmony import */ var _Results__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Results */ "./src/js/components/Results.js");
+/* harmony import */ var _SearchHeader__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SearchHeader */ "./src/js/components/SearchHeader.js");
+/* harmony import */ var _SearchToolTip__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SearchToolTip */ "./src/js/components/SearchToolTip.js");
+/* harmony import */ var _Tooltip__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -2813,14 +2814,23 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var imagesLoaded = __webpack_require__(/*! imagesloaded */ "./node_modules/imagesloaded/imagesloaded.js");
 
+var imagesLoaded = __webpack_require__(/*! imagesloaded */ "./node_modules/imagesloaded/imagesloaded.js");
 var page = 1;
 
 /**
- * Fix bug with double searching after No Results. The issue is the inview flag and loadmorephotos is being fired.
- * Fix issue with double loading on initial plugin render. Issue is the loadmore is triggering after the first renderlayout();
-/*
+ * Fix bug with double searching after No Results. The issue is the inview flag and loadmorephotos is being fired. [DONE]
+ * Fix issue with double loading on initial plugin render. Issue is the loadmore is triggering after the first renderlayout(); [DONE]
+ * Infintie Scroll stops working after a search and after 3 times in gutenberg and media modal. [DONE]
+ * Issue with API error screen. [DONE]
+ * 	- Can't close modal if switch providers [DONE]
+ * Search filters not being applied when adding multiple.
+ * Load more not working with search. [DONE]
+ * How to trigger a search and save filter values. [DONE]
+ * Reset search filter values not working.
+ * ^^ Do I need to switch to views for list/search?
+ *
+ */
 
 /**
  * Render the InstantImages component.
@@ -2833,87 +2843,94 @@ function App(props) {
   var _props$editor = props.editor,
     editor = _props$editor === void 0 ? 'classic' : _props$editor,
     data = props.data,
-    error = props.error,
+    api_error = props.api_error,
     provider = props.provider,
     container = props.container,
     setFeaturedImage = props.setFeaturedImage,
     insertImage = props.insertImage;
-  var api_provider = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider]; // The API settings for the provider.
-  var per_page = (_constants_API__WEBPACK_IMPORTED_MODULE_3___default().defaults.per_page);
-
-  // API Vars.
-  var api_key = instant_img_localize["".concat(provider, "_app_id")];
-  var photo_api = api_provider === null || api_provider === void 0 ? void 0 : api_provider.photo_api;
-  var search_api = api_provider === null || api_provider === void 0 ? void 0 : api_provider.search_api;
-  var api_error = error;
-  var searchClass = 'searching';
-  var filters = {};
 
   // App state.
-  var mounted = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(false);
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(data)),
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(data)),
     _useState2 = _slicedToArray(_useState, 2),
     results = _useState2[0],
-    setResults = _useState2[1];
+    setResults = _useState2[1]; // Image results.
   var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(provider),
     _useState4 = _slicedToArray(_useState3, 2),
     activeProvider = _useState4[0],
-    setActiveProvider = _useState4[1];
-  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    setActiveProvider = _useState4[1]; // Current provider
+  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
-    loading = _useState6[0],
-    setLoading = _useState6[1];
+    apiTested = _useState6[0],
+    setAPITested = _useState6[1]; // API key test results.
   var _useState7 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
-    loadingMore = _useState8[0],
-    setLoadingMore = _useState8[1];
-  var _useState9 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    mounted = _useState8[0],
+    setMounted = _useState8[1]; // App mounted state.
+  var _useState9 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState10 = _slicedToArray(_useState9, 2),
-    done = _useState10[0],
-    setDone = _useState10[1];
+    loading = _useState10[0],
+    setLoading = _useState10[1]; // Loading state
   var _useState11 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState12 = _slicedToArray(_useState11, 2),
-    showAPILightbox = _useState12[0],
-    setShowAPILightbox = _useState12[1];
-  var _useState13 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    loadingMore = _useState12[0],
+    setLoadingMore = _useState12[1]; // Load more state.
+  var _useState13 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState14 = _slicedToArray(_useState13, 2),
+    done = _useState14[0],
+    setDone = _useState14[1]; // Done state.
+  var _useState15 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(api_error),
+    _useState16 = _slicedToArray(_useState15, 2),
+    apiError = _useState16[0],
+    setAPIError = _useState16[1]; // API Error.
+  var _useState17 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState18 = _slicedToArray(_useState17, 2),
+    showAPILightbox = _useState18[0],
+    setShowAPILightbox = _useState18[1]; // Render API key lightbox.
+  var _useState19 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
       active: false,
       term: '',
       results: 0
     }),
-    _useState14 = _slicedToArray(_useState13, 2),
-    search = _useState14[0],
-    setSearch = _useState14[1];
-  var _useState15 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
-      "default": (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[activeProvider].filters,
-      search: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[activeProvider].search
-    }),
-    _useState16 = _slicedToArray(_useState15, 2),
-    filterOptions = _useState16[0],
-    setFilterOptions = _useState16[1];
-  var search_filters = {};
-  var show_search_filters = true;
-  var msnry = '';
-  var tooltipInterval = '';
-  var delay = 250;
+    _useState20 = _slicedToArray(_useState19, 2),
+    search = _useState20[0],
+    setSearch = _useState20[1];
+  var _useState21 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[activeProvider].filters),
+    _useState22 = _slicedToArray(_useState21, 2),
+    filterOptions = _useState22[0],
+    setFilterOptions = _useState22[1];
+  var _useState23 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState24 = _slicedToArray(_useState23, 2),
+    filters = _useState24[0],
+    setFilters = _useState24[1];
+  var _useState25 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState26 = _slicedToArray(_useState25, 2),
+    searchFilters = _useState26[0],
+    setSearchFilters = _useState26[1];
 
   // Refs.
-  var _useInView = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_20__.useInView)({
+  var _useInView = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_21__.useInView)({
       rootMargin: '0px 0px'
     }),
     _useInView2 = _slicedToArray(_useInView, 2),
     loadMoreRef = _useInView2[0],
     inView = _useInView2[1];
-  var photoTarget = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var photoListing = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var controlNav = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var searchInput = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var filterGroups = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var filterRef = [];
 
   // Editor props.
   var is_block_editor = editor === 'gutenberg' ? true : false;
   var is_media_router = editor === 'media-router' ? true : false;
-  var plugin = is_block_editor ? document.body : container.parentNode.parentNode;
-  var wrapper = is_block_editor ? document.body : plugin.querySelector('.instant-images-wrapper');
+  var body = document.body;
+  var plugin = is_block_editor ? body : container.parentNode.parentNode;
+  var wrapper = is_block_editor ? body : plugin.querySelector('.instant-images-wrapper');
+
+  // Random variables.
+  var search_filters = {};
+  var msnry = ''; // eslint-disable-line
+  var delay = 250;
+  var searchClass = 'searching';
 
   /**
    * Reset filters.
@@ -2959,8 +2976,6 @@ function App(props) {
       term: '',
       results: 0
     });
-    search_filters = {}; // Reset search filters.
-    toggleFilters(); // Re-enable filters.
   }
 
   /**
@@ -2979,80 +2994,61 @@ function App(props) {
    */
   function _doSearch() {
     _doSearch = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(term) {
-      var search_type, search_query, search_params, params, url, response, status, headers, _data, images, total_results;
+      var searchType, searchQuery, searchParams, params, url, response, status, headers, _data, images, total_results;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             setLoading(true);
-            toggleFilters(); // Disable filters.
             page = 1; // Reset current page num.
-            search_type = term.substring(0, 3) === 'id:' ? 'id' : 'term'; // Get search query.
-            search_query = {};
-            if (search_type === 'id') {
-              show_search_filters = false;
-              search_query = {
-                id: term.replace('id:', '').replace(/\s+/, '')
-              };
-            } else {
-              show_search_filters = true;
-              search_query = {
-                term: term
-              };
-            }
-
-            // Build URL.
-            search_params = _objectSpread(_objectSpread(_objectSpread({}, {
+            searchType = term.substring(0, 3) === 'id:' ? 'id' : 'term'; // Get search query.
+            searchQuery = searchType === 'id' ? {
+              id: term.replace('id:', '').replace(/\s+/, '')
+            } : {
+              term: term
+            }; // Build URL.
+            searchParams = _objectSpread(_objectSpread(_objectSpread({}, {
               page: page
-            }), search_query), search_filters);
-            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(activeProvider, search_params);
+            }), searchQuery), searchFilters);
+            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, searchParams);
             url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('search', params); // Create fetch request.
-            _context.next = 11;
+            _context.next = 9;
             return fetch(url);
-          case 11:
+          case 9:
             response = _context.sent;
             status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
-            _context.prev = 14;
-            _context.next = 17;
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
+            _context.prev = 12;
+            _context.next = 15;
             return response.json();
-          case 17:
+          case 15:
             _data = _context.sent;
-            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data);
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data);
             checkTotalResults(images.length);
             setResults(images);
 
             // Check returned data.
-            total_results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__.getSearchTotal)(_data);
+            total_results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__.getSearchTotal)(_data);
             setSearch({
               active: true,
               term: term,
               results: total_results
             });
-
-            // Hide search filters if no results and not filtering.
-            show_search_filters = total_results < 2 && (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.isObjectEmpty)(search_filters) ? false : true;
-
-            // Update Props.
-            setState({
-              search_filters: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].search
-            });
-            _context.next = 33;
+            _context.next = 28;
             break;
-          case 27:
-            _context.prev = 27;
-            _context.t0 = _context["catch"](14);
+          case 23:
+            _context.prev = 23;
+            _context.t0 = _context["catch"](12);
             // Reset all search parameters.
             setDone(true);
             setLoading(false);
-            show_search_filters = false;
-            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
-          case 33:
+            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(provider, status);
+          case 28:
             searchInput.current.classList.remove(searchClass);
-          case 34:
+          case 29:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[14, 27]]);
+      }, _callee, null, [[12, 23]]);
     }));
     return _doSearch.apply(this, arguments);
   }
@@ -3066,7 +3062,7 @@ function App(props) {
    */
   function _getPhotos() {
     _getPhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var params, url, response, status, headers, _data2, _data2$error, _error, images;
+      var params, url, response, status, headers, _data2, _data2$error, error, images;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
@@ -3081,14 +3077,14 @@ function App(props) {
             page = 1;
 
             // Build URL.
-            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(activeProvider, filters);
+            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, filters);
             url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('photos', params); // Create fetch request.
             _context2.next = 9;
             return fetch(url);
           case 9:
             response = _context2.sent;
             status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
 
             // Status OK.
             _context2.prev = 12;
@@ -3096,17 +3092,17 @@ function App(props) {
             return response.json();
           case 15:
             _data2 = _context2.sent;
-            _data2$error = _data2.error, _error = _data2$error === void 0 ? null : _data2$error; // Get error reporting.
-            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data2);
+            _data2$error = _data2.error, error = _data2$error === void 0 ? null : _data2$error; // Get error reporting.
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data2);
             checkTotalResults(images.length);
             setResults(images);
-            api_error = _error;
+            setAPIError(error);
             _context2.next = 27;
             break;
           case 23:
             _context2.prev = 23;
             _context2.t0 = _context2["catch"](12);
-            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
+            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(provider, status);
             setLoading(false);
           case 27:
             // Delay loading animatons for effect.
@@ -3132,11 +3128,11 @@ function App(props) {
    */
   function _loadMorePhotos() {
     _loadMorePhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      var search_query, type, filters, loadmore_params, params, url, response, status, headers, _data3, images;
+      var searchQuery, type, activeFilters, loadmoreParams, params, url, response, status, headers, _data3, images;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
-            if (!(loading || loadingMore)) {
+            if (!(!mounted || loading || loadingMore)) {
               _context3.next = 2;
               break;
             }
@@ -3146,28 +3142,28 @@ function App(props) {
             page = parseInt(page) + 1;
 
             // Get search query.
-            search_query = search !== null && search !== void 0 && search.active && search !== null && search !== void 0 && search.term ? {
+            searchQuery = search !== null && search !== void 0 && search.active && search !== null && search !== void 0 && search.term ? {
               term: search.term
             } : {}; // Build URL.
             type = search !== null && search !== void 0 && search.active ? 'search' : 'photos';
-            filters = search !== null && search !== void 0 && search.active ? search_filters : filters;
-            loadmore_params = _objectSpread(_objectSpread(_objectSpread({}, {
+            activeFilters = search !== null && search !== void 0 && search.active ? searchFilters : filters;
+            loadmoreParams = _objectSpread(_objectSpread(_objectSpread({}, {
               page: page
-            }), search_query), filters);
-            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(activeProvider, loadmore_params);
+            }), searchQuery), activeFilters);
+            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, loadmoreParams);
             url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])(type, params); // Create fetch request.
             _context3.next = 12;
             return fetch(url);
           case 12:
             response = _context3.sent;
             status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
             _context3.prev = 15;
             _context3.next = 18;
             return response.json();
           case 18:
             _data3 = _context3.sent;
-            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(_data3);
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data3);
             checkTotalResults(images.length);
             setResults(function (prevState) {
               return [].concat(_toConsumableArray(prevState), _toConsumableArray(images));
@@ -3177,7 +3173,7 @@ function App(props) {
           case 24:
             _context3.prev = 24;
             _context3.t0 = _context3["catch"](15);
-            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
+            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(provider, status);
             setLoadingMore(false);
           case 28:
           case "end":
@@ -3188,12 +3184,13 @@ function App(props) {
     return _loadMorePhotos.apply(this, arguments);
   }
   function filterPhotos(filter, value) {
-    if (filters[filter] && value === '#' || value === '' || value === 'all') {
-      delete filters[filter];
+    var newFilters = _objectSpread({}, filters);
+    if (newFilters[filter] && value === '#' || value === '' || value === 'all') {
+      delete newFilters[filter];
     } else {
-      filters[filter] = value;
+      newFilters[filter] = value;
     }
-    getPhotos();
+    setFilters(_objectSpread({}, newFilters));
   }
 
   /**
@@ -3203,29 +3200,13 @@ function App(props) {
    * @param {string} value  The value to filter.
    */
   function filterSearch(filter, value) {
-    if (search_filters[filter] && value === '#' || value === '' || value === 'all') {
-      delete search_filters[filter];
+    var newSearchFilters = _objectSpread({}, searchFilters);
+    if (newSearchFilters[filter] && value === '#' || value === '' || value === 'all') {
+      delete newSearchFilters[filter];
     } else {
-      search_filters[filter] = value;
+      newSearchFilters[filter] = value;
     }
-    doSearch(search === null || search === void 0 ? void 0 : search.term);
-  }
-
-  /**
-   * Toggle the active state of all filters.
-   */
-  function toggleFilters() {
-    var filters = filterGroups.current.querySelectorAll('button.filter-dropdown--button');
-    if (filters) {
-      filters.forEach(function (button) {
-        button.disabled = search !== null && search !== void 0 && search.active ? true : false;
-      });
-    }
-    if (search !== null && search !== void 0 && search.active) {
-      filterGroups.current.classList.add('inactive');
-    } else {
-      filterGroups.current.classList.remove('inactive');
-    }
+    setSearchFilters(_objectSpread({}, newSearchFilters));
   }
 
   /**
@@ -3240,7 +3221,8 @@ function App(props) {
       setActiveProvider(provider);
     }
     setShowAPILightbox(false);
-    document.body.classList.remove('overflow-hidden');
+    setLoading(false);
+    body.classList.remove('overflow-hidden');
   }
 
   /**
@@ -3272,75 +3254,78 @@ function App(props) {
             return _context4.abrupt("return");
           case 4:
             setLoading(true);
+            setAPIError(false);
+            setShowAPILightbox(false);
+            body.classList.remove('overflow-hidden');
 
             // API Verification.
             // Note: Bounce user if provider API key is not valid.
-            if (!(_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider].requires_key) {
-              _context4.next = 23;
+            if (!((_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider].requires_key && !apiTested.includes(provider))) {
+              _context4.next = 27;
               break;
             }
-            _context4.prev = 6;
-            _context4.next = 9;
+            _context4.prev = 9;
+            _context4.next = 12;
             return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__.buildTestURL)(provider));
-          case 9:
+          case 12:
             response = _context4.sent;
             status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.checkRateLimit)(headers);
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
             if (!(status !== 200)) {
-              _context4.next = 16;
+              _context4.next = 19;
               break;
             }
             // Catch API errors and 401s.
             setShowAPILightbox(provider); // Show API Lightbox.
-            document.body.classList.add('overflow-hidden');
+            body.classList.add('overflow-hidden');
             return _context4.abrupt("return");
-          case 16:
-            _context4.next = 23;
+          case 19:
+            if (status === 200) {
+              // Valid API key - Add provider to tested array.
+              setAPITested(function (prevState) {
+                return [].concat(_toConsumableArray(prevState), [provider]);
+              });
+            }
+            _context4.next = 27;
             break;
-          case 18:
-            _context4.prev = 18;
-            _context4.t0 = _context4["catch"](6);
+          case 22:
+            _context4.prev = 22;
+            _context4.t0 = _context4["catch"](9);
             // Catch all other errors.
             setShowAPILightbox(provider); // Show API Lightbox.
-            document.body.classList.add('overflow-hidden');
+            body.classList.add('overflow-hidden');
             return _context4.abrupt("return");
-          case 23:
+          case 27:
             // Update filter options.
-            setFilterOptions({
-              "default": (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].filters,
-              search: (_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].search
-            });
+            setFilterOptions((_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].filters);
 
             // Switch the provider.
             setActiveProvider(provider);
-          case 25:
+          case 29:
           case "end":
             return _context4.stop();
         }
-      }, _callee4, null, [[6, 18]]);
+      }, _callee4, null, [[9, 22]]);
     }));
     return _switchProvider.apply(this, arguments);
   }
   function renderLayout() {
-    if (is_block_editor) {
+    imagesLoaded(photoListing.current, function () {
+      if (!is_block_editor) {
+        msnry = new (masonry_layout__WEBPACK_IMPORTED_MODULE_2___default())(photoListing.current, {
+          itemSelector: '.photo'
+        });
+        photoListing.current.querySelectorAll('.photo').forEach(function (el) {
+          el.classList.add('in-view');
+        });
+      }
       setTimeout(function () {
         // Delay to allow for rendering and set up.
         setLoading(false);
         setLoadingMore(false);
-      }, delay);
-      return false;
-    }
-    imagesLoaded(photoTarget.current, function () {
-      msnry = new (masonry_layout__WEBPACK_IMPORTED_MODULE_2___default())(photoTarget.current, {
-        itemSelector: '.photo'
-      });
-      photoTarget.current.querySelectorAll('.photo').forEach(function (el) {
-        el.classList.add('in-view');
-      });
-      setTimeout(function () {
-        // Delay to allow for rendering and set up.
-        setLoading(false);
-        setLoadingMore(false);
+        if (!mounted) {
+          setMounted(true);
+        }
       }, delay);
     });
   }
@@ -3363,7 +3348,7 @@ function App(props) {
   function escFunction(e) {
     var key = e.key;
     if (key === 'Escape') {
-      var editing = photoTarget.current.querySelectorAll('.edit-screen.editing');
+      var editing = photoListing.current.querySelectorAll('.edit-screen.editing');
       if (editing) {
         _toConsumableArray(editing).forEach(function (element) {
           element && element.classList.remove('editing');
@@ -3371,19 +3356,35 @@ function App(props) {
       }
     }
   }
-
-  // Provider switch callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!mounted.current) {
+    if (!(search !== null && search !== void 0 && search.active)) {
+      setSearchFilters({}); // Reset search filters.
+    }
+  }, [search]);
+
+  /* Search filter callback. */
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (!mounted || !(search !== null && search !== void 0 && search.active)) {
+      return;
+    }
+    doSearch(search === null || search === void 0 ? void 0 : search.term);
+  }, [searchFilters]);
+
+  // Filter, Provider callback.
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (!mounted) {
       return;
     }
     getPhotos();
-  }, [activeProvider]);
+  }, [filters, activeProvider]);
 
   // Scroll in-view callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (mounted.current && !loading && !done) {
-      loadMorePhotos();
+    if (!is_block_editor && !is_media_router) {
+      // Exclude infinite scroll in mdeia modal and block editor.
+      if (mounted && !loading && !done) {
+        loadMorePhotos();
+      }
     }
   }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -3397,16 +3398,14 @@ function App(props) {
     setLoading(false);
     wrapper.classList.add('loaded');
     document.addEventListener('keydown', escFunction, false); // Add global escape listener.
-    mounted.current = true;
     return function () {
       document.removeEventListener('keydown', escFunction, false);
-      mounted.current = false;
     };
   }, []);
-  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_18__["default"], {
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_15__["default"], {
     switchProvider: switchProvider,
     provider: activeProvider
-  }), /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_15__["default"], {
+  }), /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_16__["default"], {
     title: instant_img_localize.error_restapi,
     desc: instant_img_localize.error_restapi_desc,
     type: "warning"
@@ -3414,11 +3413,10 @@ function App(props) {
     className: "control-nav",
     ref: controlNav
   }, /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--filters-wrap', api_error ? 'inactive' : null),
-    ref: filterGroups
-  }, filterOptions !== null && filterOptions !== void 0 && filterOptions["default"] && (_Object$entries = Object.entries(filterOptions["default"])) !== null && _Object$entries !== void 0 && _Object$entries.length ? /*#__PURE__*/React.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--filters-wrap', apiError || search !== null && search !== void 0 && search.active ? 'inactive' : null)
+  }, filterOptions && (_Object$entries = Object.entries(filterOptions)) !== null && _Object$entries !== void 0 && _Object$entries.length ? /*#__PURE__*/React.createElement("div", {
     className: "control-nav--filters"
-  }, Object.entries(filterOptions["default"]).map(function (_ref, index) {
+  }, Object.entries(filterOptions).map(function (_ref, index) {
     var _ref2 = _slicedToArray(_ref, 2),
       key = _ref2[0],
       filter = _ref2[1];
@@ -3430,7 +3428,7 @@ function App(props) {
       "function": filterPhotos
     });
   })) : null), /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--search', 'search-field', api_error ? 'inactive' : null),
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--search', 'search-field', apiError ? 'inactive' : null),
     id: "search-bar"
   }, /*#__PURE__*/React.createElement("form", {
     onSubmit: function onSubmit(e) {
@@ -3445,13 +3443,15 @@ function App(props) {
     id: "search-input",
     placeholder: instant_img_localize.search,
     ref: searchInput,
-    disabled: api_error
+    disabled: apiError
   }), /*#__PURE__*/React.createElement("button", {
     type: "submit",
-    disabled: api_error
+    disabled: apiError
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-search"
-  })), /*#__PURE__*/React.createElement(_ResultsToolTip__WEBPACK_IMPORTED_MODULE_16__["default"], {
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "offscreen"
+  }, instant_img_localize.search)), /*#__PURE__*/React.createElement(_SearchToolTip__WEBPACK_IMPORTED_MODULE_19__["default"], {
     container: plugin,
     getPhotos: getPhotos,
     is_search: search === null || search === void 0 ? void 0 : search.active,
@@ -3460,37 +3460,16 @@ function App(props) {
   })))), /*#__PURE__*/React.createElement("div", {
     id: "photo-listing",
     className: loading ? 'loading' : null
-  }, (search === null || search === void 0 ? void 0 : search.active) && editor !== 'gutenberg' && /*#__PURE__*/React.createElement("div", {
-    className: "search-results-header"
-  }, /*#__PURE__*/React.createElement("h2", null, search === null || search === void 0 ? void 0 : search.term.replace('id:', 'ID: ')), /*#__PURE__*/React.createElement("div", {
-    className: "search-results-header--text"
-  }, "".concat(search === null || search === void 0 ? void 0 : search.results, " ").concat(instant_img_localize.search_results), " ", /*#__PURE__*/React.createElement("strong", null, "".concat(search === null || search === void 0 ? void 0 : search.term)), ' - ', /*#__PURE__*/React.createElement("button", {
-    title: instant_img_localize.clear_search,
-    onClick: function onClick() {
-      return getPhotos(true);
-    }
-  }, instant_img_localize.clear_search)), (filterOptions === null || filterOptions === void 0 ? void 0 : filterOptions.search) && Object.entries(filterOptions.search).length && /*#__PURE__*/React.createElement("div", {
-    className: "control-nav--filters-wrap"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "control-nav--filters"
-  }, Object.entries(filterOptions.search).map(function (_ref3, index) {
-    var _ref4 = _slicedToArray(_ref3, 2),
-      key = _ref4[0],
-      filter = _ref4[1];
-    return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_12__["default"], {
-      ref: function ref(_ref5) {
-        return filterRef[index] = _ref5;
-      },
-      key: "".concat(key, "-").concat(index),
-      filterKey: key,
-      provider: provider,
-      data: filter,
-      "function": filterSearch
-    });
-  })))), /*#__PURE__*/React.createElement("div", {
+  }, !!(search !== null && search !== void 0 && search.active) && /*#__PURE__*/React.createElement(_SearchHeader__WEBPACK_IMPORTED_MODULE_18__["default"], {
+    provider: activeProvider,
+    term: search === null || search === void 0 ? void 0 : search.term,
+    total: search === null || search === void 0 ? void 0 : search.results,
+    filterSearch: filterSearch,
+    getPhotos: getPhotos
+  }), /*#__PURE__*/React.createElement("div", {
     id: "photos",
-    ref: photoTarget
-  }, /*#__PURE__*/React.createElement(_Photos__WEBPACK_IMPORTED_MODULE_19__["default"], {
+    ref: photoListing
+  }, /*#__PURE__*/React.createElement(_Results__WEBPACK_IMPORTED_MODULE_17__["default"], {
     provider: activeProvider,
     results: results,
     mediaRouter: is_media_router,
@@ -3515,9 +3494,9 @@ function App(props) {
     provider: showAPILightbox,
     closeAPILightbox: closeAPILightbox
   }), /*#__PURE__*/React.createElement(_ErrorLightbox__WEBPACK_IMPORTED_MODULE_11__["default"], {
-    error: api_error,
+    error: apiError,
     provider: activeProvider
-  }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_17__["default"], null)));
+  }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_20__["default"], null)));
 }
 
 /***/ }),
@@ -3537,9 +3516,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
-/* harmony import */ var _functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../functions/getErrorMessage */ "./src/js/functions/getErrorMessage.js");
-
+/* harmony import */ var _functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../functions/getErrorMessage */ "./src/js/functions/getErrorMessage.js");
 
 
 
@@ -3558,41 +3535,6 @@ function ErrorLightbox(props) {
   var status = error !== null && error !== void 0 && error.status ? error.status : null;
 
   /**
-   * Close the lightbox
-   */
-  function closeLightbox() {
-    if (lightbox !== null && lightbox !== void 0 && lightbox.current) {
-      lightbox.current.classList.remove('active');
-      setTimeout(function () {
-        lightbox.current.remove();
-      }, 275);
-    }
-  }
-
-  /**
-   * Close the lightbox with a background click.
-   */
-  function bkgClick(e) {
-    var target = e.target;
-    // If clicked element is the background.
-    if (target === (lightbox === null || lightbox === void 0 ? void 0 : lightbox.current)) {
-      closeLightbox();
-    }
-  }
-
-  /**
-   * Escape handler.
-   *
-   * @param {Event} e The key press event.
-   */
-  function escFunction(e) {
-    var key = e.key;
-    if (key === 'Escape') {
-      closeLightbox();
-    }
-  }
-
-  /**
    * Open the API window.
    *
    * @param {string} url The destination URL.
@@ -3600,33 +3542,17 @@ function ErrorLightbox(props) {
   function gotoURL(url) {
     window.open(url, '_blank');
   }
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    document.addEventListener('keydown', escFunction, false);
-    return function () {
-      document.removeEventListener('keydown', escFunction, false);
-    };
-  }, []);
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, error && status && /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('api-lightbox', 'active'),
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('api-lightbox', 'error-lightbox', 'active'),
     ref: lightbox,
-    onClick: function onClick(e) {
-      return bkgClick(e);
-    },
     tabIndex: "-1"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
-    className: "api-lightbox--close",
-    onClick: function onClick() {
-      return closeLightbox();
-    }
-  }, "\xD7", /*#__PURE__*/React.createElement("span", {
-    className: "offscreen"
-  }, instant_img_localize.btnClose)), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('api-lightbox--details', 'error-lightbox')
   }, /*#__PURE__*/React.createElement("h3", {
     "data-provider": provider
   }, provider), /*#__PURE__*/React.createElement("p", {
     className: "callout-warning"
-  }, status, " ", instant_img_localize.error), /*#__PURE__*/React.createElement("p", null, (0,_functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"])(status)), /*#__PURE__*/React.createElement("p", {
+  }, status, " ", instant_img_localize.error), /*#__PURE__*/React.createElement("p", null, (0,_functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_2__["default"])(status)), /*#__PURE__*/React.createElement("p", {
     className: "more-info"
   }, instant_img_localize.api_default_provider), /*#__PURE__*/React.createElement("p", {
     className: "action-controls"
@@ -3634,11 +3560,7 @@ function ErrorLightbox(props) {
     onClick: function onClick() {
       return gotoURL(instant_img_localize["".concat(provider, "_api_url")]);
     }
-  }, instant_img_localize.get_api_key), /*#__PURE__*/React.createElement("span", null, "|"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return closeLightbox();
-    }
-  }, instant_img_localize.btnCloseWindow))))));
+  }, instant_img_localize.get_api_key))))));
 }
 
 /***/ }),
@@ -4603,56 +4525,6 @@ function Photo(props) {
 
 /***/ }),
 
-/***/ "./src/js/components/Photos.js":
-/*!*************************************!*\
-  !*** ./src/js/components/Photos.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Photos)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Photo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
-/* harmony import */ var _Sponsor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sponsor */ "./src/js/components/Sponsor.js");
-
-
-
-
-/**
- * Render the Photos component.
- *
- * @param {Object} props The component props.
- * @return {JSX.Element} The Photos component.
- */
-function Photos(props) {
-  var results = props.results,
-    provider = props.provider,
-    is_media_router = props.is_media_router,
-    is_block_editor = props.is_block_editor,
-    setFeaturedImage = props.setFeaturedImage,
-    insertImage = props.insertImage;
-  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(results !== null && results !== void 0 && results.length) && results.map(function (result, index) {
-    return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-      key: "".concat(provider, "-").concat(result.id, "-").concat(index)
-    }, result && result.type && result.type === 'instant-images-ad' ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      result: result
-    }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      provider: provider,
-      result: result,
-      mediaRouter: is_media_router,
-      blockEditor: is_block_editor,
-      setFeaturedImage: setFeaturedImage,
-      insertImage: insertImage
-    }));
-  }));
-}
-
-/***/ }),
-
 /***/ "./src/js/components/ProviderNav.js":
 /*!******************************************!*\
   !*** ./src/js/components/ProviderNav.js ***!
@@ -4672,9 +4544,16 @@ __webpack_require__.r(__webpack_exports__);
 
 var providers = (_constants_API__WEBPACK_IMPORTED_MODULE_1___default().providers); // Get current provider settings.
 
-function ProviderNav(_ref) {
-  var provider = _ref.provider,
-    switchProvider = _ref.switchProvider;
+/**
+ * Render the ProviderNav component.
+ * Note: Component is display on initial plugin load if the default provider has an invalid API key.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The ProviderNav component.
+ */
+function ProviderNav(props) {
+  var provider = props.provider,
+    switchProvider = props.switchProvider;
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(providers !== null && providers !== void 0 && providers.length) && /*#__PURE__*/React.createElement("nav", {
     className: "provider-nav"
   }, providers.map(function (item, iterator) {
@@ -4767,10 +4646,129 @@ function RestAPIError() {
 
 /***/ }),
 
-/***/ "./src/js/components/ResultsToolTip.js":
-/*!*********************************************!*\
-  !*** ./src/js/components/ResultsToolTip.js ***!
-  \*********************************************/
+/***/ "./src/js/components/Results.js":
+/*!**************************************!*\
+  !*** ./src/js/components/Results.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Results)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Photo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
+/* harmony import */ var _Sponsor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sponsor */ "./src/js/components/Sponsor.js");
+
+
+
+
+/**
+ * Render the Results component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The Results component.
+ */
+function Results(props) {
+  var results = props.results,
+    provider = props.provider,
+    is_media_router = props.is_media_router,
+    is_block_editor = props.is_block_editor,
+    setFeaturedImage = props.setFeaturedImage,
+    insertImage = props.insertImage;
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(results !== null && results !== void 0 && results.length) && results.map(function (result, index) {
+    return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      key: "".concat(provider, "-").concat(result.id, "-").concat(index)
+    }, result && result.type && result.type === 'instant-images-ad' ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      result: result
+    }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      provider: provider,
+      result: result,
+      mediaRouter: is_media_router,
+      blockEditor: is_block_editor,
+      setFeaturedImage: setFeaturedImage,
+      insertImage: insertImage
+    }));
+  }));
+}
+
+/***/ }),
+
+/***/ "./src/js/components/SearchHeader.js":
+/*!*******************************************!*\
+  !*** ./src/js/components/SearchHeader.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ SearchHeader)
+/* harmony export */ });
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
+/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_constants_filters__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+/**
+ * Render the SearchHeader component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The SearchHeader component.
+ */
+function SearchHeader(props) {
+  var provider = props.provider,
+    _props$term = props.term,
+    term = _props$term === void 0 ? '' : _props$term,
+    _props$total = props.total,
+    total = _props$total === void 0 ? 0 : _props$total,
+    filterSearch = props.filterSearch,
+    getPhotos = props.getPhotos;
+  var filters = (_constants_filters__WEBPACK_IMPORTED_MODULE_1___default())[provider].search;
+  return /*#__PURE__*/React.createElement("header", {
+    className: "search-header"
+  }, /*#__PURE__*/React.createElement("h2", null, term.replace('id:', 'ID: ')), /*#__PURE__*/React.createElement("div", {
+    className: "search-header--text"
+  }, "".concat(total, " ").concat(instant_img_localize.search_results), " ", /*#__PURE__*/React.createElement("strong", null, "".concat(term)), /*#__PURE__*/React.createElement("span", null, "-"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return getPhotos();
+    }
+  }, instant_img_localize.clear_search)), filters && Object.entries(filters).length && /*#__PURE__*/React.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()('control-nav--filters-wrap', total < 1 ? 'inactive' : null)
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "control-nav--filters"
+  }, Object.entries(filters).map(function (_ref, index) {
+    var _ref2 = _slicedToArray(_ref, 2),
+      key = _ref2[0],
+      filter = _ref2[1];
+    return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      key: "".concat(provider, "-search-").concat(key, "-").concat(index),
+      filterKey: key,
+      provider: provider,
+      data: filter,
+      "function": filterSearch
+    });
+  }))));
+}
+
+/***/ }),
+
+/***/ "./src/js/components/SearchToolTip.js":
+/*!********************************************!*\
+  !*** ./src/js/components/SearchToolTip.js ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4779,10 +4777,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ ResultsToolTip)
 /* harmony export */ });
 /**
- * Render the ResultsToolTip component.
+ * Render the SearchToolTip component.
  *
  * @param {Object} props The component props.
- * @return {JSX.Element} The ResultsToolTip component.
+ * @return {JSX.Element} The SearchToolTip component.
  */
 function ResultsToolTip(props) {
   var is_search = props.is_search,
@@ -5854,12 +5852,10 @@ var defaultProvider = (0,_functions_getProvider__WEBPACK_IMPORTED_MODULE_6__["de
 /**
  * Get the initial set of photos.
  *
- * @param {string} orderby  The default order.
  * @param {string} provider The current service provider.
  */
 function getImages() {
-  var orderby = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_constants_API__WEBPACK_IMPORTED_MODULE_2___default().defaults.order);
-  var provider = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (_constants_API__WEBPACK_IMPORTED_MODULE_2___default().defaults.provider);
+  var provider = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_constants_API__WEBPACK_IMPORTED_MODULE_2___default().defaults.provider);
   var container = document.querySelector('.instant-img-container');
 
   // Build URL.
@@ -5870,7 +5866,7 @@ function getImages() {
   }
   function _initialize() {
     _initialize = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var response, status, headers, results, _results$error, error, app, initWrap;
+      var response, status, headers, results, _results$error, error, app;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -5887,14 +5883,15 @@ function getImages() {
             results = _context.sent;
             _results$error = results.error, error = _results$error === void 0 ? null : _results$error;
             app = document.getElementById('app');
-            (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)( /*#__PURE__*/React.createElement(_components_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
-              editor: "classic",
-              data: results,
-              container: app,
-              orderby: orderby,
-              provider: provider,
-              error: error
-            }), app);
+            if (app) {
+              (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)( /*#__PURE__*/React.createElement(_components_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
+                editor: "classic",
+                data: results,
+                container: app,
+                provider: provider,
+                api_error: error
+              }), app);
+            }
             _context.next = 17;
             break;
           case 14:
@@ -5902,12 +5899,6 @@ function getImages() {
             _context.t0 = _context["catch"](5);
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_5__["default"])(provider, status);
           case 17:
-            // Remove init button (if required).
-            initWrap = container.querySelector('.initialize-wrap');
-            if (typeof initWrap != 'undefined' && initWrap != null) {
-              initWrap.parentNode.removeChild(initWrap);
-            }
-          case 19:
           case "end":
             return _context.stop();
         }
@@ -5922,13 +5913,11 @@ function getImages() {
  * Dispatch an initial fetch request to confirm the default API key is valid.
  */
 _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-  var defaultOrder;
   return _regeneratorRuntime().wrap(function _callee2$(_context2) {
     while (1) switch (_context2.prev = _context2.next) {
       case 0:
-        defaultOrder = (_constants_API__WEBPACK_IMPORTED_MODULE_2___default().defaults.order);
-        getImages(defaultOrder, defaultProvider);
-      case 2:
+        getImages(defaultProvider);
+      case 1:
       case "end":
         return _context2.stop();
     }

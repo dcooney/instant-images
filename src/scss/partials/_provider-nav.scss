@@ -39,6 +39,11 @@
 		&:focus {
 			color: $text;
 		}
+		&[disabled] {
+			opacity: 0.5;
+			cursor: not-allowed;
+			pointer-events: none;
+		}
 		&.active {
 			background-color: #fff;
 			border-color: $input;
