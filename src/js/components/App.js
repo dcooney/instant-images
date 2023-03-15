@@ -21,22 +21,9 @@ import SearchHeader from './SearchHeader';
 import SearchToolTip from './SearchToolTip';
 import Tooltip from './Tooltip';
 const imagesLoaded = require('imagesloaded');
-
 let page = 1;
 
-/**
- * Fix bug with double searching after No Results. The issue is the inview flag and loadmorephotos is being fired. [DONE]
- * Fix issue with double loading on initial plugin render. Issue is the loadmore is triggering after the first renderlayout(); [DONE]
- * Infintie Scroll stops working after a search and after 3 times in gutenberg and media modal. [DONE]
- * Issue with API error screen. [DONE]
- * 	- Can't close modal if switch providers [DONE]
- * Search filters not being applied when adding multiple.
- * Load more not working with search. [DONE]
- * How to trigger a search and save filter values. [DONE]
- * Reset search filter values not working.
- * ^^ Do I need to switch to views for list/search?
- *
- */
+// TODO: Add ESLint to this project.
 
 /**
  * Render the InstantImages component.
