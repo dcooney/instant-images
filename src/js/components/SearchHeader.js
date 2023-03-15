@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import FILTERS from '../constants/filters';
 import Filter from './Filter';
 
@@ -21,7 +20,7 @@ export default function SearchHeader(props) {
 				<button onClick={() => getPhotos()}>{instant_img_localize.clear_search}</button>
 			</div>
 			{filters && Object.entries(filters).length && (
-				<div className={classNames('control-nav--filters-wrap', total < 1 ? 'inactive' : null)}>
+				<div className="control-nav--filters-wrap">
 					<div className="control-nav--filters">
 						{Object.entries(filters).map(([key, filter], index) => (
 							<Filter key={`${provider}-search-${key}-${index}`} filterKey={key} provider={provider} data={filter} function={filterSearch} />

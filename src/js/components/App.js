@@ -46,6 +46,14 @@ let page = 1;
  */
 export default function App(props) {
 	let { editor = 'classic', data, api_error, provider, container, setFeaturedImage, insertImage } = props;
+	const delay = 250;
+	const searchClass = 'searching';
+	const searchDefaults = {
+		active: false,
+		term: '',
+		type: '',
+		results: 0,
+	};
 
 	// App state.
 	const [results, setResults] = useState(getResults(data)); // Image results.
@@ -57,11 +65,7 @@ export default function App(props) {
 	const [done, setDone] = useState(false); // Done state.
 	const [apiError, setAPIError] = useState(api_error); // API Error.
 	const [showAPILightbox, setShowAPILightbox] = useState(false); // Render API key lightbox.
-	const [search, setSearch] = useState({
-		active: false,
-		term: '',
-		results: 0,
-	});
+	const [search, setSearch] = useState(searchDefaults);
 	const [filterOptions, setFilterOptions] = useState(FILTERS[activeProvider].filters);
 	const [filters, setFilters] = useState({});
 	const [searchFilters, setSearchFilters] = useState({});
@@ -73,119 +77,14 @@ export default function App(props) {
 	const photoListing = useRef();
 	const controlNav = useRef();
 	const searchInput = useRef();
-	const filterRef = [];
+	const msnry = useRef();
 
-	// Editor props.
+	// WP editor props.
 	const is_block_editor = editor === 'gutenberg' ? true : false;
 	const is_media_router = editor === 'media-router' ? true : false;
 	const body = document.body;
 	const plugin = is_block_editor ? body : container.parentNode.parentNode;
 	const wrapper = is_block_editor ? body : plugin.querySelector('.instant-images-wrapper');
-
-	// Random variables.
-	let search_filters = {};
-	let msnry = ''; // eslint-disable-line
-	const delay = 250;
-	const searchClass = 'searching';
-
-	/**
-	 * Reset filters.
-	 */
-	function resetFilters() {
-		if (filterRef?.length) {
-			filterRef.forEach((filter) => {
-				if (filter) {
-					filter.reset();
-				}
-			});
-		}
-	}
-
-	/**
-	 * Handle the Photo Search.
-	 *
-	 * @param {Event} event The dispatched submit event.
-	 * @since 3.0
-	 */
-	function searchHandler(event) {
-		event.preventDefault();
-		const term = searchInput.current.value;
-		resetFilters();
-		if (term.length > 2) {
-			searchInput.current.classList.add(searchClass);
-			search_filters = {};
-			doSearch(term);
-		} else {
-			searchInput.current.focus();
-		}
-	}
-
-	/**
-	 * Reset search results, settings and results view.
-	 *
-	 * @since 3.0
-	 */
-	function clearSearch() {
-		searchInput.current.value = '';
-		setSearch({
-			active: false,
-			term: '',
-			results: 0,
-		});
-	}
-
-	/**
-	 * Perform a photo search.
-	 *
-	 * @param {string} term Search term.
-	 * @since 3.0
-	 */
-	async function doSearch(term) {
-		setLoading(true);
-		page = 1; // Reset current page num.
-
-		const searchType = term.substring(0, 3) === 'id:' ? 'id' : 'term';
-
-		// Get search query.
-		const searchQuery = searchType === 'id' ? { id: term.replace('id:', '').replace(/\s+/, '') } : { term: term };
-
-		// Build URL.
-		const searchParams = {
-			...{ page: page },
-			...searchQuery,
-			...searchFilters,
-		};
-		const params = getQueryParams(activeProvider, searchParams);
-		const url = buildURL('search', params);
-
-		// Create fetch request.
-		const response = await fetch(url);
-		const { status, headers } = response;
-		checkRateLimit(headers);
-
-		try {
-			// Get response data.
-			const data = await response.json();
-			const images = getResults(data);
-			checkTotalResults(images.length);
-			setResults(images);
-
-			// Check returned data.
-			const total_results = getSearchTotal(data);
-
-			setSearch({
-				active: true,
-				term: term,
-				results: total_results,
-			});
-		} catch (error) {
-			// Reset all search parameters.
-			setDone(true);
-			setLoading(false);
-			consoleStatus(provider, status);
-		}
-		searchInput.current.classList.remove(searchClass);
-	}
 
 	/**
 	 * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
@@ -273,6 +172,83 @@ export default function App(props) {
 	}
 
 	/**
+	 * Perform a photo search.
+	 *
+	 * @param {string} term Search term.
+	 * @since 3.0
+	 */
+	async function doSearch(term) {
+		setLoading(true);
+		page = 1; // Reset current page num.
+
+		const searchType = term.substring(0, 3) === 'id:' ? 'id' : 'term';
+
+		// Get search query.
+		const searchQuery = searchType === 'id' ? { id: term.replace('id:', '').replace(/\s+/, '') } : { term: term };
+
+		// Build URL.
+		const searchParams = {
+			...{ page: page },
+			...searchQuery,
+			...searchFilters,
+		};
+		const params = getQueryParams(activeProvider, searchParams);
+		const url = buildURL('search', params);
+
+		// Create fetch request.
+		const response = await fetch(url);
+		const { status, headers } = response;
+		checkRateLimit(headers);
+
+		try {
+			// Get response data.
+			const data = await response.json();
+			const images = getResults(data);
+			checkTotalResults(images.length);
+			setResults(images);
+
+			setSearch({
+				active: true,
+				term: term,
+				type: searchType,
+				results: getSearchTotal(data),
+			});
+		} catch (error) {
+			// Reset all search parameters.
+			setDone(true);
+			setLoading(false);
+			consoleStatus(provider, status);
+		}
+		searchInput.current.classList.remove(searchClass);
+	}
+	/**
+	 * Handle the Photo Search.
+	 *
+	 * @param {Event} event The dispatched submit event.
+	 * @since 3.0
+	 */
+	function searchHandler(event) {
+		event.preventDefault();
+		const term = searchInput.current.value;
+		if (term.length > 2) {
+			searchInput.current.classList.add(searchClass);
+			doSearch(term);
+		} else {
+			searchInput.current.focus();
+		}
+	}
+
+	/**
+	 * Reset search results, settings and results view.
+	 *
+	 * @since 3.0
+	 */
+	function clearSearch() {
+		searchInput.current.value = '';
+		setSearch(searchDefaults);
+	}
+
+	/**
 	 * Filter the photo listing.
 	 *
 	 * @param {string} filter The current filter key.
@@ -339,7 +315,7 @@ export default function App(props) {
 		body.classList.remove('overflow-hidden');
 
 		// API Verification.
-		// Note: Bounce user if provider API key is not valid.
+		// Checks for valid API key for provider.
 		if (API[provider].requires_key && !apiTested.includes(provider)) {
 			try {
 				const response = await fetch(buildTestURL(provider));
@@ -353,7 +329,7 @@ export default function App(props) {
 					return;
 				}
 				if (status === 200) {
-					// Valid API key - Add provider to tested array.
+					// Valid API key - Add to array of tested providers.
 					setAPITested((prevState) => [...prevState, provider]);
 				}
 			} catch (error) {
@@ -379,7 +355,7 @@ export default function App(props) {
 	function renderLayout() {
 		imagesLoaded(photoListing.current, function () {
 			if (!is_block_editor) {
-				msnry = new Masonry(photoListing.current, {
+				msnry.current = new Masonry(photoListing.current, {
 					itemSelector: '.photo',
 				});
 				photoListing.current.querySelectorAll('.photo').forEach((el) => {
@@ -424,48 +400,54 @@ export default function App(props) {
 		}
 	}
 
+	/* Search callback. */
 	useEffect(() => {
 		if (!search?.active) {
-			setSearchFilters({}); // Reset search filters.
+			// Reset search filters when search is false.
+			setSearchFilters({});
 		}
 	}, [search]);
 
-	/* Search filter callback. */
+	/* Search filters callback. */
 	useEffect(() => {
-		if (!mounted || !search?.active) {
-			return;
+		if (mounted && search?.active) {
+			doSearch(search?.term);
 		}
-		doSearch(search?.term);
 	}, [searchFilters]);
 
-	// Filter, Provider callback.
+	// Filters callback.
 	useEffect(() => {
-		if (!mounted) {
-			return;
+		if (mounted) {
+			getPhotos();
 		}
-		getPhotos();
-	}, [filters, activeProvider]);
+	}, [filters]);
+
+	// Provider callback.
+	useEffect(() => {
+		setFilters({});
+	}, [activeProvider]);
 
 	// Scroll in-view callback.
 	useEffect(() => {
 		if (!is_block_editor && !is_media_router) {
-			// Exclude infinite scroll in mdeia modal and block editor.
+			// Exclude infinite scroll in media modal and block editor.
 			if (mounted && !loading && !done) {
 				loadMorePhotos();
 			}
 		}
-	}, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [inView]);
 
 	// Results callback.
 	useEffect(() => {
 		renderLayout();
-	}, [results]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [results]);
 
 	// Initial page load.
 	useEffect(() => {
 		setLoading(false);
 		wrapper.classList.add('loaded');
-		document.addEventListener('keydown', escFunction, false); // Add global escape listener.
+		// Add global escape listener.
+		document.addEventListener('keydown', escFunction, false);
 		return () => {
 			document.removeEventListener('keydown', escFunction, false);
 		};
@@ -521,7 +503,7 @@ export default function App(props) {
 						insertImage={insertImage}
 					/>
 				</div>
-				<LoadingBlock loading={loadingMore} />
+				<LoadingBlock loading={loadingMore} total={results?.length} />
 				<NoResults total={search?.results} is_search={search?.active} />
 				<div className="load-more-wrap" ref={loadMoreRef}>
 					<button type="button" className="button" onClick={() => loadMorePhotos()}>

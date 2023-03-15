@@ -15,7 +15,7 @@ export default function Results(props) {
 			{!!results?.length &&
 				results.map((result, index) => (
 					<Fragment key={`${provider}-${result.id}-${index}`}>
-						{result && result.type && result.type === 'instant-images-ad' ? (
+						{result?.type === 'instant-images-ad' ? (
 							<Sponsor result={result} />
 						) : (
 							<Photo

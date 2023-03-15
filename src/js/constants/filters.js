@@ -44,8 +44,8 @@ module.exports = {
 		filters: {
 			order_by: {
 				label: 'orderby',
-				default: 'all',
-				filters: ['all', 'curated'],
+				default: 'curated',
+				filters: ['curated'],
 			},
 		},
 		search: {

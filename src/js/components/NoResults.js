@@ -7,7 +7,7 @@
 export default function NoResults(props) {
 	const { total = 0, is_search = false } = props;
 
-	if (!is_search || (is_search && total > 1)) {
+	if (!is_search || (is_search && total >= 1)) {
 		// Bail if not search or search total is greater than 1.
 		return null;
 	}

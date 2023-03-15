@@ -66,11 +66,11 @@
 		button {
 			display: flex;
 			align-items: center;
-			gap: 10px;
+			gap: 8px;
 			width: 100%;
 			text-transform: capitalize;
-			padding: 8px 5px;
-			transition: all 0.25 ease;
+			padding: 6px;
+			transition: $transition;
 			font-size: 14px;
 			&::before {
 				font-family: 'FontAwesome';
@@ -78,7 +78,8 @@
 				display: block;
 				color: $input;
 				opacity: 0.4;
-				font-size: 10px;
+				font-size: 12px;
+				margin-top: 1px;
 			}
 			&:hover,
 			&:focus {
@@ -89,9 +90,10 @@
 			}
 			&.selected {
 				color: $text;
+				cursor: default;
 				&::before {
 					color: $text;
-					opacity: 0.75;
+					opacity: 1;
 				}
 			}
 		}

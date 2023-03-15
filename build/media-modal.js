@@ -2848,6 +2848,14 @@ function App(props) {
     container = props.container,
     setFeaturedImage = props.setFeaturedImage,
     insertImage = props.insertImage;
+  var delay = 250;
+  var searchClass = 'searching';
+  var searchDefaults = {
+    active: false,
+    term: '',
+    type: '',
+    results: 0
+  };
 
   // App state.
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(data)),
@@ -2886,11 +2894,7 @@ function App(props) {
     _useState18 = _slicedToArray(_useState17, 2),
     showAPILightbox = _useState18[0],
     setShowAPILightbox = _useState18[1]; // Render API key lightbox.
-  var _useState19 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
-      active: false,
-      term: '',
-      results: 0
-    }),
+  var _useState19 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(searchDefaults),
     _useState20 = _slicedToArray(_useState19, 2),
     search = _useState20[0],
     setSearch = _useState20[1];
@@ -2917,141 +2921,20 @@ function App(props) {
   var photoListing = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var controlNav = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var searchInput = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var filterRef = [];
+  var msnry = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
 
-  // Editor props.
+  // WP editor props.
   var is_block_editor = editor === 'gutenberg' ? true : false;
   var is_media_router = editor === 'media-router' ? true : false;
   var body = document.body;
   var plugin = is_block_editor ? body : container.parentNode.parentNode;
   var wrapper = is_block_editor ? body : plugin.querySelector('.instant-images-wrapper');
 
-  // Random variables.
-  var search_filters = {};
-  var msnry = ''; // eslint-disable-line
-  var delay = 250;
-  var searchClass = 'searching';
-
-  /**
-   * Reset filters.
-   */
-  function resetFilters() {
-    if (filterRef !== null && filterRef !== void 0 && filterRef.length) {
-      filterRef.forEach(function (filter) {
-        if (filter) {
-          filter.reset();
-        }
-      });
-    }
-  }
-
-  /**
-   * Handle the Photo Search.
-   *
-   * @param {Event} event The dispatched submit event.
-   * @since 3.0
-   */
-  function searchHandler(event) {
-    event.preventDefault();
-    var term = searchInput.current.value;
-    resetFilters();
-    if (term.length > 2) {
-      searchInput.current.classList.add(searchClass);
-      search_filters = {};
-      doSearch(term);
-    } else {
-      searchInput.current.focus();
-    }
-  }
-
-  /**
-   * Reset search results, settings and results view.
-   *
-   * @since 3.0
-   */
-  function clearSearch() {
-    searchInput.current.value = '';
-    setSearch({
-      active: false,
-      term: '',
-      results: 0
-    });
-  }
-
-  /**
-   * Perform a photo search.
-   *
-   * @param {string} term Search term.
-   * @since 3.0
-   */
-  function doSearch(_x2) {
-    return _doSearch.apply(this, arguments);
-  }
   /**
    * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
    *
    * @since 3.0
    */
-  function _doSearch() {
-    _doSearch = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(term) {
-      var searchType, searchQuery, searchParams, params, url, response, status, headers, _data, images, total_results;
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            setLoading(true);
-            page = 1; // Reset current page num.
-            searchType = term.substring(0, 3) === 'id:' ? 'id' : 'term'; // Get search query.
-            searchQuery = searchType === 'id' ? {
-              id: term.replace('id:', '').replace(/\s+/, '')
-            } : {
-              term: term
-            }; // Build URL.
-            searchParams = _objectSpread(_objectSpread(_objectSpread({}, {
-              page: page
-            }), searchQuery), searchFilters);
-            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, searchParams);
-            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('search', params); // Create fetch request.
-            _context.next = 9;
-            return fetch(url);
-          case 9:
-            response = _context.sent;
-            status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
-            _context.prev = 12;
-            _context.next = 15;
-            return response.json();
-          case 15:
-            _data = _context.sent;
-            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data);
-            checkTotalResults(images.length);
-            setResults(images);
-
-            // Check returned data.
-            total_results = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__.getSearchTotal)(_data);
-            setSearch({
-              active: true,
-              term: term,
-              results: total_results
-            });
-            _context.next = 28;
-            break;
-          case 23:
-            _context.prev = 23;
-            _context.t0 = _context["catch"](12);
-            // Reset all search parameters.
-            setDone(true);
-            setLoading(false);
-            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(provider, status);
-          case 28:
-            searchInput.current.classList.remove(searchClass);
-          case 29:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee, null, [[12, 23]]);
-    }));
-    return _doSearch.apply(this, arguments);
-  }
   function getPhotos() {
     return _getPhotos.apply(this, arguments);
   }
@@ -3061,16 +2944,16 @@ function App(props) {
    * @since 3.0
    */
   function _getPhotos() {
-    _getPhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var params, url, response, status, headers, _data2, _data2$error, error, images;
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
+    _getPhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var params, url, response, status, headers, _data, _data$error, error, images;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
           case 0:
             if (!loadingMore) {
-              _context2.next = 2;
+              _context.next = 2;
               break;
             }
-            return _context2.abrupt("return", false);
+            return _context.abrupt("return", false);
           case 2:
             setLoading(true); // Set loading state.
             clearSearch(); // Clear search results.
@@ -3079,29 +2962,29 @@ function App(props) {
             // Build URL.
             params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, filters);
             url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('photos', params); // Create fetch request.
-            _context2.next = 9;
+            _context.next = 9;
             return fetch(url);
           case 9:
-            response = _context2.sent;
+            response = _context.sent;
             status = response.status, headers = response.headers;
             (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
 
             // Status OK.
-            _context2.prev = 12;
-            _context2.next = 15;
+            _context.prev = 12;
+            _context.next = 15;
             return response.json();
           case 15:
-            _data2 = _context2.sent;
-            _data2$error = _data2.error, error = _data2$error === void 0 ? null : _data2$error; // Get error reporting.
-            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data2);
+            _data = _context.sent;
+            _data$error = _data.error, error = _data$error === void 0 ? null : _data$error; // Get error reporting.
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data);
             checkTotalResults(images.length);
             setResults(images);
             setAPIError(error);
-            _context2.next = 27;
+            _context.next = 27;
             break;
           case 23:
-            _context2.prev = 23;
-            _context2.t0 = _context2["catch"](12);
+            _context.prev = 23;
+            _context.t0 = _context["catch"](12);
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(provider, status);
             setLoading(false);
           case 27:
@@ -3111,9 +2994,9 @@ function App(props) {
             }, delay);
           case 28:
           case "end":
-            return _context2.stop();
+            return _context.stop();
         }
-      }, _callee2, null, [[12, 23]]);
+      }, _callee, null, [[12, 23]]);
     }));
     return _getPhotos.apply(this, arguments);
   }
@@ -3121,22 +3004,22 @@ function App(props) {
     return _loadMorePhotos.apply(this, arguments);
   }
   /**
-   * Filter the photo listing.
+   * Perform a photo search.
    *
-   * @param {string} filter The current filter key.
-   * @param {string} value  The value to filter.
+   * @param {string} term Search term.
+   * @since 3.0
    */
   function _loadMorePhotos() {
-    _loadMorePhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      var searchQuery, type, activeFilters, loadmoreParams, params, url, response, status, headers, _data3, images;
-      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-        while (1) switch (_context3.prev = _context3.next) {
+    _loadMorePhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var searchQuery, type, activeFilters, loadmoreParams, params, url, response, status, headers, _data2, images;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
           case 0:
             if (!(!mounted || loading || loadingMore)) {
-              _context3.next = 2;
+              _context2.next = 2;
               break;
             }
-            return _context3.abrupt("return");
+            return _context2.abrupt("return");
           case 2:
             setLoadingMore(true);
             page = parseInt(page) + 1;
@@ -3152,37 +3035,131 @@ function App(props) {
             }), searchQuery), activeFilters);
             params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, loadmoreParams);
             url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])(type, params); // Create fetch request.
-            _context3.next = 12;
+            _context2.next = 12;
             return fetch(url);
           case 12:
-            response = _context3.sent;
+            response = _context2.sent;
             status = response.status, headers = response.headers;
             (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
-            _context3.prev = 15;
-            _context3.next = 18;
+            _context2.prev = 15;
+            _context2.next = 18;
             return response.json();
           case 18:
-            _data3 = _context3.sent;
-            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data3);
+            _data2 = _context2.sent;
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data2);
             checkTotalResults(images.length);
             setResults(function (prevState) {
               return [].concat(_toConsumableArray(prevState), _toConsumableArray(images));
             });
-            _context3.next = 28;
+            _context2.next = 28;
             break;
           case 24:
-            _context3.prev = 24;
-            _context3.t0 = _context3["catch"](15);
+            _context2.prev = 24;
+            _context2.t0 = _context2["catch"](15);
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(provider, status);
             setLoadingMore(false);
           case 28:
           case "end":
-            return _context3.stop();
+            return _context2.stop();
         }
-      }, _callee3, null, [[15, 24]]);
+      }, _callee2, null, [[15, 24]]);
     }));
     return _loadMorePhotos.apply(this, arguments);
   }
+  function doSearch(_x2) {
+    return _doSearch.apply(this, arguments);
+  }
+  /**
+   * Handle the Photo Search.
+   *
+   * @param {Event} event The dispatched submit event.
+   * @since 3.0
+   */
+  function _doSearch() {
+    _doSearch = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(term) {
+      var searchType, searchQuery, searchParams, params, url, response, status, headers, _data3, images;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            setLoading(true);
+            page = 1; // Reset current page num.
+            searchType = term.substring(0, 3) === 'id:' ? 'id' : 'term'; // Get search query.
+            searchQuery = searchType === 'id' ? {
+              id: term.replace('id:', '').replace(/\s+/, '')
+            } : {
+              term: term
+            }; // Build URL.
+            searchParams = _objectSpread(_objectSpread(_objectSpread({}, {
+              page: page
+            }), searchQuery), searchFilters);
+            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, searchParams);
+            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('search', params); // Create fetch request.
+            _context3.next = 9;
+            return fetch(url);
+          case 9:
+            response = _context3.sent;
+            status = response.status, headers = response.headers;
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
+            _context3.prev = 12;
+            _context3.next = 15;
+            return response.json();
+          case 15:
+            _data3 = _context3.sent;
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data3);
+            checkTotalResults(images.length);
+            setResults(images);
+            setSearch({
+              active: true,
+              term: term,
+              type: searchType,
+              results: (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__.getSearchTotal)(_data3)
+            });
+            _context3.next = 27;
+            break;
+          case 22:
+            _context3.prev = 22;
+            _context3.t0 = _context3["catch"](12);
+            // Reset all search parameters.
+            setDone(true);
+            setLoading(false);
+            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(provider, status);
+          case 27:
+            searchInput.current.classList.remove(searchClass);
+          case 28:
+          case "end":
+            return _context3.stop();
+        }
+      }, _callee3, null, [[12, 22]]);
+    }));
+    return _doSearch.apply(this, arguments);
+  }
+  function searchHandler(event) {
+    event.preventDefault();
+    var term = searchInput.current.value;
+    if (term.length > 2) {
+      searchInput.current.classList.add(searchClass);
+      doSearch(term);
+    } else {
+      searchInput.current.focus();
+    }
+  }
+
+  /**
+   * Reset search results, settings and results view.
+   *
+   * @since 3.0
+   */
+  function clearSearch() {
+    searchInput.current.value = '';
+    setSearch(searchDefaults);
+  }
+
+  /**
+   * Filter the photo listing.
+   *
+   * @param {string} filter The current filter key.
+   * @param {string} value  The value to filter.
+   */
   function filterPhotos(filter, value) {
     var newFilters = _objectSpread({}, filters);
     if (newFilters[filter] && value === '#' || value === '' || value === 'all') {
@@ -3259,7 +3236,7 @@ function App(props) {
             body.classList.remove('overflow-hidden');
 
             // API Verification.
-            // Note: Bounce user if provider API key is not valid.
+            // Checks for valid API key for provider.
             if (!((_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider].requires_key && !apiTested.includes(provider))) {
               _context4.next = 27;
               break;
@@ -3281,7 +3258,7 @@ function App(props) {
             return _context4.abrupt("return");
           case 19:
             if (status === 200) {
-              // Valid API key - Add provider to tested array.
+              // Valid API key - Add to array of tested providers.
               setAPITested(function (prevState) {
                 return [].concat(_toConsumableArray(prevState), [provider]);
               });
@@ -3312,7 +3289,7 @@ function App(props) {
   function renderLayout() {
     imagesLoaded(photoListing.current, function () {
       if (!is_block_editor) {
-        msnry = new (masonry_layout__WEBPACK_IMPORTED_MODULE_2___default())(photoListing.current, {
+        msnry.current = new (masonry_layout__WEBPACK_IMPORTED_MODULE_2___default())(photoListing.current, {
           itemSelector: '.photo'
         });
         photoListing.current.querySelectorAll('.photo').forEach(function (el) {
@@ -3356,48 +3333,55 @@ function App(props) {
       }
     }
   }
+
+  /* Search callback. */
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (!(search !== null && search !== void 0 && search.active)) {
-      setSearchFilters({}); // Reset search filters.
+      // Reset search filters when search is false.
+      setSearchFilters({});
     }
   }, [search]);
 
-  /* Search filter callback. */
+  /* Search filters callback. */
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!mounted || !(search !== null && search !== void 0 && search.active)) {
-      return;
+    if (mounted && search !== null && search !== void 0 && search.active) {
+      doSearch(search === null || search === void 0 ? void 0 : search.term);
     }
-    doSearch(search === null || search === void 0 ? void 0 : search.term);
   }, [searchFilters]);
 
-  // Filter, Provider callback.
+  // Filters callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!mounted) {
-      return;
+    if (mounted) {
+      getPhotos();
     }
-    getPhotos();
-  }, [filters, activeProvider]);
+  }, [filters]);
+
+  // Provider callback.
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    setFilters({});
+  }, [activeProvider]);
 
   // Scroll in-view callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (!is_block_editor && !is_media_router) {
-      // Exclude infinite scroll in mdeia modal and block editor.
+      // Exclude infinite scroll in media modal and block editor.
       if (mounted && !loading && !done) {
         loadMorePhotos();
       }
     }
-  }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [inView]);
 
   // Results callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     renderLayout();
-  }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [results]);
 
   // Initial page load.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setLoading(false);
     wrapper.classList.add('loaded');
-    document.addEventListener('keydown', escFunction, false); // Add global escape listener.
+    // Add global escape listener.
+    document.addEventListener('keydown', escFunction, false);
     return function () {
       document.removeEventListener('keydown', escFunction, false);
     };
@@ -3477,7 +3461,8 @@ function App(props) {
     setFeaturedImage: setFeaturedImage,
     insertImage: insertImage
   })), /*#__PURE__*/React.createElement(_LoadingBlock__WEBPACK_IMPORTED_MODULE_13__["default"], {
-    loading: loadingMore
+    loading: loadingMore,
+    total: results === null || results === void 0 ? void 0 : results.length
   }), /*#__PURE__*/React.createElement(_NoResults__WEBPACK_IMPORTED_MODULE_14__["default"], {
     total: search === null || search === void 0 ? void 0 : search.results,
     is_search: search === null || search === void 0 ? void 0 : search.active
@@ -3745,6 +3730,7 @@ function Filter(props) {
     ref: menu
   }, (data === null || data === void 0 ? void 0 : (_data$filters = data.filters) === null || _data$filters === void 0 ? void 0 : _data$filters.length) && data.filters.map(function (value, key) {
     return /*#__PURE__*/React.createElement("button", {
+      disabled: selected === value,
       key: key,
       className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('filter-dropdown--item', selected === value ? 'selected' : null),
       onClick: function onClick() {
@@ -3772,16 +3758,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ LoadingBlock)
 /* harmony export */ });
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_0__);
+
+
 /**
  * Render the LoadingBlock component.
  *
  * @param {Object} props The component props.
  * @param {Boolean} props.loading Is the app loading.
+ * @param {Boolean} props.total Total amount of results.
  * @returns {JSX.Element} The LoadingBlock component.
  */
 function LoadingBlock(_ref) {
-  var loading = _ref.loading;
-  if (!loading) {
+  var loading = _ref.loading,
+    _ref$total = _ref.total,
+    total = _ref$total === void 0 ? 0 : _ref$total;
+  if (!loading || total < (_constants_API__WEBPACK_IMPORTED_MODULE_0___default().defaults.per_page)) {
+    // Bail early if not loading or total is less than the default per page.
     return null;
   }
   return /*#__PURE__*/React.createElement("div", {
@@ -3813,7 +3807,7 @@ function NoResults(props) {
     total = _props$total === void 0 ? 0 : _props$total,
     _props$is_search = props.is_search,
     is_search = _props$is_search === void 0 ? false : _props$is_search;
-  if (!is_search || is_search && total > 1) {
+  if (!is_search || is_search && total >= 1) {
     // Bail if not search or search total is greater than 1.
     return null;
   }
@@ -4681,7 +4675,7 @@ function Results(props) {
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(results !== null && results !== void 0 && results.length) && results.map(function (result, index) {
     return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       key: "".concat(provider, "-").concat(result.id, "-").concat(index)
-    }, result && result.type && result.type === 'instant-images-ad' ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    }, (result === null || result === void 0 ? void 0 : result.type) === 'instant-images-ad' ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_2__["default"], {
       result: result
     }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_1__["default"], {
       provider: provider,
@@ -4707,18 +4701,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ SearchHeader)
 /* harmony export */ });
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
-/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_constants_filters__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
+/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
+/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_constants_filters__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -4736,7 +4727,7 @@ function SearchHeader(props) {
     total = _props$total === void 0 ? 0 : _props$total,
     filterSearch = props.filterSearch,
     getPhotos = props.getPhotos;
-  var filters = (_constants_filters__WEBPACK_IMPORTED_MODULE_1___default())[provider].search;
+  var filters = (_constants_filters__WEBPACK_IMPORTED_MODULE_0___default())[provider].search;
   return /*#__PURE__*/React.createElement("header", {
     className: "search-header"
   }, /*#__PURE__*/React.createElement("h2", null, term.replace('id:', 'ID: ')), /*#__PURE__*/React.createElement("div", {
@@ -4746,14 +4737,14 @@ function SearchHeader(props) {
       return getPhotos();
     }
   }, instant_img_localize.clear_search)), filters && Object.entries(filters).length && /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()('control-nav--filters-wrap', total < 1 ? 'inactive' : null)
+    className: "control-nav--filters-wrap"
   }, /*#__PURE__*/React.createElement("div", {
     className: "control-nav--filters"
   }, Object.entries(filters).map(function (_ref, index) {
     var _ref2 = _slicedToArray(_ref, 2),
       key = _ref2[0],
       filter = _ref2[1];
-    return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_1__["default"], {
       key: "".concat(provider, "-search-").concat(key, "-").concat(index),
       filterKey: key,
       provider: provider,
@@ -4996,8 +4987,8 @@ module.exports = {
     filters: {
       order_by: {
         label: 'orderby',
-        "default": 'all',
-        filters: ['all', 'curated']
+        "default": 'curated',
+        filters: ['curated']
       }
     },
     search: {

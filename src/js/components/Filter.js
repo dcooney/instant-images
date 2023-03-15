@@ -137,7 +137,12 @@ export default function Filter(props) {
 			<div className={cn('filter-dropdown--menu', expanded ? 'expanded' : null)} data-key={filterKey} aria-hidden={expanded ? 'false' : 'true'} ref={menu}>
 				{data?.filters?.length &&
 					data.filters.map((value, key) => (
-						<button key={key} className={cn('filter-dropdown--item', selected === value ? 'selected' : null)} onClick={() => click(filterKey, value)}>
+						<button
+							disabled={selected === value}
+							key={key}
+							className={cn('filter-dropdown--item', selected === value ? 'selected' : null)}
+							onClick={() => click(filterKey, value)}
+						>
 							{value.replace(/_/g, ' ')}
 							{value !== 'all' && value !== 'transparent' && isColor ? <span className="_color" style={{ color: convertColor(value) }}></span> : null}
 						</button>

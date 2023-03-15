@@ -70,7 +70,7 @@ function instant_images_download( WP_REST_Request $request ) {
 		$title       = sanitize_text_field( $data['title'] ); // Title.
 		$alt         = sanitize_text_field( $data['alt'] ); // Alt text.
 		$caption     = wp_kses_post( $data['caption'] ); // Caption text.
-		$description = ''; // Description/Post Content.
+		$description = ''; // Post Content.
 		$cfilename   = sanitize_title( $data['custom_filename'] ); // Custom filename.
 		$lang        = sanitize_text_field( $data['lang'] ); // Media language.
 		$parent_id   = $data['parent_id'] ? sanitize_title( $data['parent_id'] ) : 0; // Parent post ID.
@@ -174,9 +174,13 @@ function instant_images_download( WP_REST_Request $request ) {
 			'instant_images_after_upload',
 			[
 				'filename'       => $name,
-				'unsplash_id'    => $id,
+				'id'             => $id,
+				'title'          => $title,
+				'alt'            => $alt,
+				'caption'        => $caption,
 				'attachment_id'  => $image_id,
 				'attachment_url' => wp_get_attachment_url( $image_id ),
+				'provider'       => $provider,
 			]
 		);
 

@@ -15,10 +15,11 @@
  */
 
 /*
-NEW: Added new setting to automatically add image attribution as captions.
-NEW: Adding mime type checking based on current allowed uploads.
-UPDATE: Various code refactoring and build process update.
-FIX: Various security fixes.
+* NEW: Added new setting to automatically add image attribution as captions.
+* NEW: Adding mime type checking based on current allowed uploads.
+* UPDATE: Updated `instant_images_after_upload` hook to pass additional image data.
+* UPDATE: Various code refactoring and build process updates.
+* FIX: Various security fixes.
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
