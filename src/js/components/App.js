@@ -221,6 +221,7 @@ export default function App(props) {
 		}
 		searchInput.current.classList.remove(searchClass);
 	}
+
 	/**
 	 * Handle the Photo Search.
 	 *
@@ -408,23 +409,23 @@ export default function App(props) {
 		}
 	}, [search]);
 
-	/* Search filters callback. */
+	/* Search filters change callback. */
 	useEffect(() => {
 		if (mounted && search?.active) {
 			doSearch(search?.term);
 		}
 	}, [searchFilters]);
 
-	// Filters callback.
+	// Filters change callback.
 	useEffect(() => {
 		if (mounted) {
 			getPhotos();
 		}
 	}, [filters]);
 
-	// Provider callback.
+	// Provider change callback.
 	useEffect(() => {
-		setFilters({});
+		setFilters({}); // Trigger filter change.
 	}, [activeProvider]);
 
 	// Scroll in-view callback.

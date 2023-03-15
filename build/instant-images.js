@@ -3342,23 +3342,23 @@ function App(props) {
     }
   }, [search]);
 
-  /* Search filters callback. */
+  /* Search filters change callback. */
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (mounted && search !== null && search !== void 0 && search.active) {
       doSearch(search === null || search === void 0 ? void 0 : search.term);
     }
   }, [searchFilters]);
 
-  // Filters callback.
+  // Filters change callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (mounted) {
       getPhotos();
     }
   }, [filters]);
 
-  // Provider callback.
+  // Provider change callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    setFilters({});
+    setFilters({}); // Trigger filter change.
   }, [activeProvider]);
 
   // Scroll in-view callback.
