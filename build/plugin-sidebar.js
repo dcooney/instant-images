@@ -2487,12 +2487,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var focus_trap_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! focus-trap-react */ "./node_modules/focus-trap-react/dist/focus-trap-react.js");
-/* harmony import */ var focus_trap_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(focus_trap_react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
-/* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
-/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
-/* harmony import */ var _functions_updatePluginSetting__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/updatePluginSetting */ "./src/js/functions/updatePluginSetting.js");
+/* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
+/* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
+/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
+/* harmony import */ var _functions_updatePluginSetting__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../functions/updatePluginSetting */ "./src/js/functions/updatePluginSetting.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2503,7 +2501,6 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -2524,11 +2521,11 @@ function APILightbox(props) {
   if (!provider) {
     return null;
   }
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('invalid'),
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)("invalid"),
     _useState2 = _slicedToArray(_useState, 2),
     apiStatus = _useState2[0],
     setAPIStatus = _useState2[1];
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState4 = _slicedToArray(_useState3, 2),
     response = _useState4[0],
     setResponse = _useState4[1];
@@ -2536,7 +2533,7 @@ function APILightbox(props) {
   var inputRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var submitRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var api_key = instant_img_localize["".concat(provider, "_app_id")];
-  var title = apiStatus === 'invalid' ? instant_img_localize.api_key_invalid : '';
+  var title = apiStatus === "invalid" ? instant_img_localize.api_key_invalid : "";
 
   /**
    * Handler for the form submission.
@@ -2557,7 +2554,7 @@ function APILightbox(props) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             e.preventDefault();
-            setAPIStatus('loading');
+            setAPIStatus("loading");
             key = inputRef === null || inputRef === void 0 ? void 0 : (_inputRef$current = inputRef.current) === null || _inputRef$current === void 0 ? void 0 : _inputRef$current.value; // Get API key value.
             instant_img_localize["".concat(provider, "_app_id")] = key; // Set API key to localized variable.
 
@@ -2568,27 +2565,27 @@ function APILightbox(props) {
             }
 
             // Update plugin settings via REST API.
-            (0,_functions_updatePluginSetting__WEBPACK_IMPORTED_MODULE_6__["default"])("".concat(provider, "_api"), key);
+            (0,_functions_updatePluginSetting__WEBPACK_IMPORTED_MODULE_5__["default"])("".concat(provider, "_api"), key);
             _context.prev = 7;
             _context.next = 10;
-            return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_3__.buildTestURL)(provider));
+            return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_2__.buildTestURL)(provider));
           case 10:
             _response = _context.sent;
             // Handle response.
             ok = _response.ok, status = _response.status, headers = _response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.checkRateLimit)(headers);
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.checkRateLimit)(headers);
 
             // Handle response actions.
             if (ok) {
               // Success.
-              setAPIStatus('valid');
+              setAPIStatus("valid");
               setResponse(instant_img_localize.api_success_msg);
               setTimeout(function () {
                 closeAPILightbox(provider);
               }, 1000);
             } else {
-              setAPIStatus('invalid'); // Error/Invalid.
-              (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_4__["default"])(provider, status); // Render console warning.
+              setAPIStatus("invalid"); // Error/Invalid.
+              (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_3__["default"])(provider, status); // Render console warning.
 
               if (status === 400 || status === 401) {
                 setResponse(instant_img_localize.api_invalid_msg); // Unsplash/Pixabay incorrect API key.
@@ -2603,8 +2600,8 @@ function APILightbox(props) {
           case 16:
             _context.prev = 16;
             _context.t0 = _context["catch"](7);
-            setAPIStatus('invalid'); // Error/Invalid.
-            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_4__["default"])(provider, 500); // Render console warning.
+            setAPIStatus("invalid"); // Error/Invalid.
+            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_3__["default"])(provider, 500); // Render console warning.
             setResponse(instant_img_localize.api_invalid_500_msg);
           case 21:
           case "end":
@@ -2616,7 +2613,7 @@ function APILightbox(props) {
   }
   function closeLightbox() {
     if (lightbox !== null && lightbox !== void 0 && lightbox.current) {
-      lightbox.current.classList.remove('active');
+      lightbox.current.classList.remove("active");
       setTimeout(function () {
         closeAPILightbox();
       }, 150);
@@ -2625,6 +2622,8 @@ function APILightbox(props) {
 
   /**
    * Close the lightbox with a background click.
+   *
+   * @param {Event} e The form event.
    */
   function bkgClick(e) {
     var target = e.target;
@@ -2641,34 +2640,25 @@ function APILightbox(props) {
    */
   function escFunction(e) {
     var key = e.key;
-    if (key === 'Escape') {
+    if (key === "Escape") {
       closeLightbox();
     }
-  }
-
-  /**
-   * Open the API window.
-   *
-   * @param {string} url The destination URL.
-   */
-  function gotoURL(url) {
-    window.open(url, '_blank');
   }
 
   /**
    * Reset the key to use Instant Images default.
    */
   function useDefaultKey() {
-    inputRef.current.value = '';
+    inputRef.current.value = "";
     setTimeout(function () {
       submitRef.current.click();
     }, 25);
   }
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    document.addEventListener('keydown', escFunction, false);
-    lightbox.current.classList.add('active');
+    document.addEventListener("keydown", escFunction, false);
+    lightbox.current.classList.add("active");
     return function () {
-      document.removeEventListener('keydown', escFunction, false);
+      document.removeEventListener("keydown", escFunction, false);
     };
   }, []);
   return /*#__PURE__*/React.createElement("div", {
@@ -2693,7 +2683,7 @@ function APILightbox(props) {
     className: "action-controls"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
-      return gotoURL(instant_img_localize["".concat(provider, "_api_url")]);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.gotoURL)(instant_img_localize["".concat(provider, "_api_url")]);
     }
   }, instant_img_localize.get_api_key), /*#__PURE__*/React.createElement("span", null, "|"), /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
@@ -2711,13 +2701,13 @@ function APILightbox(props) {
   }, /*#__PURE__*/React.createElement("span", {
     className: apiStatus,
     title: title && title
-  }, apiStatus === 'invalid' && /*#__PURE__*/React.createElement("i", {
+  }, apiStatus === "invalid" && /*#__PURE__*/React.createElement("i", {
     className: "fa fa-exclamation-triangle",
     "aria-hidden": "true"
-  }), apiStatus === 'valid' && /*#__PURE__*/React.createElement("i", {
+  }), apiStatus === "valid" && /*#__PURE__*/React.createElement("i", {
     className: "fa fa-check-circle",
     "aria-hidden": "true"
-  }), apiStatus === 'loading' && /*#__PURE__*/React.createElement("i", {
+  }), apiStatus === "loading" && /*#__PURE__*/React.createElement("i", {
     className: "fa fa-spinner fa-spin",
     "aria-hidden": "true"
   })), /*#__PURE__*/React.createElement("input", {
@@ -2727,7 +2717,7 @@ function APILightbox(props) {
     placeholder: "Enter API Key",
     defaultValue: api_key
   })), response && /*#__PURE__*/React.createElement("p", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('api-lightbox--response', apiStatus)
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("api-lightbox--response", apiStatus)
   }, response), /*#__PURE__*/React.createElement("button", {
     type: "submit",
     ref: submitRef
@@ -2736,16 +2726,271 @@ function APILightbox(props) {
 
 /***/ }),
 
-/***/ "./src/js/components/App.js":
-/*!**********************************!*\
-  !*** ./src/js/components/App.js ***!
-  \**********************************/
+/***/ "./src/js/components/ErrorLightbox.js":
+/*!********************************************!*\
+  !*** ./src/js/components/ErrorLightbox.js ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ App)
+/* harmony export */   "default": () => (/* binding */ ErrorLightbox)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../functions/getErrorMessage */ "./src/js/functions/getErrorMessage.js");
+/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
+
+
+
+
+
+/**
+ * Render the ErrorLightbox component.
+ * Note: Component is display on initial plugin load if the default provider has an invalid API key.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The ErrorLightbox component.
+ */
+function ErrorLightbox(props) {
+  var error = props.error,
+    provider = props.provider;
+  var lightbox = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var status = error !== null && error !== void 0 && error.status ? error.status : null;
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, error && status && /*#__PURE__*/React.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("api-lightbox", "error-lightbox", "active"),
+    ref: lightbox,
+    tabIndex: "-1"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("api-lightbox--details", "error-lightbox")
+  }, /*#__PURE__*/React.createElement("h3", {
+    "data-provider": provider
+  }, provider), /*#__PURE__*/React.createElement("p", {
+    className: "callout-warning"
+  }, status, " ", instant_img_localize.error), /*#__PURE__*/React.createElement("p", null, (0,_functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_2__["default"])(status)), /*#__PURE__*/React.createElement("p", {
+    className: "more-info"
+  }, instant_img_localize.api_default_provider), /*#__PURE__*/React.createElement("p", {
+    className: "action-controls"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.gotoURL)(instant_img_localize["".concat(provider, "_api_url")]);
+    }
+  }, instant_img_localize.get_api_key))))));
+}
+
+/***/ }),
+
+/***/ "./src/js/components/Filter.js":
+/*!*************************************!*\
+  !*** ./src/js/components/Filter.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Filter)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var a11yarrows__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! a11yarrows */ "./node_modules/a11yarrows/dist/a11yarrows.min.js");
+/* harmony import */ var a11yarrows__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(a11yarrows__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+/**
+ * Render the Filter component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The Filter component.
+ */
+function Filter(props) {
+  var _data$filters;
+  var data = props.data,
+    filterKey = props.filterKey,
+    handler = props["function"],
+    provider = props.provider;
+  var defaultValue = data === null || data === void 0 ? void 0 : data["default"];
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    expanded = _useState2[0],
+    setExpanded = _useState2[1];
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(defaultValue),
+    _useState4 = _slicedToArray(_useState3, 2),
+    selected = _useState4[0],
+    setSelected = _useState4[1];
+  var dropdown = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var button = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var menu = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var id = "".concat(provider, "-").concat(filterKey);
+  var isColor = filterKey === "colors" || filterKey === "color";
+
+  /**
+   * Toggle menu open/closed.
+   *
+   * @param {Event} event The click event.
+   */
+  function toggleMenu(event) {
+    event.preventDefault();
+
+    // If disabled, don't open menu.
+    var target = event.currentTarget;
+    if (target.disabled) {
+      return false;
+    }
+    if (expanded) {
+      setExpanded(false);
+      document.removeEventListener("click", closeMenuOutside);
+    } else {
+      setExpanded(true);
+      document.addEventListener("click", closeMenuOutside);
+    }
+  }
+
+  /**
+   * Close menu when clicking outside.
+   *
+   * @param {Event} event The click event.
+   */
+  function closeMenuOutside(event) {
+    var _menu$current, _button$current;
+    if (!(menu !== null && menu !== void 0 && (_menu$current = menu.current) !== null && _menu$current !== void 0 && _menu$current.contains(event.target)) && !(button !== null && button !== void 0 && (_button$current = button.current) !== null && _button$current !== void 0 && _button$current.contains(event.target))) {
+      setExpanded(false);
+      document.removeEventListener("click", closeMenuOutside);
+    }
+  }
+
+  /**
+   * Checks for focus outside of component.
+   *
+   * @param {Event} event The click event.
+   */
+  function focusOutside(event) {
+    if (!(dropdown !== null && dropdown !== void 0 && dropdown.current.contains(event.target))) {
+      closeMenuOutside(event);
+    }
+  }
+
+  /**
+   * Detect esc key press.
+   *
+   * @param {Event} event The click event.
+   */
+  function escClick(event) {
+    if (event.key === "Escape") {
+      setExpanded(false);
+    }
+  }
+
+  /**
+   * Click handler for the filter buttons.
+   *
+   * @param {string} filter The current filter key.
+   * @param {string} value  The value to filter.
+   */
+  function click(filter, value) {
+    var newValue = selected !== value ? value : defaultValue;
+    setSelected(newValue);
+    handler(filter, newValue);
+    setTimeout(function () {
+      var _button$current2;
+      button === null || button === void 0 ? void 0 : (_button$current2 = button.current) === null || _button$current2 === void 0 ? void 0 : _button$current2.click();
+    }, 100);
+  }
+
+  /**
+   * Convert a color to a CSS value.
+   *
+   * @see https://www.w3schools.com/colors/colors_names.asp
+   *
+   * @param {string} color The current color.
+   * @return {string}      The color.
+   */
+  function convertColor(color) {
+    if (color === "lilac") {
+      color = "DarkViolet";
+    }
+    if (color === "grayscale" || color === "black_and_white") {
+      color = "LightGray";
+    }
+    return color;
+  }
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    // Initiate arrow menus.
+    a11yarrows__WEBPACK_IMPORTED_MODULE_1__.init(dropdown === null || dropdown === void 0 ? void 0 : dropdown.current, {
+      selector: "button"
+    });
+
+    // Check for focus outside.
+    document.addEventListener("keyup", focusOutside);
+    document.addEventListener("keydown", escClick);
+    return function () {
+      document.removeEventListener("keyup", focusOutside);
+      document.removeEventListener("keydown", escClick);
+    };
+  }, []);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "filter-dropdown",
+    id: id,
+    ref: dropdown
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: toggleMenu,
+    className: "filter-dropdown--button",
+    "aria-expanded": expanded ? "true" : "false",
+    ref: button
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "filter-dropdown--button-label"
+  }, instant_img_localize.filters[data === null || data === void 0 ? void 0 : data.label]), /*#__PURE__*/React.createElement("span", {
+    className: "filter-dropdown--button-selected"
+  }, selected.replace(/_/g, " "), /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-caret-down",
+    "aria-hidden": "true"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()("filter-dropdown--menu", expanded ? "expanded" : null),
+    "data-key": filterKey,
+    "aria-hidden": expanded ? "false" : "true",
+    ref: menu
+  }, (data === null || data === void 0 ? void 0 : (_data$filters = data.filters) === null || _data$filters === void 0 ? void 0 : _data$filters.length) && data.filters.map(function (value, key) {
+    return /*#__PURE__*/React.createElement("button", {
+      disabled: selected === value,
+      key: key,
+      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()("filter-dropdown--item", selected === value ? "selected" : null),
+      onClick: function onClick() {
+        return click(filterKey, value);
+      }
+    }, value.replace(/_/g, " "), value !== "all" && value !== "transparent" && isColor ? /*#__PURE__*/React.createElement("span", {
+      className: "_color",
+      style: {
+        color: convertColor(value)
+      }
+    }) : null);
+  })));
+}
+
+/***/ }),
+
+/***/ "./src/js/components/InstantImages.js":
+/*!********************************************!*\
+  !*** ./src/js/components/InstantImages.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ InstantImages)
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
@@ -2819,41 +3064,25 @@ var imagesLoaded = __webpack_require__(/*! imagesloaded */ "./node_modules/image
 var page = 1;
 
 /**
- * Fix bug with double searching after No Results. The issue is the inview flag and loadmorephotos is being fired. [DONE]
- * Fix issue with double loading on initial plugin render. Issue is the loadmore is triggering after the first renderlayout(); [DONE]
- * Infintie Scroll stops working after a search and after 3 times in gutenberg and media modal. [DONE]
- * Issue with API error screen. [DONE]
- * 	- Can't close modal if switch providers [DONE]
- * Search filters not being applied when adding multiple.
- * Load more not working with search. [DONE]
- * How to trigger a search and save filter values. [DONE]
- * Reset search filter values not working.
- * ^^ Do I need to switch to views for list/search?
- *
- */
-
-/**
- * Render the InstantImages component.
+ * Render the main InstantImages application component.
  *
  * @param {Object} props The component props.
  * @return {JSX.Element} The InstantImages component.
  */
-function App(props) {
+function InstantImages(props) {
   var _Object$entries;
   var _props$editor = props.editor,
-    editor = _props$editor === void 0 ? 'classic' : _props$editor,
+    editor = _props$editor === void 0 ? "classic" : _props$editor,
     data = props.data,
     api_error = props.api_error,
     provider = props.provider,
-    container = props.container,
-    setFeaturedImage = props.setFeaturedImage,
-    insertImage = props.insertImage;
+    container = props.container; // eslint-disable-line prefer-const
   var delay = 250;
-  var searchClass = 'searching';
+  var searchClass = "searching";
   var searchDefaults = {
     active: false,
-    term: '',
-    type: '',
+    term: "",
+    type: "",
     results: 0
   };
 
@@ -2913,7 +3142,7 @@ function App(props) {
 
   // Refs.
   var _useInView = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_21__.useInView)({
-      rootMargin: '0px 0px'
+      rootMargin: "0px 0px"
     }),
     _useInView2 = _slicedToArray(_useInView, 2),
     loadMoreRef = _useInView2[0],
@@ -2924,11 +3153,11 @@ function App(props) {
   var msnry = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
 
   // WP editor props.
-  var is_block_editor = editor === 'gutenberg' ? true : false;
-  var is_media_router = editor === 'media-router' ? true : false;
+  var blockEditor = editor === "gutenberg" ? true : false;
+  var mediaRouter = editor === "media-router" ? true : false;
   var body = document.body;
-  var plugin = is_block_editor ? body : container.parentNode.parentNode;
-  var wrapper = is_block_editor ? body : plugin.querySelector('.instant-images-wrapper');
+  var plugin = blockEditor ? body : container.parentNode.parentNode;
+  var wrapper = blockEditor ? body : plugin.querySelector(".instant-images-wrapper");
 
   /**
    * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
@@ -2945,7 +3174,7 @@ function App(props) {
    */
   function _getPhotos() {
     _getPhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var params, url, response, status, headers, _data, _data$error, error, images;
+      var params, url, response, status, headers, json, _json$error, error, images;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -2961,7 +3190,7 @@ function App(props) {
 
             // Build URL.
             params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, filters);
-            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('photos', params); // Create fetch request.
+            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])("photos", params); // Create fetch request.
             _context.next = 9;
             return fetch(url);
           case 9:
@@ -2974,9 +3203,9 @@ function App(props) {
             _context.next = 15;
             return response.json();
           case 15:
-            _data = _context.sent;
-            _data$error = _data.error, error = _data$error === void 0 ? null : _data$error; // Get error reporting.
-            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data);
+            json = _context.sent;
+            _json$error = json.error, error = _json$error === void 0 ? null : _json$error; // Get error reporting.
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(json);
             checkTotalResults(images.length);
             setResults(images);
             setAPIError(error);
@@ -3011,7 +3240,7 @@ function App(props) {
    */
   function _loadMorePhotos() {
     _loadMorePhotos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var searchQuery, type, activeFilters, loadmoreParams, params, url, response, status, headers, _data2, images;
+      var searchQuery, type, activeFilters, loadmoreParams, params, url, response, status, headers, json, images;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
@@ -3028,7 +3257,7 @@ function App(props) {
             searchQuery = search !== null && search !== void 0 && search.active && search !== null && search !== void 0 && search.term ? {
               term: search.term
             } : {}; // Build URL.
-            type = search !== null && search !== void 0 && search.active ? 'search' : 'photos';
+            type = search !== null && search !== void 0 && search.active ? "search" : "photos";
             activeFilters = search !== null && search !== void 0 && search.active ? searchFilters : filters;
             loadmoreParams = _objectSpread(_objectSpread(_objectSpread({}, {
               page: page
@@ -3045,8 +3274,8 @@ function App(props) {
             _context2.next = 18;
             return response.json();
           case 18:
-            _data2 = _context2.sent;
-            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data2);
+            json = _context2.sent;
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(json);
             checkTotalResults(images.length);
             setResults(function (prevState) {
               return [].concat(_toConsumableArray(prevState), _toConsumableArray(images));
@@ -3077,15 +3306,15 @@ function App(props) {
    */
   function _doSearch() {
     _doSearch = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(term) {
-      var searchType, searchQuery, searchParams, params, url, response, status, headers, _data3, images;
+      var searchType, searchQuery, searchParams, params, url, response, status, headers, json, images;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
             setLoading(true);
             page = 1; // Reset current page num.
-            searchType = term.substring(0, 3) === 'id:' ? 'id' : 'term'; // Get search query.
-            searchQuery = searchType === 'id' ? {
-              id: term.replace('id:', '').replace(/\s+/, '')
+            searchType = term.substring(0, 3) === "id:" ? "id" : "term"; // Get search query.
+            searchQuery = searchType === "id" ? {
+              id: term.replace("id:", "").replace(/\s+/, "")
             } : {
               term: term
             }; // Build URL.
@@ -3093,7 +3322,7 @@ function App(props) {
               page: page
             }), searchQuery), searchFilters);
             params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, searchParams);
-            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])('search', params); // Create fetch request.
+            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])("search", params); // Create fetch request.
             _context3.next = 9;
             return fetch(url);
           case 9:
@@ -3104,15 +3333,15 @@ function App(props) {
             _context3.next = 15;
             return response.json();
           case 15:
-            _data3 = _context3.sent;
-            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(_data3);
+            json = _context3.sent;
+            images = (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(json);
             checkTotalResults(images.length);
             setResults(images);
             setSearch({
               active: true,
               term: term,
               type: searchType,
-              results: (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__.getSearchTotal)(_data3)
+              results: (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__.getSearchTotal)(json)
             });
             _context3.next = 27;
             break;
@@ -3150,7 +3379,7 @@ function App(props) {
    * @since 3.0
    */
   function clearSearch() {
-    searchInput.current.value = '';
+    searchInput.current.value = "";
     setSearch(searchDefaults);
   }
 
@@ -3162,7 +3391,7 @@ function App(props) {
    */
   function filterPhotos(filter, value) {
     var newFilters = _objectSpread({}, filters);
-    if (newFilters[filter] && value === '#' || value === '' || value === 'all') {
+    if (newFilters[filter] && value === "#" || value === "" || value === "all") {
       delete newFilters[filter];
     } else {
       newFilters[filter] = value;
@@ -3178,7 +3407,7 @@ function App(props) {
    */
   function filterSearch(filter, value) {
     var newSearchFilters = _objectSpread({}, searchFilters);
-    if (newSearchFilters[filter] && value === '#' || value === '' || value === 'all') {
+    if (newSearchFilters[filter] && value === "#" || value === "" || value === "all") {
       delete newSearchFilters[filter];
     } else {
       newSearchFilters[filter] = value;
@@ -3189,17 +3418,17 @@ function App(props) {
   /**
    * Close the API Lightbox.
    *
-   * @param {string} provider The provider to close the lightbox for.
+   * @param {string} target The target provider to close the lightbox for.
    * @since 4.5
    */
   function closeAPILightbox() {
-    var provider = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    if (provider) {
-      setActiveProvider(provider);
+    var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    if (target) {
+      setActiveProvider(target);
     }
     setShowAPILightbox(false);
     setLoading(false);
-    body.classList.remove('overflow-hidden');
+    body.classList.remove("overflow-hidden");
   }
 
   /**
@@ -3218,13 +3447,13 @@ function App(props) {
    */
   function _switchProvider() {
     _switchProvider = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
-      var target, provider, response, status, headers;
+      var target, newProvider, response, status, headers;
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
         while (1) switch (_context4.prev = _context4.next) {
           case 0:
             target = e.currentTarget;
-            provider = target.dataset.provider;
-            if (!target.classList.contains('active')) {
+            newProvider = target.dataset.provider;
+            if (!target.classList.contains("active")) {
               _context4.next = 4;
               break;
             }
@@ -3233,17 +3462,17 @@ function App(props) {
             setLoading(true);
             setAPIError(false);
             setShowAPILightbox(false);
-            body.classList.remove('overflow-hidden');
+            body.classList.remove("overflow-hidden");
 
             // API Verification.
             // Checks for valid API key for provider.
-            if (!((_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[provider].requires_key && !apiTested.includes(provider))) {
+            if (!((_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[newProvider].requires_key && !apiTested.includes(newProvider))) {
               _context4.next = 27;
               break;
             }
             _context4.prev = 9;
             _context4.next = 12;
-            return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__.buildTestURL)(provider));
+            return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__.buildTestURL)(newProvider));
           case 12:
             response = _context4.sent;
             status = response.status, headers = response.headers;
@@ -3253,14 +3482,14 @@ function App(props) {
               break;
             }
             // Catch API errors and 401s.
-            setShowAPILightbox(provider); // Show API Lightbox.
-            body.classList.add('overflow-hidden');
+            setShowAPILightbox(newProvider); // Show API Lightbox.
+            body.classList.add("overflow-hidden");
             return _context4.abrupt("return");
           case 19:
             if (status === 200) {
               // Valid API key - Add to array of tested providers.
               setAPITested(function (prevState) {
-                return [].concat(_toConsumableArray(prevState), [provider]);
+                return [].concat(_toConsumableArray(prevState), [newProvider]);
               });
             }
             _context4.next = 27;
@@ -3269,15 +3498,15 @@ function App(props) {
             _context4.prev = 22;
             _context4.t0 = _context4["catch"](9);
             // Catch all other errors.
-            setShowAPILightbox(provider); // Show API Lightbox.
-            body.classList.add('overflow-hidden');
+            setShowAPILightbox(newProvider); // Show API Lightbox.
+            body.classList.add("overflow-hidden");
             return _context4.abrupt("return");
           case 27:
             // Update filter options.
-            setFilterOptions((_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[provider].filters);
+            setFilterOptions((_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[newProvider].filters);
 
             // Switch the provider.
-            setActiveProvider(provider);
+            setActiveProvider(newProvider);
           case 29:
           case "end":
             return _context4.stop();
@@ -3288,12 +3517,12 @@ function App(props) {
   }
   function renderLayout() {
     imagesLoaded(photoListing.current, function () {
-      if (!is_block_editor) {
+      if (!blockEditor) {
         msnry.current = new (masonry_layout__WEBPACK_IMPORTED_MODULE_2___default())(photoListing.current, {
-          itemSelector: '.photo'
+          itemSelector: ".photo"
         });
-        photoListing.current.querySelectorAll('.photo').forEach(function (el) {
-          el.classList.add('in-view');
+        photoListing.current.querySelectorAll(".photo").forEach(function (el) {
+          el.classList.add("in-view");
         });
       }
       setTimeout(function () {
@@ -3324,11 +3553,11 @@ function App(props) {
    */
   function escFunction(e) {
     var key = e.key;
-    if (key === 'Escape') {
-      var editing = photoListing.current.querySelectorAll('.edit-screen.editing');
+    if (key === "Escape") {
+      var editing = photoListing.current.querySelectorAll(".edit-screen.editing");
       if (editing) {
         _toConsumableArray(editing).forEach(function (element) {
-          element && element.classList.remove('editing');
+          element === null || element === void 0 ? void 0 : element.classList.remove("editing");
         });
       }
     }
@@ -3363,7 +3592,7 @@ function App(props) {
 
   // Scroll in-view callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!is_block_editor && !is_media_router) {
+    if (!blockEditor && !mediaRouter) {
       // Exclude infinite scroll in media modal and block editor.
       if (mounted && !loading && !done) {
         loadMorePhotos();
@@ -3379,11 +3608,11 @@ function App(props) {
   // Initial page load.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setLoading(false);
-    wrapper.classList.add('loaded');
+    wrapper.classList.add("loaded");
     // Add global escape listener.
-    document.addEventListener('keydown', escFunction, false);
+    document.addEventListener("keydown", escFunction, false);
     return function () {
-      document.removeEventListener('keydown', escFunction, false);
+      document.removeEventListener("keydown", escFunction, false);
     };
   }, []);
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_15__["default"], {
@@ -3397,7 +3626,7 @@ function App(props) {
     className: "control-nav",
     ref: controlNav
   }, /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--filters-wrap', apiError || search !== null && search !== void 0 && search.active ? 'inactive' : null)
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("control-nav--filters-wrap", apiError || search !== null && search !== void 0 && search.active ? "inactive" : null)
   }, filterOptions && (_Object$entries = Object.entries(filterOptions)) !== null && _Object$entries !== void 0 && _Object$entries.length ? /*#__PURE__*/React.createElement("div", {
     className: "control-nav--filters"
   }, Object.entries(filterOptions).map(function (_ref, index) {
@@ -3412,7 +3641,7 @@ function App(props) {
       "function": filterPhotos
     });
   })) : null), /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('control-nav--search', 'search-field', apiError ? 'inactive' : null),
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("control-nav--search", "search-field", apiError ? "inactive" : null),
     id: "search-bar"
   }, /*#__PURE__*/React.createElement("form", {
     onSubmit: function onSubmit(e) {
@@ -3443,7 +3672,7 @@ function App(props) {
     title: "".concat(search === null || search === void 0 ? void 0 : search.results, " ").concat(instant_img_localize.search_results, " ").concat(search === null || search === void 0 ? void 0 : search.term)
   })))), /*#__PURE__*/React.createElement("div", {
     id: "photo-listing",
-    className: loading ? 'loading' : null
+    className: loading ? "loading" : null
   }, !!(search !== null && search !== void 0 && search.active) && /*#__PURE__*/React.createElement(_SearchHeader__WEBPACK_IMPORTED_MODULE_18__["default"], {
     provider: activeProvider,
     term: search === null || search === void 0 ? void 0 : search.term,
@@ -3456,10 +3685,8 @@ function App(props) {
   }, /*#__PURE__*/React.createElement(_Results__WEBPACK_IMPORTED_MODULE_17__["default"], {
     provider: activeProvider,
     results: results,
-    mediaRouter: is_media_router,
-    blockEditor: is_block_editor,
-    setFeaturedImage: setFeaturedImage,
-    insertImage: insertImage
+    mediaRouter: mediaRouter,
+    blockEditor: blockEditor
   })), /*#__PURE__*/React.createElement(_LoadingBlock__WEBPACK_IMPORTED_MODULE_13__["default"], {
     loading: loadingMore,
     total: results === null || results === void 0 ? void 0 : results.length
@@ -3486,267 +3713,6 @@ function App(props) {
 
 /***/ }),
 
-/***/ "./src/js/components/ErrorLightbox.js":
-/*!********************************************!*\
-  !*** ./src/js/components/ErrorLightbox.js ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ErrorLightbox)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../functions/getErrorMessage */ "./src/js/functions/getErrorMessage.js");
-
-
-
-
-/**
- * Render the ErrorLightbox component.
- * Note: Component is display on initial plugin load if the default provider has an invalid API key.
- *
- * @param {Object} props The component props.
- * @return {JSX.Element} The ErrorLightbox component.
- */
-function ErrorLightbox(props) {
-  var error = props.error,
-    provider = props.provider;
-  var lightbox = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var status = error !== null && error !== void 0 && error.status ? error.status : null;
-
-  /**
-   * Open the API window.
-   *
-   * @param {string} url The destination URL.
-   */
-  function gotoURL(url) {
-    window.open(url, '_blank');
-  }
-  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, error && status && /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('api-lightbox', 'error-lightbox', 'active'),
-    ref: lightbox,
-    tabIndex: "-1"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('api-lightbox--details', 'error-lightbox')
-  }, /*#__PURE__*/React.createElement("h3", {
-    "data-provider": provider
-  }, provider), /*#__PURE__*/React.createElement("p", {
-    className: "callout-warning"
-  }, status, " ", instant_img_localize.error), /*#__PURE__*/React.createElement("p", null, (0,_functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_2__["default"])(status)), /*#__PURE__*/React.createElement("p", {
-    className: "more-info"
-  }, instant_img_localize.api_default_provider), /*#__PURE__*/React.createElement("p", {
-    className: "action-controls"
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return gotoURL(instant_img_localize["".concat(provider, "_api_url")]);
-    }
-  }, instant_img_localize.get_api_key))))));
-}
-
-/***/ }),
-
-/***/ "./src/js/components/Filter.js":
-/*!*************************************!*\
-  !*** ./src/js/components/Filter.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Filter)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var a11yarrows__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! a11yarrows */ "./node_modules/a11yarrows/dist/a11yarrows.min.js");
-/* harmony import */ var a11yarrows__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(a11yarrows__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
-
-/**
- * Render the Filter component.
- *
- * @param {Object} props The component props.
- * @return {JSX.Element} The Filter component.
- */
-function Filter(props) {
-  var _data$filters;
-  var data = props.data,
-    filterKey = props.filterKey,
-    handler = props["function"],
-    provider = props.provider;
-  var defaultValue = data === null || data === void 0 ? void 0 : data["default"];
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    expanded = _useState2[0],
-    setExpanded = _useState2[1];
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(defaultValue),
-    _useState4 = _slicedToArray(_useState3, 2),
-    selected = _useState4[0],
-    setSelected = _useState4[1];
-  var dropdown = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var button = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var menu = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var id = "".concat(provider, "-").concat(filterKey);
-  var isColor = filterKey === 'colors' || filterKey === 'color';
-
-  /**
-   * Toggle menu open/closed.
-   *
-   * @param {Event} event The click event.
-   */
-  function toggleMenu(event) {
-    event.preventDefault();
-
-    // If disabled, don't open menu.
-    var target = event.currentTarget;
-    if (target.disabled) {
-      return false;
-    }
-    if (expanded) {
-      setExpanded(false);
-      document.removeEventListener('click', closeMenuOutside);
-    } else {
-      setExpanded(true);
-      document.addEventListener('click', closeMenuOutside);
-    }
-  }
-
-  /**
-   * Close menu when clicking outside.
-   *
-   * @param {Event} event The click event.
-   */
-  function closeMenuOutside(event) {
-    var _menu$current, _button$current;
-    if (!(menu !== null && menu !== void 0 && (_menu$current = menu.current) !== null && _menu$current !== void 0 && _menu$current.contains(event.target)) && !(button !== null && button !== void 0 && (_button$current = button.current) !== null && _button$current !== void 0 && _button$current.contains(event.target))) {
-      setExpanded(false);
-      document.removeEventListener('click', closeMenuOutside);
-    }
-  }
-
-  /**
-   * Checks for focus outside of component.
-   *
-   * @param {Event} event The click event.
-   */
-  function focusOutside(event) {
-    if (!(dropdown !== null && dropdown !== void 0 && dropdown.current.contains(event.target))) {
-      closeMenuOutside(event);
-    }
-  }
-
-  /**
-   * Detect esc key press.
-   *
-   * @param {Event} event The click event.
-   */
-  function escClick(event) {
-    if (event.key === 'Escape') {
-      setExpanded(false);
-    }
-  }
-
-  /**
-   * Click handler for the filter buttons.
-   *
-   * @param {string} filter The current filter key.
-   * @param {string} value  The value to filter.
-   */
-  function click(filter, value) {
-    var newValue = selected !== value ? value : defaultValue;
-    setSelected(newValue);
-    handler(filter, newValue);
-    setTimeout(function () {
-      var _button$current2;
-      button === null || button === void 0 ? void 0 : (_button$current2 = button.current) === null || _button$current2 === void 0 ? void 0 : _button$current2.click();
-    }, 100);
-  }
-
-  /**
-   * Convert a color to a CSS value.
-   * @see https://www.w3schools.com/colors/colors_names.asp
-   *
-   * @param  {string} color The current color.
-   * @return {string}       The color.
-   */
-  function convertColor(color) {
-    if (color === 'lilac') {
-      color = 'DarkViolet';
-    }
-    if (color === 'grayscale' || color === 'black_and_white') {
-      color = 'LightGray';
-    }
-    return color;
-  }
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    // Initiate arrow menus.
-    a11yarrows__WEBPACK_IMPORTED_MODULE_1__.init(dropdown === null || dropdown === void 0 ? void 0 : dropdown.current, {
-      selector: 'button'
-    });
-
-    // Check for focus outside.
-    document.addEventListener('keyup', focusOutside);
-    document.addEventListener('keydown', escClick);
-    return function () {
-      document.removeEventListener('keyup', focusOutside);
-      document.removeEventListener('keydown', escClick);
-    };
-  }, []);
-  return /*#__PURE__*/React.createElement("div", {
-    className: "filter-dropdown",
-    id: id,
-    ref: dropdown
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: toggleMenu,
-    className: "filter-dropdown--button",
-    "aria-expanded": expanded ? 'true' : 'false',
-    ref: button
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "filter-dropdown--button-label"
-  }, instant_img_localize.filters[data === null || data === void 0 ? void 0 : data.label]), /*#__PURE__*/React.createElement("span", {
-    className: "filter-dropdown--button-selected"
-  }, selected.replace(/_/g, ' '), /*#__PURE__*/React.createElement("i", {
-    className: "fa fa-caret-down",
-    "aria-hidden": "true"
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('filter-dropdown--menu', expanded ? 'expanded' : null),
-    "data-key": filterKey,
-    "aria-hidden": expanded ? 'false' : 'true',
-    ref: menu
-  }, (data === null || data === void 0 ? void 0 : (_data$filters = data.filters) === null || _data$filters === void 0 ? void 0 : _data$filters.length) && data.filters.map(function (value, key) {
-    return /*#__PURE__*/React.createElement("button", {
-      disabled: selected === value,
-      key: key,
-      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('filter-dropdown--item', selected === value ? 'selected' : null),
-      onClick: function onClick() {
-        return click(filterKey, value);
-      }
-    }, value.replace(/_/g, ' '), value !== 'all' && value !== 'transparent' && isColor ? /*#__PURE__*/React.createElement("span", {
-      className: "_color",
-      style: {
-        color: convertColor(value)
-      }
-    }) : null);
-  })));
-}
-
-/***/ }),
-
 /***/ "./src/js/components/LoadingBlock.js":
 /*!*******************************************!*\
   !*** ./src/js/components/LoadingBlock.js ***!
@@ -3765,10 +3731,10 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Render the LoadingBlock component.
  *
- * @param {Object} props The component props.
- * @param {Boolean} props.loading Is the app loading.
- * @param {Boolean} props.total Total amount of results.
- * @returns {JSX.Element} The LoadingBlock component.
+ * @param {Object}  props         The component props.
+ * @param {boolean} props.loading Is the app loading.
+ * @param {boolean} props.total   Total amount of results.
+ * @return {JSX.Element}          The LoadingBlock component.
  */
 function LoadingBlock(_ref) {
   var loading = _ref.loading,
@@ -3800,7 +3766,7 @@ __webpack_require__.r(__webpack_exports__);
  * Render the NoResults component.
  *
  * @param {Object} props The component props.
- * @returns {JSX.Element} The NoResults component.
+ * @return {JSX.Element} The NoResults component.
  */
 function NoResults(props) {
   var _props$total = props.total,
@@ -3833,21 +3799,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
-/* harmony import */ var _functions_unsplashDownload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../functions/unsplashDownload */ "./src/js/functions/unsplashDownload.js");
+/* harmony import */ var _editor_plugin_utils_insertImage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../editor/plugin/utils/insertImage */ "./src/js/editor/plugin/utils/insertImage.js");
+/* harmony import */ var _editor_plugin_utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../editor/plugin/utils/setFeaturedImage */ "./src/js/editor/plugin/utils/setFeaturedImage.js");
+/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
+/* harmony import */ var _functions_unsplashDownload__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../functions/unsplashDownload */ "./src/js/functions/unsplashDownload.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
@@ -3862,17 +3831,17 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function Photo(props) {
   var provider = props.provider,
     result = props.result,
-    mediaRouter = props.mediaRouter,
-    blockEditor = props.blockEditor,
-    setFeaturedImage = props.setFeaturedImage,
-    insertImage = props.insertImage;
+    _props$mediaRouter = props.mediaRouter,
+    mediaRouter = _props$mediaRouter === void 0 ? false : _props$mediaRouter,
+    _props$blockEditor = props.blockEditor,
+    blockEditor = _props$blockEditor === void 0 ? false : _props$blockEditor;
   var id = result.id,
     permalink = result.permalink,
     title = result.title,
     alt = result.alt,
     caption = result.caption,
     _result$extension = result.extension,
-    extension = _result$extension === void 0 ? 'jpg' : _result$extension,
+    extension = _result$extension === void 0 ? "jpg" : _result$extension,
     likes = result.likes,
     attribution = result.attribution,
     dimensions = result.dimensions,
@@ -3885,9 +3854,9 @@ function Photo(props) {
   var user_name = user === null || user === void 0 ? void 0 : user.name;
   var user_photo = user === null || user === void 0 ? void 0 : user.photo;
   var user_url = user === null || user === void 0 ? void 0 : user.url;
-  var container = document.querySelector('.instant-img-container');
+  var container = document.querySelector(".instant-img-container");
   var likeDisplay = parseInt(likes) === 1 ? instant_img_localize.likes : instant_img_localize.likes_plural;
-  var auto_attribution = instant_img_localize.auto_attribution === '1' ? true : false;
+  var auto_attribution = instant_img_localize.auto_attribution === "1" ? true : false;
   var imageCaption = auto_attribution ? attribution : caption; // Set auto attribution.
   var inProgress = false;
 
@@ -3901,10 +3870,14 @@ function Photo(props) {
     _useState2 = _slicedToArray(_useState, 2),
     imageDetails = _useState2[0],
     setImageDetails = _useState2[1];
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState4 = _slicedToArray(_useState3, 2),
+    editURL = _useState4[0],
+    setEditURL = _useState4[1]; // Edit URL state.
 
   // Refs.
   var photo = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var photoUpload = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var upload = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var editScreen = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var captionRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var noticeMsg = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -3912,11 +3885,6 @@ function Photo(props) {
   // Gutenberg Sidebar.
   var setAsFeaturedImage = false;
   var insertIntoPost = false;
-  var is_media_router = mediaRouter;
-  var is_block_editor = blockEditor;
-
-  // Display controls in Gutenberg Sidebar Only.
-  var displayGutenbergControl = is_block_editor ? true : false;
 
   /**
    * Function to trigger the image download.
@@ -3928,18 +3896,18 @@ function Photo(props) {
     e.preventDefault();
     var target = e.currentTarget;
     var notice = noticeMsg.current;
-    if (!target.classList.contains('upload')) {
+    if (!target.classList.contains("upload")) {
       // If target is .download-photo, switch target definition
-      target = photoUpload.current; // a.upload.
+      target = upload.current; // a.upload.
     }
 
-    if (target.classList.contains('success') || inProgress) {
+    if (target.classList.contains("success") || inProgress) {
       return false; // Exit if already uploaded or in progress.
     }
 
     inProgress = true;
-    target.classList.add('uploading');
-    photo.current.classList.add('in-progress');
+    target.classList.add("uploading");
+    photo.current.classList.add("in-progress");
 
     // Status messaging
     notice.innerHTML = instant_img_localize.saving;
@@ -3953,19 +3921,19 @@ function Photo(props) {
     }, 3000);
 
     // API URL
-    var api = instant_img_localize.root + 'instant-images/download/';
+    var api = instant_img_localize.root + "instant-images/download/";
 
     // Data Params
     var data = {
       provider: provider,
-      id: target.getAttribute('data-id'),
-      image_url: target.getAttribute('data-url'),
-      filename: target.getAttribute('data-id'),
+      id: target.getAttribute("data-id"),
+      image_url: target.getAttribute("data-url"),
+      filename: target.getAttribute("data-id"),
       extension: extension,
-      custom_filename: target.getAttribute('data-filename'),
-      title: target.getAttribute('data-title'),
-      alt: target.getAttribute('data-alt'),
-      caption: target.getAttribute('data-caption'),
+      custom_filename: target.getAttribute("data-filename"),
+      title: target.getAttribute("data-title"),
+      alt: target.getAttribute("data-alt"),
+      caption: target.getAttribute("data-caption"),
       parent_id: instant_img_localize.parent_id,
       lang: instant_img_localize.lang
     };
@@ -3973,8 +3941,8 @@ function Photo(props) {
     // Config Params
     var config = {
       headers: {
-        'X-WP-Nonce': instant_img_localize.nonce,
-        'Content-Type': 'application/json'
+        "X-WP-Nonce": instant_img_localize.nonce,
+        "Content-Type": "application/json"
       }
     };
     axios__WEBPACK_IMPORTED_MODULE_1___default().post(api, JSON.stringify(data), config).then(function (res) {
@@ -3987,32 +3955,36 @@ function Photo(props) {
         var msg = response.msg;
         if (success) {
           var edit_url = "".concat(admin_url, "post.php?post=").concat(attachment.id, "&action=edit"); // Edit URL.
-          uploadComplete(target, msg, edit_url, attachment.id); // Success/Upload Complete
+          setEditURL(edit_url);
+          uploadComplete(target, msg, attachment.id); // Success/Upload Complete
 
           // Trigger a download at Unsplash.
-          if (provider === 'unsplash' && download_url) {
-            (0,_functions_unsplashDownload__WEBPACK_IMPORTED_MODULE_3__["default"])(download_url);
+          if (provider === "unsplash" && download_url) {
+            (0,_functions_unsplashDownload__WEBPACK_IMPORTED_MODULE_5__["default"])(download_url);
           }
 
-          // Set Featured Image [Gutenberg Sidebar]
-          if (displayGutenbergControl && setAsFeaturedImage) {
-            setFeaturedImage(attachment.id);
-            false, _readOnlyError("setAsFeaturedImage");
-            closeMediaModal();
-          }
-
-          // Insert Image [Gutenberg Sidebar]
-          if (displayGutenbergControl && insertIntoPost) {
-            if (attachment.url) {
-              insertImage(attachment.url, attachment.caption, attachment.alt);
+          // Gutenberg sidebar plugin.
+          if (blockEditor) {
+            if (setAsFeaturedImage) {
+              // Set Featured Image.
+              (0,_editor_plugin_utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_3__["default"])(attachment.id);
+              setAsFeaturedImage = false;
               closeMediaModal();
             }
-            false, _readOnlyError("insertIntoPost");
+
+            // Insert Image.
+            if (insertIntoPost) {
+              if (attachment.url) {
+                (0,_editor_plugin_utils_insertImage__WEBPACK_IMPORTED_MODULE_2__["default"])(attachment.url, attachment.caption, attachment.alt);
+                closeMediaModal();
+              }
+              insertIntoPost = false;
+            }
           }
 
           // If is media popup, redirect user to media-upload settings
-          if (container.dataset.mediaPopup === 'true' && !is_block_editor) {
-            window.location = 'media-upload.php?type=image&tab=library&attachment_id=' + attachment.id;
+          if (container.dataset.mediaPopup === "true" && !blockEditor) {
+            window.location = "media-upload.php?type=image&tab=library&attachment_id=" + attachment.id;
           }
         } else {
           // Error
@@ -4023,8 +3995,19 @@ function Photo(props) {
         uploadError(target, notice, instant_img_localize.error_upload);
       }
     })["catch"](function (error) {
-      console.warn(error);
+      console.warn(error); // eslint-disable-line no-console
     });
+  }
+
+  /**
+   * Handler to send user to edit photo link after upload.
+   *
+   * @since 5.1.1
+   */
+  function editAfterUpload() {
+    if (editURL) {
+      window.location = editURL;
+    }
   }
 
   /**
@@ -4034,11 +4017,10 @@ function Photo(props) {
    * @since 4.0
    */
   function setFeaturedImageClick(e) {
-    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
-    var photo = photoUpload.current;
-    if (photo) {
-      true, _readOnlyError("setAsFeaturedImage");
-      photo.current.click();
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.hideTooltip)(e);
+    if (upload.current) {
+      setAsFeaturedImage = true;
+      upload.current.click();
     }
   }
 
@@ -4049,59 +4031,46 @@ function Photo(props) {
    * @since 4.0
    */
   function insertImageIntoPost(e) {
-    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
-    var photo = photoUpload.current;
-    if (photo) {
-      true, _readOnlyError("insertIntoPost");
-      photo.current.click();
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.hideTooltip)(e);
+    if (upload.current) {
+      insertIntoPost = true;
+      upload.current.click();
     }
   }
 
   /**
    * Upload complete function.
    *
-   * @param {Element} target Clicked item.
-   * @param {string}  msg    Success Msg.
-   * @param {string}  url    Attachment edit link.
-   * @param {string}  id     Attachment id.
+   * @param {Element} target  Clicked item.
+   * @param {string}  msg     Success Msg.
+   * @param {string}  imageID Attachment id.
    * @since 3.0
    */
-  function uploadComplete(target, msg, url, id) {
+  function uploadComplete(target, msg, imageID) {
     setImageTitle(target, msg);
-    photo.current.classList.remove('in-progress');
-    photo.current.classList.add('uploaded');
-    photo.current.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
-    photo.current.querySelector('.edit-photo-admin').style.display = 'inline-block'; // Show edit-photo-admin button
-    photo.current.querySelector('.edit-photo-admin').href = url; // Add admin edit link
-    photo.current.querySelector('.edit-photo-admin').target = '_balnk'; // Add new window
-
-    target.classList.remove('uploading');
-    target.classList.remove('resizing');
-    target.classList.add('success');
+    photo.current.classList.remove("in-progress");
+    photo.current.classList.add("uploaded");
+    target.classList.remove("uploading");
+    target.classList.remove("resizing");
+    target.classList.add("success");
     inProgress = false;
 
-    // Remove uploaded and success states after 5 seconds.
+    // Remove uploaded and success states after 3.5 seconds.
     setTimeout(function () {
-      photo.current.classList.remove('uploaded');
-      target.classList.remove('success');
-    }, 5000);
+      photo.current.classList.remove("uploaded");
+      target.classList.remove("success");
+    }, 3500);
 
-    // Gutenberg Sidebar
-    if (is_block_editor) {
-      photo.current.querySelector('.insert').style.display = 'none'; // Hide insert button
-      photo.current.querySelector('.set-featured').style.display = 'none'; // Hide set-featured button
-    }
-
-    // Media Router
-    refreshMediaRouter(id);
+    // Refresh Media Router/Modal.
+    refreshMediaRouter(imageID);
 
     /**
      * Deprecated in Instant Images 4.3.
      * Was previously used in the Media Popup Context.
      * Refresh Media Library contents on edit pages
      */
-    if (container.classList.contains('editor')) {
-      if (typeof wp.media != 'undefined') {
+    if (container.classList.contains("editor")) {
+      if (typeof wp.media !== "undefined") {
         if (wp.media.frame.content.get() !== null) {
           wp.media.frame.content.get().collection.props.set({
             ignore: +new Date()
@@ -4119,13 +4088,13 @@ function Photo(props) {
   /**
    * Refresh Media Modal and select item after it's been uploaded.
    *
-   * @param {string} id The media modal ID.
+   * @param {string} modalID The media modal ID.
    * @since 4.3
    */
-  function refreshMediaRouter(id) {
-    if (is_media_router && wp.media && wp.media.frame && wp.media.frame.el) {
+  function refreshMediaRouter(modalID) {
+    if (mediaRouter && wp.media && wp.media.frame && wp.media.frame.el) {
       var mediaModal = wp.media.frame.el;
-      var mediaTab = mediaModal.querySelector('#menu-item-browse');
+      var mediaTab = mediaModal.querySelector("#menu-item-browse");
       if (mediaTab) {
         // Open the 'Media Library' tab.
         mediaTab.click();
@@ -4139,8 +4108,8 @@ function Photo(props) {
         }
 
         // Select the attached that was just uploaded.
-        var selection = wp.media.frame.state().get('selection');
-        var selected = parseInt(id);
+        var selection = wp.media.frame.state().get("selection");
+        var selected = parseInt(modalID);
         selection.reset(selected ? [wp.media.attachment(selected)] : []);
       }, 100);
     }
@@ -4155,24 +4124,24 @@ function Photo(props) {
    * @since 3.0
    */
   function uploadError(target, notice, msg) {
-    target.classList.remove('uploading');
-    target.classList.remove('resizing');
-    target.classList.add('errors');
+    target.classList.remove("uploading");
+    target.classList.remove("resizing");
+    target.classList.add("errors");
     setImageTitle(target, msg);
     inProgress = false;
-    notice.classList.add('has-error');
-    console.warn(msg);
+    notice.classList.add("has-error");
+    console.warn(msg); // eslint-disable-line no-console
   }
 
   /**
    * Set the title attribute of target.
    *
-   * @param {Element} e   The current clicked element.
-   * @param {string}  msg The title Msg from JSON.
+   * @param {Element} target Clicked element.
+   * @param {string}  msg    Title message from JSON.
    * @since 3.0
    */
   function setImageTitle(target, msg) {
-    target.setAttribute('title', msg); // Remove 'Click to upload...', set new value
+    target.setAttribute("title", msg); // Remove 'Click to upload...', set new value
   }
 
   /**
@@ -4183,18 +4152,18 @@ function Photo(props) {
    */
   function showEditScreen(e) {
     e.preventDefault();
-    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.hideTooltip)(e);
 
     // Get all open edit screens and close them.
-    var openEdits = document.querySelectorAll('.edit-screen.editing');
+    var openEdits = document.querySelectorAll(".edit-screen.editing");
     if (openEdits) {
       openEdits.forEach(function (edit) {
-        edit.classList.remove('editing');
+        edit.classList.remove("editing");
       });
     }
 
     // Show edit screen
-    editScreen.current.classList.add('editing');
+    editScreen.current.classList.add("editing");
 
     // Set focus on edit screen
     setTimeout(function () {
@@ -4213,22 +4182,22 @@ function Photo(props) {
   function handleEditChange(e) {
     var target = e.target.name;
     switch (target) {
-      case 'filename':
+      case "filename":
         setImageDetails(_objectSpread(_objectSpread({}, imageDetails), {}, {
           filename: e.target.value
         }));
         break;
-      case 'title':
+      case "title":
         setImageDetails(_objectSpread(_objectSpread({}, imageDetails), {}, {
           title: e.target.value
         }));
         break;
-      case 'alt':
+      case "alt":
         setImageDetails(_objectSpread(_objectSpread({}, imageDetails), {}, {
           alt: e.target.value
         }));
         break;
-      case 'caption':
+      case "caption":
         setImageDetails(_objectSpread(_objectSpread({}, imageDetails), {}, {
           caption: e.target.value
         }));
@@ -4242,8 +4211,8 @@ function Photo(props) {
    * @since 3.2
    */
   function uploadNow() {
-    editScreen.current.classList.remove('editing'); // Hide edit screen.
-    photoUpload.current.click(); // Trigger photo click.
+    editScreen.current.classList.remove("editing"); // Hide edit screen.
+    upload.current.click(); // Trigger click.
   }
 
   /**
@@ -4261,10 +4230,10 @@ function Photo(props) {
     });
 
     // Hide edit screen
-    editScreen.current.classList.remove('editing');
+    editScreen.current.classList.remove("editing");
 
     // Set focus back on photo.
-    photoUpload.current.focus({
+    upload.current.focus({
       preventScrol: true
     });
   }
@@ -4275,9 +4244,9 @@ function Photo(props) {
    * @since 4.3
    */
   function closeMediaModal() {
-    var mediaModal = document.querySelector('.media-modal');
+    var mediaModal = document.querySelector(".media-modal");
     if (mediaModal) {
-      var closeBtn = mediaModal.querySelector('button.media-modal-close');
+      var closeBtn = mediaModal.querySelector("button.media-modal-close");
       if (!closeBtn) {
         return false;
       }
@@ -4309,7 +4278,7 @@ function Photo(props) {
   }, /*#__PURE__*/React.createElement("a", {
     className: "upload loaded",
     href: full,
-    ref: photoUpload,
+    ref: upload,
     "data-id": id,
     "data-url": full,
     "data-filename": imageDetails.filename,
@@ -4340,18 +4309,19 @@ function Photo(props) {
     className: "user-wrap"
   }, (user_photo === null || user_photo === void 0 ? void 0 : user_photo.length) > 0 && /*#__PURE__*/React.createElement("img", {
     className: "user-wrap--photo",
-    src: user_photo
+    src: user_photo,
+    alt: ""
   }), user_name)), /*#__PURE__*/React.createElement("div", {
     className: "photo-options"
-  }, displayGutenbergControl && /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement("button", {
+  }, blockEditor && !editURL ? /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "set-featured fade",
     "data-title": instant_img_localize.set_as_featured,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return setFeaturedImageClick(e);
@@ -4366,10 +4336,10 @@ function Photo(props) {
     className: "insert fade",
     "data-title": instant_img_localize.insert_into_post,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return insertImageIntoPost(e);
@@ -4379,33 +4349,34 @@ function Photo(props) {
     "aria-hidden": "true"
   }), /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
-  }, instant_img_localize.insert_into_post))), /*#__PURE__*/React.createElement("a", {
-    href: "#",
+  }, instant_img_localize.insert_into_post))) : null, editURL ? /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return editAfterUpload();
+    },
     className: "edit-photo-admin fade",
     "data-title": instant_img_localize.edit_upload,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-pencil",
     "aria-hidden": "true"
   }), /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
-  }, instant_img_localize.edit_upload)), /*#__PURE__*/React.createElement("button", {
-    type: "button",
+  }, instant_img_localize.edit_upload)) : /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick(e) {
+      return showEditScreen(e);
+    },
     className: "edit-photo fade",
     "data-title": instant_img_localize.edit_details,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
-    },
-    onClick: function onClick(e) {
-      return showEditScreen(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-cog",
@@ -4416,12 +4387,12 @@ function Photo(props) {
     className: "options"
   }, likes ? /*#__PURE__*/React.createElement("span", {
     className: "likes tooltip--above",
-    "data-title": likes + ' ' + likeDisplay,
+    "data-title": likes + " " + likeDisplay,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-heart heart-like",
@@ -4429,12 +4400,12 @@ function Photo(props) {
   }), " ", likes) : null, /*#__PURE__*/React.createElement("a", {
     className: "tooltip--above",
     href: permalink,
-    "data-title": "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.capitalizeFirstLetter)(provider)),
+    "data-title": "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.capitalizeFirstLetter)(provider)),
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.hideTooltip)(e);
     },
     rel: "noopener noreferrer",
     target: "_blank"
@@ -4443,7 +4414,7 @@ function Photo(props) {
     "aria-hidden": "true"
   }), /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
-  }, "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_2__.capitalizeFirstLetter)(provider)))))), /*#__PURE__*/React.createElement("div", {
+  }, "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.capitalizeFirstLetter)(provider)))))), /*#__PURE__*/React.createElement("div", {
     className: "edit-screen",
     tabIndex: "0",
     ref: editScreen
@@ -4472,7 +4443,7 @@ function Photo(props) {
     name: "title",
     "data-original": title,
     placeholder: title,
-    value: imageDetails.title || '',
+    value: imageDetails.title || "",
     onChange: function onChange(e) {
       return handleEditChange(e);
     }
@@ -4480,7 +4451,7 @@ function Photo(props) {
     type: "text",
     name: "alt",
     "data-original": alt,
-    value: imageDetails.alt || '',
+    value: imageDetails.alt || "",
     onChange: function onChange(e) {
       return handleEditChange(e);
     }
@@ -4491,7 +4462,7 @@ function Photo(props) {
     onChange: function onChange(e) {
       return handleEditChange(e);
     },
-    value: imageDetails.caption || '',
+    value: imageDetails.caption || "",
     ref: captionRef
   })), attribution ? /*#__PURE__*/React.createElement("div", {
     className: "add-attribution-row"
@@ -4508,7 +4479,7 @@ function Photo(props) {
     onClick: function onClick(e) {
       return cancelEdit(e);
     }
-  }, instant_img_localize.cancel), ' ', "\xA0", /*#__PURE__*/React.createElement("button", {
+  }, instant_img_localize.cancel), " ", "\xA0", /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "button button-primary",
     onClick: function onClick() {
@@ -4558,7 +4529,7 @@ function ProviderNav(props) {
       onClick: function onClick(e) {
         return switchProvider(e);
       },
-      className: provider === item.toLowerCase() ? 'provider-nav--btn active' : 'provider-nav--btn'
+      className: provider === item.toLowerCase() ? "provider-nav--btn active" : "provider-nav--btn"
     }, /*#__PURE__*/React.createElement("span", null, item), (_constants_API__WEBPACK_IMPORTED_MODULE_1___default())[item.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {
       className: "provider-nav--new"
     }, instant_img_localize["new"])));
@@ -4605,11 +4576,11 @@ function RestAPIError() {
    * @since 3.2
    */
   function test() {
-    var testURL = instant_img_localize.root + 'instant-images/test/';
+    var testURL = instant_img_localize.root + "instant-images/test/";
     var restAPITest = new XMLHttpRequest();
-    restAPITest.open('POST', testURL, true);
-    restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
-    restAPITest.setRequestHeader('Content-Type', 'application/json');
+    restAPITest.open("POST", testURL, true);
+    restAPITest.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
+    restAPITest.setRequestHeader("Content-Type", "application/json");
     restAPITest.send();
     restAPITest.onload = function () {
       if (restAPITest.status >= 200 && restAPITest.status < 400) {
@@ -4623,7 +4594,7 @@ function RestAPIError() {
       }
     };
     restAPITest.onerror = function (errorMsg) {
-      console.warn(errorMsg);
+      console.warn(errorMsg); // eslint-disable-line no-console
       setAccess(false);
     };
   }
@@ -4668,22 +4639,18 @@ __webpack_require__.r(__webpack_exports__);
 function Results(props) {
   var results = props.results,
     provider = props.provider,
-    is_media_router = props.is_media_router,
-    is_block_editor = props.is_block_editor,
-    setFeaturedImage = props.setFeaturedImage,
-    insertImage = props.insertImage;
+    mediaRouter = props.mediaRouter,
+    blockEditor = props.blockEditor;
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(results !== null && results !== void 0 && results.length) && results.map(function (result, index) {
     return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       key: "".concat(provider, "-").concat(result.id, "-").concat(index)
-    }, (result === null || result === void 0 ? void 0 : result.type) === 'instant-images-ad' ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    }, (result === null || result === void 0 ? void 0 : result.type) === "instant-images-ad" ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_2__["default"], {
       result: result
     }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_1__["default"], {
       provider: provider,
       result: result,
-      mediaRouter: is_media_router,
-      blockEditor: is_block_editor,
-      setFeaturedImage: setFeaturedImage,
-      insertImage: insertImage
+      mediaRouter: mediaRouter,
+      blockEditor: blockEditor
     }));
   }));
 }
@@ -4722,7 +4689,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function SearchHeader(props) {
   var provider = props.provider,
     _props$term = props.term,
-    term = _props$term === void 0 ? '' : _props$term,
+    term = _props$term === void 0 ? "" : _props$term,
     _props$total = props.total,
     total = _props$total === void 0 ? 0 : _props$total,
     filterSearch = props.filterSearch,
@@ -4730,7 +4697,7 @@ function SearchHeader(props) {
   var filters = (_constants_filters__WEBPACK_IMPORTED_MODULE_0___default())[provider].search;
   return /*#__PURE__*/React.createElement("header", {
     className: "search-header"
-  }, /*#__PURE__*/React.createElement("h2", null, term.replace('id:', 'ID: ')), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h2", null, term.replace("id:", "ID: ")), /*#__PURE__*/React.createElement("div", {
     className: "search-header--text"
   }, "".concat(total, " ").concat(instant_img_localize.search_results), " ", /*#__PURE__*/React.createElement("strong", null, "".concat(term)), /*#__PURE__*/React.createElement("span", null, "-"), /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
@@ -4779,7 +4746,7 @@ function ResultsToolTip(props) {
     total = props.total,
     getPhotos = props.getPhotos;
   return /*#__PURE__*/React.createElement("div", {
-    className: is_search ? 'searchResults' : 'searchResults hide'
+    className: is_search ? "searchResults" : "searchResults hide"
   }, /*#__PURE__*/React.createElement("span", {
     title: title
   }, total), /*#__PURE__*/React.createElement("button", {
@@ -4820,10 +4787,10 @@ function Sponsor(props) {
   var result = props.result;
   var _result$data = result.data,
     data = _result$data === void 0 ? null : _result$data;
-  var url = (data === null || data === void 0 ? void 0 : data.url) || '';
-  var title = (data === null || data === void 0 ? void 0 : data.title) || '';
-  var desc = (data === null || data === void 0 ? void 0 : data.description) || '';
-  var avatar = (data === null || data === void 0 ? void 0 : data.avatar) || '';
+  var url = (data === null || data === void 0 ? void 0 : data.url) || "";
+  var title = (data === null || data === void 0 ? void 0 : data.title) || "";
+  var desc = (data === null || data === void 0 ? void 0 : data.description) || "";
+  var avatar = (data === null || data === void 0 ? void 0 : data.avatar) || "";
   var _data$image = data.image,
     image = _data$image === void 0 ? null : _data$image;
   var _image$src = image.src,
@@ -4832,7 +4799,10 @@ function Sponsor(props) {
     alt = _image$alt === void 0 ? null : _image$alt;
   var photo = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var link = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, image && url ? /*#__PURE__*/React.createElement("article", {
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, image && url ?
+  /*#__PURE__*/
+  // eslint-disable-next-line
+  React.createElement("article", {
     className: "photo feature",
     title: desc,
     ref: photo,
@@ -4850,7 +4820,8 @@ function Sponsor(props) {
     className: "loaded",
     href: url,
     target: "_blank",
-    ref: link
+    ref: link,
+    rel: "noreferrer"
   }, /*#__PURE__*/React.createElement("img", {
     src: src,
     alt: alt
@@ -4878,7 +4849,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Render the Tooltip component.
  *
- * @returns {JSX.Element} The Tooltip component.
+ * @return {JSX.Element} The Tooltip component.
  */
 function Tooltip() {
   return /*#__PURE__*/React.createElement("div", {
@@ -4945,134 +4916,139 @@ module.exports = {
   openverse: {
     filters: {
       source: {
-        label: 'source',
-        "default": 'WordPress',
-        filters: ['WordPress', 'Flickr', 'Nasa', 'SpaceX', 'StockSnap', 'wikimedia']
+        label: "source",
+        "default": "WordPress",
+        filters: ["WordPress", "Flickr", "Nasa", "SpaceX", "StockSnap", "wikimedia"]
       },
       aspect_ratio: {
-        label: 'orientation',
-        "default": 'all',
-        filters: ['all', 'square', 'tall', 'wide']
+        label: "orientation",
+        "default": "all",
+        filters: ["all", "square", "tall", "wide"]
       }
     },
     search: {
       category: {
-        label: 'type',
-        "default": 'all',
-        filters: ['all', 'digitized_artwork', 'illustration', 'photograph']
+        label: "type",
+        "default": "all",
+        filters: ["all", "digitized_artwork", "illustration", "photograph"]
       },
       extension: {
-        label: 'extension',
-        "default": 'all',
-        filters: ['all', 'JPG', 'GIF', 'PNG', 'SVG']
+        label: "extension",
+        "default": "all",
+        filters: ["all", "JPG", "GIF", "PNG", "SVG"]
       },
       aspect_ratio: {
-        label: 'orientation',
-        "default": 'all',
-        filters: ['all', 'square', 'tall', 'wide']
+        label: "orientation",
+        "default": "all",
+        filters: ["all", "square", "tall", "wide"]
+      },
+      size: {
+        label: "size",
+        "default": "all",
+        filters: ["all", "small", "medium", "large"]
       },
       license: {
-        label: 'license',
-        "default": 'all',
-        filters: ['all', 'BY', 'BY-NC', 'BY-NC-ND', 'BY-NC-SA', 'BY-ND', 'BY-SA', 'CC0']
+        label: "license",
+        "default": "all",
+        filters: ["all", "BY", "BY-NC", "BY-NC-ND", "BY-NC-SA", "BY-ND", "BY-SA", "CC0"]
       },
       license_type: {
-        label: 'license_type',
-        "default": 'all',
-        filters: ['all', 'commercial', 'modification']
+        label: "license_type",
+        "default": "all",
+        filters: ["all", "commercial", "modification"]
       }
     }
   },
   pexels: {
     filters: {
       order_by: {
-        label: 'orderby',
-        "default": 'curated',
-        filters: ['curated']
+        label: "orderby",
+        "default": "curated",
+        filters: ["curated"]
       }
     },
     search: {
       orientation: {
-        label: 'orientation',
-        "default": 'all',
-        filters: ['all', 'landscape', 'portrait', 'square']
+        label: "orientation",
+        "default": "all",
+        filters: ["all", "landscape", "portrait", "square"]
       },
       color: {
-        label: 'colors',
-        "default": 'all',
-        filters: ['all', 'red', 'orange', 'yellow', 'green', 'turquoise', 'blue', 'violet', 'pink', 'brown', 'black', 'gray', 'white']
+        label: "colors",
+        "default": "all",
+        filters: ["all", "red", "orange", "yellow", "green", "turquoise", "blue", "violet", "pink", "brown", "black", "gray", "white"]
       },
       size: {
-        label: 'size',
-        "default": 'all',
-        filters: ['all', 'large', 'medium', 'small']
+        label: "size",
+        "default": "all",
+        filters: ["all", "large", "medium", "small"]
       }
     }
   },
   unsplash: {
     filters: {
       order_by: {
-        label: 'orderby',
-        "default": 'latest',
-        filters: ['latest', 'popular', 'oldest']
+        label: "orderby",
+        "default": "latest",
+        filters: ["latest", "popular", "oldest"]
       }
     },
     search: {
       order_by: {
-        label: 'orderby',
-        "default": 'relevance',
-        filters: ['relevance', 'latest']
+        label: "orderby",
+        "default": "relevance",
+        filters: ["relevance", "latest"]
       },
       orientation: {
-        label: 'orientation',
-        "default": 'all',
-        filters: ['all', 'landscape', 'portrait', 'squarish']
+        label: "orientation",
+        "default": "all",
+        filters: ["all", "landscape", "portrait", "squarish"]
       },
       color: {
-        label: 'colors',
-        "default": 'all',
-        filters: ['all', 'black_and_white', 'black', 'white', 'yellow', 'orange', 'red', 'purple', 'magenta', 'green', 'teal', 'blue']
+        label: "colors",
+        "default": "all",
+        filters: ["all", "black_and_white", "black", "white", "yellow", "orange", "red", "purple", "magenta", "green", "teal", "blue"]
       }
     }
   },
   pixabay: {
     filters: {
       order: {
-        label: 'orderby',
-        "default": 'popular',
-        filters: ['popular', 'latest']
+        label: "orderby",
+        "default": "popular",
+        filters: ["popular", "latest"]
       },
       image_type: {
-        label: 'type',
-        "default": 'all',
-        filters: ['all', 'photo', 'illustration', 'vector']
+        label: "type",
+        "default": "all",
+        filters: ["all", "photo", "illustration", "vector"]
       },
       category: {
-        label: 'category',
-        "default": 'all',
-        filters: ['all', 'backgrounds', 'fashion', 'nature', 'science', 'education', 'feelings', 'health', 'people', 'religion', 'places', 'animals', 'industry', 'computer', 'food', 'sports', 'transportation', 'travel', 'buildings', 'business', 'music']
+        label: "category",
+        "default": "all",
+        filters: ["all", "backgrounds", "fashion", "nature", "science", "education", "feelings", "health", "people", "religion", "places", "animals", "industry", "computer", "food", "sports", "transportation", "travel", "buildings", "business", "music"]
       },
       colors: {
-        label: 'colors',
-        "default": 'all',
-        filters: ['all', 'grayscale', 'red', 'orange', 'yellow', 'green', 'turquoise', 'blue', 'lilac', 'pink', 'white', 'gray', 'black', 'brown', 'transparent']
+        label: "colors",
+        "default": "all",
+        filters: ["all", "grayscale", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown", "transparent"]
       },
       orientation: {
-        label: 'orientation',
-        "default": 'all',
-        filters: ['all', 'horizontal', 'vertical']
+        label: "orientation",
+        "default": "all",
+        filters: ["all", "horizontal", "vertical"]
       }
     },
     search: {
       colors: {
-        label: 'colors',
-        "default": 'all',
-        filters: ['all', 'grayscale', 'red', 'orange', 'yellow', 'green', 'turquoise', 'blue', 'lilac', 'pink', 'white', 'gray', 'black', 'brown', 'transparent']
+        label: "colors",
+        "default": "all",
+        filters: ["all", "grayscale", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown", "transparent"]
       },
       orientation: {
-        label: 'orientation',
-        "default": 'all',
-        filters: ['all', 'horizontal', 'vertical']
+        label: "orientation",
+        "default": "all",
+        filters: ["all", "horizontal", "vertical"]
       }
     }
   }
@@ -5098,9 +5074,9 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * The plugin Icon component.
  *
- * @param {*} props 		- The props for the component.
- * @param {string} props.color - The color of the icon.
- * @returns {JSX.Element} 	- The Icon component.
+ * @param {Object} props       The component props.
+ * @param {string} props.color Color of the icon.
+ * @return {JSX.Element} 	    The Icon component.
  */
 function Icon(_ref) {
   var _ref$color = _ref.color,
@@ -5137,7 +5113,7 @@ var PluginSidebarMoreMenuItem = wp.editPost.PluginSidebarMoreMenuItem;
 /**
  * The plugin menu as a component.
  *
- * @returns {JSX.Element} The Menu component.
+ * @return {JSX.Element} The Menu component.
  */
 function Menu() {
   return /*#__PURE__*/React.createElement(PluginSidebarMoreMenuItem, {
@@ -5162,14 +5138,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Panel)
 /* harmony export */ });
-/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/App */ "./src/js/components/App.js");
+/* harmony import */ var _components_InstantImages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/InstantImages */ "./src/js/components/InstantImages.js");
 /* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../functions/buildURL */ "./src/js/functions/buildURL.js");
 /* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
 /* harmony import */ var _functions_getProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../functions/getProvider */ "./src/js/functions/getProvider.js");
 /* harmony import */ var _functions_getQueryParams__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
 /* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../functions/helpers */ "./src/js/functions/helpers.js");
-/* harmony import */ var _utils_insertImage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/insertImage */ "./src/js/editor/plugin/utils/insertImage.js");
-/* harmony import */ var _utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/setFeaturedImage */ "./src/js/editor/plugin/utils/setFeaturedImage.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -5186,8 +5160,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-
 var _wp$element = wp.element,
   useState = _wp$element.useState,
   useEffect = _wp$element.useEffect;
@@ -5195,7 +5167,7 @@ var _wp$element = wp.element,
 /**
  * The image listing panel for the plugin sidebar.
  *
- * @returns {JSX.Element} The Panel component.
+ * @return {JSX.Element} The Panel component.
  */
 function Panel() {
   var _useState = useState({}),
@@ -5222,7 +5194,7 @@ function Panel() {
             case 0:
               // Build URL.
               params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_4__["default"])(provider);
-              url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_1__["default"])('photos', params); // Create fetch request.
+              url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_1__["default"])("photos", params); // Create fetch request.
               _context.next = 4;
               return fetch(url);
             case 4:
@@ -5257,13 +5229,11 @@ function Panel() {
   }, []);
   return /*#__PURE__*/React.createElement("div", {
     className: "instant-img-container"
-  }, data && data.results ? /*#__PURE__*/React.createElement(_components_App__WEBPACK_IMPORTED_MODULE_0__["default"], {
+  }, data && data.results ? /*#__PURE__*/React.createElement(_components_InstantImages__WEBPACK_IMPORTED_MODULE_0__["default"], {
     editor: "gutenberg",
     data: data.results,
     api_error: data.error,
-    provider: provider,
-    setFeaturedImage: _utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_7__["default"],
-    insertImage: _utils_insertImage__WEBPACK_IMPORTED_MODULE_6__["default"]
+    provider: provider
   }) : null);
 }
 
@@ -5289,7 +5259,7 @@ var PluginSidebar = wp.editPost.PluginSidebar;
 /**
  * The plugin sidebar as a component.
  *
- * @returns {JSX.Element} The Plugin component.
+ * @return {JSX.Element} The Plugin component.
  */
 function Plugin() {
   return /*#__PURE__*/React.createElement(PluginSidebar, {
@@ -5341,18 +5311,18 @@ var createBlock = wp.blocks.createBlock;
  * @param {string} alt     Image alt.
  */
 var insertImage = function insertImage() {
-  var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var caption = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-  var alt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  if (url === '') {
+  var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+  var caption = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+  var alt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+  if (url === "") {
     return false;
   }
-  var block = createBlock('core/image', {
+  var block = createBlock("core/image", {
     url: url,
     caption: caption,
     alt: alt
   });
-  wp.data.dispatch('core/editor').insertBlocks(block);
+  wp.data.dispatch("core/editor").insertBlocks(block);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (insertImage);
 
@@ -5380,7 +5350,7 @@ var setFeaturedImage = function setFeaturedImage(imageId) {
   if (imageId === null) {
     return false;
   }
-  dispatch('core/editor').editPost({
+  dispatch("core/editor").editPost({
     featured_media: imageId
   });
 };
@@ -5418,29 +5388,29 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 /**
  * Build the API query parameters.
  *
- * @param  {string} type   The query type (search, photos, id).
- * @param  {object} params The current params object.
- * @return {string} 		   The new API URL with querystring params.
+ * @param {string} type   The query type (search, photos, id).
+ * @param {Object} params The current params object.
+ * @return {string} 		  The new API URL with querystring params.
  */
 function buildURL(type, params) {
   if (!type) {
     // Bail early if API query type is missing.
-    return '';
+    return "";
   }
   // Get the current provider.
   var _params = params,
     _params$provider = _params.provider,
-    provider = _params$provider === void 0 ? 'unsplash' : _params$provider;
+    provider = _params$provider === void 0 ? "unsplash" : _params$provider;
 
   // Provider doesn't need to be sent.
   delete params.provider;
-  params = provider === 'openverse' ? (0,_openverse__WEBPACK_IMPORTED_MODULE_2__.openverseParams)(type, params) : params;
+  params = provider === "openverse" ? (0,_openverse__WEBPACK_IMPORTED_MODULE_2__.openverseParams)(type, params) : params;
 
   // Build the API URL.
   var url = new URL(getProxyURL(provider));
 
   // Add `type` to params.
-  url.searchParams.append('type', type);
+  url.searchParams.append("type", type);
 
   // Append query params.
   Object.keys(params).forEach(function (key) {
@@ -5448,27 +5418,27 @@ function buildURL(type, params) {
   });
 
   // Add `version` to params.
-  url.searchParams.append('version', instant_img_localize.version);
+  url.searchParams.append("version", instant_img_localize.version);
   return url;
 }
 
 /**
  * Get the proxy URL from ENV vars.
  *
- * @param  {string} provider The image provider.
- * @return {string}          The proxy URL.
+ * @param {string} provider The image provider.
+ * @return {string}         The proxy URL.
  */
 function getProxyURL(provider) {
   var _API$proxy = (_constants_API__WEBPACK_IMPORTED_MODULE_0___default().proxy),
-    proxy = _API$proxy === void 0 ? 'https://proxy.getinstantimages.com/api/' : _API$proxy;
+    proxy = _API$proxy === void 0 ? "https://proxy.getinstantimages.com/api/" : _API$proxy;
   return "".concat(proxy).concat(provider);
 }
 
 /**
  * Build a API testing URL.
  *
- * @param  {string} provider  The current service provider.
- * @return {string}           The API URL.
+ * @param {string} provider The current service provider.
+ * @return {string}         The API URL.
  */
 function buildTestURL(provider) {
   var options = {
@@ -5480,7 +5450,7 @@ function buildTestURL(provider) {
   var params = _objectSpread(_objectSpread({
     test: true
   }, (0,_getQueryParams__WEBPACK_IMPORTED_MODULE_1__["default"])(provider)), options);
-  return buildURL('photos', params);
+  return buildURL("photos", params);
 }
 
 /***/ }),
@@ -5505,7 +5475,7 @@ __webpack_require__.r(__webpack_exports__);
  * Display a console.warn message about API status.
  *
  * @param {string} provider The API service provider.
- * @param {string} status The API status.
+ * @param {string} status   The API status.
  */
 function consoleStatus(provider) {
   var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
@@ -5515,15 +5485,18 @@ function consoleStatus(provider) {
     case 400:
     case 401:
     case 500:
-      // Unsplash/Pixabay/Pexels incorrect API key.
+      // Unsplash/Pixabay/Pexels incorrect API key
+      // eslint-disable-next-line no-console
       console.warn("[".concat(local.instant_images, " - ").concat(status, " Error] ").concat((0,_helpers__WEBPACK_IMPORTED_MODULE_0__.capitalizeFirstLetter)(provider), ": ").concat(message));
       break;
     case 429:
       /**
        * Pixabay, Pexels - too many requests.
+       *
        * @see https://www.pexels.com/api/documentation/#statistics
        * @see https://pixabay.com/api/docs/#api_rate_limit
        */
+      // eslint-disable-next-line no-console
       console.warn("[".concat(local.instant_images, " - ").concat(status, " Error] ").concat((0,_helpers__WEBPACK_IMPORTED_MODULE_0__.capitalizeFirstLetter)(provider), ": ").concat(message));
       break;
     default:
@@ -5547,9 +5520,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Get the correct error message by status code.
  *
- * @param  {string} provider The API service provider.
- * @param  {string} status   The API status.
- * @return {string}          The error message.
+ * @param {string} status The API status.
  */
 function getErrorMessage() {
   var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 200;
@@ -5566,6 +5537,7 @@ function getErrorMessage() {
     case 429:
       /**
        * Pixabay, Pexels - too many requests.
+       *
        * @see https://www.pexels.com/api/documentation/#statistics
        * @see https://pixabay.com/api/docs/#api_rate_limit
        */
@@ -5633,12 +5605,14 @@ function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _ty
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 
+// eslint-disable
+
 /**
  * Build the API query parameters
  *
- * @param  {string} provider    The current service provider.
- * @param  {object} queryParams Optional query parameters to append to base params.
- * @return {object} 				  Parameters used for the fetch request.
+ * @param {string} provider    The current service provider.
+ * @param {Object} queryParams Optional query parameters to append to base params.
+ * @return {Object} 				 Parameters used for the fetch request.
  */
 function getQueryParams(provider, queryParams) {
   if (!provider) {
@@ -5665,17 +5639,18 @@ function getQueryParams(provider, queryParams) {
    * Global plugin hook.
    */
   if (instant_img_localize.query_debug) {
-    console.table(params);
+    console.table(params); // eslint-disable-line no-console
   }
+
   return params;
 }
 
 /**
  * Get auth keys and append to API query request.
  *
- * @param  {object} params   The current params object.
- * @param  {string} provider The current service provider.
- * @return {object}          The auth parameter object.
+ * @param {Object} params   The current params object.
+ * @param {string} provider The current service provider.
+ * @return {Object}         The auth parameter object.
  */
 function getAuth(params, provider) {
   var has_auth = (_constants_API__WEBPACK_IMPORTED_MODULE_0___default())[provider].requires_key;
@@ -5692,12 +5667,13 @@ function getAuth(params, provider) {
 
 /**
  * Set the photo safety for indicating that only images suitable for all ages should be returned.
+ *
  * @see https://unsplash.com/documentation#content-safety
  * @see https://pixabay.com/api/docs/
  *
- * @param  {object}  params   The current params object.
- * @param  {string}  provider The current service provider.
- * @return {object} 				The fetch parameters object.
+ * @param {Object} params   The current params object.
+ * @param {string} provider The current service provider.
+ * @return {Object} 			 The fetch parameters object.
  */
 function getContentSafety(params, provider) {
   switch (provider) {
@@ -5742,8 +5718,8 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Pluck `results` from the API response.
  *
- * @param  {object} data The API results object.
- * @return {array} 		 The results as an array.
+ * @param {Object} data The API results object.
+ * @return {Array} 	 The results as an array.
  */
 function getResults(data) {
   if (!data) {
@@ -5756,8 +5732,8 @@ function getResults(data) {
 /**
  * Get the total search results.
  *
- * @param  {object} data The search data object.
- * @return {string}      The total results.
+ * @param {Object} data The search data object.
+ * @return {string}     The total results.
  */
 function getSearchTotal(data) {
   // Return 0 if undefined or null.
@@ -5767,10 +5743,10 @@ function getSearchTotal(data) {
 /**
  * Get results by photo ID.
  *
- * @param  {string} provider The current service provider.
- * @param  {string} key      The match key to access.
- * @param  {object} data     The API results object.
- * @return {Array} 			  The results as an array.
+ * @param {string} provider The current service provider.
+ * @param {string} key      The match key to access.
+ * @param {Object} data     The API results object.
+ * @return {Array} 		  The results as an array.
  * @deprecated 5.0
  */
 function getResultById(provider, key, data) {
@@ -5803,6 +5779,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "capitalizeFirstLetter": () => (/* binding */ capitalizeFirstLetter),
 /* harmony export */   "checkRateLimit": () => (/* binding */ checkRateLimit),
+/* harmony export */   "gotoURL": () => (/* binding */ gotoURL),
 /* harmony export */   "hideTooltip": () => (/* binding */ hideTooltip),
 /* harmony export */   "isObjectEmpty": () => (/* binding */ isObjectEmpty),
 /* harmony export */   "showTooltip": () => (/* binding */ showTooltip)
@@ -5810,8 +5787,8 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Check if an object is empty.
  *
- * @param {object}   obj The object to test against.
- * @return {Boolean}     Is this an object.
+ * @param {Object} obj The object to test against.
+ * @return {boolean}   Is this an object.
  */
 function isObjectEmpty(obj) {
   if (obj === null || obj === undefined) {
@@ -5823,29 +5800,29 @@ function isObjectEmpty(obj) {
 /**
  * Check the `x-ratelimit-remaining` headers to confirm the API is available.
  *
- * @param {object} headers The request headers object.
+ * @param {Object} headers The request headers object.
  */
 function checkRateLimit(headers) {
   if (!headers) {
     return;
   }
-  var limit = headers.get('X-RateLimit-Limit') || -1;
-  var remaining = headers.get('X-RateLimit-Remaining') || -1;
+  var limit = headers.get("X-RateLimit-Limit") || -1;
+  var remaining = headers.get("X-RateLimit-Remaining") || -1;
   if (limit > -1 && parseInt(remaining) < 2) {
-    alert(instant_img_localize.api_ratelimit_msg);
+    alert(instant_img_localize.api_ratelimit_msg); // eslint-disable-line
   }
 }
 
 /**
  * Capitalize the first letter of a string.
  *
- * @param  {string} str The string to format.
- * @return {string}     The formatted string.
+ * @param {string} str The string to format.
+ * @return {string}    The formatted string.
  */
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
-var tooltipInterval = '';
+var tooltipInterval = "";
 
 /**
  * Show the tooltip.
@@ -5858,13 +5835,13 @@ function showTooltip(e) {
   var rect = target.getBoundingClientRect();
   var left = Math.round(rect.left);
   var top = Math.round(rect.top);
-  var container = target.closest('#photo-listing');
-  var tooltip = container.querySelector('#tooltip');
-  tooltip.classList.remove('over');
-  if (target.classList.contains('tooltip--above')) {
-    tooltip.classList.add('above');
+  var container = target.closest("#photo-listing");
+  var tooltip = container.querySelector("#tooltip");
+  tooltip.classList.remove("over");
+  if (target.classList.contains("tooltip--above")) {
+    tooltip.classList.add("above");
   } else {
-    tooltip.classList.remove('above');
+    tooltip.classList.remove("above");
   }
 
   // Delay Tooltip Reveal.
@@ -5877,7 +5854,7 @@ function showTooltip(e) {
     tooltip.style.left = "".concat(left, "px");
     tooltip.style.top = "".concat(top, "px");
     setTimeout(function () {
-      tooltip.classList.add('over');
+      tooltip.classList.add("over");
     }, 25);
   }, 750);
 }
@@ -5890,9 +5867,20 @@ function showTooltip(e) {
  */
 function hideTooltip(e) {
   clearInterval(tooltipInterval);
-  var container = e.currentTarget.closest('#photo-listing');
-  var tooltip = container.querySelector('#tooltip');
-  tooltip.classList.remove('over');
+  var container = e.currentTarget.closest("#photo-listing");
+  var tooltip = container.querySelector("#tooltip");
+  tooltip.classList.remove("over");
+}
+
+/**
+ * Open the URL in new window.
+ *
+ * @param {string} url The destination URL.
+ */
+function gotoURL(url) {
+  if (url && window) {
+    window.open(url, "_blank");
+  }
 }
 
 /***/ }),
@@ -5911,19 +5899,19 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Format the params for openverse.
  *
- * @param  {string} type   Query type (search, photos, id).
- * @param  {object} params Query params object.
- * @return {object} 		   Updated params.
+ * @param {string} type   Query type (search, photos, id).
+ * @param {Object} params Query params object.
+ * @return {Object} 		  Updated params.
  */
 function openverseParams(type, params) {
-  if (type === 'photos' && !params.source) {
-    // Add `wordpress` as the default `source` for openverse.
-    params['source'] = 'wordpress';
+  if (type === "photos" && !params.source) {
+    params.source = "wordpress"; // Add `wordpress` as the default `source` for openverse.
   }
-  if (type === 'search') {
+
+  if (type === "search") {
     // Exlude these sources from search.
-    var excluded = '500px, rawpixel';
-    params['excluded_source'] = excluded;
+    var excluded = "500px, rawpixel";
+    params.excluded_source = excluded;
   }
   return params;
 }
@@ -5949,23 +5937,23 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Function to trigger an image download at unsplash.com.
  * This is used to give authors download credits and nothing more.
+ *
  * @see https://help.unsplash.com/en/articles/2511258-guideline-triggering-a-download
  *
  * @param {string} download_url The URL to trigger a download.
  * @since 3.1
- * @updated 5.0
  */
 function unsplashDownload(download_url) {
-  var params = (0,_getQueryParams__WEBPACK_IMPORTED_MODULE_1__.getAuth)({}, 'unsplash');
+  var params = (0,_getQueryParams__WEBPACK_IMPORTED_MODULE_1__.getAuth)({}, "unsplash");
   params.download_url = download_url; // Append download URL to query params.
-  var url = (0,_buildURL__WEBPACK_IMPORTED_MODULE_0__["default"])('photos', params);
+  var url = (0,_buildURL__WEBPACK_IMPORTED_MODULE_0__["default"])("photos", params);
   fetch(url).then(function (data) {
     return data.json();
   }).then(function () {
     // Success, nothing else happens here
-    console.log('Image download successsfully triggered at Unsplash.');
+    console.log("Image download successsfully triggered at Unsplash."); // eslint-disable-line no-console
   })["catch"](function (error) {
-    console.warn(error);
+    console.warn(error); // eslint-disable-line no-console
   });
 }
 
@@ -5989,31 +5977,26 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Update plugin settings by specific key/value pair.
  *
- * @param {string} provider The previous provider.
- * @param {string} value 	 The value to save.
+ * @param {string} setting The previous provider.
+ * @param {string} value   The value to save.
  */
 function updatePluginSetting(setting, value) {
   var _instant_img_localize;
-  // API URL
-  var api = ((_instant_img_localize = instant_img_localize) === null || _instant_img_localize === void 0 ? void 0 : _instant_img_localize.root) && instant_img_localize.root + "instant-images/settings/";
+  var api = ((_instant_img_localize = instant_img_localize) === null || _instant_img_localize === void 0 ? void 0 : _instant_img_localize.root) + "instant-images/settings/"; // eslint-disable-line no-undef
 
-  // Data Params
-  var data = {
+  var params = {
     setting: setting,
     value: value
   };
-
-  // Config Params
   var config = {
     headers: {
       "X-WP-Nonce": instant_img_localize.nonce,
+      // eslint-disable-line no-undef
       "Content-Type": "application/json"
     }
   };
-  axios__WEBPACK_IMPORTED_MODULE_0___default().post(api, JSON.stringify(data), config).then(function (res) {
-    var response = res.data;
-  })["catch"](function (error) {
-    console.warn(error);
+  axios__WEBPACK_IMPORTED_MODULE_0___default().post(api, JSON.stringify(params), config).then(function () {})["catch"](function (error) {
+    console.warn(error); // eslint-disable-line no-console
   });
 }
 
@@ -6505,1268 +6488,6 @@ utils.htmlInit = function( WidgetClass, namespace ) {
 return utils;
 
 }));
-
-
-/***/ }),
-
-/***/ "./node_modules/focus-trap-react/dist/focus-trap-react.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/focus-trap-react/dist/focus-trap-react.js ***!
-  \****************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var React = __webpack_require__(/*! react */ "react");
-
-var ReactDOM = __webpack_require__(/*! react-dom */ "react-dom");
-
-var PropTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _require = __webpack_require__(/*! focus-trap */ "./node_modules/focus-trap/dist/focus-trap.esm.js"),
-    createFocusTrap = _require.createFocusTrap;
-
-var _require2 = __webpack_require__(/*! tabbable */ "./node_modules/tabbable/dist/index.esm.js"),
-    isFocusable = _require2.isFocusable; // TODO: These issues are related to older React features which we'll likely need
-//  to fix in order to move the code forward to the next major version of React.
-//  @see https://github.com/davidtheclark/focus-trap-react/issues/77
-
-/* eslint-disable react/no-find-dom-node */
-
-
-var FocusTrap = /*#__PURE__*/function (_React$Component) {
-  _inherits(FocusTrap, _React$Component);
-
-  var _super = _createSuper(FocusTrap);
-
-  function FocusTrap(props) {
-    var _this;
-
-    _classCallCheck(this, FocusTrap);
-
-    _this = _super.call(this, props);
-
-    _defineProperty(_assertThisInitialized(_this), "getNodeForOption", function (optionName) {
-      var _this$internalOptions;
-
-      // use internal options first, falling back to original options
-      var optionValue = (_this$internalOptions = this.internalOptions[optionName]) !== null && _this$internalOptions !== void 0 ? _this$internalOptions : this.originalOptions[optionName];
-
-      if (typeof optionValue === 'function') {
-        for (var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-          params[_key - 1] = arguments[_key];
-        }
-
-        optionValue = optionValue.apply(void 0, params);
-      }
-
-      if (optionValue === true) {
-        optionValue = undefined; // use default value
-      }
-
-      if (!optionValue) {
-        if (optionValue === undefined || optionValue === false) {
-          return optionValue;
-        } // else, empty string (invalid), null (invalid), 0 (invalid)
-
-
-        throw new Error("`".concat(optionName, "` was specified but was not a node, or did not return a node"));
-      }
-
-      var node = optionValue; // could be HTMLElement, SVGElement, or non-empty string at this point
-
-      if (typeof optionValue === 'string') {
-        var _this$getDocument;
-
-        node = (_this$getDocument = this.getDocument()) === null || _this$getDocument === void 0 ? void 0 : _this$getDocument.querySelector(optionValue); // resolve to node, or null if fails
-
-        if (!node) {
-          throw new Error("`".concat(optionName, "` as selector refers to no known node"));
-        }
-      }
-
-      return node;
-    });
-
-    _this.handleDeactivate = _this.handleDeactivate.bind(_assertThisInitialized(_this));
-    _this.handlePostDeactivate = _this.handlePostDeactivate.bind(_assertThisInitialized(_this));
-    _this.handleClickOutsideDeactivates = _this.handleClickOutsideDeactivates.bind(_assertThisInitialized(_this)); // focus-trap options used internally when creating the trap
-
-    _this.internalOptions = {
-      // We need to hijack the returnFocusOnDeactivate option,
-      // because React can move focus into the element before we arrived at
-      // this lifecycle hook (e.g. with autoFocus inputs). So the component
-      // captures the previouslyFocusedElement in componentWillMount,
-      // then (optionally) returns focus to it in componentWillUnmount.
-      returnFocusOnDeactivate: false,
-      // the rest of these are also related to deactivation of the trap, and we
-      //  need to use them and control them as well
-      checkCanReturnFocus: null,
-      onDeactivate: _this.handleDeactivate,
-      onPostDeactivate: _this.handlePostDeactivate,
-      // we need to special-case this setting as well so that we can know if we should
-      //  NOT return focus if the trap gets auto-deactivated as the result of an
-      //  outside click (otherwise, we'll always think we should return focus because
-      //  of how we manage that flag internally here)
-      clickOutsideDeactivates: _this.handleClickOutsideDeactivates
-    }; // original options provided by the consumer
-
-    _this.originalOptions = {
-      // because of the above `internalOptions`, we maintain our own flag for
-      //  this option, and default it to `true` because that's focus-trap's default
-      returnFocusOnDeactivate: true,
-      // because of the above `internalOptions`, we keep these separate since
-      //  they're part of the deactivation process which we configure (internally) to
-      //  be shared between focus-trap and focus-trap-react
-      onDeactivate: null,
-      onPostDeactivate: null,
-      checkCanReturnFocus: null,
-      // the user's setting, defaulted to false since focus-trap defaults this to false
-      clickOutsideDeactivates: false
-    };
-    var focusTrapOptions = props.focusTrapOptions;
-
-    for (var optionName in focusTrapOptions) {
-      if (!Object.prototype.hasOwnProperty.call(focusTrapOptions, optionName)) {
-        continue;
-      }
-
-      if (optionName === 'returnFocusOnDeactivate' || optionName === 'onDeactivate' || optionName === 'onPostDeactivate' || optionName === 'checkCanReturnFocus' || optionName === 'clickOutsideDeactivates') {
-        _this.originalOptions[optionName] = focusTrapOptions[optionName];
-        continue; // exclude from internalOptions
-      }
-
-      _this.internalOptions[optionName] = focusTrapOptions[optionName];
-    } // if set, `{ target: Node, allowDeactivation: boolean }` where `target` is the outside
-    //  node that was clicked, and `allowDeactivation` is the result of the consumer's
-    //  option (stored in `this.originalOptions.clickOutsideDeactivates`, which may be a
-    //  function) whether to allow or deny auto-deactivation on click on this outside node
-
-
-    _this.outsideClick = null; // elements from which to create the focus trap on mount; if a child is used
-    //  instead of the `containerElements` prop, we'll get the child's related
-    //  element when the trap renders and then is declared 'mounted'
-
-    _this.focusTrapElements = props.containerElements || []; // now we remember what the currently focused element is, not relying on focus-trap
-
-    _this.updatePreviousElement();
-
-    return _this;
-  }
-  /**
-   * Gets the configured document.
-   * @returns {Document|undefined} Configured document, falling back to the main
-   *  document, if it exists. During SSR, `undefined` is returned since the
-   *  document doesn't exist.
-   */
-
-
-  _createClass(FocusTrap, [{
-    key: "getDocument",
-    value: function getDocument() {
-      // SSR: careful to check if `document` exists before accessing it as a variable
-      return this.props.focusTrapOptions.document || (typeof document !== 'undefined' ? document : undefined);
-    }
-    /**
-     * Gets the node for the given option, which is expected to be an option that
-     *  can be either a DOM node, a string that is a selector to get a node, `false`
-     *  (if a node is explicitly NOT given), or a function that returns any of these
-     *  values.
-     * @param {string} optionName
-     * @returns {undefined | false | HTMLElement | SVGElement} Returns
-     *  `undefined` if the option is not specified; `false` if the option
-     *  resolved to `false` (node explicitly not given); otherwise, the resolved
-     *  DOM node.
-     * @throws {Error} If the option is set, not `false`, and is not, or does not
-     *  resolve to a node.
-     */
-
-  }, {
-    key: "getReturnFocusNode",
-    value: function getReturnFocusNode() {
-      var node = this.getNodeForOption('setReturnFocus', this.previouslyFocusedElement);
-      return node ? node : node === false ? false : this.previouslyFocusedElement;
-    }
-    /** Update the previously focused element with the currently focused element. */
-
-  }, {
-    key: "updatePreviousElement",
-    value: function updatePreviousElement() {
-      var currentDocument = this.getDocument();
-
-      if (currentDocument) {
-        this.previouslyFocusedElement = currentDocument.activeElement;
-      }
-    }
-  }, {
-    key: "deactivateTrap",
-    value: function deactivateTrap() {
-      // NOTE: it's possible the focus trap has already been deactivated without our knowing it,
-      //  especially if the user set the `clickOutsideDeactivates: true` option on the trap,
-      //  and the mouse was clicked on some element outside the trap; at that point, focus-trap
-      //  will initiate its auto-deactivation process, which will call our own
-      //  handleDeactivate(), which will call into this method
-      if (!this.focusTrap || !this.focusTrap.active) {
-        return;
-      }
-
-      this.focusTrap.deactivate({
-        // NOTE: we never let the trap return the focus since we do that ourselves
-        returnFocus: false,
-        // we'll call this in our own post deactivate handler so make sure the trap doesn't
-        //  do it prematurely
-        checkCanReturnFocus: null,
-        // let it call the user's original deactivate handler, if any, instead of
-        //  our own which calls back into this function
-        onDeactivate: this.originalOptions.onDeactivate // NOTE: for post deactivate, don't specify anything so that it calls the
-        //  onPostDeactivate handler specified on `this.internalOptions`
-        //  which will always be our own `handlePostDeactivate()` handler, which
-        //  will finish things off by calling the user's provided onPostDeactivate
-        //  handler, if any, at the right time
-        // onPostDeactivate: NOTHING
-
-      });
-    }
-  }, {
-    key: "handleClickOutsideDeactivates",
-    value: function handleClickOutsideDeactivates(event) {
-      // use consumer's option (or call their handler) as the permission or denial
-      var allowDeactivation = typeof this.originalOptions.clickOutsideDeactivates === 'function' ? this.originalOptions.clickOutsideDeactivates.call(null, event) // call out of context
-      : this.originalOptions.clickOutsideDeactivates; // boolean
-
-      if (allowDeactivation) {
-        // capture the outside target that was clicked so we can use it in the deactivation
-        //  process since the consumer allowed it to cause auto-deactivation
-        this.outsideClick = {
-          target: event.target,
-          allowDeactivation: allowDeactivation
-        };
-      }
-
-      return allowDeactivation;
-    }
-  }, {
-    key: "handleDeactivate",
-    value: function handleDeactivate() {
-      if (this.originalOptions.onDeactivate) {
-        this.originalOptions.onDeactivate.call(null); // call user's handler out of context
-      }
-
-      this.deactivateTrap();
-    }
-  }, {
-    key: "handlePostDeactivate",
-    value: function handlePostDeactivate() {
-      var _this2 = this;
-
-      var finishDeactivation = function finishDeactivation() {
-        var returnFocusNode = _this2.getReturnFocusNode();
-
-        var canReturnFocus = !!( // did the consumer allow it?
-        _this2.originalOptions.returnFocusOnDeactivate && // can we actually focus the node?
-        returnFocusNode !== null && returnFocusNode !== void 0 && returnFocusNode.focus && ( // was there an outside click that allowed deactivation?
-        !_this2.outsideClick || // did the consumer allow deactivation when the outside node was clicked?
-        _this2.outsideClick.allowDeactivation && // is the outside node NOT focusable (implying that it did NOT receive focus
-        //  as a result of the click-through) -- in which case do NOT restore focus
-        //  to `returnFocusNode` because focus should remain on the outside node
-        !isFocusable(_this2.outsideClick.target, _this2.internalOptions.tabbableOptions)) // if no, the restore focus to `returnFocusNode` at this point
-        );
-        var _this2$internalOption = _this2.internalOptions.preventScroll,
-            preventScroll = _this2$internalOption === void 0 ? false : _this2$internalOption;
-
-        if (canReturnFocus) {
-          // return focus to the element that had focus when the trap was activated
-          returnFocusNode.focus({
-            preventScroll: preventScroll
-          });
-        }
-
-        if (_this2.originalOptions.onPostDeactivate) {
-          _this2.originalOptions.onPostDeactivate.call(null); // don't call it in context of "this"
-
-        }
-
-        _this2.outsideClick = null; // reset: no longer needed
-      };
-
-      if (this.originalOptions.checkCanReturnFocus) {
-        this.originalOptions.checkCanReturnFocus.call(null, this.getReturnFocusNode()) // call out of context
-        .then(finishDeactivation, finishDeactivation);
-      } else {
-        finishDeactivation();
-      }
-    }
-  }, {
-    key: "setupFocusTrap",
-    value: function setupFocusTrap() {
-      if (!this.focusTrap) {
-        var focusTrapElementDOMNodes = this.focusTrapElements.map( // NOTE: `findDOMNode()` does not support CSS selectors; it'll just return
-        //  a new text node with the text wrapped in it instead of treating the
-        //  string as a selector and resolving it to a node in the DOM
-        ReactDOM.findDOMNode);
-        var nodesExist = focusTrapElementDOMNodes.some(Boolean);
-
-        if (nodesExist) {
-          // eslint-disable-next-line react/prop-types -- _createFocusTrap is an internal prop
-          this.focusTrap = this.props._createFocusTrap(focusTrapElementDOMNodes, this.internalOptions);
-
-          if (this.props.active) {
-            this.focusTrap.activate();
-          }
-
-          if (this.props.paused) {
-            this.focusTrap.pause();
-          }
-        }
-      }
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      if (this.props.active) {
-        this.setupFocusTrap();
-      } // else, wait for later activation in case the `focusTrapOptions` will be updated
-      //  again before the trap is activated (e.g. if waiting to know what the document
-      //  object will be, so the Trap must be rendered, but the consumer is waiting to
-      //  activate until they have obtained the document from a ref)
-      //  @see https://github.com/focus-trap/focus-trap-react/issues/539
-
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if (this.focusTrap) {
-        if (prevProps.containerElements !== this.props.containerElements) {
-          this.focusTrap.updateContainerElements(this.props.containerElements);
-        }
-
-        var hasActivated = !prevProps.active && this.props.active;
-        var hasDeactivated = prevProps.active && !this.props.active;
-        var hasPaused = !prevProps.paused && this.props.paused;
-        var hasUnpaused = prevProps.paused && !this.props.paused;
-
-        if (hasActivated) {
-          this.updatePreviousElement();
-          this.focusTrap.activate();
-        }
-
-        if (hasDeactivated) {
-          this.deactivateTrap();
-          return; // un/pause does nothing on an inactive trap
-        }
-
-        if (hasPaused) {
-          this.focusTrap.pause();
-        }
-
-        if (hasUnpaused) {
-          this.focusTrap.unpause();
-        }
-      } else {
-        // NOTE: if we're in `componentDidUpdate` and we don't have a trap yet,
-        //  it either means it shouldn't be active, or it should be but none of
-        //  of given `containerElements` were present in the DOM the last time
-        //  we tried to create the trap
-        if (prevProps.containerElements !== this.props.containerElements) {
-          this.focusTrapElements = this.props.containerElements;
-        } // don't create the trap unless it should be active in case the consumer
-        //  is still updating `focusTrapOptions`
-        //  @see https://github.com/focus-trap/focus-trap-react/issues/539
-
-
-        if (this.props.active) {
-          this.updatePreviousElement();
-          this.setupFocusTrap();
-        }
-      }
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.deactivateTrap();
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this3 = this;
-
-      var child = this.props.children ? React.Children.only(this.props.children) : undefined;
-
-      if (child) {
-        if (child.type && child.type === React.Fragment) {
-          throw new Error('A focus-trap cannot use a Fragment as its child container. Try replacing it with a <div> element.');
-        }
-
-        var composedRefCallback = function composedRefCallback(element) {
-          var containerElements = _this3.props.containerElements;
-
-          if (child) {
-            if (typeof child.ref === 'function') {
-              child.ref(element);
-            } else if (child.ref) {
-              child.ref.current = element;
-            }
-          }
-
-          _this3.focusTrapElements = containerElements ? containerElements : [element];
-        };
-
-        var childWithRef = React.cloneElement(child, {
-          ref: composedRefCallback
-        });
-        return childWithRef;
-      }
-
-      return null;
-    }
-  }]);
-
-  return FocusTrap;
-}(React.Component); // support server-side rendering where `Element` will not be defined
-
-
-var ElementType = typeof Element === 'undefined' ? Function : Element;
-FocusTrap.propTypes = {
-  active: PropTypes.bool,
-  paused: PropTypes.bool,
-  focusTrapOptions: PropTypes.shape({
-    document: PropTypes.object,
-    onActivate: PropTypes.func,
-    onPostActivate: PropTypes.func,
-    checkCanFocusTrap: PropTypes.func,
-    onDeactivate: PropTypes.func,
-    onPostDeactivate: PropTypes.func,
-    checkCanReturnFocus: PropTypes.func,
-    initialFocus: PropTypes.oneOfType([PropTypes.instanceOf(ElementType), PropTypes.string, PropTypes.bool, PropTypes.func]),
-    fallbackFocus: PropTypes.oneOfType([PropTypes.instanceOf(ElementType), PropTypes.string, // NOTE: does not support `false` as value (or return value from function)
-    PropTypes.func]),
-    escapeDeactivates: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-    clickOutsideDeactivates: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-    returnFocusOnDeactivate: PropTypes.bool,
-    setReturnFocus: PropTypes.oneOfType([PropTypes.instanceOf(ElementType), PropTypes.string, PropTypes.bool, PropTypes.func]),
-    allowOutsideClick: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-    preventScroll: PropTypes.bool,
-    tabbableOptions: PropTypes.shape({
-      displayCheck: PropTypes.oneOf(['full', 'non-zero-area', 'none']),
-      getShadowRoot: PropTypes.oneOfType([PropTypes.bool, PropTypes.func])
-    })
-  }),
-  containerElements: PropTypes.arrayOf(PropTypes.instanceOf(ElementType)),
-  children: PropTypes.oneOfType([PropTypes.element, // React element
-  PropTypes.instanceOf(ElementType) // DOM element
-  ]) // NOTE: _createFocusTrap is internal, for testing purposes only, so we don't
-  //  specify it here. It's expected to be set to the function returned from
-  //  require('focus-trap'), or one with a compatible interface.
-
-};
-FocusTrap.defaultProps = {
-  active: true,
-  paused: false,
-  focusTrapOptions: {},
-  _createFocusTrap: createFocusTrap
-};
-module.exports = FocusTrap;
-
-/***/ }),
-
-/***/ "./node_modules/focus-trap/dist/focus-trap.esm.js":
-/*!********************************************************!*\
-  !*** ./node_modules/focus-trap/dist/focus-trap.esm.js ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createFocusTrap": () => (/* binding */ createFocusTrap)
-/* harmony export */ });
-/* harmony import */ var tabbable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tabbable */ "./node_modules/tabbable/dist/index.esm.js");
-/*!
-* focus-trap 6.9.4
-* @license MIT, https://github.com/focus-trap/focus-trap/blob/master/LICENSE
-*/
-
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    enumerableOnly && (symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    })), keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = null != arguments[i] ? arguments[i] : {};
-    i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
-      _defineProperty(target, key, source[key]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
-      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-    });
-  }
-
-  return target;
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var activeFocusTraps = function () {
-  var trapQueue = [];
-  return {
-    activateTrap: function activateTrap(trap) {
-      if (trapQueue.length > 0) {
-        var activeTrap = trapQueue[trapQueue.length - 1];
-
-        if (activeTrap !== trap) {
-          activeTrap.pause();
-        }
-      }
-
-      var trapIndex = trapQueue.indexOf(trap);
-
-      if (trapIndex === -1) {
-        trapQueue.push(trap);
-      } else {
-        // move this existing trap to the front of the queue
-        trapQueue.splice(trapIndex, 1);
-        trapQueue.push(trap);
-      }
-    },
-    deactivateTrap: function deactivateTrap(trap) {
-      var trapIndex = trapQueue.indexOf(trap);
-
-      if (trapIndex !== -1) {
-        trapQueue.splice(trapIndex, 1);
-      }
-
-      if (trapQueue.length > 0) {
-        trapQueue[trapQueue.length - 1].unpause();
-      }
-    }
-  };
-}();
-
-var isSelectableInput = function isSelectableInput(node) {
-  return node.tagName && node.tagName.toLowerCase() === 'input' && typeof node.select === 'function';
-};
-
-var isEscapeEvent = function isEscapeEvent(e) {
-  return e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27;
-};
-
-var isTabEvent = function isTabEvent(e) {
-  return e.key === 'Tab' || e.keyCode === 9;
-};
-
-var delay = function delay(fn) {
-  return setTimeout(fn, 0);
-}; // Array.find/findIndex() are not supported on IE; this replicates enough
-//  of Array.findIndex() for our needs
-
-
-var findIndex = function findIndex(arr, fn) {
-  var idx = -1;
-  arr.every(function (value, i) {
-    if (fn(value)) {
-      idx = i;
-      return false; // break
-    }
-
-    return true; // next
-  });
-  return idx;
-};
-/**
- * Get an option's value when it could be a plain value, or a handler that provides
- *  the value.
- * @param {*} value Option's value to check.
- * @param {...*} [params] Any parameters to pass to the handler, if `value` is a function.
- * @returns {*} The `value`, or the handler's returned value.
- */
-
-
-var valueOrHandler = function valueOrHandler(value) {
-  for (var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    params[_key - 1] = arguments[_key];
-  }
-
-  return typeof value === 'function' ? value.apply(void 0, params) : value;
-};
-
-var getActualTarget = function getActualTarget(event) {
-  // NOTE: If the trap is _inside_ a shadow DOM, event.target will always be the
-  //  shadow host. However, event.target.composedPath() will be an array of
-  //  nodes "clicked" from inner-most (the actual element inside the shadow) to
-  //  outer-most (the host HTML document). If we have access to composedPath(),
-  //  then use its first element; otherwise, fall back to event.target (and
-  //  this only works for an _open_ shadow DOM; otherwise,
-  //  composedPath()[0] === event.target always).
-  return event.target.shadowRoot && typeof event.composedPath === 'function' ? event.composedPath()[0] : event.target;
-};
-
-var createFocusTrap = function createFocusTrap(elements, userOptions) {
-  // SSR: a live trap shouldn't be created in this type of environment so this
-  //  should be safe code to execute if the `document` option isn't specified
-  var doc = (userOptions === null || userOptions === void 0 ? void 0 : userOptions.document) || document;
-
-  var config = _objectSpread2({
-    returnFocusOnDeactivate: true,
-    escapeDeactivates: true,
-    delayInitialFocus: true
-  }, userOptions);
-
-  var state = {
-    // containers given to createFocusTrap()
-    // @type {Array<HTMLElement>}
-    containers: [],
-    // list of objects identifying tabbable nodes in `containers` in the trap
-    // NOTE: it's possible that a group has no tabbable nodes if nodes get removed while the trap
-    //  is active, but the trap should never get to a state where there isn't at least one group
-    //  with at least one tabbable node in it (that would lead to an error condition that would
-    //  result in an error being thrown)
-    // @type {Array<{
-    //   container: HTMLElement,
-    //   tabbableNodes: Array<HTMLElement>, // empty if none
-    //   focusableNodes: Array<HTMLElement>, // empty if none
-    //   firstTabbableNode: HTMLElement|null,
-    //   lastTabbableNode: HTMLElement|null,
-    //   nextTabbableNode: (node: HTMLElement, forward: boolean) => HTMLElement|undefined
-    // }>}
-    containerGroups: [],
-    // same order/length as `containers` list
-    // references to objects in `containerGroups`, but only those that actually have
-    //  tabbable nodes in them
-    // NOTE: same order as `containers` and `containerGroups`, but __not necessarily__
-    //  the same length
-    tabbableGroups: [],
-    nodeFocusedBeforeActivation: null,
-    mostRecentlyFocusedNode: null,
-    active: false,
-    paused: false,
-    // timer ID for when delayInitialFocus is true and initial focus in this trap
-    //  has been delayed during activation
-    delayInitialFocusTimer: undefined
-  };
-  var trap; // eslint-disable-line prefer-const -- some private functions reference it, and its methods reference private functions, so we must declare here and define later
-
-  /**
-   * Gets a configuration option value.
-   * @param {Object|undefined} configOverrideOptions If true, and option is defined in this set,
-   *  value will be taken from this object. Otherwise, value will be taken from base configuration.
-   * @param {string} optionName Name of the option whose value is sought.
-   * @param {string|undefined} [configOptionName] Name of option to use __instead of__ `optionName`
-   *  IIF `configOverrideOptions` is not defined. Otherwise, `optionName` is used.
-   */
-
-  var getOption = function getOption(configOverrideOptions, optionName, configOptionName) {
-    return configOverrideOptions && configOverrideOptions[optionName] !== undefined ? configOverrideOptions[optionName] : config[configOptionName || optionName];
-  };
-  /**
-   * Finds the index of the container that contains the element.
-   * @param {HTMLElement} element
-   * @returns {number} Index of the container in either `state.containers` or
-   *  `state.containerGroups` (the order/length of these lists are the same); -1
-   *  if the element isn't found.
-   */
-
-
-  var findContainerIndex = function findContainerIndex(element) {
-    // NOTE: search `containerGroups` because it's possible a group contains no tabbable
-    //  nodes, but still contains focusable nodes (e.g. if they all have `tabindex=-1`)
-    //  and we still need to find the element in there
-    return state.containerGroups.findIndex(function (_ref) {
-      var container = _ref.container,
-          tabbableNodes = _ref.tabbableNodes;
-      return container.contains(element) || // fall back to explicit tabbable search which will take into consideration any
-      //  web components if the `tabbableOptions.getShadowRoot` option was used for
-      //  the trap, enabling shadow DOM support in tabbable (`Node.contains()` doesn't
-      //  look inside web components even if open)
-      tabbableNodes.find(function (node) {
-        return node === element;
-      });
-    });
-  };
-  /**
-   * Gets the node for the given option, which is expected to be an option that
-   *  can be either a DOM node, a string that is a selector to get a node, `false`
-   *  (if a node is explicitly NOT given), or a function that returns any of these
-   *  values.
-   * @param {string} optionName
-   * @returns {undefined | false | HTMLElement | SVGElement} Returns
-   *  `undefined` if the option is not specified; `false` if the option
-   *  resolved to `false` (node explicitly not given); otherwise, the resolved
-   *  DOM node.
-   * @throws {Error} If the option is set, not `false`, and is not, or does not
-   *  resolve to a node.
-   */
-
-
-  var getNodeForOption = function getNodeForOption(optionName) {
-    var optionValue = config[optionName];
-
-    if (typeof optionValue === 'function') {
-      for (var _len2 = arguments.length, params = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        params[_key2 - 1] = arguments[_key2];
-      }
-
-      optionValue = optionValue.apply(void 0, params);
-    }
-
-    if (optionValue === true) {
-      optionValue = undefined; // use default value
-    }
-
-    if (!optionValue) {
-      if (optionValue === undefined || optionValue === false) {
-        return optionValue;
-      } // else, empty string (invalid), null (invalid), 0 (invalid)
-
-
-      throw new Error("`".concat(optionName, "` was specified but was not a node, or did not return a node"));
-    }
-
-    var node = optionValue; // could be HTMLElement, SVGElement, or non-empty string at this point
-
-    if (typeof optionValue === 'string') {
-      node = doc.querySelector(optionValue); // resolve to node, or null if fails
-
-      if (!node) {
-        throw new Error("`".concat(optionName, "` as selector refers to no known node"));
-      }
-    }
-
-    return node;
-  };
-
-  var getInitialFocusNode = function getInitialFocusNode() {
-    var node = getNodeForOption('initialFocus'); // false explicitly indicates we want no initialFocus at all
-
-    if (node === false) {
-      return false;
-    }
-
-    if (node === undefined) {
-      // option not specified: use fallback options
-      if (findContainerIndex(doc.activeElement) >= 0) {
-        node = doc.activeElement;
-      } else {
-        var firstTabbableGroup = state.tabbableGroups[0];
-        var firstTabbableNode = firstTabbableGroup && firstTabbableGroup.firstTabbableNode; // NOTE: `fallbackFocus` option function cannot return `false` (not supported)
-
-        node = firstTabbableNode || getNodeForOption('fallbackFocus');
-      }
-    }
-
-    if (!node) {
-      throw new Error('Your focus-trap needs to have at least one focusable element');
-    }
-
-    return node;
-  };
-
-  var updateTabbableNodes = function updateTabbableNodes() {
-    state.containerGroups = state.containers.map(function (container) {
-      var tabbableNodes = (0,tabbable__WEBPACK_IMPORTED_MODULE_0__.tabbable)(container, config.tabbableOptions); // NOTE: if we have tabbable nodes, we must have focusable nodes; focusable nodes
-      //  are a superset of tabbable nodes
-
-      var focusableNodes = (0,tabbable__WEBPACK_IMPORTED_MODULE_0__.focusable)(container, config.tabbableOptions);
-      return {
-        container: container,
-        tabbableNodes: tabbableNodes,
-        focusableNodes: focusableNodes,
-        firstTabbableNode: tabbableNodes.length > 0 ? tabbableNodes[0] : null,
-        lastTabbableNode: tabbableNodes.length > 0 ? tabbableNodes[tabbableNodes.length - 1] : null,
-
-        /**
-         * Finds the __tabbable__ node that follows the given node in the specified direction,
-         *  in this container, if any.
-         * @param {HTMLElement} node
-         * @param {boolean} [forward] True if going in forward tab order; false if going
-         *  in reverse.
-         * @returns {HTMLElement|undefined} The next tabbable node, if any.
-         */
-        nextTabbableNode: function nextTabbableNode(node) {
-          var forward = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-          // NOTE: If tabindex is positive (in order to manipulate the tab order separate
-          //  from the DOM order), this __will not work__ because the list of focusableNodes,
-          //  while it contains tabbable nodes, does not sort its nodes in any order other
-          //  than DOM order, because it can't: Where would you place focusable (but not
-          //  tabbable) nodes in that order? They have no order, because they aren't tabbale...
-          // Support for positive tabindex is already broken and hard to manage (possibly
-          //  not supportable, TBD), so this isn't going to make things worse than they
-          //  already are, and at least makes things better for the majority of cases where
-          //  tabindex is either 0/unset or negative.
-          // FYI, positive tabindex issue: https://github.com/focus-trap/focus-trap/issues/375
-          var nodeIdx = focusableNodes.findIndex(function (n) {
-            return n === node;
-          });
-
-          if (nodeIdx < 0) {
-            return undefined;
-          }
-
-          if (forward) {
-            return focusableNodes.slice(nodeIdx + 1).find(function (n) {
-              return (0,tabbable__WEBPACK_IMPORTED_MODULE_0__.isTabbable)(n, config.tabbableOptions);
-            });
-          }
-
-          return focusableNodes.slice(0, nodeIdx).reverse().find(function (n) {
-            return (0,tabbable__WEBPACK_IMPORTED_MODULE_0__.isTabbable)(n, config.tabbableOptions);
-          });
-        }
-      };
-    });
-    state.tabbableGroups = state.containerGroups.filter(function (group) {
-      return group.tabbableNodes.length > 0;
-    }); // throw if no groups have tabbable nodes and we don't have a fallback focus node either
-
-    if (state.tabbableGroups.length <= 0 && !getNodeForOption('fallbackFocus') // returning false not supported for this option
-    ) {
-      throw new Error('Your focus-trap must have at least one container with at least one tabbable node in it at all times');
-    }
-  };
-
-  var tryFocus = function tryFocus(node) {
-    if (node === false) {
-      return;
-    }
-
-    if (node === doc.activeElement) {
-      return;
-    }
-
-    if (!node || !node.focus) {
-      tryFocus(getInitialFocusNode());
-      return;
-    }
-
-    node.focus({
-      preventScroll: !!config.preventScroll
-    });
-    state.mostRecentlyFocusedNode = node;
-
-    if (isSelectableInput(node)) {
-      node.select();
-    }
-  };
-
-  var getReturnFocusNode = function getReturnFocusNode(previousActiveElement) {
-    var node = getNodeForOption('setReturnFocus', previousActiveElement);
-    return node ? node : node === false ? false : previousActiveElement;
-  }; // This needs to be done on mousedown and touchstart instead of click
-  // so that it precedes the focus event.
-
-
-  var checkPointerDown = function checkPointerDown(e) {
-    var target = getActualTarget(e);
-
-    if (findContainerIndex(target) >= 0) {
-      // allow the click since it ocurred inside the trap
-      return;
-    }
-
-    if (valueOrHandler(config.clickOutsideDeactivates, e)) {
-      // immediately deactivate the trap
-      trap.deactivate({
-        // if, on deactivation, we should return focus to the node originally-focused
-        //  when the trap was activated (or the configured `setReturnFocus` node),
-        //  then assume it's also OK to return focus to the outside node that was
-        //  just clicked, causing deactivation, as long as that node is focusable;
-        //  if it isn't focusable, then return focus to the original node focused
-        //  on activation (or the configured `setReturnFocus` node)
-        // NOTE: by setting `returnFocus: false`, deactivate() will do nothing,
-        //  which will result in the outside click setting focus to the node
-        //  that was clicked, whether it's focusable or not; by setting
-        //  `returnFocus: true`, we'll attempt to re-focus the node originally-focused
-        //  on activation (or the configured `setReturnFocus` node)
-        returnFocus: config.returnFocusOnDeactivate && !(0,tabbable__WEBPACK_IMPORTED_MODULE_0__.isFocusable)(target, config.tabbableOptions)
-      });
-      return;
-    } // This is needed for mobile devices.
-    // (If we'll only let `click` events through,
-    // then on mobile they will be blocked anyways if `touchstart` is blocked.)
-
-
-    if (valueOrHandler(config.allowOutsideClick, e)) {
-      // allow the click outside the trap to take place
-      return;
-    } // otherwise, prevent the click
-
-
-    e.preventDefault();
-  }; // In case focus escapes the trap for some strange reason, pull it back in.
-
-
-  var checkFocusIn = function checkFocusIn(e) {
-    var target = getActualTarget(e);
-    var targetContained = findContainerIndex(target) >= 0; // In Firefox when you Tab out of an iframe the Document is briefly focused.
-
-    if (targetContained || target instanceof Document) {
-      if (targetContained) {
-        state.mostRecentlyFocusedNode = target;
-      }
-    } else {
-      // escaped! pull it back in to where it just left
-      e.stopImmediatePropagation();
-      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());
-    }
-  }; // Hijack Tab events on the first and last focusable nodes of the trap,
-  // in order to prevent focus from escaping. If it escapes for even a
-  // moment it can end up scrolling the page and causing confusion so we
-  // kind of need to capture the action at the keydown phase.
-
-
-  var checkTab = function checkTab(e) {
-    var target = getActualTarget(e);
-    updateTabbableNodes();
-    var destinationNode = null;
-
-    if (state.tabbableGroups.length > 0) {
-      // make sure the target is actually contained in a group
-      // NOTE: the target may also be the container itself if it's focusable
-      //  with tabIndex='-1' and was given initial focus
-      var containerIndex = findContainerIndex(target);
-      var containerGroup = containerIndex >= 0 ? state.containerGroups[containerIndex] : undefined;
-
-      if (containerIndex < 0) {
-        // target not found in any group: quite possible focus has escaped the trap,
-        //  so bring it back in to...
-        if (e.shiftKey) {
-          // ...the last node in the last group
-          destinationNode = state.tabbableGroups[state.tabbableGroups.length - 1].lastTabbableNode;
-        } else {
-          // ...the first node in the first group
-          destinationNode = state.tabbableGroups[0].firstTabbableNode;
-        }
-      } else if (e.shiftKey) {
-        // REVERSE
-        // is the target the first tabbable node in a group?
-        var startOfGroupIndex = findIndex(state.tabbableGroups, function (_ref2) {
-          var firstTabbableNode = _ref2.firstTabbableNode;
-          return target === firstTabbableNode;
-        });
-
-        if (startOfGroupIndex < 0 && (containerGroup.container === target || (0,tabbable__WEBPACK_IMPORTED_MODULE_0__.isFocusable)(target, config.tabbableOptions) && !(0,tabbable__WEBPACK_IMPORTED_MODULE_0__.isTabbable)(target, config.tabbableOptions) && !containerGroup.nextTabbableNode(target, false))) {
-          // an exception case where the target is either the container itself, or
-          //  a non-tabbable node that was given focus (i.e. tabindex is negative
-          //  and user clicked on it or node was programmatically given focus)
-          //  and is not followed by any other tabbable node, in which
-          //  case, we should handle shift+tab as if focus were on the container's
-          //  first tabbable node, and go to the last tabbable node of the LAST group
-          startOfGroupIndex = containerIndex;
-        }
-
-        if (startOfGroupIndex >= 0) {
-          // YES: then shift+tab should go to the last tabbable node in the
-          //  previous group (and wrap around to the last tabbable node of
-          //  the LAST group if it's the first tabbable node of the FIRST group)
-          var destinationGroupIndex = startOfGroupIndex === 0 ? state.tabbableGroups.length - 1 : startOfGroupIndex - 1;
-          var destinationGroup = state.tabbableGroups[destinationGroupIndex];
-          destinationNode = destinationGroup.lastTabbableNode;
-        }
-      } else {
-        // FORWARD
-        // is the target the last tabbable node in a group?
-        var lastOfGroupIndex = findIndex(state.tabbableGroups, function (_ref3) {
-          var lastTabbableNode = _ref3.lastTabbableNode;
-          return target === lastTabbableNode;
-        });
-
-        if (lastOfGroupIndex < 0 && (containerGroup.container === target || (0,tabbable__WEBPACK_IMPORTED_MODULE_0__.isFocusable)(target, config.tabbableOptions) && !(0,tabbable__WEBPACK_IMPORTED_MODULE_0__.isTabbable)(target, config.tabbableOptions) && !containerGroup.nextTabbableNode(target))) {
-          // an exception case where the target is the container itself, or
-          //  a non-tabbable node that was given focus (i.e. tabindex is negative
-          //  and user clicked on it or node was programmatically given focus)
-          //  and is not followed by any other tabbable node, in which
-          //  case, we should handle tab as if focus were on the container's
-          //  last tabbable node, and go to the first tabbable node of the FIRST group
-          lastOfGroupIndex = containerIndex;
-        }
-
-        if (lastOfGroupIndex >= 0) {
-          // YES: then tab should go to the first tabbable node in the next
-          //  group (and wrap around to the first tabbable node of the FIRST
-          //  group if it's the last tabbable node of the LAST group)
-          var _destinationGroupIndex = lastOfGroupIndex === state.tabbableGroups.length - 1 ? 0 : lastOfGroupIndex + 1;
-
-          var _destinationGroup = state.tabbableGroups[_destinationGroupIndex];
-          destinationNode = _destinationGroup.firstTabbableNode;
-        }
-      }
-    } else {
-      // NOTE: the fallbackFocus option does not support returning false to opt-out
-      destinationNode = getNodeForOption('fallbackFocus');
-    }
-
-    if (destinationNode) {
-      e.preventDefault();
-      tryFocus(destinationNode);
-    } // else, let the browser take care of [shift+]tab and move the focus
-
-  };
-
-  var checkKey = function checkKey(e) {
-    if (isEscapeEvent(e) && valueOrHandler(config.escapeDeactivates, e) !== false) {
-      e.preventDefault();
-      trap.deactivate();
-      return;
-    }
-
-    if (isTabEvent(e)) {
-      checkTab(e);
-      return;
-    }
-  };
-
-  var checkClick = function checkClick(e) {
-    var target = getActualTarget(e);
-
-    if (findContainerIndex(target) >= 0) {
-      return;
-    }
-
-    if (valueOrHandler(config.clickOutsideDeactivates, e)) {
-      return;
-    }
-
-    if (valueOrHandler(config.allowOutsideClick, e)) {
-      return;
-    }
-
-    e.preventDefault();
-    e.stopImmediatePropagation();
-  }; //
-  // EVENT LISTENERS
-  //
-
-
-  var addListeners = function addListeners() {
-    if (!state.active) {
-      return;
-    } // There can be only one listening focus trap at a time
-
-
-    activeFocusTraps.activateTrap(trap); // Delay ensures that the focused element doesn't capture the event
-    // that caused the focus trap activation.
-
-    state.delayInitialFocusTimer = config.delayInitialFocus ? delay(function () {
-      tryFocus(getInitialFocusNode());
-    }) : tryFocus(getInitialFocusNode());
-    doc.addEventListener('focusin', checkFocusIn, true);
-    doc.addEventListener('mousedown', checkPointerDown, {
-      capture: true,
-      passive: false
-    });
-    doc.addEventListener('touchstart', checkPointerDown, {
-      capture: true,
-      passive: false
-    });
-    doc.addEventListener('click', checkClick, {
-      capture: true,
-      passive: false
-    });
-    doc.addEventListener('keydown', checkKey, {
-      capture: true,
-      passive: false
-    });
-    return trap;
-  };
-
-  var removeListeners = function removeListeners() {
-    if (!state.active) {
-      return;
-    }
-
-    doc.removeEventListener('focusin', checkFocusIn, true);
-    doc.removeEventListener('mousedown', checkPointerDown, true);
-    doc.removeEventListener('touchstart', checkPointerDown, true);
-    doc.removeEventListener('click', checkClick, true);
-    doc.removeEventListener('keydown', checkKey, true);
-    return trap;
-  }; //
-  // TRAP DEFINITION
-  //
-
-
-  trap = {
-    get active() {
-      return state.active;
-    },
-
-    get paused() {
-      return state.paused;
-    },
-
-    activate: function activate(activateOptions) {
-      if (state.active) {
-        return this;
-      }
-
-      var onActivate = getOption(activateOptions, 'onActivate');
-      var onPostActivate = getOption(activateOptions, 'onPostActivate');
-      var checkCanFocusTrap = getOption(activateOptions, 'checkCanFocusTrap');
-
-      if (!checkCanFocusTrap) {
-        updateTabbableNodes();
-      }
-
-      state.active = true;
-      state.paused = false;
-      state.nodeFocusedBeforeActivation = doc.activeElement;
-
-      if (onActivate) {
-        onActivate();
-      }
-
-      var finishActivation = function finishActivation() {
-        if (checkCanFocusTrap) {
-          updateTabbableNodes();
-        }
-
-        addListeners();
-
-        if (onPostActivate) {
-          onPostActivate();
-        }
-      };
-
-      if (checkCanFocusTrap) {
-        checkCanFocusTrap(state.containers.concat()).then(finishActivation, finishActivation);
-        return this;
-      }
-
-      finishActivation();
-      return this;
-    },
-    deactivate: function deactivate(deactivateOptions) {
-      if (!state.active) {
-        return this;
-      }
-
-      var options = _objectSpread2({
-        onDeactivate: config.onDeactivate,
-        onPostDeactivate: config.onPostDeactivate,
-        checkCanReturnFocus: config.checkCanReturnFocus
-      }, deactivateOptions);
-
-      clearTimeout(state.delayInitialFocusTimer); // noop if undefined
-
-      state.delayInitialFocusTimer = undefined;
-      removeListeners();
-      state.active = false;
-      state.paused = false;
-      activeFocusTraps.deactivateTrap(trap);
-      var onDeactivate = getOption(options, 'onDeactivate');
-      var onPostDeactivate = getOption(options, 'onPostDeactivate');
-      var checkCanReturnFocus = getOption(options, 'checkCanReturnFocus');
-      var returnFocus = getOption(options, 'returnFocus', 'returnFocusOnDeactivate');
-
-      if (onDeactivate) {
-        onDeactivate();
-      }
-
-      var finishDeactivation = function finishDeactivation() {
-        delay(function () {
-          if (returnFocus) {
-            tryFocus(getReturnFocusNode(state.nodeFocusedBeforeActivation));
-          }
-
-          if (onPostDeactivate) {
-            onPostDeactivate();
-          }
-        });
-      };
-
-      if (returnFocus && checkCanReturnFocus) {
-        checkCanReturnFocus(getReturnFocusNode(state.nodeFocusedBeforeActivation)).then(finishDeactivation, finishDeactivation);
-        return this;
-      }
-
-      finishDeactivation();
-      return this;
-    },
-    pause: function pause() {
-      if (state.paused || !state.active) {
-        return this;
-      }
-
-      state.paused = true;
-      removeListeners();
-      return this;
-    },
-    unpause: function unpause() {
-      if (!state.paused || !state.active) {
-        return this;
-      }
-
-      state.paused = false;
-      updateTabbableNodes();
-      addListeners();
-      return this;
-    },
-    updateContainerElements: function updateContainerElements(containerElements) {
-      var elementsAsArray = [].concat(containerElements).filter(Boolean);
-      state.containers = elementsAsArray.map(function (element) {
-        return typeof element === 'string' ? doc.querySelector(element) : element;
-      });
-
-      if (state.active) {
-        updateTabbableNodes();
-      }
-
-      return this;
-    }
-  }; // initialize container elements
-
-  trap.updateContainerElements(elements);
-  return trap;
-};
-
-
-//# sourceMappingURL=focus-trap.esm.js.map
 
 
 /***/ }),
@@ -8597,107 +7318,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   return Masonry;
 
 }));
-
-
-/***/ }),
-
-/***/ "./node_modules/object-assign/index.js":
-/*!*********************************************!*\
-  !*** ./node_modules/object-assign/index.js ***!
-  \*********************************************/
-/***/ ((module) => {
-
-"use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
 
 
 /***/ }),
@@ -10184,1519 +8804,6 @@ return Outlayer;
 
 /***/ }),
 
-/***/ "./node_modules/prop-types/checkPropTypes.js":
-/*!***************************************************!*\
-  !*** ./node_modules/prop-types/checkPropTypes.js ***!
-  \***************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var printWarning = function() {};
-
-if (true) {
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
-  var loggedTypeFailures = {};
-  var has = __webpack_require__(/*! ./lib/has */ "./node_modules/prop-types/lib/has.js");
-
-  printWarning = function(text) {
-    var message = 'Warning: ' + text;
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) { /**/ }
-  };
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (true) {
-    for (var typeSpecName in typeSpecs) {
-      if (has(typeSpecs, typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          if (typeof typeSpecs[typeSpecName] !== 'function') {
-            var err = Error(
-              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
-              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.' +
-              'This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.'
-            );
-            err.name = 'Invariant Violation';
-            throw err;
-          }
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        if (error && !(error instanceof Error)) {
-          printWarning(
-            (componentName || 'React class') + ': type specification of ' +
-            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
-            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
-            'You may have forgotten to pass an argument to the type checker ' +
-            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
-            'shape all require an argument).'
-          );
-        }
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          printWarning(
-            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
-          );
-        }
-      }
-    }
-  }
-}
-
-/**
- * Resets warning cache when testing.
- *
- * @private
- */
-checkPropTypes.resetWarningCache = function() {
-  if (true) {
-    loggedTypeFailures = {};
-  }
-}
-
-module.exports = checkPropTypes;
-
-
-/***/ }),
-
-/***/ "./node_modules/prop-types/factoryWithTypeCheckers.js":
-/*!************************************************************!*\
-  !*** ./node_modules/prop-types/factoryWithTypeCheckers.js ***!
-  \************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/prop-types/node_modules/react-is/index.js");
-var assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
-
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
-var has = __webpack_require__(/*! ./lib/has */ "./node_modules/prop-types/lib/has.js");
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ "./node_modules/prop-types/checkPropTypes.js");
-
-var printWarning = function() {};
-
-if (true) {
-  printWarning = function(text) {
-    var message = 'Warning: ' + text;
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-}
-
-function emptyFunctionThatReturnsNull() {
-  return null;
-}
-
-module.exports = function(isValidElement, throwOnDirectAccess) {
-  /* global Symbol */
-  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
-  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
-
-  /**
-   * Returns the iterator method function contained on the iterable object.
-   *
-   * Be sure to invoke the function with the iterable as context:
-   *
-   *     var iteratorFn = getIteratorFn(myIterable);
-   *     if (iteratorFn) {
-   *       var iterator = iteratorFn.call(myIterable);
-   *       ...
-   *     }
-   *
-   * @param {?object} maybeIterable
-   * @return {?function}
-   */
-  function getIteratorFn(maybeIterable) {
-    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
-    if (typeof iteratorFn === 'function') {
-      return iteratorFn;
-    }
-  }
-
-  /**
-   * Collection of methods that allow declaration and validation of props that are
-   * supplied to React components. Example usage:
-   *
-   *   var Props = require('ReactPropTypes');
-   *   var MyArticle = React.createClass({
-   *     propTypes: {
-   *       // An optional string prop named "description".
-   *       description: Props.string,
-   *
-   *       // A required enum prop named "category".
-   *       category: Props.oneOf(['News','Photos']).isRequired,
-   *
-   *       // A prop named "dialog" that requires an instance of Dialog.
-   *       dialog: Props.instanceOf(Dialog).isRequired
-   *     },
-   *     render: function() { ... }
-   *   });
-   *
-   * A more formal specification of how these methods are used:
-   *
-   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
-   *   decl := ReactPropTypes.{type}(.isRequired)?
-   *
-   * Each and every declaration produces a function with the same signature. This
-   * allows the creation of custom validation functions. For example:
-   *
-   *  var MyLink = React.createClass({
-   *    propTypes: {
-   *      // An optional string or URI prop named "href".
-   *      href: function(props, propName, componentName) {
-   *        var propValue = props[propName];
-   *        if (propValue != null && typeof propValue !== 'string' &&
-   *            !(propValue instanceof URI)) {
-   *          return new Error(
-   *            'Expected a string or an URI for ' + propName + ' in ' +
-   *            componentName
-   *          );
-   *        }
-   *      }
-   *    },
-   *    render: function() {...}
-   *  });
-   *
-   * @internal
-   */
-
-  var ANONYMOUS = '<<anonymous>>';
-
-  // Important!
-  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
-  var ReactPropTypes = {
-    array: createPrimitiveTypeChecker('array'),
-    bigint: createPrimitiveTypeChecker('bigint'),
-    bool: createPrimitiveTypeChecker('boolean'),
-    func: createPrimitiveTypeChecker('function'),
-    number: createPrimitiveTypeChecker('number'),
-    object: createPrimitiveTypeChecker('object'),
-    string: createPrimitiveTypeChecker('string'),
-    symbol: createPrimitiveTypeChecker('symbol'),
-
-    any: createAnyTypeChecker(),
-    arrayOf: createArrayOfTypeChecker,
-    element: createElementTypeChecker(),
-    elementType: createElementTypeTypeChecker(),
-    instanceOf: createInstanceTypeChecker,
-    node: createNodeChecker(),
-    objectOf: createObjectOfTypeChecker,
-    oneOf: createEnumTypeChecker,
-    oneOfType: createUnionTypeChecker,
-    shape: createShapeTypeChecker,
-    exact: createStrictShapeTypeChecker,
-  };
-
-  /**
-   * inlined Object.is polyfill to avoid requiring consumers ship their own
-   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-   */
-  /*eslint-disable no-self-compare*/
-  function is(x, y) {
-    // SameValue algorithm
-    if (x === y) {
-      // Steps 1-5, 7-10
-      // Steps 6.b-6.e: +0 != -0
-      return x !== 0 || 1 / x === 1 / y;
-    } else {
-      // Step 6.a: NaN == NaN
-      return x !== x && y !== y;
-    }
-  }
-  /*eslint-enable no-self-compare*/
-
-  /**
-   * We use an Error-like object for backward compatibility as people may call
-   * PropTypes directly and inspect their output. However, we don't use real
-   * Errors anymore. We don't inspect their stack anyway, and creating them
-   * is prohibitively expensive if they are created too often, such as what
-   * happens in oneOfType() for any type before the one that matched.
-   */
-  function PropTypeError(message, data) {
-    this.message = message;
-    this.data = data && typeof data === 'object' ? data: {};
-    this.stack = '';
-  }
-  // Make `instanceof Error` still work for returned errors.
-  PropTypeError.prototype = Error.prototype;
-
-  function createChainableTypeChecker(validate) {
-    if (true) {
-      var manualPropTypeCallCache = {};
-      var manualPropTypeWarningCount = 0;
-    }
-    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
-      componentName = componentName || ANONYMOUS;
-      propFullName = propFullName || propName;
-
-      if (secret !== ReactPropTypesSecret) {
-        if (throwOnDirectAccess) {
-          // New behavior only for users of `prop-types` package
-          var err = new Error(
-            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-            'Use `PropTypes.checkPropTypes()` to call them. ' +
-            'Read more at http://fb.me/use-check-prop-types'
-          );
-          err.name = 'Invariant Violation';
-          throw err;
-        } else if ( true && typeof console !== 'undefined') {
-          // Old behavior for people using React.PropTypes
-          var cacheKey = componentName + ':' + propName;
-          if (
-            !manualPropTypeCallCache[cacheKey] &&
-            // Avoid spamming the console because they are often not actionable except for lib authors
-            manualPropTypeWarningCount < 3
-          ) {
-            printWarning(
-              'You are manually calling a React.PropTypes validation ' +
-              'function for the `' + propFullName + '` prop on `' + componentName + '`. This is deprecated ' +
-              'and will throw in the standalone `prop-types` package. ' +
-              'You may be seeing this warning due to a third-party PropTypes ' +
-              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.'
-            );
-            manualPropTypeCallCache[cacheKey] = true;
-            manualPropTypeWarningCount++;
-          }
-        }
-      }
-      if (props[propName] == null) {
-        if (isRequired) {
-          if (props[propName] === null) {
-            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
-          }
-          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
-        }
-        return null;
-      } else {
-        return validate(props, propName, componentName, location, propFullName);
-      }
-    }
-
-    var chainedCheckType = checkType.bind(null, false);
-    chainedCheckType.isRequired = checkType.bind(null, true);
-
-    return chainedCheckType;
-  }
-
-  function createPrimitiveTypeChecker(expectedType) {
-    function validate(props, propName, componentName, location, propFullName, secret) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== expectedType) {
-        // `propValue` being instance of, say, date/regexp, pass the 'object'
-        // check, but we can offer a more precise error message here rather than
-        // 'of type `object`'.
-        var preciseType = getPreciseType(propValue);
-
-        return new PropTypeError(
-          'Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'),
-          {expectedType: expectedType}
-        );
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createAnyTypeChecker() {
-    return createChainableTypeChecker(emptyFunctionThatReturnsNull);
-  }
-
-  function createArrayOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
-      }
-      var propValue = props[propName];
-      if (!Array.isArray(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
-      }
-      for (var i = 0; i < propValue.length; i++) {
-        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
-        if (error instanceof Error) {
-          return error;
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createElementTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      if (!isValidElement(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createElementTypeTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      if (!ReactIs.isValidElementType(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement type.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createInstanceTypeChecker(expectedClass) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!(props[propName] instanceof expectedClass)) {
-        var expectedClassName = expectedClass.name || ANONYMOUS;
-        var actualClassName = getClassName(props[propName]);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createEnumTypeChecker(expectedValues) {
-    if (!Array.isArray(expectedValues)) {
-      if (true) {
-        if (arguments.length > 1) {
-          printWarning(
-            'Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' +
-            'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).'
-          );
-        } else {
-          printWarning('Invalid argument supplied to oneOf, expected an array.');
-        }
-      }
-      return emptyFunctionThatReturnsNull;
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      for (var i = 0; i < expectedValues.length; i++) {
-        if (is(propValue, expectedValues[i])) {
-          return null;
-        }
-      }
-
-      var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
-        var type = getPreciseType(value);
-        if (type === 'symbol') {
-          return String(value);
-        }
-        return value;
-      });
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + String(propValue) + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createObjectOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
-      }
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
-      }
-      for (var key in propValue) {
-        if (has(propValue, key)) {
-          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-          if (error instanceof Error) {
-            return error;
-          }
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createUnionTypeChecker(arrayOfTypeCheckers) {
-    if (!Array.isArray(arrayOfTypeCheckers)) {
-       true ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : 0;
-      return emptyFunctionThatReturnsNull;
-    }
-
-    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-      var checker = arrayOfTypeCheckers[i];
-      if (typeof checker !== 'function') {
-        printWarning(
-          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
-          'received ' + getPostfixForTypeWarning(checker) + ' at index ' + i + '.'
-        );
-        return emptyFunctionThatReturnsNull;
-      }
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      var expectedTypes = [];
-      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-        var checker = arrayOfTypeCheckers[i];
-        var checkerResult = checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret);
-        if (checkerResult == null) {
-          return null;
-        }
-        if (checkerResult.data && has(checkerResult.data, 'expectedType')) {
-          expectedTypes.push(checkerResult.data.expectedType);
-        }
-      }
-      var expectedTypesMessage = (expectedTypes.length > 0) ? ', expected one of type [' + expectedTypes.join(', ') + ']': '';
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`' + expectedTypesMessage + '.'));
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createNodeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!isNode(props[propName])) {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function invalidValidatorError(componentName, location, propFullName, key, type) {
-    return new PropTypeError(
-      (componentName || 'React class') + ': ' + location + ' type `' + propFullName + '.' + key + '` is invalid; ' +
-      'it must be a function, usually from the `prop-types` package, but received `' + type + '`.'
-    );
-  }
-
-  function createShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      }
-      for (var key in shapeTypes) {
-        var checker = shapeTypes[key];
-        if (typeof checker !== 'function') {
-          return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
-        }
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-        if (error) {
-          return error;
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createStrictShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      }
-      // We need to check all keys in case some are required but missing from props.
-      var allKeys = assign({}, props[propName], shapeTypes);
-      for (var key in allKeys) {
-        var checker = shapeTypes[key];
-        if (has(shapeTypes, key) && typeof checker !== 'function') {
-          return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
-        }
-        if (!checker) {
-          return new PropTypeError(
-            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
-            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
-            '\nValid keys: ' + JSON.stringify(Object.keys(shapeTypes), null, '  ')
-          );
-        }
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-        if (error) {
-          return error;
-        }
-      }
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function isNode(propValue) {
-    switch (typeof propValue) {
-      case 'number':
-      case 'string':
-      case 'undefined':
-        return true;
-      case 'boolean':
-        return !propValue;
-      case 'object':
-        if (Array.isArray(propValue)) {
-          return propValue.every(isNode);
-        }
-        if (propValue === null || isValidElement(propValue)) {
-          return true;
-        }
-
-        var iteratorFn = getIteratorFn(propValue);
-        if (iteratorFn) {
-          var iterator = iteratorFn.call(propValue);
-          var step;
-          if (iteratorFn !== propValue.entries) {
-            while (!(step = iterator.next()).done) {
-              if (!isNode(step.value)) {
-                return false;
-              }
-            }
-          } else {
-            // Iterator will provide entry [k,v] tuples rather than values.
-            while (!(step = iterator.next()).done) {
-              var entry = step.value;
-              if (entry) {
-                if (!isNode(entry[1])) {
-                  return false;
-                }
-              }
-            }
-          }
-        } else {
-          return false;
-        }
-
-        return true;
-      default:
-        return false;
-    }
-  }
-
-  function isSymbol(propType, propValue) {
-    // Native Symbol.
-    if (propType === 'symbol') {
-      return true;
-    }
-
-    // falsy value can't be a Symbol
-    if (!propValue) {
-      return false;
-    }
-
-    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
-    if (propValue['@@toStringTag'] === 'Symbol') {
-      return true;
-    }
-
-    // Fallback for non-spec compliant Symbols which are polyfilled.
-    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
-      return true;
-    }
-
-    return false;
-  }
-
-  // Equivalent of `typeof` but with special handling for array and regexp.
-  function getPropType(propValue) {
-    var propType = typeof propValue;
-    if (Array.isArray(propValue)) {
-      return 'array';
-    }
-    if (propValue instanceof RegExp) {
-      // Old webkits (at least until Android 4.0) return 'function' rather than
-      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
-      // passes PropTypes.object.
-      return 'object';
-    }
-    if (isSymbol(propType, propValue)) {
-      return 'symbol';
-    }
-    return propType;
-  }
-
-  // This handles more types than `getPropType`. Only used for error messages.
-  // See `createPrimitiveTypeChecker`.
-  function getPreciseType(propValue) {
-    if (typeof propValue === 'undefined' || propValue === null) {
-      return '' + propValue;
-    }
-    var propType = getPropType(propValue);
-    if (propType === 'object') {
-      if (propValue instanceof Date) {
-        return 'date';
-      } else if (propValue instanceof RegExp) {
-        return 'regexp';
-      }
-    }
-    return propType;
-  }
-
-  // Returns a string that is postfixed to a warning about an invalid type.
-  // For example, "undefined" or "of type array"
-  function getPostfixForTypeWarning(value) {
-    var type = getPreciseType(value);
-    switch (type) {
-      case 'array':
-      case 'object':
-        return 'an ' + type;
-      case 'boolean':
-      case 'date':
-      case 'regexp':
-        return 'a ' + type;
-      default:
-        return type;
-    }
-  }
-
-  // Returns class name of the object, if any.
-  function getClassName(propValue) {
-    if (!propValue.constructor || !propValue.constructor.name) {
-      return ANONYMOUS;
-    }
-    return propValue.constructor.name;
-  }
-
-  ReactPropTypes.checkPropTypes = checkPropTypes;
-  ReactPropTypes.resetWarningCache = checkPropTypes.resetWarningCache;
-  ReactPropTypes.PropTypes = ReactPropTypes;
-
-  return ReactPropTypes;
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/prop-types/index.js":
-/*!******************************************!*\
-  !*** ./node_modules/prop-types/index.js ***!
-  \******************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (true) {
-  var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/prop-types/node_modules/react-is/index.js");
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ "./node_modules/prop-types/factoryWithTypeCheckers.js")(ReactIs.isElement, throwOnDirectAccess);
-} else {}
-
-
-/***/ }),
-
-/***/ "./node_modules/prop-types/lib/ReactPropTypesSecret.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
-  \*************************************************************/
-/***/ ((module) => {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-module.exports = ReactPropTypesSecret;
-
-
-/***/ }),
-
-/***/ "./node_modules/prop-types/lib/has.js":
-/*!********************************************!*\
-  !*** ./node_modules/prop-types/lib/has.js ***!
-  \********************************************/
-/***/ ((module) => {
-
-module.exports = Function.call.bind(Object.prototype.hasOwnProperty);
-
-
-/***/ }),
-
-/***/ "./node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js ***!
-  \***********************************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-/** @license React v16.13.1
- * react-is.development.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-
-
-if (true) {
-  (function() {
-'use strict';
-
-// The Symbol used to tag the ReactElement-like types. If there is no native Symbol
-// nor polyfill, then a plain number is used for performance.
-var hasSymbol = typeof Symbol === 'function' && Symbol.for;
-var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 0xeac7;
-var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 0xeaca;
-var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 0xeacb;
-var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 0xeacc;
-var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 0xead2;
-var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 0xeacd;
-var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace; // TODO: We don't use AsyncMode or ConcurrentMode anymore. They were temporary
-// (unstable) APIs that have been removed. Can we remove the symbols?
-
-var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for('react.async_mode') : 0xeacf;
-var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 0xeacf;
-var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 0xead0;
-var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 0xead1;
-var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for('react.suspense_list') : 0xead8;
-var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 0xead3;
-var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 0xead4;
-var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for('react.block') : 0xead9;
-var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for('react.fundamental') : 0xead5;
-var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for('react.responder') : 0xead6;
-var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for('react.scope') : 0xead7;
-
-function isValidElementType(type) {
-  return typeof type === 'string' || typeof type === 'function' || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
-  type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
-}
-
-function typeOf(object) {
-  if (typeof object === 'object' && object !== null) {
-    var $$typeof = object.$$typeof;
-
-    switch ($$typeof) {
-      case REACT_ELEMENT_TYPE:
-        var type = object.type;
-
-        switch (type) {
-          case REACT_ASYNC_MODE_TYPE:
-          case REACT_CONCURRENT_MODE_TYPE:
-          case REACT_FRAGMENT_TYPE:
-          case REACT_PROFILER_TYPE:
-          case REACT_STRICT_MODE_TYPE:
-          case REACT_SUSPENSE_TYPE:
-            return type;
-
-          default:
-            var $$typeofType = type && type.$$typeof;
-
-            switch ($$typeofType) {
-              case REACT_CONTEXT_TYPE:
-              case REACT_FORWARD_REF_TYPE:
-              case REACT_LAZY_TYPE:
-              case REACT_MEMO_TYPE:
-              case REACT_PROVIDER_TYPE:
-                return $$typeofType;
-
-              default:
-                return $$typeof;
-            }
-
-        }
-
-      case REACT_PORTAL_TYPE:
-        return $$typeof;
-    }
-  }
-
-  return undefined;
-} // AsyncMode is deprecated along with isAsyncMode
-
-var AsyncMode = REACT_ASYNC_MODE_TYPE;
-var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
-var ContextConsumer = REACT_CONTEXT_TYPE;
-var ContextProvider = REACT_PROVIDER_TYPE;
-var Element = REACT_ELEMENT_TYPE;
-var ForwardRef = REACT_FORWARD_REF_TYPE;
-var Fragment = REACT_FRAGMENT_TYPE;
-var Lazy = REACT_LAZY_TYPE;
-var Memo = REACT_MEMO_TYPE;
-var Portal = REACT_PORTAL_TYPE;
-var Profiler = REACT_PROFILER_TYPE;
-var StrictMode = REACT_STRICT_MODE_TYPE;
-var Suspense = REACT_SUSPENSE_TYPE;
-var hasWarnedAboutDeprecatedIsAsyncMode = false; // AsyncMode should be deprecated
-
-function isAsyncMode(object) {
-  {
-    if (!hasWarnedAboutDeprecatedIsAsyncMode) {
-      hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
-
-      console['warn']('The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 17+. Update your code to use ' + 'ReactIs.isConcurrentMode() instead. It has the exact same API.');
-    }
-  }
-
-  return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
-}
-function isConcurrentMode(object) {
-  return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
-}
-function isContextConsumer(object) {
-  return typeOf(object) === REACT_CONTEXT_TYPE;
-}
-function isContextProvider(object) {
-  return typeOf(object) === REACT_PROVIDER_TYPE;
-}
-function isElement(object) {
-  return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-}
-function isForwardRef(object) {
-  return typeOf(object) === REACT_FORWARD_REF_TYPE;
-}
-function isFragment(object) {
-  return typeOf(object) === REACT_FRAGMENT_TYPE;
-}
-function isLazy(object) {
-  return typeOf(object) === REACT_LAZY_TYPE;
-}
-function isMemo(object) {
-  return typeOf(object) === REACT_MEMO_TYPE;
-}
-function isPortal(object) {
-  return typeOf(object) === REACT_PORTAL_TYPE;
-}
-function isProfiler(object) {
-  return typeOf(object) === REACT_PROFILER_TYPE;
-}
-function isStrictMode(object) {
-  return typeOf(object) === REACT_STRICT_MODE_TYPE;
-}
-function isSuspense(object) {
-  return typeOf(object) === REACT_SUSPENSE_TYPE;
-}
-
-exports.AsyncMode = AsyncMode;
-exports.ConcurrentMode = ConcurrentMode;
-exports.ContextConsumer = ContextConsumer;
-exports.ContextProvider = ContextProvider;
-exports.Element = Element;
-exports.ForwardRef = ForwardRef;
-exports.Fragment = Fragment;
-exports.Lazy = Lazy;
-exports.Memo = Memo;
-exports.Portal = Portal;
-exports.Profiler = Profiler;
-exports.StrictMode = StrictMode;
-exports.Suspense = Suspense;
-exports.isAsyncMode = isAsyncMode;
-exports.isConcurrentMode = isConcurrentMode;
-exports.isContextConsumer = isContextConsumer;
-exports.isContextProvider = isContextProvider;
-exports.isElement = isElement;
-exports.isForwardRef = isForwardRef;
-exports.isFragment = isFragment;
-exports.isLazy = isLazy;
-exports.isMemo = isMemo;
-exports.isPortal = isPortal;
-exports.isProfiler = isProfiler;
-exports.isStrictMode = isStrictMode;
-exports.isSuspense = isSuspense;
-exports.isValidElementType = isValidElementType;
-exports.typeOf = typeOf;
-  })();
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/prop-types/node_modules/react-is/index.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/prop-types/node_modules/react-is/index.js ***!
-  \****************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-if (false) {} else {
-  module.exports = __webpack_require__(/*! ./cjs/react-is.development.js */ "./node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js");
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/tabbable/dist/index.esm.js":
-/*!*************************************************!*\
-  !*** ./node_modules/tabbable/dist/index.esm.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "focusable": () => (/* binding */ focusable),
-/* harmony export */   "isFocusable": () => (/* binding */ isFocusable),
-/* harmony export */   "isTabbable": () => (/* binding */ isTabbable),
-/* harmony export */   "tabbable": () => (/* binding */ tabbable)
-/* harmony export */ });
-/*!
-* tabbable 5.3.3
-* @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
-*/
-var candidateSelectors = ['input', 'select', 'textarea', 'a[href]', 'button', '[tabindex]:not(slot)', 'audio[controls]', 'video[controls]', '[contenteditable]:not([contenteditable="false"])', 'details>summary:first-of-type', 'details'];
-var candidateSelector = /* #__PURE__ */candidateSelectors.join(',');
-var NoElement = typeof Element === 'undefined';
-var matches = NoElement ? function () {} : Element.prototype.matches || Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
-var getRootNode = !NoElement && Element.prototype.getRootNode ? function (element) {
-  return element.getRootNode();
-} : function (element) {
-  return element.ownerDocument;
-};
-/**
- * @param {Element} el container to check in
- * @param {boolean} includeContainer add container to check
- * @param {(node: Element) => boolean} filter filter candidates
- * @returns {Element[]}
- */
-
-var getCandidates = function getCandidates(el, includeContainer, filter) {
-  var candidates = Array.prototype.slice.apply(el.querySelectorAll(candidateSelector));
-
-  if (includeContainer && matches.call(el, candidateSelector)) {
-    candidates.unshift(el);
-  }
-
-  candidates = candidates.filter(filter);
-  return candidates;
-};
-/**
- * @callback GetShadowRoot
- * @param {Element} element to check for shadow root
- * @returns {ShadowRoot|boolean} ShadowRoot if available or boolean indicating if a shadowRoot is attached but not available.
- */
-
-/**
- * @callback ShadowRootFilter
- * @param {Element} shadowHostNode the element which contains shadow content
- * @returns {boolean} true if a shadow root could potentially contain valid candidates.
- */
-
-/**
- * @typedef {Object} CandidatesScope
- * @property {Element} scope contains inner candidates
- * @property {Element[]} candidates
- */
-
-/**
- * @typedef {Object} IterativeOptions
- * @property {GetShadowRoot|boolean} getShadowRoot true if shadow support is enabled; falsy if not;
- *  if a function, implies shadow support is enabled and either returns the shadow root of an element
- *  or a boolean stating if it has an undisclosed shadow root
- * @property {(node: Element) => boolean} filter filter candidates
- * @property {boolean} flatten if true then result will flatten any CandidatesScope into the returned list
- * @property {ShadowRootFilter} shadowRootFilter filter shadow roots;
- */
-
-/**
- * @param {Element[]} elements list of element containers to match candidates from
- * @param {boolean} includeContainer add container list to check
- * @param {IterativeOptions} options
- * @returns {Array.<Element|CandidatesScope>}
- */
-
-
-var getCandidatesIteratively = function getCandidatesIteratively(elements, includeContainer, options) {
-  var candidates = [];
-  var elementsToCheck = Array.from(elements);
-
-  while (elementsToCheck.length) {
-    var element = elementsToCheck.shift();
-
-    if (element.tagName === 'SLOT') {
-      // add shadow dom slot scope (slot itself cannot be focusable)
-      var assigned = element.assignedElements();
-      var content = assigned.length ? assigned : element.children;
-      var nestedCandidates = getCandidatesIteratively(content, true, options);
-
-      if (options.flatten) {
-        candidates.push.apply(candidates, nestedCandidates);
-      } else {
-        candidates.push({
-          scope: element,
-          candidates: nestedCandidates
-        });
-      }
-    } else {
-      // check candidate element
-      var validCandidate = matches.call(element, candidateSelector);
-
-      if (validCandidate && options.filter(element) && (includeContainer || !elements.includes(element))) {
-        candidates.push(element);
-      } // iterate over shadow content if possible
-
-
-      var shadowRoot = element.shadowRoot || // check for an undisclosed shadow
-      typeof options.getShadowRoot === 'function' && options.getShadowRoot(element);
-      var validShadowRoot = !options.shadowRootFilter || options.shadowRootFilter(element);
-
-      if (shadowRoot && validShadowRoot) {
-        // add shadow dom scope IIF a shadow root node was given; otherwise, an undisclosed
-        //  shadow exists, so look at light dom children as fallback BUT create a scope for any
-        //  child candidates found because they're likely slotted elements (elements that are
-        //  children of the web component element (which has the shadow), in the light dom, but
-        //  slotted somewhere _inside_ the undisclosed shadow) -- the scope is created below,
-        //  _after_ we return from this recursive call
-        var _nestedCandidates = getCandidatesIteratively(shadowRoot === true ? element.children : shadowRoot.children, true, options);
-
-        if (options.flatten) {
-          candidates.push.apply(candidates, _nestedCandidates);
-        } else {
-          candidates.push({
-            scope: element,
-            candidates: _nestedCandidates
-          });
-        }
-      } else {
-        // there's not shadow so just dig into the element's (light dom) children
-        //  __without__ giving the element special scope treatment
-        elementsToCheck.unshift.apply(elementsToCheck, element.children);
-      }
-    }
-  }
-
-  return candidates;
-};
-
-var getTabindex = function getTabindex(node, isScope) {
-  if (node.tabIndex < 0) {
-    // in Chrome, <details/>, <audio controls/> and <video controls/> elements get a default
-    // `tabIndex` of -1 when the 'tabindex' attribute isn't specified in the DOM,
-    // yet they are still part of the regular tab order; in FF, they get a default
-    // `tabIndex` of 0; since Chrome still puts those elements in the regular tab
-    // order, consider their tab index to be 0.
-    // Also browsers do not return `tabIndex` correctly for contentEditable nodes;
-    // so if they don't have a tabindex attribute specifically set, assume it's 0.
-    //
-    // isScope is positive for custom element with shadow root or slot that by default
-    // have tabIndex -1, but need to be sorted by document order in order for their
-    // content to be inserted in the correct position
-    if ((isScope || /^(AUDIO|VIDEO|DETAILS)$/.test(node.tagName) || node.isContentEditable) && isNaN(parseInt(node.getAttribute('tabindex'), 10))) {
-      return 0;
-    }
-  }
-
-  return node.tabIndex;
-};
-
-var sortOrderedTabbables = function sortOrderedTabbables(a, b) {
-  return a.tabIndex === b.tabIndex ? a.documentOrder - b.documentOrder : a.tabIndex - b.tabIndex;
-};
-
-var isInput = function isInput(node) {
-  return node.tagName === 'INPUT';
-};
-
-var isHiddenInput = function isHiddenInput(node) {
-  return isInput(node) && node.type === 'hidden';
-};
-
-var isDetailsWithSummary = function isDetailsWithSummary(node) {
-  var r = node.tagName === 'DETAILS' && Array.prototype.slice.apply(node.children).some(function (child) {
-    return child.tagName === 'SUMMARY';
-  });
-  return r;
-};
-
-var getCheckedRadio = function getCheckedRadio(nodes, form) {
-  for (var i = 0; i < nodes.length; i++) {
-    if (nodes[i].checked && nodes[i].form === form) {
-      return nodes[i];
-    }
-  }
-};
-
-var isTabbableRadio = function isTabbableRadio(node) {
-  if (!node.name) {
-    return true;
-  }
-
-  var radioScope = node.form || getRootNode(node);
-
-  var queryRadios = function queryRadios(name) {
-    return radioScope.querySelectorAll('input[type="radio"][name="' + name + '"]');
-  };
-
-  var radioSet;
-
-  if (typeof window !== 'undefined' && typeof window.CSS !== 'undefined' && typeof window.CSS.escape === 'function') {
-    radioSet = queryRadios(window.CSS.escape(node.name));
-  } else {
-    try {
-      radioSet = queryRadios(node.name);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error('Looks like you have a radio button with a name attribute containing invalid CSS selector characters and need the CSS.escape polyfill: %s', err.message);
-      return false;
-    }
-  }
-
-  var checked = getCheckedRadio(radioSet, node.form);
-  return !checked || checked === node;
-};
-
-var isRadio = function isRadio(node) {
-  return isInput(node) && node.type === 'radio';
-};
-
-var isNonTabbableRadio = function isNonTabbableRadio(node) {
-  return isRadio(node) && !isTabbableRadio(node);
-};
-
-var isZeroArea = function isZeroArea(node) {
-  var _node$getBoundingClie = node.getBoundingClientRect(),
-      width = _node$getBoundingClie.width,
-      height = _node$getBoundingClie.height;
-
-  return width === 0 && height === 0;
-};
-
-var isHidden = function isHidden(node, _ref) {
-  var displayCheck = _ref.displayCheck,
-      getShadowRoot = _ref.getShadowRoot;
-
-  // NOTE: visibility will be `undefined` if node is detached from the document
-  //  (see notes about this further down), which means we will consider it visible
-  //  (this is legacy behavior from a very long way back)
-  // NOTE: we check this regardless of `displayCheck="none"` because this is a
-  //  _visibility_ check, not a _display_ check
-  if (getComputedStyle(node).visibility === 'hidden') {
-    return true;
-  }
-
-  var isDirectSummary = matches.call(node, 'details>summary:first-of-type');
-  var nodeUnderDetails = isDirectSummary ? node.parentElement : node;
-
-  if (matches.call(nodeUnderDetails, 'details:not([open]) *')) {
-    return true;
-  } // The root node is the shadow root if the node is in a shadow DOM; some document otherwise
-  //  (but NOT _the_ document; see second 'If' comment below for more).
-  // If rootNode is shadow root, it'll have a host, which is the element to which the shadow
-  //  is attached, and the one we need to check if it's in the document or not (because the
-  //  shadow, and all nodes it contains, is never considered in the document since shadows
-  //  behave like self-contained DOMs; but if the shadow's HOST, which is part of the document,
-  //  is hidden, or is not in the document itself but is detached, it will affect the shadow's
-  //  visibility, including all the nodes it contains). The host could be any normal node,
-  //  or a custom element (i.e. web component). Either way, that's the one that is considered
-  //  part of the document, not the shadow root, nor any of its children (i.e. the node being
-  //  tested).
-  // If rootNode is not a shadow root, it won't have a host, and so rootNode should be the
-  //  document (per the docs) and while it's a Document-type object, that document does not
-  //  appear to be the same as the node's `ownerDocument` for some reason, so it's safer
-  //  to ignore the rootNode at this point, and use `node.ownerDocument`. Otherwise,
-  //  using `rootNode.contains(node)` will _always_ be true we'll get false-positives when
-  //  node is actually detached.
-
-
-  var nodeRootHost = getRootNode(node).host;
-  var nodeIsAttached = (nodeRootHost === null || nodeRootHost === void 0 ? void 0 : nodeRootHost.ownerDocument.contains(nodeRootHost)) || node.ownerDocument.contains(node);
-
-  if (!displayCheck || displayCheck === 'full') {
-    if (typeof getShadowRoot === 'function') {
-      // figure out if we should consider the node to be in an undisclosed shadow and use the
-      //  'non-zero-area' fallback
-      var originalNode = node;
-
-      while (node) {
-        var parentElement = node.parentElement;
-        var rootNode = getRootNode(node);
-
-        if (parentElement && !parentElement.shadowRoot && getShadowRoot(parentElement) === true // check if there's an undisclosed shadow
-        ) {
-          // node has an undisclosed shadow which means we can only treat it as a black box, so we
-          //  fall back to a non-zero-area test
-          return isZeroArea(node);
-        } else if (node.assignedSlot) {
-          // iterate up slot
-          node = node.assignedSlot;
-        } else if (!parentElement && rootNode !== node.ownerDocument) {
-          // cross shadow boundary
-          node = rootNode.host;
-        } else {
-          // iterate up normal dom
-          node = parentElement;
-        }
-      }
-
-      node = originalNode;
-    } // else, `getShadowRoot` might be true, but all that does is enable shadow DOM support
-    //  (i.e. it does not also presume that all nodes might have undisclosed shadows); or
-    //  it might be a falsy value, which means shadow DOM support is disabled
-    // Since we didn't find it sitting in an undisclosed shadow (or shadows are disabled)
-    //  now we can just test to see if it would normally be visible or not, provided it's
-    //  attached to the main document.
-    // NOTE: We must consider case where node is inside a shadow DOM and given directly to
-    //  `isTabbable()` or `isFocusable()` -- regardless of `getShadowRoot` option setting.
-
-
-    if (nodeIsAttached) {
-      // this works wherever the node is: if there's at least one client rect, it's
-      //  somehow displayed; it also covers the CSS 'display: contents' case where the
-      //  node itself is hidden in place of its contents; and there's no need to search
-      //  up the hierarchy either
-      return !node.getClientRects().length;
-    } // Else, the node isn't attached to the document, which means the `getClientRects()`
-    //  API will __always__ return zero rects (this can happen, for example, if React
-    //  is used to render nodes onto a detached tree, as confirmed in this thread:
-    //  https://github.com/facebook/react/issues/9117#issuecomment-284228870)
-    //
-    // It also means that even window.getComputedStyle(node).display will return `undefined`
-    //  because styles are only computed for nodes that are in the document.
-    //
-    // NOTE: THIS HAS BEEN THE CASE FOR YEARS. It is not new, nor is it caused by tabbable
-    //  somehow. Though it was never stated officially, anyone who has ever used tabbable
-    //  APIs on nodes in detached containers has actually implicitly used tabbable in what
-    //  was later (as of v5.2.0 on Apr 9, 2021) called `displayCheck="none"` mode -- essentially
-    //  considering __everything__ to be visible because of the innability to determine styles.
-
-  } else if (displayCheck === 'non-zero-area') {
-    // NOTE: Even though this tests that the node's client rect is non-zero to determine
-    //  whether it's displayed, and that a detached node will __always__ have a zero-area
-    //  client rect, we don't special-case for whether the node is attached or not. In
-    //  this mode, we do want to consider nodes that have a zero area to be hidden at all
-    //  times, and that includes attached or not.
-    return isZeroArea(node);
-  } // visible, as far as we can tell, or per current `displayCheck` mode
-
-
-  return false;
-}; // form fields (nested) inside a disabled fieldset are not focusable/tabbable
-//  unless they are in the _first_ <legend> element of the top-most disabled
-//  fieldset
-
-
-var isDisabledFromFieldset = function isDisabledFromFieldset(node) {
-  if (/^(INPUT|BUTTON|SELECT|TEXTAREA)$/.test(node.tagName)) {
-    var parentNode = node.parentElement; // check if `node` is contained in a disabled <fieldset>
-
-    while (parentNode) {
-      if (parentNode.tagName === 'FIELDSET' && parentNode.disabled) {
-        // look for the first <legend> among the children of the disabled <fieldset>
-        for (var i = 0; i < parentNode.children.length; i++) {
-          var child = parentNode.children.item(i); // when the first <legend> (in document order) is found
-
-          if (child.tagName === 'LEGEND') {
-            // if its parent <fieldset> is not nested in another disabled <fieldset>,
-            // return whether `node` is a descendant of its first <legend>
-            return matches.call(parentNode, 'fieldset[disabled] *') ? true : !child.contains(node);
-          }
-        } // the disabled <fieldset> containing `node` has no <legend>
-
-
-        return true;
-      }
-
-      parentNode = parentNode.parentElement;
-    }
-  } // else, node's tabbable/focusable state should not be affected by a fieldset's
-  //  enabled/disabled state
-
-
-  return false;
-};
-
-var isNodeMatchingSelectorFocusable = function isNodeMatchingSelectorFocusable(options, node) {
-  if (node.disabled || isHiddenInput(node) || isHidden(node, options) || // For a details element with a summary, the summary element gets the focus
-  isDetailsWithSummary(node) || isDisabledFromFieldset(node)) {
-    return false;
-  }
-
-  return true;
-};
-
-var isNodeMatchingSelectorTabbable = function isNodeMatchingSelectorTabbable(options, node) {
-  if (isNonTabbableRadio(node) || getTabindex(node) < 0 || !isNodeMatchingSelectorFocusable(options, node)) {
-    return false;
-  }
-
-  return true;
-};
-
-var isValidShadowRootTabbable = function isValidShadowRootTabbable(shadowHostNode) {
-  var tabIndex = parseInt(shadowHostNode.getAttribute('tabindex'), 10);
-
-  if (isNaN(tabIndex) || tabIndex >= 0) {
-    return true;
-  } // If a custom element has an explicit negative tabindex,
-  // browsers will not allow tab targeting said element's children.
-
-
-  return false;
-};
-/**
- * @param {Array.<Element|CandidatesScope>} candidates
- * @returns Element[]
- */
-
-
-var sortByOrder = function sortByOrder(candidates) {
-  var regularTabbables = [];
-  var orderedTabbables = [];
-  candidates.forEach(function (item, i) {
-    var isScope = !!item.scope;
-    var element = isScope ? item.scope : item;
-    var candidateTabindex = getTabindex(element, isScope);
-    var elements = isScope ? sortByOrder(item.candidates) : element;
-
-    if (candidateTabindex === 0) {
-      isScope ? regularTabbables.push.apply(regularTabbables, elements) : regularTabbables.push(element);
-    } else {
-      orderedTabbables.push({
-        documentOrder: i,
-        tabIndex: candidateTabindex,
-        item: item,
-        isScope: isScope,
-        content: elements
-      });
-    }
-  });
-  return orderedTabbables.sort(sortOrderedTabbables).reduce(function (acc, sortable) {
-    sortable.isScope ? acc.push.apply(acc, sortable.content) : acc.push(sortable.content);
-    return acc;
-  }, []).concat(regularTabbables);
-};
-
-var tabbable = function tabbable(el, options) {
-  options = options || {};
-  var candidates;
-
-  if (options.getShadowRoot) {
-    candidates = getCandidatesIteratively([el], options.includeContainer, {
-      filter: isNodeMatchingSelectorTabbable.bind(null, options),
-      flatten: false,
-      getShadowRoot: options.getShadowRoot,
-      shadowRootFilter: isValidShadowRootTabbable
-    });
-  } else {
-    candidates = getCandidates(el, options.includeContainer, isNodeMatchingSelectorTabbable.bind(null, options));
-  }
-
-  return sortByOrder(candidates);
-};
-
-var focusable = function focusable(el, options) {
-  options = options || {};
-  var candidates;
-
-  if (options.getShadowRoot) {
-    candidates = getCandidatesIteratively([el], options.includeContainer, {
-      filter: isNodeMatchingSelectorFocusable.bind(null, options),
-      flatten: true,
-      getShadowRoot: options.getShadowRoot
-    });
-  } else {
-    candidates = getCandidates(el, options.includeContainer, isNodeMatchingSelectorFocusable.bind(null, options));
-  }
-
-  return candidates;
-};
-
-var isTabbable = function isTabbable(node, options) {
-  options = options || {};
-
-  if (!node) {
-    throw new Error('No node provided');
-  }
-
-  if (matches.call(node, candidateSelector) === false) {
-    return false;
-  }
-
-  return isNodeMatchingSelectorTabbable(options, node);
-};
-
-var focusableCandidateSelector = /* #__PURE__ */candidateSelectors.concat('iframe').join(',');
-
-var isFocusable = function isFocusable(node, options) {
-  options = options || {};
-
-  if (!node) {
-    throw new Error('No node provided');
-  }
-
-  if (matches.call(node, focusableCandidateSelector) === false) {
-    return false;
-  }
-
-  return isNodeMatchingSelectorFocusable(options, node);
-};
-
-
-//# sourceMappingURL=index.esm.js.map
-
-
-/***/ }),
-
 /***/ "react":
 /*!************************!*\
   !*** external "React" ***!
@@ -11705,17 +8812,6 @@ var isFocusable = function isFocusable(node, options) {
 
 "use strict";
 module.exports = window["React"];
-
-/***/ }),
-
-/***/ "react-dom":
-/*!***************************!*\
-  !*** external "ReactDOM" ***!
-  \***************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = window["ReactDOM"];
 
 /***/ }),
 

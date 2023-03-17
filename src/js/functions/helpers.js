@@ -1,8 +1,8 @@
 /**
  * Check if an object is empty.
  *
- * @param {object}   obj The object to test against.
- * @return {Boolean}     Is this an object.
+ * @param {Object} obj The object to test against.
+ * @return {boolean}   Is this an object.
  */
 export function isObjectEmpty(obj) {
 	if (obj === null || obj === undefined) {
@@ -14,30 +14,30 @@ export function isObjectEmpty(obj) {
 /**
  * Check the `x-ratelimit-remaining` headers to confirm the API is available.
  *
- * @param {object} headers The request headers object.
+ * @param {Object} headers The request headers object.
  */
 export function checkRateLimit(headers) {
 	if (!headers) {
 		return;
 	}
-	const limit = headers.get('X-RateLimit-Limit') || -1;
-	const remaining = headers.get('X-RateLimit-Remaining') || -1;
+	const limit = headers.get("X-RateLimit-Limit") || -1;
+	const remaining = headers.get("X-RateLimit-Remaining") || -1;
 	if (limit > -1 && parseInt(remaining) < 2) {
-		alert(instant_img_localize.api_ratelimit_msg);
+		alert(instant_img_localize.api_ratelimit_msg); // eslint-disable-line
 	}
 }
 
 /**
  * Capitalize the first letter of a string.
  *
- * @param  {string} str The string to format.
- * @return {string}     The formatted string.
+ * @param {string} str The string to format.
+ * @return {string}    The formatted string.
  */
 export function capitalizeFirstLetter(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-let tooltipInterval = '';
+let tooltipInterval = "";
 
 /**
  * Show the tooltip.
@@ -51,14 +51,14 @@ export function showTooltip(e) {
 	let left = Math.round(rect.left);
 	const top = Math.round(rect.top);
 
-	const container = target.closest('#photo-listing');
-	const tooltip = container.querySelector('#tooltip');
-	tooltip.classList.remove('over');
+	const container = target.closest("#photo-listing");
+	const tooltip = container.querySelector("#tooltip");
+	tooltip.classList.remove("over");
 
-	if (target.classList.contains('tooltip--above')) {
-		tooltip.classList.add('above');
+	if (target.classList.contains("tooltip--above")) {
+		tooltip.classList.add("above");
 	} else {
-		tooltip.classList.remove('above');
+		tooltip.classList.remove("above");
 	}
 
 	// Delay Tooltip Reveal.
@@ -72,7 +72,7 @@ export function showTooltip(e) {
 		tooltip.style.top = `${top}px`;
 
 		setTimeout(function () {
-			tooltip.classList.add('over');
+			tooltip.classList.add("over");
 		}, 25);
 	}, 750);
 }
@@ -85,7 +85,18 @@ export function showTooltip(e) {
  */
 export function hideTooltip(e) {
 	clearInterval(tooltipInterval);
-	const container = e.currentTarget.closest('#photo-listing');
-	const tooltip = container.querySelector('#tooltip');
-	tooltip.classList.remove('over');
+	const container = e.currentTarget.closest("#photo-listing");
+	const tooltip = container.querySelector("#tooltip");
+	tooltip.classList.remove("over");
+}
+
+/**
+ * Open the URL in new window.
+ *
+ * @param {string} url The destination URL.
+ */
+export function gotoURL(url) {
+	if (url && window) {
+		window.open(url, "_blank");
+	}
 }

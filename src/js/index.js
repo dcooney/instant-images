@@ -1,14 +1,14 @@
-import { render } from '@wordpress/element';
-import App from './components/App';
-import API from './constants/API';
-import buildURL from './functions/buildURL';
-import { checkRateLimit } from './functions/helpers';
-import consoleStatus from './functions/consoleStatus';
-import getProvider from './functions/getProvider';
-import getQueryParams from './functions/getQueryParams';
-require('./functions/polyfills');
+import { render } from "@wordpress/element";
+import InstantImages from "./components/InstantImages";
+import API from "./constants/API";
+import buildURL from "./functions/buildURL";
+import { checkRateLimit } from "./functions/helpers";
+import consoleStatus from "./functions/consoleStatus";
+import getProvider from "./functions/getProvider";
+import getQueryParams from "./functions/getQueryParams";
+require("./functions/polyfills");
 
-import '../scss/style.scss';
+import "../scss/style.scss";
 
 // Get provider from settings.
 const defaultProvider = getProvider();
@@ -19,11 +19,9 @@ const defaultProvider = getProvider();
  * @param {string} provider The current service provider.
  */
 function getImages(provider = API.defaults.provider) {
-	const container = document.querySelector('.instant-img-container');
-
 	// Build URL.
 	const params = getQueryParams(provider);
-	const url = buildURL('photos', params);
+	const url = buildURL("photos", params);
 
 	async function initialize() {
 		// Create fetch request.
@@ -35,9 +33,18 @@ function getImages(provider = API.defaults.provider) {
 			// Get response data.
 			const results = await response.json();
 			const { error = null } = results;
-			const app = document.getElementById('app');
+			const app = document.getElementById("app");
 			if (app) {
-				render(<App editor="classic" data={results} container={app} provider={provider} api_error={error} />, app);
+				render(
+					<InstantImages
+						editor="classic"
+						data={results}
+						container={app}
+						provider={provider}
+						api_error={error}
+					/>,
+					app
+				);
 			}
 		} catch (error) {
 			consoleStatus(provider, status);

@@ -1,5 +1,5 @@
-import { Fragment } from '@wordpress/element';
-import API from '../constants/API';
+import { Fragment } from "@wordpress/element";
+import API from "../constants/API";
 const providers = API.providers; // Get current provider settings.
 
 /**
@@ -20,10 +20,18 @@ export default function ProviderNav(props) {
 							<button
 								data-provider={item.toLowerCase()}
 								onClick={(e) => switchProvider(e)}
-								className={provider === item.toLowerCase() ? 'provider-nav--btn active' : 'provider-nav--btn'}
+								className={
+									provider === item.toLowerCase()
+										? "provider-nav--btn active"
+										: "provider-nav--btn"
+								}
 							>
 								<span>{item}</span>
-								{API[item.toLowerCase()].new && <span className="provider-nav--new">{instant_img_localize.new}</span>}
+								{API[item.toLowerCase()].new && (
+									<span className="provider-nav--new">
+										{instant_img_localize.new}
+									</span>
+								)}
 							</button>
 						</div>
 					))}

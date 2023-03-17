@@ -3,9 +3,9 @@ import classnames from "classnames";
 /**
  * The plugin Icon component.
  *
- * @param {*} props 		- The props for the component.
- * @param {string} props.color - The color of the icon.
- * @returns {JSX.Element} 	- The Icon component.
+ * @param {Object} props       The component props.
+ * @param {string} props.color Color of the icon.
+ * @return {JSX.Element} 	    The Icon component.
  */
 export default function Icon({ color = "unsplash" }) {
 	return (

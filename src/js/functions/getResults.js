@@ -3,8 +3,8 @@ import API from "../constants/API";
 /**
  * Pluck `results` from the API response.
  *
- * @param  {object} data The API results object.
- * @return {array} 		 The results as an array.
+ * @param {Object} data The API results object.
+ * @return {Array} 	 The results as an array.
  */
 export default function getResults(data) {
 	if (!data) {
@@ -18,8 +18,8 @@ export default function getResults(data) {
 /**
  * Get the total search results.
  *
- * @param  {object} data The search data object.
- * @return {string}      The total results.
+ * @param {Object} data The search data object.
+ * @return {string}     The total results.
  */
 export function getSearchTotal(data) {
 	// Return 0 if undefined or null.
@@ -29,10 +29,10 @@ export function getSearchTotal(data) {
 /**
  * Get results by photo ID.
  *
- * @param  {string} provider The current service provider.
- * @param  {string} key      The match key to access.
- * @param  {object} data     The API results object.
- * @return {Array} 			  The results as an array.
+ * @param {string} provider The current service provider.
+ * @param {string} key      The match key to access.
+ * @param {Object} data     The API results object.
+ * @return {Array} 		  The results as an array.
  * @deprecated 5.0
  */
 export function getResultById(provider, key, data) {

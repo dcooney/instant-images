@@ -19,6 +19,8 @@
 * NEW: Adding mime type checking based on current allowed uploads.
 * UPDATE: Updated `instant_images_after_upload` hook to pass additional image data.
 * UPDATE: Various code refactoring and build process updates.
+* UPDATE: Added sizes filter to openverse search.
+* UPDATE: Added Wikimedia filter to openverse sources.
 * FIX: Various security fixes.
 */
 

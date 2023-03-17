@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from '@wordpress/element';
+import { Fragment, useState, useEffect } from "@wordpress/element";
 
 /**
  * Render the RestAPIError component.
@@ -14,11 +14,11 @@ export default function RestAPIError() {
 	 * @since 3.2
 	 */
 	function test() {
-		const testURL = instant_img_localize.root + 'instant-images/test/';
+		const testURL = instant_img_localize.root + "instant-images/test/";
 		const restAPITest = new XMLHttpRequest();
-		restAPITest.open('POST', testURL, true);
-		restAPITest.setRequestHeader('X-WP-Nonce', instant_img_localize.nonce);
-		restAPITest.setRequestHeader('Content-Type', 'application/json');
+		restAPITest.open("POST", testURL, true);
+		restAPITest.setRequestHeader("X-WP-Nonce", instant_img_localize.nonce);
+		restAPITest.setRequestHeader("Content-Type", "application/json");
 		restAPITest.send();
 		restAPITest.onload = function () {
 			if (restAPITest.status >= 200 && restAPITest.status < 400) {
@@ -32,7 +32,7 @@ export default function RestAPIError() {
 			}
 		};
 		restAPITest.onerror = function (errorMsg) {
-			console.warn(errorMsg);
+			console.warn(errorMsg); // eslint-disable-line no-console
 			setAccess(false);
 		};
 	}

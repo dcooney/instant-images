@@ -7,13 +7,14 @@
 		visibility: hidden;
 		opacity: 0;
 		display: block;
-		content: '';
+		content: "";
 		position: absolute;
 		width: calc(100% + 50px);
 		height: 100%;
 		left: -25px;
 		top: 0;
-		background: rgba(255, 255, 255, 0.9) url('../img/ajax-loader-lg.gif') no-repeat center 90px;
+		background: rgba(255, 255, 255, 0.9) url("../img/ajax-loader-lg.gif")
+			no-repeat center 90px;
 		z-index: 9999;
 		transition: all 0.25s ease;
 	}
@@ -97,7 +98,7 @@
 			background-color: #222;
 			background-position: center center;
 			background-repeat: no-repeat;
-			background-image: url('../img/ajax-loader.gif');
+			background-image: url("../img/ajax-loader.gif");
 			overflow: hidden;
 			&.loaded {
 				background-image: none;
@@ -129,11 +130,11 @@
 				top: 50%;
 				z-index: 5;
 				transform: translate(-50%, -50%) scale(1.2);
-				box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+				box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 				background-position: center center;
 				background-repeat: no-repeat;
 				&::before {
-					font-family: 'FontAwesome';
+					font-family: "FontAwesome";
 					display: block;
 					color: #fff;
 					font-size: 24px;
@@ -159,7 +160,8 @@
 				.status {
 					visibility: visible;
 					opacity: 1;
-					background: rgba(255, 255, 255, 0.95) url('../img/ajax-loader-lg.gif') no-repeat center center;
+					background: rgba(255, 255, 255, 0.95) url("../img/ajax-loader-lg.gif")
+						no-repeat center center;
 					background-size: 24px 24px;
 					&::before {
 						display: none;
@@ -175,7 +177,7 @@
 					opacity: 1;
 					background-color: $green;
 					&::before {
-						content: '\f00c';
+						content: "\f00c";
 						color: #fff;
 					}
 				}
@@ -192,7 +194,7 @@
 					opacity: 1;
 					background-color: $red;
 					&::before {
-						content: '\f12a';
+						content: "\f12a";
 						color: #fff;
 						opacity: 0.8;
 					}
@@ -207,6 +209,7 @@
 					opacity: 0.25 !important;
 				}
 			}
+
 			.user-controls,
 			.options {
 				opacity: 0 !important;
@@ -361,9 +364,6 @@
 					background: rgba(255, 255, 255, 0.95);
 				}
 			}
-			&.edit-photo-admin {
-				display: none;
-			}
 			&.user {
 				background: none;
 				text-decoration: none;
@@ -387,7 +387,7 @@
 					text-overflow: ellipsis;
 					white-space: nowrap;
 					&::before {
-						content: '';
+						content: "";
 						display: block;
 						z-index: 0;
 						background-color: #fff;
@@ -612,7 +612,7 @@
 			margin: 0;
 			height: 35px;
 			line-height: 35px;
-			&[name='filename'] {
+			&[name="filename"] {
 				padding-right: 45px;
 			}
 		}

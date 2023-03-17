@@ -3,35 +3,28 @@ import axios from "axios";
 /**
  * Update plugin settings by specific key/value pair.
  *
- * @param {string} provider The previous provider.
- * @param {string} value 	 The value to save.
+ * @param {string} setting The previous provider.
+ * @param {string} value   The value to save.
  */
 export default function updatePluginSetting(setting, value) {
-	// API URL
-	const api =
-		instant_img_localize?.root &&
-		instant_img_localize.root + "instant-images/settings/";
+	const api = instant_img_localize?.root + "instant-images/settings/"; // eslint-disable-line no-undef
 
-	// Data Params
-	const data = {
+	const params = {
 		setting,
 		value,
 	};
 
-	// Config Params
 	const config = {
 		headers: {
-			"X-WP-Nonce": instant_img_localize.nonce,
+			"X-WP-Nonce": instant_img_localize.nonce, // eslint-disable-line no-undef
 			"Content-Type": "application/json",
 		},
 	};
 
 	axios
-		.post(api, JSON.stringify(data), config)
-		.then(function (res) {
-			const response = res.data;
-		})
+		.post(api, JSON.stringify(params), config)
+		.then(function () {})
 		.catch(function (error) {
-			console.warn(error);
+			console.warn(error); // eslint-disable-line no-console
 		});
 }

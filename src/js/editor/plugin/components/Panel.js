@@ -1,17 +1,15 @@
-import App from '../../../components/App';
-import buildURL from '../../../functions/buildURL';
-import consoleStatus from '../../../functions/consoleStatus';
-import getProvider from '../../../functions/getProvider';
-import getQueryParams from '../../../functions/getQueryParams';
-import { checkRateLimit } from '../../../functions/helpers';
-import insertImage from '../utils/insertImage';
-import setFeaturedImage from '../utils/setFeaturedImage';
+import InstantImages from "../../../components/InstantImages";
+import buildURL from "../../../functions/buildURL";
+import consoleStatus from "../../../functions/consoleStatus";
+import getProvider from "../../../functions/getProvider";
+import getQueryParams from "../../../functions/getQueryParams";
+import { checkRateLimit } from "../../../functions/helpers";
 const { useState, useEffect } = wp.element;
 
 /**
  * The image listing panel for the plugin sidebar.
  *
- * @returns {JSX.Element} The Panel component.
+ * @return {JSX.Element} The Panel component.
  */
 export default function Panel() {
 	const [data, setData] = useState({});
@@ -28,7 +26,7 @@ export default function Panel() {
 		async function initialize() {
 			// Build URL.
 			const params = getQueryParams(provider);
-			const url = buildURL('photos', params);
+			const url = buildURL("photos", params);
 
 			// Create fetch request.
 			const response = await fetch(url);
@@ -41,7 +39,7 @@ export default function Panel() {
 				const { error = null } = results;
 
 				// Set results to state.
-				setData({ results: results, error: error });
+				setData({ results, error });
 			} catch (error) {
 				consoleStatus(provider, status);
 			}
@@ -52,7 +50,12 @@ export default function Panel() {
 	return (
 		<div className="instant-img-container">
 			{data && data.results ? (
-				<App editor="gutenberg" data={data.results} api_error={data.error} provider={provider} setFeaturedImage={setFeaturedImage} insertImage={insertImage} />
+				<InstantImages
+					editor="gutenberg"
+					data={data.results}
+					api_error={data.error}
+					provider={provider}
+				/>
 			) : null}
 		</div>
 	);

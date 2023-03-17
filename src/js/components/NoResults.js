@@ -2,7 +2,7 @@
  * Render the NoResults component.
  *
  * @param {Object} props The component props.
- * @returns {JSX.Element} The NoResults component.
+ * @return {JSX.Element} The NoResults component.
  */
 export default function NoResults(props) {
 	const { total = 0, is_search = false } = props;

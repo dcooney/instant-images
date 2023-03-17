@@ -4,7 +4,7 @@ const { PluginSidebarMoreMenuItem } = wp.editPost;
 /**
  * The plugin menu as a component.
  *
- * @returns {JSX.Element} The Menu component.
+ * @return {JSX.Element} The Menu component.
  */
 export default function Menu() {
 	return (

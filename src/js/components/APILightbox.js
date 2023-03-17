@@ -1,10 +1,9 @@
-import { useRef, useEffect, useState } from '@wordpress/element';
-import classNames from 'classnames';
-import FocusTrap from 'focus-trap-react';
-import { buildTestURL } from '../functions/buildURL';
-import consoleStatus from '../functions/consoleStatus';
-import { checkRateLimit } from '../functions/helpers';
-import updatePluginSetting from '../functions/updatePluginSetting';
+import { useEffect, useRef, useState } from "@wordpress/element";
+import classNames from "classnames";
+import { buildTestURL } from "../functions/buildURL";
+import consoleStatus from "../functions/consoleStatus";
+import { checkRateLimit, gotoURL } from "../functions/helpers";
+import updatePluginSetting from "../functions/updatePluginSetting";
 
 /**
  * Render the APILightbox component.
@@ -19,14 +18,15 @@ export default function APILightbox(props) {
 		return null;
 	}
 
-	const [apiStatus, setAPIStatus] = useState('invalid');
-	const [response, setResponse] = useState('');
+	const [apiStatus, setAPIStatus] = useState("invalid");
+	const [response, setResponse] = useState("");
 
 	const lightbox = useRef();
 	const inputRef = useRef();
 	const submitRef = useRef();
 	const api_key = instant_img_localize[`${provider}_app_id`];
-	const title = apiStatus === 'invalid' ? instant_img_localize.api_key_invalid : '';
+	const title =
+		apiStatus === "invalid" ? instant_img_localize.api_key_invalid : "";
 
 	/**
 	 * Handler for the form submission.
@@ -35,13 +35,15 @@ export default function APILightbox(props) {
 	 */
 	async function handleSubmit(e) {
 		e.preventDefault();
-		setAPIStatus('loading');
+		setAPIStatus("loading");
 
 		const key = inputRef?.current?.value; // Get API key value.
 		instant_img_localize[`${provider}_app_id`] = key; // Set API key to localized variable.
 
 		// Update the matching provider API key in the Instant Images settings.
-		const settingField = document.querySelector(`input[name="instant_img_settings[${provider}_api]"]`);
+		const settingField = document.querySelector(
+			`input[name="instant_img_settings[${provider}_api]"]`
+		);
 		if (settingField) {
 			settingField.value = key;
 		}
@@ -60,13 +62,13 @@ export default function APILightbox(props) {
 			// Handle response actions.
 			if (ok) {
 				// Success.
-				setAPIStatus('valid');
+				setAPIStatus("valid");
 				setResponse(instant_img_localize.api_success_msg);
 				setTimeout(function () {
 					closeAPILightbox(provider);
 				}, 1000);
 			} else {
-				setAPIStatus('invalid'); // Error/Invalid.
+				setAPIStatus("invalid"); // Error/Invalid.
 				consoleStatus(provider, status); // Render console warning.
 
 				if (status === 400 || status === 401) {
@@ -77,7 +79,7 @@ export default function APILightbox(props) {
 				}
 			}
 		} catch (error) {
-			setAPIStatus('invalid'); // Error/Invalid.
+			setAPIStatus("invalid"); // Error/Invalid.
 			consoleStatus(provider, 500); // Render console warning.
 			setResponse(instant_img_localize.api_invalid_500_msg);
 		}
@@ -88,7 +90,7 @@ export default function APILightbox(props) {
 	 */
 	function closeLightbox() {
 		if (lightbox?.current) {
-			lightbox.current.classList.remove('active');
+			lightbox.current.classList.remove("active");
 			setTimeout(function () {
 				closeAPILightbox();
 			}, 150);
@@ -97,6 +99,8 @@ export default function APILightbox(props) {
 
 	/**
 	 * Close the lightbox with a background click.
+	 *
+	 * @param {Event} e The form event.
 	 */
 	function bkgClick(e) {
 		const target = e.target;
@@ -113,43 +117,42 @@ export default function APILightbox(props) {
 	 */
 	function escFunction(e) {
 		const { key } = e;
-		if (key === 'Escape') {
+		if (key === "Escape") {
 			closeLightbox();
 		}
-	}
-
-	/**
-	 * Open the API window.
-	 *
-	 * @param {string} url The destination URL.
-	 */
-	function gotoURL(url) {
-		window.open(url, '_blank');
 	}
 
 	/**
 	 * Reset the key to use Instant Images default.
 	 */
 	function useDefaultKey() {
-		inputRef.current.value = '';
+		inputRef.current.value = "";
 		setTimeout(function () {
 			submitRef.current.click();
 		}, 25);
 	}
 
 	useEffect(() => {
-		document.addEventListener('keydown', escFunction, false);
-		lightbox.current.classList.add('active');
+		document.addEventListener("keydown", escFunction, false);
+		lightbox.current.classList.add("active");
 		return () => {
-			document.removeEventListener('keydown', escFunction, false);
+			document.removeEventListener("keydown", escFunction, false);
 		};
 	}, []);
 
 	return (
-		<div className="api-lightbox" ref={lightbox} onClick={(e) => bkgClick(e)} tabIndex="-1">
+		<div
+			className="api-lightbox"
+			ref={lightbox}
+			onClick={(e) => bkgClick(e)}
+			tabIndex="-1"
+		>
 			<div>
 				<div>
-					<button className="api-lightbox--close" onClick={() => closeLightbox()}>
+					<button
+						className="api-lightbox--close"
+						onClick={() => closeLightbox()}
+					>
 						&times;
 						<span className="offscreen">{instant_img_localize.btnClose}</span>
 					</button>
@@ -157,9 +160,17 @@ export default function APILightbox(props) {
 						<h3 data-provider={provider}>{provider}</h3>
 						<p>{instant_img_localize[`${provider}_api_desc`]}</p>
 						<p className="action-controls">
-							<button onClick={() => gotoURL(instant_img_localize[`${provider}_api_url`])}>{instant_img_localize.get_api_key}</button>
+							<button
+								onClick={() =>
+									gotoURL(instant_img_localize[`${provider}_api_url`])
+								}
+							>
+								{instant_img_localize.get_api_key}
+							</button>
 							<span>|</span>
-							<button onClick={() => useDefaultKey()}>{instant_img_localize.use_instant_images_key}</button>
+							<button onClick={() => useDefaultKey()}>
+								{instant_img_localize.use_instant_images_key}
+							</button>
 						</p>
 					</div>
 					<form onSubmit={(e) => handleSubmit(e)}>
@@ -168,13 +179,32 @@ export default function APILightbox(props) {
 						</label>
 						<div className="api-lightbox--input-wrap">
 							<span className={apiStatus} title={title && title}>
-								{apiStatus === 'invalid' && <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>}
-								{apiStatus === 'valid' && <i className="fa fa-check-circle" aria-hidden="true"></i>}
-								{apiStatus === 'loading' && <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>}
+								{apiStatus === "invalid" && (
+									<i
+										className="fa fa-exclamation-triangle"
+										aria-hidden="true"
+									></i>
+								)}
+								{apiStatus === "valid" && (
+									<i className="fa fa-check-circle" aria-hidden="true"></i>
+								)}
+								{apiStatus === "loading" && (
+									<i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
+								)}
 							</span>
-							<input type="text" id="key" ref={inputRef} placeholder="Enter API Key" defaultValue={api_key}></input>
+							<input
+								type="text"
+								id="key"
+								ref={inputRef}
+								placeholder="Enter API Key"
+								defaultValue={api_key}
+							></input>
 						</div>
-						{response && <p className={classNames('api-lightbox--response', apiStatus)}>{response}</p>}
+						{response && (
+							<p className={classNames("api-lightbox--response", apiStatus)}>
+								{response}
+							</p>
+						)}
 						<button type="submit" ref={submitRef}>
 							{instant_img_localize.btnVerify}
 						</button>

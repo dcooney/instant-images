@@ -9,6 +9,6 @@ const setFeaturedImage = (imageId) => {
 	if (imageId === null) {
 		return false;
 	}
-	dispatch('core/editor').editPost({ featured_media: imageId });
+	dispatch("core/editor").editPost({ featured_media: imageId });
 };
 export default setFeaturedImage;

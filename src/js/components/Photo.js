@@ -1,7 +1,13 @@
-import { Fragment, useRef, useState } from '@wordpress/element';
-import axios from 'axios';
-import { capitalizeFirstLetter, hideTooltip, showTooltip } from '../functions/helpers';
-import unsplashDownload from '../functions/unsplashDownload';
+import { Fragment, useRef, useState } from "@wordpress/element";
+import axios from "axios";
+import insertImage from "../editor/plugin/utils/insertImage";
+import setFeaturedImage from "../editor/plugin/utils/setFeaturedImage";
+import {
+	capitalizeFirstLetter,
+	hideTooltip,
+	showTooltip,
+} from "../functions/helpers";
+import unsplashDownload from "../functions/unsplashDownload";
 
 /**
  * Render the Photo component.
@@ -10,9 +16,21 @@ import unsplashDownload from '../functions/unsplashDownload';
  * @return {JSX.Element} The Photo component.
  */
 export default function Photo(props) {
-	const { provider, result, mediaRouter, blockEditor, setFeaturedImage, insertImage } = props;
+	const { provider, result, mediaRouter = false, blockEditor = false } = props;
 
-	const { id, permalink, title, alt, caption, extension = 'jpg', likes, attribution, dimensions, urls, user } = result;
+	const {
+		id,
+		permalink,
+		title,
+		alt,
+		caption,
+		extension = "jpg",
+		likes,
+		attribution,
+		dimensions,
+		urls,
+		user,
+	} = result;
 	const { thumb, full, download_url } = urls;
 
 	const filename = id;
@@ -20,35 +38,37 @@ export default function Photo(props) {
 	const user_photo = user?.photo;
 	const user_url = user?.url;
 
-	const container = document.querySelector('.instant-img-container');
-	const likeDisplay = parseInt(likes) === 1 ? instant_img_localize.likes : instant_img_localize.likes_plural;
-	const auto_attribution = instant_img_localize.auto_attribution === '1' ? true : false;
+	const container = document.querySelector(".instant-img-container");
+	const likeDisplay =
+		parseInt(likes) === 1
+			? instant_img_localize.likes
+			: instant_img_localize.likes_plural;
+
+	const auto_attribution =
+		instant_img_localize.auto_attribution === "1" ? true : false;
 	const imageCaption = auto_attribution ? attribution : caption; // Set auto attribution.
 	let inProgress = false;
 
 	// Photo state.
 	const [imageDetails, setImageDetails] = useState({
-		filename: filename,
-		title: title,
-		alt: alt,
+		filename,
+		title,
+		alt,
 		caption: imageCaption,
 	});
 
+	const [editURL, setEditURL] = useState(""); // Edit URL state.
+
 	// Refs.
 	const photo = useRef();
-	const photoUpload = useRef();
+	const upload = useRef();
 	const editScreen = useRef();
 	const captionRef = useRef();
 	const noticeMsg = useRef();
 
 	// Gutenberg Sidebar.
-	const setAsFeaturedImage = false;
-	const insertIntoPost = false;
-	const is_media_router = mediaRouter;
-	const is_block_editor = blockEditor;
-
-	// Display controls in Gutenberg Sidebar Only.
-	const displayGutenbergControl = is_block_editor ? true : false;
+	let setAsFeaturedImage = false;
+	let insertIntoPost = false;
 
 	/**
 	 * Function to trigger the image download.
@@ -58,22 +78,21 @@ export default function Photo(props) {
 	 */
 	function download(e) {
 		e.preventDefault();
-
 		let target = e.currentTarget;
 		const notice = noticeMsg.current;
 
-		if (!target.classList.contains('upload')) {
+		if (!target.classList.contains("upload")) {
 			// If target is .download-photo, switch target definition
-			target = photoUpload.current; // a.upload.
+			target = upload.current; // a.upload.
 		}
 
-		if (target.classList.contains('success') || inProgress) {
+		if (target.classList.contains("success") || inProgress) {
 			return false; // Exit if already uploaded or in progress.
 		}
 
 		inProgress = true;
-		target.classList.add('uploading');
-		photo.current.classList.add('in-progress');
+		target.classList.add("uploading");
+		photo.current.classList.add("in-progress");
 
 		// Status messaging
 		notice.innerHTML = instant_img_localize.saving;
@@ -88,19 +107,19 @@ export default function Photo(props) {
 		}, 3000);
 
 		// API URL
-		const api = instant_img_localize.root + 'instant-images/download/';
+		const api = instant_img_localize.root + "instant-images/download/";
 
 		// Data Params
 		const data = {
-			provider: provider,
-			id: target.getAttribute('data-id'),
-			image_url: target.getAttribute('data-url'),
-			filename: target.getAttribute('data-id'),
-			extension: extension,
-			custom_filename: target.getAttribute('data-filename'),
-			title: target.getAttribute('data-title'),
-			alt: target.getAttribute('data-alt'),
-			caption: target.getAttribute('data-caption'),
+			provider,
+			id: target.getAttribute("data-id"),
+			image_url: target.getAttribute("data-url"),
+			filename: target.getAttribute("data-id"),
+			extension,
+			custom_filename: target.getAttribute("data-filename"),
+			title: target.getAttribute("data-title"),
+			alt: target.getAttribute("data-alt"),
+			caption: target.getAttribute("data-caption"),
 			parent_id: instant_img_localize.parent_id,
 			lang: instant_img_localize.lang,
 		};
@@ -108,8 +127,8 @@ export default function Photo(props) {
 		// Config Params
 		const config = {
 			headers: {
-				'X-WP-Nonce': instant_img_localize.nonce,
-				'Content-Type': 'application/json',
+				"X-WP-Nonce": instant_img_localize.nonce,
+				"Content-Type": "application/json",
 			},
 		};
 
@@ -127,32 +146,42 @@ export default function Photo(props) {
 
 					if (success) {
 						const edit_url = `${admin_url}post.php?post=${attachment.id}&action=edit`; // Edit URL.
-						uploadComplete(target, msg, edit_url, attachment.id); // Success/Upload Complete
+						setEditURL(edit_url);
+						uploadComplete(target, msg, attachment.id); // Success/Upload Complete
 
 						// Trigger a download at Unsplash.
-						if (provider === 'unsplash' && download_url) {
+						if (provider === "unsplash" && download_url) {
 							unsplashDownload(download_url);
 						}
 
-						// Set Featured Image [Gutenberg Sidebar]
-						if (displayGutenbergControl && setAsFeaturedImage) {
-							setFeaturedImage(attachment.id);
-							setAsFeaturedImage = false;
-							closeMediaModal();
-						}
-
-						// Insert Image [Gutenberg Sidebar]
-						if (displayGutenbergControl && insertIntoPost) {
-							if (attachment.url) {
-								insertImage(attachment.url, attachment.caption, attachment.alt);
+						// Gutenberg sidebar plugin.
+						if (blockEditor) {
+							if (setAsFeaturedImage) {
+								// Set Featured Image.
+								setFeaturedImage(attachment.id);
+								setAsFeaturedImage = false;
 								closeMediaModal();
 							}
-							insertIntoPost = false;
+
+							// Insert Image.
+							if (insertIntoPost) {
+								if (attachment.url) {
+									insertImage(
+										attachment.url,
+										attachment.caption,
+										attachment.alt
+									);
+									closeMediaModal();
+								}
+								insertIntoPost = false;
+							}
 						}
 
 						// If is media popup, redirect user to media-upload settings
-						if (container.dataset.mediaPopup === 'true' && !is_block_editor) {
-							window.location = 'media-upload.php?type=image&tab=library&attachment_id=' + attachment.id;
+						if (container.dataset.mediaPopup === "true" && !blockEditor) {
+							window.location =
+								"media-upload.php?type=image&tab=library&attachment_id=" +
+								attachment.id;
 						}
 					} else {
 						// Error
@@ -164,8 +193,19 @@ export default function Photo(props) {
 				}
 			})
 			.catch(function (error) {
-				console.warn(error);
+				console.warn(error); // eslint-disable-line no-console
 			});
+	}
+
+	/**
+	 * Handler to send user to edit photo link after upload.
+	 *
+	 * @since 5.1.1
+	 */
+	function editAfterUpload() {
+		if (editURL) {
+			window.location = editURL;
+		}
 	}
 
 	/**
@@ -176,10 +216,9 @@ export default function Photo(props) {
 	 */
 	function setFeaturedImageClick(e) {
 		hideTooltip(e);
-		const photo = photoUpload.current;
-		if (photo) {
+		if (upload.current) {
 			setAsFeaturedImage = true;
-			photo.current.click();
+			upload.current.click();
 		}
 	}
 
@@ -191,62 +230,51 @@ export default function Photo(props) {
 	 */
 	function insertImageIntoPost(e) {
 		hideTooltip(e);
-		const photo = photoUpload.current;
-		if (photo) {
+		if (upload.current) {
 			insertIntoPost = true;
-			photo.current.click();
+			upload.current.click();
 		}
 	}
 
 	/**
 	 * Upload complete function.
 	 *
-	 * @param {Element} target Clicked item.
-	 * @param {string}  msg    Success Msg.
-	 * @param {string}  url    Attachment edit link.
-	 * @param {string}  id     Attachment id.
+	 * @param {Element} target  Clicked item.
+	 * @param {string}  msg     Success Msg.
+	 * @param {string}  imageID Attachment id.
 	 * @since 3.0
 	 */
-	function uploadComplete(target, msg, url, id) {
+	function uploadComplete(target, msg, imageID) {
 		setImageTitle(target, msg);
 
-		photo.current.classList.remove('in-progress');
-		photo.current.classList.add('uploaded');
+		photo.current.classList.remove("in-progress");
+		photo.current.classList.add("uploaded");
 
-		photo.current.querySelector('.edit-photo').style.display = 'none'; // Hide edit-photo button
-		photo.current.querySelector('.edit-photo-admin').style.display = 'inline-block'; // Show edit-photo-admin button
-		photo.current.querySelector('.edit-photo-admin').href = url; // Add admin edit link
-		photo.current.querySelector('.edit-photo-admin').target = '_balnk'; // Add new window
-
-		target.classList.remove('uploading');
-		target.classList.remove('resizing');
-		target.classList.add('success');
+		target.classList.remove("uploading");
+		target.classList.remove("resizing");
+		target.classList.add("success");
 		inProgress = false;
 
-		// Remove uploaded and success states after 5 seconds.
+		// Remove uploaded and success states after 3.5 seconds.
 		setTimeout(function () {
-			photo.current.classList.remove('uploaded');
-			target.classList.remove('success');
-		}, 5000);
+			photo.current.classList.remove("uploaded");
+			target.classList.remove("success");
+		}, 3500);
 
-		// Gutenberg Sidebar
-		if (is_block_editor) {
-			photo.current.querySelector('.insert').style.display = 'none'; // Hide insert button
-			photo.current.querySelector('.set-featured').style.display = 'none'; // Hide set-featured button
-		}
-
-		// Media Router
-		refreshMediaRouter(id);
+		// Refresh Media Router/Modal.
+		refreshMediaRouter(imageID);
 
 		/**
 		 * Deprecated in Instant Images 4.3.
 		 * Was previously used in the Media Popup Context.
 		 * Refresh Media Library contents on edit pages
 		 */
-		if (container.classList.contains('editor')) {
-			if (typeof wp.media != 'undefined') {
+		if (container.classList.contains("editor")) {
+			if (typeof wp.media !== "undefined") {
 				if (wp.media.frame.content.get() !== null) {
-					wp.media.frame.content.get().collection.props.set({ ignore: +new Date() });
+					wp.media.frame.content
+						.get()
+						.collection.props.set({ ignore: +new Date() });
 					wp.media.frame.content.get().options.selection.reset();
 				} else {
 					wp.media.frame.library.props.set({ ignore: +new Date() });
@@ -258,13 +286,13 @@ export default function Photo(props) {
 	/**
 	 * Refresh Media Modal and select item after it's been uploaded.
 	 *
-	 * @param {string} id The media modal ID.
+	 * @param {string} modalID The media modal ID.
 	 * @since 4.3
 	 */
-	function refreshMediaRouter(id) {
-		if (is_media_router && wp.media && wp.media.frame && wp.media.frame.el) {
+	function refreshMediaRouter(modalID) {
+		if (mediaRouter && wp.media && wp.media.frame && wp.media.frame.el) {
 			const mediaModal = wp.media.frame.el;
-			const mediaTab = mediaModal.querySelector('#menu-item-browse');
+			const mediaTab = mediaModal.querySelector("#menu-item-browse");
 			if (mediaTab) {
 				// Open the 'Media Library' tab.
 				mediaTab.click();
@@ -278,8 +306,8 @@ export default function Photo(props) {
 				}
 
 				// Select the attached that was just uploaded.
-				const selection = wp.media.frame.state().get('selection');
-				const selected = parseInt(id);
+				const selection = wp.media.frame.state().get("selection");
+				const selected = parseInt(modalID);
 				selection.reset(selected ? [wp.media.attachment(selected)] : []);
 			}, 100);
 		}
@@ -294,24 +322,24 @@ export default function Photo(props) {
 	 * @since 3.0
 	 */
 	function uploadError(target, notice, msg) {
-		target.classList.remove('uploading');
-		target.classList.remove('resizing');
-		target.classList.add('errors');
+		target.classList.remove("uploading");
+		target.classList.remove("resizing");
+		target.classList.add("errors");
 		setImageTitle(target, msg);
 		inProgress = false;
-		notice.classList.add('has-error');
-		console.warn(msg);
+		notice.classList.add("has-error");
+		console.warn(msg); // eslint-disable-line no-console
 	}
 
 	/**
 	 * Set the title attribute of target.
 	 *
-	 * @param {Element} e   The current clicked element.
-	 * @param {string}  msg The title Msg from JSON.
+	 * @param {Element} target Clicked element.
+	 * @param {string}  msg    Title message from JSON.
 	 * @since 3.0
 	 */
 	function setImageTitle(target, msg) {
-		target.setAttribute('title', msg); // Remove 'Click to upload...', set new value
+		target.setAttribute("title", msg); // Remove 'Click to upload...', set new value
 	}
 
 	/**
@@ -325,15 +353,15 @@ export default function Photo(props) {
 		hideTooltip(e);
 
 		// Get all open edit screens and close them.
-		const openEdits = document.querySelectorAll('.edit-screen.editing');
+		const openEdits = document.querySelectorAll(".edit-screen.editing");
 		if (openEdits) {
 			openEdits.forEach((edit) => {
-				edit.classList.remove('editing');
+				edit.classList.remove("editing");
 			});
 		}
 
 		// Show edit screen
-		editScreen.current.classList.add('editing');
+		editScreen.current.classList.add("editing");
 
 		// Set focus on edit screen
 		setTimeout(function () {
@@ -350,19 +378,19 @@ export default function Photo(props) {
 	function handleEditChange(e) {
 		const target = e.target.name;
 		switch (target) {
-			case 'filename':
+			case "filename":
 				setImageDetails({ ...imageDetails, filename: e.target.value });
 				break;
 
-			case 'title':
+			case "title":
 				setImageDetails({ ...imageDetails, title: e.target.value });
 				break;
 
-			case 'alt':
+			case "alt":
 				setImageDetails({ ...imageDetails, alt: e.target.value });
 				break;
 
-			case 'caption':
+			case "caption":
 				setImageDetails({ ...imageDetails, caption: e.target.value });
 				break;
 		}
@@ -374,8 +402,8 @@ export default function Photo(props) {
 	 * @since 3.2
 	 */
 	function uploadNow() {
-		editScreen.current.classList.remove('editing'); // Hide edit screen.
-		photoUpload.current.click(); // Trigger photo click.
+		editScreen.current.classList.remove("editing"); // Hide edit screen.
+		upload.current.click(); // Trigger click.
 	}
 
 	/**
@@ -386,17 +414,17 @@ export default function Photo(props) {
 	function cancelEdit() {
 		// Reset image state.
 		setImageDetails({
-			filename: filename,
-			title: title,
-			alt: alt,
-			caption: caption,
+			filename,
+			title,
+			alt,
+			caption,
 		});
 
 		// Hide edit screen
-		editScreen.current.classList.remove('editing');
+		editScreen.current.classList.remove("editing");
 
 		// Set focus back on photo.
-		photoUpload.current.focus({ preventScrol: true });
+		upload.current.focus({ preventScrol: true });
 	}
 
 	/**
@@ -405,9 +433,9 @@ export default function Photo(props) {
 	 * @since 4.3
 	 */
 	function closeMediaModal() {
-		const mediaModal = document.querySelector('.media-modal');
+		const mediaModal = document.querySelector(".media-modal");
 		if (mediaModal) {
-			const closeBtn = mediaModal.querySelector('button.media-modal-close');
+			const closeBtn = mediaModal.querySelector("button.media-modal-close");
 			if (!closeBtn) {
 				return false;
 			}
@@ -434,7 +462,7 @@ export default function Photo(props) {
 					<a
 						className="upload loaded"
 						href={full}
-						ref={photoUpload}
+						ref={upload}
 						data-id={id}
 						data-url={full}
 						data-filename={imageDetails.filename}
@@ -451,14 +479,22 @@ export default function Photo(props) {
 					<div className="notice-msg" ref={noticeMsg} />
 
 					<div className="user-controls">
-						<a className="user fade" href={user_url} rel="noopener noreferrer" target="_blank" title={`${instant_img_localize.view_all} @ ${user_name}`}>
+						<a
+							className="user fade"
+							href={user_url}
+							rel="noopener noreferrer"
+							target="_blank"
+							title={`${instant_img_localize.view_all} @ ${user_name}`}
+						>
 							<div className="user-wrap">
-								{user_photo?.length > 0 && <img className="user-wrap--photo" src={user_photo} />}
+								{user_photo?.length > 0 && (
+									<img className="user-wrap--photo" src={user_photo} alt="" />
+								)}
 								{user_name}
 							</div>
 						</a>
 						<div className="photo-options">
-							{displayGutenbergControl && (
+							{blockEditor && !editURL ? (
 								<Fragment>
 									<button
 										type="button"
@@ -469,7 +505,9 @@ export default function Photo(props) {
 										onClick={(e) => setFeaturedImageClick(e)}
 									>
 										<i className="fa fa-picture-o" aria-hidden="true"></i>
-										<span className="offscreen">{instant_img_localize.set_as_featured}</span>
+										<span className="offscreen">
+											{instant_img_localize.set_as_featured}
+										</span>
 									</button>
 									<button
 										type="button"
@@ -480,33 +518,40 @@ export default function Photo(props) {
 										onClick={(e) => insertImageIntoPost(e)}
 									>
 										<i className="fa fa-plus" aria-hidden="true"></i>
-										<span className="offscreen">{instant_img_localize.insert_into_post}</span>
+										<span className="offscreen">
+											{instant_img_localize.insert_into_post}
+										</span>
 									</button>
 								</Fragment>
+							) : null}
+
+							{editURL ? (
+								<button
+									onClick={() => editAfterUpload()}
+									className="edit-photo-admin fade"
+									data-title={instant_img_localize.edit_upload}
+									onMouseEnter={(e) => showTooltip(e)}
+									onMouseLeave={(e) => hideTooltip(e)}
+								>
+									<i className="fa fa-pencil" aria-hidden="true"></i>
+									<span className="offscreen">
+										{instant_img_localize.edit_upload}
+									</span>
+								</button>
+							) : (
+								<button
+									onClick={(e) => showEditScreen(e)}
+									className="edit-photo fade"
+									data-title={instant_img_localize.edit_details}
+									onMouseEnter={(e) => showTooltip(e)}
+									onMouseLeave={(e) => hideTooltip(e)}
+								>
+									<i className="fa fa-cog" aria-hidden="true"></i>
+									<span className="offscreen">
+										{instant_img_localize.edit_details}
+									</span>
+								</button>
 							)}
-
-							<a
-								href="#"
-								className="edit-photo-admin fade"
-								data-title={instant_img_localize.edit_upload}
-								onMouseEnter={(e) => showTooltip(e)}
-								onMouseLeave={(e) => hideTooltip(e)}
-							>
-								<i className="fa fa-pencil" aria-hidden="true"></i>
-								<span className="offscreen">{instant_img_localize.edit_upload}</span>
-							</a>
-
-							<button
-								type="button"
-								className="edit-photo fade"
-								data-title={instant_img_localize.edit_details}
-								onMouseEnter={(e) => showTooltip(e)}
-								onMouseLeave={(e) => hideTooltip(e)}
-								onClick={(e) => showEditScreen(e)}
-							>
-								<i className="fa fa-cog" aria-hidden="true"></i>
-								<span className="offscreen">{instant_img_localize.edit_details}</span>
-							</button>
 						</div>
 					</div>
 
@@ -514,24 +559,29 @@ export default function Photo(props) {
 						{likes ? (
 							<span
 								className="likes tooltip--above"
-								data-title={likes + ' ' + likeDisplay}
+								data-title={likes + " " + likeDisplay}
 								onMouseEnter={(e) => showTooltip(e)}
 								onMouseLeave={(e) => hideTooltip(e)}
 							>
-								<i className="fa fa-heart heart-like" aria-hidden="true"></i> {likes}
+								<i className="fa fa-heart heart-like" aria-hidden="true"></i>{" "}
+								{likes}
 							</span>
 						) : null}
 						<a
 							className="tooltip--above"
 							href={permalink}
-							data-title={`${instant_img_localize.open_external} ${capitalizeFirstLetter(provider)}`}
+							data-title={`${
+								instant_img_localize.open_external
+							} ${capitalizeFirstLetter(provider)}`}
 							onMouseEnter={(e) => showTooltip(e)}
 							onMouseLeave={(e) => hideTooltip(e)}
 							rel="noopener noreferrer"
 							target="_blank"
 						>
 							<i className="fa fa-external-link" aria-hidden="true"></i>
-							<span className="offscreen">{`${instant_img_localize.open_external} ${capitalizeFirstLetter(provider)}`}</span>
+							<span className="offscreen">{`${
+								instant_img_localize.open_external
+							} ${capitalizeFirstLetter(provider)}`}</span>
 						</a>
 					</div>
 				</div>
@@ -540,9 +590,14 @@ export default function Photo(props) {
 					<div className="edit-screen--title">
 						<div>
 							<p className="heading">{instant_img_localize.edit_details}</p>
-							{dimensions && dimensions.length > 0 && <p className="dimensions">{dimensions}</p>}
+							{dimensions && dimensions.length > 0 && (
+								<p className="dimensions">{dimensions}</p>
+							)}
 						</div>
-						<div className="preview" style={{ backgroundImage: `url(${thumb})` }}></div>
+						<div
+							className="preview"
+							style={{ backgroundImage: `url(${thumb})` }}
+						></div>
 					</div>
 					<label>
 						<span>{instant_img_localize.edit_filename}:</span>
@@ -558,11 +613,24 @@ export default function Photo(props) {
 					</label>
 					<label>
 						<span>{instant_img_localize.edit_title}:</span>
-						<input type="text" name="title" data-original={title} placeholder={title} value={imageDetails.title || ''} onChange={(e) => handleEditChange(e)} />
+						<input
+							type="text"
+							name="title"
+							data-original={title}
+							placeholder={title}
+							value={imageDetails.title || ""}
+							onChange={(e) => handleEditChange(e)}
+						/>
 					</label>
 					<label>
 						<span>{instant_img_localize.edit_alt}:</span>
-						<input type="text" name="alt" data-original={alt} value={imageDetails.alt || ''} onChange={(e) => handleEditChange(e)} />
+						<input
+							type="text"
+							name="alt"
+							data-original={alt}
+							value={imageDetails.alt || ""}
+							onChange={(e) => handleEditChange(e)}
+						/>
 					</label>
 					<label>
 						<span>{instant_img_localize.edit_caption}:</span>
@@ -571,7 +639,7 @@ export default function Photo(props) {
 							name="caption"
 							data-original={imageCaption}
 							onChange={(e) => handleEditChange(e)}
-							value={imageDetails.caption || ''}
+							value={imageDetails.caption || ""}
 							ref={captionRef}
 						></textarea>
 					</label>
@@ -583,11 +651,19 @@ export default function Photo(props) {
 						</div>
 					) : null}
 					<div className="edit-screen--controls">
-						<button type="button" className="button" onClick={(e) => cancelEdit(e)}>
+						<button
+							type="button"
+							className="button"
+							onClick={(e) => cancelEdit(e)}
+						>
 							{instant_img_localize.cancel}
-						</button>{' '}
+						</button>{" "}
 						&nbsp;
-						<button type="button" className="button button-primary" onClick={() => uploadNow()}>
+						<button
+							type="button"
+							className="button button-primary"
+							onClick={() => uploadNow()}
+						>
 							{instant_img_localize.upload_now}
 						</button>
 					</div>

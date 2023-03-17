@@ -5,7 +5,7 @@ const { PluginSidebar } = wp.editPost;
 /**
  * The plugin sidebar as a component.
  *
- * @returns {JSX.Element} The Plugin component.
+ * @return {JSX.Element} The Plugin component.
  */
 export default function Plugin() {
 	return (

@@ -828,7 +828,7 @@ body.media_page_instant-images.overflow-hidden {
   top: 50%;
   z-index: 5;
   transform: translate(-50%, -50%) scale(1.2);
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -1026,9 +1026,6 @@ body.media_page_instant-images.overflow-hidden {
 #photos .photo .fade.edit-photo:hover, #photos .photo .fade.edit-photo:focus, #photos .photo .fade.edit-photo-admin:hover, #photos .photo .fade.edit-photo-admin:focus, #photos .photo .fade.set-featured:hover, #photos .photo .fade.set-featured:focus, #photos .photo .fade.insert:hover, #photos .photo .fade.insert:focus {
   color: #222;
   background: rgba(255, 255, 255, 0.95);
-}
-#photos .photo .fade.edit-photo-admin {
-  display: none;
 }
 #photos .photo .fade.user {
   background: none;

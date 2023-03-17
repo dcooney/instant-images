@@ -7,15 +7,15 @@ const { createBlock } = wp.blocks;
  * @param {string} caption Image caption.
  * @param {string} alt     Image alt.
  */
-const insertImage = (url = '', caption = '', alt = '') => {
-	if (url === '') {
+const insertImage = (url = "", caption = "", alt = "") => {
+	if (url === "") {
 		return false;
 	}
-	const block = createBlock('core/image', {
-		url: url,
-		caption: caption,
-		alt: alt,
+	const block = createBlock("core/image", {
+		url,
+		caption,
+		alt,
 	});
-	wp.data.dispatch('core/editor').insertBlocks(block);
+	wp.data.dispatch("core/editor").insertBlocks(block);
 };
 export default insertImage;
