@@ -22,6 +22,6 @@ export default function unsplashDownload(download_url) {
 			console.log("Image download successsfully triggered at Unsplash."); // eslint-disable-line no-console
 		})
 		.catch(function (error) {
-			console.warn(error); // eslint-disable-line no-console
+			console.warn(error);
 		});
 }

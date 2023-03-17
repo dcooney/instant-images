@@ -32,7 +32,7 @@ export default function RestAPIError() {
 			}
 		};
 		restAPITest.onerror = function (errorMsg) {
-			console.warn(errorMsg); // eslint-disable-line no-console
+			console.warn(errorMsg);
 			setAccess(false);
 		};
 	}

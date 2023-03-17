@@ -15,7 +15,6 @@ export default function consoleStatus(provider, status = 200) {
 		case 401:
 		case 500:
 			// Unsplash/Pixabay/Pexels incorrect API key
-			// eslint-disable-next-line no-console
 			console.warn(
 				`[${local.instant_images} - ${status} Error] ${capitalizeFirstLetter(
 					provider
@@ -30,7 +29,6 @@ export default function consoleStatus(provider, status = 200) {
 			 * @see https://www.pexels.com/api/documentation/#statistics
 			 * @see https://pixabay.com/api/docs/#api_rate_limit
 			 */
-			// eslint-disable-next-line no-console
 			console.warn(
 				`[${local.instant_images} - ${status} Error] ${capitalizeFirstLetter(
 					provider

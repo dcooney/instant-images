@@ -34,7 +34,7 @@ export default function getQueryParams(provider, queryParams) {
 	 * Global plugin hook.
 	 */
 	if (instant_img_localize.query_debug) {
-		console.table(params); // eslint-disable-line no-console
+		console.table(params);
 	}
 	return params;
 }

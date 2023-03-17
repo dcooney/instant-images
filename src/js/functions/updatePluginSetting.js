@@ -25,6 +25,6 @@ export default function updatePluginSetting(setting, value) {
 		.post(api, JSON.stringify(params), config)
 		.then(function () {})
 		.catch(function (error) {
-			console.warn(error); // eslint-disable-line no-console
+			console.warn(error);
 		});
 }

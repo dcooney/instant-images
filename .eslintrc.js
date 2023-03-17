@@ -19,6 +19,7 @@ module.exports = {
 		camelcase: 0,
 		"jsx-a11y/label-has-associated-control": 0,
 		"no-undef": 0,
+		"no-console": ["error", { allow: ["warn", "error", "table"] }],
 		"prettier/prettier": [
 			"error",
 			{

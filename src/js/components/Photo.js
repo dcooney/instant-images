@@ -193,7 +193,7 @@ export default function Photo(props) {
 				}
 			})
 			.catch(function (error) {
-				console.warn(error); // eslint-disable-line no-console
+				console.warn(error);
 			});
 	}
 
@@ -328,7 +328,7 @@ export default function Photo(props) {
 		setImageTitle(target, msg);
 		inProgress = false;
 		notice.classList.add("has-error");
-		console.warn(msg); // eslint-disable-line no-console
+		console.warn(msg);
 	}
 
 	/**

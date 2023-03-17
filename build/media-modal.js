@@ -3997,7 +3997,7 @@ function Photo(props) {
         uploadError(target, notice, instant_img_localize.error_upload);
       }
     })["catch"](function (error) {
-      console.warn(error); // eslint-disable-line no-console
+      console.warn(error);
     });
   }
 
@@ -4132,7 +4132,7 @@ function Photo(props) {
     setImageTitle(target, msg);
     inProgress = false;
     notice.classList.add("has-error");
-    console.warn(msg); // eslint-disable-line no-console
+    console.warn(msg);
   }
 
   /**
@@ -4596,7 +4596,7 @@ function RestAPIError() {
       }
     };
     restAPITest.onerror = function (errorMsg) {
-      console.warn(errorMsg); // eslint-disable-line no-console
+      console.warn(errorMsg);
       setAccess(false);
     };
   }
@@ -5254,7 +5254,6 @@ function consoleStatus(provider) {
     case 401:
     case 500:
       // Unsplash/Pixabay/Pexels incorrect API key
-      // eslint-disable-next-line no-console
       console.warn("[".concat(local.instant_images, " - ").concat(status, " Error] ").concat((0,_helpers__WEBPACK_IMPORTED_MODULE_0__.capitalizeFirstLetter)(provider), ": ").concat(message));
       break;
     case 429:
@@ -5264,7 +5263,6 @@ function consoleStatus(provider) {
        * @see https://www.pexels.com/api/documentation/#statistics
        * @see https://pixabay.com/api/docs/#api_rate_limit
        */
-      // eslint-disable-next-line no-console
       console.warn("[".concat(local.instant_images, " - ").concat(status, " Error] ").concat((0,_helpers__WEBPACK_IMPORTED_MODULE_0__.capitalizeFirstLetter)(provider), ": ").concat(message));
       break;
     default:
@@ -5407,9 +5405,8 @@ function getQueryParams(provider, queryParams) {
    * Global plugin hook.
    */
   if (instant_img_localize.query_debug) {
-    console.table(params); // eslint-disable-line no-console
+    console.table(params);
   }
-
   return params;
 }
 
@@ -5813,7 +5810,7 @@ function unsplashDownload(download_url) {
     // Success, nothing else happens here
     console.log("Image download successsfully triggered at Unsplash."); // eslint-disable-line no-console
   })["catch"](function (error) {
-    console.warn(error); // eslint-disable-line no-console
+    console.warn(error);
   });
 }
 
@@ -5856,7 +5853,7 @@ function updatePluginSetting(setting, value) {
     }
   };
   axios__WEBPACK_IMPORTED_MODULE_0___default().post(api, JSON.stringify(params), config).then(function () {})["catch"](function (error) {
-    console.warn(error); // eslint-disable-line no-console
+    console.warn(error);
   });
 }
 
