@@ -246,6 +246,7 @@ function instant_images_generate_image_url( $provider, $url, $max_width, $max_he
 	}
 
 	$image_url = '';
+
 	switch ( $provider ) {
 		case 'unsplash':
 			$image_url = $url . '&fit=clip&w=' . $max_width . '&h=' . $max_height;

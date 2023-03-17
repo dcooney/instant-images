@@ -152,7 +152,9 @@ How to install Instant Images.
 * UPDATE: Added sizes filter to openverse search.
 * UPDATE: Added Wikimedia filter to openverse sources.
 * UPDATE: Code refactoring and build process updates.
-* FIX: Various security fixes.
+
+= 5.1.0.2 - March 8, 2023 =
+* HOTFIX: Security fix to prevent SSRF/misuse of download functionality.
 
 = 5.1.0.1 - February 2, 2023 =
 * HOTFIX: Fixed issue with mime type check not always working correctly. Reverted change for now.
