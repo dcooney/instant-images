@@ -15,6 +15,7 @@
 .nvmrc
 .jshintrc
 .phpcs.xml
+.prettierignore
 .prettierrc.js
 .stylelintignore
 .stylelintrc.json

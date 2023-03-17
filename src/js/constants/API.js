@@ -30,7 +30,7 @@ module.exports = {
 	openverse: {
 		name: "Openverse",
 		requires_key: false,
-		new: true,
+		new: false,
 		api_var: "key",
 		key: "",
 	},

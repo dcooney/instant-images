@@ -172,7 +172,7 @@ function instant_images_height_callback() {
  * Automatically add image attribution to captions.
  *
  * @author ConnektMedia <support@connekthq.com>
- * @since 5.1.1
+ * @since 5.2.0
  */
 function instant_images_auto_attribution_callback() {
 	$options = get_option( 'instant_img_settings' );

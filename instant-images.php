@@ -7,29 +7,19 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 5.1.1
+ * Version: 5.2.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
  * @package InstantImages
  */
 
-/*
-* NEW: Added new setting to automatically add image attribution as captions.
-* NEW: Adding mime type checking based on current allowed uploads.
-* UPDATE: Updated `instant_images_after_upload` hook to pass additional image data.
-* UPDATE: Various code refactoring and build process updates.
-* UPDATE: Added sizes filter to openverse search.
-* UPDATE: Added Wikimedia filter to openverse sources.
-* FIX: Various security fixes.
-*/
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '5.1.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'February 2, 2023' );
+define( 'INSTANT_IMAGES_VERSION', '5.2.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'March 17, 2023' );
 
 /**
  * Activation hook

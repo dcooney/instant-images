@@ -200,7 +200,7 @@ export default function Photo(props) {
 	/**
 	 * Handler to send user to edit photo link after upload.
 	 *
-	 * @since 5.1.1
+	 * @since 5.2.0
 	 */
 	function editAfterUpload() {
 		if (editURL) {

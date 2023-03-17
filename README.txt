@@ -4,7 +4,7 @@ Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 6.1
-Stable tag: 5.1.0.1
+Stable tag: 5.2.0
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -27,7 +27,7 @@ Instantly upload photos from Unsplash, Openverse, Pixabay or Pexels to your webs
 
 The perfect tool for users who want to save time and frustration by uploading images directly inside their WordPress installation and for developers who want to prototype and develop using real world imagery.
 
-**[Visit Plugin Website](https://connekthq.com/plugins/instant-images/)**
+**[Visit Plugin Website](https://getinstantimages.com)**
 
 = Features =
 
@@ -52,8 +52,8 @@ Maintaining a proxy server for Instant Images allows us to keep API keys hidden 
 
 Please take a moment and read our Terms of Use and Privacy Policy for when using our proxy service:
 
-- [Terms of Use](https://connekthq.com/plugins/instant-images/terms-of-use/)
-- [Privacy Policy](https://connekthq.com/plugins/instant-images/privacy-policy/)
+- [Terms of Use](https://getinstantimages.com/terms-of-use/)
+- [Privacy Policy](https://getinstantimages.com/privacy-policy/)
 
 ---
 
@@ -63,7 +63,7 @@ Pull requests can be submitted via [GitHub](https://github.com/dcooney/instant-i
 ---
 
 = Website =
-[https://connekthq.com/plugins/instant-images/](https://connekthq.com/plugins/instant-images/)
+[https://getinstantimages.com](https://getinstantimages.com)
 
 ---
 
@@ -73,12 +73,15 @@ Pull requests can be submitted via [GitHub](https://github.com/dcooney/instant-i
 All photos published on Unsplash are licensed under Creative Commons Zero which means you can copy, modify, distribute and use the photos for free, including commercial purposes, without asking permission from or providing attribution to the photographer or Unsplash/Pixabay.
 [Learn More](http://creativecommons.org/publicdomain/zero/1.0/)
 
+[Continue Reading](https://getinstantimages.com/frequently-asked-questions/#can-i-legally-use-these-photos-on-my-website)
+
+
 = Can I search for individual photos by ID? =
 Yes! You can enter `id:{photo_id}` into the search box to return a single result.
 e.g. `id:YiUi00uqKk8`
 
 = I'm unable to download images, what is the cause of this? =
-Unfortunately, there are a number of reasons why Instant Images may not work in your current hosting/server environment. Please read through the [FAQ on our website](https://connekthq.com/plugins/instant-images/#faqs) to view some potential causes.
+Unfortunately, there are a number of reasons why Instant Images may not work in your current hosting/server environment. Please read through the [FAQ on our website](https://getinstantimages.com/frequently-asked-questions/) to view some potential causes.
 
 = Can I update the filename or metadata prior to upload? =
 Yes, click the `options` (cog) icon in the bottom corner of the image to bring up an edit screen where you can modify the filename, title, alt and caption before the image is uploaded.
@@ -142,6 +145,16 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 5.2.0 - March 17, 2023 =
+* NEW: Added new setting to automatically add image attribution as captions.
+* NEW: Adding mime type checking based on current allowed uploads.
+* UPDATE: Updated `instant_images_after_upload` hook to pass additional image data.
+* UPDATE: Added sizes filter to openverse search.
+* UPDATE: Added Wikimedia filter to openverse sources.
+* UPDATE: Code refactoring and build process updates.
+* FIX: Various security fixes.
+
+
 = 5.1.0.1 - February 2, 2023 =
 * HOTFIX: Fixed issue with mime type check not always working correctly. Reverted change for now.
 * UPDATE: Pexels is using the Proxy server again after fixing the caching issues.
@@ -190,7 +203,7 @@ How to install Instant Images.
 = 4.5.1 - December 27, 2021 =
 * NEW: Added Pixabay photo filters (Type, Category, Colors and Orientation).
 * NEW: Added Unsplash search filters for Color, Orientation and Order.
-* NEW: Added new `instant_images_pixabay_safesearch` & `instant_images_unsplash_content_filter` filters that allow for modifying the flags the indicate the types of suitable images that should be returned. Get more information in our [FAQ](https://connekthq.com/plugins/instant-images/faqs/#can-i-ensure-only-photos-safe-for-work-are-returned-in-the-photo-listings).
+* NEW: Added new `instant_images_pixabay_safesearch` & `instant_images_unsplash_content_filter` filters that allow for modifying the flags the indicate the types of suitable images that should be returned. Get more information in our [FAQ](https://getinstantimages.com/frequently-asked-questions/#can-i-ensure-only-photos-safe-for-work-are-returned-in-the-photo-listings).
 * NEW: Added Pixabay API constant that allows for setting Pixabay API key via site constant. e.g. `define( 'INSTANT_IMAGES_PIXABAY_KEY', 'YOUR-KEY-HERE' );`
 * UPDATE: Revamped filtering menus and orientation options.
 * UPDATE: Other UI/UX updates to make the plugin more visually appealing.

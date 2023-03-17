@@ -6,7 +6,6 @@ import { checkRateLimit } from "./functions/helpers";
 import consoleStatus from "./functions/consoleStatus";
 import getProvider from "./functions/getProvider";
 import getQueryParams from "./functions/getQueryParams";
-require("./functions/polyfills");
 
 import "../scss/style.scss";
 

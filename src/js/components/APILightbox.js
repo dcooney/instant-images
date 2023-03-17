@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "@wordpress/element";
+import { Fragment, useEffect, useRef, useState } from "@wordpress/element";
 import classNames from "classnames";
 import { buildTestURL } from "../functions/buildURL";
 import consoleStatus from "../functions/consoleStatus";
@@ -14,9 +14,6 @@ import updatePluginSetting from "../functions/updatePluginSetting";
  */
 export default function APILightbox(props) {
 	const { provider, closeAPILightbox } = props;
-	if (!provider) {
-		return null;
-	}
 
 	const [apiStatus, setAPIStatus] = useState("invalid");
 	const [response, setResponse] = useState("");
@@ -53,10 +50,10 @@ export default function APILightbox(props) {
 
 		try {
 			// Fetch API data.
-			const response = await fetch(buildTestURL(provider));
+			const data = await fetch(buildTestURL(provider));
 
 			// Handle response.
-			const { ok, status, headers } = response;
+			const { ok, status, headers } = data;
 			checkRateLimit(headers);
 
 			// Handle response actions.
@@ -125,7 +122,7 @@ export default function APILightbox(props) {
 	/**
 	 * Reset the key to use Instant Images default.
 	 */
-	function useDefaultKey() {
+	function getDefaultKey() {
 		inputRef.current.value = "";
 		setTimeout(function () {
 			submitRef.current.click();
@@ -134,83 +131,95 @@ export default function APILightbox(props) {
 
 	useEffect(() => {
 		document.addEventListener("keydown", escFunction, false);
-		lightbox.current.classList.add("active");
+		lightbox?.current?.classList.add("active");
 		return () => {
 			document.removeEventListener("keydown", escFunction, false);
 		};
-	}, []);
+	}, [provider]); //eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<div
-			className="api-lightbox"
-			ref={lightbox}
-			onClick={(e) => bkgClick(e)}
-			tabIndex="-1"
-		>
-			<div>
-				<div>
-					<button
-						className="api-lightbox--close"
-						onClick={() => closeLightbox()}
-					>
-						&times;
-						<span className="offscreen">{instant_img_localize.btnClose}</span>
-					</button>
-					<div className="api-lightbox--details">
-						<h3 data-provider={provider}>{provider}</h3>
-						<p>{instant_img_localize[`${provider}_api_desc`]}</p>
-						<p className="action-controls">
+		<Fragment>
+			{provider ? (
+				// eslint-disable-next-line
+				<div
+					className="api-lightbox"
+					ref={lightbox}
+					onClick={(e) => bkgClick(e)}
+					tabIndex="-1"
+				>
+					<div>
+						<div>
 							<button
-								onClick={() =>
-									gotoURL(instant_img_localize[`${provider}_api_url`])
-								}
+								className="api-lightbox--close"
+								onClick={() => closeLightbox()}
 							>
-								{instant_img_localize.get_api_key}
+								&times;
+								<span className="offscreen">
+									{instant_img_localize.btnClose}
+								</span>
 							</button>
-							<span>|</span>
-							<button onClick={() => useDefaultKey()}>
-								{instant_img_localize.use_instant_images_key}
-							</button>
-						</p>
-					</div>
-					<form onSubmit={(e) => handleSubmit(e)}>
-						<label htmlFor="key" className="offscreen">
-							{instant_img_localize.enter_api_key}
-						</label>
-						<div className="api-lightbox--input-wrap">
-							<span className={apiStatus} title={title && title}>
-								{apiStatus === "invalid" && (
-									<i
-										className="fa fa-exclamation-triangle"
-										aria-hidden="true"
-									></i>
+							<div className="api-lightbox--details">
+								<h3 data-provider={provider}>{provider}</h3>
+								<p>{instant_img_localize[`${provider}_api_desc`]}</p>
+								<p className="action-controls">
+									<button
+										onClick={() =>
+											gotoURL(instant_img_localize[`${provider}_api_url`])
+										}
+									>
+										{instant_img_localize.get_api_key}
+									</button>
+									<span>|</span>
+									<button onClick={() => getDefaultKey()}>
+										{instant_img_localize.use_instant_images_key}
+									</button>
+								</p>
+							</div>
+							<form onSubmit={(e) => handleSubmit(e)}>
+								<label htmlFor="key" className="offscreen">
+									{instant_img_localize.enter_api_key}
+								</label>
+								<div className="api-lightbox--input-wrap">
+									<span className={apiStatus} title={title && title}>
+										{apiStatus === "invalid" && (
+											<i
+												className="fa fa-exclamation-triangle"
+												aria-hidden="true"
+											></i>
+										)}
+										{apiStatus === "valid" && (
+											<i className="fa fa-check-circle" aria-hidden="true"></i>
+										)}
+										{apiStatus === "loading" && (
+											<i
+												className="fa fa-spinner fa-spin"
+												aria-hidden="true"
+											></i>
+										)}
+									</span>
+									<input
+										type="text"
+										id="key"
+										ref={inputRef}
+										placeholder="Enter API Key"
+										defaultValue={api_key}
+									></input>
+								</div>
+								{response && (
+									<p
+										className={classNames("api-lightbox--response", apiStatus)}
+									>
+										{response}
+									</p>
 								)}
-								{apiStatus === "valid" && (
-									<i className="fa fa-check-circle" aria-hidden="true"></i>
-								)}
-								{apiStatus === "loading" && (
-									<i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
-								)}
-							</span>
-							<input
-								type="text"
-								id="key"
-								ref={inputRef}
-								placeholder="Enter API Key"
-								defaultValue={api_key}
-							></input>
+								<button type="submit" ref={submitRef}>
+									{instant_img_localize.btnVerify}
+								</button>
+							</form>
 						</div>
-						{response && (
-							<p className={classNames("api-lightbox--response", apiStatus)}>
-								{response}
-							</p>
-						)}
-						<button type="submit" ref={submitRef}>
-							{instant_img_localize.btnVerify}
-						</button>
-					</form>
+					</div>
 				</div>
-			</div>
-		</div>
+			) : null}
+		</Fragment>
 	);
 }
