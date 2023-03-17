@@ -1,4 +1,5 @@
-const { createBlock } = wp.blocks;
+import { createBlock } from "@wordpress/blocks";
+import { dispatch } from "@wordpress/data";
 
 /**
  * Insert an image block into the block editor.
@@ -16,6 +17,6 @@ const insertImage = (url = "", caption = "", alt = "") => {
 		caption,
 		alt,
 	});
-	wp.data.dispatch("core/editor").insertBlocks(block);
+	dispatch("core/block-editor").insertBlocks(block);
 };
 export default insertImage;

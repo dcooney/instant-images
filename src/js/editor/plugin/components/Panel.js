@@ -1,10 +1,10 @@
+import { useEffect, useState } from "@wordpress/element";
 import InstantImages from "../../../components/InstantImages";
 import buildURL from "../../../functions/buildURL";
 import consoleStatus from "../../../functions/consoleStatus";
 import getProvider from "../../../functions/getProvider";
 import getQueryParams from "../../../functions/getQueryParams";
 import { checkRateLimit } from "../../../functions/helpers";
-const { useState, useEffect } = wp.element;
 
 /**
  * The image listing panel for the plugin sidebar.

@@ -1,5 +1,5 @@
 import Icon from "./Icon";
-const { PluginSidebarMoreMenuItem } = wp.editPost;
+import { PluginSidebarMoreMenuItem } from "@wordpress/edit-post";
 
 /**
  * The plugin menu as a component.

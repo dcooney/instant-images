@@ -1,6 +1,6 @@
+import { PluginSidebar } from "@wordpress/edit-post";
 import Icon from "./Icon";
 import Panel from "./Panel";
-const { PluginSidebar } = wp.editPost;
 
 /**
  * The plugin sidebar as a component.
