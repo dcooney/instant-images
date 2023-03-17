@@ -5,7 +5,6 @@
 /src
 /vendor
 /webpack
-/build
 .browserlistrc
 .distignore
 .editorconfig
