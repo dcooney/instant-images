@@ -154,11 +154,9 @@ How to install Instant Images.
 * UPDATE: Code refactoring and build process updates.
 * FIX: Various security fixes.
 
-
 = 5.1.0.1 - February 2, 2023 =
 * HOTFIX: Fixed issue with mime type check not always working correctly. Reverted change for now.
 * UPDATE: Pexels is using the Proxy server again after fixing the caching issues.
-
 
 = 5.1.0 - February 2, 2023 =
 * NEW: Added Openverse support.
@@ -166,7 +164,6 @@ How to install Instant Images.
 * NEW: Added mime type checker to make sure the file type is allowed before uploading.
 * UPDATE: Better attribution handling.
 * UPDATE: Various admin UI/UX tweaks and updated.
-
 
 = 5.0.1 - January 10, 2023 =
 * HOTFIX: Adding a temporary hotfix to patch issues with the Pexels API and the Instant Images Proxy server.
