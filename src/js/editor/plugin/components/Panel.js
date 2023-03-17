@@ -45,7 +45,7 @@ export default function Panel() {
 			}
 		}
 		initialize();
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<div className="instant-img-container">

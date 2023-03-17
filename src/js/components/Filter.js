@@ -127,7 +127,7 @@ export default function Filter(props) {
 			document.removeEventListener("keyup", focusOutside);
 			document.removeEventListener("keydown", escClick);
 		};
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<div className="filter-dropdown" id={id} ref={dropdown}>

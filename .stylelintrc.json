@@ -18,6 +18,7 @@
 		"no-duplicate-selectors": null,
 		"font-family-no-missing-generic-family-keyword": null,
 		"font-family-name-quotes": null,
+		"string-quotes": null,
 		"at-rule-no-unknown": [
 			true,
 			{
@@ -30,8 +31,7 @@
 					"screen"
 				]
 			}
-		],
-		"string-quotes": "single"
+		]
 	},
 	"overrides": [
 		{

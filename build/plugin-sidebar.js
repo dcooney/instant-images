@@ -2940,7 +2940,8 @@ function Filter(props) {
       document.removeEventListener("keyup", focusOutside);
       document.removeEventListener("keydown", escClick);
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return /*#__PURE__*/React.createElement("div", {
     className: "filter-dropdown",
     id: id,
@@ -3569,26 +3570,26 @@ function InstantImages(props) {
       // Reset search filters when search is false.
       setSearchFilters({});
     }
-  }, [search]);
+  }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   /* Search filters change callback. */
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (mounted && search !== null && search !== void 0 && search.active) {
       doSearch(search === null || search === void 0 ? void 0 : search.term);
     }
-  }, [searchFilters]);
+  }, [searchFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Filters change callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (mounted) {
       getPhotos();
     }
-  }, [filters]);
+  }, [filters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Provider change callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setFilters({}); // Trigger filter change.
-  }, [activeProvider]);
+  }, [activeProvider]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Scroll in-view callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -3598,12 +3599,12 @@ function InstantImages(props) {
         loadMorePhotos();
       }
     }
-  }, [inView]);
+  }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Results callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     renderLayout();
-  }, [results]);
+  }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Initial page load.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -3614,7 +3615,8 @@ function InstantImages(props) {
     return function () {
       document.removeEventListener("keydown", escFunction, false);
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_15__["default"], {
     switchProvider: switchProvider,
     provider: activeProvider
@@ -5226,7 +5228,8 @@ function Panel() {
       return _initialize.apply(this, arguments);
     }
     initialize();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return /*#__PURE__*/React.createElement("div", {
     className: "instant-img-container"
   }, data && data.results ? /*#__PURE__*/React.createElement(_components_InstantImages__WEBPACK_IMPORTED_MODULE_0__["default"], {

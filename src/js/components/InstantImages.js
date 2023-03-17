@@ -410,26 +410,26 @@ export default function InstantImages(props) {
 			// Reset search filters when search is false.
 			setSearchFilters({});
 		}
-	}, [search]);
+	}, [search]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	/* Search filters change callback. */
 	useEffect(() => {
 		if (mounted && search?.active) {
 			doSearch(search?.term);
 		}
-	}, [searchFilters]);
+	}, [searchFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	// Filters change callback.
 	useEffect(() => {
 		if (mounted) {
 			getPhotos();
 		}
-	}, [filters]);
+	}, [filters]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	// Provider change callback.
 	useEffect(() => {
 		setFilters({}); // Trigger filter change.
-	}, [activeProvider]);
+	}, [activeProvider]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	// Scroll in-view callback.
 	useEffect(() => {
@@ -439,12 +439,12 @@ export default function InstantImages(props) {
 				loadMorePhotos();
 			}
 		}
-	}, [inView]);
+	}, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	// Results callback.
 	useEffect(() => {
 		renderLayout();
-	}, [results]);
+	}, [results]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	// Initial page load.
 	useEffect(() => {
@@ -455,7 +455,7 @@ export default function InstantImages(props) {
 		return () => {
 			document.removeEventListener("keydown", escFunction, false);
 		};
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<Fragment>
