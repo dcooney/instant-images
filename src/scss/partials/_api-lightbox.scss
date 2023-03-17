@@ -2,7 +2,6 @@
 .media-frame-content {
 	.instant-img-container {
 		.api-lightbox {
-			position: fixed;
 			& > div {
 				top: 0;
 			}
@@ -93,7 +92,7 @@
 				top: 100%;
 				left: 50px;
 				border: solid transparent;
-				content: '';
+				content: "";
 				height: 0;
 				width: 0;
 				position: absolute;
@@ -194,7 +193,7 @@
 		}
 
 		label,
-		button[type='submit'] {
+		button[type="submit"] {
 			font-size: 12px;
 			text-transform: uppercase;
 			font-weight: 600;
@@ -283,7 +282,7 @@
 				}
 			}
 		}
-		button[type='submit'] {
+		button[type="submit"] {
 			width: 100%;
 			border: none;
 			background-color: $purple;
