@@ -2,12 +2,12 @@
 /**
  * Plugin Name: Instant Images
  * Plugin URI: https://connekthq.com/plugins/instant-images/
- * Description: One click photo uploads directly to your media library from Unsplash, Pixabay, Pexels and Openverse.
+ * Description: One click photo uploads directly to your media library from Unsplash, Openverse, Pixabay and Pexels.
  * Author: Darren Cooney
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 5.1.0.2
+ * Version: 5.2.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '5.1.0.2' );
-define( 'INSTANT_IMAGES_RELEASE', 'March 8, 2023' );
+define( 'INSTANT_IMAGES_VERSION', '5.2.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'March 17, 2023' );
 
 /**
  * Activation hook
@@ -103,6 +103,14 @@ class InstantImages {
 				'constant'     => 'INSTANT_IMAGES_UNSPLASH_KEY',
 			],
 			[
+				'name'         => 'Openverse',
+				'slug'         => 'openverse',
+				'requires_key' => false,
+				'url'          => 'https://api.openverse.engineering/v1/#section/Register-and-Authenticate/Register-for-a-key',
+				'download_url' => 'https://api.openverse.engineering/',
+				'constant'     => '',
+			],
+			[
 				'name'         => 'Pixabay',
 				'slug'         => 'pixabay',
 				'requires_key' => true,
@@ -117,14 +125,6 @@ class InstantImages {
 				'url'          => 'https://www.pexels.com/join-consumer/',
 				'download_url' => 'https://images.pexels.com',
 				'constant'     => 'INSTANT_IMAGES_PEXELS_KEY',
-			],
-			[
-				'name'         => 'Openverse',
-				'slug'         => 'openverse',
-				'requires_key' => false,
-				'url'          => 'https://api.openverse.engineering/v1/#section/Register-and-Authenticate/Register-for-a-key',
-				'download_url' => 'https://api.openverse.engineering/',
-				'constant'     => '',
 			],
 		];
 		return $providers;
@@ -148,14 +148,10 @@ class InstantImages {
 	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public function instant_img_block_plugin_enqueue() {
-
 		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets' ] ) ) {
-
-			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries for SCRIPT_DEBUG.
-
 			wp_enqueue_script(
-				'instant-images-block',
-				INSTANT_IMAGES_URL . 'dist/js/instant-images-block' . $suffix . '.js',
+				'instant-images-plugin-sidebar',
+				INSTANT_IMAGES_URL . 'build/plugin-sidebar.js',
 				'',
 				INSTANT_IMAGES_VERSION,
 				true
@@ -163,13 +159,12 @@ class InstantImages {
 
 			wp_enqueue_style(
 				'admin-instant-images',
-				INSTANT_IMAGES_URL . 'dist/css/instant-images' . $suffix . '.css',
+				INSTANT_IMAGES_URL . 'build/style-instant-images.css',
 				array( 'wp-edit-post' ),
 				INSTANT_IMAGES_VERSION
 			);
 
-			$this::instant_img_localize( 'instant-images-block' );
-
+			$this::instant_img_localize( 'instant-images-plugin-sidebar' );
 		}
 	}
 
@@ -180,15 +175,12 @@ class InstantImages {
 	 * @author ConnektMedia <support@connekthq.com>
 	 */
 	public function instant_img_wp_media_enqueue() {
-
-		$suffix   = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries for SCRIPT_DEBUG.
 		$show_tab = $this::instant_img_show_tab( 'media_modal_display' );  // Show Tab Setting.
-
-		if ( $this::instant_img_has_access() && $show_tab ) {
-
+		$screen   = get_current_screen()->base;
+		if ( $this::instant_img_has_access() && $show_tab && $screen !== 'upload' ) {
 			wp_enqueue_script(
-				'instant-images-media-router',
-				INSTANT_IMAGES_URL . 'dist/js/instant-images-media' . $suffix . '.js',
+				'instant-images-media-modal',
+				INSTANT_IMAGES_URL . 'build/media-modal.js',
 				'',
 				INSTANT_IMAGES_VERSION,
 				true
@@ -196,11 +188,11 @@ class InstantImages {
 
 			wp_enqueue_style(
 				'admin-instant-images',
-				INSTANT_IMAGES_URL . 'dist/css/instant-images' . $suffix . '.css',
+				INSTANT_IMAGES_URL . 'build/style-instant-images.css',
 				'',
 				INSTANT_IMAGES_VERSION
 			);
-			$this::instant_img_localize( 'instant-images-media-router' );
+			$this::instant_img_localize( 'instant-images-media-modal' );
 		}
 	}
 
@@ -218,6 +210,7 @@ class InstantImages {
 		$download_w       = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
 		$download_h       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
 		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
+		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Default provider.
 
 		// Unsplash API.
 		if ( defined( 'INSTANT_IMAGES_UNSPLASH_KEY' ) ) {
@@ -253,6 +246,7 @@ class InstantImages {
 				'ajax_url'                => admin_url( 'admin-ajax.php' ),
 				'admin_nonce'             => wp_create_nonce( 'instant_img_nonce' ),
 				'parent_id'               => $post ? $post->ID : 0,
+				'auto_attribution'        => $auto_attribution,
 				'lang'                    => function_exists( 'pll_current_language' ) ? pll_current_language() : '',
 				'default_provider'        => $default_provider,
 				'download_width'          => esc_html( $download_w ),
@@ -383,7 +377,6 @@ class InstantImages {
 		require_once 'api/test.php';
 		require_once 'api/download.php';
 		require_once 'api/settings.php';
-		require_once 'api/v5-upgrade.php';
 	}
 
 	/**

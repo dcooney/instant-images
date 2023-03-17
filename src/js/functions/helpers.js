@@ -1,92 +1,102 @@
-//Polyfill for Array.from
-// Production steps of ECMA-262, Edition 6, 22.1.2.1
-if (!Array.from) {
-	Array.from = (function () {
-		var toStr = Object.prototype.toString;
-		var isCallable = function (fn) {
-			return (
-				typeof fn === "function" || toStr.call(fn) === "[object Function]"
-			);
-		};
-		var toInteger = function (value) {
-			var number = Number(value);
-			if (isNaN(number)) {
-				return 0;
-			}
-			if (number === 0 || !isFinite(number)) {
-				return number;
-			}
-			return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
-		};
-		var maxSafeInteger = Math.pow(2, 53) - 1;
-		var toLength = function (value) {
-			var len = toInteger(value);
-			return Math.min(Math.max(len, 0), maxSafeInteger);
-		};
+/**
+ * Check if an object is empty.
+ *
+ * @param {Object} obj The object to test against.
+ * @return {boolean}   Is this an object.
+ */
+export function isObjectEmpty(obj) {
+	if (obj === null || obj === undefined) {
+		return true;
+	}
+	return Object.keys(obj).length === 0;
+}
 
-		// The length property of the from method is 1.
-		return function from(arrayLike /*, mapFn, thisArg */) {
-			// 1. Let C be the this value.
-			var C = this;
+/**
+ * Check the `x-ratelimit-remaining` headers to confirm the API is available.
+ *
+ * @param {Object} headers The request headers object.
+ */
+export function checkRateLimit(headers) {
+	if (!headers) {
+		return;
+	}
+	const limit = headers.get("X-RateLimit-Limit") || -1;
+	const remaining = headers.get("X-RateLimit-Remaining") || -1;
+	if (limit > -1 && parseInt(remaining) < 2) {
+		alert(instant_img_localize.api_ratelimit_msg); // eslint-disable-line
+	}
+}
 
-			// 2. Let items be ToObject(arrayLike).
-			var items = Object(arrayLike);
+/**
+ * Capitalize the first letter of a string.
+ *
+ * @param {string} str The string to format.
+ * @return {string}    The formatted string.
+ */
+export function capitalizeFirstLetter(str) {
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
-			// 3. ReturnIfAbrupt(items).
-			if (arrayLike == null) {
-				throw new TypeError(
-					"Array.from requires an array-like object - not null or undefined"
-				);
-			}
+let tooltipInterval = "";
 
-			// 4. If mapfn is undefined, then let mapping be false.
-			var mapFn = arguments.length > 1 ? arguments[1] : void undefined;
-			var T;
-			if (typeof mapFn !== "undefined") {
-				// 5. else
-				// 5. a If IsCallable(mapfn) is false, throw a TypeError exception.
-				if (!isCallable(mapFn)) {
-					throw new TypeError(
-						"Array.from: when provided, the second argument must be a function"
-					);
-				}
+/**
+ * Show the tooltip.
+ *
+ * @param {Event} e The target tooltip element.
+ * @since 4.3.0
+ */
+export function showTooltip(e) {
+	const target = e.currentTarget;
+	const rect = target.getBoundingClientRect();
+	let left = Math.round(rect.left);
+	const top = Math.round(rect.top);
 
-				// 5. b. If thisArg was supplied, let T be thisArg; else let T be undefined.
-				if (arguments.length > 2) {
-					T = arguments[2];
-				}
-			}
+	const container = target.closest("#photo-listing");
+	const tooltip = container.querySelector("#tooltip");
+	tooltip.classList.remove("over");
 
-			// 10. Let lenValue be Get(items, "length").
-			// 11. Let len be ToLength(lenValue).
-			var len = toLength(items.length);
+	if (target.classList.contains("tooltip--above")) {
+		tooltip.classList.add("above");
+	} else {
+		tooltip.classList.remove("above");
+	}
 
-			// 13. If IsConstructor(C) is true, then
-			// 13. a. Let A be the result of calling the [[Construct]] internal method
-			// of C with an argument list containing the single item len.
-			// 14. a. Else, Let A be ArrayCreate(len).
-			var A = isCallable(C) ? Object(new C(len)) : new Array(len);
+	// Delay Tooltip Reveal.
+	tooltipInterval = setInterval(function () {
+		clearInterval(tooltipInterval);
+		tooltip.innerHTML = target.dataset.title; // Tooltip content.
 
-			// 16. Let k be 0.
-			var k = 0;
-			// 17. Repeat, while k < len… (also steps a - h)
-			var kValue;
-			while (k < len) {
-				kValue = items[k];
-				if (mapFn) {
-					A[k] =
-						typeof T === "undefined"
-							? mapFn(kValue, k)
-							: mapFn.call(T, kValue, k);
-				} else {
-					A[k] = kValue;
-				}
-				k += 1;
-			}
-			// 18. Let putStatus be Put(A, "length", len, true).
-			A.length = len;
-			// 20. Return A.
-			return A;
-		};
-	})();
+		// Position Tooltip.
+		left = left - tooltip.offsetWidth + target.offsetWidth + 5;
+		tooltip.style.left = `${left}px`;
+		tooltip.style.top = `${top}px`;
+
+		setTimeout(function () {
+			tooltip.classList.add("over");
+		}, 25);
+	}, 750);
+}
+
+/**
+ * Hide the tooltip.
+ *
+ * @param {Event} e The target tooltip element.
+ * @since 4.3.0
+ */
+export function hideTooltip(e) {
+	clearInterval(tooltipInterval);
+	const container = e.currentTarget.closest("#photo-listing");
+	const tooltip = container.querySelector("#tooltip");
+	tooltip.classList.remove("over");
+}
+
+/**
+ * Open the URL in new window.
+ *
+ * @param {string} url The destination URL.
+ */
+export function gotoURL(url) {
+	if (url && window) {
+		window.open(url, "_blank");
+	}
 }

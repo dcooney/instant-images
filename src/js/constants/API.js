@@ -1,11 +1,12 @@
 module.exports = {
+	proxy: PROXY_URL || "https://proxy.getinstantimages.com/api/", // eslint-disable-line
 	defaults: {
 		provider: "unsplash",
 		order: "latest",
 		per_page: "20",
 		arr_key: "results",
 	},
-	providers: ["Unsplash", "Pixabay", "Pexels", "Openverse"],
+	providers: ["Unsplash", "Openverse", "Pixabay", "Pexels"],
 	unsplash: {
 		name: "Unsplash",
 		requires_key: true,
@@ -29,7 +30,7 @@ module.exports = {
 	openverse: {
 		name: "Openverse",
 		requires_key: false,
-		new: true,
+		new: false,
 		api_var: "key",
 		key: "",
 	},

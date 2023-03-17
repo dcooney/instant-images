@@ -1,5 +1,3 @@
-
-
 body.loading {
 	.instant-img-container {
 		.loading-block {
@@ -23,16 +21,28 @@ body.loading {
 	fill: $purple !important;
 }
 
-button[aria-expanded="true"] .instant-images-sidebar-icon svg,
-button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
+button[aria-expanded='true'] .instant-images-sidebar-icon svg,
+button[aria-expanded='true'] .instant-images-sidebar-icon svg * {
 	stroke: $purple_bright !important;
 	fill: $purple_bright !important;
 }
 
 .components-panel {
+	#photos {
+		&::after {
+			width: 100%;
+			left: 0;
+		}
+	}
 	.instant-img-container {
 		.load-more-wrap {
-			display: block;
+			border-top: 1px solid $gb_border;
+			button {
+				display: inline-block;
+			}
+		}
+		.loading-block {
+			padding: 25px 0;
 		}
 		.notice.upgrade-notice {
 			margin: 10px;
@@ -55,7 +65,10 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 			display: none;
 		}
 	}
-	#photos {
+	.search-header {
+		display: none;
+	}
+	#photo-listing {
 		width: 100%;
 		margin: 0;
 		padding: 5px 10px;
@@ -142,10 +155,10 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 			form {
 				height: auto;
 			}
-			&:before {
+			&::before {
 				display: none;
 			}
-			button[type="submit"] {
+			button[type='submit'] {
 				display: none;
 			}
 			input {
@@ -164,16 +177,16 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 					box-shadow: none;
 				}
 			}
-			input[type="search"]::-webkit-input-placeholder {
+			input[type='search']::-webkit-input-placeholder {
 				font-size: 13px;
 			}
-			input[type="search"]:-moz-placeholder {
+			input[type='search']:-moz-placeholder {
 				font-size: 13px;
 			}
-			input[type="search"]::-moz-placeholder {
+			input[type='search']::-moz-placeholder {
 				font-size: 13px;
 			}
-			input[type="search"]:-ms-input-placeholder {
+			input[type='search']:-ms-input-placeholder {
 				font-size: 13px;
 			}
 			.searchResults {
@@ -184,8 +197,8 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 				font-size: 12px;
 				height: 36px;
 				line-height: 35px;
-				&:before,
-				&:after {
+				&::before,
+				&::after {
 					display: none;
 				}
 			}

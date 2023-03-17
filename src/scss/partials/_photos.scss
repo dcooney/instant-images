@@ -1,32 +1,37 @@
+#photo-listing {
+	position: relative;
+	min-height: 500px;
+	height: 100%;
+
+	&::after {
+		visibility: hidden;
+		opacity: 0;
+		display: block;
+		content: "";
+		position: absolute;
+		width: calc(100% + 50px);
+		height: 100%;
+		left: -25px;
+		top: 0;
+		background: rgba(255, 255, 255, 0.9) url("../img/ajax-loader-lg.gif")
+			no-repeat center 90px;
+		z-index: 9999;
+		transition: all 0.25s ease;
+	}
+	&.loading {
+		&::after {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+}
+
 #photos {
 	width: 100%;
 	width: calc(100% + 10px);
 	margin: 0 0 0 -5px;
 	padding: 0;
 	position: relative;
-
-	&:after {
-		visibility: hidden;
-		opacity: 0;
-		display: block;
-		content: "";
-		position: absolute;
-		left: -10px;
-		top: -5px;
-		width: calc(100% + 20px);
-		height: calc(100% + 10px);
-		min-height: 300px;
-		background: rgba(255, 255, 255, 0.95) url("../img/ajax-loader-lg.gif")
-			no-repeat center 90px;
-		z-index: 999;
-		transition: all 0.25s ease;
-	}
-	&.loading {
-		&:after {
-			visibility: visible;
-			opacity: 1;
-		}
-	}
 
 	.photo {
 		width: 20%;
@@ -83,6 +88,7 @@
 		}
 		&:focus-within {
 			.user-controls {
+				bottom: 0;
 				opacity: 1;
 			}
 		}
@@ -124,10 +130,10 @@
 				top: 50%;
 				z-index: 5;
 				transform: translate(-50%, -50%) scale(1.2);
-				box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+				box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 				background-position: center center;
 				background-repeat: no-repeat;
-				&:before {
+				&::before {
 					font-family: "FontAwesome";
 					display: block;
 					color: #fff;
@@ -154,10 +160,10 @@
 				.status {
 					visibility: visible;
 					opacity: 1;
-					background: rgba(255, 255, 255, 0.95)
-						url("../img/ajax-loader-lg.gif") no-repeat center center;
+					background: rgba(255, 255, 255, 0.95) url("../img/ajax-loader-lg.gif")
+						no-repeat center center;
 					background-size: 24px 24px;
-					&:before {
+					&::before {
 						display: none;
 					}
 				}
@@ -170,7 +176,7 @@
 					visibility: visible;
 					opacity: 1;
 					background-color: $green;
-					&:before {
+					&::before {
 						content: "\f00c";
 						color: #fff;
 					}
@@ -187,7 +193,7 @@
 					visibility: visible;
 					opacity: 1;
 					background-color: $red;
-					&:before {
+					&::before {
 						content: "\f12a";
 						color: #fff;
 						opacity: 0.8;
@@ -203,6 +209,7 @@
 					opacity: 0.25 !important;
 				}
 			}
+
 			.user-controls,
 			.options {
 				opacity: 0 !important;
@@ -225,6 +232,7 @@
 				}
 			}
 			.user-controls {
+				bottom: 0;
 				opacity: 1;
 			}
 		}
@@ -249,9 +257,8 @@
 			z-index: 6;
 			width: auto;
 			display: inline-block;
-			width: auto;
 			cursor: default !important;
-			transition: all 0.3s ease;
+			transition: all 0.25s ease 0.15s;
 			opacity: 0;
 			visibility: hidden;
 			font-size: 13px;
@@ -277,7 +284,6 @@
 				margin: 0;
 				padding-top: 1px;
 				background: rgba(255, 255, 255, 0.5);
-				margin: 0;
 				border-radius: 2px;
 				color: #23282d;
 				transition: all 0.3s ease;
@@ -307,13 +313,12 @@
 			position: absolute;
 			z-index: 6;
 			width: 100%;
-			bottom: 0;
+			bottom: -20px;
 			left: 0;
-			width: 100%;
 			background: rgba(0, 0, 0, 0.4);
 			padding: 0;
-			opacity: 0.25;
-			transition: all 0.3s ease;
+			opacity: 0;
+			transition: all 0.25s ease 0.15s;
 		}
 
 		.photo-options {
@@ -324,7 +329,6 @@
 
 		.fade {
 			transition: all 0.35s ease;
-			color: #fff;
 			background: rgba(255, 255, 255, 0.75);
 			background: transparent;
 			border-radius: 2px;
@@ -345,7 +349,6 @@
 			&.insert {
 				width: 34px;
 				display: inline-block;
-				width: 34px;
 				text-align: center;
 				position: relative;
 				i {
@@ -361,16 +364,12 @@
 					background: rgba(255, 255, 255, 0.95);
 				}
 			}
-			&.edit-photo-admin {
-				display: none;
-			}
 			&.user {
 				background: none;
 				text-decoration: none;
 				font-size: 13px;
 				max-width: 48%;
 				cursor: pointer;
-				text-decoration: none;
 				border: none;
 				line-height: 35px;
 				height: 36px;
@@ -387,7 +386,7 @@
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
-					&:before {
+					&::before {
 						content: "";
 						display: block;
 						z-index: 0;
@@ -397,7 +396,7 @@
 					}
 				}
 				img.user-wrap--photo,
-				.user-wrap:before {
+				.user-wrap::before {
 					width: 20px;
 					max-width: 20px;
 					border-radius: 100%;
@@ -414,7 +413,6 @@
 		// Notice Msg
 		.notice-msg {
 			position: absolute;
-			z-index: 999;
 			top: -40px;
 			left: 0;
 			height: 40px;
@@ -428,7 +426,6 @@
 			padding: 0;
 			transition: all 0.25s ease-in-out;
 			opacity: 0;
-			//visibility: hidden;
 			z-index: 9999;
 			&.has-error {
 				top: -40px;
@@ -436,21 +433,21 @@
 			}
 		}
 		// Advertisement block.
-		&.feature{
+		&.feature {
 			cursor: pointer;
 			&:hover,
-			&:focus-within{
+			&:focus-within {
 				text-decoration: underline;
 				.photo--wrap {
 					border-color: #ccc;
 				}
 			}
-			.photo--wrap{
+			.photo--wrap {
 				padding: 5px;
 				border: 1px solid $border;
 				border-radius: $radius;
 				transition: border 0.25s ease;
-				.flag{
+				.flag {
 					position: absolute;
 					right: 3px;
 					top: 3px;
@@ -461,25 +458,25 @@
 					border-radius: $radius;
 					line-height: 1;
 				}
-				.img-wrap{
-					img{
+				.img-wrap {
+					img {
 						display: block;
 						border-radius: $radius;
 					}
 				}
-				.feature-title{
+				.feature-title {
 					display: flex;
 					align-items: center;
 					width: 100%;
 					padding: 8px 3px 3px;
-					img{
+					img {
 						border-radius: 100%;
 						width: 25px;
 						height: 25px;
 						object-fit: cover;
 						margin-right: 6px;
 					}
-					span{
+					span {
 						flex: 1;
 						display: block;
 						width: 100%;
@@ -549,7 +546,6 @@
 					background-repeat: no-repeat;
 					border-radius: 3px;
 					flex: none;
-					//transform: rotate(-2deg);
 				}
 			}
 			p {
@@ -562,6 +558,9 @@
 					margin: 0;
 					font-weight: 600;
 					text-transform: uppercase;
+				}
+				&.dimensions {
+					font-size: 11px;
 				}
 			}
 		}
@@ -613,7 +612,7 @@
 			margin: 0;
 			height: 35px;
 			line-height: 35px;
-			&[name=filename]{
+			&[name="filename"] {
 				padding-right: 45px;
 			}
 		}
@@ -633,15 +632,15 @@
 	}
 }
 
-.instant-img-container{
-	.onload-warning{
+.instant-img-container {
+	.onload-warning {
 		text-align: center;
 		max-width: 600px;
 		margin: 0 auto;
 		padding: 20px;
-		h3{
+		h3 {
 			margin-bottom: 10px;
-			span{
+			span {
 				text-transform: uppercase;
 			}
 		}

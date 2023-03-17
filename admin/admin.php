@@ -68,17 +68,12 @@ function instant_images_enqueue_scripts() {
  * @author ConnektMedia <support@connekthq.com>
  */
 function instant_images_scripts() {
-	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
-	wp_enqueue_style( 'admin-instant-images', INSTANT_IMAGES_URL . 'dist/css/instant-images' . $suffix . '.css', '', INSTANT_IMAGES_VERSION );
+	wp_enqueue_style( 'admin-instant-images', INSTANT_IMAGES_URL . 'build/style-instant-images".css', '', INSTANT_IMAGES_VERSION );
 	wp_enqueue_script( 'jquery', true, '', INSTANT_IMAGES_VERSION, false );
 	wp_enqueue_script( 'jquery-form', true, '', INSTANT_IMAGES_VERSION, false );
-
-	wp_enqueue_script( 'instant-images-react', INSTANT_IMAGES_URL . 'dist/js/instant-images' . $suffix . '.js', '', INSTANT_IMAGES_VERSION, true );
+	wp_enqueue_script( 'instant-images-react', INSTANT_IMAGES_URL . 'build/instant-images".js', '', INSTANT_IMAGES_VERSION, true );
 	wp_enqueue_script( 'instant-images', INSTANT_IMAGES_ADMIN_URL . 'assets/js/admin.js', 'jquery', INSTANT_IMAGES_VERSION, true );
-
 	InstantImages::instant_img_localize();
-
 }
 
 /**
@@ -156,7 +151,7 @@ function instant_images_filter_admin_footer_text( $text ) {
 	$base   = 'media_page_' . INSTANT_IMAGES_NAME;
 	if ( $screen->base === $base ) {
 		// @codingStandardsIgnoreStart
-		echo INSTANT_IMAGES_TITLE . ' is made with <span style="color: #e25555;">♥</span> by <a href="https://connekthq.com/?utm_source=WPAdmin&utm_medium=InstantImages&utm_campaign=Footer" target="_blank" style="font-weight: 500;">Connekt</a> | <a href="https://wordpress.org/support/plugin/instant-images/reviews/#new-post" target="_blank" style="font-weight: 500;">Leave a Review</a> | <a href="https://connekthq.com/plugins/instant-images/faqs/" target="_blank" style="font-weight: 500;">FAQs</a> | <a href="https://connekthq.com/plugins/instant-images/terms-of-use/" target="_blank" style="font-weight: 500;">Terms</a> | <a href="https://connekthq.com/plugins/instant-images/privacy-policy/" target="_blank" style="font-weight: 500;">Privacy Policy</a>';
+		echo INSTANT_IMAGES_TITLE . ' is made with <span style="color: #e25555;">♥</span> by <a href="https://connekthq.com/?utm_source=WPAdmin&utm_medium=InstantImages&utm_campaign=Footer" target="_blank" style="font-weight: 500;">Connekt</a> | <a href="https://wordpress.org/support/plugin/instant-images/reviews/#new-post" target="_blank" style="font-weight: 500;">Leave a Review</a> | <a href="https://getinstantimages.com/faqs/" target="_blank" style="font-weight: 500;">FAQs</a> | <a href="https://getinstantimages.com/terms-of-use/" target="_blank" style="font-weight: 500;">Terms</a> | <a href="https://getinstantimages.com/privacy-policy/" target="_blank" style="font-weight: 500;">Privacy Policy</a>';
 		// @codingStandardsIgnoreEnd
 	}
 }

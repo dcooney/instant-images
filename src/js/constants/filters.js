@@ -4,7 +4,14 @@ module.exports = {
 			source: {
 				label: "source",
 				default: "WordPress",
-				filters: ["WordPress", "Flickr", "Nasa", "SpaceX", "StockSnap"],
+				filters: [
+					"WordPress",
+					"Flickr",
+					"Nasa",
+					"SpaceX",
+					"StockSnap",
+					"wikimedia",
+				],
 			},
 			aspect_ratio: {
 				label: "orientation",
@@ -27,6 +34,11 @@ module.exports = {
 				label: "orientation",
 				default: "all",
 				filters: ["all", "square", "tall", "wide"],
+			},
+			size: {
+				label: "size",
+				default: "all",
+				filters: ["all", "small", "medium", "large"],
 			},
 			license: {
 				label: "license",

@@ -39,6 +39,11 @@
 		&:focus {
 			color: $text;
 		}
+		&[disabled] {
+			opacity: 0.5;
+			cursor: not-allowed;
+			pointer-events: none;
+		}
 		&.active {
 			background-color: #fff;
 			border-color: $input;
@@ -62,21 +67,21 @@
 	}
 }
 
-[data-provider="unsplash"] {
-	background: url("../img/logos/unsplash.svg") no-repeat 10px center;
+[data-provider='unsplash'] {
+	background: url('../img/logos/unsplash.svg') no-repeat 10px center;
 	background-size: 18px 18px;
 }
 
-[data-provider="pixabay"] {
-	background: url("../img/logos/pixabay.png") no-repeat 10px center;
+[data-provider='pixabay'] {
+	background: url('../img/logos/pixabay.png') no-repeat 10px center;
 	background-size: 20px 20px;
 }
 
-[data-provider="pexels"] {
-	background: url("../img/logos/pexels.svg") no-repeat 10px center;
+[data-provider='pexels'] {
+	background: url('../img/logos/pexels.svg') no-repeat 10px center;
 	background-size: 20px 20px;
 }
-[data-provider="openverse"] {
-	background: url("../img/logos/openverse.svg") no-repeat 10px center;
+[data-provider='openverse'] {
+	background: url('../img/logos/openverse.svg') no-repeat 10px center;
 	background-size: 20px 20px;
 }

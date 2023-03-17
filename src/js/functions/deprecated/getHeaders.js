@@ -5,7 +5,7 @@ import API from "../constants/API";
  *
  * @param  {string} provider The current provider.
  * @return {object}          The headers as an object.
- * @deprecated 5.1.1
+ * @deprecated 5.2.0
  */
 export default function getHeaders(provider) {
 	if (provider !== "pexels") {

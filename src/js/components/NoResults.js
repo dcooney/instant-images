@@ -1,16 +1,23 @@
-import React from "react";
+/**
+ * Render the NoResults component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The NoResults component.
+ */
+export default function NoResults(props) {
+	const { total = 0, is_search = false } = props;
 
-class NoResults extends React.Component {
-	render() {
-		return (
-			<div className="no-results">
-				<div>
-					<h3>{instant_img_localize.no_results} </h3>
-					<p>{instant_img_localize.no_results_desc} </p>
-				</div>
-			</div>
-		);
+	if (!is_search || (is_search && total >= 1)) {
+		// Bail if not search or search total is greater than 1.
+		return null;
 	}
-}
 
-export default NoResults;
+	return (
+		<div className="no-results">
+			<div>
+				<h3>{instant_img_localize.no_results} </h3>
+				<p>{instant_img_localize.no_results_desc} </p>
+			</div>
+		</div>
+	);
+}

@@ -1,8 +1,8 @@
-import React from "react";
-
-class Tooltip extends React.Component {
-	render() {
-		return <div id="tooltip" />;
-	}
+/**
+ * Render the Tooltip component.
+ *
+ * @return {JSX.Element} The Tooltip component.
+ */
+export default function Tooltip() {
+	return <div id="tooltip" />;
 }
-export default Tooltip;

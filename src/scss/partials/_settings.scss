@@ -24,7 +24,6 @@
 			position: relative;
 			border: 1px solid $border;
 			border-radius: $radius;
-			overflow: hidden;
 
 			// What's New
 			&.ii-whats-new {
@@ -66,7 +65,6 @@
 								display: block;
 								font-weight: 700;
 								margin: 0 0 5px;
-								color: $text;
 							}
 						}
 						code {
@@ -103,8 +101,8 @@
 					width: 35%;
 				}
 				select,
-				input[type="text"],
-				input[type="number"] {
+				input[type='text'],
+				input[type='number'] {
 					background-color: #fff;
 					width: 100%;
 					padding: 5px 10px;
@@ -118,8 +116,8 @@
 						box-shadow: none !important;
 					}
 				}
-				input[type="text"],
-				input[type="number"] {
+				input[type='text'],
+				input[type='number'] {
 					padding: 10px;
 				}
 				span.desc {
@@ -164,7 +162,7 @@
 						margin: 0 0 4px 1px;
 					}
 				}
-				.ii-api-contsant{
+				.ii-api-contsant {
 					display: block;
 					padding: 7px 0 0 1px;
 					font-style: italic;
@@ -193,7 +191,7 @@
 							margin-bottom: 5px;
 						}
 					}
-					&:after {
+					&::after {
 						display: none;
 					}
 				}

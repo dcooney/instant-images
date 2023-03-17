@@ -1,9 +1,7 @@
 /**
  * Get the correct error message by status code.
  *
- * @param  {string} provider The API service provider.
- * @param  {string} status   The API status.
- * @return {string}          The error message.
+ * @param {string} status The API status.
  */
 export default function getErrorMessage(status = 200) {
 	const local = instant_img_localize;
@@ -22,6 +20,7 @@ export default function getErrorMessage(status = 200) {
 		case 429:
 			/**
 			 * Pixabay, Pexels - too many requests.
+			 *
 			 * @see https://www.pexels.com/api/documentation/#statistics
 			 * @see https://pixabay.com/api/docs/#api_rate_limit
 			 */

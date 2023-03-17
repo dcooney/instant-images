@@ -51,7 +51,7 @@ body.media_page_instant-images {
 	}
 	a {
 		color: $purple;
-		transition: all 0.25s ease;
+		transition: $transition;
 		&:hover {
 			color: #5568ae;
 			text-decoration: none;
@@ -64,7 +64,6 @@ body.media_page_instant-images {
 		display: block;
 		color: #666;
 		width: 100%;
-		display: block;
 		clear: both;
 		text-transform: none;
 		padding: 0;
@@ -79,25 +78,25 @@ body.media_page_instant-images {
 
 	.error-messaging {
 		padding: 22px 22px 22px 60px;
-		border-radius: 4px;
+		border-radius: $radius;
 		background: #da4444;
 		color: #fff;
 		font-size: 13px;
 		line-height: 1.75;
-		margin: 15px;
+		margin: 15px 15px 0;
 		display: block;
 		position: relative;
 		box-shadow: $shadow;
-		&.warning{
+		&.warning {
 			background-color: $warn;
 		}
-		strong{
+		strong {
 			font-size: 15px;
 			display: block;
 		}
-		&:before {
-			font-family: "FontAwesome";
-			content: "\f06a";
+		&::before {
+			font-family: 'FontAwesome';
+			content: '\f06a';
 			display: block;
 			left: 18px;
 			top: 18px;
@@ -112,7 +111,7 @@ body.media_page_instant-images {
       wp-admin/upload.php?page=instant-images
    */
 	.header-wrap {
-		background: $lighter_grey url("../img/logo-48x48.png") no-repeat 25px 20px;
+		background: $lighter_grey url('../img/logo-48x48.png') no-repeat 25px 20px;
 		padding: 20px 25px 20px 83px;
 		min-height: 88px;
 		overflow: hidden;
@@ -172,11 +171,11 @@ body.media_page_instant-images {
 		}
 	}
 	.instant-images-wrapper {
-		padding: 0 25px;
+		padding: 0 25px 20px;
 		display: block;
 		overflow: hidden;
 		min-height: 400px;
-		background: url("../img/ajax-loader-lg.gif") no-repeat center center;
+		background: url('../img/ajax-loader-lg.gif') no-repeat center center;
 		&.loaded {
 			background: none;
 		}
@@ -204,26 +203,23 @@ body.media_page_instant-images {
 		}
 	}
 	.loading-block {
-		display: none;
-		padding: 50px;
-		background: url("../img/ajax-loader-lg.gif") no-repeat center center;
+		padding: 50px 0;
+		background: url('../img/ajax-loader-lg.gif') no-repeat center center;
 	}
 
 	// Load More btn
 	.load-more-wrap {
-		margin: 1% 0 0;
-		padding: 25px 0;
+		margin: 0;
+		padding: 0;
 		text-align: center;
-		display: none;
-		border-top: 1px solid $gb_border;
 
 		button {
-			display: inline-block;
-			margin: 0;
+			display: none;
+			margin: 20px 0;
 			padding: 12px 15px;
 			font-size: 15px;
 			font-weight: 600;
-			transition: all 0.1s ease;
+			transition: $transition;
 			height: auto;
 			line-height: 1;
 			cursor: pointer;
@@ -263,14 +259,14 @@ body.media_page_instant-images {
 		height: 28px;
 		display: none;
 		float: left;
-		background: #fff url("../img/ajax-loader.gif") no-repeat center center;
+		background: #fff url('../img/ajax-loader.gif') no-repeat center center;
 	}
 }
 
 // Thickbox styles
 #TB_ajaxContent {
 	clear: both;
-	line-height: 1.4em;
+	line-height: 1.4;
 	overflow: auto;
 	text-align: left;
 	width: 100% !important;
@@ -284,6 +280,18 @@ body.media_page_instant-images {
 	border: none;
 	position: relative;
 	top: -5px;
+
+	& .cnkt-checkbox-wrap {
+		display: flex;
+		flex-wrap: nowrap;
+		width: 100%;
+		padding: 3px 0;
+
+		& input {
+			margin-top: 0;
+			margin-right: 8px;
+		}
+	}
 }
 .cnkt-sidebar .form-table td,
 .cnkt-sidebar .form-table label,
@@ -306,10 +314,13 @@ body.media_page_instant-images {
 }
 .instant-img-container .form-table td {
 	border-top: 0;
-	padding: 0 0 10px;
+	padding: 0 0 15px;
 	float: left;
 	width: 100%;
 	margin: 0;
+	&:empty {
+		padding: 0;
+	}
 }
 .cnkt-sidebar .form-table .form-msg,
 .cnkt-main .form-msg {
@@ -358,14 +369,14 @@ body.media_page_instant-images {
 	padding-top: 5px;
 }
 .instant-img-container label {
-	padding: 5px 0px;
+	padding: 5px 0 7px;
 }
 #unsplash-form-options h2,
 #unsplash-form-options p.desc {
 	display: none;
 }
-.instant-img-container input[type="text"],
-.instant-img-container input[type="number"],
+.instant-img-container input[type='text'],
+.instant-img-container input[type='number'],
 .instant-img-container textarea {
 	padding: 10px;
 	line-height: 1;
@@ -374,7 +385,7 @@ body.media_page_instant-images {
 	border-radius: 2px;
 	height: auto;
 }
-.instant-img-container input[type="text"]:focus,
+.instant-img-container input[type='text']:focus,
 .instant-img-container textarea:focus {
 	border-color: $text_light;
 	box-shadow: 0 0 3px #ccc;
@@ -394,6 +405,6 @@ body.media_page_instant-images {
 		}
 	}
 	input:-webkit-autofill {
-		box-shadow: 0 0 0px 1000px white inset;
+		box-shadow: 0 0 0 1000px #fff inset;
 	}
 }

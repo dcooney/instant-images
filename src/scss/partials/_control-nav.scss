@@ -11,8 +11,8 @@
 		padding: 20px 0;
 		list-style: none;
 		border-bottom: 1px solid $grey;
-		&:after {
-			content: "";
+		&::after {
+			content: '';
 			display: table;
 			clear: both;
 		}
@@ -24,9 +24,9 @@
 				flex: none;
 				width: 100%;
 			}
-			transition: all 0.25s ease;
+			transition: all 0.3s ease 0.15s;
 			&.inactive {
-				opacity: 0.55;
+				opacity: 0.35;
 				filter: blur(1px);
 				pointer-events: none;
 				i {
@@ -47,11 +47,11 @@
 				column-gap: 20px;
 			}
 			width: 100%;
-			&:before {
+			&::before {
 				display: block;
 				display: none;
-				content: "\f0b0";
-				font-family: "FontAwesome";
+				content: '\f0b0';
+				font-family: 'FontAwesome';
 				color: $grey;
 				font-size: 24px;
 				margin-right: 10px;
@@ -108,8 +108,8 @@
 			margin-left: auto;
 			padding: 0 0 0 20px;
 			position: relative;
-			&.inactive{
-				opacity: 0.55;
+			&.inactive {
+				opacity: 0.35;
 				filter: blur(1px);
 				pointer-events: none;
 			}
@@ -117,7 +117,6 @@
 				width: 100%;
 				display: block;
 				position: static;
-				padding: 0;
 				text-align: left;
 				max-width: 100%;
 				padding: 10px 0;
@@ -149,7 +148,6 @@
 					color: #fff;
 					background-color: transparent !important;
 					padding: 0;
-					height: auto;
 					line-height: 1;
 					width: 28px;
 					font-weight: 700;
@@ -166,25 +164,25 @@
 						opacity: 1;
 					}
 				}
-				&:after,
-				&:before {
+				&::after,
+				&::before {
 					left: 100%;
 					top: 50%;
 					border: solid transparent;
-					content: "";
+					content: '';
 					height: 0;
 					width: 0;
 					position: absolute;
 					pointer-events: none;
 					z-index: 100;
 				}
-				&:after {
+				&::after {
 					border-color: rgba(223, 225, 173, 0);
 					border-left-color: $purple;
 					border-width: 6px;
 					margin-top: -6px;
 				}
-				&:before {
+				&::before {
 					border-color: rgba(0, 0, 0, 0);
 					border-left-color: $purple_dark;
 					border-width: 7px;
@@ -195,10 +193,10 @@
 					visibility: hidden;
 				}
 				@media screen and (max-width: $small) {
-					right:0;
+					right: 0;
 					border-radius: 0 9999px 9999px 0;
-					&:after,
-					&:before{
+					&::after,
+					&::before {
 						display: none;
 					}
 				}
@@ -211,7 +209,7 @@
 				display: block;
 				width: 100%;
 				&:hover {
-					button[type="submit"] {
+					button[type='submit'] {
 						opacity: 1;
 					}
 				}
@@ -236,17 +234,17 @@
 					box-shadow: 0 0 1px 5px rgba(#000, 0.035);
 				}
 				&.searching {
-					background-image: url("../img/ajax-loader.gif");
+					background-image: url('../img/ajax-loader.gif');
 				}
 			}
 			// Remove X button in search.
-			input[type="search"]::-webkit-search-decoration,
-			input[type="search"]::-webkit-search-cancel-button,
-			input[type="search"]::-webkit-search-results-button,
-			input[type="search"]::-webkit-search-results-decoration {
+			input[type='search']::-webkit-search-decoration,
+			input[type='search']::-webkit-search-cancel-button,
+			input[type='search']::-webkit-search-results-button,
+			input[type='search']::-webkit-search-results-decoration {
 				-webkit-appearance: none;
 			}
-			button[type="submit"] {
+			button[type='submit'] {
 				position: absolute;
 				left: 2px;
 				top: 0;
@@ -273,25 +271,25 @@
 					cursor: not-allowed;
 				}
 			}
-			input[type="search"]::-webkit-input-placeholder {
+			input[type='search']::-webkit-input-placeholder {
 				color: #ccc;
 				font-weight: 400;
 				font-style: normal;
 				font-size: 14px;
 			}
-			input[type="search"]:-moz-placeholder {
+			input[type='search']:-moz-placeholder {
 				color: #ccc;
 				font-weight: 400;
 				font-style: normal;
 				font-size: 14px;
 			}
-			input[type="search"]::-moz-placeholder {
+			input[type='search']::-moz-placeholder {
 				color: #ccc;
 				font-weight: 400;
 				font-style: normal;
 				font-size: 14px;
 			}
-			input[type="search"]:-ms-input-placeholder {
+			input[type='search']:-ms-input-placeholder {
 				color: #ccc;
 				font-weight: 400;
 				font-style: normal;
