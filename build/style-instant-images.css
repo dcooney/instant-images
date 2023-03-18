@@ -273,7 +273,7 @@ body.loading .instant-img-container .loading-block{display:block}
 .instant-images-sidebar-icon svg,.instant-images-sidebar-icon svg *{stroke:#586ec6 !important;fill:#586ec6 !important}
 button[aria-expanded=true] .instant-images-sidebar-icon svg,button[aria-expanded=true] .instant-images-sidebar-icon svg *{stroke:#abf !important;fill:#abf !important}
 .components-panel #photos::after{width:100%;left:0}
-.components-panel .instant-img-container .load-more-wrap{border-top:1px solid #ddd}
+.components-panel .instant-img-container .load-more-wrap{padding-bottom:5px}
 .components-panel .instant-img-container .load-more-wrap button{display:inline-block}
 .components-panel .instant-img-container .loading-block{padding:25px 0}
 .components-panel .instant-img-container .notice.upgrade-notice{margin:10px}
@@ -317,7 +317,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg,button[aria-expanded
 .components-panel .orientation-list span{display:none}
 .components-panel .orientation-list ul{padding:0;width:100%}
 .media-frame-router button#menu-item-instantimages.active{background-color:#f7f7f7}
-.media-frame-content .instant-img-container .load-more-wrap{border-top:1px solid #ddd}
+.media-frame-content .instant-img-container .load-more-wrap{margin-top:10px}
 .media-frame-content .instant-img-container .load-more-wrap button{display:inline-block}
 .instant-img-container #tooltip{padding:8px 10px;background:#fff;position:fixed;left:auto;top:auto;z-index:999;display:block;opacity:0;visibility:hidden;margin-top:-37px;font-size:12px;color:rgba(51,51,51,.75);text-align:center;line-height:1;border-radius:2px;box-shadow:0 2px 3px rgba(0,0,0,.1);transition:transform .25s cubic-bezier(0.24, 0.22, 0.015, 1.56),opacity .15s ease-in-out,visibility .15s ease-in-out;transform:scale(0.8)}
 .instant-img-container #tooltip::after{top:100%;right:17px;border:solid rgba(0,0,0,0);content:"";height:0;width:0;position:absolute;pointer-events:none;border-color:rgba(255,255,255,0);border-top-color:#fff;border-width:5px;margin-left:-5px}
