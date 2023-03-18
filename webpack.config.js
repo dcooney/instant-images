@@ -1,6 +1,6 @@
-const defaults = require( '@wordpress/scripts/config/webpack.config' );
-const ESLintPlugin = require( 'eslint-webpack-plugin' );
-const StylelintPlugin = require( 'stylelint-webpack-plugin' );
+const defaults = require("@wordpress/scripts/config/webpack.config");
+const ESLintPlugin = require("eslint-webpack-plugin");
+const StylelintPlugin = require("stylelint-webpack-plugin");
 
 /**
  * Webpack config (Development mode)
@@ -9,10 +9,14 @@ const StylelintPlugin = require( 'stylelint-webpack-plugin' );
  */
 module.exports = {
 	...defaults,
+	externals: {
+		react: "React",
+		"react-dom": "ReactDOM",
+	},
 	entry: {
-		'instant-images': './src/js/index.js',
-		'media-modal': './src/js/media-modal.js',
-		'plugin-sidebar': './src/js/plugin-sidebar.js',
+		"instant-images": "./src/js/index.js",
+		"media-modal": "./src/js/media-modal.js",
+		"plugin-sidebar": "./src/js/plugin-sidebar.js",
 	},
 	plugins: [
 		...defaults.plugins,

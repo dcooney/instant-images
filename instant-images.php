@@ -24,8 +24,8 @@ define( 'INSTANT_IMAGES_RELEASE', 'March 18, 2023' );
 /**
  * Activation hook
  *
- * @since 2.0
  * @author ConnektMedia <support@connekthq.com>
+ * @since 2.0
  */
 function instant_images_activate() {
 	// Create /instant-images directory inside /uploads to temporarily store images.
@@ -40,8 +40,8 @@ register_activation_hook( __FILE__, 'instant_images_activate' );
 /**
  * Deactivation hook
  *
- * @since 3.2.2
  * @author ConnektMedia <support@connekthq.com>
+ * @since 3.2.2
  */
 function instant_images_deactivate() {
 	// Delete /instant-images directory inside /uploads to temporarily store images.
@@ -64,22 +64,21 @@ register_deactivation_hook( __FILE__, 'instant_images_deactivate' );
 /**
  * InstantImages class
  *
- * @since 2.0
  * @author ConnektMedia <support@connekthq.com>
+ * @since 2.0
  */
 class InstantImages {
 
 	/**
 	 * Set up plugin.
 	 *
-	 * @since 2.0
 	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 2.0
 	 */
 	public function __construct() {
-
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( &$this, 'instant_images_add_action_links' ) );
-		add_action( 'enqueue_block_editor_assets', array( &$this, 'instant_img_block_plugin_enqueue' ) );
-		add_action( 'wp_enqueue_media', array( &$this, 'instant_img_wp_media_enqueue' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ &$this, 'instant_images_add_action_links' ] );
+		add_action( 'enqueue_block_editor_assets', [ &$this, 'instant_img_block_plugin_enqueue' ] );
+		add_action( 'wp_enqueue_media', [ &$this, 'instant_img_wp_media_enqueue' ] );
 		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain.
 		$this->includes();
 		$this->constants();
@@ -88,9 +87,9 @@ class InstantImages {
 	/**
 	 * Get a list of all plugin providers.
 	 *
-	 * @since 4.6
-	 * @author ConnektMedia <support@connekthq.com>
 	 * @return array The array of providers.
+	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 4.6
 	 */
 	public static function instant_img_get_providers() {
 		$providers = [
@@ -134,6 +133,8 @@ class InstantImages {
 	 * Get a list of potential download URLs to increase security of download functionality.
 	 *
 	 * @return array The array of urls.
+	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 4.0
 	 */
 	public static function instant_img_get_download_urls() {
 		$providers = self::instant_img_get_providers();
@@ -144,15 +145,15 @@ class InstantImages {
 	/**
 	 * Enqueue Gutenberg Block sidebar plugin
 	 *
-	 * @since 3.0
 	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 3.0
 	 */
 	public function instant_img_block_plugin_enqueue() {
 		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets' ] ) ) {
 			wp_enqueue_script(
 				'instant-images-plugin-sidebar',
 				INSTANT_IMAGES_URL . 'build/plugin-sidebar.js',
-				'',
+				[ 'wp-element' ],
 				INSTANT_IMAGES_VERSION,
 				true
 			);
@@ -160,7 +161,7 @@ class InstantImages {
 			wp_enqueue_style(
 				'admin-instant-images',
 				INSTANT_IMAGES_URL . 'build/style-instant-images.css',
-				array( 'wp-edit-post' ),
+				[ 'wp-edit-post' ],
 				INSTANT_IMAGES_VERSION
 			);
 
@@ -171,8 +172,8 @@ class InstantImages {
 	/**
 	 * Enqueue script for Media Modal and Blocks sidebar
 	 *
-	 * @since 4.0
 	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 4.0
 	 */
 	public function instant_img_wp_media_enqueue() {
 		$show_tab = $this::instant_img_show_tab( 'media_modal_display' );  // Show Tab Setting.
@@ -181,7 +182,7 @@ class InstantImages {
 			wp_enqueue_script(
 				'instant-images-media-modal',
 				INSTANT_IMAGES_URL . 'build/media-modal.js',
-				'',
+				[ 'wp-element' ],
 				INSTANT_IMAGES_VERSION,
 				true
 			);
@@ -199,12 +200,11 @@ class InstantImages {
 	/**
 	 * Localization strings and settings
 	 *
-	 * @param string $script id.
-	 * @since 2.0
+	 * @param string $script Script ID.
 	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 2.0
 	 */
 	public static function instant_img_localize( $script = 'instant-images-react' ) {
-
 		global $post;
 		$options          = get_option( 'instant_img_settings' );
 		$download_w       = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
@@ -238,7 +238,7 @@ class InstantImages {
 		wp_localize_script(
 			$script,
 			'instant_img_localize',
-			array(
+			[
 				'instant_images'          => __( 'Instant Images', 'instant-images' ),
 				'version'                 => INSTANT_IMAGES_VERSION,
 				'root'                    => esc_url_raw( rest_url() ),
@@ -282,7 +282,7 @@ class InstantImages {
 				'resizing'                => __( 'Creating image sizes...', 'instant-images' ),
 				'resizing_still'          => __( 'Still resizing...', 'instant-images' ),
 				'no_results'              => __( 'Nothing matched your search query.', 'instant-images' ),
-				'no_results_desc'         => __( 'Try adjusting your criteria and searching again.', 'instant-images' ),
+				'no_results_desc'         => __( 'Try adjusting your filter criteria or searching again.', 'instant-images' ),
 				'new'                     => __( 'New', 'instant-images' ),
 				'latest'                  => __( 'New', 'instant-images' ),
 				'oldest'                  => __( 'Oldest', 'instant-images' ),
@@ -357,15 +357,15 @@ class InstantImages {
 					'license'      => __( 'License:', 'instant-images' ),
 					'source'       => __( 'Source:', 'instant-images' ),
 				],
-			)
+			]
 		);
 	}
 
 	/**
 	 * Include these files in the admin
 	 *
-	 * @since 2.0
 	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 2.0
 	 */
 	private function includes() {
 		if ( is_admin() ) {
@@ -383,9 +383,9 @@ class InstantImages {
 	 * Show tab to upload image on post edit screens
 	 *
 	 * @param string $option WP Option.
-	 * @return $show boolean
-	 * @since 3.2.1
+	 * @return boolean
 	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 3.2.1
 	 */
 	public static function instant_img_show_tab( $option ) {
 		if ( ! $option ) {
@@ -405,9 +405,9 @@ class InstantImages {
 	/**
 	 * Confirm user has access to instant images.
 	 *
-	 * @since 4.3.3
 	 * @return boolean
 	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 4.3.3
 	 */
 	public static function instant_img_has_access() {
 		$access = false;
@@ -420,10 +420,10 @@ class InstantImages {
 	/**
 	 * Block Instant Images from loading on some screens.
 	 *
-	 * @since 4.4.0.3
 	 * @param array $array An array of screen IDs.
 	 * @return boolean
 	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 4.4.0.3
 	 */
 	public static function instant_img_not_current_screen( $array = [] ) {
 		$access       = true;
@@ -437,8 +437,8 @@ class InstantImages {
 	/**
 	 * Set up plugin constants.
 	 *
-	 * @since 2.0
 	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 2.0
 	 */
 	private function constants() {
 		define( 'INSTANT_IMAGES_TITLE', 'Instant Images' );
@@ -455,13 +455,13 @@ class InstantImages {
 	/**
 	 * Add custom links to plugins.php
 	 *
-	 * @param array $links current links.
-	 * @since 2.0
-	 * @return {Array} $mylinks
+	 * @param array $links Current links.
+	 * @return array
 	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 2.0
 	 */
 	public function instant_images_add_action_links( $links ) {
-		$mylinks = array( '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Photos', 'instant-images' ) . '</a>' );
+		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Photos', 'instant-images' ) . '</a>' ];
 		return array_merge( $mylinks, $links );
 	}
 
@@ -470,9 +470,8 @@ class InstantImages {
 /**
  * The main function responsible for returning the one true InstantImages Instance.
  *
- * @since 2.0
- * @return $instant_images
  * @author ConnektMedia <support@connekthq.com>
+ * @since 2.0
  */
 function instant_images() {
 	global $instant_images;

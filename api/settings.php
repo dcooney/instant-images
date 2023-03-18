@@ -2,8 +2,8 @@
 /**
  * Custom /settings route to update plugin settings.
  *
- * @since 4.5
  * @author ConnektMedia <support@connekthq.com>
+ * @since 4.5
  * @package InstantImages
  */
 
@@ -30,7 +30,6 @@ add_action(
  * Save plugin settings.
  *
  * @param WP_REST_Request $request API request.
- * @since 4.5
  * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */

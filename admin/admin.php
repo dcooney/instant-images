@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Create admin menu item under 'Media'.
  *
- * @since 2.0
  * @author ConnektMedia <support@connekthq.com>
+ * @since 2.0
  */
 function instant_images_create_page() {
-	$usplash_settings_page = add_submenu_page(
+	$instant_images_settings_page = add_submenu_page(
 		'upload.php',
 		INSTANT_IMAGES_TITLE,
 		INSTANT_IMAGES_TITLE,
@@ -24,7 +24,7 @@ function instant_images_create_page() {
 		INSTANT_IMAGES_NAME,
 		'instant_images_settings_page'
 	);
-	add_action( 'load-' . $usplash_settings_page, 'instant_images_load_scripts' ); // Add admin scripts.
+	add_action( 'load-' . $instant_images_settings_page, 'instant_images_load_scripts' ); // Add admin scripts.
 }
 add_action( 'admin_menu', 'instant_images_create_page' );
 
@@ -44,8 +44,8 @@ function instant_images_settings_page() {
 /**
  * Load Admin CSS and JS
  *
- * @since 1.0
  * @author ConnektMedia <support@connekthq.com>
+ * @since 1.0
  */
 function instant_images_load_scripts() {
 	add_action( 'admin_enqueue_scripts', 'instant_images_enqueue_scripts' );
@@ -54,8 +54,8 @@ function instant_images_load_scripts() {
 /**
  * Admin Enqueue Scripts
  *
- * @since 2.0
  * @author ConnektMedia <support@connekthq.com>
+ * @since 2.0
  */
 function instant_images_enqueue_scripts() {
 	instant_images_scripts();
@@ -64,8 +64,8 @@ function instant_images_enqueue_scripts() {
 /**
  * Localize vars and scripts.
  *
- * @since 3.0
  * @author ConnektMedia <support@connekthq.com>
+ * @since 3.0
  */
 function instant_images_scripts() {
 	wp_enqueue_style( 'admin-instant-images', INSTANT_IMAGES_URL . 'build/style-instant-images".css', '', INSTANT_IMAGES_VERSION );
@@ -80,8 +80,8 @@ function instant_images_scripts() {
  * Add tab to media upload window (left hand sidebar).
  *
  * @param array $tabs Current tabs.
- * @since 3.2.1
  * @author ConnektMedia <support@connekthq.com>
+ * @since 3.2.1
  */
 function instant_images_media_upload_tabs_handler( $tabs ) {
 	$show_media_tab = InstantImages::instant_img_show_tab( 'media_modal_display' );
@@ -96,8 +96,8 @@ add_filter( 'media_upload_tabs', 'instant_images_media_upload_tabs_handler' );
 /**
  * Add Instant Images media button to classic editor screens.
  *
- * @since 3.2.1
  * @author ConnektMedia <support@connekthq.com>
+ * @since 3.2.1
  */
 function instant_images_media_buttons() {
 	$show_button = InstantImages::instant_img_show_tab( 'media_modal_display' );
@@ -113,21 +113,20 @@ add_filter( 'media_buttons', 'instant_images_media_buttons' );
  * Add instant images iframe to classic editor screens.
  *
  * @see https://developer.wordpress.org/reference/hooks/media_upload_tab/
- * @since 3.2.1
+ *
  * @author ConnektMedia <support@connekthq.com>
+ * @since 3.2.1
  */
-// @codingStandardsIgnoreStart
-function media_upload_instant_images_handler() {
+function instant_images_media_upload_handler() {
 	wp_iframe( 'instant_images_media_tab' );
 }
-add_action( 'media_upload_instant_img_tab', 'media_upload_instant_images_handler' );
-// @codingStandardsIgnoreEnd
+add_action( 'media_upload_instant_img_tab', 'instant_images_media_upload_handler' );
 
 /**
  * Add pop up content to edit, new and post pages on classic editor screens.
  *
- * @since 2.0
  * @author ConnektMedia <support@connekthq.com>
+ * @since 2.0
  */
 function instant_images_media_tab() {
 	instant_images_scripts();
@@ -143,8 +142,8 @@ function instant_images_media_tab() {
  * Filter the WP Admin footer text.
  *
  * @param string $text The footer display text.
- * @since 2.0
  * @author ConnektMedia <support@connekthq.com>
+ * @since 2.0
  */
 function instant_images_filter_admin_footer_text( $text ) {
 	$screen = get_current_screen();

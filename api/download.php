@@ -2,8 +2,8 @@
 /**
  * Custom /ownload API route for download and adding images to media library.
  *
- * @since 3.0
  * @author ConnektMedia <support@connekthq.com>
+ * @since 3.0
  * @package InstantImages
  */
 
@@ -31,7 +31,6 @@ add_action(
  *
  * @param WP_REST_Request $request Rest request object.
  * @return $response
- * @since 3.0
  * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */

@@ -30,7 +30,6 @@ add_action(
  * Test REST API access
  *
  * @param WP_REST_Request $request API request.
- * @since 3.2
  * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */
