@@ -153,7 +153,7 @@ class InstantImages {
 			wp_enqueue_script(
 				'instant-images-plugin-sidebar',
 				INSTANT_IMAGES_URL . 'build/plugin-sidebar.js',
-				[ 'wp-element' ],
+				[],
 				INSTANT_IMAGES_VERSION,
 				true
 			);
@@ -182,7 +182,7 @@ class InstantImages {
 			wp_enqueue_script(
 				'instant-images-media-modal',
 				INSTANT_IMAGES_URL . 'build/media-modal.js',
-				[ 'wp-element' ],
+				[],
 				INSTANT_IMAGES_VERSION,
 				true
 			);
