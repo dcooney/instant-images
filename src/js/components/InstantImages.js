@@ -316,8 +316,7 @@ export default function InstantImages(props) {
 		setShowAPILightbox(false);
 		body.classList.remove("overflow-hidden");
 
-		// API Verification.
-		// Checks for valid API key for provider.
+		// API verification - check API key for provider.
 		if (API[newProvider].requires_key && !apiTested.includes(newProvider)) {
 			try {
 				const response = await fetch(buildTestURL(newProvider));
@@ -342,11 +341,15 @@ export default function InstantImages(props) {
 			}
 		}
 
-		// Update filter options.
-		setFilterOptions(FILTERS[newProvider].filters);
+		setTimeout(() => {
+			// Add slight delay for loading effect.
 
-		// Switch the provider.
-		setActiveProvider(newProvider);
+			// Update filter options.
+			setFilterOptions(FILTERS[newProvider].filters);
+
+			// Switch the provider.
+			setActiveProvider(newProvider);
+		}, delay);
 	}
 
 	/**

@@ -145,7 +145,7 @@ How to install Instant Images.
 
 == Changelog ==
 
-= 5.2.0 - March 17, 2023 =
+= 5.2.0 - March 20, 2023 =
 * NEW: Added new setting to automatically add image attribution as captions.
 * NEW: Adding mime type checking based on current allowed uploads.
 * UPDATE: Updated `instant_images_after_upload` hook to pass additional image data.
