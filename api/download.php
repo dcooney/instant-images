@@ -124,8 +124,8 @@ function instant_images_download( WP_REST_Request $request ) {
 			wp_send_json( $response );
 		}
 
-		// Send request to `wp_remote_get`.
-		$response = wp_remote_get( $image_url );
+		// Send request to `wp_safe_remote_get`.
+		$response = wp_safe_remote_get( $image_url );
 		if ( is_wp_error( $response ) ) {
 			return new WP_Error( 100, __( 'Image download failed, please try again. Errors:', 'instant-images' ) . PHP_EOL . $response->get_error_message() );
 		}
