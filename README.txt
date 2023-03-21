@@ -145,6 +145,9 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 5.2.0.1 - March 20, 2023 =
+* HOTFIX: Quick fix for potential fatal error on the frontend for Beaver Builder users. Fixed by wrapping function check in `is_admin()`.
+
 = 5.2.0 - March 20, 2023 =
 * NEW: Added new setting to automatically add image attribution as captions.
 * NEW: Adding mime type checking based on current allowed uploads.
