@@ -28,7 +28,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</button>
 </header>
 <?php } ?>
-<?php require INSTANT_IMAGES_PATH . 'admin/includes/cta/permissions.php'; ?>
 <?php
 if ( $show_settings ) {
 	include INSTANT_IMAGES_PATH . 'admin/includes/page-settings.php';

@@ -2,6 +2,7 @@
 /**
  * Instant Images permissions checker.
  *
+ * @deprecated 5.3.0
  * @package InstantImages
  */
 

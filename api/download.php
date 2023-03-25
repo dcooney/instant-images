@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom /ownload API route for download and adding images to media library.
+ * Custom API route for download and adding images to media library.
  *
  * @author ConnektMedia <support@connekthq.com>
  * @since 3.0

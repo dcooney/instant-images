@@ -22,46 +22,6 @@ define( 'INSTANT_IMAGES_VERSION', '5.2.0.1' );
 define( 'INSTANT_IMAGES_RELEASE', 'March 20, 2023' );
 
 /**
- * Activation hook
- *
- * @author ConnektMedia <support@connekthq.com>
- * @since 2.0
- */
-function instant_images_activate() {
-	// Create /instant-images directory inside /uploads to temporarily store images.
-	$upload_dir = wp_upload_dir();
-	$dir        = $upload_dir['basedir'] . '/instant-images';
-	if ( ! is_dir( $dir ) ) {
-		wp_mkdir_p( $dir );
-	}
-}
-register_activation_hook( __FILE__, 'instant_images_activate' );
-
-/**
- * Deactivation hook
- *
- * @author ConnektMedia <support@connekthq.com>
- * @since 3.2.2
- */
-function instant_images_deactivate() {
-	// Delete /instant-images directory inside /uploads to temporarily store images.
-	$upload_dir = wp_upload_dir();
-	$dir        = $upload_dir['basedir'] . '/instant-images';
-
-	if ( is_dir( $dir ) ) {
-		// Check for files in dir.
-		foreach ( glob( $dir . '/*.*' ) as $filename ) {
-			if ( is_file( $filename ) ) {
-				unlink( $filename );
-			}
-		}
-		// Delete the directory.
-		rmdir( $dir );
-	}
-}
-register_deactivation_hook( __FILE__, 'instant_images_deactivate' );
-
-/**
  * InstantImages class
  *
  * @author ConnektMedia <support@connekthq.com>
