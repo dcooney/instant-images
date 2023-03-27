@@ -106,7 +106,7 @@ class InstantImages {
 	/**
 	 * Get global Instant Images plugin settings.
 	 *
-	 * @return array Settings as an array with defaults.
+	 * @return object Settings as an STD object with defaults.
 	 */
 	public static function instant_img_get_settings() {
 		$options          = get_option( 'instant_img_settings' );
@@ -115,11 +115,22 @@ class InstantImages {
 		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
 		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Default provider.
 
+		// API Keys.
+		$unsplash_api = isset( $options['unsplash_api'] ) ? $options['unsplash_api'] : '';
+		$unsplash_api = empty( $unsplash_api ) ? '' : $unsplash_api; // If empty, set to default key.
+		$pixabay_api  = isset( $options['pixabay_api'] ) ? $options['pixabay_api'] : '';
+		$pixabay_api  = empty( $pixabay_api ) ? '' : $pixabay_api; // If empty, set to default key.
+		$pexels_api   = isset( $options['pexels_api'] ) ? $options['pexels_api'] : '';
+		$pexels_api   = empty( $pexels_api ) ? '' : $pexels_api; // If empty, set to default key.
+
 		return (object) [
 			'max_width'        => $max_width,
 			'max_height'       => $max_height,
 			'default_provider' => $default_provider,
 			'auto_attribution' => $auto_attribution,
+			'unsplash_api'     => $unsplash_api,
+			'pixabay_api'      => $pixabay_api,
+			'pexels_api'       => $pexels_api,
 		];
 	}
 
@@ -187,35 +198,29 @@ class InstantImages {
 	 */
 	public static function instant_img_localize( $script = 'instant-images-react' ) {
 		global $post;
-
-		$settings         = self::instant_img_get_settings();
-		$download_w       = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
-		$download_h       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
-		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
-		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Default provider.
+		$settings = self::instant_img_get_settings();
 
 		// Unsplash API.
 		if ( defined( 'INSTANT_IMAGES_UNSPLASH_KEY' ) ) {
 			$unsplash_api = INSTANT_IMAGES_UNSPLASH_KEY;
 		} else {
-			$unsplash_api = isset( $options['unsplash_api'] ) ? $options['unsplash_api'] : '';
-			$unsplash_api = empty( $unsplash_api ) ? '' : $unsplash_api; // If empty, set to default key.
+			$unsplash_api = $settings->unsplash_api;
 		}
 		// Pixabay API.
 		if ( defined( 'INSTANT_IMAGES_PIXABAY_KEY' ) ) {
 			$pixabay_api = INSTANT_IMAGES_PIXABAY_KEY;
 		} else {
-			$pixabay_api = isset( $options['pixabay_api'] ) ? $options['pixabay_api'] : '';
-			$pixabay_api = empty( $pixabay_api ) ? '' : $pixabay_api; // If empty, set to default key.
+			$pixabay_api = $settings->pixabay_api;
 		}
 
 		// Pexels API.
 		if ( defined( 'INSTANT_IMAGES_PEXELS_KEY' ) ) {
 			$pexels_api = INSTANT_IMAGES_PEXELS_KEY;
 		} else {
-			$pexels_api = isset( $options['pexels_api'] ) ? $options['pexels_api'] : '';
-			$pexels_api = empty( $pexels_api ) ? '' : $pexels_api; // If empty, set to default key.
+			$pexels_api = $settings->pexels_api;
 		}
+
+		print_r( $settings );
 
 		wp_localize_script(
 			$script,
@@ -232,7 +237,7 @@ class InstantImages {
 				'auto_attribution'        => esc_html( $settings->auto_attribution ),
 				'default_provider'        => esc_html( $settings->default_provider ),
 				'download_width'          => esc_html( $settings->max_width ),
-				'download_height'         => esc_html( $settings->max_width ),
+				'download_height'         => esc_html( $settings->max_height ),
 				'query_debug'             => apply_filters( 'instant_images_query_debug', false ),
 				'unsplash_app_id'         => $unsplash_api,
 				'unsplash_url'            => 'https://unsplash.com',

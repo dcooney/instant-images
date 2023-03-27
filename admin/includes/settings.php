@@ -187,9 +187,7 @@ function instant_images_auto_attribution_callback() {
 	$html .= __( 'Automatically add image attribution (as captions) when uploading images.', 'instant-images' );
 	$html .= '</label>';
 
-	// @codingStandardsIgnoreStart
-	echo $html;
-	// @codingStandardsIgnoreEnd
+	echo $html; // phpcs:ignore
 }
 
 /**
@@ -211,9 +209,7 @@ function instant_images_tab_display_callback() {
 	$html .= __( 'Hide Instant Images tab in Media Modal windows.', 'instant-images' );
 	$html .= '</label>';
 
-	// @codingStandardsIgnoreStart
-	echo $html;
-	// @codingStandardsIgnoreEnd
+	echo $html; // phpcs:ignore
 }
 
 /**
