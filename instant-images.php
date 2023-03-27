@@ -109,7 +109,9 @@ class InstantImages {
 	 * @return object Settings as an STD object with defaults.
 	 */
 	public static function instant_img_get_settings() {
-		$options          = get_option( 'instant_img_settings' );
+		$options = get_option( 'instant_img_settings' );
+
+		// Plugin settings.
 		$max_width        = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
 		$max_height       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
 		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
@@ -219,8 +221,6 @@ class InstantImages {
 		} else {
 			$pexels_api = $settings->pexels_api;
 		}
-
-		print_r( $settings );
 
 		wp_localize_script(
 			$script,
