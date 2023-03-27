@@ -102,6 +102,27 @@ class InstantImages {
 		return $urls;
 	}
 
+
+	/**
+	 * Get global Instant Images plugin settings.
+	 *
+	 * @return array Settings as an array with defaults.
+	 */
+	public static function instant_img_get_settings() {
+		$options          = get_option( 'instant_img_settings' );
+		$max_width        = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
+		$max_height       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
+		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
+		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Default provider.
+
+		return (object) [
+			'max_width'        => $max_width,
+			'max_height'       => $max_height,
+			'default_provider' => $default_provider,
+			'auto_attribution' => $auto_attribution,
+		];
+	}
+
 	/**
 	 * Enqueue Gutenberg Block sidebar plugin
 	 *
@@ -166,7 +187,8 @@ class InstantImages {
 	 */
 	public static function instant_img_localize( $script = 'instant-images-react' ) {
 		global $post;
-		$options          = get_option( 'instant_img_settings' );
+
+		$settings         = self::instant_img_get_settings();
 		$download_w       = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
 		$download_h       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
 		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
@@ -205,12 +227,12 @@ class InstantImages {
 				'nonce'                   => wp_create_nonce( 'wp_rest' ),
 				'ajax_url'                => admin_url( 'admin-ajax.php' ),
 				'admin_nonce'             => wp_create_nonce( 'instant_img_nonce' ),
-				'parent_id'               => $post ? $post->ID : 0,
-				'auto_attribution'        => $auto_attribution,
 				'lang'                    => function_exists( 'pll_current_language' ) ? pll_current_language() : '',
-				'default_provider'        => $default_provider,
-				'download_width'          => esc_html( $download_w ),
-				'download_height'         => esc_html( $download_h ),
+				'parent_id'               => $post ? $post->ID : 0,
+				'auto_attribution'        => esc_html( $settings->auto_attribution ),
+				'default_provider'        => esc_html( $settings->default_provider ),
+				'download_width'          => esc_html( $settings->max_width ),
+				'download_height'         => esc_html( $settings->max_width ),
 				'query_debug'             => apply_filters( 'instant_images_query_debug', false ),
 				'unsplash_app_id'         => $unsplash_api,
 				'unsplash_url'            => 'https://unsplash.com',

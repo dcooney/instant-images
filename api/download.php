@@ -49,9 +49,7 @@ function instant_images_download( WP_REST_Request $request ) {
 	}
 
 	// Global settings.
-	$options    = get_option( 'instant_img_settings' );
-	$max_width  = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width.
-	$max_height = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height.
+	$settings = InstantImages::instant_img_get_settings();
 
 	// Core WP includes.
 	require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -63,7 +61,7 @@ function instant_images_download( WP_REST_Request $request ) {
 	if ( $data ) {
 		$provider    = $data['provider'];
 		$id          = $data['id']; // Image ID.
-		$image_url   = instant_images_generate_image_url( $provider, $data['image_url'], $max_width, $max_height ); // Image URL.
+		$image_url   = instant_images_generate_image_url( $provider, $data['image_url'], $settings->max_width, $settings->max_height ); // Image URL.
 		$filename    = sanitize_text_field( $data['filename'] ); // The filename.
 		$extension   = sanitize_text_field( $data['extension'] ); // File extension.
 		$title       = sanitize_text_field( $data['title'] ); // Title.
@@ -274,28 +272,4 @@ function instant_images_generate_image_url( $provider, $url, $max_width, $max_he
 function instant_images_remote_file_exists( $url ) {
 	$response = wp_remote_head( $url );
 	return 200 === wp_remote_retrieve_response_code( $response );
-}
-
-/**
- * Resize original image to max size (set in Instant Images settings)
- *
- * @param string $filename the image filename.
- * @since 3.0
- * @author ConnektMedia <support@connekthq.com>
- * @package InstantImages
- */
-function instant_images_resize_download( $filename ) {
-	$options    = get_option( 'instant_img_settings' );
-	$download_w = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width.
-	$download_h = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height.
-
-	require_once ABSPATH . 'wp-admin/includes/file.php';
-	require_once ABSPATH . 'wp-admin/includes/image.php';
-
-	$uploads_dir    = wp_upload_dir();
-	$original_image = wp_get_image_editor( $uploads_dir['path'] . '/' . $filename );
-	if ( ! is_wp_error( $original_image ) ) {
-		$original_image->resize( $download_w, $download_h, false );
-		$original_image->save( $uploads_dir['path'] . '/' . $filename );
-	}
 }
