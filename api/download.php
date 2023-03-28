@@ -102,9 +102,7 @@ function instant_images_download( WP_REST_Request $request ) {
 			}
 		}
 
-		/**
-		 * Check if file exists on remote server.
-		 */
+		// Check if file exists on remote server.
 		if ( ! instant_images_remote_file_exists( $image_url ) ) {
 			$has_error = true;
 			$error_msg = __( 'Image file does not exist on remote server or there was an error accessing the file.', 'instant-images' );
@@ -178,6 +176,7 @@ function instant_images_download( WP_REST_Request $request ) {
 				'attachment_id'  => $image_id,
 				'attachment_url' => wp_get_attachment_url( $image_id ),
 				'provider'       => $provider,
+				'original_url'   => $image_url,
 			]
 		);
 

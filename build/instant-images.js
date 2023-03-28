@@ -2411,7 +2411,7 @@ function Tooltip() {
 /***/ ((module) => {
 
 module.exports = {
-  proxy: "http://localhost:3000/api/" || 0,
+  proxy: "https://proxy.getinstantimages.com/api/" || 0,
   // eslint-disable-line
   defaults: {
     provider: "unsplash",
