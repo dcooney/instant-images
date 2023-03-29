@@ -1,6 +1,6 @@
 .instant-images-settings {
 	background-color: $lighter_grey;
-	padding: 20px;
+	padding: 25px;
 
 	&--wrap {
 		.settings-entry {
@@ -12,7 +12,7 @@
 
 			&--title {
 				width: 100%;
-				padding: 20px 10px 10px 25px;
+				padding: 25px 10px 10px 30px;
 				position: relative;
 
 				@media screen and (min-width: $small) {
@@ -29,14 +29,14 @@
 					font-size: 25px;
 					color: $text_alt;
 					opacity: 0.4;
-					margin-top: -5px;
+					margin-top: -4px;
 				}
 				h2 {
 					font-size: 18px;
 					font-weight: 600;
 					border: none;
 					padding: 0;
-					margin: 0 0 5px;
+					margin: 0 0 10px;
 				}
 			}
 
@@ -45,7 +45,7 @@
 				padding: 25px;
 				@media screen and (min-width: $small) {
 					width: 70%;
-					padding: 35px;
+					padding: 30px;
 				}
 				background-color: #fff;
 				border-radius: 10px;
@@ -224,7 +224,14 @@
 					font-size: 12px;
 					font-weight: 400;
 					display: block;
+					padding: 0 2px;
 					text-decoration: none;
+					position: relative;
+					top: 1px;
+					&:hover,
+					&:focus {
+						color: $purple_dark;
+					}
 				}
 			}
 
@@ -273,7 +280,7 @@
 		}
 		td {
 			border-top: 0;
-			padding: 0 0 20px;
+			padding: 0 0 30px;
 			float: left;
 			width: 100%;
 			margin: 0;

@@ -1196,7 +1196,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-images-settings {
   background-color: #f7f7f7;
-  padding: 20px;
+  padding: 25px;
 }
 .instant-images-settings--wrap .settings-entry {
   display: flex;
@@ -1207,7 +1207,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-images-settings--wrap .settings-entry--title {
   width: 100%;
-  padding: 20px 10px 10px 25px;
+  padding: 25px 10px 10px 30px;
   position: relative;
 }
 @media screen and (min-width: 800px) {
@@ -1223,7 +1223,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-size: 25px;
   color: #6b6877;
   opacity: 0.4;
-  margin-top: -5px;
+  margin-top: -4px;
 }
 @media screen and (min-width: 800px) {
   .instant-images-settings--wrap .settings-entry--title i.fa {
@@ -1235,7 +1235,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-weight: 600;
   border: none;
   padding: 0;
-  margin: 0 0 5px;
+  margin: 0 0 10px;
 }
 .instant-images-settings--wrap .settings-entry--action {
   width: 100%;
@@ -1249,7 +1249,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 @media screen and (min-width: 800px) {
   .instant-images-settings--wrap .settings-entry--action {
     width: 70%;
-    padding: 35px;
+    padding: 30px;
   }
 }
 .instant-images-settings .save-settings {
@@ -1410,7 +1410,13 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-size: 12px;
   font-weight: 400;
   display: block;
+  padding: 0 2px;
   text-decoration: none;
+  position: relative;
+  top: 1px;
+}
+.instant-images-settings form label.provider-label a:hover, .instant-images-settings form label.provider-label a:focus {
+  color: #455cb6;
 }
 .instant-images-settings form label span {
   opacity: 0.8;
@@ -1451,7 +1457,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-images-settings .form-table td {
   border-top: 0;
-  padding: 0 0 20px;
+  padding: 0 0 30px;
   float: left;
   width: 100%;
   margin: 0;
@@ -1897,13 +1903,10 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   width: 100%;
   margin: 0;
 }
-.settings_page_instant-images-settings .provider-nav > div {
-  margin: 0 15px 0 0;
-}
 .settings_page_instant-images-settings .provider-nav button {
   background-color: transparent;
   border: none;
-  color: #98979d;
+  color: #6b6877;
   height: 38px;
   line-height: 38px;
   padding: 0 10px;

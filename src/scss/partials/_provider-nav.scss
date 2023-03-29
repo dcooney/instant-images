@@ -91,13 +91,10 @@
 	.provider-nav {
 		width: 100%;
 		margin: 0;
-		& > div {
-			margin: 0 15px 0 0;
-		}
 		button {
 			background-color: transparent;
 			border: none;
-			color: $text_light;
+			color: $text_alt;
 			height: 38px;
 			line-height: 38px;
 			padding: 0 10px;
