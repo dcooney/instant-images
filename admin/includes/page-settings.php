@@ -7,6 +7,9 @@
 
 ?>
 <div class="provider-nav settings-page">
+	<?php if ( class_exists( 'InstantImagesPro' ) ) { ?>
+		<button type="button" data-anchor="pro-settings"><?php esc_attr_e( 'Pro Settings', 'instant-images' ); ?></button>
+	<?php } ?>
 	<button type="button" data-anchor="general-settings"><?php esc_attr_e( 'General Settings', 'instant-images' ); ?></button>
 	<button type="button" data-anchor="api-settings"><?php esc_attr_e( 'API Keys', 'instant-images' ); ?></button>
 	<button type="button" data-anchor="whats-new"><?php esc_attr_e( 'What\'s New', 'instant-images' ); ?></button>
@@ -15,6 +18,27 @@
 
 <section class="instant-images-settings">
 	<div class="instant-images-settings--wrap">
+
+		<!-- Pro -->
+		<?php if ( class_exists( 'InstantImagesPro' ) ) { ?>
+			<div class="settings-entry" id="pro-settings">
+			<div class="settings-entry--title">
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<h2><?php esc_attr_e( 'Instant Images Pro', 'instant-images' ); ?></h2>
+				<p><?php esc_attr_e( 'Manage settings for the Pro add-on.', 'instant-images' ); ?></p>
+			</div>
+			<div class="settings-entry--action general-settings">
+				<form action="options.php" method="post">
+					<?php
+						// TODO: Add pro settings.
+						// settings_fields( 'instant_images_general_settings_group' );
+						// do_settings_sections( 'instant-images' );.
+					?>
+					<?php require INSTANT_IMAGES_PATH . 'admin/includes/save-settings.php'; ?>
+				</form>
+			</div>
+		</div>
+		<?php } ?>
 
 		<!-- General Settings -->
 		<div class="settings-entry" id="general-settings">

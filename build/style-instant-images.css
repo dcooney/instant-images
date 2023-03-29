@@ -1196,7 +1196,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-images-settings {
   background-color: #f7f7f7;
-  padding: 25px;
+  padding: 30px 25px 25px;
 }
 .instant-images-settings--wrap .settings-entry {
   display: flex;
@@ -1242,7 +1242,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   padding: 25px;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1019607843), 0 1px 2px -1px rgba(0, 0, 0, 0.1019607843) !important;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1019607843), 0 1px 3px -1px rgba(0, 0, 0, 0.1019607843) !important;
   position: relative;
   overflow: hidden;
 }
@@ -1360,7 +1360,6 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-images-settings form {
   display: block;
-  max-width: 800px;
 }
 .instant-images-settings form > h2,
 .instant-images-settings form > p.desc {
@@ -1375,9 +1374,9 @@ body.settings_page_instant-images-settings.overflow-hidden {
   width: 100%;
   padding: 10px;
   border-color: #e1e1e1;
-  max-width: none;
   line-height: 1;
   border-radius: 3px;
+  max-width: 800px;
 }
 .instant-images-settings form select[readonly],
 .instant-images-settings form input[type=text][readonly],
@@ -1399,11 +1398,13 @@ body.settings_page_instant-images-settings.overflow-hidden {
   clear: both;
   float: none;
   margin: 0 0 10px;
+  max-width: 800px;
 }
 .instant-images-settings form label.provider-label {
   display: flex;
   width: 100%;
   align-items: center;
+  gap: 10px;
   justify-content: space-between;
 }
 .instant-images-settings form label.provider-label a {

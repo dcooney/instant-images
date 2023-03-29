@@ -1,6 +1,6 @@
 .instant-images-settings {
 	background-color: $lighter_grey;
-	padding: 25px;
+	padding: 30px 25px 25px;
 
 	&--wrap {
 		.settings-entry {
@@ -174,7 +174,6 @@
 	// Form Styles.
 	form {
 		display: block;
-		max-width: 800px;
 
 		> h2,
 		> p.desc {
@@ -190,9 +189,9 @@
 			width: 100%;
 			padding: 10px;
 			border-color: $border;
-			max-width: none;
 			line-height: 1;
 			border-radius: $radius;
+			max-width: 800px;
 
 			&[readonly] {
 				background-color: $lighter_grey;
@@ -213,11 +212,13 @@
 			clear: both;
 			float: none;
 			margin: 0 0 10px;
+			max-width: 800px;
 
 			&.provider-label {
 				display: flex;
 				width: 100%;
 				align-items: center;
+				gap: 10px;
 				justify-content: space-between;
 
 				& a {
