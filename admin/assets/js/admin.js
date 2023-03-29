@@ -3,8 +3,6 @@ var instant_images = instant_images || {};
 jQuery(document).ready(function ($) {
 	"use strict";
 
-	var speed = 350;
-
 	// Media Uploader
 	instant_images.setEditor = function (frame) {
 		// vars
@@ -53,47 +51,30 @@ jQuery(document).ready(function ($) {
 
 	// Close
 	$(document).on("click", ".media-modal-backdrop", function (e) {
-		//alert("meow");
 		e.preventDefault();
 		frame.removeClass("active");
 	});
 
-	// Show Settings
-	var settingsDiv = $(".instant-images-settings");
-	$(".header-wrap button").on("click", function () {
-		var el = $(this);
-		if (settingsDiv.hasClass("active")) {
-			settingsDiv.slideUp(speed, function () {
-				el.find("i").removeClass("fa-close").addClass("fa-cog");
-				settingsDiv.removeClass("active");
-			});
-		} else {
-			settingsDiv.slideDown(speed, function () {
-				el.find("i").addClass("fa-close").removeClass("fa-cog");
-				settingsDiv.addClass("active");
-			});
-		}
-	});
-
-	// Close
-	$(document).on("keyup", function (e) {
-		if (e.key === "Escape" && settingsDiv && settingsDiv.hasClass("active")) {
-			$(".header-wrap button").trigger("click");
-		}
-	});
-
-	// Save Form
-	$("#unsplash-form-options").on("submit", function () {
-		$(".save-settings .loading").fadeIn();
+	// Save Form.
+	$(".instant-images-settings form").on("submit", function () {
+		var form = $(this);
+		$(".save-settings .loading", form).addClass("active");
+		$(".save-settings #submit", form).prop("disabled", true);
 		$(this).ajaxSubmit({
 			success: function () {
-				$(".save-settings .loading").fadeOut(speed, function () {
-					window.location.reload();
-				});
+				$(".save-settings .loading", form).removeClass("active");
+				setTimeout(function () {
+					$(".save-settings .saved", form).addClass("active");
+					setTimeout(function () {
+						$(".save-settings .saved", form).removeClass("active");
+						$(".save-settings #submit", form).prop("disabled", false);
+					}, 2000);
+				}, 250);
 			},
 			error: function () {
-				$(".save-settings .loading").fadeOut();
-				alert("Sorry, settings could not be saved");
+				$(".save-settings .loading", form).removeClass("active");
+				$(".save-settings #submit", form).prop("disabled", false);
+				alert("An error occured and the settings could not be saved");
 			},
 		});
 		return false;

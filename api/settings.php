@@ -42,7 +42,7 @@ function instant_images_settings( WP_REST_Request $request ) {
 
 		if ( $data ) {
 
-			$option = 'instant_img_settings';
+			$option = 'instant_img_api_settings';
 
 			// Global settings.
 			$options = get_option( $option );

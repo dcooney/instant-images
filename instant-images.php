@@ -14,6 +14,18 @@
  * @package InstantImages
  */
 
+/*
+TO DO:
+- Separate out API keys into own settings field group. [DONE]
+- Adjust font paragraph colors etc
+
+
+DONE
+- Updated Instant Images settings page and added new settings fields.
+- Added support for Instant Images Pro.
+- General styling and UI updates.
+*/
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -109,20 +121,21 @@ class InstantImages {
 	 * @return object Settings as an STD object with defaults.
 	 */
 	public static function instant_img_get_settings() {
-		$options = get_option( 'instant_img_settings' );
 
-		// Plugin settings.
+		// General plugin settings.
+		$options          = get_option( 'instant_img_settings' );
 		$max_width        = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
 		$max_height       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
 		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
 		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Default provider.
 
 		// API Keys.
-		$unsplash_api = isset( $options['unsplash_api'] ) ? $options['unsplash_api'] : '';
+		$api_options  = get_option( 'instant_img_api_settings' );
+		$unsplash_api = isset( $api_options['unsplash_api'] ) ? $api_options['unsplash_api'] : '';
 		$unsplash_api = empty( $unsplash_api ) ? '' : $unsplash_api; // If empty, set to default key.
-		$pixabay_api  = isset( $options['pixabay_api'] ) ? $options['pixabay_api'] : '';
+		$pixabay_api  = isset( $api_options['pixabay_api'] ) ? $api_options['pixabay_api'] : '';
 		$pixabay_api  = empty( $pixabay_api ) ? '' : $pixabay_api; // If empty, set to default key.
-		$pexels_api   = isset( $options['pexels_api'] ) ? $options['pexels_api'] : '';
+		$pexels_api   = isset( $api_options['pexels_api'] ) ? $api_options['pexels_api'] : '';
 		$pexels_api   = empty( $pexels_api ) ? '' : $pexels_api; // If empty, set to default key.
 
 		return (object) [
@@ -448,7 +461,7 @@ class InstantImages {
 	 * @since 2.0
 	 */
 	public function instant_images_add_action_links( $links ) {
-		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Photos', 'instant-images' ) . '</a>' ];
+		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Images', 'instant-images' ) . '</a>' ];
 		return array_merge( $mylinks, $links );
 	}
 

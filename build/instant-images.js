@@ -85,27 +85,23 @@ function APILightbox(props) {
   function _handleSubmit() {
     _handleSubmit = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
       var _inputRef$current;
-      var key, settingField, data, ok, status, headers;
+      var key, data, ok, status, headers;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             e.preventDefault();
             setAPIStatus("loading");
-            key = inputRef === null || inputRef === void 0 ? void 0 : (_inputRef$current = inputRef.current) === null || _inputRef$current === void 0 ? void 0 : _inputRef$current.value; // Get API key value.
-            instant_img_localize["".concat(provider, "_app_id")] = key; // Set API key to localized variable.
 
-            // Update the matching provider API key in the Instant Images settings.
-            settingField = document.querySelector("input[name=\"instant_img_settings[".concat(provider, "_api]\"]"));
-            if (settingField) {
-              settingField.value = key;
-            }
+            // Get API key value.
+            key = inputRef === null || inputRef === void 0 ? void 0 : (_inputRef$current = inputRef.current) === null || _inputRef$current === void 0 ? void 0 : _inputRef$current.value; // Set API key to localized variable.
+            instant_img_localize["".concat(provider, "_app_id")] = key;
 
             // Update plugin settings via REST API.
             (0,_functions_updatePluginSetting__WEBPACK_IMPORTED_MODULE_5__["default"])("".concat(provider, "_api"), key);
-            _context.prev = 7;
-            _context.next = 10;
+            _context.prev = 5;
+            _context.next = 8;
             return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_2__.buildTestURL)(provider));
-          case 10:
+          case 8:
             data = _context.sent;
             // Handle response.
             ok = data.ok, status = data.status, headers = data.headers;
@@ -117,6 +113,8 @@ function APILightbox(props) {
               setAPIStatus("valid");
               setResponse(instant_img_localize.api_success_msg);
               setTimeout(function () {
+                setResponse("");
+                setAPIStatus("invalid");
                 closeAPILightbox(provider);
               }, 1000);
             } else {
@@ -131,19 +129,19 @@ function APILightbox(props) {
                 setResponse(instant_img_localize.api_ratelimit_msg); // Pixabay - too many requests.
               }
             }
-            _context.next = 21;
+            _context.next = 19;
             break;
-          case 16:
-            _context.prev = 16;
-            _context.t0 = _context["catch"](7);
+          case 14:
+            _context.prev = 14;
+            _context.t0 = _context["catch"](5);
             setAPIStatus("invalid"); // Error/Invalid.
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_3__["default"])(provider, 500); // Render console warning.
             setResponse(instant_img_localize.api_invalid_500_msg);
-          case 21:
+          case 19:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[7, 16]]);
+      }, _callee, null, [[5, 14]]);
     }));
     return _handleSubmit.apply(this, arguments);
   }
