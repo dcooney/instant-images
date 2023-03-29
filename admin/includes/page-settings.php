@@ -6,11 +6,18 @@
  */
 
 ?>
+<div class="provider-nav settings-page">
+	<button type="button" data-anchor="general-settings"><?php esc_attr_e( 'General Settings', 'instant-images' ); ?></button>
+	<button type="button" data-anchor="api-settings"><?php esc_attr_e( 'API Keys', 'instant-images' ); ?></button>
+	<button type="button" data-anchor="whats-new"><?php esc_attr_e( 'What\'s New', 'instant-images' ); ?></button>
+	<button type="button" data-anchor="our-plugins"><?php esc_attr_e( 'Our Plugins', 'instant-images' ); ?></button>
+</div>
+
 <section class="instant-images-settings">
 	<div class="instant-images-settings--wrap">
 
 		<!-- General Settings -->
-		<div class="settings-entry">
+		<div class="settings-entry" id="general-settings">
 			<div class="settings-entry--title">
 				<i class="fa fa-cog" aria-hidden="true"></i>
 				<h2><?php esc_attr_e( 'General Settings', 'instant-images' ); ?></h2>
@@ -28,7 +35,7 @@
 		</div>
 
 		<!-- API Settings -->
-		<div class="settings-entry">
+		<div class="settings-entry" id="api-settings">
 			<div class="settings-entry--title">
 				<i class="fa fa-key" aria-hidden="true"></i>
 				<h2><?php esc_attr_e( 'API Keys', 'instant-images' ); ?></h2>
@@ -47,11 +54,11 @@
 		</div>
 
 		<!-- What's New -->
-		<div class="settings-entry">
+		<div class="settings-entry" id="whats-new">
 			<div class="settings-entry--title">
 				<i class="fa fa-pencil" aria-hidden="true"></i>
 				<h2><?php esc_attr_e( 'What\'s New', 'instant-images' ); ?></h2>
-				<p><?php esc_attr_e( 'The latest news and plugin updates.', 'instant-images' ); ?></p>
+				<p><?php esc_attr_e( 'The latest Instant Images news, features and updates.', 'instant-images' ); ?></p>
 			</div>
 			<div class="settings-entry--action whats-new">
 				<div class="scroll-section">
@@ -116,7 +123,7 @@
 		</div>
 
 		<!-- Our Plugins -->
-		<div class="settings-entry">
+		<div class="settings-entry" id="our-plugins">
 			<div class="settings-entry--title">
 				<i class="fa fa-plug" aria-hidden="true"></i>
 				<h2><?php esc_attr_e( 'Our Plugins', 'instant-images' ); ?></h2>

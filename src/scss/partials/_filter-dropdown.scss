@@ -44,7 +44,8 @@
 		visibility: hidden;
 		opacity: 0;
 		transform: scale(0.9);
-		transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56), opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+		transition: transform 0.25s cubic-bezier(0.24, 0.22, 0.015, 1.56),
+			opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
 		padding: 10px;
 		background-color: #fff;
 		border: 1px solid $border;
@@ -73,8 +74,8 @@
 			transition: $transition;
 			font-size: 14px;
 			&::before {
-				font-family: 'FontAwesome';
-				content: '\f00c';
+				font-family: "FontAwesome";
+				content: "\f00c";
 				display: block;
 				color: $input;
 				opacity: 0.4;
@@ -97,8 +98,8 @@
 				}
 			}
 		}
-		&[data-key='colors'],
-		&[data-key='color'] {
+		&[data-key="colors"],
+		&[data-key="color"] {
 			button {
 				._color {
 					margin-left: auto;

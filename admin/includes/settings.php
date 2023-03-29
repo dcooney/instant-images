@@ -294,9 +294,11 @@ function instant_images_api_keys_callback( $args = [] ) {
 	$constant = $provider['constant'];
 	$url      = $provider['url'];
 	$readonly = '';
+	$disabled = '';
 
 	if ( defined( $constant ) ) {
-		$readonly        = 'readonly';
+		$readonly        = ' readonly';
+		$disabled        = ' disabled';
 		$options[ $key ] = constant( $constant );
 	} else {
 		if ( ! isset( $options[ $key ] ) ) {
@@ -308,7 +310,7 @@ function instant_images_api_keys_callback( $args = [] ) {
 	echo esc_attr( ucfirst( $title ) ) . ' ' . esc_attr__( 'API Key', 'instant-images' );
 	echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_attr__( 'Get Key', 'instant-images' ) . '</a>';
 	echo '</label>';
-	echo '<input type="text" id="instant_img_api_settings[' . esc_attr( $key ) . ']" name="instant_img_api_settings[' . esc_attr( $key ) . ']" value="' . esc_attr( $options[ '' . esc_attr( $key ) . '' ] ) . '" ' . esc_attr( $readonly ) . ' />';
+	echo '<input type="text" id="instant_img_api_settings[' . esc_attr( $key ) . ']" name="instant_img_api_settings[' . esc_attr( $key ) . ']" value="' . esc_attr( $options[ '' . esc_attr( $key ) . '' ] ) . '" ' . esc_attr( $readonly ) . esc_attr( $disabled ) . ' />';
 
 	if ( defined( $constant ) ) {
 		echo '<div class="api-constant">' . esc_attr__( 'API key has been set via site constant.', 'instant-images' ) . '</div>';

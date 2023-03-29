@@ -67,21 +67,46 @@
 	}
 }
 
-[data-provider='unsplash'] {
-	background: url('../img/logos/unsplash.svg') no-repeat 10px center;
+[data-provider="unsplash"] {
+	background: url("../img/logos/unsplash.svg") no-repeat 10px center;
 	background-size: 18px 18px;
 }
 
-[data-provider='pixabay'] {
-	background: url('../img/logos/pixabay.png') no-repeat 10px center;
+[data-provider="pixabay"] {
+	background: url("../img/logos/pixabay.png") no-repeat 10px center;
 	background-size: 20px 20px;
 }
 
-[data-provider='pexels'] {
-	background: url('../img/logos/pexels.svg') no-repeat 10px center;
+[data-provider="pexels"] {
+	background: url("../img/logos/pexels.svg") no-repeat 10px center;
 	background-size: 20px 20px;
 }
-[data-provider='openverse'] {
-	background: url('../img/logos/openverse.svg') no-repeat 10px center;
+[data-provider="openverse"] {
+	background: url("../img/logos/openverse.svg") no-repeat 10px center;
 	background-size: 20px 20px;
+}
+
+// Settings page.
+.settings_page_instant-images-settings {
+	.provider-nav {
+		width: 100%;
+		margin: 0;
+		& > div {
+			margin: 0 15px 0 0;
+		}
+		button {
+			background-color: transparent;
+			border: none;
+			color: $text_light;
+			height: 38px;
+			line-height: 38px;
+			padding: 0 10px;
+			cursor: pointer;
+			white-space: nowrap;
+			&:hover,
+			&:focus {
+				color: $text;
+			}
+		}
+	}
 }

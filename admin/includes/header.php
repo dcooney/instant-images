@@ -6,7 +6,7 @@
  */
 
 ?>
-<header class="header-wrap<?php echo isset( $remove_header_styles ) && $remove_header_styles ? ' no-styling' : ''; ?> ">
+<header class="header-wrap">
 	<h1>
 		<?php echo esc_attr( INSTANT_IMAGES_TITLE ); ?> <em><?php echo esc_attr( INSTANT_IMAGES_VERSION ); ?></em>
 		<span>

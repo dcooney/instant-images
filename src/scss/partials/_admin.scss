@@ -121,11 +121,6 @@ body.settings_page_instant-images-settings {
 		position: relative;
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
 
-		&.no-styling {
-			border: none;
-			box-shadow: none;
-		}
-
 		@media screen and (max-width: $small) {
 			background-position: center 20px;
 			padding: 80px 25px 20px;
@@ -146,10 +141,10 @@ body.settings_page_instant-images-settings {
 				font-weight: 400;
 				font-size: 14px;
 				background-color: rgba(0, 0, 0, 0.055);
-				color: rgba(0, 0, 0, 0.5);
+				color: $text_alt;
 				display: inline-block;
-				border-radius: 2px;
-				padding: 3px 3px;
+				border-radius: $radius;
+				padding: 4px;
 				position: relative;
 				top: -2px;
 				left: 2px;

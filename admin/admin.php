@@ -47,8 +47,7 @@ add_action( 'admin_menu', 'instant_images_create_page' );
  * @since 5.3
  */
 function instant_images_settings_page() {
-	$show_settings        = false;
-	$remove_header_styles = true;
+	$show_settings = false;
 	echo '<div class="instant-img-container" data-media-popup="false">';
 	require_once INSTANT_IMAGES_PATH . 'admin/includes/header.php';
 	require_once INSTANT_IMAGES_PATH . 'admin/includes/page-settings.php';

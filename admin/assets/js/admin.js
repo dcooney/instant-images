@@ -3,11 +3,9 @@ var instant_images = instant_images || {};
 jQuery(document).ready(function ($) {
 	"use strict";
 
-	// Media Uploader
+	// Media Uploader Modal
 	instant_images.setEditor = function (frame) {
-		// vars
 		var Parent = wp.media.view.Router;
-
 		wp.media.view.Router = Parent.extend({
 			addNav: function () {
 				// Button
@@ -49,13 +47,13 @@ jQuery(document).ready(function ($) {
 		}
 	}
 
-	// Close
+	// Close Modal.
 	$(document).on("click", ".media-modal-backdrop", function (e) {
 		e.preventDefault();
 		frame.removeClass("active");
 	});
 
-	// Save Form.
+	// Save Settings Form.
 	$(".instant-images-settings form").on("submit", function () {
 		var form = $(this);
 		$(".save-settings .loading", form).addClass("active");
@@ -78,5 +76,16 @@ jQuery(document).ready(function ($) {
 			},
 		});
 		return false;
+	});
+
+	// Settings anchor links.
+	$(".settings_page_instant-images-settings button").on("click", function (e) {
+		e.preventDefault();
+		var anchor = $(this).data("anchor");
+		var target = document.querySelector("#" + anchor);
+		window.scrollTo({
+			top: target.offsetTop,
+			behavior: "smooth",
+		});
 	});
 });

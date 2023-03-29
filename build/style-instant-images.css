@@ -133,10 +133,6 @@ body.settings_page_instant-images-settings.overflow-hidden {
   position: relative;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
 }
-.instant-img-container .header-wrap.no-styling {
-  border: none;
-  box-shadow: none;
-}
 @media screen and (max-width: 800px) {
   .instant-img-container .header-wrap {
     background-position: center 20px;
@@ -162,10 +158,10 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-weight: 400;
   font-size: 14px;
   background-color: rgba(0, 0, 0, 0.055);
-  color: rgba(0, 0, 0, 0.5);
+  color: #6b6877;
   display: inline-block;
-  border-radius: 2px;
-  padding: 3px 3px;
+  border-radius: 3px;
+  padding: 4px;
   position: relative;
   top: -2px;
   left: 2px;
@@ -1207,24 +1203,24 @@ body.settings_page_instant-images-settings.overflow-hidden {
   flex-wrap: wrap;
   width: 100%;
   padding: 0;
-  margin: 0 0 25px;
+  margin: 0 0 30px;
 }
 .instant-images-settings--wrap .settings-entry--title {
   width: 100%;
-  padding: 20px 0 10px 25px;
+  padding: 20px 10px 10px 25px;
   position: relative;
 }
 @media screen and (min-width: 800px) {
   .instant-images-settings--wrap .settings-entry--title {
     width: 30%;
-    padding: 30px 20px 30px 45px;
+    padding: 30px 30px 30px 45px;
   }
 }
 .instant-images-settings--wrap .settings-entry--title i.fa {
   display: none;
   position: absolute;
   left: 10px;
-  font-size: 28px;
+  font-size: 25px;
   color: #6b6877;
   opacity: 0.4;
   margin-top: -5px;
@@ -1255,10 +1251,6 @@ body.settings_page_instant-images-settings.overflow-hidden {
     width: 70%;
     padding: 35px;
   }
-}
-.instant-images-settings form h2,
-.instant-images-settings form p.desc {
-  display: none;
 }
 .instant-images-settings .save-settings {
   display: flex;
@@ -1293,28 +1285,36 @@ body.settings_page_instant-images-settings.overflow-hidden {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  font-size: 12px;
+  gap: 6px;
+  font-size: 13px;
   padding: 0;
 }
 .instant-images-settings .save-settings .saved i {
   color: #65c774;
-  font-size: 20px;
+  font-size: 22px;
 }
 .instant-images-settings .whats-new ul {
   margin: 0;
-  padding: 5px;
+  padding: 10px;
   max-height: 400px;
   overflow-y: auto;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1;
   border-radius: 3px;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(1, 1fr);
+}
+@media screen and (min-width: 800px) {
+  .instant-images-settings .whats-new ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 .instant-images-settings .whats-new ul li {
   line-height: 1.4;
   width: 100%;
   background-color: transparent;
-  padding: 5px;
+  padding: 0;
   margin: 0;
   position: relative;
   display: flex;
@@ -1354,45 +1354,17 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-images-settings .general-settings span.desc a:hover, .instant-images-settings .general-settings span.desc a:focus {
   text-decoration: underline;
 }
-.instant-images-settings .general-settings .ii-api-desc {
-  padding-bottom: 6px;
-}
-.instant-images-settings .general-settings .ii-api-desc p strong {
-  color: #434246;
-}
-.instant-images-settings .general-settings .ii-api-option {
-  padding: 15px 15px 16px;
-  background-color: #f7f7f7;
-  border: 1px solid #e1e1e1;
-  border-bottom: none;
-}
-.instant-images-settings .general-settings .ii-api-option:last-of-type {
-  margin: 0;
-  border-bottom: 1px solid #e1e1e1;
-}
-.instant-images-settings .general-settings .ii-api-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.instant-images-settings .general-settings .ii-api-label label {
-  font-size: 12px;
-  text-transform: uppercase;
-  margin: 0;
-}
-.instant-images-settings .general-settings .ii-api-contsant {
-  display: block;
-  padding: 7px 0 0 1px;
-  font-style: italic;
-  opacity: 0.75;
-  font-size: 12px;
-}
 .instant-images-settings .instant-images-settings h3,
 .instant-images-settings .instant-images-settings h4 {
   margin-top: 0;
 }
 .instant-images-settings form {
   display: block;
+  max-width: 800px;
+}
+.instant-images-settings form > h2,
+.instant-images-settings form > p.desc {
+  display: none;
 }
 .instant-images-settings form select,
 .instant-images-settings form input[type=text],
@@ -1920,6 +1892,26 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 [data-provider=openverse] {
   background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNDIiIHZpZXdCb3g9IjAgMCA1MCA0MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxnIGlkPSJsb2dvIiBmaWxsPSJjdXJyZW50Q29sb3IiPgoJCTxwYXRoIGQ9Ik0zNy41NTg5IDE4Ljc5NUM0Mi43MTQ2IDE4Ljc5NSA0Ni44OTQyIDE0LjU4NzYgNDYuODk0MiA5LjM5NzVDNDYuODk0MiA0LjIwNzQgNDIuNzE0NiAwIDM3LjU1ODkgMEMzMi40MDMxIDAgMjguMjIzNiA0LjIwNzQgMjguMjIzNiA5LjM5NzVDMjguMjIzNiAxNC41ODc2IDMyLjQwMzEgMTguNzk1IDM3LjU1ODkgMTguNzk1WiIgY2xhc3M9ImNpcmNsZSI+PC9wYXRoPjxwYXRoIGQ9Ik0wLjk5OTk2OSA5LjM5NzVDMC45OTk5NjkgMTQuNTY4NyA1LjE3MjE3IDE4Ljc5NSAxMC4zMzUzIDE4Ljc5NVYwQzUuMTcyMTcgMCAwLjk5OTk2OSA0LjIgMC45OTk5NjkgOS4zOTc1WiIgY2xhc3M9ImNpcmNsZSI+PC9wYXRoPjxwYXRoIGQ9Ik0xNC42MTE4IDkuMzk3NUMxNC42MTE4IDE0LjU2ODcgMTguNzg0IDE4Ljc5NSAyMy45NDcxIDE4Ljc5NVYwQzE4LjgxMDEgMCAxNC42MTE4IDQuMiAxNC42MTE4IDkuMzk3NVoiIGNsYXNzPSJjaXJjbGUiPjwvcGF0aD48cGF0aCBkPSJNMzcuNTU4OSA0MS45MjEyQzQyLjcxNDYgNDEuOTIxMiA0Ni44OTQyIDM3LjcxMzggNDYuODk0MiAzMi41MjM4QzQ2Ljg5NDIgMjcuMzMzNyA0Mi43MTQ2IDIzLjEyNjMgMzcuNTU4OSAyMy4xMjYzQzMyLjQwMzEgMjMuMTI2MyAyOC4yMjM2IDI3LjMzMzcgMjguMjIzNiAzMi41MjM4QzI4LjIyMzYgMzcuNzEzOCAzMi40MDMxIDQxLjkyMTIgMzcuNTU4OSA0MS45MjEyWiIgY2xhc3M9ImNpcmNsZSI+PC9wYXRoPjxwYXRoIGQ9Ik0xNC42MTE4IDMyLjUyMzhDMTQuNjExOCAzNy42OTUgMTguNzg0IDQxLjkyMTMgMjMuOTQ3MSA0MS45MjEzVjIzLjE1MjVDMTguODEwMSAyMy4xNTI1IDE0LjYxMTggMjcuMzUyNSAxNC42MTE4IDMyLjUyMzhaIiBjbGFzcz0iY2lyY2xlIj48L3BhdGg+CgkJPHBhdGggZD0iTTAuOTk5OTY5IDMyLjYwMjVDMC45OTk5NjkgMzcuOCA1LjE3MjE3IDQyIDEwLjMzNTMgNDJWMjMuMjMxMkM1LjE3MjE3IDIzLjIzMTIgMC45OTk5NjkgMjcuNDMxMiAwLjk5OTk2OSAzMi42MDI1WiI+PC9wYXRoPgoJPC9nPgo8L3N2Zz4K) no-repeat 10px center;
   background-size: 20px 20px;
+}
+.settings_page_instant-images-settings .provider-nav {
+  width: 100%;
+  margin: 0;
+}
+.settings_page_instant-images-settings .provider-nav > div {
+  margin: 0 15px 0 0;
+}
+.settings_page_instant-images-settings .provider-nav button {
+  background-color: transparent;
+  border: none;
+  color: #98979d;
+  height: 38px;
+  line-height: 38px;
+  padding: 0 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.settings_page_instant-images-settings .provider-nav button:hover, .settings_page_instant-images-settings .provider-nav button:focus {
+  color: #434246;
 }
 .media-frame-content .instant-img-container .api-lightbox > div {
   top: 0;

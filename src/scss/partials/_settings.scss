@@ -1,6 +1,5 @@
 .instant-images-settings {
 	background-color: $lighter_grey;
-	//background-color: #fff;
 	padding: 20px;
 
 	&--wrap {
@@ -9,16 +8,16 @@
 			flex-wrap: wrap;
 			width: 100%;
 			padding: 0;
-			margin: 0 0 25px;
+			margin: 0 0 30px;
 
 			&--title {
 				width: 100%;
-				padding: 20px 0 10px 25px;
+				padding: 20px 10px 10px 25px;
 				position: relative;
 
 				@media screen and (min-width: $small) {
 					width: 30%;
-					padding: 30px 20px 30px 45px;
+					padding: 30px 30px 30px 45px;
 				}
 				i.fa {
 					display: none;
@@ -27,7 +26,7 @@
 					}
 					position: absolute;
 					left: 10px;
-					font-size: 28px;
+					font-size: 25px;
 					color: $text_alt;
 					opacity: 0.4;
 					margin-top: -5px;
@@ -55,11 +54,6 @@
 				overflow: hidden;
 			}
 		}
-	}
-
-	form h2,
-	form p.desc {
-		display: none;
 	}
 
 	// Save Settings.
@@ -94,12 +88,12 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			gap: 5px;
-			font-size: 12px;
+			gap: 6px;
+			font-size: 13px;
 			padding: 0;
 			i {
 				color: $green;
-				font-size: 20px;
+				font-size: 22px;
 			}
 		}
 	}
@@ -108,17 +102,24 @@
 	& .whats-new {
 		ul {
 			margin: 0;
-			padding: 5px;
+			padding: 10px;
 			max-height: 400px;
 			overflow-y: auto;
 			background-color: $lighter_grey;
 			border: 1px solid $border;
 			border-radius: $radius;
+			display: grid;
+			grid-gap: 10px;
+			grid-template-columns: repeat(1, 1fr);
+			@media screen and (min-width: $small) {
+				grid-template-columns: repeat(2, 1fr);
+			}
+
 			li {
 				line-height: 1.4;
 				width: 100%;
 				background-color: transparent;
-				padding: 5px;
+				padding: 0;
 				margin: 0;
 				position: relative;
 				display: flex;
@@ -163,41 +164,6 @@
 				}
 			}
 		}
-		.ii-api-desc {
-			p {
-				strong {
-					color: $text;
-				}
-			}
-			padding-bottom: 6px;
-		}
-		.ii-api-option {
-			padding: 15px 15px 16px;
-			background-color: $lighter_grey;
-			border: 1px solid $border;
-			border-bottom: none;
-			&:last-of-type {
-				margin: 0;
-				border-bottom: 1px solid $border;
-			}
-		}
-		.ii-api-label {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			label {
-				font-size: 12px;
-				text-transform: uppercase;
-				margin: 0;
-			}
-		}
-		.ii-api-contsant {
-			display: block;
-			padding: 7px 0 0 1px;
-			font-style: italic;
-			opacity: 0.75;
-			font-size: 12px;
-		}
 	}
 
 	.instant-images-settings h3,
@@ -208,6 +174,12 @@
 	// Form Styles.
 	form {
 		display: block;
+		max-width: 800px;
+
+		> h2,
+		> p.desc {
+			display: none;
+		}
 
 		select,
 		input[type="text"],
@@ -332,7 +304,6 @@
 			position: static;
 			display: grid;
 			grid-template-columns: repeat(1, 1fr);
-
 			@media screen and (min-width: $small) {
 				grid-template-columns: repeat(2, 1fr);
 			}
