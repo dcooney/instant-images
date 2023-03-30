@@ -1,58 +1,134 @@
 .instant-images-settings {
 	background-color: $lighter_grey;
-	padding: 30px 25px 25px;
+	padding: 30px;
 
-	&--wrap {
-		.settings-entry {
-			display: flex;
-			flex-wrap: wrap;
+	&--grid {
+		display: grid;
+		grid-gap: 30px;
+		grid-template-columns: repeat(1, 1fr);
+
+		@media screen and (min-width: $small) {
+			grid-template-rows: repeat(1, 1fr);
+			grid-template-columns: 2fr 10fr;
+		}
+	}
+
+	// Header
+	&--header {
+		display: block;
+		width: 100%;
+		margin: 0;
+
+		.settings-jump {
+			display: block;
+			padding: 15px;
+			border-radius: 10px;
+			background-color: #fff;
+			border: 1px solid $border;
+
+			select {
+				width: 100%;
+			}
+		}
+
+		nav {
+			display: none;
+			button {
+				width: 100%;
+				background-color: transparent;
+				border: none;
+				color: $text_alt;
+				height: $el_height;
+				line-height: 1;
+				padding: 0 10px;
+				cursor: pointer;
+				white-space: nowrap;
+				text-align: left;
+				&:hover,
+				&:focus {
+					color: $text;
+				}
+			}
+		}
+
+		.button-secondary {
+			border-color: $purple;
+			color: $purple;
+			&:hover,
+			&:focus {
+				color: $purple_dark;
+				border-color: $purple_dark;
+			}
+		}
+	}
+
+	// Sections
+	&--sections {
+		background-color: #fff;
+		border-radius: 10px;
+		box-shadow: $shadow_md;
+	}
+
+	.settings-entry {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		width: 100%;
+		padding: 30px;
+		margin: 0;
+		border-bottom: 1px solid $lighter_grey;
+		&:last-of-type {
+			border-bottom: none;
+		}
+
+		&--title {
 			width: 100%;
-			padding: 0;
-			margin: 0 0 30px;
+			padding: 30px 30px 15px 30px;
+			position: relative;
 
-			&--title {
-				width: 100%;
-				padding: 25px 10px 10px 30px;
-				position: relative;
+			@media screen and (min-width: $small) {
+				width: 30%;
+				padding: 30px 30px 15px 45px;
 
-				@media screen and (min-width: $small) {
-					width: 30%;
-					padding: 30px 30px 30px 45px;
-				}
-				i.fa {
-					display: none;
-					@media screen and (min-width: $small) {
-						display: block;
-					}
+				&::after {
+					display: block;
+					content: "";
+					height: 1px;
+					width: 50px;
+					background-color: $lighter_grey;
 					position: absolute;
-					left: 10px;
-					font-size: 25px;
-					color: $text_alt;
-					opacity: 0.4;
-					margin-top: -4px;
-				}
-				h2 {
-					font-size: 18px;
-					font-weight: 600;
-					border: none;
-					padding: 0;
-					margin: 0 0 10px;
+					bottom: 0;
 				}
 			}
 
-			&--action {
-				width: 100%;
-				padding: 25px;
+			i.fa {
+				display: none;
 				@media screen and (min-width: $small) {
-					width: 70%;
-					padding: 30px;
+					display: block;
 				}
-				background-color: #fff;
-				border-radius: 10px;
-				box-shadow: $shadow_md;
-				position: relative;
-				overflow: hidden;
+				position: absolute;
+				left: 10px;
+				font-size: 26px;
+				color: $border;
+				margin-top: -4px;
 			}
+			h2 {
+				font-size: 18px;
+				font-weight: 600;
+				border: none;
+				padding: 0;
+				margin: 0 0 10px;
+			}
+		}
+
+		&--action {
+			width: 100%;
+			padding: 30px;
+			@media screen and (min-width: $small) {
+				width: 70%;
+			}
+			position: relative;
+			overflow: hidden;
 		}
 	}
 
@@ -66,6 +142,16 @@
 		p.submit {
 			margin: 0;
 			width: auto;
+			.button-primary {
+				background-color: $purple;
+				border-color: $purple;
+				border-radius: $radius;
+				&:hover,
+				&:focus {
+					background-color: $purple_dark;
+					border-color: $purple_dark;
+				}
+			}
 		}
 		.loading,
 		.saved {
@@ -102,12 +188,9 @@
 	& .whats-new {
 		ul {
 			margin: 0;
-			padding: 10px;
-			max-height: 400px;
+			padding: 0;
+			max-height: 450px;
 			overflow-y: auto;
-			background-color: $lighter_grey;
-			border: 1px solid $border;
-			border-radius: $radius;
 			display: grid;
 			grid-gap: 10px;
 			grid-template-columns: repeat(1, 1fr);
@@ -191,18 +274,25 @@
 			border-color: $border;
 			line-height: 1;
 			border-radius: $radius;
-			max-width: 800px;
 
 			&[readonly] {
 				background-color: $lighter_grey;
 				cursor: not-allowed;
 				opacity: 0.5;
 				border-color: $border !important;
-				box-shadow: none !important;
+			}
+
+			&:focus {
+				outline: none;
+				border-color: $purple;
+				box-shadow: 0 0 0 1px $purple;
 			}
 		}
 		select {
 			padding: 12px 10px;
+			&:hover {
+				color: $text_alt;
+			}
 		}
 
 		label {
@@ -212,7 +302,6 @@
 			clear: both;
 			float: none;
 			margin: 0 0 10px;
-			max-width: 800px;
 
 			&.provider-label {
 				display: flex;

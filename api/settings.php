@@ -55,13 +55,13 @@ function instant_images_settings( WP_REST_Request $request ) {
 				// Success.
 				$response = array(
 					'success' => true,
-					'msg'     => 'Settings saved.',
+					'msg'     => __( 'Settings saved.', 'instant-images' ),
 				);
 			} else {
 				// Error.
 				$response = array(
 					'success' => false,
-					'msg'     => 'Unable to save settings.',
+					'msg'     => __( 'Unable to save settings.', 'instant-images' ),
 				);
 			}
 

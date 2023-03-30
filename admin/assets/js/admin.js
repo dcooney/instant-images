@@ -88,4 +88,17 @@ jQuery(document).ready(function ($) {
 			behavior: "smooth",
 		});
 	});
+
+	$(".settings_page_instant-images-settings #anchor-nav").on(
+		"change",
+		function (e) {
+			e.preventDefault();
+			var anchor = this.value;
+			var target = anchor ? document.querySelector("#" + anchor) : false;
+			window.scrollTo({
+				top: !target ? 0 : target.offsetTop,
+				behavior: "smooth",
+			});
+		}
+	);
 });

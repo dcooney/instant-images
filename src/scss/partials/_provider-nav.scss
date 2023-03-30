@@ -85,25 +85,3 @@
 	background: url("../img/logos/openverse.svg") no-repeat 10px center;
 	background-size: 20px 20px;
 }
-
-// Settings page.
-.settings_page_instant-images-settings {
-	.provider-nav {
-		width: 100%;
-		margin: 0;
-		button {
-			background-color: transparent;
-			border: none;
-			color: $text_alt;
-			height: $el_height;
-			line-height: $el_height;
-			padding: 0 10px;
-			cursor: pointer;
-			white-space: nowrap;
-			&:hover,
-			&:focus {
-				color: $text;
-			}
-		}
-	}
-}

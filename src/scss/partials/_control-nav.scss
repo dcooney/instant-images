@@ -12,7 +12,7 @@
 		list-style: none;
 		border-bottom: 1px solid $grey;
 		&::after {
-			content: '';
+			content: "";
 			display: table;
 			clear: both;
 		}
@@ -50,8 +50,8 @@
 			&::before {
 				display: block;
 				display: none;
-				content: '\f0b0';
-				font-family: 'FontAwesome';
+				content: "\f0b0";
+				font-family: "FontAwesome";
 				color: $grey;
 				font-size: 24px;
 				margin-right: 10px;
@@ -169,7 +169,7 @@
 					left: 100%;
 					top: 50%;
 					border: solid transparent;
-					content: '';
+					content: "";
 					height: 0;
 					width: 0;
 					position: absolute;
@@ -209,12 +209,13 @@
 				display: block;
 				width: 100%;
 				&:hover {
-					button[type='submit'] {
+					button[type="submit"] {
 						opacity: 1;
 					}
 				}
 			}
 			input {
+				color: $text;
 				width: 100%;
 				padding: 0 10px 0 $el_height;
 				border: 1px solid $input;
@@ -234,17 +235,17 @@
 					box-shadow: 0 0 1px 5px rgba(#000, 0.035);
 				}
 				&.searching {
-					background-image: url('../img/ajax-loader.gif');
+					background-image: url("../img/ajax-loader.gif");
 				}
 			}
 			// Remove X button in search.
-			input[type='search']::-webkit-search-decoration,
-			input[type='search']::-webkit-search-cancel-button,
-			input[type='search']::-webkit-search-results-button,
-			input[type='search']::-webkit-search-results-decoration {
+			input[type="search"]::-webkit-search-decoration,
+			input[type="search"]::-webkit-search-cancel-button,
+			input[type="search"]::-webkit-search-results-button,
+			input[type="search"]::-webkit-search-results-decoration {
 				-webkit-appearance: none;
 			}
-			button[type='submit'] {
+			button[type="submit"] {
 				position: absolute;
 				left: 2px;
 				top: 0;
@@ -256,40 +257,39 @@
 				border: none !important;
 				background: transparent !important;
 				cursor: pointer;
-				color: $text;
+				color: $text_alt;
 				box-shadow: none !important;
-				transition: all 0.25s ease;
-				opacity: 0.75;
+				transition: $transition;
 				margin: 0;
 				padding: 0;
 				font-size: 16px;
 				&:hover,
 				&:focus {
-					opacity: 1;
+					color: $text;
 				}
 				&[disabled] {
 					cursor: not-allowed;
 				}
 			}
-			input[type='search']::-webkit-input-placeholder {
+			input[type="search"]::-webkit-input-placeholder {
 				color: #ccc;
 				font-weight: 400;
 				font-style: normal;
 				font-size: 14px;
 			}
-			input[type='search']:-moz-placeholder {
+			input[type="search"]:-moz-placeholder {
 				color: #ccc;
 				font-weight: 400;
 				font-style: normal;
 				font-size: 14px;
 			}
-			input[type='search']::-moz-placeholder {
+			input[type="search"]::-moz-placeholder {
 				color: #ccc;
 				font-weight: 400;
 				font-style: normal;
 				font-size: 14px;
 			}
-			input[type='search']:-ms-input-placeholder {
+			input[type="search"]:-ms-input-placeholder {
 				color: #ccc;
 				font-weight: 400;
 				font-style: normal;

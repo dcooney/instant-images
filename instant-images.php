@@ -443,6 +443,7 @@ class InstantImages {
 	 */
 	private function constants() {
 		define( 'INSTANT_IMAGES_TITLE', 'Instant Images' );
+
 		$upload_dir = wp_upload_dir();
 		define( 'INSTANT_IMAGES_UPLOAD_PATH', $upload_dir['basedir'] . '/instant-images' );
 		define( 'INSTANT_IMAGES_UPLOAD_URL', $upload_dir['baseurl'] . '/instant-images/' );
@@ -450,7 +451,19 @@ class InstantImages {
 		define( 'INSTANT_IMAGES_URL', plugins_url( '/', __FILE__ ) );
 		define( 'INSTANT_IMAGES_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
 		define( 'INSTANT_IMAGES_WPADMIN_URL', admin_url( 'upload.php?page=instant-images' ) );
+		define( 'INSTANT_IMAGES_WPADMIN_SETTINGS_URL', admin_url( 'options-general.php?page=instant-images-settings' ) );
 		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
+	}
+
+	/**
+	 * Get the instant images tagline.
+	 *
+	 * @return string
+	 */
+	public static function instant_images_get_tagline() {
+		// translators: Instant Images tagline.
+		$instant_images_tagline = __( 'One click photo uploads from %1$s, %2$s, %3$s and %4$s.', 'instant-images' ); // phpcs:ignore
+		return '<span class="instant-images-tagline">' . sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">Unsplash</a>', '<a href="https://wordpress.org/openverse" target="_blank">Openverse</a>', '<a href="https://pixabay.com/" target="_blank">Pixabay</a>', '<a href="https://pexels.com/" target="_blank">Pexels</a>' ) .'</span>';  // phpcs:ignore
 	}
 
 	/**
