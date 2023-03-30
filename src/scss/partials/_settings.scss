@@ -2,14 +2,20 @@
 	background-color: $lighter_grey;
 	padding: 30px;
 
-	&--grid {
-		display: grid;
-		grid-gap: 30px;
-		grid-template-columns: repeat(1, 1fr);
+	display: grid;
+	grid-gap: 30px;
+	grid-template-columns: repeat(1, 1fr);
 
+	@media screen and (min-width: $small) {
+		grid-template-rows: repeat(1, 1fr);
+		grid-template-columns: 3fr 13fr;
+	}
+
+	&--sticky {
 		@media screen and (min-width: $small) {
-			grid-template-rows: repeat(1, 1fr);
-			grid-template-columns: 2fr 10fr;
+			position: sticky;
+			top: 55px;
+			left: 0;
 		}
 	}
 
