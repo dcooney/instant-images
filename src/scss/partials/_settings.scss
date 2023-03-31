@@ -1,3 +1,5 @@
+$sticky_top: 62px;
+
 .instant-images-settings {
 	background-color: $lighter_grey;
 	padding: 30px;
@@ -5,16 +7,24 @@
 	display: grid;
 	grid-gap: 30px;
 	grid-template-columns: repeat(1, 1fr);
+	grid-template-rows: repeat(1, 1fr);
 
 	@media screen and (min-width: $small) {
-		grid-template-rows: repeat(1, 1fr);
-		grid-template-columns: 3fr 13fr;
+		grid-template-columns: 4fr 8fr;
+	}
+
+	@media screen and (min-width: $large) {
+		grid-template-columns: 3fr 9fr;
+	}
+
+	@media screen and (min-width: $xlarge) {
+		grid-template-columns: 2fr 10fr;
 	}
 
 	&--sticky {
-		@media screen and (min-width: $small) {
+		@media screen and (min-width: $large) and (min-height: 640px) {
 			position: sticky;
-			top: 55px;
+			top: $sticky_top;
 			left: 0;
 		}
 	}
@@ -25,31 +35,43 @@
 		width: 100%;
 		margin: 0;
 
-		.settings-jump {
-			display: block;
-			padding: 15px;
-			border-radius: 10px;
-			background-color: #fff;
-			border: 1px solid $border;
-
-			select {
-				width: 100%;
-			}
-		}
-
 		nav {
 			display: none;
+			@media screen and (min-width: $small) {
+				display: block;
+			}
+			margin-top: 20px;
+			padding: 0 0 5px;
+			border-radius: 10px;
+			background-color: #fff;
+			box-shadow: $shadow_md;
+			overflow: hidden;
+			h3 {
+				font-size: 12px;
+				background-color: $lighter_grey;
+				border-bottom: 1px solid $border;
+				margin: 0 0 5px;
+				padding: 10px 15px;
+				text-transform: uppercase;
+			}
 			button {
 				width: 100%;
 				background-color: transparent;
 				border: none;
 				color: $text_alt;
-				height: $el_height;
 				line-height: 1;
-				padding: 0 10px;
+				padding: 10px 12px;
 				cursor: pointer;
 				white-space: nowrap;
 				text-align: left;
+				display: flex;
+				align-items: center;
+				flex-wrap: nowrap;
+				i {
+					width: 25px;
+					color: $border;
+					font-size: 18px;
+				}
 				&:hover,
 				&:focus {
 					color: $text;
@@ -70,71 +92,81 @@
 
 	// Sections
 	&--sections {
-		background-color: #fff;
-		border-radius: 10px;
-		box-shadow: $shadow_md;
-	}
-
-	.settings-entry {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: flex-start;
-		width: 100%;
-		padding: 30px;
-		margin: 0;
-		border-bottom: 1px solid $lighter_grey;
-		&:last-of-type {
-			border-bottom: none;
-		}
-
-		&--title {
+		.settings-entry {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: flex-start;
 			width: 100%;
-			padding: 30px 30px 15px 30px;
-			position: relative;
+			@media screen and (min-width: $large) {
+				padding: 30px;
+			}
+			margin: 0 0 30px;
+			background-color: #fff;
+			border-radius: 10px;
+			box-shadow: $shadow_md;
 
-			@media screen and (min-width: $small) {
-				width: 30%;
-				padding: 30px 30px 15px 45px;
+			&:last-of-type {
+				border-bottom: none;
+			}
 
-				&::after {
-					display: block;
-					content: "";
-					height: 1px;
-					width: 50px;
-					background-color: $lighter_grey;
+			&--title {
+				width: 100%;
+				padding: 25px;
+				position: relative;
+				border-bottom: 1px solid $lighter_grey;
+
+				@media screen and (min-width: $large) {
+					width: 30%;
+					padding: 30px 30px 30px 50px;
+					border: none;
+					position: sticky;
+					top: $sticky_top;
+					margin-bottom: 20px;
+
+					&::after {
+						display: block;
+						content: "";
+						height: 1px;
+						width: 50px;
+						background-color: $border;
+						position: absolute;
+						bottom: 0;
+					}
+				}
+
+				i.fa {
+					display: none;
+					@media screen and (min-width: $large) {
+						display: block;
+					}
 					position: absolute;
-					bottom: 0;
+					left: 10px;
+					font-size: 30px;
+					color: $border;
+					margin-top: -7px;
+				}
+				h2 {
+					font-size: 18px;
+					font-weight: 600;
+					border: none;
+					padding: 0;
+					margin: 0 0 10px;
+				}
+				p {
+					margin: 0;
 				}
 			}
 
-			i.fa {
-				display: none;
-				@media screen and (min-width: $small) {
-					display: block;
+			&--action {
+				width: 100%;
+				padding: 25px;
+				@media screen and (min-width: $large) {
+					width: 70%;
+					padding: 30px;
 				}
-				position: absolute;
-				left: 10px;
-				font-size: 26px;
-				color: $border;
-				margin-top: -4px;
+				position: relative;
+				overflow: hidden;
 			}
-			h2 {
-				font-size: 18px;
-				font-weight: 600;
-				border: none;
-				padding: 0;
-				margin: 0 0 10px;
-			}
-		}
-
-		&--action {
-			width: 100%;
-			padding: 30px;
-			@media screen and (min-width: $small) {
-				width: 70%;
-			}
-			position: relative;
-			overflow: hidden;
 		}
 	}
 
@@ -195,8 +227,8 @@
 		ul {
 			margin: 0;
 			padding: 0;
-			max-height: 450px;
-			overflow-y: auto;
+			// max-height: 450px;
+			// overflow-y: auto;
 			display: grid;
 			grid-gap: 10px;
 			grid-template-columns: repeat(1, 1fr);
@@ -258,106 +290,6 @@
 	.instant-images-settings h3,
 	.instant-images-settings h4 {
 		margin-top: 0;
-	}
-
-	// Form Styles.
-	form {
-		display: block;
-
-		> h2,
-		> p.desc {
-			display: none;
-		}
-
-		select,
-		input[type="text"],
-		input[type="number"],
-		textarea {
-			color: $text_alt;
-			background-color: #fff;
-			width: 100%;
-			padding: 10px;
-			border-color: $border;
-			line-height: 1;
-			border-radius: $radius;
-
-			&[readonly] {
-				background-color: $lighter_grey;
-				cursor: not-allowed;
-				opacity: 0.5;
-				border-color: $border !important;
-			}
-
-			&:focus {
-				outline: none;
-				border-color: $purple;
-				box-shadow: 0 0 0 1px $purple;
-			}
-		}
-		select {
-			padding: 12px 10px;
-			&:hover {
-				color: $text_alt;
-			}
-		}
-
-		label {
-			color: $text;
-			display: block;
-			font-weight: 600;
-			clear: both;
-			float: none;
-			margin: 0 0 10px;
-
-			&.provider-label {
-				display: flex;
-				width: 100%;
-				align-items: center;
-				gap: 10px;
-				justify-content: space-between;
-
-				& a {
-					font-size: 12px;
-					font-weight: 400;
-					display: block;
-					padding: 0 2px;
-					text-decoration: none;
-					position: relative;
-					top: 1px;
-					&:hover,
-					&:focus {
-						color: $purple_dark;
-					}
-				}
-			}
-
-			span {
-				opacity: 0.8;
-				font-size: 13px;
-				font-style: italic;
-			}
-
-			&.cnkt-checkbox-wrap {
-				display: flex;
-				flex-wrap: nowrap;
-				width: 100%;
-				padding: 3px 0;
-				margin: 0;
-				font-weight: 400;
-				color: $text_alt;
-
-				& input {
-					margin-top: 1px;
-					margin-right: 8px;
-				}
-			}
-		}
-		.api-constant {
-			display: block;
-			padding: 10px 0 0 1px;
-			opacity: 0.75;
-			font-size: 12px;
-		}
 	}
 
 	// Form Table.

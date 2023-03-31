@@ -218,11 +218,14 @@ function instant_images_auto_attribution_callback() {
 		$options['auto_attribution'] = '0';
 	}
 
-	$html  = '<label style="cursor: default;">' . esc_attr__( 'Image Attribution', 'instant-images' ) . '</label>';
-	$html .= '<label for="auto_attribution" class="cnkt-checkbox-wrap">';
+	$html  = '<div class="fake-label">' . esc_attr__( 'Image Attribution', 'instant-images' ) . '</div>';
+	$html .= '<label for="auto_attribution" class="instant-images-checkbox">';
 	$html .= '<input type="hidden" name="instant_img_settings[auto_attribution]" value="0" />';
 	$html .= '<input type="checkbox" name="instant_img_settings[auto_attribution]" id="auto_attribution" value="1"' . ( $options['auto_attribution'] ? ' checked="checked"' : '' ) . ' />';
-	$html .= __( 'Automatically add image attribution (as captions) when uploading images.', 'instant-images' );
+	$html .= '<div class="instant-images-checkbox--switch">';
+	$html .= '<div class="toggle-switch"></div>';
+	$html .= '<div class="toggle-label">' . __( 'Automatically add image attribution (as captions) when uploading images.', 'instant-images' ) . '</div>';
+	$html .= '</div>';
 	$html .= '</label>';
 
 	echo $html; // phpcs:ignore
@@ -240,11 +243,14 @@ function instant_images_tab_display_callback() {
 		$options['media_modal_display'] = '0';
 	}
 
-	$html  = '<label style="cursor: default;">' . esc_attr__( 'Media Modal', 'instant-images' ) . '</label>';
-	$html .= '<label for="media_modal_display" class="cnkt-checkbox-wrap">';
+	$html  = '<div class="fake-label">' . esc_attr__( 'Media Modal', 'instant-images' ) . '</div>';
+	$html .= '<label for="media_modal_display" class="instant-images-checkbox">';
 	$html .= '<input type="hidden" name="instant_img_settings[media_modal_display]" value="0" />';
 	$html .= '<input type="checkbox" name="instant_img_settings[media_modal_display]" id="media_modal_display" value="1"' . ( $options['media_modal_display'] ? ' checked="checked"' : '' ) . ' />';
-	$html .= __( 'Hide Instant Images tab in Media Modal windows.', 'instant-images' );
+	$html .= '<div class="instant-images-checkbox--switch">';
+	$html .= '<div class="toggle-switch"></div>';
+	$html .= '<div class="toggle-label">' . __( 'Hide Instant Images tab in Media Modal windows.', 'instant-images' ) . '</div>';
+	$html .= '</div>';
 	$html .= '</label>';
 
 	echo $html; // phpcs:ignore

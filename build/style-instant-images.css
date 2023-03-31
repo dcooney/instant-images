@@ -213,9 +213,6 @@ body.settings_page_instant-images-settings.overflow-hidden {
   margin: 0;
   list-style: none;
 }
-.instant-img-container .save-settings {
-  padding-top: 5px;
-}
 .instant-img-container .spacer {
   display: block;
   height: 40px;
@@ -1129,17 +1126,27 @@ body.settings_page_instant-images-settings.overflow-hidden {
   display: grid;
   grid-gap: 30px;
   grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(1, 1fr);
 }
 @media screen and (min-width: 800px) {
   .instant-images-settings {
-    grid-template-rows: repeat(1, 1fr);
-    grid-template-columns: 3fr 13fr;
+    grid-template-columns: 4fr 8fr;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1270px) {
+  .instant-images-settings {
+    grid-template-columns: 3fr 9fr;
+  }
+}
+@media screen and (min-width: 1500px) {
+  .instant-images-settings {
+    grid-template-columns: 2fr 10fr;
+  }
+}
+@media screen and (min-width: 1270px) and (min-height: 640px) {
   .instant-images-settings--sticky {
     position: sticky;
-    top: 55px;
+    top: 62px;
     left: 0;
   }
 }
@@ -1148,30 +1155,46 @@ body.settings_page_instant-images-settings.overflow-hidden {
   width: 100%;
   margin: 0;
 }
-.instant-images-settings--header .settings-jump {
-  display: block;
-  padding: 15px;
-  border-radius: 10px;
-  background-color: #fff;
-  border: 1px solid #e1e1e1;
-}
-.instant-images-settings--header .settings-jump select {
-  width: 100%;
-}
 .instant-images-settings--header nav {
   display: none;
+  margin-top: 20px;
+  padding: 0 0 5px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1019607843), 0 1px 3px -1px rgba(0, 0, 0, 0.1019607843) !important;
+  overflow: hidden;
+}
+@media screen and (min-width: 800px) {
+  .instant-images-settings--header nav {
+    display: block;
+  }
+}
+.instant-images-settings--header nav h3 {
+  font-size: 12px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #e1e1e1;
+  margin: 0 0 5px;
+  padding: 10px 15px;
+  text-transform: uppercase;
 }
 .instant-images-settings--header nav button {
   width: 100%;
   background-color: transparent;
   border: none;
   color: #6b6877;
-  height: 38px;
   line-height: 1;
-  padding: 0 10px;
+  padding: 10px 12px;
   cursor: pointer;
   white-space: nowrap;
   text-align: left;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.instant-images-settings--header nav button i {
+  width: 25px;
+  color: #e1e1e1;
+  font-size: 18px;
 }
 .instant-images-settings--header nav button:hover, .instant-images-settings--header nav button:focus {
   color: #434246;
@@ -1184,72 +1207,82 @@ body.settings_page_instant-images-settings.overflow-hidden {
   color: #455cb6;
   border-color: #455cb6;
 }
-.instant-images-settings--sections {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1019607843), 0 1px 3px -1px rgba(0, 0, 0, 0.1019607843) !important;
-}
-.instant-images-settings .settings-entry {
+.instant-images-settings--sections .settings-entry {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   width: 100%;
-  padding: 30px;
-  margin: 0;
-  border-bottom: 1px solid #f7f7f7;
+  margin: 0 0 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1019607843), 0 1px 3px -1px rgba(0, 0, 0, 0.1019607843) !important;
 }
-.instant-images-settings .settings-entry:last-of-type {
+@media screen and (min-width: 1270px) {
+  .instant-images-settings--sections .settings-entry {
+    padding: 30px;
+  }
+}
+.instant-images-settings--sections .settings-entry:last-of-type {
   border-bottom: none;
 }
-.instant-images-settings .settings-entry--title {
+.instant-images-settings--sections .settings-entry--title {
   width: 100%;
-  padding: 30px 30px 15px 30px;
+  padding: 25px;
   position: relative;
+  border-bottom: 1px solid #f7f7f7;
 }
-@media screen and (min-width: 800px) {
-  .instant-images-settings .settings-entry--title {
+@media screen and (min-width: 1270px) {
+  .instant-images-settings--sections .settings-entry--title {
     width: 30%;
-    padding: 30px 30px 15px 45px;
+    padding: 30px 30px 30px 50px;
+    border: none;
+    position: sticky;
+    top: 62px;
+    margin-bottom: 20px;
   }
-  .instant-images-settings .settings-entry--title::after {
+  .instant-images-settings--sections .settings-entry--title::after {
     display: block;
     content: "";
     height: 1px;
     width: 50px;
-    background-color: #f7f7f7;
+    background-color: #e1e1e1;
     position: absolute;
     bottom: 0;
   }
 }
-.instant-images-settings .settings-entry--title i.fa {
+.instant-images-settings--sections .settings-entry--title i.fa {
   display: none;
   position: absolute;
   left: 10px;
-  font-size: 26px;
+  font-size: 30px;
   color: #e1e1e1;
-  margin-top: -4px;
+  margin-top: -7px;
 }
-@media screen and (min-width: 800px) {
-  .instant-images-settings .settings-entry--title i.fa {
+@media screen and (min-width: 1270px) {
+  .instant-images-settings--sections .settings-entry--title i.fa {
     display: block;
   }
 }
-.instant-images-settings .settings-entry--title h2 {
+.instant-images-settings--sections .settings-entry--title h2 {
   font-size: 18px;
   font-weight: 600;
   border: none;
   padding: 0;
   margin: 0 0 10px;
 }
-.instant-images-settings .settings-entry--action {
+.instant-images-settings--sections .settings-entry--title p {
+  margin: 0;
+}
+.instant-images-settings--sections .settings-entry--action {
   width: 100%;
-  padding: 30px;
+  padding: 25px;
   position: relative;
   overflow: hidden;
 }
-@media screen and (min-width: 800px) {
-  .instant-images-settings .settings-entry--action {
+@media screen and (min-width: 1270px) {
+  .instant-images-settings--sections .settings-entry--action {
     width: 70%;
+    padding: 30px;
   }
 }
 .instant-images-settings .save-settings {
@@ -1305,8 +1338,6 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-images-settings .whats-new ul {
   margin: 0;
   padding: 0;
-  max-height: 450px;
-  overflow-y: auto;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(1, 1fr);
@@ -1363,99 +1394,6 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-images-settings .instant-images-settings h3,
 .instant-images-settings .instant-images-settings h4 {
   margin-top: 0;
-}
-.instant-images-settings form {
-  display: block;
-}
-.instant-images-settings form > h2,
-.instant-images-settings form > p.desc {
-  display: none;
-}
-.instant-images-settings form select,
-.instant-images-settings form input[type=text],
-.instant-images-settings form input[type=number],
-.instant-images-settings form textarea {
-  color: #6b6877;
-  background-color: #fff;
-  width: 100%;
-  padding: 10px;
-  border-color: #e1e1e1;
-  line-height: 1;
-  border-radius: 3px;
-}
-.instant-images-settings form select[readonly],
-.instant-images-settings form input[type=text][readonly],
-.instant-images-settings form input[type=number][readonly],
-.instant-images-settings form textarea[readonly] {
-  background-color: #f7f7f7;
-  cursor: not-allowed;
-  opacity: 0.5;
-  border-color: #e1e1e1 !important;
-}
-.instant-images-settings form select:focus,
-.instant-images-settings form input[type=text]:focus,
-.instant-images-settings form input[type=number]:focus,
-.instant-images-settings form textarea:focus {
-  outline: none;
-  border-color: #586ec6;
-  box-shadow: 0 0 0 1px #586ec6;
-}
-.instant-images-settings form select {
-  padding: 12px 10px;
-}
-.instant-images-settings form select:hover {
-  color: #6b6877;
-}
-.instant-images-settings form label {
-  color: #434246;
-  display: block;
-  font-weight: 600;
-  clear: both;
-  float: none;
-  margin: 0 0 10px;
-}
-.instant-images-settings form label.provider-label {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  gap: 10px;
-  justify-content: space-between;
-}
-.instant-images-settings form label.provider-label a {
-  font-size: 12px;
-  font-weight: 400;
-  display: block;
-  padding: 0 2px;
-  text-decoration: none;
-  position: relative;
-  top: 1px;
-}
-.instant-images-settings form label.provider-label a:hover, .instant-images-settings form label.provider-label a:focus {
-  color: #455cb6;
-}
-.instant-images-settings form label span {
-  opacity: 0.8;
-  font-size: 13px;
-  font-style: italic;
-}
-.instant-images-settings form label.cnkt-checkbox-wrap {
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
-  padding: 3px 0;
-  margin: 0;
-  font-weight: 400;
-  color: #6b6877;
-}
-.instant-images-settings form label.cnkt-checkbox-wrap input {
-  margin-top: 1px;
-  margin-right: 8px;
-}
-.instant-images-settings form .api-constant {
-  display: block;
-  padding: 10px 0 0 1px;
-  opacity: 0.75;
-  font-size: 12px;
 }
 .instant-images-settings .form-table {
   margin: 0;
@@ -1566,7 +1504,6 @@ span.instant-images-tagline {
   display: block;
   text-align: center;
   padding: 0 0 20px;
-  margin: 0 0 20px;
   border-bottom: 1px solid #e1e1e1;
 }
 .header-wrap-alt h1 {
@@ -2384,6 +2321,149 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   background-color: currentcolor;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.075);
 }
+.instant-images-settings form {
+  display: block;
+}
+.instant-images-settings form.saving {
+  pointer-events: none;
+}
+.instant-images-settings form > h2,
+.instant-images-settings form > p.desc {
+  display: none;
+}
+.instant-images-settings form select,
+.instant-images-settings form input[type=text],
+.instant-images-settings form input[type=number],
+.instant-images-settings form textarea {
+  color: #6b6877;
+  background-color: #fff;
+  width: 100%;
+  padding: 10px;
+  border-color: #e1e1e1;
+  line-height: 1;
+  border-radius: 3px;
+}
+.instant-images-settings form select[readonly],
+.instant-images-settings form input[type=text][readonly],
+.instant-images-settings form input[type=number][readonly],
+.instant-images-settings form textarea[readonly] {
+  background-color: #f7f7f7;
+  cursor: not-allowed;
+  opacity: 0.5;
+  border-color: #e1e1e1 !important;
+}
+.instant-images-settings form select:focus,
+.instant-images-settings form input[type=text]:focus,
+.instant-images-settings form input[type=number]:focus,
+.instant-images-settings form textarea:focus {
+  outline: none;
+  border-color: #586ec6;
+  box-shadow: 0 0 0 1px #586ec6;
+}
+.instant-images-settings form select {
+  padding: 12px 10px;
+}
+.instant-images-settings form select:hover {
+  color: #6b6877;
+}
+.instant-images-settings form label,
+.instant-images-settings form .fake-label {
+  color: #434246;
+  display: block;
+  font-weight: 600;
+  clear: both;
+  float: none;
+  margin: 0 0 10px;
+}
+.instant-images-settings form label.provider-label,
+.instant-images-settings form .fake-label.provider-label {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+.instant-images-settings form label.provider-label a,
+.instant-images-settings form .fake-label.provider-label a {
+  font-size: 12px;
+  font-weight: 400;
+  display: block;
+  padding: 0 2px;
+  text-decoration: none;
+  position: relative;
+  top: 1px;
+}
+.instant-images-settings form label.provider-label a:hover, .instant-images-settings form label.provider-label a:focus,
+.instant-images-settings form .fake-label.provider-label a:hover,
+.instant-images-settings form .fake-label.provider-label a:focus {
+  color: #455cb6;
+}
+.instant-images-settings form label > span,
+.instant-images-settings form .fake-label > span {
+  opacity: 0.8;
+  font-size: 13px;
+  font-style: italic;
+}
+.instant-images-settings form .api-constant {
+  display: block;
+  padding: 10px 0 0 1px;
+  opacity: 0.75;
+  font-size: 12px;
+}
+.instant-images-settings .instant-images-checkbox {
+  padding: 3px 0;
+  margin: 0;
+  font-weight: 400;
+  color: #6b6877;
+  position: relative;
+}
+.instant-images-settings .instant-images-checkbox--switch {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  width: 100%;
+  position: relative;
+}
+.instant-images-settings .instant-images-checkbox--switch .toggle-switch {
+  width: 41px;
+  height: 23px;
+  position: relative;
+  background-color: rgba(107, 104, 119, 0.5);
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+}
+.instant-images-settings .instant-images-checkbox--switch .toggle-switch::before {
+  position: absolute;
+  content: "";
+  height: 17px;
+  width: 17px;
+  left: 3px;
+  bottom: 3px;
+  border-radius: 100%;
+  background-color: #fff;
+  transition: all 0.25s ease;
+}
+.instant-images-settings .instant-images-checkbox--switch .toggle-label {
+  flex: 1;
+  padding-top: 2px;
+}
+.instant-images-settings .instant-images-checkbox input[type=checkbox] {
+  opacity: 0;
+  position: absolute;
+  left: -1px;
+}
+.instant-images-settings .instant-images-checkbox input[type=checkbox]:checked + div .toggle-switch {
+  background-color: #586ec6;
+}
+.instant-images-settings .instant-images-checkbox input[type=checkbox]:checked + div .toggle-switch::before {
+  left: 20px;
+}
+.instant-images-settings .instant-images-checkbox input[type=checkbox]:checked + div .toggle-switch::after {
+  opacity: 1;
+}
+.instant-images-settings .instant-images-checkbox input[type=checkbox]:focus + div .toggle-switch {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 4px #586ec6;
+}
 .search-header h2 {
   font-size: 34px;
   line-height: 1;
@@ -2436,30 +2516,6 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .search-header .control-nav--filters-wrap {
   margin: 0 0 15px;
-}
-.instant-img-container .notice.upgrade-notice {
-  margin: 20px 0 0;
-  padding: 15px;
-  border-radius: 3px;
-  background-color: #f7f7f7;
-  box-shadow: 0 8px 16px rgba(48, 63, 122, 0.175);
-}
-.instant-img-container .notice.upgrade-notice p {
-  padding: 0;
-  margin: 0 0 15px;
-  font-size: 13px;
-}
-.instant-img-container .notice.upgrade-notice p span.links {
-  display: block;
-  padding-top: 10px;
-}
-.instant-img-container .notice.upgrade-notice > div {
-  display: flex;
-  width: 100%;
-  flex-wrap: nowrap;
-}
-.instant-img-container .notice.upgrade-notice > div .button {
-  margin-right: 5px;
 }
 
 /*# sourceMappingURL=style-instant-images.css.map*/

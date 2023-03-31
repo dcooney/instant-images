@@ -56,6 +56,7 @@ jQuery(document).ready(function ($) {
 	// Save Settings Form.
 	$(".instant-images-settings form").on("submit", function () {
 		var form = $(this);
+		form.addClass("saving");
 		$(".save-settings .loading", form).addClass("active");
 		$(".save-settings #submit", form).prop("disabled", true);
 		$(this).ajaxSubmit({
@@ -65,11 +66,13 @@ jQuery(document).ready(function ($) {
 					$(".save-settings .saved", form).addClass("active");
 					setTimeout(function () {
 						$(".save-settings .saved", form).removeClass("active");
+						form.removeClass("saving");
 						$(".save-settings #submit", form).prop("disabled", false);
 					}, 2000);
 				}, 250);
 			},
 			error: function () {
+				form.removeClass("saving");
 				$(".save-settings .loading", form).removeClass("active");
 				$(".save-settings #submit", form).prop("disabled", false);
 				alert("An error occured and the settings could not be saved");

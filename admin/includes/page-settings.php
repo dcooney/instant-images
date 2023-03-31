@@ -22,27 +22,29 @@
 					</a>
 				</p>
 			</div>
-			<form class="settings-jump">
-				<label for="anchor-nav">Jump to Section</label>
-				<select id="anchor-nav">
-					<option value="">--<?php esc_attr_e( 'Make a Selection', 'instant-images' ); ?>--</option>
-					<?php if ( class_exists( 'InstantImagesPro' ) ) { ?>
-						<option value="pro-settings"><?php esc_attr_e( 'Pro Settings', 'instant-images' ); ?></option>
-					<?php } ?>
-					<option value="general-settings"><?php esc_attr_e( 'General Settings', 'instant-images' ); ?></option>
-					<option value="api-settings"><?php esc_attr_e( 'API Keys', 'instant-images' ); ?></option>
-					<option value="whats-new"><?php esc_attr_e( 'What\'s New', 'instant-images' ); ?></option>
-					<option value="our-plugins"><?php esc_attr_e( 'Our Plugins', 'instant-images' ); ?></option>
-				</select>
-			</form>
 			<nav>
+				<h3><?php esc_attr_e( 'Skip to Section', 'instant-images' ); ?></h3>
 				<?php if ( class_exists( 'InstantImagesPro' ) ) { ?>
-					<button type="button" data-anchor="pro-settings"><?php esc_attr_e( 'Pro Settings', 'instant-images' ); ?></button>
+					<button type="button" data-anchor="pro-settings">
+						<i class="fa fa-star" aria-hidden="true"></i>
+						<?php esc_attr_e( 'Instant Images Pro', 'instant-images' ); ?>
+					</button>
 				<?php } ?>
-				<button type="button" data-anchor="general-settings"><?php esc_attr_e( 'General Settings', 'instant-images' ); ?></button>
-				<button type="button" data-anchor="api-settings"><?php esc_attr_e( 'API Keys', 'instant-images' ); ?></button>
-				<button type="button" data-anchor="whats-new"><?php esc_attr_e( 'What\'s New', 'instant-images' ); ?></button>
-				<button type="button" data-anchor="our-plugins"><?php esc_attr_e( 'Our Plugins', 'instant-images' ); ?></button>
+				<button type="button" data-anchor="general-settings">
+					<i class="fa fa-cog" aria-hidden="true"></i><?php esc_attr_e( 'General Settings', 'instant-images' ); ?>
+				</button>
+				<button type="button" data-anchor="api-settings">
+				<i class="fa fa-key" aria-hidden="true"></i>
+					<?php esc_attr_e( 'API Keys', 'instant-images' ); ?>
+				</button>
+				<button type="button" data-anchor="whats-new">
+					<i class="fa fa-pencil" aria-hidden="true"></i>
+					<?php esc_attr_e( 'What\'s New', 'instant-images' ); ?>
+				</button>
+				<button type="button" data-anchor="our-plugins">
+					<i class="fa fa-plug" aria-hidden="true"></i>
+					<?php esc_attr_e( 'Our Plugins', 'instant-images' ); ?>
+				</button>
 			</nav>
 		</div>
 	</div>
@@ -50,7 +52,7 @@
 	<div class="instant-images-settings--sections">
 		<!-- Pro -->
 		<?php if ( class_exists( 'InstantImagesPro' ) ) { ?>
-			<section class="settings-entry" id="pro-settings" style="display: none;">
+			<section class="settings-entry" id="pro-settings">
 			<div class="settings-entry--title">
 				<i class="fa fa-star" aria-hidden="true"></i>
 				<h2><?php esc_attr_e( 'Instant Images Pro', 'instant-images' ); ?></h2>
