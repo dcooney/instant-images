@@ -42,21 +42,22 @@ $sticky_top: 62px;
 			}
 			margin-top: 20px;
 			padding: 0 0 5px;
-			border-radius: 10px;
+			border-radius: $radius_xl;
 			background-color: #fff;
 			box-shadow: $shadow_md;
 			overflow: hidden;
 			h3 {
 				font-size: 12px;
-				background-color: $lighter_grey;
-				border-bottom: 1px solid $border;
+				background-color: #fff;
+				border-bottom: 1px solid $lighter_grey;
 				margin: 0 0 5px;
-				padding: 10px 15px;
+				padding: 15px 15px 14px;
+				line-height: 1;
 				text-transform: uppercase;
 			}
 			button {
+				all: unset;
 				width: 100%;
-				background-color: transparent;
 				border: none;
 				color: $text_alt;
 				line-height: 1;
@@ -102,7 +103,7 @@ $sticky_top: 62px;
 			}
 			margin: 0 0 30px;
 			background-color: #fff;
-			border-radius: 10px;
+			border-radius: $radius_xl;
 			box-shadow: $shadow_md;
 
 			&:last-of-type {
@@ -249,7 +250,7 @@ $sticky_top: 62px;
 					position: relative;
 					z-index: 1;
 					margin: 0;
-					padding: 15px;
+					padding: 20px;
 					background-color: #fff;
 					border: 1px solid $border;
 					border-radius: $radius;
@@ -258,7 +259,7 @@ $sticky_top: 62px;
 						color: $text;
 						display: block;
 						font-weight: 700;
-						margin: 0 0 3px;
+						margin: 0 0 5px;
 					}
 				}
 				code {
@@ -339,7 +340,7 @@ $sticky_top: 62px;
 			position: static;
 			display: grid;
 			grid-template-columns: repeat(1, 1fr);
-			@media screen and (min-width: $small) {
+			@media screen and (min-width: $xlarge) {
 				grid-template-columns: repeat(2, 1fr);
 			}
 			grid-gap: 10px;
@@ -349,6 +350,9 @@ $sticky_top: 62px;
 				padding: 0 !important;
 				margin: 0 !important;
 				line-height: 1.45;
+				border-color: $border;
+				border-radius: $radius;
+				overflow: hidden;
 				h2 {
 					margin-bottom: 5px;
 				}

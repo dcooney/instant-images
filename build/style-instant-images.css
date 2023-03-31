@@ -1171,15 +1171,16 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-images-settings--header nav h3 {
   font-size: 12px;
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #e1e1e1;
+  background-color: #fff;
+  border-bottom: 1px solid #f7f7f7;
   margin: 0 0 5px;
-  padding: 10px 15px;
+  padding: 15px 15px 14px;
+  line-height: 1;
   text-transform: uppercase;
 }
 .instant-images-settings--header nav button {
+  all: unset;
   width: 100%;
-  background-color: transparent;
   border: none;
   color: #6b6877;
   line-height: 1;
@@ -1361,7 +1362,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   position: relative;
   z-index: 1;
   margin: 0;
-  padding: 15px;
+  padding: 20px;
   background-color: #fff;
   border: 1px solid #e1e1e1;
   border-radius: 3px;
@@ -1371,7 +1372,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   color: #434246;
   display: block;
   font-weight: 700;
-  margin: 0 0 3px;
+  margin: 0 0 5px;
 }
 .instant-images-settings .whats-new ul li code {
   font-size: 12px;
@@ -1440,7 +1441,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   grid-gap: 10px;
   padding: 0;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1500px) {
   .instant-images-settings .other-plugins .cnkt-plugin-installer {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1450,6 +1451,9 @@ body.settings_page_instant-images-settings.overflow-hidden {
   padding: 0 !important;
   margin: 0 !important;
   line-height: 1.45;
+  border-color: #e1e1e1;
+  border-radius: 3px;
+  overflow: hidden;
 }
 .instant-images-settings .other-plugins .cnkt-plugin-installer .plugin h2 {
   margin-bottom: 5px;
