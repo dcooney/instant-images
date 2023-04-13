@@ -54,7 +54,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	// Save Settings Form.
-	$(".instant-images-settings form").on("submit", function () {
+	$(".instant-images-settings form.settings").on("submit", function () {
 		var form = $(this);
 		form.addClass("saving");
 		$(".save-settings .loading", form).addClass("active");
@@ -82,15 +82,18 @@ jQuery(document).ready(function ($) {
 	});
 
 	// Settings anchor links.
-	$(".settings_page_instant-images-settings button").on("click", function (e) {
-		e.preventDefault();
-		var anchor = $(this).data("anchor");
-		var target = document.querySelector("#" + anchor);
-		window.scrollTo({
-			top: target.offsetTop,
-			behavior: "smooth",
-		});
-	});
+	$(".settings_page_instant-images-settings nav.jump-nav button").on(
+		"click",
+		function (e) {
+			e.preventDefault();
+			var anchor = $(this).data("anchor");
+			var target = document.querySelector("#" + anchor);
+			window.scrollTo({
+				top: target.offsetTop,
+				behavior: "smooth",
+			});
+		}
+	);
 
 	$(".settings_page_instant-images-settings #anchor-nav").on(
 		"change",

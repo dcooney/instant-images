@@ -35,7 +35,6 @@ add_action(
  * @package InstantImages
  */
 function instant_images_download( WP_REST_Request $request ) {
-
 	if ( ! InstantImages::instant_img_has_access() ) {
 		// Exit if not allowed.
 		$response = [

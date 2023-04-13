@@ -6,9 +6,9 @@
  */
 
 ?>
-
 <section class="instant-images-settings instant-img-container">
 
+	<!-- Header -->
 	<div class="instant-images-settings--header">
 		<div class="instant-images-settings--sticky">
 			<div class="header-wrap-alt">
@@ -22,8 +22,8 @@
 					</a>
 				</p>
 			</div>
-			<nav>
-				<h3><?php esc_attr_e( 'Skip to Section', 'instant-images' ); ?></h3>
+			<nav class="jump-nav">
+				<h3><?php esc_attr_e( 'Jump to Section', 'instant-images' ); ?></h3>
 				<?php if ( class_exists( 'InstantImagesPro' ) ) { ?>
 					<button type="button" data-anchor="pro-settings">
 						<i class="fa fa-star" aria-hidden="true"></i>
@@ -48,10 +48,11 @@
 			</nav>
 		</div>
 	</div>
+	<!-- /End Header -->
 
 	<div class="instant-images-settings--sections">
 		<!-- Pro -->
-		<?php if ( class_exists( 'InstantImagesPro' ) ) { ?>
+		<?php if ( class_exists( 'InstantImagesPro' ) && defined( 'INSTANT_IMAGES_PRO_PATH' ) ) { ?>
 			<section class="settings-entry" id="pro-settings">
 			<div class="settings-entry--title">
 				<i class="fa fa-star" aria-hidden="true"></i>
@@ -59,13 +60,15 @@
 				<p><?php esc_attr_e( 'Manage settings for the Pro add-on.', 'instant-images' ); ?></p>
 			</div>
 			<div class="settings-entry--action general-settings">
-				<form action="options.php" method="post">
+				<?php require_once INSTANT_IMAGES_PRO_PATH . 'views/import.php'; ?>
+
+				<form action="options.php" method="post" class="settings">
 					<?php
 						// TODO: Add pro settings.
 						// settings_fields( 'instant_images_general_settings_group' );
 						// do_settings_sections( 'instant-images' );.
 					?>
-					<?php require INSTANT_IMAGES_PATH . 'admin/includes/save-settings.php'; ?>
+					<?php // require INSTANT_IMAGES_PATH . 'admin/includes/save-settings.php'; ?>
 				</form>
 			</div>
 		</section>
@@ -79,12 +82,14 @@
 				<p><?php esc_attr_e( 'Manage your Instant Images plugin settings.', 'instant-images' ); ?></p>
 			</div>
 			<div class="settings-entry--action general-settings">
-				<form action="options.php" method="post">
+				<form action="options.php" method="post" class="settings">
 					<?php
 						settings_fields( 'instant_images_general_settings_group' );
 						do_settings_sections( 'instant-images' );
 					?>
-					<?php require INSTANT_IMAGES_PATH . 'admin/includes/save-settings.php'; ?>
+					<?php
+					require INSTANT_IMAGES_PATH . 'admin/includes/save-settings.php';
+					?>
 				</form>
 			</div>
 		</section>
@@ -98,7 +103,7 @@
 				<p class="small"><?php esc_attr_e( 'Leave empty to restore default plugin keys.', 'instant-images' ); ?></p>
 			</div>
 			<div class="settings-entry--action general-settings">
-				<form action="options.php" method="post">
+				<form action="options.php" method="post" class="settings">
 					<?php
 						settings_fields( 'instant_images_api_settings_group' );
 						do_settings_sections( 'instant-images-api' );

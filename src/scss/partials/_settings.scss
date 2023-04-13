@@ -144,7 +144,7 @@ $sticky_top: 62px;
 					left: 10px;
 					font-size: 30px;
 					color: $border;
-					margin-top: -7px;
+					margin-top: -4px;
 				}
 				h2 {
 					font-size: 18px;
@@ -152,9 +152,10 @@ $sticky_top: 62px;
 					border: none;
 					padding: 0;
 					margin: 0 0 10px;
+					line-height: 1.35;
 				}
 				p {
-					margin: 0;
+					margin: 10px 0 0;
 				}
 			}
 
@@ -181,17 +182,8 @@ $sticky_top: 62px;
 		p.submit {
 			margin: 0;
 			width: auto;
-			.button-primary {
-				background-color: $purple;
-				border-color: $purple;
-				border-radius: $radius;
-				&:hover,
-				&:focus {
-					background-color: $purple_dark;
-					border-color: $purple_dark;
-				}
-			}
 		}
+
 		.loading,
 		.saved {
 			opacity: 0;

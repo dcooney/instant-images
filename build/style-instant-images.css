@@ -1257,7 +1257,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   left: 10px;
   font-size: 30px;
   color: #e1e1e1;
-  margin-top: -7px;
+  margin-top: -4px;
 }
 @media screen and (min-width: 1270px) {
   .instant-images-settings--sections .settings-entry--title i.fa {
@@ -1270,9 +1270,10 @@ body.settings_page_instant-images-settings.overflow-hidden {
   border: none;
   padding: 0;
   margin: 0 0 10px;
+  line-height: 1.35;
 }
 .instant-images-settings--sections .settings-entry--title p {
-  margin: 0;
+  margin: 10px 0 0;
 }
 .instant-images-settings--sections .settings-entry--action {
   width: 100%;
@@ -1296,15 +1297,6 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-images-settings .save-settings p.submit {
   margin: 0;
   width: auto;
-}
-.instant-images-settings .save-settings p.submit .button-primary {
-  background-color: #586ec6;
-  border-color: #586ec6;
-  border-radius: 3px;
-}
-.instant-images-settings .save-settings p.submit .button-primary:hover, .instant-images-settings .save-settings p.submit .button-primary:focus {
-  background-color: #455cb6;
-  border-color: #455cb6;
 }
 .instant-images-settings .save-settings .loading,
 .instant-images-settings .save-settings .saved {
@@ -2325,6 +2317,18 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   background-color: currentcolor;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.075);
 }
+.instant-images-settings .button-primary {
+  background-color: #586ec6;
+  border-color: #586ec6;
+  border-radius: 3px;
+}
+.instant-images-settings .button-primary:hover, .instant-images-settings .button-primary:focus {
+  background-color: #455cb6;
+  border-color: #455cb6;
+}
+.instant-images-settings .button-primary:focus {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 3px #455cb6;
+}
 .instant-images-settings form {
   display: block;
 }
@@ -2460,13 +2464,13 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   background-color: #586ec6;
 }
 .instant-images-settings .instant-images-checkbox input[type=checkbox]:checked + div .toggle-switch::before {
-  left: 20px;
+  left: 21px;
 }
 .instant-images-settings .instant-images-checkbox input[type=checkbox]:checked + div .toggle-switch::after {
   opacity: 1;
 }
 .instant-images-settings .instant-images-checkbox input[type=checkbox]:focus + div .toggle-switch {
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 4px #586ec6;
+  box-shadow: 0 0 0 1px rgb(255, 255, 255), 0 0 0 3px #586ec6;
 }
 .search-header h2 {
   font-size: 34px;

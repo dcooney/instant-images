@@ -1483,6 +1483,7 @@ function Photo(props) {
 
     // Config Params
     var config = {
+      credentials: "same-origin",
       headers: {
         "X-WP-Nonce": instant_img_localize.nonce,
         "Content-Type": "application/json"
