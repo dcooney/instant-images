@@ -118,7 +118,7 @@ $sticky_top: 62px;
 
 				@media screen and (min-width: $large) {
 					width: 30%;
-					padding: 30px 30px 30px 50px;
+					padding: 27px 30px 30px 50px;
 					border: none;
 					position: sticky;
 					top: $sticky_top;
@@ -175,6 +175,7 @@ $sticky_top: 62px;
 	// Save Settings.
 	.save-settings {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 10px;
 		width: 100%;
 		align-items: center;
@@ -301,7 +302,7 @@ $sticky_top: 62px;
 		}
 		td {
 			border-top: 0;
-			padding: 0 0 30px;
+			padding: 0 0 25px;
 			float: left;
 			width: 100%;
 			margin: 0;

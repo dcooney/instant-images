@@ -19,7 +19,8 @@
 	form {
 		display: block;
 
-		&.saving {
+		&.saving,
+		&.submitting {
 			pointer-events: none;
 		}
 
@@ -55,6 +56,7 @@
 		}
 		select {
 			padding: 12px 10px;
+			max-width: none;
 			&:hover {
 				color: $text_alt;
 			}

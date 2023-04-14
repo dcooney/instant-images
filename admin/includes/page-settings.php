@@ -52,7 +52,7 @@
 
 	<div class="instant-images-settings--sections">
 		<!-- Pro -->
-		<?php if ( class_exists( 'InstantImagesPro' ) && defined( 'INSTANT_IMAGES_PRO_PATH' ) ) { ?>
+		<?php if ( class_exists( InstantImagesPro::class ) && defined( 'INSTANT_IMAGES_PRO_PATH' ) ) { ?>
 			<section class="settings-entry" id="pro-settings">
 			<div class="settings-entry--title">
 				<i class="fa fa-star" aria-hidden="true"></i>
@@ -61,15 +61,6 @@
 			</div>
 			<div class="settings-entry--action general-settings">
 				<?php require_once INSTANT_IMAGES_PRO_PATH . 'views/import.php'; ?>
-
-				<form action="options.php" method="post" class="settings">
-					<?php
-						// TODO: Add pro settings.
-						// settings_fields( 'instant_images_general_settings_group' );
-						// do_settings_sections( 'instant-images' );.
-					?>
-					<?php // require INSTANT_IMAGES_PATH . 'admin/includes/save-settings.php'; ?>
-				</form>
 			</div>
 		</section>
 		<?php } ?>
