@@ -82,29 +82,31 @@ jQuery(document).ready(function ($) {
 	});
 
 	// Settings anchor links.
-	$(".settings_page_instant-images-settings nav.jump-nav button").on(
-		"click",
-		function (e) {
-			e.preventDefault();
-			var anchor = $(this).data("anchor");
-			var target = document.querySelector("#" + anchor);
-			window.scrollTo({
-				top: target.offsetTop,
-				behavior: "smooth",
-			});
-		}
+	var settings = document.querySelectorAll(
+		".settings_page_instant-images-settings .settings-entry"
 	);
+	if (settings) {
+		var target = document.querySelector(
+			".settings_page_instant-images-settings nav.jump-nav"
+		);
+		settings.forEach(function (setting) {
+			var anchor = setting.getAttribute("id");
+			var icon = setting.querySelector(".settings-entry--title .fa");
+			var text = setting.querySelector(".settings-entry--title h2").innerText;
 
-	$(".settings_page_instant-images-settings #anchor-nav").on(
-		"change",
-		function (e) {
-			e.preventDefault();
-			var anchor = this.value;
-			var target = anchor ? document.querySelector("#" + anchor) : false;
-			window.scrollTo({
-				top: !target ? 0 : target.offsetTop,
-				behavior: "smooth",
+			var button = document.createElement("button");
+			button.setAttribute("data-anchor", anchor);
+			button.innerHTML = icon.outerHTML + text;
+			target.appendChild(button);
+
+			// Scroll to section.
+			button.addEventListener("click", function (e) {
+				var target = document.querySelector("#" + anchor);
+				window.scrollTo({
+					top: target.offsetTop,
+					behavior: "smooth",
+				});
 			});
-		}
-	);
+		});
+	}
 });

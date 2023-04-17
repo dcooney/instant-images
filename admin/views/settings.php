@@ -24,46 +24,18 @@
 			</div>
 			<nav class="jump-nav">
 				<h3><?php esc_attr_e( 'Jump to Section', 'instant-images' ); ?></h3>
-				<?php if ( class_exists( 'InstantImagesPro' ) ) { ?>
-					<button type="button" data-anchor="pro-settings">
-						<i class="fa fa-star" aria-hidden="true"></i>
-						<?php esc_attr_e( 'Instant Images Pro', 'instant-images' ); ?>
-					</button>
-				<?php } ?>
-				<button type="button" data-anchor="general-settings">
-					<i class="fa fa-cog" aria-hidden="true"></i><?php esc_attr_e( 'General Settings', 'instant-images' ); ?>
-				</button>
-				<button type="button" data-anchor="api-settings">
-				<i class="fa fa-key" aria-hidden="true"></i>
-					<?php esc_attr_e( 'API Keys', 'instant-images' ); ?>
-				</button>
-				<button type="button" data-anchor="whats-new">
-					<i class="fa fa-pencil" aria-hidden="true"></i>
-					<?php esc_attr_e( 'What\'s New', 'instant-images' ); ?>
-				</button>
-				<button type="button" data-anchor="our-plugins">
-					<i class="fa fa-plug" aria-hidden="true"></i>
-					<?php esc_attr_e( 'Our Plugins', 'instant-images' ); ?>
-				</button>
 			</nav>
 		</div>
 	</div>
 	<!-- /End Header -->
 
 	<div class="instant-images-settings--sections">
-		<!-- Pro -->
-		<?php if ( class_exists( InstantImagesPro::class ) && defined( 'INSTANT_IMAGES_PRO_PATH' ) ) { ?>
-			<section class="settings-entry" id="pro-settings">
-			<div class="settings-entry--title">
-				<i class="fa fa-star" aria-hidden="true"></i>
-				<h2><?php esc_attr_e( 'Instant Images Pro', 'instant-images' ); ?></h2>
-				<p><?php esc_attr_e( 'Manage settings for the Pro add-on.', 'instant-images' ); ?></p>
-			</div>
-			<div class="settings-entry--action general-settings">
-				<?php require_once INSTANT_IMAGES_PRO_PATH . 'views/import.php'; ?>
-			</div>
-		</section>
-		<?php } ?>
+		<!-- Pro: Image Import-->
+		<?php
+		if ( class_exists( 'InstantImagesPro' ) && defined( 'INSTANT_IMAGES_PRO_PATH' ) ) {
+			require_once INSTANT_IMAGES_PRO_PATH . 'views/import.php';
+		}
+		?>
 
 		<!-- General Settings -->
 		<section class="settings-entry" id="general-settings">

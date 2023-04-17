@@ -1,17 +1,20 @@
 .instant-images-pro-import {
+	// Image Import
 	&--elements {
-		padding: 15px;
+		padding: 20px;
 		border-radius: $radius_md $radius_md 0 0;
 		border: 1px solid $border;
 		display: grid;
-		grid-gap: 15px;
-		grid-template-columns: repeat(3, 1fr);
+		grid-gap: 20px;
+		@media screen and (min-width: $medium) {
+			grid-template-columns: repeat(3, 1fr);
+		}
 		grid-template-rows: repeat(1, 1fr);
 	}
 
 	&--controls {
 		display: flex;
-		gap: 15px;
+		gap: 20px;
 		align-items: center;
 		border-radius: 0 0 $radius_md $radius_md;
 		background-color: $lighter_grey;

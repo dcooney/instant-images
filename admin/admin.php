@@ -47,7 +47,7 @@ add_action( 'admin_menu', 'instant_images_create_page' );
  * @since 5.3
  */
 function instant_images_settings_page() {
-	require_once INSTANT_IMAGES_PATH . 'admin/includes/page-settings.php';
+	require_once INSTANT_IMAGES_PATH . 'admin/views/settings.php';
 }
 
 /**
