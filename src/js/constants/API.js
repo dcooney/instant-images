@@ -1,4 +1,4 @@
-module.exports = {
+export const API = {
 	proxy: PROXY_URL || "https://proxy.getinstantimages.com/api/", // eslint-disable-line
 	defaults: {
 		provider: "unsplash",

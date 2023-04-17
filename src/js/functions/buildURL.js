@@ -1,4 +1,4 @@
-import API from "../constants/API";
+import { API } from "../constants/API";
 import getQueryParams from "./getQueryParams";
 import { openverseParams } from "./openverse";
 

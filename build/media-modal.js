@@ -542,9 +542,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(masonry_layout__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! react-intersection-observer */ "./node_modules/react-intersection-observer/react-intersection-observer.modern.mjs");
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
-/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_constants_filters__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
 /* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
 /* harmony import */ var _functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
@@ -669,7 +667,7 @@ function InstantImages(props) {
     _useState20 = _slicedToArray(_useState19, 2),
     search = _useState20[0],
     setSearch = _useState20[1];
-  var _useState21 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[activeProvider].filters),
+  var _useState21 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(_constants_filters__WEBPACK_IMPORTED_MODULE_4__.FILTERS[activeProvider].filters),
     _useState22 = _slicedToArray(_useState21, 2),
     filterOptions = _useState22[0],
     setFilterOptions = _useState22[1];
@@ -1007,7 +1005,7 @@ function InstantImages(props) {
             body.classList.remove("overflow-hidden");
 
             // API verification - check API key for provider.
-            if (!((_constants_API__WEBPACK_IMPORTED_MODULE_3___default())[newProvider].requires_key && !apiTested.includes(newProvider))) {
+            if (!(_constants_API__WEBPACK_IMPORTED_MODULE_3__.API[newProvider].requires_key && !apiTested.includes(newProvider))) {
               _context4.next = 27;
               break;
             }
@@ -1047,7 +1045,7 @@ function InstantImages(props) {
               // Add slight delay for loading effect.
 
               // Update filter options.
-              setFilterOptions((_constants_filters__WEBPACK_IMPORTED_MODULE_4___default())[newProvider].filters);
+              setFilterOptions(_constants_filters__WEBPACK_IMPORTED_MODULE_4__.FILTERS[newProvider].filters);
 
               // Switch the provider.
               setActiveProvider(newProvider);
@@ -1271,7 +1269,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ LoadingBlock)
 /* harmony export */ });
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_0__);
 
 
 /**
@@ -1286,7 +1283,7 @@ function LoadingBlock(_ref) {
   var loading = _ref.loading,
     _ref$total = _ref.total,
     total = _ref$total === void 0 ? 0 : _ref$total;
-  if (!loading || total < (_constants_API__WEBPACK_IMPORTED_MODULE_0___default().defaults.per_page)) {
+  if (!loading || total < _constants_API__WEBPACK_IMPORTED_MODULE_0__.API.defaults.per_page) {
     // Bail early if not loading or total is less than the default per page.
     return null;
   }
@@ -2049,10 +2046,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var providers = (_constants_API__WEBPACK_IMPORTED_MODULE_1___default().providers); // Get current provider settings.
+var providers = _constants_API__WEBPACK_IMPORTED_MODULE_1__.API.providers; // Get current provider settings.
 
 /**
  * Render the ProviderNav component.
@@ -2075,7 +2071,7 @@ function ProviderNav(props) {
         return switchProvider(e);
       },
       className: provider === item.toLowerCase() ? "provider-nav--btn active" : "provider-nav--btn"
-    }, /*#__PURE__*/React.createElement("span", null, item), (_constants_API__WEBPACK_IMPORTED_MODULE_1___default())[item.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement("span", null, item), _constants_API__WEBPACK_IMPORTED_MODULE_1__.API[item.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {
       className: "provider-nav--new"
     }, instant_img_localize["new"])));
   })));
@@ -2214,7 +2210,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ SearchHeader)
 /* harmony export */ });
 /* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
-/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_constants_filters__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2239,7 +2234,7 @@ function SearchHeader(props) {
     total = _props$total === void 0 ? 0 : _props$total,
     filterSearch = props.filterSearch,
     getPhotos = props.getPhotos;
-  var filters = (_constants_filters__WEBPACK_IMPORTED_MODULE_0___default())[provider].search;
+  var filters = _constants_filters__WEBPACK_IMPORTED_MODULE_0__.FILTERS[provider].search;
   return /*#__PURE__*/React.createElement("header", {
     className: "search-header"
   }, /*#__PURE__*/React.createElement("h2", null, term.replace("id:", "ID: ")), /*#__PURE__*/React.createElement("div", {
@@ -2408,9 +2403,14 @@ function Tooltip() {
 /*!*********************************!*\
   !*** ./src/js/constants/API.js ***!
   \*********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = {
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "API": () => (/* binding */ API)
+/* harmony export */ });
+var API = {
   proxy: "https://proxy.getinstantimages.com/api/" || 0,
   // eslint-disable-line
   defaults: {
@@ -2455,9 +2455,14 @@ module.exports = {
 /*!*************************************!*\
   !*** ./src/js/constants/filters.js ***!
   \*************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = {
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FILTERS": () => (/* binding */ FILTERS)
+/* harmony export */ });
+var FILTERS = {
   openverse: {
     filters: {
       source: {
@@ -2690,7 +2695,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getProxyURL": () => (/* binding */ getProxyURL)
 /* harmony export */ });
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _getQueryParams__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getQueryParams */ "./src/js/functions/getQueryParams.js");
 /* harmony import */ var _openverse__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./openverse */ "./src/js/functions/openverse.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -2747,7 +2751,7 @@ function buildURL(type, params) {
  * @return {string}         The proxy URL.
  */
 function getProxyURL(provider) {
-  var _API$proxy = (_constants_API__WEBPACK_IMPORTED_MODULE_0___default().proxy),
+  var _API$proxy = _constants_API__WEBPACK_IMPORTED_MODULE_0__.API.proxy,
     proxy = _API$proxy === void 0 ? "https://proxy.getinstantimages.com/api/" : _API$proxy;
   return "".concat(proxy).concat(provider);
 }
@@ -2884,7 +2888,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ getProvider)
 /* harmony export */ });
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_0__);
 
 
 /**
@@ -2893,7 +2896,7 @@ __webpack_require__.r(__webpack_exports__);
  * @return {string} The default service provider.
  */
 function getProvider() {
-  return instant_img_localize && instant_img_localize.default_provider ? instant_img_localize.default_provider : (_constants_API__WEBPACK_IMPORTED_MODULE_0___default().defaults.provider);
+  return instant_img_localize && instant_img_localize.default_provider ? instant_img_localize.default_provider : _constants_API__WEBPACK_IMPORTED_MODULE_0__.API.defaults.provider;
 }
 
 /***/ }),
@@ -2912,7 +2915,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getContentSafety": () => (/* binding */ getContentSafety)
 /* harmony export */ });
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -2936,7 +2938,7 @@ function getQueryParams(provider, queryParams) {
   }
 
   // Construct per page amount.
-  var per_page = queryParams && queryParams.id ? 1 : (_constants_API__WEBPACK_IMPORTED_MODULE_0___default().defaults.per_page);
+  var per_page = queryParams && queryParams.id ? 1 : _constants_API__WEBPACK_IMPORTED_MODULE_0__.API.defaults.per_page;
 
   // Set default params.
   var params = {
@@ -2968,14 +2970,14 @@ function getQueryParams(provider, queryParams) {
  * @return {Object}         The auth parameter object.
  */
 function getAuth(params, provider) {
-  var has_auth = (_constants_API__WEBPACK_IMPORTED_MODULE_0___default())[provider].requires_key;
+  var has_auth = _constants_API__WEBPACK_IMPORTED_MODULE_0__.API[provider].requires_key;
   if (!has_auth || !provider) {
     return params;
   }
   var app_id = instant_img_localize["".concat(provider, "_app_id")];
   if (app_id) {
     // Pass API keys if not using defaults.
-    params[(_constants_API__WEBPACK_IMPORTED_MODULE_0___default())[provider].api_var] = app_id;
+    params[_constants_API__WEBPACK_IMPORTED_MODULE_0__.API[provider].api_var] = app_id;
   }
   return params;
 }
@@ -3027,7 +3029,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getSearchTotal": () => (/* binding */ getSearchTotal)
 /* harmony export */ });
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_constants_API__WEBPACK_IMPORTED_MODULE_0__);
 
 
 /**
@@ -3040,7 +3041,7 @@ function getResults(data) {
   if (!data) {
     return [];
   }
-  var results = data[(_constants_API__WEBPACK_IMPORTED_MODULE_0___default().defaults.arr_key)] || [];
+  var results = data[_constants_API__WEBPACK_IMPORTED_MODULE_0__.API.defaults.arr_key] || [];
   return results;
 }
 

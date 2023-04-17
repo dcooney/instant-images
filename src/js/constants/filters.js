@@ -1,4 +1,4 @@
-module.exports = {
+export const FILTERS = {
 	openverse: {
 		filters: {
 			source: {

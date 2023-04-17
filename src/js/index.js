@@ -1,6 +1,6 @@
 import { createRoot } from "@wordpress/element";
 import InstantImages from "./components/InstantImages";
-import API from "./constants/API";
+import { API } from "./constants/API";
 import buildURL from "./functions/buildURL";
 import consoleStatus from "./functions/consoleStatus";
 import getProvider from "./functions/getProvider";

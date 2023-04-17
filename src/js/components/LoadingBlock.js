@@ -1,4 +1,4 @@
-import API from "../constants/API";
+import { API } from "../constants/API";
 
 /**
  * Render the LoadingBlock component.

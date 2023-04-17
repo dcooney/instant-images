@@ -1,4 +1,4 @@
-import FILTERS from "../constants/filters";
+import { FILTERS } from "../constants/filters";
 import Filter from "./Filter";
 
 /**
