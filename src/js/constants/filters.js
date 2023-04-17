@@ -1,17 +1,12 @@
+import { OPENVERSE_SOURCES } from "./openverse";
+
 export const FILTERS = {
 	openverse: {
 		filters: {
 			source: {
 				label: "source",
 				default: "WordPress",
-				filters: [
-					"WordPress",
-					"Flickr",
-					"Nasa",
-					"SpaceX",
-					"StockSnap",
-					"wikimedia",
-				],
+				filters: OPENVERSE_SOURCES,
 			},
 			aspect_ratio: {
 				label: "orientation",
@@ -23,7 +18,7 @@ export const FILTERS = {
 			category: {
 				label: "type",
 				default: "all",
-				filters: ["all", "digitized_artwork", "illustration", "photograph"],
+				filters: ["all", "illustration", "photograph"],
 			},
 			extension: {
 				label: "extension",

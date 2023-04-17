@@ -2462,13 +2462,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "FILTERS": () => (/* binding */ FILTERS)
 /* harmony export */ });
+/* harmony import */ var _openverse__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./openverse */ "./src/js/constants/openverse.js");
+
 var FILTERS = {
   openverse: {
     filters: {
       source: {
         label: "source",
         "default": "WordPress",
-        filters: ["WordPress", "Flickr", "Nasa", "SpaceX", "StockSnap", "wikimedia"]
+        filters: _openverse__WEBPACK_IMPORTED_MODULE_0__.OPENVERSE_SOURCES
       },
       aspect_ratio: {
         label: "orientation",
@@ -2480,7 +2482,7 @@ var FILTERS = {
       category: {
         label: "type",
         "default": "all",
-        filters: ["all", "digitized_artwork", "illustration", "photograph"]
+        filters: ["all", "illustration", "photograph"]
       },
       extension: {
         label: "extension",
@@ -2603,6 +2605,21 @@ var FILTERS = {
     }
   }
 };
+
+/***/ }),
+
+/***/ "./src/js/constants/openverse.js":
+/*!***************************************!*\
+  !*** ./src/js/constants/openverse.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "OPENVERSE_SOURCES": () => (/* binding */ OPENVERSE_SOURCES)
+/* harmony export */ });
+var OPENVERSE_SOURCES = ["WordPress", "Flickr", "Nasa", "SpaceX", "StockSnap", "Wikimedia"];
 
 /***/ }),
 
@@ -3451,6 +3468,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "openverseParams": () => (/* binding */ openverseParams)
 /* harmony export */ });
+/* harmony import */ var _constants_openverse__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/openverse */ "./src/js/constants/openverse.js");
+
+
 /**
  * Format the params for openverse.
  *
@@ -3464,9 +3484,8 @@ function openverseParams(type, params) {
   }
 
   if (type === "search") {
-    // Exlude these sources from search.
-    var excluded = "500px, rawpixel";
-    params.excluded_source = excluded;
+    // Include these sources only.
+    params.source = _constants_openverse__WEBPACK_IMPORTED_MODULE_0__.OPENVERSE_SOURCES.toString();
   }
   return params;
 }

@@ -1,8 +1,8 @@
-module.exports = [
+export const OPENVERSE_SOURCES = [
 	"WordPress",
 	"Flickr",
 	"Nasa",
 	"SpaceX",
 	"StockSnap",
-	"wikimedia",
+	"Wikimedia",
 ];
