@@ -3,6 +3,6 @@ export const OPENVERSE_SOURCES = [
 	"Flickr",
 	"Nasa",
 	"SpaceX",
-	"StockSnap",
+	//"StockSnap",
 	"Wikimedia",
 ];

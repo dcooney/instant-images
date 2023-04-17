@@ -227,20 +227,27 @@ function instant_images_download( WP_REST_Request $request ) {
 function instant_images_generate_image_url( $provider, $url, $max_width, $max_height ) {
 	/**
 	 * Security check.
-	 * Note: Confirm image URL does NOT contains relative path.
+	 * Confirm image URL does NOT contains relative path.
 	 */
 	if ( false !== strpos( $url, './' ) ) {
 		return false;
 	}
 
-	$server_ip   = $_SERVER['SERVER_ADDR']; // Server IP.
-	$server_name = $_SERVER['SERVER_NAME']; // Server base URL.
+	// Get all potential download URLs.
+	$download_urls = InstantImages::instant_images_download_urls();
+
+	// Parse $url to create URL array.
+	$host = wp_parse_url( $url );
+
+	// Construct a host url from the parsed $url. e.g. https://images.unsplash.com.
+	$host_url = $host['scheme'] . '://' . $host['host'];
 
 	/**
 	 * Security check.
-	 * Note: Check for local server IP or site URL in image URL.
+	 * To prevent misuse, check image download URL is valid and supported.
+	 * If the URL for the image is not valid, bail early.
 	 */
-	if ( false !== strpos( $url, $server_ip ) || false !== strpos( $url, $server_name ) ) {
+	if ( ! in_array( $host_url, $download_urls, true ) ) {
 		return false;
 	}
 

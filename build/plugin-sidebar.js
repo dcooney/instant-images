@@ -2619,7 +2619,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "OPENVERSE_SOURCES": () => (/* binding */ OPENVERSE_SOURCES)
 /* harmony export */ });
-var OPENVERSE_SOURCES = ["WordPress", "Flickr", "Nasa", "SpaceX", "StockSnap", "Wikimedia"];
+var OPENVERSE_SOURCES = ["WordPress", "Flickr", "Nasa", "SpaceX",
+//"StockSnap",
+"Wikimedia"];
 
 /***/ }),
 
@@ -3480,12 +3482,13 @@ __webpack_require__.r(__webpack_exports__);
  */
 function openverseParams(type, params) {
   if (type === "photos" && !params.source) {
-    params.source = "wordpress"; // Add `wordpress` as the default `source` for openverse.
+    // Add `wordpress` as the default `source` for openverse.
+    params.source = "wordpress";
   }
-
   if (type === "search") {
     // Include these sources only.
-    params.source = _constants_openverse__WEBPACK_IMPORTED_MODULE_0__.OPENVERSE_SOURCES.toString();
+    var sources = _constants_openverse__WEBPACK_IMPORTED_MODULE_0__.OPENVERSE_SOURCES.toString();
+    params.source = sources;
   }
   return params;
 }
