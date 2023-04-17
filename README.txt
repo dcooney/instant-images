@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
-Tested up to: 6.1
-Stable tag: 5.2.0.1
+Tested up to: 6.2
+Stable tag: 5.2.0.2
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -144,6 +144,9 @@ How to install Instant Images.
 5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 5.2.0.2 - March 28, 2023 =
+* HOTFIX: Fix for fatal compatibility error with Elementor Pro.
 
 = 5.2.0.1 - March 20, 2023 =
 * HOTFIX: Quick fix for potential fatal error on the frontend for Beaver Builder users. Fixed by wrapping function check in `is_admin()`.

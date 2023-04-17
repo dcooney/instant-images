@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 5.2.0.1
+ * Version: 5.2.0.2
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '5.2.0.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'March 20, 2023' );
+define( 'INSTANT_IMAGES_VERSION', '5.2.0.2' );
+define( 'INSTANT_IMAGES_RELEASE', 'March 28, 2023' );
 
 /**
  * Activation hook
@@ -177,7 +177,7 @@ class InstantImages {
 	 */
 	public function instant_img_wp_media_enqueue() {
 		$show_tab       = $this::instant_img_show_tab( 'media_modal_display' ); // Show Tab Setting.
-		$current_screen = is_admin() ? get_current_screen()->base : ''; // Current admin screen.
+		$current_screen = is_admin() && function_exists( 'get_current_screen' ) ? get_current_screen()->base : ''; // Current admin screen.
 		if ( $this::instant_img_has_access() && $show_tab && $current_screen !== 'upload' ) {
 			wp_enqueue_script(
 				'instant-images-media-modal',
