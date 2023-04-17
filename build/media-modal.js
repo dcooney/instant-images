@@ -11031,13 +11031,14 @@ var getMediaModalProvider = /*#__PURE__*/function () {
  * @param {object|null} error    The API error object.
  */
 var renderApp = function renderApp(element, provider, results, error) {
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)( /*#__PURE__*/React.createElement(_components_InstantImages__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  var root = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRoot)(element);
+  root.render( /*#__PURE__*/React.createElement(_components_InstantImages__WEBPACK_IMPORTED_MODULE_1__["default"], {
     editor: "media-router",
     data: results,
     container: element,
     api_error: error,
     provider: provider
-  }), element);
+  }));
 };
 
 /**

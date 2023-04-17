@@ -1,4 +1,4 @@
-import { render } from "@wordpress/element";
+import { createRoot } from "@wordpress/element";
 import InstantImages from "./components/InstantImages";
 import API from "./constants/API";
 import buildURL from "./functions/buildURL";
@@ -34,15 +34,15 @@ function getImages(provider = API.defaults.provider) {
 			const { error = null } = results;
 			const app = document.getElementById("app");
 			if (app) {
-				render(
+				const root = createRoot(app);
+				root.render(
 					<InstantImages
 						editor="classic"
 						data={results}
 						container={app}
 						provider={provider}
 						api_error={error}
-					/>,
-					app
+					/>
 				);
 			}
 		} catch (error) {
