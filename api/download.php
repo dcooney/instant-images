@@ -133,7 +133,7 @@ function instant_images_download( WP_REST_Request $request ) {
 		// Get Headers.
 		$type = wp_remote_retrieve_header( $response, 'content-type' );
 		if ( ! $type ) {
-			return new WP_Error( 100, __( 'Image type could not be determined', 'instant-images' ) );
+			return new WP_Error( 100, __( 'Image type could not be determined.', 'instant-images' ) );
 		}
 
 		// Upload remote file.
@@ -147,6 +147,10 @@ function instant_images_download( WP_REST_Request $request ) {
 			'post_status'    => 'inherit',
 			'post_mime_type' => $type,
 		];
+
+		if ( ! $mirror['file'] ) {
+			return new WP_Error( 500, __( 'Attachment file not found prior to upload.', 'instant-images' ) );
+		}
 
 		// Insert as attachment.
 		$image_id = wp_insert_attachment( $attachment, $mirror['file'], $parent_id );

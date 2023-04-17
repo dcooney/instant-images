@@ -140,6 +140,8 @@ class InstantImages {
 			'https://pd.w.org',
 			'https://live.staticflickr.com',
 			'https://upload.wikimedia.org',
+			'https://images.rawpixel.com',
+			'https://img.rawpixel.com',
 		];
 		return $urls;
 	}
