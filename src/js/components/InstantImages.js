@@ -472,6 +472,7 @@ export default function InstantImages(props) {
 
 	// Provider change callback.
 	useEffect(() => {
+		setFilterOptions(FILTERS[activeProvider].filters);
 		setFilters({}); // Trigger filter change.
 	}, [activeProvider]); // eslint-disable-line react-hooks/exhaustive-deps
 
