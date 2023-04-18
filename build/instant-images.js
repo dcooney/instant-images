@@ -915,7 +915,7 @@ function InstantImages(props) {
               active: true,
               term: term,
               type: searchType,
-              results: (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__.getSearchTotal)(json)
+              results: (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__.getSearchTotal)(apiResults)
             });
             (0,_functions_session__WEBPACK_IMPORTED_MODULE_10__.saveSession)(url, apiResults);
             _context3.next = 34;
@@ -2646,6 +2646,11 @@ var FILTERS = {
       }
     },
     search: {
+      image_type: {
+        label: "type",
+        "default": "all",
+        filters: ["all", "photo", "illustration", "vector"]
+      },
       colors: {
         label: "colors",
         "default": "all",

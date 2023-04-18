@@ -228,7 +228,7 @@ export default function InstantImages(props) {
 					active: true,
 					term,
 					type: searchType,
-					results: getSearchTotal(json),
+					results: getSearchTotal(apiResults),
 				});
 				saveSession(url, apiResults);
 			} catch (error) {

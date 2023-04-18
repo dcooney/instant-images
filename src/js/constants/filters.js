@@ -202,6 +202,11 @@ export const FILTERS = {
 			},
 		},
 		search: {
+			image_type: {
+				label: "type",
+				default: "all",
+				filters: ["all", "photo", "illustration", "vector"],
+			},
 			colors: {
 				label: "colors",
 				default: "all",
