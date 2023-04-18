@@ -248,8 +248,7 @@ function instant_images_generate_image_url( $provider, $url, $max_width, $max_he
 
 	/**
 	 * Security check.
-	 * To prevent misuse, check image download URL is valid and supported.
-	 * If the URL for the image is not valid, bail early.
+	 * Check image download URL is valid, allowed and supported by Instant Images.
 	 */
 	if ( ! in_array( $host_url, $download_urls, true ) ) {
 		return false;
