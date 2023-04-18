@@ -4,7 +4,7 @@ Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 6.2
-Stable tag: 5.2.0.3
+Stable tag: 5.2.1
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -145,7 +145,7 @@ How to install Instant Images.
 
 == Changelog ==
 
-= 5.2.0.3 - April 18, 2023 =
+= 5.2.1 - April 18, 2023 =
 * UPDATE: Adds sessionStorage for storing API results in browser session to cut down on proxy usage and API requests.
 * UPDATE: Cleans up Openverse sources to include WordPress, Flickr, Nasa, SpaceX and Wikimedia only.
 * UPDATE: Updates security check to match on expected URLs before an upload is processed.

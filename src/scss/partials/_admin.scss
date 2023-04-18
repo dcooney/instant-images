@@ -95,8 +95,8 @@ body.media_page_instant-images {
 			display: block;
 		}
 		&::before {
-			font-family: 'FontAwesome';
-			content: '\f06a';
+			font-family: "FontAwesome";
+			content: "\f06a";
 			display: block;
 			left: 18px;
 			top: 18px;
@@ -111,7 +111,7 @@ body.media_page_instant-images {
       wp-admin/upload.php?page=instant-images
    */
 	.header-wrap {
-		background: $lighter_grey url('../img/logo-48x48.png') no-repeat 25px 20px;
+		background: $lighter_grey url("../img/logo-48x48.png") no-repeat 25px 20px;
 		padding: 20px 25px 20px 83px;
 		min-height: 88px;
 		overflow: hidden;
@@ -175,7 +175,7 @@ body.media_page_instant-images {
 		display: block;
 		overflow: hidden;
 		min-height: 400px;
-		background: url('../img/ajax-loader-lg.gif') no-repeat center center;
+		background: url("../img/ajax-loader-lg.gif") no-repeat center center;
 		&.loaded {
 			background: none;
 		}
@@ -204,7 +204,7 @@ body.media_page_instant-images {
 	}
 	.loading-block {
 		padding: 50px 0;
-		background: url('../img/ajax-loader-lg.gif') no-repeat center center;
+		background: url("../img/ajax-loader-lg.gif") no-repeat center center;
 	}
 
 	// Load More btn
@@ -216,7 +216,7 @@ body.media_page_instant-images {
 		button {
 			display: none;
 			margin: 20px 0;
-			padding: 12px 15px;
+			padding: 15px;
 			font-size: 15px;
 			font-weight: 600;
 			transition: $transition;
@@ -259,7 +259,7 @@ body.media_page_instant-images {
 		height: 28px;
 		display: none;
 		float: left;
-		background: #fff url('../img/ajax-loader.gif') no-repeat center center;
+		background: #fff url("../img/ajax-loader.gif") no-repeat center center;
 	}
 }
 
@@ -375,8 +375,8 @@ body.media_page_instant-images {
 #unsplash-form-options p.desc {
 	display: none;
 }
-.instant-img-container input[type='text'],
-.instant-img-container input[type='number'],
+.instant-img-container input[type="text"],
+.instant-img-container input[type="number"],
 .instant-img-container textarea {
 	padding: 10px;
 	line-height: 1;
@@ -385,7 +385,7 @@ body.media_page_instant-images {
 	border-radius: 2px;
 	height: auto;
 }
-.instant-img-container input[type='text']:focus,
+.instant-img-container input[type="text"]:focus,
 .instant-img-container textarea:focus {
 	border-color: $text_light;
 	box-shadow: 0 0 3px #ccc;
