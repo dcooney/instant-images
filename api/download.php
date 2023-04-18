@@ -155,7 +155,7 @@ function instant_images_download( WP_REST_Request $request ) {
 		// Insert as attachment.
 		$image_id = wp_insert_attachment( $attachment, $mirror['file'], $parent_id );
 
-		// Add Alt Text as Post Meta.
+		// Add alt text as postmeta.
 		update_post_meta( $image_id, '_wp_attachment_image_alt', $alt );
 
 		// Set media language.
@@ -163,7 +163,7 @@ function instant_images_download( WP_REST_Request $request ) {
 			pll_set_post_language( $image_id, $lang ); // Polylang.
 		}
 
-		// Generate Metadata.
+		// Generate metadata.
 		$attach_data = wp_generate_attachment_metadata( $image_id, $mirror['file'] );
 		wp_update_attachment_metadata( $image_id, $attach_data );
 

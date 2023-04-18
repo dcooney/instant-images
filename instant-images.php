@@ -14,6 +14,13 @@
  * @package InstantImages
  */
 
+/*
+TODO:
+- Switch to sessionStorage.
+- Create helpers for easy access.
+
+*/
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

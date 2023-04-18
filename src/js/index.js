@@ -1,4 +1,5 @@
 import { createRoot } from "@wordpress/element";
+import "../scss/style.scss";
 import InstantImages from "./components/InstantImages";
 import { API } from "./constants/API";
 import buildURL from "./functions/buildURL";
@@ -6,8 +7,7 @@ import consoleStatus from "./functions/consoleStatus";
 import getProvider from "./functions/getProvider";
 import getQueryParams from "./functions/getQueryParams";
 import { checkRateLimit } from "./functions/helpers";
-
-import "../scss/style.scss";
+import { deleteSession, getSession, saveSession } from "./functions/session";
 
 // Get provider from settings.
 const defaultProvider = getProvider();
@@ -22,31 +22,49 @@ function getImages(provider = API.defaults.provider) {
 	const params = getQueryParams(provider);
 	const url = buildURL("photos", params);
 
-	async function initialize() {
-		// Create fetch request.
-		const response = await fetch(url);
-		const { status, headers } = response;
-		checkRateLimit(headers);
+	// Get session storage.
+	const sessionData = getSession(url);
 
-		try {
-			// Get response data.
-			const results = await response.json();
-			const { error = null } = results;
-			const app = document.getElementById("app");
-			if (app) {
-				const root = createRoot(app);
+	async function initialize() {
+		const app = document.getElementById("app");
+		if (app) {
+			const root = createRoot(app);
+
+			if (sessionData) {
 				root.render(
 					<InstantImages
 						editor="classic"
-						data={results}
+						data={sessionData}
 						container={app}
 						provider={provider}
-						api_error={error}
+						api_error={null}
 					/>
 				);
+			} else {
+				// Create fetch request.
+				const response = await fetch(url);
+				const { status, headers } = response;
+				checkRateLimit(headers);
+
+				try {
+					// Get response data.
+					const results = await response.json();
+					const { error = null } = results;
+					root.render(
+						<InstantImages
+							editor="classic"
+							data={results}
+							container={app}
+							provider={provider}
+							api_error={error}
+						/>
+					);
+					saveSession(url, results);
+				} catch (error) {
+					consoleStatus(provider, status);
+					deleteSession(url);
+				}
 			}
-		} catch (error) {
-			consoleStatus(provider, status);
 		}
 	}
 	initialize();
