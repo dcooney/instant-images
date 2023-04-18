@@ -147,9 +147,10 @@ How to install Instant Images.
 
 = 5.2.0.3 - April 18, 2023 =
 * UPDATE: Adds sessionStorage for storing API results in browser session to cut down on proxy usage and API requests.
+* UPDATE: Cleans up Openverse sources to include WordPress, Flickr, Nasa, SpaceX and Wikimedia only.
+* UPDATE: Updates security check to match on expected URLs before an upload is processed.
 * FIX: Removes StockSnap from Openverse as images are being blocked on upload to the media.
-* UPDATE:Cleans up Openverse sources to include WordPress, Flickr, Nasa, SpaceX and Wikimedia only.
-* UPDATE:Various code cleanup and tweaks.
+* UPDATE: Various code cleanup and tweaks.
 
 = 5.2.0.2 - March 28, 2023 =
 * HOTFIX: Fix for fatal compatibility error with Elementor Pro.

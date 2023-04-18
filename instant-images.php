@@ -130,7 +130,7 @@ class InstantImages {
 	 *
 	 * @return array The array of urls.
 	 * @author ConnektMedia <support@connekthq.com>
-	 * @since 4.0
+	 * @since 5.0
 	 */
 	public static function instant_images_download_urls() {
 		$urls = [
@@ -140,8 +140,6 @@ class InstantImages {
 			'https://pd.w.org',
 			'https://live.staticflickr.com',
 			'https://upload.wikimedia.org',
-			'https://images.rawpixel.com',
-			'https://img.rawpixel.com',
 		];
 		return $urls;
 	}
