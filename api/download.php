@@ -133,7 +133,7 @@ function instant_images_download( WP_REST_Request $request ) {
 		// Get Headers.
 		$type = wp_remote_retrieve_header( $response, 'content-type' );
 		if ( ! $type ) {
-			return new WP_Error( 100, __( 'Image type could not be determined', 'instant-images' ) );
+			return new WP_Error( 100, __( 'Image type could not be determined.', 'instant-images' ) );
 		}
 
 		// Upload remote file.
@@ -148,10 +148,14 @@ function instant_images_download( WP_REST_Request $request ) {
 			'post_mime_type' => $type,
 		];
 
+		if ( ! $mirror['file'] ) {
+			return new WP_Error( 500, __( 'Attachment file not found prior to upload.', 'instant-images' ) );
+		}
+
 		// Insert as attachment.
 		$image_id = wp_insert_attachment( $attachment, $mirror['file'], $parent_id );
 
-		// Add Alt Text as Post Meta.
+		// Add alt text as postmeta.
 		update_post_meta( $image_id, '_wp_attachment_image_alt', $alt );
 
 		// Set media language.
@@ -159,7 +163,7 @@ function instant_images_download( WP_REST_Request $request ) {
 			pll_set_post_language( $image_id, $lang ); // Polylang.
 		}
 
-		// Generate Metadata.
+		// Generate metadata.
 		$attach_data = wp_generate_attachment_metadata( $image_id, $mirror['file'] );
 		wp_update_attachment_metadata( $image_id, $attach_data );
 
@@ -227,20 +231,26 @@ function instant_images_download( WP_REST_Request $request ) {
 function instant_images_generate_image_url( $provider, $url, $max_width, $max_height ) {
 	/**
 	 * Security check.
-	 * Note: Confirm image URL does NOT contains relative path.
+	 * Confirm image URL does NOT contains relative path.
 	 */
 	if ( false !== strpos( $url, './' ) ) {
 		return false;
 	}
 
-	$server_ip   = $_SERVER['SERVER_ADDR']; // Server IP.
-	$server_name = $_SERVER['SERVER_NAME']; // Server base URL.
+	// Get all potential download URLs.
+	$download_urls = InstantImages::instant_images_download_urls();
+
+	// Parse $url to create URL array.
+	$host = wp_parse_url( $url );
+
+	// Construct a host url from the parsed $url. e.g. https://images.unsplash.com.
+	$host_url = $host['scheme'] . '://' . $host['host'];
 
 	/**
 	 * Security check.
-	 * Note: Check for local server IP or site URL in image URL.
+	 * Check image download URL is valid, allowed and supported by Instant Images.
 	 */
-	if ( false !== strpos( $url, $server_ip ) || false !== strpos( $url, $server_name ) ) {
+	if ( ! in_array( $host_url, $download_urls, true ) ) {
 		return false;
 	}
 

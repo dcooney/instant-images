@@ -4,7 +4,7 @@ Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 6.2
-Stable tag: 5.2.0.2
+Stable tag: 5.2.1
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -144,6 +144,13 @@ How to install Instant Images.
 5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 5.2.1 - April 20, 2023 =
+* UPDATE: Adds sessionStorage for storing API results in browser session to reduce proxy usage and API requests. Session data is stored for 1 hour.
+* UPDATE: Cleans up Openverse sources to include WordPress, Flickr, Nasa, SpaceX and Wikimedia only.
+* UPDATE: Updates security check to match on expected URLs before an upload is processed.
+* FIX: Removes StockSnap from Openverse as images are being blocked on upload to the media library.
+* UPDATE: Various code cleanup and tweaks.
 
 = 5.2.0.2 - March 28, 2023 =
 * HOTFIX: Fix for fatal compatibility error with Elementor Pro.

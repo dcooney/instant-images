@@ -1,5 +1,5 @@
 import { Fragment } from "@wordpress/element";
-import API from "../constants/API";
+import { API } from "../constants/API";
 const providers = API.providers; // Get current provider settings.
 
 /**

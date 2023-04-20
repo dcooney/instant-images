@@ -5,6 +5,11 @@ import consoleStatus from "../../../functions/consoleStatus";
 import getProvider from "../../../functions/getProvider";
 import getQueryParams from "../../../functions/getQueryParams";
 import { checkRateLimit } from "../../../functions/helpers";
+import {
+	deleteSession,
+	getSession,
+	saveSession,
+} from "../../../functions/session";
 
 /**
  * The image listing panel for the plugin sidebar.
@@ -28,20 +33,29 @@ export default function Panel() {
 			const params = getQueryParams(provider);
 			const url = buildURL("photos", params);
 
-			// Create fetch request.
-			const response = await fetch(url);
-			const { status, headers } = response;
-			checkRateLimit(headers);
+			// Get session storage.
+			const sessionData = getSession(url);
+			if (sessionData) {
+				// Display results from session.
+				setData({ results: sessionData, error: null });
+			} else {
+				// Dispatch API fetch request.
+				const response = await fetch(url);
+				const { status, headers } = response;
+				checkRateLimit(headers);
 
-			try {
-				// Get response data.
-				const results = await response.json();
-				const { error = null } = results;
+				try {
+					// Get response data.
+					const results = await response.json();
+					const { error = null } = results;
 
-				// Set results to state.
-				setData({ results, error });
-			} catch (error) {
-				consoleStatus(provider, status);
+					// Set results to state.
+					setData({ results, error });
+					saveSession(url, results);
+				} catch (error) {
+					consoleStatus(provider, status);
+					deleteSession(url);
+				}
 			}
 		}
 		initialize();

@@ -1,6 +1,6 @@
-import API from "../constants/API";
+import { API } from "../constants/API";
 import getQueryParams from "./getQueryParams";
-import { openverseParams } from "./openverse";
+import { openverseParams } from "./providers/openverse";
 
 /**
  * Build the API query parameters.
@@ -20,6 +20,7 @@ export default function buildURL(type, params) {
 	// Provider doesn't need to be sent.
 	delete params.provider;
 
+	// Set Openverse params.
 	params = provider === "openverse" ? openverseParams(type, params) : params;
 
 	// Build the API URL.
@@ -36,7 +37,7 @@ export default function buildURL(type, params) {
 	// Add `version` to params.
 	url.searchParams.append("version", instant_img_localize.version);
 
-	return url;
+	return url?.href;
 }
 
 /**

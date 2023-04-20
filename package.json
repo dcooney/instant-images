@@ -1,7 +1,7 @@
 {
 	"name": "instant-images",
-	"version": "5.0.0",
-	"description": "One-click uploads from Unsplash, Pixabay and Pexels directly to your WordPress media library.",
+	"version": "5.2.1",
+	"description": "One click image uploads from Unsplash, Openverse, Pixabay and Pexels directly to your WordPress media library.",
 	"author": "connekthq.com <support@connekthq.com>",
 	"license": "GPL-2.0-or-later",
 	"keywords": [
@@ -45,6 +45,7 @@
 		"a11yarrows": "^1.0.9",
 		"axios": "^1.3.4",
 		"classnames": "^2.3.2",
+		"crypto-js": "^4.1.1",
 		"imagesloaded": "^5.0.0",
 		"masonry-layout": "^4.2.2",
 		"react-intersection-observer": "^9.4.3",

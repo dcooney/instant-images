@@ -1,4 +1,4 @@
-import API from "../constants/API";
+import { API } from "../constants/API";
 
 /**
  * Pluck `results` from the API response.

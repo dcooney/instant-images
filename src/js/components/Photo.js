@@ -7,7 +7,7 @@ import {
 	hideTooltip,
 	showTooltip,
 } from "../functions/helpers";
-import unsplashDownload from "../functions/unsplashDownload";
+import { unsplashDownload } from "../functions/providers/unsplash";
 
 /**
  * Render the Photo component.

@@ -38,7 +38,7 @@ body.media_page_instant-images.overflow-hidden{overflow:hidden}
 .instant-img-container .permissions-warning p:first-of-type{font-size:18px;margin:0 0 2px}
 .instant-img-container .loading-block{padding:50px 0;background:url(images/ajax-loader-lg.808ea7f8.gif) no-repeat center center}
 .instant-img-container .load-more-wrap{margin:0;padding:0;text-align:center}
-.instant-img-container .load-more-wrap button{display:none;margin:20px 0;padding:12px 15px;font-size:15px;font-weight:600;transition:all .25s ease;height:auto;line-height:1;cursor:pointer;background-image:none;background-repeat:no-repeat !important;background-position:15px center !important}
+.instant-img-container .load-more-wrap button{display:none;margin:20px 0;padding:15px;font-size:15px;font-weight:600;transition:all .25s ease;height:auto;line-height:1;cursor:pointer;background-image:none;background-repeat:no-repeat !important;background-position:15px center !important}
 .instant-img-container .load-more-wrap button.disabled{opacity:.3;cursor:default}
 .instant-img-container .cnkt-main{width:100%;float:none;background:none !important;position:relative}
 .instant-img-container h2,.instant-img-container h3,.instant-img-container h4{margin-top:0}
