@@ -145,7 +145,7 @@ How to install Instant Images.
 
 == Changelog ==
 
-= 5.2.1 - April 18, 2023 =
+= 5.2.1 - April 19, 2023 =
 * UPDATE: Adds sessionStorage for storing API results in browser session to cut down on proxy usage and API requests.
 * UPDATE: Cleans up Openverse sources to include WordPress, Flickr, Nasa, SpaceX and Wikimedia only.
 * UPDATE: Updates security check to match on expected URLs before an upload is processed.
