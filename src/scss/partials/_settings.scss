@@ -35,6 +35,15 @@ $sticky_top: 62px;
 		width: 100%;
 		margin: 0;
 
+		.plugin-version {
+			display: none;
+			@media screen and (min-width: $small) {
+				display: block;
+				padding: 20px 11px 0;
+				font-size: 12px;
+			}
+		}
+
 		nav {
 			display: none;
 			@media screen and (min-width: $small) {
