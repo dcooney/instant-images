@@ -22,15 +22,16 @@ function getImages(provider = API.defaults.provider) {
 	const params = getQueryParams(provider);
 	const url = buildURL("photos", params);
 
-	// Get session storage.
-	const sessionData = getSession(url);
-
 	async function initialize() {
 		const app = document.getElementById("app");
 		if (app) {
 			const root = createRoot(app);
 
+			// Get session storage.
+			const sessionData = getSession(url);
+
 			if (sessionData) {
+				// Display results from session.
 				root.render(
 					<InstantImages
 						editor="classic"
@@ -41,7 +42,7 @@ function getImages(provider = API.defaults.provider) {
 					/>
 				);
 			} else {
-				// Create fetch request.
+				// Dispatch API fetch request.
 				const response = await fetch(url);
 				const { status, headers } = response;
 				checkRateLimit(headers);

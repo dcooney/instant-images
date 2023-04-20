@@ -1,7 +1,7 @@
-import { OPENVERSE_SOURCES } from "../constants/openverse";
+import { OPENVERSE_SOURCES } from "../../constants/openverse";
 
 /**
- * Format the params for openverse.
+ * Format the params for Openverse.
  *
  * @param {string} type   Query type (search, photos, id).
  * @param {Object} params Query params object.
