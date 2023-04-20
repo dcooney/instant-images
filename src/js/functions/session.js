@@ -1,29 +1,34 @@
 import CryptoJS from "crypto-js";
-
-const TESTING = false;
-
-/**
- * Get the MD5 hash value of a URL.
- *
- * @param {string} url The API URL to hash.
- * @return {string} The MD5 hash.
- */
-export function md5Hash(url) {
-	return CryptoJS.MD5(url).toString();
-}
+import { API } from "../constants/API";
 
 /**
  * Get results from session storage by URL.
  *
  * @param {string} url The API URL.
- * @return {Array|boolean} The results as an array.
+ * @return {Array|boolean} Session results.
  */
 export function getSession(url) {
-	if (!url) {
-		return false;
+	if (!url || API.testmode) {
+		return false; // Exit if no URL or test mode is enabled.
 	}
-	const data = !TESTING ? sessionStorage.getItem(md5Hash(url)) : false;
-	return data ? JSON.parse(data) : false;
+
+	const session = sessionStorage.getItem(md5Hash(url));
+	if (!session) {
+		return false; // Exit if no session data.
+	}
+
+	const data = JSON.parse(session);
+	const { expires = 0 } = data;
+
+	// Check if expiration time has passed.
+	const expired = Date.now() > expires;
+
+	// Delete session data when expired.
+	if (expired) {
+		deleteSession(url);
+	}
+
+	return data && !expired ? data : false;
 }
 
 /**
@@ -36,6 +41,10 @@ export function saveSession(url, results) {
 	if (!url || !results) {
 		return false;
 	}
+	// Set expiration to 1 hour.
+	results.expires = Date.now() + 3600000;
+
+	// Save session data.
 	sessionStorage.setItem(md5Hash(url), JSON.stringify(results));
 }
 
@@ -49,4 +58,14 @@ export function deleteSession(url) {
 		return false;
 	}
 	sessionStorage.removeItem(md5Hash(url));
+}
+
+/**
+ * Get the MD5 hash value of a URL.
+ *
+ * @param {string} url The API URL to hash.
+ * @return {string} The MD5 hash.
+ */
+export function md5Hash(url) {
+	return CryptoJS.MD5(url).toString();
 }

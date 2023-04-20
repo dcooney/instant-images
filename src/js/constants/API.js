@@ -1,5 +1,6 @@
 export const API = {
 	proxy: PROXY_URL || "https://proxy.getinstantimages.com/api/", // eslint-disable-line
+	testmode: false,
 	defaults: {
 		provider: "unsplash",
 		order: "latest",
