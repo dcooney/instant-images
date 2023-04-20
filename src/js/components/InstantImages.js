@@ -2,13 +2,14 @@ import { Fragment, useEffect, useRef, useState } from "@wordpress/element";
 import classNames from "classnames";
 import Masonry from "masonry-layout";
 import { useInView } from "react-intersection-observer";
-import API from "../constants/API";
-import FILTERS from "../constants/filters";
+import { API } from "../constants/API";
+import { FILTERS } from "../constants/filters";
 import buildURL, { buildTestURL } from "../functions/buildURL";
 import consoleStatus from "../functions/consoleStatus";
 import getQueryParams from "../functions/getQueryParams";
 import getResults, { getSearchTotal } from "../functions/getResults";
 import { checkRateLimit } from "../functions/helpers";
+import { deleteSession, getSession, saveSession } from "../functions/session";
 import APILightbox from "./APILightbox";
 import ErrorLightbox from "./ErrorLightbox";
 import Filter from "./Filter";
@@ -93,22 +94,27 @@ export default function InstantImages(props) {
 		const params = getQueryParams(activeProvider, filters);
 		const url = buildURL("photos", params);
 
-		// Create fetch request.
-		const response = await fetch(url);
-		const { status, headers } = response;
-		checkRateLimit(headers);
+		// Get session storage.
+		const sessionData = getSession(url);
 
-		// Status OK.
-		try {
-			const json = await response.json();
-			const { error = null } = json; // Get error reporting.
-			const images = getResults(json);
-			checkTotalResults(images.length);
-			setResults(images);
-			setAPIError(error);
-		} catch (error) {
-			consoleStatus(provider, status);
-			setLoading(false);
+		if (sessionData) {
+			// Display results from session.
+			displayResults(getResults(sessionData), false, null);
+		} else {
+			// Dispatch API fetch request.
+			const response = await fetch(url);
+			const { status, headers } = response;
+			checkRateLimit(headers);
+			try {
+				const apiResults = await response.json();
+				const { error = null } = apiResults;
+				displayResults(getResults(apiResults), false, error);
+				saveSession(url, apiResults);
+			} catch (error) {
+				consoleStatus(provider, status);
+				setLoading(false);
+				deleteSession(url);
+			}
 		}
 
 		// Delay loading animatons for effect.
@@ -118,7 +124,7 @@ export default function InstantImages(props) {
 	}
 
 	/**
-	 * Load next set of photos in infinite scroll style.
+	 * Load more photos in infinite scroll style.
 	 *
 	 * @since 3.0
 	 */
@@ -145,19 +151,27 @@ export default function InstantImages(props) {
 		const params = getQueryParams(activeProvider, loadmoreParams);
 		const url = buildURL(type, params);
 
-		// Create fetch request.
-		const response = await fetch(url);
-		const { status, headers } = response;
-		checkRateLimit(headers);
+		// Get session storage.
+		const sessionData = getSession(url);
 
-		try {
-			const json = await response.json();
-			const images = getResults(json);
-			checkTotalResults(images.length);
-			setResults((prevState) => [...prevState, ...images]);
-		} catch (error) {
-			consoleStatus(provider, status);
-			setLoadingMore(false);
+		if (sessionData) {
+			// Display results from session.
+			displayResults(getResults(sessionData), true, null);
+		} else {
+			// Dispatch API fetch request.
+			const response = await fetch(url);
+			const { status, headers } = response;
+			checkRateLimit(headers);
+			try {
+				const apiResults = await response.json();
+				const { error = null } = apiResults;
+				displayResults(getResults(apiResults), true, error);
+				saveSession(url, apiResults);
+			} catch (error) {
+				consoleStatus(provider, status);
+				setLoadingMore(false);
+				deleteSession(url);
+			}
 		}
 	}
 
@@ -188,31 +202,62 @@ export default function InstantImages(props) {
 		const params = getQueryParams(activeProvider, searchParams);
 		const url = buildURL("search", params);
 
-		// Create fetch request.
-		const response = await fetch(url);
-		const { status, headers } = response;
-		checkRateLimit(headers);
+		// Get session storage.
+		const sessionData = getSession(url);
 
-		try {
-			// Get response data.
-			const json = await response.json();
-			const images = getResults(json);
-			checkTotalResults(images.length);
-			setResults(images);
-
+		if (sessionData) {
+			// Display results from session.
+			displayResults(getResults(sessionData), false, null);
 			setSearch({
 				active: true,
 				term,
 				type: searchType,
-				results: getSearchTotal(json),
+				results: getSearchTotal(sessionData),
 			});
-		} catch (error) {
-			// Reset all search parameters.
-			setDone(true);
-			setLoading(false);
-			consoleStatus(provider, status);
+		} else {
+			// Dispatch API fetch request.
+			const response = await fetch(url);
+			const { status, headers } = response;
+			checkRateLimit(headers);
+			try {
+				// Get response data.
+				const apiResults = await response.json();
+				const { error = null } = apiResults;
+				displayResults(getResults(apiResults), false, error);
+				setSearch({
+					active: true,
+					term,
+					type: searchType,
+					results: getSearchTotal(apiResults),
+				});
+				saveSession(url, apiResults);
+			} catch (error) {
+				// Reset all search parameters.
+				setDone(true);
+				setLoading(false);
+				consoleStatus(provider, status);
+				deleteSession(url);
+			}
 		}
+
 		searchInput.current.classList.remove(searchClass);
+	}
+
+	/**
+	 *	Handle the display results.
+	 *
+	 * @param {Array}       images Image array.
+	 * @param {boolean}     append Append images to existing results display.
+	 * @param {string|null} error  Error message.
+	 */
+	function displayResults(images = [], append = false, error) {
+		checkResults(images?.length);
+		if (append) {
+			setResults((prevState) => [...prevState, ...images]); // Load more.
+		} else {
+			setResults(images); // Standard switch.
+		}
+		setAPIError(error);
 	}
 
 	/**
@@ -341,14 +386,10 @@ export default function InstantImages(props) {
 			}
 		}
 
+		// Add slight delay for loading effect.
 		setTimeout(() => {
-			// Add slight delay for loading effect.
-
-			// Update filter options.
-			setFilterOptions(FILTERS[newProvider].filters);
-
-			// Switch the provider.
-			setActiveProvider(newProvider);
+			setFilterOptions(FILTERS[newProvider].filters); // Update filter options.
+			setActiveProvider(newProvider); // Switch the provider.
 		}, delay);
 	}
 
@@ -384,7 +425,7 @@ export default function InstantImages(props) {
 	 * @param {number} num Total search results.
 	 * @since 3.0
 	 */
-	function checkTotalResults(num) {
+	function checkResults(num) {
 		setDone(parseInt(num) === 0 || num === undefined);
 	}
 
@@ -431,6 +472,7 @@ export default function InstantImages(props) {
 
 	// Provider change callback.
 	useEffect(() => {
+		setFilterOptions(FILTERS[activeProvider].filters);
 		setFilters({}); // Trigger filter change.
 	}, [activeProvider]); // eslint-disable-line react-hooks/exhaustive-deps
 

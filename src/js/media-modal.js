@@ -5,6 +5,7 @@ import consoleStatus from "./functions/consoleStatus";
 import getProvider from "./functions/getProvider";
 import getQueryParams from "./functions/getQueryParams";
 import { checkRateLimit } from "./functions/helpers";
+import { deleteSession, getSession, saveSession } from "./functions/session";
 
 // Global vars
 let activeFrameId = "";
@@ -129,17 +130,27 @@ const getMediaModalProvider = async (element) => {
 	const params = getQueryParams(provider);
 	const url = buildURL("photos", params);
 
-	// Create fetch request.
-	const response = await fetch(url);
-	const { status, headers } = response;
-	checkRateLimit(headers);
+	// Get session storage.
+	const sessionData = getSession(url);
 
-	try {
-		const results = await response.json();
-		const { error = null } = results;
-		renderApp(element, provider, results, error);
-	} catch (error) {
-		consoleStatus(provider, status);
+	if (sessionData) {
+		// Display results from session.
+		renderApp(element, provider, sessionData, null);
+	} else {
+		// Dispatch API fetch request.
+		const response = await fetch(url);
+		const { status, headers } = response;
+		checkRateLimit(headers);
+
+		try {
+			const results = await response.json();
+			const { error = null } = results;
+			renderApp(element, provider, results, error);
+			saveSession(url, results);
+		} catch (error) {
+			consoleStatus(provider, status);
+			deleteSession(url);
+		}
 	}
 };
 

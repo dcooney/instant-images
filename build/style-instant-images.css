@@ -53,6 +53,10 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-size: 14px;
   color: #6b6877;
   position: relative;
+  /*
+       Admin Screens - Setting page
+       wp-admin/upload.php?page=instant-images
+    */
 }
 .instant-img-container .offscreen {
   position: absolute;
@@ -120,6 +124,72 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-size: 32px;
   opacity: 0.75;
 }
+.instant-img-container .header-wrap {
+  background: #f7f7f7 url(images/logo-48x48.f34cb1d9.png) no-repeat 25px 20px;
+  padding: 20px 25px 20px 83px;
+  min-height: 88px;
+  overflow: hidden;
+  border-bottom: 1px solid #efefef;
+  position: relative;
+}
+@media screen and (max-width: 800px) {
+  .instant-img-container .header-wrap {
+    background-position: center 20px;
+    padding: 80px 25px 20px;
+    text-align: center;
+  }
+}
+.instant-img-container .header-wrap h1 {
+  padding: 0;
+  margin: 4px 0 0;
+  font-weight: 700;
+  font-size: 26px;
+  max-width: 70%;
+}
+@media screen and (max-width: 800px) {
+  .instant-img-container .header-wrap h1 {
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+  }
+}
+.instant-img-container .header-wrap h1 em {
+  font-weight: 400;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.055);
+  color: rgba(0, 0, 0, 0.5);
+  display: inline-block;
+  border-radius: 2px;
+  padding: 3px 3px;
+  position: relative;
+  top: -2px;
+  left: 2px;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
+  font-style: normal;
+  line-height: 1;
+}
+.instant-img-container .header-wrap h1 span {
+  display: block;
+  padding: 3px 0 0;
+  color: #98979d;
+  font-size: 15px;
+  font-weight: 400;
+}
+.instant-img-container .header-wrap button {
+  position: absolute;
+  right: 25px;
+  bottom: 26px;
+}
+@media screen and (max-width: 800px) {
+  .instant-img-container .header-wrap button {
+    position: static;
+    margin-top: 20px;
+    display: inline-block;
+  }
+}
+.instant-img-container .header-wrap button i {
+  margin-right: 2px;
+}
 .instant-img-container .instant-images-wrapper {
   padding: 0 25px 20px;
   display: block;
@@ -164,7 +234,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-img-container .load-more-wrap button {
   display: none;
   margin: 20px 0;
-  padding: 12px 15px;
+  padding: 15px;
   font-size: 15px;
   font-weight: 600;
   transition: all 0.25s ease;
@@ -183,6 +253,18 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-img-container h3,
 .instant-img-container h4 {
   margin-top: 0;
+}
+.instant-img-container .save-settings p.submit {
+  float: left;
+  margin: 0 2px 0 0;
+  width: auto;
+}
+.instant-img-container .save-settings .loading {
+  width: 46px;
+  height: 28px;
+  display: none;
+  float: left;
+  background: #fff url(images/ajax-loader.7c5ec6b9.gif) no-repeat center center;
 }
 #TB_ajaxContent {
   clear: both;
@@ -212,6 +294,38 @@ body.settings_page_instant-images-settings.overflow-hidden {
   padding: 0;
   margin: 0;
   list-style: none;
+}
+.instant-img-container label,
+.instant-img-container input,
+.instant-img-container select,
+.instant-img-container textarea {
+  box-shadow: none;
+}
+.instant-img-container .save-settings {
+  padding-top: 5px;
+}
+.instant-img-container label {
+  padding: 5px 0 7px;
+}
+#unsplash-form-options h2,
+#unsplash-form-options p.desc {
+  display: none;
+}
+.instant-img-container input[type=text],
+.instant-img-container input[type=number],
+.instant-img-container textarea {
+  padding: 10px;
+  line-height: 1;
+  background: #f7f7f7;
+  width: 100%;
+  border-radius: 2px;
+  height: auto;
+}
+.instant-img-container input[type=text]:focus,
+.instant-img-container textarea:focus {
+  border-color: #98979d;
+  box-shadow: 0 0 3px #ccc;
+  background: #efefef;
 }
 .instant-img-container .spacer {
   display: block;

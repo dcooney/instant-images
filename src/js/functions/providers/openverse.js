@@ -1,5 +1,7 @@
+import { OPENVERSE_SOURCES } from "../../constants/openverse";
+
 /**
- * Format the params for openverse.
+ * Format the params for Openverse.
  *
  * @param {string} type   Query type (search, photos, id).
  * @param {Object} params Query params object.
@@ -7,12 +9,14 @@
  */
 export function openverseParams(type, params) {
 	if (type === "photos" && !params.source) {
-		params.source = "wordpress"; // Add `wordpress` as the default `source` for openverse.
+		// Add `wordpress` as the default `source` for openverse.
+		params.source = "wordpress";
 	}
+
 	if (type === "search") {
-		// Exlude these sources from search.
-		const excluded = "500px, rawpixel";
-		params.excluded_source = excluded;
+		// Include these sources only.
+		const sources = OPENVERSE_SOURCES.toString();
+		params.source = sources;
 	}
 
 	return params;

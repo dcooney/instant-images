@@ -108,6 +108,70 @@ body.settings_page_instant-images-settings {
 		}
 	}
 
+	/*
+      Admin Screens - Setting page
+      wp-admin/upload.php?page=instant-images
+   */
+	.header-wrap {
+		background: $lighter_grey url("../img/logo-48x48.png") no-repeat 25px 20px;
+		padding: 20px 25px 20px 83px;
+		min-height: 88px;
+		overflow: hidden;
+		border-bottom: 1px solid $grey;
+		position: relative;
+		@media screen and (max-width: $small) {
+			background-position: center 20px;
+			padding: 80px 25px 20px;
+			text-align: center;
+		}
+		h1 {
+			padding: 0;
+			margin: 4px 0 0;
+			font-weight: 700;
+			font-size: 26px;
+			max-width: 70%;
+			@media screen and (max-width: $small) {
+				max-width: 100%;
+				width: 100%;
+				text-align: center;
+			}
+			em {
+				font-weight: 400;
+				font-size: 14px;
+				background-color: rgba(0, 0, 0, 0.055);
+				color: rgba(0, 0, 0, 0.5);
+				display: inline-block;
+				border-radius: 2px;
+				padding: 3px 3px;
+				position: relative;
+				top: -2px;
+				left: 2px;
+				text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
+				font-style: normal;
+				line-height: 1;
+			}
+			span {
+				display: block;
+				padding: 3px 0 0;
+				color: $text_light;
+				font-size: 15px;
+				font-weight: 400;
+			}
+		}
+		button {
+			position: absolute;
+			right: 25px;
+			bottom: 26px;
+			@media screen and (max-width: $small) {
+				position: static;
+				margin-top: 20px;
+				display: inline-block;
+			}
+			i {
+				margin-right: 2px;
+			}
+		}
+	}
 	.instant-images-wrapper {
 		padding: 0 25px 20px;
 		display: block;
@@ -155,7 +219,7 @@ body.settings_page_instant-images-settings {
 		button {
 			display: none;
 			margin: 20px 0;
-			padding: 12px 15px;
+			padding: 15px;
 			font-size: 15px;
 			font-weight: 600;
 			transition: $transition;
@@ -178,6 +242,22 @@ body.settings_page_instant-images-settings {
 .instant-img-container h3,
 .instant-img-container h4 {
 	margin-top: 0;
+}
+
+// Settings
+.instant-img-container .save-settings {
+	p.submit {
+		float: left;
+		margin: 0 2px 0 0;
+		width: auto;
+	}
+	.loading {
+		width: 46px;
+		height: 28px;
+		display: none;
+		float: left;
+		background: #fff url("../img/ajax-loader.gif") no-repeat center center;
+	}
 }
 
 // Thickbox styles
@@ -211,6 +291,38 @@ body.settings_page_instant-images-settings {
 	padding: 0;
 	margin: 0;
 	list-style: none;
+}
+.instant-img-container label,
+.instant-img-container input,
+.instant-img-container select,
+.instant-img-container textarea {
+	box-shadow: none;
+}
+.instant-img-container .save-settings {
+	padding-top: 5px;
+}
+.instant-img-container label {
+	padding: 5px 0 7px;
+}
+#unsplash-form-options h2,
+#unsplash-form-options p.desc {
+	display: none;
+}
+.instant-img-container input[type="text"],
+.instant-img-container input[type="number"],
+.instant-img-container textarea {
+	padding: 10px;
+	line-height: 1;
+	background: $lighter_grey;
+	width: 100%;
+	border-radius: 2px;
+	height: auto;
+}
+.instant-img-container input[type="text"]:focus,
+.instant-img-container textarea:focus {
+	border-color: $text_light;
+	box-shadow: 0 0 3px #ccc;
+	background: $grey;
 }
 
 // Helpers

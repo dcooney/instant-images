@@ -2,12 +2,12 @@
 /**
  * Plugin Name: Instant Images
  * Plugin URI: https://connekthq.com/plugins/instant-images/
- * Description: One click photo uploads directly to your media library from Unsplash, Openverse, Pixabay and Pexels.
+ * Description: One click image uploads directly to your media library from Unsplash, Openverse, Pixabay and Pexels.
  * Author: Darren Cooney
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 5.2.0.2
+ * Version: 5.2.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -31,8 +31,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '5.2.0.2' );
-define( 'INSTANT_IMAGES_RELEASE', 'March 28, 2023' );
+define( 'INSTANT_IMAGES_VERSION', '5.2.1' );
+define( 'INSTANT_IMAGES_RELEASE', 'April 20, 2023' );
 
 /**
  * InstantImages class
@@ -71,7 +71,6 @@ class InstantImages {
 				'slug'         => 'unsplash',
 				'requires_key' => true,
 				'url'          => 'https://unsplash.com/developers',
-				'download_url' => 'https://images.unsplash.com',
 				'constant'     => 'INSTANT_IMAGES_UNSPLASH_KEY',
 			],
 			[
@@ -79,7 +78,6 @@ class InstantImages {
 				'slug'         => 'openverse',
 				'requires_key' => false,
 				'url'          => 'https://api.openverse.engineering/v1/#section/Register-and-Authenticate/Register-for-a-key',
-				'download_url' => 'https://api.openverse.engineering/',
 				'constant'     => '',
 			],
 			[
@@ -87,7 +85,6 @@ class InstantImages {
 				'slug'         => 'pixabay',
 				'requires_key' => true,
 				'url'          => 'https://pixabay.com/service/about/api/',
-				'download_url' => 'https://pixabay.com',
 				'constant'     => 'INSTANT_IMAGES_PIXABAY_KEY',
 			],
 			[
@@ -95,7 +92,6 @@ class InstantImages {
 				'slug'         => 'pexels',
 				'requires_key' => true,
 				'url'          => 'https://www.pexels.com/join-consumer/',
-				'download_url' => 'https://images.pexels.com',
 				'constant'     => 'INSTANT_IMAGES_PEXELS_KEY',
 			],
 		];
@@ -107,11 +103,17 @@ class InstantImages {
 	 *
 	 * @return array The array of urls.
 	 * @author ConnektMedia <support@connekthq.com>
-	 * @since 4.0
+	 * @since 5.0
 	 */
-	public static function instant_img_get_download_urls() {
-		$providers = self::instant_img_get_providers();
-		$urls      = wp_list_pluck( $providers, 'download_url' );
+	public static function instant_images_download_urls() {
+		$urls = [
+			'https://images.unsplash.com',
+			'https://pixabay.com',
+			'https://images.pexels.com',
+			'https://pd.w.org',
+			'https://live.staticflickr.com',
+			'https://upload.wikimedia.org',
+		];
 		return $urls;
 	}
 

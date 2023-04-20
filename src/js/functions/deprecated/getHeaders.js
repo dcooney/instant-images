@@ -1,4 +1,4 @@
-import API from "../constants/API";
+import { API } from "../constants/API";
 
 /**
  * Build the required auth headers for the provider (Pexels only).
