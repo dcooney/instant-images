@@ -727,9 +727,6 @@ body.settings_page_instant-images-settings.overflow-hidden {
 #photos .photo:focus .fade.user {
   opacity: 0.7;
 }
-#photos .photo:focus-within a.upload img {
-  opacity: 0.5;
-}
 #photos .photo:focus-within .user-controls {
   bottom: 0;
   opacity: 1;
