@@ -192,6 +192,7 @@ function instant_images_download( WP_REST_Request $request ) {
 			'attachment' => [
 				'id'          => $image_id,
 				'url'         => wp_get_attachment_url( $image_id ),
+				'edit_url'    => get_edit_post_link( $image_id ),
 				'alt'         => $alt,
 				'caption'     => $caption,
 				'description' => $description,

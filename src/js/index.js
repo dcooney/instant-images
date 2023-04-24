@@ -1,5 +1,4 @@
 import { createRoot } from "@wordpress/element";
-import "../scss/style.scss";
 import InstantImages from "./components/InstantImages";
 import { API } from "./constants/API";
 import buildURL from "./functions/buildURL";
@@ -8,6 +7,7 @@ import getProvider from "./functions/getProvider";
 import getQueryParams from "./functions/getQueryParams";
 import { checkRateLimit } from "./functions/helpers";
 import { deleteSession, getSession, saveSession } from "./functions/session";
+import "../scss/style.scss";
 
 // Get provider from settings.
 const defaultProvider = getProvider();

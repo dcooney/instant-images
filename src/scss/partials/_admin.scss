@@ -315,14 +315,14 @@ body.settings_page_instant-images-settings {
 	line-height: 1;
 	background: $lighter_grey;
 	width: 100%;
-	border-radius: 2px;
+	border-radius: $radius_md;
 	height: auto;
 }
 .instant-img-container input[type="text"]:focus,
+.instant-img-container input[type="number"]:focus,
 .instant-img-container textarea:focus {
 	border-color: $text_light;
 	box-shadow: 0 0 3px #ccc;
-	background: $grey;
 }
 
 // Helpers

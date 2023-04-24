@@ -217,12 +217,11 @@
 			input {
 				color: $text;
 				width: 100%;
-				padding: 0 10px 0 $el_height;
-				border: 1px solid $input;
-				background-color: $lighter_grey !important;
+				padding: 0 $el_height 0 12px;
+				border-color: $border;
 				height: $el_height;
 				line-height: $el_height;
-				border-radius: 999px;
+				border-radius: 9999px;
 				font-size: 14px;
 				transition: border 0.25s ease;
 				background-position: right 10px center;
@@ -231,8 +230,9 @@
 					cursor: not-allowed;
 				}
 				&:focus {
-					border-color: $text_light;
-					box-shadow: 0 0 1px 5px rgba(#000, 0.035);
+					outline: none;
+					border-color: $purple;
+					box-shadow: 0 0 0 1px $purple;
 				}
 				&.searching {
 					background-image: url("../img/ajax-loader.gif");
@@ -247,7 +247,7 @@
 			}
 			button[type="submit"] {
 				position: absolute;
-				left: 2px;
+				right: 2px;
 				top: 0;
 				width: $el_height;
 				height: $el_height;
@@ -262,7 +262,7 @@
 				transition: $transition;
 				margin: 0;
 				padding: 0;
-				font-size: 16px;
+				font-size: 18px;
 				&:hover,
 				&:focus {
 					color: $text;

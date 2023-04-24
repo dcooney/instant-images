@@ -322,10 +322,10 @@ body.settings_page_instant-images-settings.overflow-hidden {
   height: auto;
 }
 .instant-img-container input[type=text]:focus,
+.instant-img-container input[type=number]:focus,
 .instant-img-container textarea:focus {
   border-color: #98979d;
   box-shadow: 0 0 3px #ccc;
-  background: #efefef;
 }
 .instant-img-container .spacer {
   display: block;
@@ -564,12 +564,11 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-img-container .control-nav--search input {
   color: #434246;
   width: 100%;
-  padding: 0 10px 0 38px;
-  border: 1px solid #ccc;
-  background-color: #f7f7f7 !important;
+  padding: 0 38px 0 12px;
+  border-color: #e1e1e1;
   height: 38px;
   line-height: 38px;
-  border-radius: 999px;
+  border-radius: 9999px;
   font-size: 14px;
   transition: border 0.25s ease;
   background-position: right 10px center;
@@ -579,8 +578,9 @@ body.settings_page_instant-images-settings.overflow-hidden {
   cursor: not-allowed;
 }
 .instant-img-container .control-nav--search input:focus {
-  border-color: #98979d;
-  box-shadow: 0 0 1px 5px rgba(0, 0, 0, 0.035);
+  outline: none;
+  border-color: #586ec6;
+  box-shadow: 0 0 0 1px #586ec6;
 }
 .instant-img-container .control-nav--search input.searching {
   background-image: url(images/ajax-loader.7c5ec6b9.gif);
@@ -593,7 +593,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-img-container .control-nav--search button[type=submit] {
   position: absolute;
-  left: 2px;
+  right: 2px;
   top: 0;
   width: 38px;
   height: 38px;
@@ -608,7 +608,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   transition: all 0.25s ease;
   margin: 0;
   padding: 0;
-  font-size: 16px;
+  font-size: 18px;
 }
 .instant-img-container .control-nav--search button[type=submit]:hover, .instant-img-container .control-nav--search button[type=submit]:focus {
   color: #434246;
