@@ -1393,11 +1393,11 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-weight: 600;
   border: none;
   padding: 0;
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   line-height: 1.35;
 }
 .instant-images-settings--sections .settings-entry--title p {
-  margin: 10px 0 0;
+  margin: 8px 0 0;
 }
 .instant-images-settings--sections .settings-entry--action {
   width: 100%;
@@ -2708,6 +2708,10 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-images-pro-import .import-response--message span {
   color: #434246;
+}
+.instant-images-pro-import .import-response--downloaded {
+  padding: 15px 15px 0;
+  font-size: 12px;
 }
 
 /*# sourceMappingURL=style-instant-images.css.map*/

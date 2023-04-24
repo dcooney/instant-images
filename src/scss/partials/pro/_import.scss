@@ -63,5 +63,10 @@
 				color: $text;
 			}
 		}
+
+		&--downloaded {
+			padding: 15px 15px 0;
+			font-size: 12px;
+		}
 	}
 }
