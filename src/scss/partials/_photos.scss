@@ -16,7 +16,7 @@
 		background: rgba(255, 255, 255, 0.9) url("../img/ajax-loader-lg.gif")
 			no-repeat center 90px;
 		z-index: 9999;
-		transition: all 0.25s ease;
+		transition: $transition;
 	}
 	&.loading {
 		&::after {
@@ -75,9 +75,6 @@
 			margin: 0 0 2%;
 		}
 		&:focus {
-			a.upload img {
-				opacity: 0.6;
-			}
 			.fade {
 				opacity: 1;
 				visibility: visible;
@@ -87,6 +84,10 @@
 			}
 		}
 		&:focus-within {
+			a.upload img {
+				opacity: 0.5;
+			}
+
 			.user-controls {
 				bottom: 0;
 				opacity: 1;
@@ -95,12 +96,13 @@
 		a.upload {
 			display: block;
 			position: relative;
-			background-color: #222;
+			background-color: $lighter_grey;
 			background-position: center center;
 			background-repeat: no-repeat;
 			background-image: url("../img/ajax-loader.gif");
 			overflow: hidden;
 			&.loaded {
+				background-color: #111;
 				background-image: none;
 			}
 			&:focus,
@@ -109,7 +111,7 @@
 				border: none;
 			}
 			img {
-				transition: all 0.5s ease;
+				transition: all 0.4s ease;
 				width: 100%;
 				height: auto !important;
 				padding: 0;
@@ -218,10 +220,11 @@
 		}
 
 		// Hover and Progress
+		&:focus,
 		&:hover,
 		&.in-progress {
 			a.upload img {
-				opacity: 0.7;
+				opacity: 0.5;
 				transform: scale(1.075);
 			}
 			.options {
@@ -258,7 +261,7 @@
 			width: auto;
 			display: inline-block;
 			cursor: default !important;
-			transition: all 0.25s ease 0.15s;
+			transition: $transition;
 			opacity: 0;
 			visibility: hidden;
 			font-size: 13px;
@@ -267,7 +270,7 @@
 			}
 			i.heart-like {
 				color: #de4624;
-				transition: all 0.25s ease 0.05s;
+				transition: $transition;
 				transform: scale(0.55);
 				margin-right: 2px;
 				position: relative;
@@ -286,7 +289,7 @@
 				background: rgba(255, 255, 255, 0.5);
 				border-radius: 2px;
 				color: #23282d;
-				transition: all 0.3s ease;
+				transition: $transition;
 			}
 			span {
 				cursor: default;
@@ -313,12 +316,11 @@
 			position: absolute;
 			z-index: 6;
 			width: 100%;
-			bottom: -20px;
+			bottom: 0;
 			left: 0;
-			background: rgba(0, 0, 0, 0.4);
 			padding: 0;
 			opacity: 0;
-			transition: all 0.25s ease 0.15s;
+			transition: $transition;
 		}
 
 		.photo-options {
@@ -502,7 +504,7 @@
 		background: rgba(255, 255, 255, 0.9);
 		opacity: 0;
 		visibility: hidden;
-		transition: all 0.25s ease;
+		transition: $transition;
 		padding: 5px;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;

@@ -564,7 +564,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-img-container .control-nav--search input {
   color: #434246;
   width: 100%;
-  padding: 0 38px 0 12px;
+  padding: 0 38px 0 15px;
   border-color: #e1e1e1;
   height: 38px;
   line-height: 38px;
@@ -720,15 +720,15 @@ body.settings_page_instant-images-settings.overflow-hidden {
     margin: 0 0 2%;
   }
 }
-#photos .photo:focus a.upload img {
-  opacity: 0.6;
-}
 #photos .photo:focus .fade {
   opacity: 1;
   visibility: visible;
 }
 #photos .photo:focus .fade.user {
   opacity: 0.7;
+}
+#photos .photo:focus-within a.upload img {
+  opacity: 0.5;
 }
 #photos .photo:focus-within .user-controls {
   bottom: 0;
@@ -737,13 +737,14 @@ body.settings_page_instant-images-settings.overflow-hidden {
 #photos .photo a.upload {
   display: block;
   position: relative;
-  background-color: #222;
+  background-color: #f7f7f7;
   background-position: center center;
   background-repeat: no-repeat;
   background-image: url(images/ajax-loader.7c5ec6b9.gif);
   overflow: hidden;
 }
 #photos .photo a.upload.loaded {
+  background-color: #111;
   background-image: none;
 }
 #photos .photo a.upload:focus, #photos .photo a.upload:active {
@@ -751,7 +752,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   border: none;
 }
 #photos .photo a.upload img {
-  transition: all 0.5s ease;
+  transition: all 0.4s ease;
   width: 100%;
   height: auto !important;
   padding: 0;
@@ -838,18 +839,18 @@ body.settings_page_instant-images-settings.overflow-hidden {
   opacity: 0 !important;
   visibility: hidden !important;
 }
-#photos .photo:hover a.upload img, #photos .photo.in-progress a.upload img {
-  opacity: 0.7;
+#photos .photo:focus a.upload img, #photos .photo:hover a.upload img, #photos .photo.in-progress a.upload img {
+  opacity: 0.5;
   transform: scale(1.075);
 }
-#photos .photo:hover .options, #photos .photo.in-progress .options {
+#photos .photo:focus .options, #photos .photo:hover .options, #photos .photo.in-progress .options {
   opacity: 1;
   visibility: visible;
 }
-#photos .photo:hover .options i.heart-like, #photos .photo.in-progress .options i.heart-like {
+#photos .photo:focus .options i.heart-like, #photos .photo:hover .options i.heart-like, #photos .photo.in-progress .options i.heart-like {
   transform: scale(1);
 }
-#photos .photo:hover .user-controls, #photos .photo.in-progress .user-controls {
+#photos .photo:focus .user-controls, #photos .photo:hover .user-controls, #photos .photo.in-progress .user-controls {
   bottom: 0;
   opacity: 1;
 }
@@ -871,7 +872,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   width: auto;
   display: inline-block;
   cursor: default !important;
-  transition: all 0.25s ease 0.15s;
+  transition: all 0.25s ease;
   opacity: 0;
   visibility: hidden;
   font-size: 13px;
@@ -881,7 +882,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 #photos .photo .options i.heart-like {
   color: #de4624;
-  transition: all 0.25s ease 0.05s;
+  transition: all 0.25s ease;
   transform: scale(0.55);
   margin-right: 2px;
   position: relative;
@@ -900,7 +901,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   background: rgba(255, 255, 255, 0.5);
   border-radius: 2px;
   color: #23282d;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 #photos .photo .options span {
   cursor: default;
@@ -923,12 +924,11 @@ body.settings_page_instant-images-settings.overflow-hidden {
   position: absolute;
   z-index: 6;
   width: 100%;
-  bottom: -20px;
+  bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.4);
   padding: 0;
   opacity: 0;
-  transition: all 0.25s ease 0.15s;
+  transition: all 0.25s ease;
 }
 #photos .photo .photo-options {
   float: right;
