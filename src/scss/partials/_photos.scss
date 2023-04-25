@@ -600,37 +600,47 @@
 			font-size: 11px;
 			text-transform: uppercase;
 			font-weight: 600;
-			margin: 0 0 5px;
+			margin: 0 0 10px;
 			color: #222;
 			line-height: 1;
 		}
-		textarea {
-			//resize: none;
+
+		textarea,
+		input {
+			@include inputDefaults;
 			font-size: 12px;
 			line-height: 1.35;
+
+			&:focus {
+				@include inputFocus;
+			}
+		}
+		textarea {
+			resize: none;
 		}
 		input {
-			font-size: 12px;
-			padding: 0 10px;
-			margin: 0;
-			height: 35px;
-			line-height: 35px;
+			height: $el_height;
+			line-height: $el_height;
+			padding-top: 0;
+			padding-bottom: 0;
 			&[name="filename"] {
 				padding-right: 45px;
 			}
 		}
 		em {
 			position: absolute;
-			bottom: 15px;
+			bottom: 16px;
 			right: 15px;
-			height: 35px;
-			line-height: 35px;
-			background: rgb(133, 133, 133);
+			height: calc($el_height - 2px);
+			line-height: calc($el_height - 2px);
+			background: $grey;
 			border-radius: 0 2px 2px 0;
-			color: $border;
+			color: $text_light;
 			font-style: normal;
+			font-weight: 500;
 			font-size: 11px;
 			padding: 0 10px;
+			border-left: 1px solid $border;
 		}
 	}
 }

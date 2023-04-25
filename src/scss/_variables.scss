@@ -32,6 +32,15 @@ $warn: #cfa345;
 $yellow: #ffe732;
 $yellow_bkg: #fffadc;
 
+@mixin inputDefaults() {
+	color: $text_alt;
+	background-color: #fff;
+	width: 100%;
+	padding: 10px;
+	border-color: $border;
+	line-height: 1;
+	border-radius: $radius;
+}
 @mixin inputFocus() {
 	outline: none;
 	border-color: $purple;

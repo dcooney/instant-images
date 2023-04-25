@@ -1188,36 +1188,54 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-size: 11px;
   text-transform: uppercase;
   font-weight: 600;
-  margin: 0 0 5px;
+  margin: 0 0 10px;
   color: #222;
   line-height: 1;
 }
-#photos .edit-screen textarea {
+#photos .edit-screen textarea,
+#photos .edit-screen input {
+  color: #6b6877;
+  background-color: #fff;
+  width: 100%;
+  padding: 10px;
+  border-color: #e1e1e1;
+  line-height: 1;
+  border-radius: 3px;
   font-size: 12px;
   line-height: 1.35;
 }
+#photos .edit-screen textarea:focus,
+#photos .edit-screen input:focus {
+  outline: none;
+  border-color: #586ec6;
+  box-shadow: 0 0 0 1px #586ec6, 0 0 0 4px rgba(88, 110, 198, 0.1);
+}
+#photos .edit-screen textarea {
+  resize: none;
+}
 #photos .edit-screen input {
-  font-size: 12px;
-  padding: 0 10px;
-  margin: 0;
-  height: 35px;
-  line-height: 35px;
+  height: 38px;
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 #photos .edit-screen input[name=filename] {
   padding-right: 45px;
 }
 #photos .edit-screen em {
   position: absolute;
-  bottom: 15px;
+  bottom: 16px;
   right: 15px;
-  height: 35px;
-  line-height: 35px;
-  background: rgb(133, 133, 133);
+  height: 36px;
+  line-height: 36px;
+  background: #efefef;
   border-radius: 0 2px 2px 0;
-  color: #e1e1e1;
+  color: #98979d;
   font-style: normal;
+  font-weight: 500;
   font-size: 11px;
   padding: 0 10px;
+  border-left: 1px solid #e1e1e1;
 }
 .instant-img-container .onload-warning {
   text-align: center;

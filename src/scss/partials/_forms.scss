@@ -33,13 +33,7 @@
 		input[type="text"],
 		input[type="number"],
 		textarea {
-			color: $text_alt;
-			background-color: #fff;
-			width: 100%;
-			padding: 10px;
-			border-color: $border;
-			line-height: 1;
-			border-radius: $radius;
+			@include inputDefaults;
 
 			&[readonly] {
 				background-color: $lighter_grey;
