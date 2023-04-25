@@ -418,7 +418,7 @@ export default function Photo(props) {
 			filename,
 			title,
 			alt,
-			caption,
+			caption: imageCaption,
 		});
 
 		// Hide edit screen

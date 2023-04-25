@@ -1822,7 +1822,7 @@ function Photo(props) {
       filename: filename,
       title: title,
       alt: alt,
-      caption: caption
+      caption: imageCaption
     });
 
     // Hide edit screen
