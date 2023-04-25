@@ -31,3 +31,9 @@ $red: #df3333;
 $warn: #cfa345;
 $yellow: #ffe732;
 $yellow_bkg: #fffadc;
+
+@mixin inputFocus() {
+	outline: none;
+	border-color: $purple;
+	box-shadow: 0 0 0 1px $purple, 0 0 0 4px rgba($purple, 0.1);
+}

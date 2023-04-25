@@ -221,7 +221,7 @@
 		&.in-progress {
 			a.upload img {
 				opacity: 0.5;
-				transform: scale(1.075);
+				transform: scale(1.025);
 			}
 			.options {
 				opacity: 1;
@@ -317,6 +317,11 @@
 			padding: 0;
 			opacity: 0;
 			transition: $transition;
+			background: linear-gradient(
+				180deg,
+				rgba(17, 17, 17, 0) 0%,
+				rgba(17, 17, 17, 0.3) 100%
+			);
 		}
 
 		.photo-options {

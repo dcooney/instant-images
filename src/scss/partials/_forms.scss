@@ -49,9 +49,7 @@
 			}
 
 			&:focus {
-				outline: none;
-				border-color: $purple;
-				box-shadow: 0 0 0 1px $purple;
+				@include inputFocus;
 			}
 		}
 		select {

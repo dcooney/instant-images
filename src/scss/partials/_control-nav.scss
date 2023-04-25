@@ -217,22 +217,19 @@
 			input {
 				color: $text;
 				width: 100%;
-				padding: 0 $el_height 0 15px;
+				padding: 0 15px 0 $el_height;
 				border-color: $border;
 				height: $el_height;
 				line-height: $el_height;
 				border-radius: 9999px;
 				font-size: 14px;
-				transition: border 0.25s ease;
 				background-position: right 10px center;
 				background-repeat: no-repeat;
 				&[disabled] {
 					cursor: not-allowed;
 				}
 				&:focus {
-					outline: none;
-					border-color: $purple;
-					box-shadow: 0 0 0 1px $purple;
+					@include inputFocus;
 				}
 				&.searching {
 					background-image: url("../img/ajax-loader.gif");
@@ -247,7 +244,7 @@
 			}
 			button[type="submit"] {
 				position: absolute;
-				right: 2px;
+				left: 3px;
 				top: 0;
 				width: $el_height;
 				height: $el_height;
