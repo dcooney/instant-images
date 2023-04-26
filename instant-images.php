@@ -162,7 +162,7 @@ class InstantImages {
 		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets' ] ) ) {
 			wp_enqueue_script(
 				'instant-images-plugin-sidebar',
-				INSTANT_IMAGES_URL . 'build/plugin-sidebar.js',
+				INSTANT_IMAGES_URL . 'build/plugin-sidebar/index.js',
 				[],
 				INSTANT_IMAGES_VERSION,
 				true
@@ -191,7 +191,7 @@ class InstantImages {
 		if ( $this::instant_img_has_access() && $show_tab && $current_screen !== 'upload' ) {
 			wp_enqueue_script(
 				'instant-images-media-modal',
-				INSTANT_IMAGES_URL . 'build/media-modal.js',
+				INSTANT_IMAGES_URL . 'build/media-modal/index.js',
 				[ 'wp-element' ],
 				INSTANT_IMAGES_VERSION,
 				true

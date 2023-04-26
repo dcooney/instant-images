@@ -3,7 +3,7 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 
 /**
- * Webpack config (Development mode)
+ * WP-Scripts Webpack config.
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-scripts/#provide-your-own-webpack-config
  */
@@ -15,8 +15,8 @@ module.exports = {
 	},
 	entry: {
 		"instant-images": "./src/js/index.js",
-		"media-modal": "./src/js/media-modal.js",
-		"plugin-sidebar": "./src/js/plugin-sidebar.js",
+		"media-modal/index": "./src/js/media-modal.js",
+		"plugin-sidebar/index": "./src/js/plugin-sidebar.js",
 	},
 	plugins: [
 		...defaults.plugins,

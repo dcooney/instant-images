@@ -18224,4 +18224,4 @@ var InstantImagesPlugin = function InstantImagesPlugin() {
 
 /******/ })()
 ;
-//# sourceMappingURL=plugin-sidebar.js.map
+//# sourceMappingURL=index.js.map
