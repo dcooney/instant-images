@@ -1,5 +1,5 @@
 import { PluginSidebar } from "@wordpress/edit-post";
-import Icon from "./Icon";
+import Icon from "../../components/Icon";
 import Panel from "./Panel";
 
 /**

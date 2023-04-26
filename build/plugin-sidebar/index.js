@@ -2686,15 +2686,16 @@ var OPENVERSE_SOURCES = ["WordPress", "Flickr", "Nasa",
 
 /***/ }),
 
-/***/ "./src/js/editor/plugin/components/Icon.js":
-/*!*************************************************!*\
-  !*** ./src/js/editor/plugin/components/Icon.js ***!
-  \*************************************************/
+/***/ "./src/js/editor/components/Icon.js":
+/*!******************************************!*\
+  !*** ./src/js/editor/components/Icon.js ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "IconSVG": () => (/* binding */ IconSVG),
 /* harmony export */   "default": () => (/* binding */ Icon)
 /* harmony export */ });
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
@@ -2702,7 +2703,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * The plugin Icon component.
+ * The Icon component.
  *
  * @param {Object} props       The component props.
  * @param {string} props.color Color of the icon.
@@ -2713,14 +2714,23 @@ function Icon(_ref) {
     color = _ref$color === void 0 ? "unsplash" : _ref$color;
   return /*#__PURE__*/React.createElement("span", {
     className: classnames__WEBPACK_IMPORTED_MODULE_0___default()("instant-images-sidebar-icon", "color-" + color)
-  }, /*#__PURE__*/React.createElement("svg", {
+  }, /*#__PURE__*/React.createElement(IconSVG, null));
+}
+
+/**
+ * The IconSVG component.
+ *
+ * @return {JSX.Element} The IconSVG component.
+ */
+function IconSVG() {
+  return /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 31 58",
     width: "13px",
     height: "24px"
   }, /*#__PURE__*/React.createElement("title", null, "Instant Images Logo"), /*#__PURE__*/React.createElement("polygon", {
     points: "20 0 20 23 31 23 11 58 11 34 0 34 20 0",
     fill: "#4a7bc5"
-  })));
+  }));
 }
 
 /***/ }),
@@ -2736,7 +2746,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Menu)
 /* harmony export */ });
-/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Icon */ "./src/js/editor/plugin/components/Icon.js");
+/* harmony import */ var _components_Icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Icon */ "./src/js/editor/components/Icon.js");
 /* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
 /* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_1__);
 
@@ -2749,7 +2759,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 function Menu() {
   return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_1__.PluginSidebarMoreMenuItem, {
-    icon: /*#__PURE__*/React.createElement(_Icon__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    icon: /*#__PURE__*/React.createElement(_components_Icon__WEBPACK_IMPORTED_MODULE_0__["default"], {
       color: "unsplash"
     }),
     target: "instant-images-sidebar",
@@ -2902,7 +2912,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
 /* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Icon */ "./src/js/editor/plugin/components/Icon.js");
+/* harmony import */ var _components_Icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Icon */ "./src/js/editor/components/Icon.js");
 /* harmony import */ var _Panel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Panel */ "./src/js/editor/plugin/components/Panel.js");
 
 
@@ -2915,7 +2925,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 function Plugin() {
   return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__.PluginSidebar, {
-    icon: /*#__PURE__*/React.createElement(_Icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    icon: /*#__PURE__*/React.createElement(_components_Icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
       borderless: true,
       color: "unsplash"
     }),

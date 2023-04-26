@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "instant-images/images",
+  "version": "1.0.0",
+  "title": "Instant Images",
+  "category": "media",
+  "description": "One click photo uploads from Unsplash, Openverse, Pixabay and Pexels.",
+  "attributes": {
+    "sourceImageId": {
+      "type": "number"
+    },
+    "currentImageId": {
+      "type": "number"
+    },
+    "currentFilterSlug": {
+      "type": "string"
+    },
+    "filteredFromImageId": {
+      "type": "number"
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "textdomain": "instant-images-pro",
+  "editorScript": "file:./index.js"
+}

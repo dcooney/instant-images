@@ -49,9 +49,10 @@ class InstantImages {
 	 * @since 2.0
 	 */
 	public function __construct() {
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ &$this, 'instant_images_add_action_links' ] );
-		add_action( 'enqueue_block_editor_assets', [ &$this, 'instant_img_block_plugin_enqueue' ] );
-		add_action( 'wp_enqueue_media', [ &$this, 'instant_img_wp_media_enqueue' ] );
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ &$this, 'add_action_links' ] );
+		add_action( 'enqueue_block_editor_assets', [ &$this, 'enqueue_block_plugin' ] );
+		add_action( 'wp_enqueue_media', [ &$this, 'enqueue_media' ] );
+		add_action( 'init', [ &$this, 'register_block' ] );
 		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain.
 		$this->includes();
 		$this->constants();
@@ -117,7 +118,6 @@ class InstantImages {
 		return $urls;
 	}
 
-
 	/**
 	 * Get global Instant Images plugin settings.
 	 *
@@ -153,12 +153,19 @@ class InstantImages {
 	}
 
 	/**
+	 * Register the block.
+	 */
+	public function register_block() {
+		register_block_type( __DIR__ . '/build/block' );
+	}
+
+	/**
 	 * Enqueue Gutenberg Block sidebar plugin
 	 *
 	 * @author ConnektMedia <support@connekthq.com>
 	 * @since 3.0
 	 */
-	public function instant_img_block_plugin_enqueue() {
+	public function enqueue_block_plugin() {
 		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets' ] ) ) {
 			wp_enqueue_script(
 				'instant-images-plugin-sidebar',
@@ -185,7 +192,7 @@ class InstantImages {
 	 * @author ConnektMedia <support@connekthq.com>
 	 * @since 4.0
 	 */
-	public function instant_img_wp_media_enqueue() {
+	public function enqueue_media() {
 		$show_tab       = $this::instant_img_show_tab( 'media_modal_display' ); // Show Tab Setting.
 		$current_screen = is_admin() && function_exists( 'get_current_screen' ) ? get_current_screen()->base : ''; // Current admin screen.
 		if ( $this::instant_img_has_access() && $show_tab && $current_screen !== 'upload' ) {
@@ -476,7 +483,7 @@ class InstantImages {
 	 * @author ConnektMedia <support@connekthq.com>
 	 * @since 2.0
 	 */
-	public function instant_images_add_action_links( $links ) {
+	public function add_action_links( $links ) {
 		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Images', 'instant-images' ) . '</a>' ];
 		return array_merge( $mylinks, $links );
 	}
