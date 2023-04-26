@@ -2695,6 +2695,7 @@ var OPENVERSE_SOURCES = ["WordPress", "Flickr", "Nasa",
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "IconSVG": () => (/* binding */ IconSVG),
 /* harmony export */   "default": () => (/* binding */ Icon)
 /* harmony export */ });
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
@@ -2702,7 +2703,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * The plugin Icon component.
+ * The Icon component.
  *
  * @param {Object} props       The component props.
  * @param {string} props.color Color of the icon.
@@ -2713,14 +2714,23 @@ function Icon(_ref) {
     color = _ref$color === void 0 ? "unsplash" : _ref$color;
   return /*#__PURE__*/React.createElement("span", {
     className: classnames__WEBPACK_IMPORTED_MODULE_0___default()("instant-images-sidebar-icon", "color-" + color)
-  }, /*#__PURE__*/React.createElement("svg", {
+  }, /*#__PURE__*/React.createElement(IconSVG, null));
+}
+
+/**
+ * The IconSVG component.
+ *
+ * @return {JSX.Element} The IconSVG component.
+ */
+function IconSVG() {
+  return /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 31 58",
     width: "13px",
     height: "24px"
   }, /*#__PURE__*/React.createElement("title", null, "Instant Images Logo"), /*#__PURE__*/React.createElement("polygon", {
     points: "20 0 20 23 31 23 11 58 11 34 0 34 20 0",
     fill: "#4a7bc5"
-  })));
+  }));
 }
 
 /***/ }),
