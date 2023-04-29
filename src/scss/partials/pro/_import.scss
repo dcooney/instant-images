@@ -20,7 +20,7 @@
 		background-color: $lighter_grey;
 		border: 1px solid $border;
 		border-top: 0;
-		padding: 15px;
+		padding: 20px;
 	}
 
 	// Response/Progress bar.
@@ -65,7 +65,7 @@
 		}
 
 		&--downloaded {
-			padding: 15px 15px 0;
+			padding: 20px 20px 0;
 			font-size: 12px;
 		}
 	}

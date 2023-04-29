@@ -2687,7 +2687,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1;
   border-top: 0;
-  padding: 15px;
+  padding: 20px;
 }
 .instant-images-pro-import .import-response {
   display: none;
@@ -2725,7 +2725,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   color: #434246;
 }
 .instant-images-pro-import .import-response--downloaded {
-  padding: 15px 15px 0;
+  padding: 20px 20px 0;
   font-size: 12px;
 }
 
