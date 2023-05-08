@@ -16,18 +16,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 2.0
  */
 function instant_images_admin_init() {
-
 	$providers = InstantImages::instant_img_get_providers();
 
+	// General Settings.
 	register_setting(
-		'instant-img-setting-group',
+		'instant_images_general_settings_group',
 		'instant_img_settings',
 		'instant_images_sanitize'
 	);
 
 	add_settings_section(
-		'unsplash_general_settings',
-		__( 'Global Settings', 'instant-images' ),
+		'instant_images_general_settings',
+		__( 'General Settings', 'instant-images' ),
 		'instant_images_general_settings_callback',
 		'instant-images'
 	);
@@ -38,7 +38,7 @@ function instant_images_admin_init() {
 		__( 'Upload Image Width', 'instant-images' ),
 		'instant_images_width_callback',
 		'instant-images',
-		'unsplash_general_settings'
+		'instant_images_general_settings'
 	);
 
 	// Download Height.
@@ -47,7 +47,7 @@ function instant_images_admin_init() {
 		__( 'Upload Image Height', 'instant-images' ),
 		'instant_images_height_callback',
 		'instant-images',
-		'unsplash_general_settings'
+		'instant_images_general_settings'
 	);
 
 	// Default Provider.
@@ -56,27 +56,8 @@ function instant_images_admin_init() {
 		__( 'Default Image Provider', 'instant-images' ),
 		'instant_images_default_provider',
 		'instant-images',
-		'unsplash_general_settings'
+		'instant_images_general_settings'
 	);
-
-	// Providers API Keys.
-	$count = 0;
-	foreach ( $providers as $provider ) {
-		if ( $provider['requires_key'] ) {
-			$count++;
-			$key   = $provider['slug'] . '_api';
-			$title = $provider['name'] . __( 'API Key', 'instant-images' );
-			// Only set the callback on the first item as they are created only once.
-			$callback = 1 === $count ? 'instant_images_api_key_callback' : 'instant_images_callable';
-			add_settings_field(
-				$key,
-				$title,
-				$callback,
-				'instant-images',
-				'unsplash_general_settings'
-			);
-		}
-	}
 
 	// Auto captions.
 	add_settings_field(
@@ -84,7 +65,7 @@ function instant_images_admin_init() {
 		__( 'Auto Captions/Attribution', 'instant-images' ),
 		'instant_images_auto_attribution_callback',
 		'instant-images',
-		'unsplash_general_settings'
+		'instant_images_general_settings'
 	);
 
 	// Media Modal.
@@ -93,20 +74,78 @@ function instant_images_admin_init() {
 		__( 'Media Tab', 'instant-images' ),
 		'instant_images_tab_display_callback',
 		'instant-images',
-		'unsplash_general_settings'
+		'instant_images_general_settings'
 	);
+
+	// API Keys.
+	register_setting(
+		'instant_images_api_settings_group',
+		'instant_img_api_settings',
+		'instant_images_sanitize'
+	);
+
+	add_settings_section(
+		'instant_images_api_settings',
+		__( 'API Keys', 'instant-images' ),
+		'instant_images_api_settings_callback',
+		'instant-images-api'
+	);
+
+	// Upgrade routine.
+	$general_options  = get_option( 'instant_img_settings' ); // General options.
+	$api_options      = get_option( 'instant_img_api_settings' ); // API options.
+	$settings_updated = get_option( 'instant_img_settings_updated' );
+
+	// Providers API Keys.
+	$upgrade_routine = [];
+	$count           = 0;
+	foreach ( $providers as $provider ) {
+		if ( $provider['requires_key'] ) {
+			$count++;
+			$key   = $provider['slug'] . '_api';
+			$title = $provider['name'] . __( 'API Key', 'instant-images' );
+
+			// Upgrade routine.
+			if ( ! $settings_updated && isset( $general_options [ $key ] ) && $general_options [ $key ] ) {
+				$upgrade_routine[ $key ] = $general_options [ $key ];
+				update_option( 'instant_img_api_settings', $upgrade_routine );
+				unset( $general_options [ $key ] );
+				update_option( 'instant_img_settings', $general_options );
+				update_option( 'instant_img_settings_updated', true );
+			}
+
+			add_settings_field(
+				$key,
+				$title,
+				'instant_images_api_keys_callback',
+				'instant-images-api',
+				'instant_images_api_settings',
+				[ $provider ]
+			);
+		}
+	}
 
 }
 add_action( 'admin_init', 'instant_images_admin_init' );
 
 /**
- * Some general settings text.
+ * General settings text.
  *
  * @author ConnektMedia <support@connekthq.com>
  * @since 1.0
  */
 function instant_images_general_settings_callback() {
 	echo '<p class="desc">' . esc_attr__( 'Manage your media upload settings.', 'instant-images' ) . '</p>';
+}
+
+/**
+ * API Key settings text.
+ *
+ * @author ConnektMedia <support@connekthq.com>
+ * @since 5.3
+ */
+function instant_images_api_settings_callback() {
+	echo '<p class="desc">' . esc_attr__( 'Manage your provider API keys.', 'instant-images' ) . '</p>';
 }
 
 /**
@@ -147,7 +186,7 @@ function instant_images_width_callback() {
 		$options['unsplash_download_w'] = '1600';
 	}
 
-	echo '<label for="instant_img_settings[unsplash_download_w]"><strong>' . esc_attr__( 'Max Image Upload Width', 'instant-images' ) . '</strong></label>';
+	echo '<label for="instant_img_settings[unsplash_download_w]">' . esc_attr__( 'Max Image Upload Width', 'instant-images' ) . '</label>';
 	echo '<input type="number" id="instant_img_settings[unsplash_download_w]" name="instant_img_settings[unsplash_download_w]" value="' . esc_attr( $options['unsplash_download_w'] ) . '" class="sm" step="20" max="4800" /> ';
 }
 
@@ -159,12 +198,11 @@ function instant_images_width_callback() {
  */
 function instant_images_height_callback() {
 	$options = get_option( 'instant_img_settings' );
-
 	if ( ! isset( $options['unsplash_download_h'] ) ) {
 		$options['unsplash_download_h'] = '1200';
 	}
 
-	echo '<label for="instant_img_settings[unsplash_download_h]"><strong>' . esc_attr__( 'Max Image Upload Height', 'instant-images' ) . '</strong></label>';
+	echo '<label for="instant_img_settings[unsplash_download_h]">' . esc_attr__( 'Max Image Upload Height', 'instant-images' ) . '</label>';
 	echo '<input type="number" id="instant_img_settings[unsplash_download_h]" name="instant_img_settings[unsplash_download_h]" value="' . esc_attr( $options['unsplash_download_h'] ) . '" class="sm" step="20" max="4800" /> ';
 }
 
@@ -180,16 +218,17 @@ function instant_images_auto_attribution_callback() {
 		$options['auto_attribution'] = '0';
 	}
 
-	$html  = '<label style="cursor: default;"><strong>' . esc_attr__( 'Image Attribution', 'instant-images' ) . '</strong></label>';
-	$html .= '<label for="auto_attribution" class="cnkt-checkbox-wrap">';
+	$html  = '<div class="fake-label">' . esc_attr__( 'Image Attribution', 'instant-images' ) . '</div>';
+	$html .= '<label for="auto_attribution" class="instant-images-checkbox">';
 	$html .= '<input type="hidden" name="instant_img_settings[auto_attribution]" value="0" />';
 	$html .= '<input type="checkbox" name="instant_img_settings[auto_attribution]" id="auto_attribution" value="1"' . ( $options['auto_attribution'] ? ' checked="checked"' : '' ) . ' />';
-	$html .= __( 'Automatically add image attribution (as captions) when uploading images.', 'instant-images' );
+	$html .= '<div class="instant-images-checkbox--switch">';
+	$html .= '<div class="toggle-switch"></div>';
+	$html .= '<div class="toggle-label">' . __( 'Automatically add image attribution (as captions) when uploading images.', 'instant-images' ) . '</div>';
+	$html .= '</div>';
 	$html .= '</label>';
 
-	// @codingStandardsIgnoreStart
-	echo $html;
-	// @codingStandardsIgnoreEnd
+	echo $html; // phpcs:ignore
 }
 
 /**
@@ -204,16 +243,17 @@ function instant_images_tab_display_callback() {
 		$options['media_modal_display'] = '0';
 	}
 
-	$html  = '<label style="cursor: default;"><strong>' . esc_attr__( 'Media Modal', 'instant-images' ) . '</strong></label>';
-	$html .= '<label for="media_modal_display" class="cnkt-checkbox-wrap">';
+	$html  = '<div class="fake-label">' . esc_attr__( 'Media Modal', 'instant-images' ) . '</div>';
+	$html .= '<label for="media_modal_display" class="instant-images-checkbox">';
 	$html .= '<input type="hidden" name="instant_img_settings[media_modal_display]" value="0" />';
 	$html .= '<input type="checkbox" name="instant_img_settings[media_modal_display]" id="media_modal_display" value="1"' . ( $options['media_modal_display'] ? ' checked="checked"' : '' ) . ' />';
-	$html .= __( 'Hide Instant Images tab in Media Modal windows.', 'instant-images' );
+	$html .= '<div class="instant-images-checkbox--switch">';
+	$html .= '<div class="toggle-switch"></div>';
+	$html .= '<div class="toggle-label">' . __( 'Hide Instant Images tab in Media Modal windows.', 'instant-images' ) . '</div>';
+	$html .= '</div>';
 	$html .= '</label>';
 
-	// @codingStandardsIgnoreStart
-	echo $html;
-	// @codingStandardsIgnoreEnd
+	echo $html; // phpcs:ignore
 }
 
 /**
@@ -229,9 +269,7 @@ function instant_images_default_provider() {
 		$options['default_provider'] = 'unsplash';
 	}
 	?>
-	<label for="default_provider" style="cursor: default; margin-bottom: 3px;">
-		<strong><?php esc_attr_e( 'Default Provider', 'instant-images' ); ?></strong>
-	</label>
+	<label for="default_provider"><?php esc_attr_e( 'Default Provider', 'instant-images' ); ?></label>
 	<select id="default_provider" name="instant_img_settings[default_provider]">
 		<?php foreach ( $providers as $provider ) { ?>
 			<option value="<?php echo esc_html( $provider['slug'] ); ?>" <?php selected( esc_html( $provider['slug'] ), $options['default_provider'] ); ?>>
@@ -242,55 +280,46 @@ function instant_images_default_provider() {
 	<?php
 }
 
-
 /**
  * Set the API keys for each required provider.
  *
+ * @param array $args Provider arguments.
  * @author ConnektMedia <support@connekthq.com>
- * @since 4.5
+ * @since 5.3
  */
-function instant_images_api_key_callback() {
-	$providers = InstantImages::instant_img_get_providers();
-	$options   = get_option( 'instant_img_settings' );
+function instant_images_api_keys_callback( $args = [] ) {
+	$provider = isset( $args[0] ) && isset( $args[0] ) ? $args[0] : false;
+	if ( ! $provider ) {
+		// Bail early if no provider is set.
+		return;
+	}
 
-	?>
-	<div class="ii-api-desc">
-		<p><strong><?php esc_attr_e( 'API Keys', 'instant-images' ); ?></strong></p>
-		<p><?php esc_attr_e( 'Replace the API keys provided by Instant Images with your own. Leave empty to restore default plugin keys.', 'instant-images' ); ?><br/>
-	</div>
-	<?php
-	foreach ( $providers as $provider ) {
-		if ( $provider['requires_key'] ) {
+	$options  = get_option( 'instant_img_api_settings' ); // API options.
+	$key      = $provider['slug'] . '_api';
+	$title    = $provider['name'];
+	$constant = $provider['constant'];
+	$url      = $provider['url'];
+	$readonly = '';
+	$disabled = '';
 
-			$key      = $provider['slug'] . '_api';
-			$title    = $provider['name'];
-			$constant = $provider['constant'];
-			$url      = $provider['url'];
-
-			if ( defined( $constant ) ) {
-				$options[ $key ] = constant( $constant );
-			} else {
-				if ( ! isset( $options[ $key ] ) ) {
-					$options[ $key ] = '';
-				}
-			}
-			?>
-			<div class="ii-api-option">
-				<div class="ii-api-label">
-					<label for="<?php echo esc_html( $key ); ?>">
-						<strong><?php echo esc_attr( $title ); ?></strong>
-					</label>
-					<span class="desc">&rarr; <a href="<?php echo wp_kses_post( $url ); ?>" target="_blank"><?php esc_attr_e( 'Get Key', 'instant-images' ); ?></a></span>
-				</div>
-				<input type="text" id="<?php echo esc_html( $key ); ?>" name="instant_img_settings[<?php echo esc_html( $key ); ?>]" value="<?php echo wp_kses_post( $options[ $key ] ); ?>" <?php echo defined( $constant ) ? ' readonly="readonly"' : ''; ?>>
-				<?php
-				if ( defined( $constant ) ) {
-					?>
-				<span class="ii-api-contsant"><?php esc_attr_e( 'API key has been set via site constant.', 'instant-images' ); ?></span>
-				<?php } ?>
-			</div>
-			<?php
+	if ( defined( $constant ) ) {
+		$readonly        = ' readonly';
+		$disabled        = ' disabled';
+		$options[ $key ] = constant( $constant );
+	} else {
+		if ( ! isset( $options[ $key ] ) ) {
+			$options[ $key ] = '';
 		}
+	}
+
+	echo '<label class="provider-label" for="instant_img_api_settings[' . esc_attr( $key ) . ']">';
+	echo esc_attr( ucfirst( $title ) ) . ' ' . esc_attr__( 'API Key', 'instant-images' );
+	echo '<a href="' . esc_url( $url ) . '" target="_blank">&rarr; ' . esc_attr__( 'Get Key', 'instant-images' ) . '</a>';
+	echo '</label>';
+	echo '<input type="text" id="instant_img_api_settings[' . esc_attr( $key ) . ']" name="instant_img_api_settings[' . esc_attr( $key ) . ']" value="' . esc_attr( $options[ '' . esc_attr( $key ) . '' ] ) . '" ' . esc_attr( $readonly ) . esc_attr( $disabled ) . ' />';
+
+	if ( defined( $constant ) ) {
+		echo '<div class="api-constant">' . esc_attr__( 'API key has been set via site constant.', 'instant-images' ) . '</div>';
 	}
 }
 

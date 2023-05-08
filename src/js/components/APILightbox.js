@@ -34,16 +34,11 @@ export default function APILightbox(props) {
 		e.preventDefault();
 		setAPIStatus("loading");
 
-		const key = inputRef?.current?.value; // Get API key value.
-		instant_img_localize[`${provider}_app_id`] = key; // Set API key to localized variable.
+		// Get API key value.
+		const key = inputRef?.current?.value;
 
-		// Update the matching provider API key in the Instant Images settings.
-		const settingField = document.querySelector(
-			`input[name="instant_img_settings[${provider}_api]"]`
-		);
-		if (settingField) {
-			settingField.value = key;
-		}
+		// Set API key to localized variable.
+		instant_img_localize[`${provider}_app_id`] = key;
 
 		// Update plugin settings via REST API.
 		updatePluginSetting(`${provider}_api`, key);
@@ -62,6 +57,8 @@ export default function APILightbox(props) {
 				setAPIStatus("valid");
 				setResponse(instant_img_localize.api_success_msg);
 				setTimeout(function () {
+					setResponse("");
+					setAPIStatus("invalid");
 					closeAPILightbox(provider);
 				}, 1000);
 			} else {

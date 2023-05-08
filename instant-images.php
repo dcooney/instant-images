@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 5.2.1
+ * Version: 5.3.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,48 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '5.2.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'April 20, 2023' );
-
-/**
- * Activation hook
- *
- * @author ConnektMedia <support@connekthq.com>
- * @since 2.0
- */
-function instant_images_activate() {
-	// Create /instant-images directory inside /uploads to temporarily store images.
-	$upload_dir = wp_upload_dir();
-	$dir        = $upload_dir['basedir'] . '/instant-images';
-	if ( ! is_dir( $dir ) ) {
-		wp_mkdir_p( $dir );
-	}
-}
-register_activation_hook( __FILE__, 'instant_images_activate' );
-
-/**
- * Deactivation hook
- *
- * @author ConnektMedia <support@connekthq.com>
- * @since 3.2.2
- */
-function instant_images_deactivate() {
-	// Delete /instant-images directory inside /uploads to temporarily store images.
-	$upload_dir = wp_upload_dir();
-	$dir        = $upload_dir['basedir'] . '/instant-images';
-
-	if ( is_dir( $dir ) ) {
-		// Check for files in dir.
-		foreach ( glob( $dir . '/*.*' ) as $filename ) {
-			if ( is_file( $filename ) ) {
-				unlink( $filename );
-			}
-		}
-		// Delete the directory.
-		rmdir( $dir );
-	}
-}
-register_deactivation_hook( __FILE__, 'instant_images_deactivate' );
+define( 'INSTANT_IMAGES_VERSION', '5.3.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'May 8, 2023' );
 
 /**
  * InstantImages class
@@ -76,9 +36,9 @@ class InstantImages {
 	 * @since 2.0
 	 */
 	public function __construct() {
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ &$this, 'instant_images_add_action_links' ] );
-		add_action( 'enqueue_block_editor_assets', [ &$this, 'instant_img_block_plugin_enqueue' ] );
-		add_action( 'wp_enqueue_media', [ &$this, 'instant_img_wp_media_enqueue' ] );
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ &$this, 'add_action_links' ] );
+		add_action( 'enqueue_block_editor_assets', [ &$this, 'enqueue_block_editor' ] );
+		add_action( 'wp_enqueue_media', [ &$this, 'enqueue_media' ] );
 		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain.
 		$this->includes();
 		$this->constants();
@@ -144,17 +104,52 @@ class InstantImages {
 		return $urls;
 	}
 
+
+	/**
+	 * Get global Instant Images plugin settings.
+	 *
+	 * @return object Settings as an STD object with defaults.
+	 */
+	public static function instant_img_get_settings() {
+
+		// General plugin settings.
+		$options          = get_option( 'instant_img_settings' );
+		$max_width        = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
+		$max_height       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
+		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
+		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Default provider.
+
+		// API Keys.
+		$api_options  = get_option( 'instant_img_api_settings' );
+		$unsplash_api = isset( $api_options['unsplash_api'] ) ? $api_options['unsplash_api'] : '';
+		$unsplash_api = empty( $unsplash_api ) ? '' : $unsplash_api; // If empty, set to default key.
+		$pixabay_api  = isset( $api_options['pixabay_api'] ) ? $api_options['pixabay_api'] : '';
+		$pixabay_api  = empty( $pixabay_api ) ? '' : $pixabay_api; // If empty, set to default key.
+		$pexels_api   = isset( $api_options['pexels_api'] ) ? $api_options['pexels_api'] : '';
+		$pexels_api   = empty( $pexels_api ) ? '' : $pexels_api; // If empty, set to default key.
+
+		return (object) [
+			'max_width'        => $max_width,
+			'max_height'       => $max_height,
+			'default_provider' => $default_provider,
+			'auto_attribution' => $auto_attribution,
+			'unsplash_api'     => $unsplash_api,
+			'pixabay_api'      => $pixabay_api,
+			'pexels_api'       => $pexels_api,
+		];
+	}
+
 	/**
 	 * Enqueue Gutenberg Block sidebar plugin
 	 *
 	 * @author ConnektMedia <support@connekthq.com>
 	 * @since 3.0
 	 */
-	public function instant_img_block_plugin_enqueue() {
+	public function enqueue_block_editor() {
 		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets' ] ) ) {
 			wp_enqueue_script(
 				'instant-images-plugin-sidebar',
-				INSTANT_IMAGES_URL . 'build/plugin-sidebar.js',
+				INSTANT_IMAGES_URL . 'build/plugin-sidebar/index.js',
 				[],
 				INSTANT_IMAGES_VERSION,
 				true
@@ -177,13 +172,13 @@ class InstantImages {
 	 * @author ConnektMedia <support@connekthq.com>
 	 * @since 4.0
 	 */
-	public function instant_img_wp_media_enqueue() {
+	public function enqueue_media() {
 		$show_tab       = $this::instant_img_show_tab( 'media_modal_display' ); // Show Tab Setting.
 		$current_screen = is_admin() && function_exists( 'get_current_screen' ) ? get_current_screen()->base : ''; // Current admin screen.
 		if ( $this::instant_img_has_access() && $show_tab && $current_screen !== 'upload' ) {
 			wp_enqueue_script(
 				'instant-images-media-modal',
-				INSTANT_IMAGES_URL . 'build/media-modal.js',
+				INSTANT_IMAGES_URL . 'build/media-modal/index.js',
 				[ 'wp-element' ],
 				INSTANT_IMAGES_VERSION,
 				true
@@ -208,33 +203,26 @@ class InstantImages {
 	 */
 	public static function instant_img_localize( $script = 'instant-images-react' ) {
 		global $post;
-		$options          = get_option( 'instant_img_settings' );
-		$download_w       = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
-		$download_h       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
-		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
-		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Default provider.
+		$settings = self::instant_img_get_settings();
 
 		// Unsplash API.
 		if ( defined( 'INSTANT_IMAGES_UNSPLASH_KEY' ) ) {
 			$unsplash_api = INSTANT_IMAGES_UNSPLASH_KEY;
 		} else {
-			$unsplash_api = isset( $options['unsplash_api'] ) ? $options['unsplash_api'] : '';
-			$unsplash_api = empty( $unsplash_api ) ? '' : $unsplash_api; // If empty, set to default key.
+			$unsplash_api = $settings->unsplash_api;
 		}
 		// Pixabay API.
 		if ( defined( 'INSTANT_IMAGES_PIXABAY_KEY' ) ) {
 			$pixabay_api = INSTANT_IMAGES_PIXABAY_KEY;
 		} else {
-			$pixabay_api = isset( $options['pixabay_api'] ) ? $options['pixabay_api'] : '';
-			$pixabay_api = empty( $pixabay_api ) ? '' : $pixabay_api; // If empty, set to default key.
+			$pixabay_api = $settings->pixabay_api;
 		}
 
 		// Pexels API.
 		if ( defined( 'INSTANT_IMAGES_PEXELS_KEY' ) ) {
 			$pexels_api = INSTANT_IMAGES_PEXELS_KEY;
 		} else {
-			$pexels_api = isset( $options['pexels_api'] ) ? $options['pexels_api'] : '';
-			$pexels_api = empty( $pexels_api ) ? '' : $pexels_api; // If empty, set to default key.
+			$pexels_api = $settings->pexels_api;
 		}
 
 		wp_localize_script(
@@ -247,12 +235,12 @@ class InstantImages {
 				'nonce'                   => wp_create_nonce( 'wp_rest' ),
 				'ajax_url'                => admin_url( 'admin-ajax.php' ),
 				'admin_nonce'             => wp_create_nonce( 'instant_img_nonce' ),
-				'parent_id'               => $post ? $post->ID : 0,
-				'auto_attribution'        => $auto_attribution,
 				'lang'                    => function_exists( 'pll_current_language' ) ? pll_current_language() : '',
-				'default_provider'        => $default_provider,
-				'download_width'          => esc_html( $download_w ),
-				'download_height'         => esc_html( $download_h ),
+				'parent_id'               => $post ? $post->ID : 0,
+				'auto_attribution'        => esc_html( $settings->auto_attribution ),
+				'default_provider'        => esc_html( $settings->default_provider ),
+				'download_width'          => esc_html( $settings->max_width ),
+				'download_height'         => esc_html( $settings->max_height ),
 				'query_debug'             => apply_filters( 'instant_images_query_debug', false ),
 				'unsplash_app_id'         => $unsplash_api,
 				'unsplash_url'            => 'https://unsplash.com',
@@ -444,6 +432,7 @@ class InstantImages {
 	 */
 	private function constants() {
 		define( 'INSTANT_IMAGES_TITLE', 'Instant Images' );
+
 		$upload_dir = wp_upload_dir();
 		define( 'INSTANT_IMAGES_UPLOAD_PATH', $upload_dir['basedir'] . '/instant-images' );
 		define( 'INSTANT_IMAGES_UPLOAD_URL', $upload_dir['baseurl'] . '/instant-images/' );
@@ -451,7 +440,19 @@ class InstantImages {
 		define( 'INSTANT_IMAGES_URL', plugins_url( '/', __FILE__ ) );
 		define( 'INSTANT_IMAGES_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
 		define( 'INSTANT_IMAGES_WPADMIN_URL', admin_url( 'upload.php?page=instant-images' ) );
+		define( 'INSTANT_IMAGES_WPADMIN_SETTINGS_URL', admin_url( 'options-general.php?page=instant-images-settings' ) );
 		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
+	}
+
+	/**
+	 * Get the instant images tagline.
+	 *
+	 * @return string
+	 */
+	public static function instant_images_get_tagline() {
+		// translators: Instant Images tagline.
+		$instant_images_tagline = __( 'One click photo uploads from %1$s, %2$s, %3$s and %4$s.', 'instant-images' ); // phpcs:ignore
+		return '<span class="instant-images-tagline">' . sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">Unsplash</a>', '<a href="https://wordpress.org/openverse" target="_blank">Openverse</a>', '<a href="https://pixabay.com/" target="_blank">Pixabay</a>', '<a href="https://pexels.com/" target="_blank">Pexels</a>' ) .'</span>';  // phpcs:ignore
 	}
 
 	/**
@@ -462,8 +463,8 @@ class InstantImages {
 	 * @author ConnektMedia <support@connekthq.com>
 	 * @since 2.0
 	 */
-	public function instant_images_add_action_links( $links ) {
-		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Photos', 'instant-images' ) . '</a>' ];
+	public function add_action_links( $links ) {
+		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Images', 'instant-images' ) . '</a>' ];
 		return array_merge( $mylinks, $links );
 	}
 

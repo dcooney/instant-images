@@ -23,6 +23,8 @@
 			true,
 			{
 				"ignoreAtRules": [
+					"mixin",
+					"include",
 					"tailwind",
 					"apply",
 					"layer",

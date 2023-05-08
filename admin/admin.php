@@ -16,25 +16,47 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 2.0
  */
 function instant_images_create_page() {
-	$instant_images_settings_page = add_submenu_page(
+	// Media submenu page.
+	$instant_images_media_page = add_submenu_page(
 		'upload.php',
 		INSTANT_IMAGES_TITLE,
 		INSTANT_IMAGES_TITLE,
 		apply_filters( 'instant_images_user_role', 'upload_files' ),
 		INSTANT_IMAGES_NAME,
+		'instant_images_media_page'
+	);
+	add_action( 'load-' . $instant_images_media_page, 'instant_images_load_app_scripts' ); // Add admin scripts.
+
+	// Options/Settings submenu page.
+	$instant_images_settings_page = add_submenu_page(
+		'options-general.php',
+		INSTANT_IMAGES_TITLE,
+		INSTANT_IMAGES_TITLE,
+		apply_filters( 'instant_images_user_role', 'upload_files' ),
+		INSTANT_IMAGES_NAME . '-settings',
 		'instant_images_settings_page'
 	);
-	add_action( 'load-' . $instant_images_settings_page, 'instant_images_load_scripts' ); // Add admin scripts.
+	add_action( 'load-' . $instant_images_settings_page, 'instant_images_load_settings_scripts' ); // Add admin scripts.
 }
 add_action( 'admin_menu', 'instant_images_create_page' );
 
 /**
- * Settings page callback.
+ * Settings/Options page.
  *
- * @since 2.0
  * @author ConnektMedia <support@connekthq.com>
+ * @since 5.3
  */
 function instant_images_settings_page() {
+	require_once INSTANT_IMAGES_PATH . 'admin/views/settings.php';
+}
+
+/**
+ * Media page.
+ *
+ * @author ConnektMedia <support@connekthq.com>
+ * @since 2.0
+ */
+function instant_images_media_page() {
 	$show_settings = true;
 	echo '<div class="instant-img-container" data-media-popup="false">';
 	include INSTANT_IMAGES_PATH . 'admin/views/app.php';
@@ -42,17 +64,27 @@ function instant_images_settings_page() {
 }
 
 /**
- * Load Admin CSS and JS
+ * Load scripts for the Instant Images application.
  *
  * @author ConnektMedia <support@connekthq.com>
  * @since 1.0
  */
-function instant_images_load_scripts() {
+function instant_images_load_app_scripts() {
 	add_action( 'admin_enqueue_scripts', 'instant_images_enqueue_scripts' );
 }
 
 /**
- * Admin Enqueue Scripts
+ * Load scripts for the settings page.
+ *
+ * @author ConnektMedia <support@connekthq.com>
+ * @since 1.0
+ */
+function instant_images_load_settings_scripts() {
+	add_action( 'admin_enqueue_scripts', 'instant_images_settings_scripts' );
+}
+
+/**
+ * Admin Enqueue Scripts.
  *
  * @author ConnektMedia <support@connekthq.com>
  * @since 2.0
@@ -62,18 +94,28 @@ function instant_images_enqueue_scripts() {
 }
 
 /**
- * Localize vars and scripts.
+ * Load the required application scripts and localized vars.
  *
  * @author ConnektMedia <support@connekthq.com>
  * @since 3.0
  */
 function instant_images_scripts() {
 	wp_enqueue_style( 'admin-instant-images', INSTANT_IMAGES_URL . 'build/style-instant-images".css', '', INSTANT_IMAGES_VERSION );
+	wp_enqueue_script( 'instant-images-react', INSTANT_IMAGES_URL . 'build/instant-images".js', [ 'wp-element' ], INSTANT_IMAGES_VERSION, true );
+	InstantImages::instant_img_localize();
+}
+
+/**
+ * Load the required settings scripts.
+ *
+ * @author ConnektMedia <support@connekthq.com>
+ * @since 5.3
+ */
+function instant_images_settings_scripts() {
+	wp_enqueue_style( 'admin-instant-images', INSTANT_IMAGES_URL . 'build/style-instant-images".css', '', INSTANT_IMAGES_VERSION );
 	wp_enqueue_script( 'jquery', true, '', INSTANT_IMAGES_VERSION, false );
 	wp_enqueue_script( 'jquery-form', true, '', INSTANT_IMAGES_VERSION, false );
-	wp_enqueue_script( 'instant-images-react', INSTANT_IMAGES_URL . 'build/instant-images".js', [ 'wp-element' ], INSTANT_IMAGES_VERSION, true );
 	wp_enqueue_script( 'instant-images', INSTANT_IMAGES_ADMIN_URL . 'assets/js/admin.js', 'jquery', INSTANT_IMAGES_VERSION, true );
-	InstantImages::instant_img_localize();
 }
 
 /**
@@ -146,11 +188,16 @@ function instant_images_media_tab() {
  * @since 2.0
  */
 function instant_images_filter_admin_footer_text( $text ) {
-	$screen = get_current_screen();
-	$base   = 'media_page_' . INSTANT_IMAGES_NAME;
-	if ( $screen->base === $base ) {
+	$screen     = get_current_screen();
+	$base_array = [
+		'media_page_' . INSTANT_IMAGES_NAME,
+		'settings_page_' . INSTANT_IMAGES_NAME . '-settings',
+	];
+
+	if ( in_array( $screen->base, $base_array, true ) ) {
+		$divider = '<em>|</em>';
 		// @codingStandardsIgnoreStart
-		echo INSTANT_IMAGES_TITLE . ' is made with <span style="color: #e25555;">♥</span> by <a href="https://connekthq.com/?utm_source=WPAdmin&utm_medium=InstantImages&utm_campaign=Footer" target="_blank" style="font-weight: 500;">Connekt</a> | <a href="https://wordpress.org/support/plugin/instant-images/reviews/#new-post" target="_blank" style="font-weight: 500;">Leave a Review</a> | <a href="https://getinstantimages.com/faqs/" target="_blank" style="font-weight: 500;">FAQs</a> | <a href="https://getinstantimages.com/terms-of-use/" target="_blank" style="font-weight: 500;">Terms</a> | <a href="https://getinstantimages.com/privacy-policy/" target="_blank" style="font-weight: 500;">Privacy Policy</a>';
+		echo INSTANT_IMAGES_TITLE . ' is made with <span style="color: #e25555;">♥</span> by <a href="https://connekthq.com/?utm_source=WPAdmin&utm_medium=InstantImages&utm_campaign=Footer" target="_blank" style="font-weight: 500;">Connekt</a> &rarr; <a href="https://wordpress.org/support/plugin/instant-images/reviews/#new-post" target="_blank" style="font-weight: 500;">Reviews</a> ' . $divider . ' <a href="https://getinstantimages.com/frequently-asked-questions/" target="_blank" style="font-weight: 500;">FAQ</a> ' . $divider . ' <a href="https://getinstantimages.com/terms-of-use/" target="_blank" style="font-weight: 500;">Terms</a> ' . $divider . ' <a href="https://getinstantimages.com/privacy-policy/" target="_blank" style="font-weight: 500;">Privacy Policy</a>';
 		// @codingStandardsIgnoreEnd
 	}
 }

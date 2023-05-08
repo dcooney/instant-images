@@ -41,8 +41,7 @@ function instant_images_settings( WP_REST_Request $request ) {
 		$data = json_decode( $request->get_body(), true ); // Get contents of request body.
 
 		if ( $data ) {
-
-			$option = 'instant_img_settings';
+			$option = 'instant_img_api_settings';
 
 			// Global settings.
 			$options = get_option( $option );
@@ -56,13 +55,13 @@ function instant_images_settings( WP_REST_Request $request ) {
 				// Success.
 				$response = array(
 					'success' => true,
-					'msg'     => 'Settings saved.',
+					'msg'     => __( 'Settings saved.', 'instant-images' ),
 				);
 			} else {
 				// Error.
 				$response = array(
 					'success' => false,
-					'msg'     => 'Unable to save settings.',
+					'msg'     => __( 'Unable to save settings.', 'instant-images' ),
 				);
 			}
 

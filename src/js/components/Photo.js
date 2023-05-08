@@ -126,6 +126,7 @@ export default function Photo(props) {
 
 		// Config Params
 		const config = {
+			credentials: "same-origin",
 			headers: {
 				"X-WP-Nonce": instant_img_localize.nonce,
 				"Content-Type": "application/json",
@@ -417,7 +418,7 @@ export default function Photo(props) {
 			filename,
 			title,
 			alt,
-			caption,
+			caption: imageCaption,
 		});
 
 		// Hide edit screen

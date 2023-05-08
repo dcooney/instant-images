@@ -1,5 +1,7 @@
-body.media_page_instant-images {
+body.media_page_instant-images,
+body.settings_page_instant-images-settings {
 	background: #fff;
+
 	#wpcontent {
 		padding-left: 0;
 		padding-bottom: 40px;
@@ -33,7 +35,7 @@ body.media_page_instant-images {
 
 .instant-img-container {
 	font-size: 14px;
-	color: #666;
+	color: $text_alt;
 	position: relative;
 
 	.offscreen {
@@ -62,7 +64,7 @@ body.media_page_instant-images {
 	}
 	p {
 		display: block;
-		color: #666;
+		color: $text_alt;
 		width: 100%;
 		clear: both;
 		text-transform: none;
@@ -180,6 +182,7 @@ body.media_page_instant-images {
 			background: none;
 		}
 	}
+
 	.permissions-warning {
 		padding: 0 25px;
 		.inner {
@@ -235,12 +238,6 @@ body.media_page_instant-images {
 }
 
 // defaults
-.instant-img-container .cnkt-main {
-	width: 100%;
-	float: none;
-	background: none !important;
-	position: relative;
-}
 .instant-img-container h2,
 .instant-img-container h3,
 .instant-img-container h4 {
@@ -274,75 +271,11 @@ body.media_page_instant-images {
 	padding: 15px !important;
 }
 
-// Table
-.cnkt-sidebar .form-table {
-	margin: 0;
-	border: none;
-	position: relative;
-	top: -5px;
-
-	& .cnkt-checkbox-wrap {
-		display: flex;
-		flex-wrap: nowrap;
-		width: 100%;
-		padding: 3px 0;
-
-		& input {
-			margin-top: 0;
-			margin-right: 8px;
-		}
-	}
-}
-.cnkt-sidebar .form-table td,
-.cnkt-sidebar .form-table label,
-.cnkt-sidebar .form-table p {
-	font-size: 13px;
-}
-.cnkt-sidebar .form-table label {
-	color: $text;
-	display: block;
-	clear: both;
-	float: none;
-}
-.cnkt-sidebar .form-table label span {
-	opacity: 0.8;
-	font-size: 13px;
-	font-style: italic;
-}
-.cnkt-sidebar .form-table th {
-	display: none;
-}
-.instant-img-container .form-table td {
-	border-top: 0;
-	padding: 0 0 15px;
-	float: left;
-	width: 100%;
-	margin: 0;
-	&:empty {
-		padding: 0;
-	}
-}
-.cnkt-sidebar .form-table .form-msg,
-.cnkt-main .form-msg {
-	display: block;
-	line-height: 18px;
-	padding: 12px 12px 12px 15px;
-	margin: 15px 0 0;
-	color: #666;
-	background-color: #fff9ea;
-	border-left: 5px solid #dfd8c2;
-	border-radius: 2px;
-}
-.cnkt-sidebar .form-table .form-msg span,
-.cnkt-main .form-msg span {
-	display: block;
-	padding: 6px 0 3px;
-}
-
 .instant-img-container h1,
+.instant-img-container h2,
 .instant-img-container h3,
 .instant-img-container h4 {
-	color: #222;
+	color: $text;
 	margin-top: 0;
 }
 .instant-img-container h4 + p {
@@ -382,14 +315,14 @@ body.media_page_instant-images {
 	line-height: 1;
 	background: $lighter_grey;
 	width: 100%;
-	border-radius: 2px;
+	border-radius: $radius_md;
 	height: auto;
 }
 .instant-img-container input[type="text"]:focus,
+.instant-img-container input[type="number"]:focus,
 .instant-img-container textarea:focus {
 	border-color: $text_light;
 	box-shadow: 0 0 3px #ccc;
-	background: $grey;
 }
 
 // Helpers

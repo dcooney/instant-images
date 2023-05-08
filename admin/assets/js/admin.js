@@ -3,13 +3,9 @@ var instant_images = instant_images || {};
 jQuery(document).ready(function ($) {
 	"use strict";
 
-	var speed = 350;
-
-	// Media Uploader
+	// Media Uploader Modal
 	instant_images.setEditor = function (frame) {
-		// vars
 		var Parent = wp.media.view.Router;
-
 		wp.media.view.Router = Parent.extend({
 			addNav: function () {
 				// Button
@@ -51,51 +47,66 @@ jQuery(document).ready(function ($) {
 		}
 	}
 
-	// Close
+	// Close Modal.
 	$(document).on("click", ".media-modal-backdrop", function (e) {
-		//alert("meow");
 		e.preventDefault();
 		frame.removeClass("active");
 	});
 
-	// Show Settings
-	var settingsDiv = $(".instant-images-settings");
-	$(".header-wrap button").on("click", function () {
-		var el = $(this);
-		if (settingsDiv.hasClass("active")) {
-			settingsDiv.slideUp(speed, function () {
-				el.find("i").removeClass("fa-close").addClass("fa-cog");
-				settingsDiv.removeClass("active");
-			});
-		} else {
-			settingsDiv.slideDown(speed, function () {
-				el.find("i").addClass("fa-close").removeClass("fa-cog");
-				settingsDiv.addClass("active");
-			});
-		}
-	});
-
-	// Close
-	$(document).on("keyup", function (e) {
-		if (e.key === "Escape" && settingsDiv && settingsDiv.hasClass("active")) {
-			$(".header-wrap button").trigger("click");
-		}
-	});
-
-	// Save Form
-	$("#unsplash-form-options").on("submit", function () {
-		$(".save-settings .loading").fadeIn();
+	// Save Settings Form.
+	$(".instant-images-settings form.settings").on("submit", function () {
+		var form = $(this);
+		form.addClass("saving");
+		$(".save-settings .loading", form).addClass("active");
+		$(".save-settings #submit", form).prop("disabled", true);
 		$(this).ajaxSubmit({
 			success: function () {
-				$(".save-settings .loading").fadeOut(speed, function () {
-					window.location.reload();
-				});
+				$(".save-settings .loading", form).removeClass("active");
+				setTimeout(function () {
+					$(".save-settings .saved", form).addClass("active");
+					setTimeout(function () {
+						$(".save-settings .saved", form).removeClass("active");
+						form.removeClass("saving");
+						$(".save-settings #submit", form).prop("disabled", false);
+					}, 2000);
+				}, 250);
 			},
 			error: function () {
-				$(".save-settings .loading").fadeOut();
-				alert("Sorry, settings could not be saved");
+				form.removeClass("saving");
+				$(".save-settings .loading", form).removeClass("active");
+				$(".save-settings #submit", form).prop("disabled", false);
+				alert("An error occured and the settings could not be saved");
 			},
 		});
 		return false;
 	});
+
+	// Settings anchor links.
+	var settings = document.querySelectorAll(
+		".settings_page_instant-images-settings .settings-entry"
+	);
+	if (settings) {
+		var target = document.querySelector(
+			".settings_page_instant-images-settings nav.jump-nav"
+		);
+		settings.forEach(function (setting) {
+			var anchor = setting.getAttribute("id");
+			var icon = setting.querySelector(".settings-entry--title .fa");
+			var text = setting.querySelector(".settings-entry--title h2").innerText;
+
+			var button = document.createElement("button");
+			button.setAttribute("data-anchor", anchor);
+			button.innerHTML = icon.outerHTML + text;
+			target.appendChild(button);
+
+			// Scroll to section.
+			button.addEventListener("click", function (e) {
+				var target = document.querySelector("#" + anchor);
+				window.scrollTo({
+					top: target.offsetTop,
+					behavior: "smooth",
+				});
+			});
+		});
+	}
 });

@@ -5,15 +5,19 @@ $small: 800px;
 $wp_small: 640px;
 $xsmall: 600px;
 $radius_sm: 1px;
+$radius_md: 2px;
 $radius: 3px;
-$radius_lg: 5px;
+$radius_lg: 6px;
+$radius_xl: 10px;
 $el_height: 38px;
+$shadow_md: 0 1px 4px 0 #0000001a, 0 1px 3px -1px #0000001a !important;
 $shadow: 0 8px 16px rgba(#303f7a, 0.175);
 $gb_border: #ddd;
 $transition: all 0.25s ease;
 
-$text: #333;
-$text_light: #999;
+$text: #434246;
+$text_alt: #6b6877;
+$text_light: #98979d;
 $input: #ccc;
 $border: #e1e1e1;
 $grey: #efefef;
@@ -27,3 +31,18 @@ $red: #df3333;
 $warn: #cfa345;
 $yellow: #ffe732;
 $yellow_bkg: #fffadc;
+
+@mixin inputDefaults() {
+	color: $text_alt;
+	background-color: #fff;
+	width: 100%;
+	padding: 10px;
+	border-color: $border;
+	line-height: 1;
+	border-radius: $radius;
+}
+@mixin inputFocus() {
+	outline: none;
+	border-color: $purple;
+	box-shadow: 0 0 0 1px $purple, 0 0 0 4px rgba($purple, 0.1);
+}

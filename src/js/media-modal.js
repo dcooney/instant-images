@@ -1,4 +1,4 @@
-import { createRoot } from "@wordpress/element";
+import { createRoot, render } from "@wordpress/element";
 import InstantImages from "./components/InstantImages";
 import buildURL from "./functions/buildURL";
 import consoleStatus from "./functions/consoleStatus";
@@ -163,16 +163,29 @@ const getMediaModalProvider = async (element) => {
  * @param {object|null} error    The API error object.
  */
 const renderApp = (element, provider, results, error) => {
-	const root = createRoot(element);
-	root.render(
-		<InstantImages
-			editor="media-router"
-			data={results}
-			container={element}
-			api_error={error}
-			provider={provider}
-		/>
-	);
+	if (createRoot) {
+		const root = createRoot(element);
+		root.render(
+			<InstantImages
+				editor="media-router"
+				data={results}
+				container={element}
+				api_error={error}
+				provider={provider}
+			/>
+		);
+	} else {
+		render(
+			<InstantImages
+				editor="media-router"
+				data={results}
+				container={element}
+				api_error={error}
+				provider={provider}
+			/>,
+			element
+		);
+	}
 };
 
 /**

@@ -1,0 +1,96 @@
+// Title.
+.header-wrap,
+.header-wrap-alt {
+	h1 {
+		padding: 0;
+		margin: 4px 0 0;
+		font-weight: 800;
+		font-size: 24px;
+		max-width: 70%;
+		@media screen and (max-width: $small) {
+			max-width: 100%;
+			width: 100%;
+			text-align: center;
+		}
+		em {
+			font-weight: 400;
+			font-size: 12px;
+			background-color: rgba(0, 0, 0, 0.035);
+			color: $text_alt;
+			display: inline-block;
+			border-radius: $radius;
+			padding: 5px;
+			position: relative;
+			top: -2px;
+			left: 2px;
+			font-style: normal;
+			line-height: 1;
+		}
+	}
+}
+
+// Tagline.
+span.instant-images-tagline {
+	display: block;
+	padding: 0;
+	color: $text_light;
+	font-size: 14px;
+	line-height: 1.45;
+	font-weight: 400;
+}
+
+// Settings Header.
+.header-wrap-alt {
+	display: block;
+	text-align: center;
+	padding: 0 0 20px;
+	border-bottom: 1px solid $border;
+	h1 {
+		width: 100%;
+		height: auto;
+		max-width: none;
+		display: block;
+		background: url("../img/instant-images-icon.svg") no-repeat center 15px;
+		background-size: 50px 50px;
+		padding: 80px 5px 0;
+		margin: 0 0 15px;
+		span {
+			padding-top: 10px;
+		}
+		+ p {
+			margin: 0;
+		}
+	}
+}
+
+// Upload header - Import/Upload page wp-admin/upload.php?page=instant-images
+.header-wrap {
+	background: $lighter_grey url("../img/instant-images-icon.svg") no-repeat 25px
+		20px;
+	background-size: 48px 48px;
+	padding: 20px 25px 20px 83px;
+	min-height: 88px;
+	overflow: hidden;
+	border-bottom: 1px solid $grey;
+	position: relative;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
+
+	@media screen and (max-width: $small) {
+		background-position: center 20px;
+		padding: 80px 25px 20px;
+		text-align: center;
+	}
+	a.button {
+		position: absolute;
+		right: 25px;
+		bottom: 26px;
+		@media screen and (max-width: $small) {
+			position: static;
+			margin-top: 20px;
+			display: inline-block;
+		}
+		i {
+			margin-right: 2px;
+		}
+	}
+}
