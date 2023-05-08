@@ -7,32 +7,19 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 5.2.1
+ * Version: 5.3.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
  * @package InstantImages
  */
 
-/*
-TO DO:
-- Separate out API keys into own settings field group. [DONE]
-- Adjust font paragraph colors etc [DONE]
-- Add license key settings for Pro.
-
-
-DONE
-* NEW - Added new standalone Instant Images settings page and added new settings fields.
-* NEW - Added initial support for upcoming Instant Images Pro plugin.
-* UPDATE - General styling and UI updates.
-*/
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '5.2.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'April 20, 2023' );
+define( 'INSTANT_IMAGES_VERSION', '5.3.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'May 8, 2023' );
 
 /**
  * InstantImages class
