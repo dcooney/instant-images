@@ -14,6 +14,13 @@
  * @package InstantImages
  */
 
+/*
+TO DO:
+- Separate out API keys into own settings field group. [DONE]
+- Adjust font paragraph colors etc [DONE]
+- Add license key settings for Pro.
+*/
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
