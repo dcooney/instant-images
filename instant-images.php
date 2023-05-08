@@ -22,9 +22,9 @@ TO DO:
 
 
 DONE
-- Updated Instant Images settings page and added new settings fields.
-- Added support for Instant Images Pro.
-- General styling and UI updates.
+* NEW - Added new standalone Instant Images settings page and added new settings fields.
+* NEW - Added initial support for upcoming Instant Images Pro plugin.
+* UPDATE - General styling and UI updates.
 */
 
 if ( ! defined( 'ABSPATH' ) ) {

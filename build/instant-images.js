@@ -3545,64 +3545,86 @@ function getImages() {
   }
   function _initialize() {
     _initialize = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var app, root, sessionData, response, status, headers, results, _results$error, error;
+      var app, sessionData, root, response, status, headers, results, _results$error, error, _root;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             app = document.getElementById("app");
             if (!app) {
-              _context.next = 26;
+              _context.next = 25;
               break;
             }
-            root = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRoot)(app); // Get session storage.
+            // Get session storage.
             sessionData = (0,_functions_session__WEBPACK_IMPORTED_MODULE_8__.getSession)(url);
             if (!sessionData) {
-              _context.next = 8;
+              _context.next = 7;
               break;
             }
             // Display results from session.
-            root.render( /*#__PURE__*/React.createElement(_components_InstantImages__WEBPACK_IMPORTED_MODULE_1__["default"], {
-              editor: "classic",
-              data: sessionData,
-              container: app,
-              provider: provider,
-              api_error: null
-            }));
-            _context.next = 26;
+            if (_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRoot) {
+              root = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRoot)(app);
+              root.render( /*#__PURE__*/React.createElement(_components_InstantImages__WEBPACK_IMPORTED_MODULE_1__["default"], {
+                editor: "classic",
+                data: sessionData,
+                container: app,
+                provider: provider,
+                api_error: null
+              }));
+            } else {
+              (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)( /*#__PURE__*/React.createElement(_components_InstantImages__WEBPACK_IMPORTED_MODULE_1__["default"], {
+                editor: "classic",
+                data: sessionData,
+                container: app,
+                provider: provider,
+                api_error: null
+              }), app);
+            }
+            _context.next = 25;
             break;
-          case 8:
-            _context.next = 10;
+          case 7:
+            _context.next = 9;
             return fetch(url);
-          case 10:
+          case 9:
             response = _context.sent;
             status = response.status, headers = response.headers;
             (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_7__.checkRateLimit)(headers);
-            _context.prev = 13;
-            _context.next = 16;
+            _context.prev = 12;
+            _context.next = 15;
             return response.json();
-          case 16:
+          case 15:
             results = _context.sent;
             _results$error = results.error, error = _results$error === void 0 ? null : _results$error;
-            root.render( /*#__PURE__*/React.createElement(_components_InstantImages__WEBPACK_IMPORTED_MODULE_1__["default"], {
-              editor: "classic",
-              data: results,
-              container: app,
-              provider: provider,
-              api_error: error
-            }));
+            if (_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRoot) {
+              _root = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRoot)(app);
+              _root.render( /*#__PURE__*/React.createElement(_components_InstantImages__WEBPACK_IMPORTED_MODULE_1__["default"], {
+                editor: "classic",
+                data: results,
+                container: app,
+                provider: provider,
+                api_error: error
+              }));
+            } else {
+              (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)( /*#__PURE__*/React.createElement(_components_InstantImages__WEBPACK_IMPORTED_MODULE_1__["default"], {
+                editor: "classic",
+                data: results,
+                container: app,
+                provider: provider,
+                api_error: error
+              }), app);
+            }
             (0,_functions_session__WEBPACK_IMPORTED_MODULE_8__.saveSession)(url, results);
-            _context.next = 26;
+            _context.next = 25;
             break;
-          case 22:
-            _context.prev = 22;
-            _context.t0 = _context["catch"](13);
+          case 21:
+            _context.prev = 21;
+            _context.t0 = _context["catch"](12);
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_4__["default"])(provider, status);
             (0,_functions_session__WEBPACK_IMPORTED_MODULE_8__.deleteSession)(url);
-          case 26:
+          case 25:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[13, 22]]);
+      }, _callee, null, [[12, 21]]);
     }));
     return _initialize.apply(this, arguments);
   }

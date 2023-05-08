@@ -1,4 +1,4 @@
-import { createRoot } from "@wordpress/element";
+import { createRoot, render } from "@wordpress/element";
 import InstantImages from "./components/InstantImages";
 import { API } from "./constants/API";
 import buildURL from "./functions/buildURL";
@@ -25,22 +25,34 @@ function getImages(provider = API.defaults.provider) {
 	async function initialize() {
 		const app = document.getElementById("app");
 		if (app) {
-			const root = createRoot(app);
-
 			// Get session storage.
 			const sessionData = getSession(url);
 
 			if (sessionData) {
 				// Display results from session.
-				root.render(
-					<InstantImages
-						editor="classic"
-						data={sessionData}
-						container={app}
-						provider={provider}
-						api_error={null}
-					/>
-				);
+				if (createRoot) {
+					const root = createRoot(app);
+					root.render(
+						<InstantImages
+							editor="classic"
+							data={sessionData}
+							container={app}
+							provider={provider}
+							api_error={null}
+						/>
+					);
+				} else {
+					render(
+						<InstantImages
+							editor="classic"
+							data={sessionData}
+							container={app}
+							provider={provider}
+							api_error={null}
+						/>,
+						app
+					);
+				}
 			} else {
 				// Dispatch API fetch request.
 				const response = await fetch(url);
@@ -51,15 +63,29 @@ function getImages(provider = API.defaults.provider) {
 					// Get response data.
 					const results = await response.json();
 					const { error = null } = results;
-					root.render(
-						<InstantImages
-							editor="classic"
-							data={results}
-							container={app}
-							provider={provider}
-							api_error={error}
-						/>
-					);
+					if (createRoot) {
+						const root = createRoot(app);
+						root.render(
+							<InstantImages
+								editor="classic"
+								data={results}
+								container={app}
+								provider={provider}
+								api_error={error}
+							/>
+						);
+					} else {
+						render(
+							<InstantImages
+								editor="classic"
+								data={results}
+								container={app}
+								provider={provider}
+								api_error={error}
+							/>,
+							app
+						);
+					}
 					saveSession(url, results);
 				} catch (error) {
 					consoleStatus(provider, status);
