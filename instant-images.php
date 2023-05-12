@@ -118,16 +118,15 @@ class InstantImages {
 	 * @return object Settings as an STD object with defaults.
 	 */
 	public static function instant_img_get_settings() {
-
 		// General plugin settings.
-		$options          = get_option( 'instant_img_settings' );
+		$options          = get_option( INSTANT_IMAGES_SETTINGS );
 		$max_width        = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
 		$max_height       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
 		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
 		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Default provider.
 
 		// API Keys.
-		$api_options  = get_option( 'instant_img_api_settings' );
+		$api_options  = get_option( INSTANT_IMAGES_API_SETTINGS );
 		$unsplash_api = isset( $api_options['unsplash_api'] ) ? $api_options['unsplash_api'] : '';
 		$unsplash_api = empty( $unsplash_api ) ? '' : $unsplash_api; // If empty, set to default key.
 		$pixabay_api  = isset( $api_options['pixabay_api'] ) ? $api_options['pixabay_api'] : '';
@@ -332,15 +331,7 @@ class InstantImages {
 				'error'                   => __( 'Error', 'instant-images' ),
 				'ad'                      => __( 'Ad', 'instant-images' ),
 				'advertisement'           => __( 'Advertisement', 'instant-images' ),
-				'v5_upgrade_notice'       => [
-					'transient'  => get_transient( 'instant_images_v5_upgrade_notice' ),
-					'disclaimer' => __( 'Disclaimer', 'instant-images' ),
-					// translators: Instant Images upgrade notice.
-					'text'       => sprintf( __( 'As of Instant Images 5.0, all API requests to service providers (Unsplash, Pexels and Pixabay) are now routed through our custom %1$sInstant Images Proxy%2$s server.', 'instant-images' ), '<a href="https://connekthq.com/plugins/instant-images/faqs/#what-is-the-instant-images-proxy-server" target="_blank">', '</a>' ),
-					'privacy'    => __( 'Privacy Policy', 'instant-images' ),
-					'terms'      => __( 'Terms of Use', 'instant-images' ),
-					'dismiss'    => __( 'Dismiss Notice', 'instant-images' ),
-				],
+				'pro'                     => self::instant_images_pro_activated() ? instant_images_pro_localized_vars() : false,
 				'filters'                 => [
 					'select'       => __( '-- Select --', 'instant-images' ),
 					'orderby'      => __( 'Order:', 'instant-images' ),
@@ -389,7 +380,7 @@ class InstantImages {
 			return true;
 		}
 
-		$options = get_option( 'instant_img_settings' );
+		$options = get_option( INSTANT_IMAGES_SETTINGS );
 		$show    = true;
 		if ( isset( $options[ $option ] ) ) {
 			if ( '1' === $options[ $option ] ) {
@@ -448,6 +439,8 @@ class InstantImages {
 		define( 'INSTANT_IMAGES_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
 		define( 'INSTANT_IMAGES_WPADMIN_URL', admin_url( 'upload.php?page=instant-images' ) );
 		define( 'INSTANT_IMAGES_WPADMIN_SETTINGS_URL', admin_url( 'options-general.php?page=instant-images-settings' ) );
+		define( 'INSTANT_IMAGES_SETTINGS', 'instant_img_settings' );
+		define( 'INSTANT_IMAGES_API_SETTINGS', 'instant_img_api_settings' );
 		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
 	}
 
@@ -473,6 +466,15 @@ class InstantImages {
 	public function add_action_links( $links ) {
 		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Images', 'instant-images' ) . '</a>' ];
 		return array_merge( $mylinks, $links );
+	}
+
+	/**
+	 * Is Instant Images Pro activated.
+	 *
+	 * @return boolean
+	 */
+	public static function instant_images_pro_activated() {
+		return class_exists( 'InstantImagesPro' ) && defined( 'INSTANT_IMAGES_PRO_PATH' );
 	}
 
 }

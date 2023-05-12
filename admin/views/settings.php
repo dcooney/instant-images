@@ -33,7 +33,7 @@
 	<div class="instant-images-settings--sections">
 		<!-- Pro: Image Import-->
 		<?php
-		if ( class_exists( 'InstantImagesPro' ) && defined( 'INSTANT_IMAGES_PRO_PATH' ) ) {
+		if ( InstantImages::instant_images_pro_activated() ) {
 			require_once INSTANT_IMAGES_PRO_PATH . 'views/import.php';
 		}
 		?>

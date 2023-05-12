@@ -21,7 +21,7 @@ function instant_images_admin_init() {
 	// General Settings.
 	register_setting(
 		'instant_images_general_settings_group',
-		'instant_img_settings',
+		INSTANT_IMAGES_SETTINGS,
 		'instant_images_sanitize'
 	);
 
@@ -72,15 +72,19 @@ function instant_images_admin_init() {
 	add_settings_field(
 		'media_modal_display',
 		__( 'Media Tab', 'instant-images' ),
-		'instant_images_tab_display_callback',
+		'instant_images_media_modal_display_callback',
 		'instant-images',
 		'instant_images_general_settings'
 	);
 
+	if ( InstantImages::instant_images_pro_activated() ) {
+		instant_images_pro_add_settings(); // Add Pro Settings.
+	}
+
 	// API Keys.
 	register_setting(
 		'instant_images_api_settings_group',
-		'instant_img_api_settings',
+		INSTANT_IMAGES_API_SETTINGS,
 		'instant_images_sanitize'
 	);
 
@@ -92,8 +96,8 @@ function instant_images_admin_init() {
 	);
 
 	// Upgrade routine.
-	$general_options  = get_option( 'instant_img_settings' ); // General options.
-	$api_options      = get_option( 'instant_img_api_settings' ); // API options.
+	$general_options  = get_option( INSTANT_IMAGES_SETTINGS ); // General options.
+	$api_options      = get_option( INSTANT_IMAGES_API_SETTINGS ); // API options.
 	$settings_updated = get_option( 'instant_img_settings_updated' );
 
 	// Providers API Keys.
@@ -108,9 +112,9 @@ function instant_images_admin_init() {
 			// Upgrade routine.
 			if ( ! $settings_updated && isset( $general_options [ $key ] ) && $general_options [ $key ] ) {
 				$upgrade_routine[ $key ] = $general_options [ $key ];
-				update_option( 'instant_img_api_settings', $upgrade_routine );
+				update_option( INSTANT_IMAGES_API_SETTINGS, $upgrade_routine );
 				unset( $general_options [ $key ] );
-				update_option( 'instant_img_settings', $general_options );
+				update_option( INSTANT_IMAGES_SETTINGS, $general_options );
 				update_option( 'instant_img_settings_updated', true );
 			}
 
@@ -180,7 +184,7 @@ function instant_images_sanitize( $input ) {
  * @since 1.0
  */
 function instant_images_width_callback() {
-	$options = get_option( 'instant_img_settings' );
+	$options = get_option( INSTANT_IMAGES_SETTINGS );
 
 	if ( ! isset( $options['unsplash_download_w'] ) ) {
 		$options['unsplash_download_w'] = '1600';
@@ -197,7 +201,7 @@ function instant_images_width_callback() {
  * @since 1.0
  */
 function instant_images_height_callback() {
-	$options = get_option( 'instant_img_settings' );
+	$options = get_option( INSTANT_IMAGES_SETTINGS );
 	if ( ! isset( $options['unsplash_download_h'] ) ) {
 		$options['unsplash_download_h'] = '1200';
 	}
@@ -213,22 +217,11 @@ function instant_images_height_callback() {
  * @since 5.2.0
  */
 function instant_images_auto_attribution_callback() {
-	$options = get_option( 'instant_img_settings' );
-	if ( ! isset( $options['auto_attribution'] ) ) {
-		$options['auto_attribution'] = '0';
-	}
+	$name  = 'auto_attribution';
+	$title = esc_attr__( 'Image Attribution', 'instant-images' );
+	$label = __( 'Automatically add image attribution (as captions) when uploading images.', 'instant-images' );
 
-	$html  = '<div class="fake-label">' . esc_attr__( 'Image Attribution', 'instant-images' ) . '</div>';
-	$html .= '<label for="auto_attribution" class="instant-images-checkbox">';
-	$html .= '<input type="hidden" name="instant_img_settings[auto_attribution]" value="0" />';
-	$html .= '<input type="checkbox" name="instant_img_settings[auto_attribution]" id="auto_attribution" value="1"' . ( $options['auto_attribution'] ? ' checked="checked"' : '' ) . ' />';
-	$html .= '<div class="instant-images-checkbox--switch">';
-	$html .= '<div class="toggle-switch"></div>';
-	$html .= '<div class="toggle-label">' . __( 'Automatically add image attribution (as captions) when uploading images.', 'instant-images' ) . '</div>';
-	$html .= '</div>';
-	$html .= '</label>';
-
-	echo $html; // phpcs:ignore
+	echo instant_images_settings_toggle_switch( $name, $title, $label ); // phpcs:ignore
 }
 
 /**
@@ -237,23 +230,40 @@ function instant_images_auto_attribution_callback() {
  * @author ConnektMedia <support@connekthq.com>
  * @since 3.2.1
  */
-function instant_images_tab_display_callback() {
-	$options = get_option( 'instant_img_settings' );
-	if ( ! isset( $options['media_modal_display'] ) ) {
-		$options['media_modal_display'] = '0';
+function instant_images_media_modal_display_callback() {
+	$name  = 'media_modal_display';
+	$title = esc_attr__( 'Media Modal', 'instant-images' );
+	$label = __( 'Hide Instant Images tab in Media Modal windows.', 'instant-images' );
+
+	echo instant_images_settings_toggle_switch( $name, $title, $label ); // phpcs:ignore
+}
+
+/**
+ * Render a toggle switch from checkbox.
+ *
+ * @param string $name The option name.
+ * @param string $title The checkbox title.
+ * @param string $label The toggle switch label.
+ * @param string $default The default setting.
+ * @return string The HTML for the toggle switch.
+ */
+function instant_images_settings_toggle_switch( $name, $title, $label, $default = '0' ) {
+	$options = get_option( INSTANT_IMAGES_SETTINGS );
+
+	if ( ! isset( $options[ $name ] ) ) {
+		$options[ $name ] = $default;
 	}
 
-	$html  = '<div class="fake-label">' . esc_attr__( 'Media Modal', 'instant-images' ) . '</div>';
-	$html .= '<label for="media_modal_display" class="instant-images-checkbox">';
-	$html .= '<input type="hidden" name="instant_img_settings[media_modal_display]" value="0" />';
-	$html .= '<input type="checkbox" name="instant_img_settings[media_modal_display]" id="media_modal_display" value="1"' . ( $options['media_modal_display'] ? ' checked="checked"' : '' ) . ' />';
+	$html  = '<div class="fake-label">' . $title . '</div>';
+	$html .= '<label for="' . $name . '" class="instant-images-checkbox">';
+	$html .= '<input type="checkbox" name="instant_img_settings[' . $name . ']" id="' . $name . '" value="1"' . ( $options[ $name ] ? ' checked="checked"' : '' ) . ' />';
 	$html .= '<div class="instant-images-checkbox--switch">';
 	$html .= '<div class="toggle-switch"></div>';
-	$html .= '<div class="toggle-label">' . __( 'Hide Instant Images tab in Media Modal windows.', 'instant-images' ) . '</div>';
+	$html .= '<div class="toggle-label">' . $label . '</div>';
 	$html .= '</div>';
 	$html .= '</label>';
 
-	echo $html; // phpcs:ignore
+	return $html;
 }
 
 /**
@@ -264,7 +274,7 @@ function instant_images_tab_display_callback() {
  */
 function instant_images_default_provider() {
 	$providers = InstantImages::instant_img_get_providers();
-	$options   = get_option( 'instant_img_settings' );
+	$options   = get_option( INSTANT_IMAGES_SETTINGS );
 	if ( ! isset( $options['default_provider'] ) ) {
 		$options['default_provider'] = 'unsplash';
 	}
@@ -294,7 +304,7 @@ function instant_images_api_keys_callback( $args = [] ) {
 		return;
 	}
 
-	$options  = get_option( 'instant_img_api_settings' ); // API options.
+	$options  = get_option( INSTANT_IMAGES_API_SETTINGS ); // API options.
 	$key      = $provider['slug'] . '_api';
 	$title    = $provider['name'];
 	$constant = $provider['constant'];
