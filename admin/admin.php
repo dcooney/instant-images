@@ -32,7 +32,7 @@ function instant_images_create_page() {
 		'options-general.php',
 		INSTANT_IMAGES_TITLE,
 		INSTANT_IMAGES_TITLE,
-		apply_filters( 'instant_images_user_role', 'upload_files' ),
+		apply_filters( 'instant_images_settings_user_role', 'manage_options' ),
 		INSTANT_IMAGES_NAME . '-settings',
 		'instant_images_settings_page'
 	);

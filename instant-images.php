@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 5.3.0
+ * Version: 5.3.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '5.3.0' );
-define( 'INSTANT_IMAGES_RELEASE', 'May 8, 2023' );
+define( 'INSTANT_IMAGES_VERSION', '5.3.1' );
+define( 'INSTANT_IMAGES_RELEASE', 'May 12, 2023' );
 
 /**
  * InstantImages class
@@ -146,7 +146,7 @@ class InstantImages {
 	 * @since 3.0
 	 */
 	public function enqueue_block_editor() {
-		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets' ] ) ) {
+		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets', 'site-editor' ] ) ) {
 			wp_enqueue_script(
 				'instant-images-plugin-sidebar',
 				INSTANT_IMAGES_URL . 'build/plugin-sidebar/index.js',
