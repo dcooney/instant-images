@@ -146,8 +146,8 @@ How to install Instant Images.
 == Changelog ==
 
 = 5.3.1 - May 12, 2023 =
-* UPDATE: Updated default user role to `manage_options` on Instant Images settings page.
-* NEW: Added new `instant_images_settings_user_role` hook to adjust the user role for Instant Images settings page.
+* UPDATE: Updated default user role to manage_options on the Instant Images settings page.
+* NEW: Added new instant_images_settings_user_role hook to adjust the user role for the Instant Images settings page.
 * FIX: Adding fix for error on Site Editor screen when using a FSE theme.
 
 = 5.3.0 - May 8, 2023 =
