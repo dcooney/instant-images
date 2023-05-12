@@ -4,7 +4,7 @@ Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 6.2
-Stable tag: 5.3.0
+Stable tag: 5.3.1
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -145,11 +145,16 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 5.3.1 - May 12, 2023 =
+* UPDATE: Updated default user role to `manage_options` on Instant Images settings page.
+* NEW: Added new `instant_images_settings_user_role` hook to adjust the user role for Instant Images settings page.
+* FIX: Adding fix for error on Site Editor screen when using a FSE theme.
+
 = 5.3.0 - May 8, 2023 =
-* NEW - Added new standalone Instant Images settings page and added new settings fields.
-* NEW - Added initial support for upcoming Instant Images Pro plugin.
-* FIX - Fixed issue with missing `createRoot` function in WP < 6.2 that would cause Instant Images to fail to load.
-* UPDATE - General styling and UI updates throughout app.
+* NEW: Added new standalone Instant Images settings page and added new settings fields.
+* NEW: Added initial support for upcoming Instant Images Pro plugin.
+* FIX: Fixed issue with missing `createRoot` function in WP < 6.2 that would cause Instant Images to fail to load.
+* UPDATE: General styling and UI updates throughout app.
 
 = 5.2.1 - April 20, 2023 =
 * UPDATE: Adds sessionStorage for storing API results in browser session to reduce proxy usage and API requests. Session data is stored for 1 hour.
