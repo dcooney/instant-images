@@ -146,7 +146,7 @@ class InstantImages {
 	 * @since 3.0
 	 */
 	public function enqueue_block_editor() {
-		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets' ] ) ) {
+		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets', 'site-editor' ] ) ) {
 			wp_enqueue_script(
 				'instant-images-plugin-sidebar',
 				INSTANT_IMAGES_URL . 'build/plugin-sidebar/index.js',
