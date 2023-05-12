@@ -15,5 +15,5 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 // Delete options.
-delete_option( INSTANT_IMAGES_SETTINGS );
-delete_option( INSTANT_IMAGES_API_SETTINGS );
+delete_option( 'instant_img_settings' );
+delete_option( 'instant_img_api_settings' );
