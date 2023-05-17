@@ -1732,7 +1732,6 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .wp-block .provider-nav button,
 .components-panel .provider-nav button {
   font-size: 13px;
-  padding-left: 36px;
 }
 .wp-block .instant-img-container {
   border: 1px solid #e1e1e1;
