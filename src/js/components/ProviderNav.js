@@ -1,16 +1,17 @@
 import { Fragment } from "@wordpress/element";
 import { API } from "../constants/API";
+import { usePluginContext } from "../common/pluginProvider";
 const providers = API.providers; // Get current provider settings.
 
 /**
  * Render the ProviderNav component.
- * Note: Component is display on initial plugin load if the default provider has an invalid API key.
  *
  * @param {Object} props The component props.
  * @return {JSX.Element} The ProviderNav component.
  */
 export default function ProviderNav(props) {
-	const { provider, switchProvider } = props;
+	const { switchProvider } = props;
+	const { provider } = usePluginContext();
 	return (
 		<Fragment>
 			{!!providers?.length && (

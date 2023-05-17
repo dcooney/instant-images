@@ -5,10 +5,13 @@ import { dispatch } from "@wordpress/data";
  *
  * @param {string} imageId The attachment ID.
  */
-const setFeaturedImage = (imageId) => {
+export default function setFeaturedImage(imageId) {
 	if (imageId === null) {
 		return false;
 	}
+	// Set the featured image.
 	dispatch("core/editor").editPost({ featured_media: imageId });
-};
-export default setFeaturedImage;
+
+	// Open the document sidebar.
+	dispatch("core/edit-post").openGeneralSidebar("edit-post/document");
+}

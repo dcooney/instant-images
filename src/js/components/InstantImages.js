@@ -2,6 +2,7 @@ import { Fragment, useEffect, useRef, useState } from "@wordpress/element";
 import classNames from "classnames";
 import Masonry from "masonry-layout";
 import { useInView } from "react-intersection-observer";
+import { PluginProvider } from "../common/pluginProvider";
 import { API } from "../constants/API";
 import { FILTERS } from "../constants/filters";
 import buildURL, { buildTestURL } from "../functions/buildURL";
@@ -13,6 +14,7 @@ import { deleteSession, getSession, saveSession } from "../functions/session";
 import APILightbox from "./APILightbox";
 import ErrorLightbox from "./ErrorLightbox";
 import Filter from "./Filter";
+import LoadMore from "./LoadMore";
 import LoadingBlock from "./LoadingBlock";
 import NoResults from "./NoResults";
 import ProviderNav from "./ProviderNav";
@@ -22,16 +24,31 @@ import SearchHeader from "./SearchHeader";
 import SearchToolTip from "./SearchToolTip";
 import Tooltip from "./Tooltip";
 const imagesLoaded = require("imagesloaded");
+
 let page = 1;
 
 /**
  * Render the main InstantImages application component.
  *
- * @param {Object} props The component props.
- * @return {JSX.Element} The InstantImages component.
+ * @param {Object}  props           The component props.
+ * @param {string}  props.editor    Editor type.
+ * @param {string}  props.provider  Image provider.
+ * @param {Array}   props.data      API results.
+ * @param {Element} props.container Instant Images container element.
+ * @param {Object}  props.api_error API error object.
+ * @param {string}  props.clientId  WP block client ID.
+ * @return {JSX.Element}            InstantImages component.
  */
 export default function InstantImages(props) {
-	let { editor = "classic", data, api_error, provider, container } = props; // eslint-disable-line prefer-const
+	const {
+		editor = "classic",
+		provider,
+		data,
+		container,
+		api_error = null,
+		clientId = null,
+	} = props;
+
 	const delay = 250;
 	const searchClass = "searching";
 	const searchDefaults = {
@@ -67,13 +84,16 @@ export default function InstantImages(props) {
 	const searchInput = useRef();
 	const msnry = useRef();
 
-	// WP editor props.
-	const blockEditor = editor === "gutenberg" ? true : false;
-	const mediaRouter = editor === "media-router" ? true : false;
+	// WP Editor props.
+	const wpBlock = editor === "block" ? true : false;
+	const blockSidebar = editor === "sidebar" ? true : false;
+	const gutenberg = wpBlock || blockSidebar ? true : false;
+	const mediaModal = editor === "media-modal" ? true : false;
+
 	const body = document.body;
-	const plugin = blockEditor ? body : container.parentNode.parentNode;
-	const wrapper = blockEditor
-		? body
+	const plugin = gutenberg ? container : container.parentNode.parentNode;
+	const wrapper = gutenberg
+		? container
 		: plugin.querySelector(".instant-images-wrapper");
 
 	/**
@@ -400,7 +420,7 @@ export default function InstantImages(props) {
 	 */
 	function renderLayout() {
 		imagesLoaded(photoListing.current, function () {
-			if (!blockEditor) {
+			if (!gutenberg) {
 				msnry.current = new Masonry(photoListing.current, {
 					itemSelector: ".photo",
 				});
@@ -478,11 +498,9 @@ export default function InstantImages(props) {
 
 	// Scroll in-view callback.
 	useEffect(() => {
-		if (!blockEditor && !mediaRouter) {
-			// Exclude infinite scroll in media modal and block editor.
-			if (mounted && !loading && !done) {
-				loadMorePhotos();
-			}
+		// Infinite scrolling.
+		if (mounted && !loading && !done) {
+			loadMorePhotos();
 		}
 	}, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -495,6 +513,11 @@ export default function InstantImages(props) {
 	useEffect(() => {
 		setLoading(false);
 		wrapper.classList.add("loaded");
+
+		// Block editor.
+		if (wpBlock) {
+			getPhotos();
+		}
 		// Add global escape listener.
 		document.addEventListener("keydown", escFunction, false);
 		return () => {
@@ -504,104 +527,98 @@ export default function InstantImages(props) {
 
 	return (
 		<Fragment>
-			<ProviderNav switchProvider={switchProvider} provider={activeProvider} />
-			<RestAPIError
-				title={instant_img_localize.error_restapi}
-				desc={instant_img_localize.error_restapi_desc}
-				type="warning"
-			/>
-
-			<div className="control-nav" ref={controlNav}>
-				<div
-					className={classNames(
-						"control-nav--filters-wrap",
-						apiError || search?.active ? "inactive" : null
-					)}
-				>
-					{filterOptions && Object.entries(filterOptions)?.length ? (
-						<div className="control-nav--filters">
-							{Object.entries(filterOptions).map(([key, filter], index) => (
-								<Filter
-									key={`${activeProvider}-${index}-${key}`}
-									provider={activeProvider}
-									data={filter}
-									filterKey={key}
-									function={filterPhotos}
-								/>
-							))}
-						</div>
-					) : null}
-				</div>
-				<div
-					className={classNames(
-						"control-nav--search",
-						"search-field",
-						apiError ? "inactive" : null
-					)}
-					id="search-bar"
-				>
-					<form onSubmit={(e) => searchHandler(e)} autoComplete="off">
-						<label htmlFor="search-input" className="offscreen">
-							{instant_img_localize.search_label}
-						</label>
-						<input
-							type="search"
-							id="search-input"
-							placeholder={instant_img_localize.search}
-							ref={searchInput}
-							disabled={apiError}
-						/>
-						<button type="submit" disabled={apiError}>
-							<i className="fa fa-search"></i>
-							<span className="offscreen">{instant_img_localize.search}</span>
-						</button>
-						<SearchToolTip
-							container={plugin}
-							getPhotos={getPhotos}
-							is_search={search?.active}
-							total={search?.results}
-							title={`${search?.results} ${instant_img_localize.search_results} ${search?.term}`}
-						/>
-					</form>
-				</div>
-			</div>
-
-			<div id="photo-listing" className={loading ? "loading" : null}>
-				{!!search?.active && (
-					<SearchHeader
-						provider={activeProvider}
-						term={search?.term}
-						total={search?.results}
-						filterSearch={filterSearch}
-						getPhotos={getPhotos}
-					/>
-				)}
-				<div id="photos" ref={photoListing}>
-					<Results
-						provider={activeProvider}
-						results={results}
-						mediaRouter={mediaRouter}
-						blockEditor={blockEditor}
-					/>
-				</div>
-				<LoadingBlock loading={loadingMore} total={results?.length} />
-				<NoResults total={search?.results} is_search={search?.active} />
-				<div className="load-more-wrap" ref={loadMoreRef}>
-					<button
-						type="button"
-						className="button"
-						onClick={() => loadMorePhotos()}
-					>
-						{instant_img_localize.load_more}
-					</button>
-				</div>
-				<APILightbox
-					provider={showAPILightbox}
-					closeAPILightbox={closeAPILightbox}
+			<PluginProvider
+				value={{
+					provider: activeProvider,
+					wpBlock,
+					mediaModal,
+					blockSidebar,
+					clientId,
+				}}
+			>
+				<ProviderNav switchProvider={switchProvider} />
+				<RestAPIError
+					title={instant_img_localize.error_restapi}
+					desc={instant_img_localize.error_restapi_desc}
+					type="warning"
 				/>
-				<ErrorLightbox error={apiError} provider={activeProvider} />
-				<Tooltip />
-			</div>
+				<div className="control-nav" ref={controlNav}>
+					<div
+						className={classNames(
+							"control-nav--filters-wrap",
+							apiError || search?.active ? "inactive" : null
+						)}
+					>
+						{filterOptions && Object.entries(filterOptions)?.length ? (
+							<div className="control-nav--filters">
+								{Object.entries(filterOptions).map(([key, filter], index) => (
+									<Filter
+										key={`${activeProvider}-${index}-${key}`}
+										provider={activeProvider}
+										data={filter}
+										filterKey={key}
+										function={filterPhotos}
+									/>
+								))}
+							</div>
+						) : null}
+					</div>
+					<div
+						className={classNames(
+							"control-nav--search",
+							"search-field",
+							apiError ? "inactive" : null
+						)}
+						id="search-bar"
+					>
+						<form onSubmit={(e) => searchHandler(e)} autoComplete="off">
+							<label htmlFor="search-input" className="offscreen">
+								{instant_img_localize.search_label}
+							</label>
+							<input
+								type="search"
+								id="search-input"
+								placeholder={instant_img_localize.search}
+								ref={searchInput}
+								disabled={apiError}
+							/>
+							<button type="submit" disabled={apiError}>
+								<i className="fa fa-search"></i>
+								<span className="offscreen">{instant_img_localize.search}</span>
+							</button>
+							<SearchToolTip
+								container={plugin}
+								getPhotos={getPhotos}
+								is_search={search?.active}
+								total={search?.results}
+								title={`${search?.results} ${instant_img_localize.search_results} ${search?.term}`}
+							/>
+						</form>
+					</div>
+				</div>
+				<div id="photo-listing" className={loading ? "loading" : null}>
+					{!!search?.active && (
+						<SearchHeader
+							term={search?.term}
+							total={search?.results}
+							filterSearch={filterSearch}
+							getPhotos={getPhotos}
+						/>
+					)}
+					<div id="photos" ref={photoListing}>
+						<Results results={results} />
+					</div>
+					<NoResults total={search?.results} is_search={search?.active} />
+					<LoadMore loadMorePhotos={loadMorePhotos} ref={loadMoreRef} />
+					<LoadingBlock loading={loadingMore} total={results?.length} />
+					<APILightbox
+						provider={showAPILightbox}
+						closeAPILightbox={closeAPILightbox}
+					/>
+					<ErrorLightbox error={apiError} />
+					<Tooltip />
+				</div>
+			</PluginProvider>
 		</Fragment>
 	);
 }

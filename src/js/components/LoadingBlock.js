@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { API } from "../constants/API";
 
 /**
@@ -9,9 +10,11 @@ import { API } from "../constants/API";
  * @return {JSX.Element}          The LoadingBlock component.
  */
 export default function LoadingBlock({ loading, total = 0 }) {
-	if (!loading || total < API.defaults.per_page) {
+	if (total < API.defaults.per_page) {
 		// Bail early if not loading or total is less than the default per page.
 		return null;
 	}
-	return <div className="loading-block" />;
+	return (
+		<div className={classNames("loading-block", loading ? "loading" : null)} />
+	);
 }

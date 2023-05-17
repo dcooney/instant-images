@@ -11,6 +11,41 @@
 
 /***/ }),
 
+/***/ "./src/js/common/pluginProvider.js":
+/*!*****************************************!*\
+  !*** ./src/js/common/pluginProvider.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PluginProvider": () => (/* binding */ PluginProvider),
+/* harmony export */   "usePluginContext": () => (/* binding */ usePluginContext)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+
+
+// Create Context object.
+var PluginContext = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createContext)();
+
+// Export Provider.
+function PluginProvider(props) {
+  var value = props.value,
+    children = props.children;
+  return /*#__PURE__*/React.createElement(PluginContext.Provider, {
+    value: value
+  }, children);
+}
+
+// Export useContext Hook.
+function usePluginContext() {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useContext)(PluginContext);
+}
+
+/***/ }),
+
 /***/ "./src/js/components/APILightbox.js":
 /*!******************************************!*\
   !*** ./src/js/components/APILightbox.js ***!
@@ -280,8 +315,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../functions/getErrorMessage */ "./src/js/functions/getErrorMessage.js");
-/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+/* harmony import */ var _functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../functions/getErrorMessage */ "./src/js/functions/getErrorMessage.js");
+/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
+
 
 
 
@@ -295,8 +332,9 @@ __webpack_require__.r(__webpack_exports__);
  * @return {JSX.Element} The ErrorLightbox component.
  */
 function ErrorLightbox(props) {
-  var error = props.error,
-    provider = props.provider;
+  var error = props.error;
+  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__.usePluginContext)(),
+    provider = _usePluginContext.provider;
   var lightbox = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var status = error !== null && error !== void 0 && error.status ? error.status : null;
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, error && status && /*#__PURE__*/React.createElement("div", {
@@ -309,13 +347,13 @@ function ErrorLightbox(props) {
     "data-provider": provider
   }, provider), /*#__PURE__*/React.createElement("p", {
     className: "callout-warning"
-  }, status, " ", instant_img_localize.error), /*#__PURE__*/React.createElement("p", null, (0,_functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_2__["default"])(status)), /*#__PURE__*/React.createElement("p", {
+  }, status, " ", instant_img_localize.error), /*#__PURE__*/React.createElement("p", null, (0,_functions_getErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"])(status)), /*#__PURE__*/React.createElement("p", {
     className: "more-info"
   }, instant_img_localize.api_default_provider), /*#__PURE__*/React.createElement("p", {
     className: "action-controls"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.gotoURL)(instant_img_localize["".concat(provider, "_api_url")]);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.gotoURL)(instant_img_localize["".concat(provider, "_api_url")]);
     }
   }, instant_img_localize.get_api_key))))));
 }
@@ -339,12 +377,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var a11yarrows__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(a11yarrows__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/pluginProvider */ "./src/js/common/pluginProvider.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -359,8 +399,9 @@ function Filter(props) {
   var _data$filters;
   var data = props.data,
     filterKey = props.filterKey,
-    handler = props["function"],
-    provider = props.provider;
+    handler = props["function"];
+  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_3__.usePluginContext)(),
+    provider = _usePluginContext.provider;
   var defaultValue = data === null || data === void 0 ? void 0 : data["default"];
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
@@ -521,6 +562,47 @@ function Filter(props) {
 
 /***/ }),
 
+/***/ "./src/js/components/Icon.js":
+/*!***********************************!*\
+  !*** ./src/js/components/Icon.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "IconSVG": () => (/* binding */ IconSVG),
+/* harmony export */   "default": () => (/* binding */ Icon)
+/* harmony export */ });
+/**
+ * The Icon component.
+ *
+ * @return {JSX.Element} 	    The Icon component.
+ */
+function Icon() {
+  return /*#__PURE__*/React.createElement("span", {
+    className: "instant-images-sidebar-icon"
+  }, /*#__PURE__*/React.createElement(IconSVG, null));
+}
+
+/**
+ * The SVG icon.
+ *
+ * @return {JSX.Element} The IconSVG component.
+ */
+function IconSVG() {
+  return /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 31 58",
+    width: "13px",
+    height: "24px"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: "20 0 20 23 31 23 11 58 11 34 0 34 20 0",
+    fill: "#4a7bc5"
+  }));
+}
+
+/***/ }),
+
 /***/ "./src/js/components/InstantImages.js":
 /*!********************************************!*\
   !*** ./src/js/components/InstantImages.js ***!
@@ -538,26 +620,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
 /* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(masonry_layout__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! react-intersection-observer */ "./node_modules/react-intersection-observer/react-intersection-observer.modern.mjs");
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
-/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
-/* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
-/* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
-/* harmony import */ var _functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
-/* harmony import */ var _functions_getResults__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
-/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
-/* harmony import */ var _functions_session__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../functions/session */ "./src/js/functions/session.js");
-/* harmony import */ var _APILightbox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./APILightbox */ "./src/js/components/APILightbox.js");
-/* harmony import */ var _ErrorLightbox__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./ErrorLightbox */ "./src/js/components/ErrorLightbox.js");
-/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
-/* harmony import */ var _LoadingBlock__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
-/* harmony import */ var _NoResults__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
-/* harmony import */ var _ProviderNav__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ProviderNav */ "./src/js/components/ProviderNav.js");
-/* harmony import */ var _RestAPIError__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./RestAPIError */ "./src/js/components/RestAPIError.js");
-/* harmony import */ var _Results__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Results */ "./src/js/components/Results.js");
-/* harmony import */ var _SearchHeader__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SearchHeader */ "./src/js/components/SearchHeader.js");
-/* harmony import */ var _SearchToolTip__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./SearchToolTip */ "./src/js/components/SearchToolTip.js");
-/* harmony import */ var _Tooltip__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip.js");
+/* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! react-intersection-observer */ "./node_modules/react-intersection-observer/react-intersection-observer.modern.mjs");
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+/* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
+/* harmony import */ var _functions_buildURL__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/buildURL */ "./src/js/functions/buildURL.js");
+/* harmony import */ var _functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../functions/consoleStatus */ "./src/js/functions/consoleStatus.js");
+/* harmony import */ var _functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../functions/getQueryParams */ "./src/js/functions/getQueryParams.js");
+/* harmony import */ var _functions_getResults__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../functions/getResults */ "./src/js/functions/getResults.js");
+/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
+/* harmony import */ var _functions_session__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../functions/session */ "./src/js/functions/session.js");
+/* harmony import */ var _APILightbox__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./APILightbox */ "./src/js/components/APILightbox.js");
+/* harmony import */ var _ErrorLightbox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ErrorLightbox */ "./src/js/components/ErrorLightbox.js");
+/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
+/* harmony import */ var _LoadMore__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./LoadMore */ "./src/js/components/LoadMore.js");
+/* harmony import */ var _LoadingBlock__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./LoadingBlock */ "./src/js/components/LoadingBlock.js");
+/* harmony import */ var _NoResults__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
+/* harmony import */ var _ProviderNav__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ProviderNav */ "./src/js/components/ProviderNav.js");
+/* harmony import */ var _RestAPIError__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./RestAPIError */ "./src/js/components/RestAPIError.js");
+/* harmony import */ var _Results__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Results */ "./src/js/components/Results.js");
+/* harmony import */ var _SearchHeader__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./SearchHeader */ "./src/js/components/SearchHeader.js");
+/* harmony import */ var _SearchToolTip__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./SearchToolTip */ "./src/js/components/SearchToolTip.js");
+/* harmony import */ var _Tooltip__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -600,23 +684,34 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
 var imagesLoaded = __webpack_require__(/*! imagesloaded */ "./node_modules/imagesloaded/imagesloaded.js");
 var page = 1;
 
 /**
  * Render the main InstantImages application component.
  *
- * @param {Object} props The component props.
- * @return {JSX.Element} The InstantImages component.
+ * @param {Object}  props           The component props.
+ * @param {string}  props.editor    Editor type.
+ * @param {string}  props.provider  Image provider.
+ * @param {Array}   props.data      API results.
+ * @param {Element} props.container Instant Images container element.
+ * @param {Object}  props.api_error API error object.
+ * @param {string}  props.clientId  WP block client ID.
+ * @return {JSX.Element}            InstantImages component.
  */
 function InstantImages(props) {
   var _Object$entries;
   var _props$editor = props.editor,
     editor = _props$editor === void 0 ? "classic" : _props$editor,
-    data = props.data,
-    api_error = props.api_error,
     provider = props.provider,
-    container = props.container; // eslint-disable-line prefer-const
+    data = props.data,
+    container = props.container,
+    _props$api_error = props.api_error,
+    api_error = _props$api_error === void 0 ? null : _props$api_error,
+    _props$clientId = props.clientId,
+    clientId = _props$clientId === void 0 ? null : _props$clientId;
   var delay = 250;
   var searchClass = "searching";
   var searchDefaults = {
@@ -627,7 +722,7 @@ function InstantImages(props) {
   };
 
   // App state.
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(data)),
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(data)),
     _useState2 = _slicedToArray(_useState, 2),
     results = _useState2[0],
     setResults = _useState2[1]; // Image results.
@@ -667,7 +762,7 @@ function InstantImages(props) {
     _useState20 = _slicedToArray(_useState19, 2),
     search = _useState20[0],
     setSearch = _useState20[1];
-  var _useState21 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(_constants_filters__WEBPACK_IMPORTED_MODULE_4__.FILTERS[activeProvider].filters),
+  var _useState21 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(_constants_filters__WEBPACK_IMPORTED_MODULE_5__.FILTERS[activeProvider].filters),
     _useState22 = _slicedToArray(_useState21, 2),
     filterOptions = _useState22[0],
     setFilterOptions = _useState22[1];
@@ -681,7 +776,7 @@ function InstantImages(props) {
     setSearchFilters = _useState26[1];
 
   // Refs.
-  var _useInView = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_22__.useInView)({
+  var _useInView = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_24__.useInView)({
       rootMargin: "0px 0px"
     }),
     _useInView2 = _slicedToArray(_useInView, 2),
@@ -692,12 +787,14 @@ function InstantImages(props) {
   var searchInput = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var msnry = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
 
-  // WP editor props.
-  var blockEditor = editor === "gutenberg" ? true : false;
-  var mediaRouter = editor === "media-router" ? true : false;
+  // WP Editor props.
+  var wpBlock = editor === "block" ? true : false;
+  var blockSidebar = editor === "sidebar" ? true : false;
+  var gutenberg = wpBlock || blockSidebar ? true : false;
+  var mediaModal = editor === "media-modal" ? true : false;
   var body = document.body;
-  var plugin = blockEditor ? body : container.parentNode.parentNode;
-  var wrapper = blockEditor ? body : plugin.querySelector(".instant-images-wrapper");
+  var plugin = gutenberg ? container : container.parentNode.parentNode;
+  var wrapper = gutenberg ? container : plugin.querySelector(".instant-images-wrapper");
 
   /**
    * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
@@ -729,15 +826,15 @@ function InstantImages(props) {
             page = 1;
 
             // Build URL.
-            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, filters);
-            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])("photos", params); // Get session storage.
-            sessionData = (0,_functions_session__WEBPACK_IMPORTED_MODULE_10__.getSession)(url);
+            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(activeProvider, filters);
+            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_6__["default"])("photos", params); // Get session storage.
+            sessionData = (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.getSession)(url);
             if (!sessionData) {
               _context.next = 12;
               break;
             }
             // Display results from session.
-            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(sessionData), false, null);
+            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(sessionData), false, null);
             _context.next = 31;
             break;
           case 12:
@@ -746,23 +843,23 @@ function InstantImages(props) {
           case 14:
             response = _context.sent;
             status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_10__.checkRateLimit)(headers);
             _context.prev = 17;
             _context.next = 20;
             return response.json();
           case 20:
             apiResults = _context.sent;
             _apiResults$error = apiResults.error, error = _apiResults$error === void 0 ? null : _apiResults$error;
-            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(apiResults), false, error);
-            (0,_functions_session__WEBPACK_IMPORTED_MODULE_10__.saveSession)(url, apiResults);
+            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(apiResults), false, error);
+            (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.saveSession)(url, apiResults);
             _context.next = 31;
             break;
           case 26:
             _context.prev = 26;
             _context.t0 = _context["catch"](17);
-            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(provider, status);
+            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
             setLoading(false);
-            (0,_functions_session__WEBPACK_IMPORTED_MODULE_10__.deleteSession)(url);
+            (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.deleteSession)(url);
           case 31:
             // Delay loading animatons for effect.
             setTimeout(function () {
@@ -809,15 +906,15 @@ function InstantImages(props) {
             loadmoreParams = _objectSpread(_objectSpread(_objectSpread({}, {
               page: page
             }), searchQuery), activeFilters);
-            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, loadmoreParams);
-            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])(type, params); // Get session storage.
-            sessionData = (0,_functions_session__WEBPACK_IMPORTED_MODULE_10__.getSession)(url);
+            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(activeProvider, loadmoreParams);
+            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_6__["default"])(type, params); // Get session storage.
+            sessionData = (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.getSession)(url);
             if (!sessionData) {
               _context2.next = 15;
               break;
             }
             // Display results from session.
-            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(sessionData), true, null);
+            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(sessionData), true, null);
             _context2.next = 34;
             break;
           case 15:
@@ -826,23 +923,23 @@ function InstantImages(props) {
           case 17:
             response = _context2.sent;
             status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_10__.checkRateLimit)(headers);
             _context2.prev = 20;
             _context2.next = 23;
             return response.json();
           case 23:
             apiResults = _context2.sent;
             _apiResults$error2 = apiResults.error, error = _apiResults$error2 === void 0 ? null : _apiResults$error2;
-            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(apiResults), true, error);
-            (0,_functions_session__WEBPACK_IMPORTED_MODULE_10__.saveSession)(url, apiResults);
+            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(apiResults), true, error);
+            (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.saveSession)(url, apiResults);
             _context2.next = 34;
             break;
           case 29:
             _context2.prev = 29;
             _context2.t0 = _context2["catch"](20);
-            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(provider, status);
+            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
             setLoadingMore(false);
-            (0,_functions_session__WEBPACK_IMPORTED_MODULE_10__.deleteSession)(url);
+            (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.deleteSession)(url);
           case 34:
           case "end":
             return _context2.stop();
@@ -878,20 +975,20 @@ function InstantImages(props) {
             searchParams = _objectSpread(_objectSpread(_objectSpread({}, {
               page: page
             }), searchQuery), searchFilters);
-            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_7__["default"])(activeProvider, searchParams);
-            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__["default"])("search", params); // Get session storage.
-            sessionData = (0,_functions_session__WEBPACK_IMPORTED_MODULE_10__.getSession)(url);
+            params = (0,_functions_getQueryParams__WEBPACK_IMPORTED_MODULE_8__["default"])(activeProvider, searchParams);
+            url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_6__["default"])("search", params); // Get session storage.
+            sessionData = (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.getSession)(url);
             if (!sessionData) {
               _context3.next = 13;
               break;
             }
             // Display results from session.
-            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(sessionData), false, null);
+            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(sessionData), false, null);
             setSearch({
               active: true,
               term: term,
               type: searchType,
-              results: (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__.getSearchTotal)(sessionData)
+              results: (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__.getSearchTotal)(sessionData)
             });
             _context3.next = 34;
             break;
@@ -901,21 +998,21 @@ function InstantImages(props) {
           case 15:
             response = _context3.sent;
             status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_10__.checkRateLimit)(headers);
             _context3.prev = 18;
             _context3.next = 21;
             return response.json();
           case 21:
             apiResults = _context3.sent;
             _apiResults$error3 = apiResults.error, error = _apiResults$error3 === void 0 ? null : _apiResults$error3;
-            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__["default"])(apiResults), false, error);
+            displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(apiResults), false, error);
             setSearch({
               active: true,
               term: term,
               type: searchType,
-              results: (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_8__.getSearchTotal)(apiResults)
+              results: (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__.getSearchTotal)(apiResults)
             });
-            (0,_functions_session__WEBPACK_IMPORTED_MODULE_10__.saveSession)(url, apiResults);
+            (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.saveSession)(url, apiResults);
             _context3.next = 34;
             break;
           case 28:
@@ -924,8 +1021,8 @@ function InstantImages(props) {
             // Reset all search parameters.
             setDone(true);
             setLoading(false);
-            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_6__["default"])(provider, status);
-            (0,_functions_session__WEBPACK_IMPORTED_MODULE_10__.deleteSession)(url);
+            (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
+            (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.deleteSession)(url);
           case 34:
             searchInput.current.classList.remove(searchClass);
           case 35:
@@ -1061,17 +1158,17 @@ function InstantImages(props) {
             body.classList.remove("overflow-hidden");
 
             // API verification - check API key for provider.
-            if (!(_constants_API__WEBPACK_IMPORTED_MODULE_3__.API[newProvider].requires_key && !apiTested.includes(newProvider))) {
+            if (!(_constants_API__WEBPACK_IMPORTED_MODULE_4__.API[newProvider].requires_key && !apiTested.includes(newProvider))) {
               _context4.next = 27;
               break;
             }
             _context4.prev = 9;
             _context4.next = 12;
-            return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_5__.buildTestURL)(newProvider));
+            return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_6__.buildTestURL)(newProvider));
           case 12:
             response = _context4.sent;
             status = response.status, headers = response.headers;
-            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_9__.checkRateLimit)(headers);
+            (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_10__.checkRateLimit)(headers);
             if (!(status !== 200)) {
               _context4.next = 19;
               break;
@@ -1099,7 +1196,7 @@ function InstantImages(props) {
           case 27:
             // Add slight delay for loading effect.
             setTimeout(function () {
-              setFilterOptions(_constants_filters__WEBPACK_IMPORTED_MODULE_4__.FILTERS[newProvider].filters); // Update filter options.
+              setFilterOptions(_constants_filters__WEBPACK_IMPORTED_MODULE_5__.FILTERS[newProvider].filters); // Update filter options.
               setActiveProvider(newProvider); // Switch the provider.
             }, delay);
           case 28:
@@ -1112,7 +1209,7 @@ function InstantImages(props) {
   }
   function renderLayout() {
     imagesLoaded(photoListing.current, function () {
-      if (!blockEditor) {
+      if (!gutenberg) {
         msnry.current = new (masonry_layout__WEBPACK_IMPORTED_MODULE_2___default())(photoListing.current, {
           itemSelector: ".photo"
         });
@@ -1182,17 +1279,15 @@ function InstantImages(props) {
 
   // Provider change callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    setFilterOptions(_constants_filters__WEBPACK_IMPORTED_MODULE_4__.FILTERS[activeProvider].filters);
+    setFilterOptions(_constants_filters__WEBPACK_IMPORTED_MODULE_5__.FILTERS[activeProvider].filters);
     setFilters({}); // Trigger filter change.
   }, [activeProvider]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Scroll in-view callback.
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!blockEditor && !mediaRouter) {
-      // Exclude infinite scroll in media modal and block editor.
-      if (mounted && !loading && !done) {
-        loadMorePhotos();
-      }
+    // Infinite scrolling.
+    if (mounted && !loading && !done) {
+      loadMorePhotos();
     }
   }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -1205,6 +1300,11 @@ function InstantImages(props) {
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setLoading(false);
     wrapper.classList.add("loaded");
+
+    // Block editor.
+    if (wpBlock) {
+      getPhotos();
+    }
     // Add global escape listener.
     document.addEventListener("keydown", escFunction, false);
     return function () {
@@ -1212,10 +1312,17 @@ function InstantImages(props) {
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_16__["default"], {
-    switchProvider: switchProvider,
-    provider: activeProvider
-  }), /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_17__["default"], {
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(_common_pluginProvider__WEBPACK_IMPORTED_MODULE_3__.PluginProvider, {
+    value: {
+      provider: activeProvider,
+      wpBlock: wpBlock,
+      mediaModal: mediaModal,
+      blockSidebar: blockSidebar,
+      clientId: clientId
+    }
+  }, /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_18__["default"], {
+    switchProvider: switchProvider
+  }), /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_19__["default"], {
     title: instant_img_localize.error_restapi,
     desc: instant_img_localize.error_restapi_desc,
     type: "warning"
@@ -1230,7 +1337,7 @@ function InstantImages(props) {
     var _ref2 = _slicedToArray(_ref, 2),
       key = _ref2[0],
       filter = _ref2[1];
-    return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_13__["default"], {
+    return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_14__["default"], {
       key: "".concat(activeProvider, "-").concat(index, "-").concat(key),
       provider: activeProvider,
       data: filter,
@@ -1261,7 +1368,7 @@ function InstantImages(props) {
     className: "fa fa-search"
   }), /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
-  }, instant_img_localize.search)), /*#__PURE__*/React.createElement(_SearchToolTip__WEBPACK_IMPORTED_MODULE_20__["default"], {
+  }, instant_img_localize.search)), /*#__PURE__*/React.createElement(_SearchToolTip__WEBPACK_IMPORTED_MODULE_22__["default"], {
     container: plugin,
     getPhotos: getPhotos,
     is_search: search === null || search === void 0 ? void 0 : search.active,
@@ -1270,8 +1377,7 @@ function InstantImages(props) {
   })))), /*#__PURE__*/React.createElement("div", {
     id: "photo-listing",
     className: loading ? "loading" : null
-  }, !!(search !== null && search !== void 0 && search.active) && /*#__PURE__*/React.createElement(_SearchHeader__WEBPACK_IMPORTED_MODULE_19__["default"], {
-    provider: activeProvider,
+  }, !!(search !== null && search !== void 0 && search.active) && /*#__PURE__*/React.createElement(_SearchHeader__WEBPACK_IMPORTED_MODULE_21__["default"], {
     term: search === null || search === void 0 ? void 0 : search.term,
     total: search === null || search === void 0 ? void 0 : search.results,
     filterSearch: filterSearch,
@@ -1279,34 +1385,61 @@ function InstantImages(props) {
   }), /*#__PURE__*/React.createElement("div", {
     id: "photos",
     ref: photoListing
-  }, /*#__PURE__*/React.createElement(_Results__WEBPACK_IMPORTED_MODULE_18__["default"], {
-    provider: activeProvider,
-    results: results,
-    mediaRouter: mediaRouter,
-    blockEditor: blockEditor
-  })), /*#__PURE__*/React.createElement(_LoadingBlock__WEBPACK_IMPORTED_MODULE_14__["default"], {
-    loading: loadingMore,
-    total: results === null || results === void 0 ? void 0 : results.length
-  }), /*#__PURE__*/React.createElement(_NoResults__WEBPACK_IMPORTED_MODULE_15__["default"], {
+  }, /*#__PURE__*/React.createElement(_Results__WEBPACK_IMPORTED_MODULE_20__["default"], {
+    results: results
+  })), /*#__PURE__*/React.createElement(_NoResults__WEBPACK_IMPORTED_MODULE_17__["default"], {
     total: search === null || search === void 0 ? void 0 : search.results,
     is_search: search === null || search === void 0 ? void 0 : search.active
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "load-more-wrap",
+  }), /*#__PURE__*/React.createElement(_LoadMore__WEBPACK_IMPORTED_MODULE_15__["default"], {
+    loadMorePhotos: loadMorePhotos,
     ref: loadMoreRef
+  }), /*#__PURE__*/React.createElement(_LoadingBlock__WEBPACK_IMPORTED_MODULE_16__["default"], {
+    loading: loadingMore,
+    total: results === null || results === void 0 ? void 0 : results.length
+  }), /*#__PURE__*/React.createElement(_APILightbox__WEBPACK_IMPORTED_MODULE_12__["default"], {
+    provider: showAPILightbox,
+    closeAPILightbox: closeAPILightbox
+  }), /*#__PURE__*/React.createElement(_ErrorLightbox__WEBPACK_IMPORTED_MODULE_13__["default"], {
+    error: apiError
+  }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_23__["default"], null))));
+}
+
+/***/ }),
+
+/***/ "./src/js/components/LoadMore.js":
+/*!***************************************!*\
+  !*** ./src/js/components/LoadMore.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/**
+ * Render the LoadMore component.
+ *
+ * @return {JSX.Element} The LoadMore component.
+ */
+var LoadMore = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(function (props, ref) {
+  var loadMorePhotos = props.loadMorePhotos;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "load-more-wrap",
+    ref: ref
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "button",
     onClick: function onClick() {
       return loadMorePhotos();
     }
-  }, instant_img_localize.load_more)), /*#__PURE__*/React.createElement(_APILightbox__WEBPACK_IMPORTED_MODULE_11__["default"], {
-    provider: showAPILightbox,
-    closeAPILightbox: closeAPILightbox
-  }), /*#__PURE__*/React.createElement(_ErrorLightbox__WEBPACK_IMPORTED_MODULE_12__["default"], {
-    error: apiError,
-    provider: activeProvider
-  }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_21__["default"], null)));
-}
+  }, instant_img_localize.load_more));
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LoadMore);
 
 /***/ }),
 
@@ -1321,7 +1454,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ LoadingBlock)
 /* harmony export */ });
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+
 
 
 /**
@@ -1336,12 +1472,12 @@ function LoadingBlock(_ref) {
   var loading = _ref.loading,
     _ref$total = _ref.total,
     total = _ref$total === void 0 ? 0 : _ref$total;
-  if (!loading || total < _constants_API__WEBPACK_IMPORTED_MODULE_0__.API.defaults.per_page) {
+  if (total < _constants_API__WEBPACK_IMPORTED_MODULE_1__.API.defaults.per_page) {
     // Bail early if not loading or total is less than the default per page.
     return null;
   }
   return /*#__PURE__*/React.createElement("div", {
-    className: "loading-block"
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()("loading-block", loading ? "loading" : null)
   });
 }
 
@@ -1393,11 +1529,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
-/* harmony import */ var _editor_plugin_utils_insertImage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../editor/plugin/utils/insertImage */ "./src/js/editor/plugin/utils/insertImage.js");
-/* harmony import */ var _editor_plugin_utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../editor/plugin/utils/setFeaturedImage */ "./src/js/editor/plugin/utils/setFeaturedImage.js");
-/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
-/* harmony import */ var _functions_providers_unsplash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../functions/providers/unsplash */ "./src/js/functions/providers/unsplash.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+/* harmony import */ var _editor_utils_insertImage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../editor/utils/insertImage */ "./src/js/editor/utils/insertImage.js");
+/* harmony import */ var _editor_utils_replaceAndInsert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../editor/utils/replaceAndInsert */ "./src/js/editor/utils/replaceAndInsert.js");
+/* harmony import */ var _editor_utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../editor/utils/setFeaturedImage */ "./src/js/editor/utils/setFeaturedImage.js");
+/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
+/* harmony import */ var _functions_providers_unsplash__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../functions/providers/unsplash */ "./src/js/functions/providers/unsplash.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -1417,6 +1557,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
+
 /**
  * Render the Photo component.
  *
@@ -1424,12 +1567,16 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  * @return {JSX.Element} The Photo component.
  */
 function Photo(props) {
-  var provider = props.provider,
-    result = props.result,
-    _props$mediaRouter = props.mediaRouter,
-    mediaRouter = _props$mediaRouter === void 0 ? false : _props$mediaRouter,
-    _props$blockEditor = props.blockEditor,
-    blockEditor = _props$blockEditor === void 0 ? false : _props$blockEditor;
+  var result = props.result;
+  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__.usePluginContext)(),
+    provider = _usePluginContext.provider,
+    _usePluginContext$wpB = _usePluginContext.wpBlock,
+    wpBlock = _usePluginContext$wpB === void 0 ? false : _usePluginContext$wpB,
+    _usePluginContext$med = _usePluginContext.mediaModal,
+    mediaModal = _usePluginContext$med === void 0 ? false : _usePluginContext$med,
+    _usePluginContext$blo = _usePluginContext.blockSidebar,
+    blockSidebar = _usePluginContext$blo === void 0 ? false : _usePluginContext$blo,
+    clientId = _usePluginContext.clientId;
   var id = result.id,
     permalink = result.permalink,
     title = result.title,
@@ -1453,7 +1600,6 @@ function Photo(props) {
   var likeDisplay = parseInt(likes) === 1 ? instant_img_localize.likes : instant_img_localize.likes_plural;
   var auto_attribution = instant_img_localize.auto_attribution === "1" ? true : false;
   var imageCaption = auto_attribution ? attribution : caption; // Set auto attribution.
-  var inProgress = false;
 
   // Photo state.
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
@@ -1465,55 +1611,42 @@ function Photo(props) {
     _useState2 = _slicedToArray(_useState, 2),
     imageDetails = _useState2[0],
     setImageDetails = _useState2[1];
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
-    editURL = _useState4[0],
-    setEditURL = _useState4[1]; // Edit URL state.
+    inProgress = _useState4[0],
+    setInProgress = _useState4[1]; // inProgress state.
+  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)("loaded"),
+    _useState6 = _slicedToArray(_useState5, 2),
+    status = _useState6[0],
+    setStatus = _useState6[1]; // Status state.
+  var _useState7 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState8 = _slicedToArray(_useState7, 2),
+    editURL = _useState8[0],
+    setEditURL = _useState8[1]; // Edit URL state.
 
   // Refs.
   var photo = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var upload = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var editScreen = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var captionRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var noticeMsg = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
 
-  // Gutenberg Sidebar.
+  // Gutenberg.
   var setAsFeaturedImage = false;
   var insertIntoPost = false;
 
   /**
    * Function to trigger the image download.
    *
-   * @param {Element} e The current download item.
    * @since 4.3
    */
-  function download(e) {
-    e.preventDefault();
-    var target = e.currentTarget;
-    var notice = noticeMsg.current;
-    if (!target.classList.contains("upload")) {
-      // If target is .download-photo, switch target definition
-      target = upload.current; // a.upload.
+  function download() {
+    if (inProgress || status === "success" || status === "uploaded") {
+      return false; // Exit if uploading, uploaded or success.
     }
 
-    if (target.classList.contains("success") || inProgress) {
-      return false; // Exit if already uploaded or in progress.
-    }
-
-    inProgress = true;
-    target.classList.add("uploading");
-    photo.current.classList.add("in-progress");
-
-    // Status messaging
-    notice.innerHTML = instant_img_localize.saving;
-    setTimeout(function () {
-      // Change notice after 3 seconds
-      notice.innerHTML = instant_img_localize.resizing;
-      setTimeout(function () {
-        // Change notice again after 5 seconds (Still resizing...)
-        notice.innerHTML = instant_img_localize.resizing_still;
-      }, 5000);
-    }, 3000);
+    var target = upload === null || upload === void 0 ? void 0 : upload.current;
+    setInProgress(true);
+    setStatus("uploading");
 
     // API URL
     var api = instant_img_localize.root + "instant-images/download/";
@@ -1541,7 +1674,7 @@ function Photo(props) {
         "Content-Type": "application/json"
       }
     };
-    axios__WEBPACK_IMPORTED_MODULE_5__["default"].post(api, JSON.stringify(data), config).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_8__["default"].post(api, JSON.stringify(data), config).then(function (res) {
       var response = res.data;
       if (response) {
         // Successful response from server
@@ -1556,43 +1689,81 @@ function Photo(props) {
 
           // Trigger a download at Unsplash.
           if (provider === "unsplash" && download_url) {
-            (0,_functions_providers_unsplash__WEBPACK_IMPORTED_MODULE_4__.unsplashDownload)(download_url);
+            (0,_functions_providers_unsplash__WEBPACK_IMPORTED_MODULE_7__.unsplashDownload)(download_url);
           }
 
-          // Gutenberg sidebar plugin.
-          if (blockEditor) {
-            if (setAsFeaturedImage) {
-              // Set Featured Image.
-              (0,_editor_plugin_utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_2__["default"])(attachment.id);
-              setAsFeaturedImage = false;
+          /**
+           * Gutenberg options.
+           */
+
+          // Set Featured Image via Sidebar.
+          if (blockSidebar && setAsFeaturedImage) {
+            (0,_editor_utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_5__["default"])(attachment.id);
+            setAsFeaturedImage = false;
+            closeMediaModal();
+          }
+
+          // Insert Image via Sidebar.
+          if (blockSidebar && insertIntoPost) {
+            if (attachment.url) {
+              (0,_editor_utils_insertImage__WEBPACK_IMPORTED_MODULE_3__["default"])(attachment.url, attachment.caption, attachment.alt);
               closeMediaModal();
             }
-
-            // Insert Image.
-            if (insertIntoPost) {
-              if (attachment.url) {
-                (0,_editor_plugin_utils_insertImage__WEBPACK_IMPORTED_MODULE_1__["default"])(attachment.url, attachment.caption, attachment.alt);
-                closeMediaModal();
-              }
-              insertIntoPost = false;
-            }
+            insertIntoPost = false;
           }
 
-          // If is media popup, redirect user to media-upload settings
-          if (container.dataset.mediaPopup === "true" && !blockEditor) {
+          // Insert Image via WP Block.
+          if (wpBlock && clientId) {
+            if (attachment.url) {
+              (0,_editor_utils_replaceAndInsert__WEBPACK_IMPORTED_MODULE_4__["default"])(attachment.url, attachment.caption, attachment.alt, clientId);
+              closeMediaModal();
+            }
+            insertIntoPost = false;
+          }
+
+          /**
+           * Media Modal.
+           * If is media popup, redirect user to media-upload settings.
+           */
+          if (container.dataset.mediaPopup === "true" && !blockSidebar) {
             window.location = "media-upload.php?type=image&tab=library&attachment_id=" + attachment.id;
           }
         } else {
           // Error
-          uploadError(target, notice, msg);
+          uploadError(target, msg);
         }
       } else {
         // Error
-        uploadError(target, notice, instant_img_localize.error_upload);
+        uploadError(target, instant_img_localize.error_upload);
       }
     })["catch"](function (error) {
       console.warn(error);
     });
+  }
+
+  /**
+   * Upload complete function.
+   *
+   * @param {Element} target  Clicked item.
+   * @param {string}  msg     Success Msg.
+   * @param {string}  imageID Attachment id.
+   * @since 3.0
+   */
+  function uploadComplete(target, msg, imageID) {
+    if (!(photo !== null && photo !== void 0 && photo.current)) {
+      return;
+    }
+    setImageTitle(target, msg);
+    setStatus("uploaded");
+    setInProgress(false);
+
+    // Remove uploaded status after 3.5 seconds.
+    setTimeout(function () {
+      setStatus("success");
+    }, 3500);
+
+    // Refresh Media Router/Modal.
+    refreshMediaModal(imageID);
   }
 
   /**
@@ -1613,7 +1784,7 @@ function Photo(props) {
    * @since 4.0
    */
   function setFeaturedImageClick(e) {
-    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.hideTooltip)(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
     if (upload.current) {
       setAsFeaturedImage = true;
       upload.current.click();
@@ -1627,57 +1798,10 @@ function Photo(props) {
    * @since 4.0
    */
   function insertImageIntoPost(e) {
-    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.hideTooltip)(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
     if (upload.current) {
       insertIntoPost = true;
       upload.current.click();
-    }
-  }
-
-  /**
-   * Upload complete function.
-   *
-   * @param {Element} target  Clicked item.
-   * @param {string}  msg     Success Msg.
-   * @param {string}  imageID Attachment id.
-   * @since 3.0
-   */
-  function uploadComplete(target, msg, imageID) {
-    setImageTitle(target, msg);
-    photo.current.classList.remove("in-progress");
-    photo.current.classList.add("uploaded");
-    target.classList.remove("uploading");
-    target.classList.remove("resizing");
-    target.classList.add("success");
-    inProgress = false;
-
-    // Remove uploaded and success states after 3.5 seconds.
-    setTimeout(function () {
-      photo.current.classList.remove("uploaded");
-      target.classList.remove("success");
-    }, 3500);
-
-    // Refresh Media Router/Modal.
-    refreshMediaRouter(imageID);
-
-    /**
-     * Deprecated in Instant Images 4.3.
-     * Was previously used in the Media Popup Context.
-     * Refresh Media Library contents on edit pages
-     */
-    if (container.classList.contains("editor")) {
-      if (typeof wp.media !== "undefined") {
-        if (wp.media.frame.content.get() !== null) {
-          wp.media.frame.content.get().collection.props.set({
-            ignore: +new Date()
-          });
-          wp.media.frame.content.get().options.selection.reset();
-        } else {
-          wp.media.frame.library.props.set({
-            ignore: +new Date()
-          });
-        }
-      }
     }
   }
 
@@ -1687,10 +1811,10 @@ function Photo(props) {
    * @param {string} modalID The media modal ID.
    * @since 4.3
    */
-  function refreshMediaRouter(modalID) {
-    if (mediaRouter && wp.media && wp.media.frame && wp.media.frame.el) {
-      var mediaModal = wp.media.frame.el;
-      var mediaTab = mediaModal.querySelector("#menu-item-browse");
+  function refreshMediaModal(modalID) {
+    if (mediaModal && wp.media && wp.media.frame && wp.media.frame.el) {
+      var mediaModalEl = wp.media.frame.el;
+      var mediaTab = mediaModalEl.querySelector("#menu-item-browse");
       if (mediaTab) {
         // Open the 'Media Library' tab.
         mediaTab.click();
@@ -1715,17 +1839,13 @@ function Photo(props) {
    * Function runs when error occurs on upload or resize.
    *
    * @param {Element} target Current clicked item.
-   * @param {Element} notice The notice element.
    * @param {string}  msg    Error Msg.
    * @since 3.0
    */
-  function uploadError(target, notice, msg) {
-    target.classList.remove("uploading");
-    target.classList.remove("resizing");
-    target.classList.add("errors");
+  function uploadError(target, msg) {
     setImageTitle(target, msg);
-    inProgress = false;
-    notice.classList.add("has-error");
+    setInProgress(false);
+    setStatus("error");
     console.warn(msg);
   }
 
@@ -1748,7 +1868,7 @@ function Photo(props) {
    */
   function showEditScreen(e) {
     e.preventDefault();
-    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.hideTooltip)(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
 
     // Get all open edit screens and close them.
     var openEdits = document.querySelectorAll(".edit-screen.editing");
@@ -1840,9 +1960,9 @@ function Photo(props) {
    * @since 4.3
    */
   function closeMediaModal() {
-    var mediaModal = document.querySelector(".media-modal");
-    if (mediaModal) {
-      var closeBtn = mediaModal.querySelector("button.media-modal-close");
+    var mediaModalEl = document.querySelector(".media-modal");
+    if (mediaModalEl) {
+      var closeBtn = mediaModalEl.querySelector("button.media-modal-close");
       if (!closeBtn) {
         return false;
       }
@@ -1868,12 +1988,11 @@ function Photo(props) {
     className: "photo",
     ref: photo
   }, /*#__PURE__*/React.createElement("div", {
-    className: "photo--wrap"
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("photo-wrap", "photo-".concat(status))
   }, /*#__PURE__*/React.createElement("div", {
     className: "img-wrap"
-  }, /*#__PURE__*/React.createElement("a", {
-    className: "upload loaded",
-    href: full,
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "photo-upload",
     ref: upload,
     "data-id": id,
     "data-url": full,
@@ -1881,25 +2000,21 @@ function Photo(props) {
     "data-title": imageDetails.title,
     "data-alt": imageDetails.alt,
     "data-caption": imageDetails.caption,
-    title: instant_img_localize.upload,
-    onClick: function onClick(e) {
-      return download(e);
+    title: wpBlock ? instant_img_localize.insert_into_post : instant_img_localize.upload,
+    onClick: function onClick() {
+      return download();
     }
   }, /*#__PURE__*/React.createElement("img", {
     src: thumb,
-    alt: alt
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "status"
+    alt: alt,
+    className: status
   })), /*#__PURE__*/React.createElement("div", {
-    className: "notice-msg",
-    ref: noticeMsg
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "user-controls"
+    className: "photo-controls"
   }, /*#__PURE__*/React.createElement("a", {
+    target: "_blank",
     className: "user fade",
     href: user_url,
     rel: "noopener noreferrer",
-    target: "_blank",
     title: "".concat(instant_img_localize.view_all, " @ ").concat(user_name)
   }, /*#__PURE__*/React.createElement("div", {
     className: "user-wrap"
@@ -1909,15 +2024,15 @@ function Photo(props) {
     alt: ""
   }), user_name)), /*#__PURE__*/React.createElement("div", {
     className: "photo-options"
-  }, blockEditor && !editURL ? /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement("button", {
+  }, blockSidebar && !editURL ? /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "set-featured fade",
     "data-title": instant_img_localize.set_as_featured,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return setFeaturedImageClick(e);
@@ -1932,10 +2047,10 @@ function Photo(props) {
     className: "insert fade",
     "data-title": instant_img_localize.insert_into_post,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return insertImageIntoPost(e);
@@ -1945,17 +2060,35 @@ function Photo(props) {
     "aria-hidden": "true"
   }), /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
-  }, instant_img_localize.insert_into_post))) : null, editURL ? /*#__PURE__*/React.createElement("button", {
+  }, instant_img_localize.insert_into_post))) : null, !!wpBlock && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "insert fade",
+    "data-title": instant_img_localize.insert_into_post,
+    onMouseEnter: function onMouseEnter(e) {
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
+    },
+    onMouseLeave: function onMouseLeave(e) {
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
+    },
+    onClick: function onClick(e) {
+      return insertImageIntoPost(e);
+    }
+  }, /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-plus",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "offscreen"
+  }, instant_img_localize.insert_into_post)), editURL ? /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
       return editAfterUpload();
     },
     className: "edit-photo-admin fade",
     "data-title": instant_img_localize.edit_upload,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-pencil",
@@ -1969,10 +2102,10 @@ function Photo(props) {
     className: "edit-photo fade",
     "data-title": instant_img_localize.edit_details,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-cog",
@@ -1980,15 +2113,15 @@ function Photo(props) {
   }), /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
   }, instant_img_localize.edit_details)))), /*#__PURE__*/React.createElement("div", {
-    className: "options"
+    className: "photo-meta"
   }, likes ? /*#__PURE__*/React.createElement("span", {
     className: "likes tooltip--above",
     "data-title": likes + " " + likeDisplay,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-heart heart-like",
@@ -1996,12 +2129,12 @@ function Photo(props) {
   }), " ", likes) : null, /*#__PURE__*/React.createElement("a", {
     className: "tooltip--above",
     href: permalink,
-    "data-title": "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.capitalizeFirstLetter)(provider)),
+    "data-title": "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.capitalizeFirstLetter)(provider)),
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
     },
     rel: "noopener noreferrer",
     target: "_blank"
@@ -2010,7 +2143,7 @@ function Photo(props) {
     "aria-hidden": "true"
   }), /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
-  }, "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_3__.capitalizeFirstLetter)(provider)))))), /*#__PURE__*/React.createElement("div", {
+  }, "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.capitalizeFirstLetter)(provider)))))), /*#__PURE__*/React.createElement("div", {
     className: "edit-screen",
     tabIndex: "0",
     ref: editScreen
@@ -2081,7 +2214,9 @@ function Photo(props) {
     onClick: function onClick() {
       return uploadNow();
     }
-  }, instant_img_localize.upload_now)))));
+  }, wpBlock ? instant_img_localize.insert_into_post : instant_img_localize.upload_now))), /*#__PURE__*/React.createElement("div", {
+    className: "photo-status"
+  })));
 }
 
 /***/ }),
@@ -2100,20 +2235,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+
 
 
 var providers = _constants_API__WEBPACK_IMPORTED_MODULE_1__.API.providers; // Get current provider settings.
 
 /**
  * Render the ProviderNav component.
- * Note: Component is display on initial plugin load if the default provider has an invalid API key.
  *
  * @param {Object} props The component props.
  * @return {JSX.Element} The ProviderNav component.
  */
 function ProviderNav(props) {
-  var provider = props.provider,
-    switchProvider = props.switchProvider;
+  var switchProvider = props.switchProvider;
+  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__.usePluginContext)(),
+    provider = _usePluginContext.provider;
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(providers !== null && providers !== void 0 && providers.length) && /*#__PURE__*/React.createElement("nav", {
     className: "provider-nav"
   }, providers.map(function (item, iterator) {
@@ -2232,20 +2369,14 @@ __webpack_require__.r(__webpack_exports__);
  * @return {JSX.Element} The Results component.
  */
 function Results(props) {
-  var results = props.results,
-    provider = props.provider,
-    mediaRouter = props.mediaRouter,
-    blockEditor = props.blockEditor;
+  var results = props.results;
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(results !== null && results !== void 0 && results.length) && results.map(function (result, index) {
     return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-      key: "".concat(provider, "-").concat(result.id, "-").concat(index)
+      key: "".concat(result.id, "-").concat(index)
     }, (result === null || result === void 0 ? void 0 : result.type) === "instant-images-ad" ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_2__["default"], {
       result: result
     }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      provider: provider,
-      result: result,
-      mediaRouter: mediaRouter,
-      blockEditor: blockEditor
+      result: result
     }));
   }));
 }
@@ -2265,12 +2396,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
 /* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Filter */ "./src/js/components/Filter.js");
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/pluginProvider */ "./src/js/common/pluginProvider.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -2281,13 +2414,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  * @return {JSX.Element} The SearchHeader component.
  */
 function SearchHeader(props) {
-  var provider = props.provider,
-    _props$term = props.term,
+  var _props$term = props.term,
     term = _props$term === void 0 ? "" : _props$term,
     _props$total = props.total,
     total = _props$total === void 0 ? 0 : _props$total,
     filterSearch = props.filterSearch,
     getPhotos = props.getPhotos;
+  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__.usePluginContext)(),
+    provider = _usePluginContext.provider;
   var filters = _constants_filters__WEBPACK_IMPORTED_MODULE_0__.FILTERS[provider].search;
   return /*#__PURE__*/React.createElement("header", {
     className: "search-header"
@@ -2686,55 +2820,6 @@ var OPENVERSE_SOURCES = ["WordPress", "Flickr", "Nasa",
 
 /***/ }),
 
-/***/ "./src/js/editor/plugin/components/Icon.js":
-/*!*************************************************!*\
-  !*** ./src/js/editor/plugin/components/Icon.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "IconSVG": () => (/* binding */ IconSVG),
-/* harmony export */   "default": () => (/* binding */ Icon)
-/* harmony export */ });
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-
-
-/**
- * The Icon component.
- *
- * @param {Object} props       The component props.
- * @param {string} props.color Color of the icon.
- * @return {JSX.Element} 	    The Icon component.
- */
-function Icon(_ref) {
-  var _ref$color = _ref.color,
-    color = _ref$color === void 0 ? "unsplash" : _ref$color;
-  return /*#__PURE__*/React.createElement("span", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()("instant-images-sidebar-icon", "color-" + color)
-  }, /*#__PURE__*/React.createElement(IconSVG, null));
-}
-
-/**
- * The IconSVG component.
- *
- * @return {JSX.Element} The IconSVG component.
- */
-function IconSVG() {
-  return /*#__PURE__*/React.createElement("svg", {
-    viewBox: "0 0 31 58",
-    width: "13px",
-    height: "24px"
-  }, /*#__PURE__*/React.createElement("title", null, "Instant Images Logo"), /*#__PURE__*/React.createElement("polygon", {
-    points: "20 0 20 23 31 23 11 58 11 34 0 34 20 0",
-    fill: "#4a7bc5"
-  }));
-}
-
-/***/ }),
-
 /***/ "./src/js/editor/plugin/components/Menu.js":
 /*!*************************************************!*\
   !*** ./src/js/editor/plugin/components/Menu.js ***!
@@ -2746,9 +2831,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Menu)
 /* harmony export */ });
-/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Icon */ "./src/js/editor/plugin/components/Icon.js");
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/Icon */ "./src/js/components/Icon.js");
 
 
 
@@ -2758,9 +2843,9 @@ __webpack_require__.r(__webpack_exports__);
  * @return {JSX.Element} The Menu component.
  */
 function Menu() {
-  return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_1__.PluginSidebarMoreMenuItem, {
-    icon: /*#__PURE__*/React.createElement(_Icon__WEBPACK_IMPORTED_MODULE_0__["default"], {
-      color: "unsplash"
+  return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__.PluginSidebarMoreMenuItem, {
+    icon: /*#__PURE__*/React.createElement(_components_Icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      borderless: true
     }),
     target: "instant-images-sidebar",
     className: "instant-images-menu-item"
@@ -2769,16 +2854,52 @@ function Menu() {
 
 /***/ }),
 
-/***/ "./src/js/editor/plugin/components/Panel.js":
-/*!**************************************************!*\
-  !*** ./src/js/editor/plugin/components/Panel.js ***!
-  \**************************************************/
+/***/ "./src/js/editor/plugin/components/Plugin.js":
+/*!***************************************************!*\
+  !*** ./src/js/editor/plugin/components/Plugin.js ***!
+  \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Panel)
+/* harmony export */   "default": () => (/* binding */ Plugin)
+/* harmony export */ });
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
+/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/Icon */ "./src/js/components/Icon.js");
+/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sidebar */ "./src/js/editor/plugin/components/Sidebar.js");
+
+
+
+
+/**
+ * The plugin sidebar as a component.
+ *
+ * @return {JSX.Element} The Plugin component.
+ */
+function Plugin() {
+  return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__.PluginSidebar, {
+    icon: /*#__PURE__*/React.createElement(_components_Icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      borderless: true
+    }),
+    name: "instant-images-sidebar",
+    title: "Instant Images"
+  }, /*#__PURE__*/React.createElement(_Sidebar__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+}
+
+/***/ }),
+
+/***/ "./src/js/editor/plugin/components/Sidebar.js":
+/*!****************************************************!*\
+  !*** ./src/js/editor/plugin/components/Sidebar.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Sidebar)
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
@@ -2809,15 +2930,16 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 /**
- * The image listing panel for the plugin sidebar.
+ * The image listing sidebar for the plugin sidebar.
  *
  * @return {JSX.Element} The Panel component.
  */
-function Panel() {
+function Sidebar() {
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState2 = _slicedToArray(_useState, 2),
     data = _useState2[0],
     setData = _useState2[1];
+  var containerRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
 
   // Get provider and options from settings.
   var provider = (0,_functions_getProvider__WEBPACK_IMPORTED_MODULE_4__["default"])();
@@ -2888,50 +3010,16 @@ function Panel() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return /*#__PURE__*/React.createElement("div", {
-    className: "instant-img-container"
+    className: "instant-img-container",
+    "data-editor": "gutenberg-sidebar",
+    ref: containerRef
   }, data && data.results ? /*#__PURE__*/React.createElement(_components_InstantImages__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    editor: "gutenberg",
+    editor: "sidebar",
     data: data.results,
     api_error: data.error,
-    provider: provider
+    provider: provider,
+    container: containerRef === null || containerRef === void 0 ? void 0 : containerRef.current
   }) : null);
-}
-
-/***/ }),
-
-/***/ "./src/js/editor/plugin/components/Plugin.js":
-/*!***************************************************!*\
-  !*** ./src/js/editor/plugin/components/Plugin.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Plugin)
-/* harmony export */ });
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Icon */ "./src/js/editor/plugin/components/Icon.js");
-/* harmony import */ var _Panel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Panel */ "./src/js/editor/plugin/components/Panel.js");
-
-
-
-
-/**
- * The plugin sidebar as a component.
- *
- * @return {JSX.Element} The Plugin component.
- */
-function Plugin() {
-  return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__.PluginSidebar, {
-    icon: /*#__PURE__*/React.createElement(_Icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      borderless: true,
-      color: "unsplash"
-    }),
-    name: "instant-images-sidebar",
-    title: "Instant Images"
-  }, /*#__PURE__*/React.createElement(_Panel__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 }
 
 /***/ }),
@@ -2952,16 +3040,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/js/editor/plugin/utils/insertImage.js":
-/*!***************************************************!*\
-  !*** ./src/js/editor/plugin/utils/insertImage.js ***!
-  \***************************************************/
+/***/ "./src/js/editor/utils/insertImage.js":
+/*!********************************************!*\
+  !*** ./src/js/editor/utils/insertImage.js ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ insertImage)
 /* harmony export */ });
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
@@ -2977,7 +3065,7 @@ __webpack_require__.r(__webpack_exports__);
  * @param {string} caption Image caption.
  * @param {string} alt     Image alt.
  */
-var insertImage = function insertImage() {
+function insertImage() {
   var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
   var caption = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
   var alt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
@@ -2990,21 +3078,57 @@ var insertImage = function insertImage() {
     alt: alt
   });
   (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.dispatch)("core/block-editor").insertBlocks(block);
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (insertImage);
+}
 
 /***/ }),
 
-/***/ "./src/js/editor/plugin/utils/setFeaturedImage.js":
-/*!********************************************************!*\
-  !*** ./src/js/editor/plugin/utils/setFeaturedImage.js ***!
-  \********************************************************/
+/***/ "./src/js/editor/utils/replaceAndInsert.js":
+/*!*************************************************!*\
+  !*** ./src/js/editor/utils/replaceAndInsert.js ***!
+  \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ replaceAndInsert)
+/* harmony export */ });
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+/**
+ * Replace the InstantImages block with an Image block.
+ *
+ * @param {string} url      Image URL.
+ * @param {string} caption  Image caption.
+ * @param {string} alt      Image alt.
+ * @param {string} clientId The block ID.
+ */
+function replaceAndInsert(url, caption, alt, clientId) {
+  var block = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)("core/image", {
+    url: url,
+    caption: caption,
+    alt: alt
+  });
+  (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.dispatch)("core/block-editor").replaceBlock(clientId, block);
+}
+
+/***/ }),
+
+/***/ "./src/js/editor/utils/setFeaturedImage.js":
+/*!*************************************************!*\
+  !*** ./src/js/editor/utils/setFeaturedImage.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ setFeaturedImage)
 /* harmony export */ });
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
@@ -3015,15 +3139,18 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @param {string} imageId The attachment ID.
  */
-var setFeaturedImage = function setFeaturedImage(imageId) {
+function setFeaturedImage(imageId) {
   if (imageId === null) {
     return false;
   }
+  // Set the featured image.
   (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.dispatch)("core/editor").editPost({
     featured_media: imageId
   });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (setFeaturedImage);
+
+  // Open the document sidebar.
+  (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.dispatch)("core/edit-post").openGeneralSidebar("edit-post/document");
+}
 
 /***/ }),
 

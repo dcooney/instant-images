@@ -8,7 +8,7 @@ import { dispatch } from "@wordpress/data";
  * @param {string} caption Image caption.
  * @param {string} alt     Image alt.
  */
-const insertImage = (url = "", caption = "", alt = "") => {
+export default function insertImage(url = "", caption = "", alt = "") {
 	if (url === "") {
 		return false;
 	}
@@ -18,5 +18,4 @@ const insertImage = (url = "", caption = "", alt = "") => {
 		alt,
 	});
 	dispatch("core/block-editor").insertBlocks(block);
-};
-export default insertImage;
+}

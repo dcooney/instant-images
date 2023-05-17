@@ -92,9 +92,6 @@ body.settings_page_instant-images-settings.overflow-hidden {
   margin: 0 0 15px;
   font-size: 14px;
 }
-.instant-img-container.loading .loading-block {
-  display: block;
-}
 .instant-img-container .error-messaging {
   padding: 22px 22px 22px 60px;
   border-radius: 3px;
@@ -223,13 +220,23 @@ body.settings_page_instant-images-settings.overflow-hidden {
   margin: 0 0 2px;
 }
 .instant-img-container .loading-block {
-  padding: 50px 0;
-  background: url(images/ajax-loader-lg.808ea7f8.gif) no-repeat center center;
+  height: 90px;
+  background-image: none;
+  background-position: center center;
+  background-repeat: no-repeat;
+  margin-top: 10px;
+}
+.instant-img-container .loading-block.loading {
+  background-image: url(images/ajax-loader-lg.808ea7f8.gif);
 }
 .instant-img-container .load-more-wrap {
   margin: 0;
   padding: 0;
   text-align: center;
+  position: relative;
+  z-index: -1;
+  top: -100px;
+  opacity: 0;
 }
 .instant-img-container .load-more-wrap button {
   display: none;
@@ -668,6 +675,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   margin: 0 0 0 -5px;
   padding: 0;
   position: relative;
+  z-index: 1;
 }
 #photos .photo {
   width: 20%;
@@ -676,17 +684,59 @@ body.settings_page_instant-images-settings.overflow-hidden {
   opacity: 0;
   transition: opacity 0.45s ease;
 }
-#photos .photo--wrap {
+#photos .photo-wrap {
   position: relative;
   border-radius: 3px;
   overflow: hidden;
 }
-#photos .photo.in-view {
-  opacity: 1;
+#photos .photo-wrap.photo-uploading button.photo-upload img, #photos .photo-wrap.photo-uploaded button.photo-upload img, #photos .photo-wrap.photo-success button.photo-upload img, #photos .photo-wrap.photo-error button.photo-upload img {
+  transform: scale(1) !important;
+  opacity: 0.5 !important;
 }
-#photos .photo.in-progress .fade {
+#photos .photo-wrap.photo-uploading .photo-status, #photos .photo-wrap.photo-uploaded .photo-status, #photos .photo-wrap.photo-success .photo-status, #photos .photo-wrap.photo-error .photo-status {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+#photos .photo-wrap.photo-uploading {
+  pointer-events: none;
+}
+#photos .photo-wrap.photo-uploading .photo-status {
+  background: rgba(255, 255, 255, 0.95) url(images/ajax-loader-lg.808ea7f8.gif) no-repeat center center;
+  background-size: 24px 24px;
+}
+#photos .photo-wrap.photo-uploading .photo-status::before {
+  display: none;
+}
+#photos .photo-wrap.photo-uploading .photo-meta,
+#photos .photo-wrap.photo-uploading .photo-controls, #photos .photo-wrap.photo-uploaded .photo-meta,
+#photos .photo-wrap.photo-uploaded .photo-controls {
   opacity: 0 !important;
   visibility: hidden !important;
+}
+#photos .photo-wrap.photo-uploaded button.photo-upload, #photos .photo-wrap.photo-success button.photo-upload {
+  cursor: default;
+}
+#photos .photo-wrap.photo-uploaded .photo-status, #photos .photo-wrap.photo-success .photo-status {
+  background-color: #65c774;
+}
+#photos .photo-wrap.photo-uploaded .photo-status::before, #photos .photo-wrap.photo-success .photo-status::before {
+  content: "\f00c";
+  color: #fff;
+}
+#photos .photo-wrap.photo-error {
+  cursor: help !important;
+}
+#photos .photo-wrap.photo-error .photo-status {
+  background-color: #df3333;
+}
+#photos .photo-wrap.photo-error .photo-status::before {
+  content: "\f12a";
+  color: #fff;
+  opacity: 0.8;
+}
+#photos .photo.in-view {
+  opacity: 1;
 }
 #photos .photo .img-wrap {
   display: block;
@@ -726,141 +776,76 @@ body.settings_page_instant-images-settings.overflow-hidden {
 #photos .photo:focus .fade.user {
   opacity: 0.7;
 }
-#photos .photo:focus-within .user-controls {
+#photos .photo:focus-within .photo-controls {
   bottom: 0;
   opacity: 1;
 }
-#photos .photo a.upload {
+#photos .photo button.photo-upload {
   display: block;
   position: relative;
-  background-color: #f7f7f7;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-image: url(images/ajax-loader.7c5ec6b9.gif);
-  overflow: hidden;
-}
-#photos .photo a.upload.loaded {
   background-color: #111;
-  background-image: none;
-}
-#photos .photo a.upload:focus, #photos .photo a.upload:active {
-  outline: none;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
   border: none;
 }
-#photos .photo a.upload img {
+#photos .photo button.photo-upload:focus, #photos .photo button.photo-upload:active {
+  border: none;
+}
+#photos .photo button.photo-upload img {
   transition: all 0.4s ease;
   width: 100%;
   height: auto !important;
   padding: 0;
   vertical-align: top;
 }
-#photos .photo a.upload .status {
+#photos .photo:focus button.photo-upload img, #photos .photo:hover button.photo-upload img {
+  opacity: 0.5;
+  transform: scale(1.05);
+}
+#photos .photo:focus .photo-meta, #photos .photo:hover .photo-meta {
+  opacity: 1;
+  visibility: visible;
+}
+#photos .photo:focus .photo-meta i.heart-like, #photos .photo:hover .photo-meta i.heart-like {
+  transform: scale(1);
+}
+#photos .photo:focus .photo-controls, #photos .photo:hover .photo-controls {
+  bottom: 0;
+  opacity: 1;
+}
+#photos .photo .photo-status {
   visibility: hidden;
   opacity: 0;
-  transition: all 0.25s ease-in-out;
+  transition: all 0.3s ease-out;
   width: 60px;
   height: 60px;
   line-height: 60px;
-  border-radius: 3px;
+  border-radius: 6px;
   position: absolute;
+  text-align: center;
   left: 50%;
   top: 50%;
   z-index: 5;
   transform: translate(-50%, -50%) scale(1.2);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.075);
+  background-color: rgba(255, 255, 255, 0.95);
   background-position: center center;
   background-repeat: no-repeat;
 }
-#photos .photo a.upload .status::before {
+#photos .photo .photo-status::before {
   font-family: "FontAwesome";
   display: block;
   color: #fff;
   font-size: 24px;
   opacity: 0.8;
 }
-#photos .photo a.upload .status a {
-  color: #fff;
-}
-#photos .photo a.upload.uploading .status, #photos .photo a.upload.success .status, #photos .photo a.upload.errors .status {
-  text-align: center;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(1);
-}
-#photos .photo a.upload.uploading {
-  cursor: default !important;
-}
-#photos .photo a.upload.uploading .status {
-  visibility: visible;
-  opacity: 1;
-  background: rgba(255, 255, 255, 0.95) url(images/ajax-loader-lg.808ea7f8.gif) no-repeat center center;
-  background-size: 24px 24px;
-}
-#photos .photo a.upload.uploading .status::before {
-  display: none;
-}
-#photos .photo a.upload.success {
-  cursor: default !important;
-}
-#photos .photo a.upload.success .status {
-  visibility: visible;
-  opacity: 1;
-  background-color: #65c774;
-}
-#photos .photo a.upload.success .status::before {
-  content: "\f00c";
-  color: #fff;
-}
-#photos .photo a.upload.success img {
-  transform: scale(1) !important;
-}
-#photos .photo a.upload.errors {
-  cursor: help !important;
-}
-#photos .photo a.upload.errors .status {
-  visibility: visible;
-  opacity: 1;
-  background-color: #df3333;
-}
-#photos .photo a.upload.errors .status::before {
-  content: "\f12a";
-  color: #fff;
-  opacity: 0.8;
-}
-#photos .photo.uploaded a.upload img {
-  opacity: 0.25 !important;
-}
-#photos .photo.uploaded .user-controls,
-#photos .photo.uploaded .options {
-  opacity: 0 !important;
-  visibility: hidden !important;
-}
-#photos .photo:focus a.upload img, #photos .photo:hover a.upload img, #photos .photo.in-progress a.upload img {
-  opacity: 0.5;
-  transform: scale(1.025);
-}
-#photos .photo:focus .options, #photos .photo:hover .options, #photos .photo.in-progress .options {
+#photos .photo .photo-status.active {
   opacity: 1;
   visibility: visible;
 }
-#photos .photo:focus .options i.heart-like, #photos .photo:hover .options i.heart-like, #photos .photo.in-progress .options i.heart-like {
-  transform: scale(1);
-}
-#photos .photo:focus .user-controls, #photos .photo:hover .user-controls, #photos .photo.in-progress .user-controls {
-  bottom: 0;
-  opacity: 1;
-}
-#photos .photo.in-progress .notice-msg {
-  top: 0;
-  opacity: 1;
-}
-#photos .photo.in-progress .user-controls {
-  opacity: 0 !important;
-}
-#photos .photo.in-progress .options {
-  opacity: 0 !important;
-}
-#photos .photo .options {
+#photos .photo .photo-meta {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -873,50 +858,50 @@ body.settings_page_instant-images-settings.overflow-hidden {
   visibility: hidden;
   font-size: 13px;
 }
-#photos .photo .options i {
+#photos .photo .photo-meta i {
   font-size: 14px;
 }
-#photos .photo .options i.heart-like {
-  color: #de4624;
+#photos .photo .photo-meta i.heart-like {
+  color: #df3333;
   transition: all 0.25s ease;
   transform: scale(0.55);
   margin-right: 2px;
   position: relative;
   top: 0;
   font-size: 14px;
-  opacity: 0.9;
+  opacity: 0.85;
 }
-#photos .photo .options a,
-#photos .photo .options span {
+#photos .photo .photo-meta a,
+#photos .photo .photo-meta span {
   display: inline-block;
   vertical-align: top;
   line-height: 30px;
   padding: 0 10px;
   margin: 0;
   padding-top: 1px;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 2px;
   color: #23282d;
   transition: all 0.25s ease;
 }
-#photos .photo .options span {
+#photos .photo .photo-meta span {
   cursor: default;
 }
-#photos .photo .options span:hover, #photos .photo .options span:focus {
+#photos .photo .photo-meta span:hover, #photos .photo .photo-meta span:focus {
   background-color: #fff;
 }
-#photos .photo .options a {
+#photos .photo .photo-meta a {
   margin-left: 5px;
 }
-#photos .photo .options a:hover, #photos .photo .options a:focus {
+#photos .photo .photo-meta a:hover, #photos .photo .photo-meta a:focus {
   background-color: #fff;
 }
-#photos .photo .options a i {
+#photos .photo .photo-meta a i {
   position: relative;
   top: 1px;
   left: 1px;
 }
-#photos .photo .user-controls {
+#photos .photo .photo-controls {
   position: absolute;
   z-index: 6;
   width: 100%;
@@ -1008,27 +993,6 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 #photos .photo .fade.user img.user-wrap--photo {
   z-index: 1;
-}
-#photos .photo .notice-msg {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  height: 40px;
-  line-height: 40px;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  text-align: center;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 12px;
-  margin: 0;
-  padding: 0;
-  transition: all 0.25s ease-in-out;
-  opacity: 0;
-  z-index: 9999;
-}
-#photos .photo .notice-msg.has-error {
-  top: -40px;
-  opacity: 0;
 }
 #photos .photo.feature {
   cursor: pointer;
@@ -1699,9 +1663,6 @@ span.instant-images-tagline {
 .instant-img-container[data-media-popup=true] .instant-images-wrapper {
   padding: 0 16px;
 }
-body.loading .instant-img-container .loading-block {
-  display: block;
-}
 .instant-images-sidebar-icon,
 .instant-images-sidebar-icon svg {
   display: inline-flex;
@@ -1721,41 +1682,90 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   stroke: #aabbff !important;
   fill: #aabbff !important;
 }
+.wp-block #photos::after,
 .components-panel #photos::after {
   width: 100%;
   left: 0;
 }
-.components-panel .instant-img-container .load-more-wrap {
-  padding-bottom: 5px;
-}
-.components-panel .instant-img-container .load-more-wrap button {
-  display: inline-block;
-}
-.components-panel .instant-img-container .loading-block {
-  padding: 25px 0;
-}
-.components-panel .instant-img-container .notice.upgrade-notice {
-  margin: 10px;
-}
+.wp-block .no-results,
 .components-panel .no-results {
   padding: 40px;
 }
+.wp-block .no-results h3,
 .components-panel .no-results h3 {
   font-size: 18px;
 }
+.wp-block .no-results p,
 .components-panel .no-results p {
   font-size: 13px;
 }
+.wp-block .search-results-text,
 .components-panel .search-results-text {
   font-size: 12px;
   border-top: 1px solid #ddd;
   border-color: #ddd;
 }
+.wp-block .search-results-text .search-results-clear,
 .components-panel .search-results-text .search-results-clear {
   display: none;
 }
+.wp-block .search-header,
 .components-panel .search-header {
   display: none;
+}
+.wp-block .provider-nav,
+.components-panel .provider-nav {
+  width: 100%;
+  padding: 10px 5px;
+  margin: 0;
+  border-bottom-color: #ddd;
+}
+.wp-block .provider-nav button,
+.components-panel .provider-nav button {
+  font-size: 13px;
+  padding-left: 36px;
+}
+.wp-block .instant-img-container {
+  border: 1px solid #e1e1e1;
+  padding: 10px;
+  border-radius: 3px;
+}
+.wp-block .provider-nav {
+  padding: 10px;
+  border-radius: 3px;
+}
+.wp-block #photo-listing {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  min-height: initial;
+}
+.wp-block #photo-listing #photos {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  width: 100%;
+  white-space: nowrap;
+  padding: 0 0 10px;
+}
+.wp-block #photo-listing #photos .photo {
+  opacity: 1 !important;
+  margin-right: 10px;
+  width: 280px;
+  min-width: 280px;
+  height: 240px;
+}
+.wp-block #photo-listing #photos .photo-wrap,
+.wp-block #photo-listing #photos .img-wrap,
+.wp-block #photo-listing #photos button.photo-upload {
+  width: 280px;
+  height: 240px;
+}
+.wp-block #photo-listing #photos button.photo-upload img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100% !important;
+  height: 100% !important;
 }
 .components-panel #photo-listing {
   width: 100%;
@@ -1769,16 +1779,6 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   opacity: 1 !important;
   margin: 0 0 10px;
   padding: 0;
-}
-.components-panel .provider-nav {
-  width: 100%;
-  padding: 10px 5px;
-  margin: 0;
-  border-bottom-color: #ddd;
-}
-.components-panel .provider-nav button {
-  font-size: 13px;
-  padding-left: 36px;
 }
 .components-panel .control-nav {
   padding: 0 5px 5px;
@@ -1892,29 +1892,8 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .components-panel .control-nav--search .searchResults::before, .components-panel .control-nav--search .searchResults::after {
   display: none;
 }
-.components-panel .orientation-list {
-  position: static;
-  border-top: none;
-  background: #f7f7f7;
-  padding: 5px 5px 5px 0;
-  margin-bottom: 5px;
-  border-bottom-color: #ddd;
-}
-.components-panel .orientation-list span {
-  display: none;
-}
-.components-panel .orientation-list ul {
-  padding: 0;
-  width: 100%;
-}
 .media-frame-router button#menu-item-instantimages.active {
   background-color: #f7f7f7;
-}
-.media-frame-content .instant-img-container .load-more-wrap {
-  margin-top: 10px;
-}
-.media-frame-content .instant-img-container .load-more-wrap button {
-  display: inline-block;
 }
 .instant-img-container #tooltip {
   padding: 8px 10px;

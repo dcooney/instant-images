@@ -32,6 +32,7 @@
 	margin: 0 0 0 -5px;
 	padding: 0;
 	position: relative;
+	z-index: 1;
 
 	.photo {
 		width: 20%;
@@ -39,25 +40,95 @@
 		padding: 0 3px 6px;
 		opacity: 0;
 		transition: opacity 0.45s ease;
-		&--wrap {
+
+		&-wrap {
 			position: relative;
 			border-radius: $radius;
 			overflow: hidden;
+
+			&.photo-uploading,
+			&.photo-uploaded,
+			&.photo-success,
+			&.photo-error {
+				button.photo-upload {
+					img {
+						transform: scale(1) !important;
+						opacity: 0.5 !important;
+					}
+				}
+
+				.photo-status {
+					visibility: visible;
+					opacity: 1;
+					transform: translate(-50%, -50%) scale(1);
+				}
+			}
+
+			// Uploading
+			&.photo-uploading {
+				pointer-events: none;
+
+				.photo-status {
+					background: rgba(255, 255, 255, 0.95) url("../img/ajax-loader-lg.gif")
+						no-repeat center center;
+					background-size: 24px 24px;
+					&::before {
+						display: none;
+					}
+				}
+			}
+
+			// Uploading & Uploaded
+			&.photo-uploading,
+			&.photo-uploaded {
+				.photo-meta,
+				.photo-controls {
+					opacity: 0 !important;
+					visibility: hidden !important;
+				}
+			}
+
+			// Uploaded
+			&.photo-uploaded,
+			&.photo-success {
+				button.photo-upload {
+					cursor: default;
+				}
+
+				.photo-status {
+					background-color: $green;
+					&::before {
+						content: "\f00c";
+						color: #fff;
+					}
+				}
+			}
+
+			// Errors
+			&.photo-error {
+				cursor: help !important;
+
+				.photo-status {
+					background-color: $red;
+					&::before {
+						content: "\f12a";
+						color: #fff;
+						opacity: 0.8;
+					}
+				}
+			}
 		}
+
 		&.in-view {
 			opacity: 1;
 		}
-		&.in-progress {
-			.fade {
-				opacity: 0 !important;
-				visibility: hidden !important;
-			}
-		}
+
 		.img-wrap {
 			display: block;
 			overflow: hidden;
 			position: relative;
 		}
+
 		@media screen and (min-width: 2000px) {
 			width: 20%;
 		}
@@ -84,26 +155,24 @@
 			}
 		}
 		&:focus-within {
-			.user-controls {
+			.photo-controls {
 				bottom: 0;
 				opacity: 1;
 			}
 		}
-		a.upload {
+
+		// Upload Photo Button.
+		button.photo-upload {
 			display: block;
 			position: relative;
-			background-color: $lighter_grey;
-			background-position: center center;
-			background-repeat: no-repeat;
-			background-image: url("../img/ajax-loader.gif");
+			background-color: #111;
 			overflow: hidden;
-			&.loaded {
-				background-color: #111;
-				background-image: none;
-			}
+			cursor: pointer;
+			padding: 0;
+			margin: 0;
+			border: none;
 			&:focus,
 			&:active {
-				outline: none;
 				border: none;
 			}
 			img {
@@ -113,143 +182,63 @@
 				padding: 0;
 				vertical-align: top;
 			}
-
-			// Status
-			.status {
-				visibility: hidden;
-				opacity: 0;
-				transition: all 0.25s ease-in-out;
-				width: 60px;
-				height: 60px;
-				line-height: 60px;
-				border-radius: $radius;
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				z-index: 5;
-				transform: translate(-50%, -50%) scale(1.2);
-				box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-				background-position: center center;
-				background-repeat: no-repeat;
-				&::before {
-					font-family: "FontAwesome";
-					display: block;
-					color: #fff;
-					font-size: 24px;
-					opacity: 0.8;
-				}
-				a {
-					color: #fff;
-				}
-			}
-
-			&.uploading .status,
-			&.success .status,
-			&.errors .status {
-				text-align: center;
-				left: 50%;
-				top: 50%;
-				transform: translate(-50%, -50%) scale(1);
-			}
-
-			// Uploading
-			&.uploading {
-				cursor: default !important;
-				.status {
-					visibility: visible;
-					opacity: 1;
-					background: rgba(255, 255, 255, 0.95) url("../img/ajax-loader-lg.gif")
-						no-repeat center center;
-					background-size: 24px 24px;
-					&::before {
-						display: none;
-					}
-				}
-			}
-
-			// Success
-			&.success {
-				cursor: default !important;
-				.status {
-					visibility: visible;
-					opacity: 1;
-					background-color: $green;
-					&::before {
-						content: "\f00c";
-						color: #fff;
-					}
-				}
-				img {
-					transform: scale(1) !important;
-				}
-			}
-
-			// Error
-			&.errors {
-				cursor: help !important;
-				.status {
-					visibility: visible;
-					opacity: 1;
-					background-color: $red;
-					&::before {
-						content: "\f12a";
-						color: #fff;
-						opacity: 0.8;
-					}
-				}
-			}
 		}
 
-		// Upload Complete
-		&.uploaded {
-			a.upload {
-				img {
-					opacity: 0.25 !important;
-				}
-			}
-
-			.user-controls,
-			.options {
-				opacity: 0 !important;
-				visibility: hidden !important;
-			}
-		}
-
-		// Hover and Progress
+		// Hover and focus
 		&:focus,
-		&:hover,
-		&.in-progress {
-			a.upload img {
+		&:hover {
+			button.photo-upload img {
 				opacity: 0.5;
-				transform: scale(1.025);
+				transform: scale(1.05);
 			}
-			.options {
+			.photo-meta {
 				opacity: 1;
 				visibility: visible;
+
 				i.heart-like {
 					transform: scale(1);
 				}
 			}
-			.user-controls {
+			.photo-controls {
 				bottom: 0;
 				opacity: 1;
 			}
 		}
 
-		&.in-progress {
-			.notice-msg {
-				top: 0;
+		// Status
+		.photo-status {
+			visibility: hidden;
+			opacity: 0;
+			transition: all 0.3s ease-out;
+			width: 60px;
+			height: 60px;
+			line-height: 60px;
+			border-radius: $radius_lg;
+			position: absolute;
+			text-align: center;
+			left: 50%;
+			top: 50%;
+			z-index: 5;
+			transform: translate(-50%, -50%) scale(1.2);
+			box-shadow: 0 3px 10px rgba(0, 0, 0, 0.075);
+			background-color: rgba(255, 255, 255, 0.95);
+			background-position: center center;
+			background-repeat: no-repeat;
+			&::before {
+				font-family: "FontAwesome";
+				display: block;
+				color: #fff;
+				font-size: 24px;
+				opacity: 0.8;
+			}
+			&.active {
 				opacity: 1;
-			}
-			.user-controls {
-				opacity: 0 !important;
-			}
-			.options {
-				opacity: 0 !important;
+				visibility: visible;
 			}
 		}
 
-		.options {
+		// Likes and URL meta.
+		.photo-meta {
 			position: absolute;
 			top: 5px;
 			right: 5px;
@@ -265,14 +254,14 @@
 				font-size: 14px;
 			}
 			i.heart-like {
-				color: #de4624;
+				color: $red;
 				transition: $transition;
 				transform: scale(0.55);
 				margin-right: 2px;
 				position: relative;
 				top: 0;
 				font-size: 14px;
-				opacity: 0.9;
+				opacity: 0.85;
 			}
 			a,
 			span {
@@ -282,7 +271,7 @@
 				padding: 0 10px;
 				margin: 0;
 				padding-top: 1px;
-				background: rgba(255, 255, 255, 0.5);
+				background: rgba(255, 255, 255, 0.4);
 				border-radius: 2px;
 				color: #23282d;
 				transition: $transition;
@@ -308,7 +297,8 @@
 			}
 		}
 
-		.user-controls {
+		// Control options.
+		.photo-controls {
 			position: absolute;
 			z-index: 6;
 			width: 100%;
@@ -330,6 +320,7 @@
 			max-width: 50%;
 		}
 
+		// Sections that fade in/out.
 		.fade {
 			transition: all 0.35s ease;
 			background: rgba(255, 255, 255, 0.75);
@@ -413,28 +404,6 @@
 			}
 		}
 
-		// Notice Msg
-		.notice-msg {
-			position: absolute;
-			top: -40px;
-			left: 0;
-			height: 40px;
-			line-height: 40px;
-			width: 100%;
-			background: rgba(0, 0, 0, 0.6);
-			text-align: center;
-			color: rgba(255, 255, 255, 0.9);
-			font-size: 12px;
-			margin: 0;
-			padding: 0;
-			transition: all 0.25s ease-in-out;
-			opacity: 0;
-			z-index: 9999;
-			&.has-error {
-				top: -40px;
-				opacity: 0;
-			}
-		}
 		// Advertisement block.
 		&.feature {
 			cursor: pointer;

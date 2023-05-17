@@ -1,6 +1,7 @@
-import { useRef, useEffect, useState } from "@wordpress/element";
+import { useEffect, useRef, useState } from "@wordpress/element";
 import * as a11yarrows from "a11yarrows";
 import cn from "classnames";
+import { usePluginContext } from "../common/pluginProvider";
 
 /**
  * Render the Filter component.
@@ -9,7 +10,9 @@ import cn from "classnames";
  * @return {JSX.Element} The Filter component.
  */
 export default function Filter(props) {
-	const { data, filterKey, function: handler, provider } = props;
+	const { data, filterKey, function: handler } = props;
+	const { provider } = usePluginContext();
+
 	const defaultValue = data?.default;
 	const [expanded, setExpanded] = useState(false);
 	const [selected, setSelected] = useState(defaultValue);

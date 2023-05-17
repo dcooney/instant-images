@@ -1,5 +1,6 @@
 import { Fragment, useRef } from "@wordpress/element";
 import classNames from "classnames";
+import { usePluginContext } from "../common/pluginProvider";
 import getErrorMessage from "../functions/getErrorMessage";
 import { gotoURL } from "../functions/helpers";
 
@@ -11,7 +12,8 @@ import { gotoURL } from "../functions/helpers";
  * @return {JSX.Element} The ErrorLightbox component.
  */
 export default function ErrorLightbox(props) {
-	const { error, provider } = props;
+	const { error } = props;
+	const { provider } = usePluginContext();
 	const lightbox = useRef();
 	const status = error?.status ? error.status : null;
 

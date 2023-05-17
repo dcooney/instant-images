@@ -1,5 +1,6 @@
 import { FILTERS } from "../constants/filters";
 import Filter from "./Filter";
+import { usePluginContext } from "../common/pluginProvider";
 
 /**
  * Render the SearchHeader component.
@@ -8,7 +9,8 @@ import Filter from "./Filter";
  * @return {JSX.Element} The SearchHeader component.
  */
 export default function SearchHeader(props) {
-	const { provider, term = "", total = 0, filterSearch, getPhotos } = props;
+	const { term = "", total = 0, filterSearch, getPhotos } = props;
+	const { provider } = usePluginContext();
 	const filters = FILTERS[provider].search;
 
 	return (

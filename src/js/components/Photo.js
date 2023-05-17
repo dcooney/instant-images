@@ -1,7 +1,10 @@
 import { Fragment, useRef, useState } from "@wordpress/element";
 import axios from "axios";
-import insertImage from "../editor/plugin/utils/insertImage";
-import setFeaturedImage from "../editor/plugin/utils/setFeaturedImage";
+import classNames from "classnames";
+import { usePluginContext } from "../common/pluginProvider";
+import insertImage from "../editor/utils/insertImage";
+import replaceAndInsert from "../editor/utils/replaceAndInsert";
+import setFeaturedImage from "../editor/utils/setFeaturedImage";
 import {
 	capitalizeFirstLetter,
 	hideTooltip,
@@ -16,7 +19,14 @@ import { unsplashDownload } from "../functions/providers/unsplash";
  * @return {JSX.Element} The Photo component.
  */
 export default function Photo(props) {
-	const { provider, result, mediaRouter = false, blockEditor = false } = props;
+	const { result } = props;
+	const {
+		provider,
+		wpBlock = false,
+		mediaModal = false,
+		blockSidebar = false,
+		clientId,
+	} = usePluginContext();
 
 	const {
 		id,
@@ -47,7 +57,6 @@ export default function Photo(props) {
 	const auto_attribution =
 		instant_img_localize.auto_attribution === "1" ? true : false;
 	const imageCaption = auto_attribution ? attribution : caption; // Set auto attribution.
-	let inProgress = false;
 
 	// Photo state.
 	const [imageDetails, setImageDetails] = useState({
@@ -56,7 +65,8 @@ export default function Photo(props) {
 		alt,
 		caption: imageCaption,
 	});
-
+	const [inProgress, setInProgress] = useState(false); // inProgress state.
+	const [status, setStatus] = useState("loaded"); // Status state.
 	const [editURL, setEditURL] = useState(""); // Edit URL state.
 
 	// Refs.
@@ -64,47 +74,24 @@ export default function Photo(props) {
 	const upload = useRef();
 	const editScreen = useRef();
 	const captionRef = useRef();
-	const noticeMsg = useRef();
 
-	// Gutenberg Sidebar.
+	// Gutenberg.
 	let setAsFeaturedImage = false;
 	let insertIntoPost = false;
 
 	/**
 	 * Function to trigger the image download.
 	 *
-	 * @param {Element} e The current download item.
 	 * @since 4.3
 	 */
-	function download(e) {
-		e.preventDefault();
-		let target = e.currentTarget;
-		const notice = noticeMsg.current;
-
-		if (!target.classList.contains("upload")) {
-			// If target is .download-photo, switch target definition
-			target = upload.current; // a.upload.
+	function download() {
+		if (inProgress || status === "success" || status === "uploaded") {
+			return false; // Exit if uploading, uploaded or success.
 		}
+		const target = upload?.current;
 
-		if (target.classList.contains("success") || inProgress) {
-			return false; // Exit if already uploaded or in progress.
-		}
-
-		inProgress = true;
-		target.classList.add("uploading");
-		photo.current.classList.add("in-progress");
-
-		// Status messaging
-		notice.innerHTML = instant_img_localize.saving;
-
-		setTimeout(function () {
-			// Change notice after 3 seconds
-			notice.innerHTML = instant_img_localize.resizing;
-			setTimeout(function () {
-				// Change notice again after 5 seconds (Still resizing...)
-				notice.innerHTML = instant_img_localize.resizing_still;
-			}, 5000);
-		}, 3000);
+		setInProgress(true);
+		setStatus("uploading");
 
 		// API URL
 		const api = instant_img_localize.root + "instant-images/download/";
@@ -155,47 +142,87 @@ export default function Photo(props) {
 							unsplashDownload(download_url);
 						}
 
-						// Gutenberg sidebar plugin.
-						if (blockEditor) {
-							if (setAsFeaturedImage) {
-								// Set Featured Image.
-								setFeaturedImage(attachment.id);
-								setAsFeaturedImage = false;
-								closeMediaModal();
-							}
+						/**
+						 * Gutenberg options.
+						 */
 
-							// Insert Image.
-							if (insertIntoPost) {
-								if (attachment.url) {
-									insertImage(
-										attachment.url,
-										attachment.caption,
-										attachment.alt
-									);
-									closeMediaModal();
-								}
-								insertIntoPost = false;
-							}
+						// Set Featured Image via Sidebar.
+						if (blockSidebar && setAsFeaturedImage) {
+							setFeaturedImage(attachment.id);
+							setAsFeaturedImage = false;
+							closeMediaModal();
 						}
 
-						// If is media popup, redirect user to media-upload settings
-						if (container.dataset.mediaPopup === "true" && !blockEditor) {
+						// Insert Image via Sidebar.
+						if (blockSidebar && insertIntoPost) {
+							if (attachment.url) {
+								insertImage(attachment.url, attachment.caption, attachment.alt);
+								closeMediaModal();
+							}
+							insertIntoPost = false;
+						}
+
+						// Insert Image via WP Block.
+						if (wpBlock && clientId) {
+							if (attachment.url) {
+								replaceAndInsert(
+									attachment.url,
+									attachment.caption,
+									attachment.alt,
+									clientId
+								);
+								closeMediaModal();
+							}
+							insertIntoPost = false;
+						}
+
+						/**
+						 * Media Modal.
+						 * If is media popup, redirect user to media-upload settings.
+						 */
+						if (container.dataset.mediaPopup === "true" && !blockSidebar) {
 							window.location =
 								"media-upload.php?type=image&tab=library&attachment_id=" +
 								attachment.id;
 						}
 					} else {
 						// Error
-						uploadError(target, notice, msg);
+						uploadError(target, msg);
 					}
 				} else {
 					// Error
-					uploadError(target, notice, instant_img_localize.error_upload);
+					uploadError(target, instant_img_localize.error_upload);
 				}
 			})
 			.catch(function (error) {
 				console.warn(error);
 			});
+	}
+
+	/**
+	 * Upload complete function.
+	 *
+	 * @param {Element} target  Clicked item.
+	 * @param {string}  msg     Success Msg.
+	 * @param {string}  imageID Attachment id.
+	 * @since 3.0
+	 */
+	function uploadComplete(target, msg, imageID) {
+		if (!photo?.current) {
+			return;
+		}
+
+		setImageTitle(target, msg);
+		setStatus("uploaded");
+		setInProgress(false);
+
+		// Remove uploaded status after 3.5 seconds.
+		setTimeout(function () {
+			setStatus("success");
+		}, 3500);
+
+		// Refresh Media Router/Modal.
+		refreshMediaModal(imageID);
 	}
 
 	/**
@@ -238,62 +265,15 @@ export default function Photo(props) {
 	}
 
 	/**
-	 * Upload complete function.
-	 *
-	 * @param {Element} target  Clicked item.
-	 * @param {string}  msg     Success Msg.
-	 * @param {string}  imageID Attachment id.
-	 * @since 3.0
-	 */
-	function uploadComplete(target, msg, imageID) {
-		setImageTitle(target, msg);
-
-		photo.current.classList.remove("in-progress");
-		photo.current.classList.add("uploaded");
-
-		target.classList.remove("uploading");
-		target.classList.remove("resizing");
-		target.classList.add("success");
-		inProgress = false;
-
-		// Remove uploaded and success states after 3.5 seconds.
-		setTimeout(function () {
-			photo.current.classList.remove("uploaded");
-			target.classList.remove("success");
-		}, 3500);
-
-		// Refresh Media Router/Modal.
-		refreshMediaRouter(imageID);
-
-		/**
-		 * Deprecated in Instant Images 4.3.
-		 * Was previously used in the Media Popup Context.
-		 * Refresh Media Library contents on edit pages
-		 */
-		if (container.classList.contains("editor")) {
-			if (typeof wp.media !== "undefined") {
-				if (wp.media.frame.content.get() !== null) {
-					wp.media.frame.content
-						.get()
-						.collection.props.set({ ignore: +new Date() });
-					wp.media.frame.content.get().options.selection.reset();
-				} else {
-					wp.media.frame.library.props.set({ ignore: +new Date() });
-				}
-			}
-		}
-	}
-
-	/**
 	 * Refresh Media Modal and select item after it's been uploaded.
 	 *
 	 * @param {string} modalID The media modal ID.
 	 * @since 4.3
 	 */
-	function refreshMediaRouter(modalID) {
-		if (mediaRouter && wp.media && wp.media.frame && wp.media.frame.el) {
-			const mediaModal = wp.media.frame.el;
-			const mediaTab = mediaModal.querySelector("#menu-item-browse");
+	function refreshMediaModal(modalID) {
+		if (mediaModal && wp.media && wp.media.frame && wp.media.frame.el) {
+			const mediaModalEl = wp.media.frame.el;
+			const mediaTab = mediaModalEl.querySelector("#menu-item-browse");
 			if (mediaTab) {
 				// Open the 'Media Library' tab.
 				mediaTab.click();
@@ -318,17 +298,13 @@ export default function Photo(props) {
 	 * Function runs when error occurs on upload or resize.
 	 *
 	 * @param {Element} target Current clicked item.
-	 * @param {Element} notice The notice element.
 	 * @param {string}  msg    Error Msg.
 	 * @since 3.0
 	 */
-	function uploadError(target, notice, msg) {
-		target.classList.remove("uploading");
-		target.classList.remove("resizing");
-		target.classList.add("errors");
+	function uploadError(target, msg) {
 		setImageTitle(target, msg);
-		inProgress = false;
-		notice.classList.add("has-error");
+		setInProgress(false);
+		setStatus("error");
 		console.warn(msg);
 	}
 
@@ -434,9 +410,9 @@ export default function Photo(props) {
 	 * @since 4.3
 	 */
 	function closeMediaModal() {
-		const mediaModal = document.querySelector(".media-modal");
-		if (mediaModal) {
-			const closeBtn = mediaModal.querySelector("button.media-modal-close");
+		const mediaModalEl = document.querySelector(".media-modal");
+		if (mediaModalEl) {
+			const closeBtn = mediaModalEl.querySelector("button.media-modal-close");
 			if (!closeBtn) {
 				return false;
 			}
@@ -458,11 +434,10 @@ export default function Photo(props) {
 
 	return (
 		<article className="photo" ref={photo}>
-			<div className="photo--wrap">
+			<div className={classNames("photo-wrap", `photo-${status}`)}>
 				<div className="img-wrap">
-					<a
-						className="upload loaded"
-						href={full}
+					<button
+						className="photo-upload"
 						ref={upload}
 						data-id={id}
 						data-url={full}
@@ -470,21 +445,22 @@ export default function Photo(props) {
 						data-title={imageDetails.title}
 						data-alt={imageDetails.alt}
 						data-caption={imageDetails.caption}
-						title={instant_img_localize.upload}
-						onClick={(e) => download(e)}
+						title={
+							wpBlock
+								? instant_img_localize.insert_into_post
+								: instant_img_localize.upload
+						}
+						onClick={() => download()}
 					>
-						<img src={thumb} alt={alt} />
-						<div className="status" />
-					</a>
+						<img src={thumb} alt={alt} className={status} />
+					</button>
 
-					<div className="notice-msg" ref={noticeMsg} />
-
-					<div className="user-controls">
+					<div className="photo-controls">
 						<a
+							target="_blank"
 							className="user fade"
 							href={user_url}
 							rel="noopener noreferrer"
-							target="_blank"
 							title={`${instant_img_localize.view_all} @ ${user_name}`}
 						>
 							<div className="user-wrap">
@@ -495,7 +471,7 @@ export default function Photo(props) {
 							</div>
 						</a>
 						<div className="photo-options">
-							{blockEditor && !editURL ? (
+							{blockSidebar && !editURL ? (
 								<Fragment>
 									<button
 										type="button"
@@ -525,6 +501,22 @@ export default function Photo(props) {
 									</button>
 								</Fragment>
 							) : null}
+
+							{!!wpBlock && (
+								<button
+									type="button"
+									className="insert fade"
+									data-title={instant_img_localize.insert_into_post}
+									onMouseEnter={(e) => showTooltip(e)}
+									onMouseLeave={(e) => hideTooltip(e)}
+									onClick={(e) => insertImageIntoPost(e)}
+								>
+									<i className="fa fa-plus" aria-hidden="true"></i>
+									<span className="offscreen">
+										{instant_img_localize.insert_into_post}
+									</span>
+								</button>
+							)}
 
 							{editURL ? (
 								<button
@@ -556,7 +548,7 @@ export default function Photo(props) {
 						</div>
 					</div>
 
-					<div className="options">
+					<div className="photo-meta">
 						{likes ? (
 							<span
 								className="likes tooltip--above"
@@ -665,10 +657,13 @@ export default function Photo(props) {
 							className="button button-primary"
 							onClick={() => uploadNow()}
 						>
-							{instant_img_localize.upload_now}
+							{wpBlock
+								? instant_img_localize.insert_into_post
+								: instant_img_localize.upload_now}
 						</button>
 					</div>
 				</div>
+				<div className="photo-status" />
 			</div>
 		</article>
 	);

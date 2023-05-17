@@ -19,6 +19,14 @@ TO DO:
 - Separate out API keys into own settings field group. [DONE]
 - Adjust font paragraph colors etc [DONE]
 - Add license key settings for Pro.
+
+
+CHANGES:
+
+* UPDATE: Improved  infinite scroll loading and animations.
+* UPDATE: UX and UI updates throughout the app.
+* UPDATE: Code cleanup and various refactoring.
+
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -153,6 +161,7 @@ class InstantImages {
 	 */
 	public function enqueue_block_editor() {
 		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets', 'site-editor' ] ) ) {
+			// Plugin sidebar.
 			wp_enqueue_script(
 				'instant-images-plugin-sidebar',
 				INSTANT_IMAGES_URL . 'build/plugin-sidebar/index.js',
@@ -167,6 +176,17 @@ class InstantImages {
 				[ 'wp-edit-post' ],
 				INSTANT_IMAGES_VERSION
 			);
+
+			// Image block.
+			if ( $this::instant_images_pro_activated() ) {
+				wp_enqueue_script(
+					'instant-images-block',
+					INSTANT_IMAGES_URL . 'build/block/index.js',
+					[],
+					INSTANT_IMAGES_VERSION,
+					true
+				);
+			}
 
 			$this::instant_img_localize( 'instant-images-plugin-sidebar' );
 		}
@@ -331,7 +351,6 @@ class InstantImages {
 				'error'                   => __( 'Error', 'instant-images' ),
 				'ad'                      => __( 'Ad', 'instant-images' ),
 				'advertisement'           => __( 'Advertisement', 'instant-images' ),
-				'pro'                     => self::instant_images_pro_activated() ? instant_images_pro_localized_vars() : false,
 				'filters'                 => [
 					'select'       => __( '-- Select --', 'instant-images' ),
 					'orderby'      => __( 'Order:', 'instant-images' ),

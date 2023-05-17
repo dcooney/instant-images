@@ -174,7 +174,7 @@ function instant_images_media_tab() {
 	instant_images_scripts();
 	$show_settings = false;
 	?>
-	<div class="instant-img-container editor" data-media-popup="true">
+	<div class="instant-img-container editor" data-editor="media-modal" data-media-popup="true">
 		<?php include INSTANT_IMAGES_PATH . 'admin/views/app.php'; ?>
 	</div>
 	<?php

@@ -1,5 +1,5 @@
-import Icon from "./Icon";
 import { PluginSidebarMoreMenuItem } from "@wordpress/edit-post";
+import Icon from "../../../components/Icon";
 
 /**
  * The plugin menu as a component.
@@ -9,7 +9,7 @@ import { PluginSidebarMoreMenuItem } from "@wordpress/edit-post";
 export default function Menu() {
 	return (
 		<PluginSidebarMoreMenuItem
-			icon={<Icon color="unsplash" />}
+			icon={<Icon borderless />}
 			target="instant-images-sidebar"
 			className="instant-images-menu-item"
 		>

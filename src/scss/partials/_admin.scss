@@ -72,11 +72,6 @@ body.settings_page_instant-images-settings {
 		margin: 0 0 15px;
 		font-size: 14px;
 	}
-	&.loading {
-		.loading-block {
-			display: block;
-		}
-	}
 
 	.error-messaging {
 		padding: 22px 22px 22px 60px;
@@ -205,9 +200,17 @@ body.settings_page_instant-images-settings {
 			margin: 0 0 2px;
 		}
 	}
+
+	// Loader.
 	.loading-block {
-		padding: 50px 0;
-		background: url("../img/ajax-loader-lg.gif") no-repeat center center;
+		height: 90px;
+		background-image: none;
+		background-position: center center;
+		background-repeat: no-repeat;
+		margin-top: 10px;
+		&.loading {
+			background-image: url("../img/ajax-loader-lg.gif");
+		}
 	}
 
 	// Load More btn
@@ -215,6 +218,10 @@ body.settings_page_instant-images-settings {
 		margin: 0;
 		padding: 0;
 		text-align: center;
+		position: relative;
+		z-index: -1;
+		top: -100px;
+		opacity: 0;
 
 		button {
 			display: none;

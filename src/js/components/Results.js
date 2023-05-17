@@ -9,22 +9,17 @@ import Sponsor from "./Sponsor";
  * @return {JSX.Element} The Results component.
  */
 export default function Results(props) {
-	const { results, provider, mediaRouter, blockEditor } = props;
+	const { results } = props;
 
 	return (
 		<Fragment>
 			{!!results?.length &&
 				results.map((result, index) => (
-					<Fragment key={`${provider}-${result.id}-${index}`}>
+					<Fragment key={`${result.id}-${index}`}>
 						{result?.type === "instant-images-ad" ? (
 							<Sponsor result={result} />
 						) : (
-							<Photo
-								provider={provider}
-								result={result}
-								mediaRouter={mediaRouter}
-								blockEditor={blockEditor}
-							/>
+							<Photo result={result} />
 						)}
 					</Fragment>
 				))}

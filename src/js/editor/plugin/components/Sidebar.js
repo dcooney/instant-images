@@ -1,4 +1,4 @@
-import { useEffect, useState } from "@wordpress/element";
+import { useEffect, useRef, useState } from "@wordpress/element";
 import InstantImages from "../../../components/InstantImages";
 import buildURL from "../../../functions/buildURL";
 import consoleStatus from "../../../functions/consoleStatus";
@@ -12,12 +12,13 @@ import {
 } from "../../../functions/session";
 
 /**
- * The image listing panel for the plugin sidebar.
+ * The image listing sidebar for the plugin sidebar.
  *
  * @return {JSX.Element} The Panel component.
  */
-export default function Panel() {
+export default function Sidebar() {
 	const [data, setData] = useState({});
+	const containerRef = useRef();
 
 	// Get provider and options from settings.
 	const provider = getProvider();
@@ -62,13 +63,18 @@ export default function Panel() {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<div className="instant-img-container">
+		<div
+			className="instant-img-container"
+			data-editor="gutenberg-sidebar"
+			ref={containerRef}
+		>
 			{data && data.results ? (
 				<InstantImages
-					editor="gutenberg"
+					editor="sidebar"
 					data={data.results}
 					api_error={data.error}
 					provider={provider}
+					container={containerRef?.current}
 				/>
 			) : null}
 		</div>
