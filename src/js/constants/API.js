@@ -1,3 +1,10 @@
+import {
+	UnsplashIcon,
+	PexelsIcon,
+	PixabayIcon,
+	OpenverseIcon,
+} from "../components/ProviderIcons";
+
 export const API = {
 	proxy: PROXY_URL || "https://proxy.getinstantimages.com/api/", // eslint-disable-line
 	testmode: false,
@@ -14,18 +21,21 @@ export const API = {
 		new: false,
 		api_var: "client_id",
 		collections_api: "https://api.unsplash.com/collections/",
+		icon: UnsplashIcon,
 	},
 	pixabay: {
 		name: "Pixabay",
 		requires_key: true,
 		new: false,
 		api_var: "key",
+		icon: PixabayIcon,
 	},
 	pexels: {
 		name: "Pexels",
 		requires_key: true,
 		new: false,
 		api_var: "key",
+		icon: PexelsIcon,
 	},
 	openverse: {
 		name: "Openverse",
@@ -33,5 +43,6 @@ export const API = {
 		new: false,
 		api_var: "key",
 		key: "",
+		icon: OpenverseIcon,
 	},
 };

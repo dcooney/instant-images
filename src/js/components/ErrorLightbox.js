@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { usePluginContext } from "../common/pluginProvider";
 import getErrorMessage from "../functions/getErrorMessage";
 import { gotoURL } from "../functions/helpers";
+import { getProviderIcon } from "./ProviderIcons";
 
 /**
  * Render the ErrorLightbox component.
@@ -29,7 +30,10 @@ export default function ErrorLightbox(props) {
 						<div
 							className={classNames("api-lightbox--details", "error-lightbox")}
 						>
-							<h3 data-provider={provider}>{provider}</h3>
+							<h3>
+								{getProviderIcon(provider)}
+								{provider}
+							</h3>
 							<p className="callout-warning">
 								{status} {instant_img_localize.error}
 							</p>

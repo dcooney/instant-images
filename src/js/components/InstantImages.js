@@ -15,7 +15,6 @@ import APILightbox from "./APILightbox";
 import ErrorLightbox from "./ErrorLightbox";
 import Filter from "./Filter";
 import LoadMore from "./LoadMore";
-import LoadingBlock from "./LoadingBlock";
 import NoResults from "./NoResults";
 import ProviderNav from "./ProviderNav";
 import RestAPIError from "./RestAPIError";
@@ -87,12 +86,12 @@ export default function InstantImages(props) {
 	// WP Editor props.
 	const wpBlock = editor === "block" ? true : false;
 	const blockSidebar = editor === "sidebar" ? true : false;
-	const gutenberg = wpBlock || blockSidebar ? true : false;
+	const isBlockEditor = wpBlock || blockSidebar ? true : false;
 	const mediaModal = editor === "media-modal" ? true : false;
 
 	const body = document.body;
-	const plugin = gutenberg ? container : container.parentNode.parentNode;
-	const wrapper = gutenberg
+	const plugin = isBlockEditor ? container : container.parentNode.parentNode;
+	const wrapper = isBlockEditor
 		? container
 		: plugin.querySelector(".instant-images-wrapper");
 
@@ -420,7 +419,7 @@ export default function InstantImages(props) {
 	 */
 	function renderLayout() {
 		imagesLoaded(photoListing.current, function () {
-			if (!gutenberg) {
+			if (!isBlockEditor) {
 				msnry.current = new Masonry(photoListing.current, {
 					itemSelector: ".photo",
 				});
@@ -514,8 +513,8 @@ export default function InstantImages(props) {
 		setLoading(false);
 		wrapper.classList.add("loaded");
 
-		// Block editor.
-		if (wpBlock) {
+		// Block editor, get initial set of photos.
+		if (isBlockEditor) {
 			getPhotos();
 		}
 		// Add global escape listener.
@@ -609,8 +608,13 @@ export default function InstantImages(props) {
 						<Results results={results} />
 					</div>
 					<NoResults total={search?.results} is_search={search?.active} />
-					<LoadMore loadMorePhotos={loadMorePhotos} ref={loadMoreRef} />
-					<LoadingBlock loading={loadingMore} total={results?.length} />
+					<LoadMore
+						className="load-more-wrap infinitescroll"
+						loadMorePhotos={loadMorePhotos}
+						loading={loadingMore}
+						total={results?.length}
+						ref={loadMoreRef}
+					/>
 					<APILightbox
 						provider={showAPILightbox}
 						closeAPILightbox={closeAPILightbox}

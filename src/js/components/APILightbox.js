@@ -4,6 +4,7 @@ import { buildTestURL } from "../functions/buildURL";
 import consoleStatus from "../functions/consoleStatus";
 import { checkRateLimit, gotoURL } from "../functions/helpers";
 import updatePluginSetting from "../functions/updatePluginSetting";
+import { getProviderIcon } from "./ProviderIcons";
 
 /**
  * Render the APILightbox component.
@@ -156,7 +157,10 @@ export default function APILightbox(props) {
 								</span>
 							</button>
 							<div className="api-lightbox--details">
-								<h3 data-provider={provider}>{provider}</h3>
+								<h3>
+									{getProviderIcon(provider)}
+									{provider}
+								</h3>
 								<p>{instant_img_localize[`${provider}_api_desc`]}</p>
 								<p className="action-controls">
 									<button

@@ -219,43 +219,6 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-size: 18px;
   margin: 0 0 2px;
 }
-.instant-img-container .loading-block {
-  height: 90px;
-  background-image: none;
-  background-position: center center;
-  background-repeat: no-repeat;
-  margin-top: 10px;
-}
-.instant-img-container .loading-block.loading {
-  background-image: url(images/ajax-loader-lg.808ea7f8.gif);
-}
-.instant-img-container .load-more-wrap {
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  position: relative;
-  z-index: -1;
-  top: -100px;
-  opacity: 0;
-}
-.instant-img-container .load-more-wrap button {
-  display: none;
-  margin: 20px 0;
-  padding: 15px;
-  font-size: 15px;
-  font-weight: 600;
-  transition: all 0.25s ease;
-  height: auto;
-  line-height: 1;
-  cursor: pointer;
-  background-image: none;
-  background-repeat: no-repeat !important;
-  background-position: 15px center !important;
-}
-.instant-img-container .load-more-wrap button.disabled {
-  opacity: 0.3;
-  cursor: default;
-}
 .instant-img-container h2,
 .instant-img-container h3,
 .instant-img-container h4 {
@@ -346,6 +309,52 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-img-container input:-webkit-autofill {
   box-shadow: 0 0 0 1000px #fff inset;
+}
+.instant-img-container .loading-block {
+  height: 90px;
+  margin-top: 10px;
+  position: relative;
+}
+.instant-img-container .loading-block::after {
+  position: absolute;
+  content: "";
+  display: block;
+  inset: 0;
+  background: url(images/ajax-loader-lg.808ea7f8.gif) no-repeat center center;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.instant-img-container .loading-block.loading::after {
+  opacity: 1;
+}
+.instant-img-container .load-more-wrap {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.instant-img-container .load-more-wrap.infinitescroll {
+  position: relative;
+  z-index: -1;
+  top: -100px;
+  opacity: 0;
+}
+.instant-img-container .load-more-wrap button {
+  display: none;
+  margin: 20px 0;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  height: auto;
+  line-height: 1;
+  cursor: pointer;
+  background-image: none;
+  background-repeat: no-repeat !important;
+  background-position: 15px center !important;
+}
+.instant-img-container .load-more-wrap button.disabled {
+  opacity: 0.3;
+  cursor: default;
 }
 .instant-img-container .control-nav {
   display: flex;
@@ -2002,7 +2011,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   margin-left: 0;
 }
 .provider-nav--btn {
-  padding: 0 10px 0 36px;
+  padding: 0 10px;
   margin: 0;
   height: 38px;
   line-height: 38px;
@@ -2015,6 +2024,13 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   color: #98979d;
   transition: all 0.2s ease;
   background-color: #f7f7f7;
+  display: flex;
+  align-items: center;
+}
+.provider-nav--btn svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
 }
 .provider-nav--btn:hover, .provider-nav--btn:focus {
   color: #434246;
@@ -2043,22 +2059,6 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   position: relative;
   top: -1px;
   letter-spacing: -0.05rem;
-}
-[data-provider=unsplash] {
-  background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHBhdGggZD0iTTEwIDlWMGgxMnY5SDEwem0xMiA1aDEwdjE4SDBWMTRoMTB2OWgxMnYtOXoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0ibm9uemVybyIgLz4KPC9zdmc+Cg==) no-repeat 10px center;
-  background-size: 18px 18px;
-}
-[data-provider=pixabay] {
-  background: url(images/pixabay.6c43095c.png) no-repeat 10px center;
-  background-size: 20px 20px;
-}
-[data-provider=pexels] {
-  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMnB4IiBoZWlnaHQ9IjMycHgiIHZpZXdCb3g9IjAgMCAzMiAzMiI+Cgk8cGF0aCBkPSJNMiAwaDI4YTIgMiAwIDAgMSAyIDJ2MjhhMiAyIDAgMCAxLTIgMkgyYTIgMiAwIDAgMS0yLTJWMmEyIDIgMCAwIDEgMi0yeiIgZmlsbD0iIzA1QTA4MSI+PC9wYXRoPgoJPHBhdGggZD0iTTEzIDIxaDMuODYzdi0zLjc1MmgxLjE2N2EzLjEyNCAzLjEyNCAwIDEgMCAwLTYuMjQ4SDEzdjEwem01Ljg2MyAySDExVjloNy4wM2E1LjEyNCA1LjEyNCAwIDAgMSAuODMzIDEwLjE4VjIzeiIgZmlsbD0iI2ZmZiI+PC9wYXRoPgo8L3N2Zz4K) no-repeat 10px center;
-  background-size: 20px 20px;
-}
-[data-provider=openverse] {
-  background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNDIiIHZpZXdCb3g9IjAgMCA1MCA0MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxnIGlkPSJsb2dvIiBmaWxsPSJjdXJyZW50Q29sb3IiPgoJCTxwYXRoIGQ9Ik0zNy41NTg5IDE4Ljc5NUM0Mi43MTQ2IDE4Ljc5NSA0Ni44OTQyIDE0LjU4NzYgNDYuODk0MiA5LjM5NzVDNDYuODk0MiA0LjIwNzQgNDIuNzE0NiAwIDM3LjU1ODkgMEMzMi40MDMxIDAgMjguMjIzNiA0LjIwNzQgMjguMjIzNiA5LjM5NzVDMjguMjIzNiAxNC41ODc2IDMyLjQwMzEgMTguNzk1IDM3LjU1ODkgMTguNzk1WiIgY2xhc3M9ImNpcmNsZSI+PC9wYXRoPjxwYXRoIGQ9Ik0wLjk5OTk2OSA5LjM5NzVDMC45OTk5NjkgMTQuNTY4NyA1LjE3MjE3IDE4Ljc5NSAxMC4zMzUzIDE4Ljc5NVYwQzUuMTcyMTcgMCAwLjk5OTk2OSA0LjIgMC45OTk5NjkgOS4zOTc1WiIgY2xhc3M9ImNpcmNsZSI+PC9wYXRoPjxwYXRoIGQ9Ik0xNC42MTE4IDkuMzk3NUMxNC42MTE4IDE0LjU2ODcgMTguNzg0IDE4Ljc5NSAyMy45NDcxIDE4Ljc5NVYwQzE4LjgxMDEgMCAxNC42MTE4IDQuMiAxNC42MTE4IDkuMzk3NVoiIGNsYXNzPSJjaXJjbGUiPjwvcGF0aD48cGF0aCBkPSJNMzcuNTU4OSA0MS45MjEyQzQyLjcxNDYgNDEuOTIxMiA0Ni44OTQyIDM3LjcxMzggNDYuODk0MiAzMi41MjM4QzQ2Ljg5NDIgMjcuMzMzNyA0Mi43MTQ2IDIzLjEyNjMgMzcuNTU4OSAyMy4xMjYzQzMyLjQwMzEgMjMuMTI2MyAyOC4yMjM2IDI3LjMzMzcgMjguMjIzNiAzMi41MjM4QzI4LjIyMzYgMzcuNzEzOCAzMi40MDMxIDQxLjkyMTIgMzcuNTU4OSA0MS45MjEyWiIgY2xhc3M9ImNpcmNsZSI+PC9wYXRoPjxwYXRoIGQ9Ik0xNC42MTE4IDMyLjUyMzhDMTQuNjExOCAzNy42OTUgMTguNzg0IDQxLjkyMTMgMjMuOTQ3MSA0MS45MjEzVjIzLjE1MjVDMTguODEwMSAyMy4xNTI1IDE0LjYxMTggMjcuMzUyNSAxNC42MTE4IDMyLjUyMzhaIiBjbGFzcz0iY2lyY2xlIj48L3BhdGg+CgkJPHBhdGggZD0iTTAuOTk5OTY5IDMyLjYwMjVDMC45OTk5NjkgMzcuOCA1LjE3MjE3IDQyIDEwLjMzNTMgNDJWMjMuMjMxMkM1LjE3MjE3IDIzLjIzMTIgMC45OTk5NjkgMjcuNDMxMiAwLjk5OTk2OSAzMi42MDI1WiI+PC9wYXRoPgoJPC9nPgo8L3N2Zz4K) no-repeat 10px center;
-  background-size: 20px 20px;
 }
 .media-frame-content .instant-img-container .api-lightbox > div {
   top: 0;
@@ -2150,10 +2150,17 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .instant-img-container .api-lightbox--details h3 {
   font-size: 16px;
   line-height: 18px;
-  padding: 0 0 0 28px;
+  padding: 0;
   text-transform: uppercase;
   margin: 0 0 15px;
-  background-position: left center;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+.instant-img-container .api-lightbox--details h3 svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
 }
 .instant-img-container .api-lightbox--details p {
   margin: 10px 0 0;

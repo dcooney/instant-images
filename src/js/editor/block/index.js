@@ -1,10 +1,17 @@
-import { InnerBlocks, useBlockProps } from "@wordpress/block-editor";
+import {
+	BlockControls,
+	InnerBlocks,
+	useBlockProps,
+} from "@wordpress/block-editor";
 import { registerBlockType } from "@wordpress/blocks";
-import { useRef, useState, useEffect } from "@wordpress/element";
+import { DropdownMenu } from "@wordpress/components";
+import { useEffect, useRef, useState } from "@wordpress/element";
 import Icon from "../../components/Icon";
 import InstantImages from "../../components/InstantImages";
 import getProvider from "../../functions/getProvider";
 import blockConfig from "./block.json";
+import { API } from "../../constants/API";
+const providers = API.providers;
 
 // Register the block
 registerBlockType("connekthq/instant-images", {
@@ -27,9 +34,24 @@ registerBlockType("connekthq/instant-images", {
  */
 function InstantImagesBlock({ clientId }) {
 	const provider = getProvider();
-	const [mounted, setMounted] = useState(false); // App mounted state.
+	const [mounted, setMounted] = useState(false);
 	const containerRef = useRef();
 	const blockProps = useBlockProps();
+
+	/**
+	 * Get a list of the Providers.
+	 *
+	 * @return {Array} The list of Providers.
+	 */
+	function getProviders() {
+		const theProviders = providers.map((item) => {
+			return {
+				title: item,
+				icon: API[item.toLowerCase()].icon,
+			};
+		});
+		return theProviders;
+	}
 
 	useEffect(() => {
 		if (!mounted) {
@@ -44,6 +66,9 @@ function InstantImagesBlock({ clientId }) {
 				data-editor="block"
 				ref={containerRef}
 			>
+				<BlockControls>
+					<DropdownMenu label="Select a Provider" controls={getProviders()} />
+				</BlockControls>
 				{!!mounted && (
 					<InstantImages
 						editor="block"

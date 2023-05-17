@@ -1,7 +1,8 @@
 import { Fragment } from "@wordpress/element";
-import { API } from "../constants/API";
 import { usePluginContext } from "../common/pluginProvider";
-const providers = API.providers; // Get current provider settings.
+import { API } from "../constants/API";
+import { getProviderIcon } from "./ProviderIcons";
+const providers = API.providers;
 
 /**
  * Render the ProviderNav component.
@@ -16,8 +17,8 @@ export default function ProviderNav(props) {
 		<Fragment>
 			{!!providers?.length && (
 				<nav className="provider-nav">
-					{providers.map((item, iterator) => (
-						<div key={`provider-${iterator}`}>
+					{providers.map((item, index) => (
+						<div key={`provider-${index}`}>
 							<button
 								data-provider={item.toLowerCase()}
 								onClick={(e) => switchProvider(e)}
@@ -27,6 +28,7 @@ export default function ProviderNav(props) {
 										: "provider-nav--btn"
 								}
 							>
+								{getProviderIcon(item)}
 								<span>{item}</span>
 								{API[item.toLowerCase()].new && (
 									<span className="provider-nav--new">

@@ -200,48 +200,6 @@ body.settings_page_instant-images-settings {
 			margin: 0 0 2px;
 		}
 	}
-
-	// Loader.
-	.loading-block {
-		height: 90px;
-		background-image: none;
-		background-position: center center;
-		background-repeat: no-repeat;
-		margin-top: 10px;
-		&.loading {
-			background-image: url("../img/ajax-loader-lg.gif");
-		}
-	}
-
-	// Load More btn
-	.load-more-wrap {
-		margin: 0;
-		padding: 0;
-		text-align: center;
-		position: relative;
-		z-index: -1;
-		top: -100px;
-		opacity: 0;
-
-		button {
-			display: none;
-			margin: 20px 0;
-			padding: 15px;
-			font-size: 15px;
-			font-weight: 600;
-			transition: $transition;
-			height: auto;
-			line-height: 1;
-			cursor: pointer;
-			background-image: none;
-			background-repeat: no-repeat !important;
-			background-position: 15px center !important;
-			&.disabled {
-				opacity: 0.3;
-				cursor: default;
-			}
-		}
-	}
 }
 
 // defaults

@@ -18,7 +18,11 @@ export function getSession(url) {
 	}
 
 	const data = JSON.parse(session);
-	const { expires = 0 } = data;
+	const { expires = 0, error = null } = data;
+
+	if (error) {
+		return false; // Exit if session data has error entry.
+	}
 
 	// Check if expiration time has passed.
 	const expired = Date.now() > expires;
@@ -38,7 +42,7 @@ export function getSession(url) {
  * @param {Array}  results The API results.
  */
 export function saveSession(url, results) {
-	if (!url || !results) {
+	if (!url || !results || results?.error) {
 		return false;
 	}
 	// Set expiration to 1 hour.
