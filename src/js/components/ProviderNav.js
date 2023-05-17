@@ -20,8 +20,7 @@ export default function ProviderNav(props) {
 					{providers.map((item, index) => (
 						<div key={`provider-${index}`}>
 							<button
-								data-provider={item.toLowerCase()}
-								onClick={(e) => switchProvider(e)}
+								onClick={() => switchProvider(item.toLowerCase())}
 								className={
 									provider === item.toLowerCase()
 										? "provider-nav--btn active"

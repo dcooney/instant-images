@@ -23,7 +23,8 @@ TO DO:
 
 CHANGES:
 
-* UPDATE: Improved  infinite scroll loading and animations.
+* UPDATE: Improved infinite scroll loading and animations.
+* UPDATE: Improved error handling for API keys with session data.
 * UPDATE: UX and UI updates throughout the app.
 * UPDATE: Code cleanup and various refactoring.
 

@@ -686,7 +686,7 @@ function InstantImages(props) {
   var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(provider),
     _useState4 = _slicedToArray(_useState3, 2),
     activeProvider = _useState4[0],
-    setActiveProvider = _useState4[1]; // Current provider
+    setActiveProvider = _useState4[1]; // Current provider.
   var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
     apiTested = _useState6[0],
@@ -1084,7 +1084,7 @@ function InstantImages(props) {
   /**
    * Switch API providers.
    *
-   * @param {Event} e The clicked element event.
+   * @param {string} newProvider The provider to switch to.
    * @since 4.5
    */
   function switchProvider(_x3) {
@@ -1096,19 +1096,17 @@ function InstantImages(props) {
    * @since 3.0
    */
   function _switchProvider() {
-    _switchProvider = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
-      var target, newProvider, response, status, headers;
+    _switchProvider = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(newProvider) {
+      var response, status, headers;
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
         while (1) switch (_context4.prev = _context4.next) {
           case 0:
-            target = e.currentTarget;
-            newProvider = target.dataset.provider;
-            if (!target.classList.contains("active")) {
-              _context4.next = 4;
+            if (!(activeProvider === newProvider)) {
+              _context4.next = 2;
               break;
             }
             return _context4.abrupt("return");
-          case 4:
+          case 2:
             setLoading(true);
             setAPIError(false);
             setShowAPILightbox(false);
@@ -1116,51 +1114,51 @@ function InstantImages(props) {
 
             // API verification - check API key for provider.
             if (!(_constants_API__WEBPACK_IMPORTED_MODULE_4__.API[newProvider].requires_key && !apiTested.includes(newProvider))) {
-              _context4.next = 27;
+              _context4.next = 25;
               break;
             }
-            _context4.prev = 9;
-            _context4.next = 12;
+            _context4.prev = 7;
+            _context4.next = 10;
             return fetch((0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_6__.buildTestURL)(newProvider));
-          case 12:
+          case 10:
             response = _context4.sent;
             status = response.status, headers = response.headers;
             (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_10__.checkRateLimit)(headers);
             if (!(status !== 200)) {
-              _context4.next = 19;
+              _context4.next = 17;
               break;
             }
             // Catch API errors and 401s.
             setShowAPILightbox(newProvider); // Show API Lightbox.
             body.classList.add("overflow-hidden");
             return _context4.abrupt("return");
-          case 19:
+          case 17:
             if (status === 200) {
               // Valid API key - Add to array of tested providers.
               setAPITested(function (prevState) {
                 return [].concat(_toConsumableArray(prevState), [newProvider]);
               });
             }
-            _context4.next = 27;
+            _context4.next = 25;
             break;
-          case 22:
-            _context4.prev = 22;
-            _context4.t0 = _context4["catch"](9);
+          case 20:
+            _context4.prev = 20;
+            _context4.t0 = _context4["catch"](7);
             // Catch all other errors.
             setShowAPILightbox(newProvider); // Show API Lightbox.
             body.classList.add("overflow-hidden");
             return _context4.abrupt("return");
-          case 27:
+          case 25:
             // Add slight delay for loading effect.
             setTimeout(function () {
               setFilterOptions(_constants_filters__WEBPACK_IMPORTED_MODULE_5__.FILTERS[newProvider].filters); // Update filter options.
               setActiveProvider(newProvider); // Switch the provider.
             }, delay);
-          case 28:
+          case 26:
           case "end":
             return _context4.stop();
         }
-      }, _callee4, null, [[9, 22]]);
+      }, _callee4, null, [[7, 20]]);
     }));
     return _switchProvider.apply(this, arguments);
   }
@@ -2352,9 +2350,8 @@ function ProviderNav(props) {
     return /*#__PURE__*/React.createElement("div", {
       key: "provider-".concat(index)
     }, /*#__PURE__*/React.createElement("button", {
-      "data-provider": item.toLowerCase(),
-      onClick: function onClick(e) {
-        return switchProvider(e);
+      onClick: function onClick() {
+        return switchProvider(item.toLowerCase());
       },
       className: provider === item.toLowerCase() ? "provider-nav--btn active" : "provider-nav--btn"
     }, (0,_ProviderIcons__WEBPACK_IMPORTED_MODULE_3__.getProviderIcon)(item), /*#__PURE__*/React.createElement("span", null, item), _constants_API__WEBPACK_IMPORTED_MODULE_2__.API[item.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {

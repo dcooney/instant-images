@@ -4,19 +4,19 @@ import {
 	useBlockProps,
 } from "@wordpress/block-editor";
 import { registerBlockType } from "@wordpress/blocks";
-import { DropdownMenu } from "@wordpress/components";
+import { ToolbarDropdownMenu, ToolbarGroup } from "@wordpress/components";
 import { useEffect, useRef, useState } from "@wordpress/element";
-import Icon from "../../components/Icon";
+import { __ } from "@wordpress/i18n";
+import { help } from "@wordpress/icons";
+import { IconLogo } from "../../components/Icon";
 import InstantImages from "../../components/InstantImages";
 import getProvider from "../../functions/getProvider";
 import blockConfig from "./block.json";
-import { API } from "../../constants/API";
-const providers = API.providers;
 
 // Register the block
 registerBlockType("connekthq/instant-images", {
 	...blockConfig,
-	icon: Icon,
+	icon: IconLogo,
 	edit({ clientId }) {
 		return <InstantImagesBlock clientId={clientId} />;
 	},
@@ -38,21 +38,6 @@ function InstantImagesBlock({ clientId }) {
 	const containerRef = useRef();
 	const blockProps = useBlockProps();
 
-	/**
-	 * Get a list of the Providers.
-	 *
-	 * @return {Array} The list of Providers.
-	 */
-	function getProviders() {
-		const theProviders = providers.map((item) => {
-			return {
-				title: item,
-				icon: API[item.toLowerCase()].icon,
-			};
-		});
-		return theProviders;
-	}
-
 	useEffect(() => {
 		if (!mounted) {
 			setMounted(true);
@@ -67,7 +52,27 @@ function InstantImagesBlock({ clientId }) {
 				ref={containerRef}
 			>
 				<BlockControls>
-					<DropdownMenu label="Select a Provider" controls={getProviders()} />
+					<ToolbarGroup>
+						<ToolbarDropdownMenu label="Help" icon={help}>
+							{() => {
+								return (
+									<div style={{ width: "300px", padding: "0 10px" }}>
+										<p>
+											<strong>
+												{__("Instant Images Help", "instant-images")}
+											</strong>
+										</p>
+										<p>
+											{__(
+												"Clicking an image will download and insert the image directly into the post using the core Image block.",
+												"instant-images"
+											)}
+										</p>
+									</div>
+								);
+							}}
+						</ToolbarDropdownMenu>
+					</ToolbarGroup>
 				</BlockControls>
 				{!!mounted && (
 					<InstantImages

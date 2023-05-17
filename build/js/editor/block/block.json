@@ -18,6 +18,8 @@
   ],
   "attributes": {},
   "supports": {
+    "customClassName": false,
+    "anchor": false,
     "html": false
   },
   "textdomain": "instant-images",

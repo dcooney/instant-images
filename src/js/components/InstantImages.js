@@ -59,7 +59,7 @@ export default function InstantImages(props) {
 
 	// App state.
 	const [results, setResults] = useState(getResults(data)); // Image results.
-	const [activeProvider, setActiveProvider] = useState(provider); // Current provider
+	const [activeProvider, setActiveProvider] = useState(provider); // Current provider.
 	const [apiTested, setAPITested] = useState([]); // API key test results.
 	const [mounted, setMounted] = useState(false); // App mounted state.
 	const [loading, setLoading] = useState(true); // Loading state
@@ -364,17 +364,14 @@ export default function InstantImages(props) {
 	/**
 	 * Switch API providers.
 	 *
-	 * @param {Event} e The clicked element event.
+	 * @param {string} newProvider The provider to switch to.
 	 * @since 4.5
 	 */
-	async function switchProvider(e) {
-		const target = e.currentTarget;
-		const newProvider = target.dataset.provider;
-
-		if (target.classList.contains("active")) {
-			// Exit if already active.
-			return;
+	async function switchProvider(newProvider) {
+		if (activeProvider === newProvider) {
+			return; // Exit if already active.
 		}
+
 		setLoading(true);
 		setAPIError(false);
 		setShowAPILightbox(false);
