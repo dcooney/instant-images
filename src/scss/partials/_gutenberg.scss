@@ -67,6 +67,8 @@ $wpblock_maxh: 220px;
 .instant-images-block {
 	.instant-img-container {
 		border: 1px solid $border;
+		border-radius: $radius;
+		box-shadow: 0 0 0 5px $lighter_grey;
 		padding: 0;
 	}
 
@@ -79,6 +81,7 @@ $wpblock_maxh: 220px;
 		background-color: $lighter_grey;
 		border-bottom: 1px solid $border;
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
+		border-radius: $radius $radius 0 0;
 		&-logo {
 			display: flex;
 			align-items: center;
@@ -98,6 +101,24 @@ $wpblock_maxh: 220px;
 		}
 	}
 
+	&--instructions {
+		width: 100%;
+		background-color: $lighter_grey;
+		border-radius: 0 0 $radius $radius;
+		padding: 10px;
+		font-size: 12px;
+		display: flex;
+		justify-content: center;
+		color: $text;
+		font-weight: 500;
+		cursor: default;
+		span {
+			opacity: 0.5;
+			margin: 0 5px;
+			font-weight: 400;
+		}
+	}
+
 	.load-more-wrap,
 	.loading-block {
 		display: none !important;
@@ -111,16 +132,25 @@ $wpblock_maxh: 220px;
 	#photo-listing {
 		display: block;
 		width: 100%;
-		min-height: unset;
+		min-height: $wpblock_maxh;
 		padding: 15px;
 		overflow: hidden;
+		&::after {
+			background-position: center 43%;
+		}
+
+		#photos--wrap {
+			display: flex;
+		}
 		#photos {
+			flex: 1;
 			display: flex;
 			flex-wrap: nowrap;
 			overflow-x: auto;
 			width: 100%;
 			white-space: nowrap;
 			padding: 0 0 10px;
+			margin: 0;
 			.photo {
 				opacity: 1 !important;
 				margin-right: 10px;

@@ -680,6 +680,9 @@ body.settings_page_instant-images-settings.overflow-hidden {
   position: relative;
   z-index: 1;
 }
+#photos.inactive {
+  pointer-events: none;
+}
 #photos .photo {
   width: 20%;
   margin: 0;
@@ -1734,6 +1737,8 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-images-block .instant-img-container {
   border: 1px solid #e1e1e1;
+  border-radius: 3px;
+  box-shadow: 0 0 0 5px #f7f7f7;
   padding: 0;
 }
 .instant-images-block--header {
@@ -1744,6 +1749,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   background-color: #f7f7f7;
   border-bottom: 1px solid #e1e1e1;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
+  border-radius: 3px 3px 0 0;
 }
 .instant-images-block--header-logo {
   display: flex;
@@ -1762,6 +1768,23 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .instant-images-block--header-nav {
   margin-left: auto;
 }
+.instant-images-block--instructions {
+  width: 100%;
+  background-color: #f7f7f7;
+  border-radius: 0 0 3px 3px;
+  padding: 10px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  color: #434246;
+  font-weight: 500;
+  cursor: default;
+}
+.instant-images-block--instructions span {
+  opacity: 0.5;
+  margin: 0 5px;
+  font-weight: 400;
+}
 .instant-images-block .load-more-wrap,
 .instant-images-block .loading-block {
   display: none !important;
@@ -1773,18 +1796,25 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .instant-images-block #photo-listing {
   display: block;
   width: 100%;
-  min-height: 0;
-  min-height: initial;
+  min-height: 220px;
   padding: 15px;
   overflow: hidden;
 }
+.instant-images-block #photo-listing::after {
+  background-position: center 43%;
+}
+.instant-images-block #photo-listing #photos--wrap {
+  display: flex;
+}
 .instant-images-block #photo-listing #photos {
+  flex: 1;
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
   width: 100%;
   white-space: nowrap;
   padding: 0 0 10px;
+  margin: 0;
 }
 .instant-images-block #photo-listing #photos .photo {
   opacity: 1 !important;

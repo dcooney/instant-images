@@ -21,6 +21,7 @@ import Results from "./Results";
 import SearchHeader from "./SearchHeader";
 import SearchToolTip from "./SearchToolTip";
 import Tooltip from "./Tooltip";
+import BlockHeader from "./block/Header";
 const imagesLoaded = require("imagesloaded");
 
 let page = 1;
@@ -77,7 +78,7 @@ export default function InstantImages(props) {
 	const [loadMoreRef, inView] = useInView({
 		rootMargin: "0px 0px",
 	});
-	const photoListingRef = useRef();
+	const photosRef = useRef();
 	const searchInputRef = useRef();
 	const msnryRef = useRef();
 
@@ -105,6 +106,7 @@ export default function InstantImages(props) {
 
 		setLoading(true); // Set loading state.
 		clearSearch(); // Clear search results.
+		resetScrollPosition();
 		page = 1;
 
 		// Build URL.
@@ -200,6 +202,7 @@ export default function InstantImages(props) {
 	 */
 	async function doSearch(term) {
 		setLoading(true);
+		resetScrollPosition();
 		page = 1; // Reset current page num.
 
 		const searchType = term.substring(0, 3) === "id:" ? "id" : "term";
@@ -413,12 +416,12 @@ export default function InstantImages(props) {
 	 * @since 3.0
 	 */
 	function renderLayout() {
-		imagesLoaded(photoListingRef.current, function () {
+		imagesLoaded(photosRef.current, function () {
 			if (!isBlockEditor) {
-				msnryRef.current = new Masonry(photoListingRef.current, {
+				msnryRef.current = new Masonry(photosRef.current, {
 					itemSelector: ".photo",
 				});
-				photoListingRef.current.querySelectorAll(".photo").forEach((el) => {
+				photosRef.current.querySelectorAll(".photo").forEach((el) => {
 					el.classList.add("in-view");
 				});
 			}
@@ -431,6 +434,19 @@ export default function InstantImages(props) {
 				}
 			}, delay);
 		});
+	}
+
+	/**
+	 * Reset the scroll position for the WP block only.
+	 */
+	function resetScrollPosition() {
+		if (wpBlock && photosRef?.current) {
+			photosRef?.current.scroll({
+				top: 0,
+				left: 0,
+				behavior: "smooth",
+			});
+		}
 	}
 
 	/**
@@ -451,7 +467,7 @@ export default function InstantImages(props) {
 	function escFunction(e) {
 		const { key } = e;
 		if (key === "Escape") {
-			const editing = photoListingRef.current.querySelectorAll(
+			const editing = photosRef.current.querySelectorAll(
 				".edit-screen.editing"
 			);
 			if (editing) {
@@ -530,7 +546,11 @@ export default function InstantImages(props) {
 					clientId,
 				}}
 			>
-				<ProviderNav switchProvider={switchProvider} />
+				{wpBlock ? (
+					<BlockHeader switchProvider={switchProvider} />
+				) : (
+					<ProviderNav switchProvider={switchProvider} />
+				)}
 				<RestAPIError
 					title={instant_img_localize.error_restapi}
 					desc={instant_img_localize.error_restapi_desc}
@@ -598,9 +618,9 @@ export default function InstantImages(props) {
 						filterSearch={filterSearch}
 						getPhotos={getPhotos}
 					/>
-					<Results data={results} search={search} ref={photoListingRef} />
+					<Results data={results} search={search} ref={photosRef} />
 					<LoadMore
-						className="load-more-wrap infinitescroll"
+						className="load-more-wrap"
 						loadMorePhotos={loadMorePhotos}
 						loading={loadingMore}
 						total={results?.length}

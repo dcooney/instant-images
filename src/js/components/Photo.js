@@ -19,7 +19,7 @@ import { unsplashDownload } from "../functions/providers/unsplash";
  * @return {JSX.Element} The Photo component.
  */
 export default function Photo(props) {
-	const { result } = props;
+	const { result, setInactive } = props;
 	const {
 		provider,
 		wpBlock = false,
@@ -93,6 +93,10 @@ export default function Photo(props) {
 		setInProgress(true);
 		setStatus("uploading");
 
+		if (wpBlock) {
+			setInactive(true); // Make Instant Images inactive after selecting an image.
+		}
+
 		// API URL
 		const api = instant_img_localize.root + "instant-images/download/";
 
@@ -165,12 +169,16 @@ export default function Photo(props) {
 						// Insert Image via WP Block.
 						if (wpBlock && clientId) {
 							if (attachment.url) {
-								replaceAndInsert(
-									attachment.url,
-									attachment.caption,
-									attachment.alt,
-									clientId
-								);
+								setStatus("uploaded");
+								setTimeout(() => {
+									// Delay for effect.
+									replaceAndInsert(
+										attachment.url,
+										attachment.caption,
+										attachment.alt,
+										clientId
+									);
+								}, 250);
 								closeMediaModal();
 							}
 							insertIntoPost = false;
@@ -305,6 +313,7 @@ export default function Photo(props) {
 		setImageTitle(target, msg);
 		setInProgress(false);
 		setStatus("error");
+		setInactive(false);
 		console.warn(msg);
 	}
 

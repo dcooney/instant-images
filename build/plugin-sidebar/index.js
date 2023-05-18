@@ -659,7 +659,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
 /* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(masonry_layout__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! react-intersection-observer */ "./node_modules/react-intersection-observer/react-intersection-observer.modern.mjs");
+/* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! react-intersection-observer */ "./node_modules/react-intersection-observer/react-intersection-observer.modern.mjs");
 /* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/pluginProvider */ "./src/js/common/pluginProvider.js");
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
 /* harmony import */ var _constants_filters__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../constants/filters */ "./src/js/constants/filters.js");
@@ -679,6 +679,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SearchHeader__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SearchHeader */ "./src/js/components/SearchHeader.js");
 /* harmony import */ var _SearchToolTip__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./SearchToolTip */ "./src/js/components/SearchToolTip.js");
 /* harmony import */ var _Tooltip__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Tooltip */ "./src/js/components/Tooltip.js");
+/* harmony import */ var _block_Header__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./block/Header */ "./src/js/components/block/Header.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -698,6 +699,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -811,13 +813,13 @@ function InstantImages(props) {
     setSearchFilters = _useState26[1];
 
   // Refs.
-  var _useInView = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_22__.useInView)({
+  var _useInView = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_23__.useInView)({
       rootMargin: "0px 0px"
     }),
     _useInView2 = _slicedToArray(_useInView, 2),
     loadMoreRef = _useInView2[0],
     inView = _useInView2[1];
-  var photoListingRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var photosRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var searchInputRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var msnryRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
 
@@ -857,6 +859,7 @@ function InstantImages(props) {
           case 2:
             setLoading(true); // Set loading state.
             clearSearch(); // Clear search results.
+            resetScrollPosition();
             page = 1;
 
             // Build URL.
@@ -864,46 +867,46 @@ function InstantImages(props) {
             url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_6__["default"])("photos", params); // Get session storage.
             sessionData = (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.getSession)(url);
             if (!sessionData) {
-              _context.next = 12;
+              _context.next = 13;
               break;
             }
             // Display results from session.
             displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(sessionData), false, null);
-            _context.next = 31;
+            _context.next = 32;
             break;
-          case 12:
-            _context.next = 14;
+          case 13:
+            _context.next = 15;
             return fetch(url);
-          case 14:
+          case 15:
             response = _context.sent;
             status = response.status, headers = response.headers;
             (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_10__.checkRateLimit)(headers);
-            _context.prev = 17;
-            _context.next = 20;
+            _context.prev = 18;
+            _context.next = 21;
             return response.json();
-          case 20:
+          case 21:
             apiResults = _context.sent;
             _apiResults$error = apiResults.error, error = _apiResults$error === void 0 ? null : _apiResults$error;
             displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(apiResults), false, error);
             (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.saveSession)(url, apiResults);
-            _context.next = 31;
+            _context.next = 32;
             break;
-          case 26:
-            _context.prev = 26;
-            _context.t0 = _context["catch"](17);
+          case 27:
+            _context.prev = 27;
+            _context.t0 = _context["catch"](18);
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
             setLoading(false);
             (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.deleteSession)(url);
-          case 31:
+          case 32:
             // Delay loading animatons for effect.
             setTimeout(function () {
               setLoading(false);
             }, delay);
-          case 32:
+          case 33:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[17, 26]]);
+      }, _callee, null, [[18, 27]]);
     }));
     return _getPhotos.apply(this, arguments);
   }
@@ -999,6 +1002,7 @@ function InstantImages(props) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
             setLoading(true);
+            resetScrollPosition();
             page = 1; // Reset current page num.
             searchType = term.substring(0, 3) === "id:" ? "id" : "term"; // Get search query.
             searchQuery = searchType === "id" ? {
@@ -1013,7 +1017,7 @@ function InstantImages(props) {
             url = (0,_functions_buildURL__WEBPACK_IMPORTED_MODULE_6__["default"])("search", params); // Get session storage.
             sessionData = (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.getSession)(url);
             if (!sessionData) {
-              _context3.next = 13;
+              _context3.next = 14;
               break;
             }
             // Display results from session.
@@ -1024,19 +1028,19 @@ function InstantImages(props) {
               type: searchType,
               results: (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__.getSearchTotal)(sessionData)
             });
-            _context3.next = 34;
+            _context3.next = 35;
             break;
-          case 13:
-            _context3.next = 15;
+          case 14:
+            _context3.next = 16;
             return fetch(url);
-          case 15:
+          case 16:
             response = _context3.sent;
             status = response.status, headers = response.headers;
             (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_10__.checkRateLimit)(headers);
-            _context3.prev = 18;
-            _context3.next = 21;
+            _context3.prev = 19;
+            _context3.next = 22;
             return response.json();
-          case 21:
+          case 22:
             apiResults = _context3.sent;
             _apiResults$error3 = apiResults.error, error = _apiResults$error3 === void 0 ? null : _apiResults$error3;
             displayResults((0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__["default"])(apiResults), false, error);
@@ -1047,23 +1051,23 @@ function InstantImages(props) {
               results: (0,_functions_getResults__WEBPACK_IMPORTED_MODULE_9__.getSearchTotal)(apiResults)
             });
             (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.saveSession)(url, apiResults);
-            _context3.next = 34;
+            _context3.next = 35;
             break;
-          case 28:
-            _context3.prev = 28;
-            _context3.t0 = _context3["catch"](18);
+          case 29:
+            _context3.prev = 29;
+            _context3.t0 = _context3["catch"](19);
             // Reset all search parameters.
             setDone(true);
             setLoading(false);
             (0,_functions_consoleStatus__WEBPACK_IMPORTED_MODULE_7__["default"])(provider, status);
             (0,_functions_session__WEBPACK_IMPORTED_MODULE_11__.deleteSession)(url);
-          case 34:
-            searchInputRef.current.classList.remove(searchClass);
           case 35:
+            searchInputRef.current.classList.remove(searchClass);
+          case 36:
           case "end":
             return _context3.stop();
         }
-      }, _callee3, null, [[18, 28]]);
+      }, _callee3, null, [[19, 29]]);
     }));
     return _doSearch.apply(this, arguments);
   }
@@ -1240,12 +1244,12 @@ function InstantImages(props) {
     return _switchProvider.apply(this, arguments);
   }
   function renderLayout() {
-    imagesLoaded(photoListingRef.current, function () {
+    imagesLoaded(photosRef.current, function () {
       if (!isBlockEditor) {
-        msnryRef.current = new (masonry_layout__WEBPACK_IMPORTED_MODULE_2___default())(photoListingRef.current, {
+        msnryRef.current = new (masonry_layout__WEBPACK_IMPORTED_MODULE_2___default())(photosRef.current, {
           itemSelector: ".photo"
         });
-        photoListingRef.current.querySelectorAll(".photo").forEach(function (el) {
+        photosRef.current.querySelectorAll(".photo").forEach(function (el) {
           el.classList.add("in-view");
         });
       }
@@ -1258,6 +1262,19 @@ function InstantImages(props) {
         }
       }, delay);
     });
+  }
+
+  /**
+   * Reset the scroll position for the WP block only.
+   */
+  function resetScrollPosition() {
+    if (wpBlock && photosRef !== null && photosRef !== void 0 && photosRef.current) {
+      photosRef === null || photosRef === void 0 ? void 0 : photosRef.current.scroll({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      });
+    }
   }
 
   /**
@@ -1278,7 +1295,7 @@ function InstantImages(props) {
   function escFunction(e) {
     var key = e.key;
     if (key === "Escape") {
-      var editing = photoListingRef.current.querySelectorAll(".edit-screen.editing");
+      var editing = photosRef.current.querySelectorAll(".edit-screen.editing");
       if (editing) {
         _toConsumableArray(editing).forEach(function (element) {
           element === null || element === void 0 ? void 0 : element.classList.remove("editing");
@@ -1352,7 +1369,9 @@ function InstantImages(props) {
       blockSidebar: blockSidebar,
       clientId: clientId
     }
-  }, /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_16__["default"], {
+  }, wpBlock ? /*#__PURE__*/React.createElement(_block_Header__WEBPACK_IMPORTED_MODULE_22__["default"], {
+    switchProvider: switchProvider
+  }) : /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_16__["default"], {
     switchProvider: switchProvider
   }), /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_17__["default"], {
     title: instant_img_localize.error_restapi,
@@ -1417,9 +1436,9 @@ function InstantImages(props) {
   }), /*#__PURE__*/React.createElement(_Results__WEBPACK_IMPORTED_MODULE_18__["default"], {
     data: results,
     search: search,
-    ref: photoListingRef
+    ref: photosRef
   }), /*#__PURE__*/React.createElement(_LoadMore__WEBPACK_IMPORTED_MODULE_15__["default"], {
-    className: "load-more-wrap infinitescroll",
+    className: "load-more-wrap",
     loadMorePhotos: loadMorePhotos,
     loading: loadingMore,
     total: results === null || results === void 0 ? void 0 : results.length,
@@ -1603,7 +1622,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  * @return {JSX.Element} The Photo component.
  */
 function Photo(props) {
-  var result = props.result;
+  var result = props.result,
+    setInactive = props.setInactive;
   var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__.usePluginContext)(),
     provider = _usePluginContext.provider,
     _usePluginContext$wpB = _usePluginContext.wpBlock,
@@ -1683,6 +1703,9 @@ function Photo(props) {
     var target = upload === null || upload === void 0 ? void 0 : upload.current;
     setInProgress(true);
     setStatus("uploading");
+    if (wpBlock) {
+      setInactive(true); // Make Instant Images inactive after selecting an image.
+    }
 
     // API URL
     var api = instant_img_localize.root + "instant-images/download/";
@@ -1751,7 +1774,11 @@ function Photo(props) {
           // Insert Image via WP Block.
           if (wpBlock && clientId) {
             if (attachment.url) {
-              (0,_editor_utils_replaceAndInsert__WEBPACK_IMPORTED_MODULE_4__["default"])(attachment.url, attachment.caption, attachment.alt, clientId);
+              setStatus("uploaded");
+              setTimeout(function () {
+                // Delay for effect.
+                (0,_editor_utils_replaceAndInsert__WEBPACK_IMPORTED_MODULE_4__["default"])(attachment.url, attachment.caption, attachment.alt, clientId);
+              }, 250);
               closeMediaModal();
             }
             insertIntoPost = false;
@@ -1882,6 +1909,7 @@ function Photo(props) {
     setImageTitle(target, msg);
     setInProgress(false);
     setStatus("error");
+    setInactive(false);
     console.warn(msg);
   }
 
@@ -2401,16 +2429,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/pluginProvider */ "./src/js/common/pluginProvider.js");
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
 /* harmony import */ var _ProviderIcons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ProviderIcons */ "./src/js/components/ProviderIcons.js");
-/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Icon */ "./src/js/components/Icon.js");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
-
 
 
 
 
 var providers = _constants_API__WEBPACK_IMPORTED_MODULE_2__.API.providers;
-
 
 /**
  * Render the ProviderNav component.
@@ -2421,50 +2444,8 @@ var providers = _constants_API__WEBPACK_IMPORTED_MODULE_2__.API.providers;
 function ProviderNav(props) {
   var switchProvider = props.switchProvider;
   var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_1__.usePluginContext)(),
-    provider = _usePluginContext.provider,
-    _usePluginContext$wpB = _usePluginContext.wpBlock,
-    wpBlock = _usePluginContext$wpB === void 0 ? false : _usePluginContext$wpB;
-
-  /**
-   * Switch the provider via select.
-   *
-   * @param {string} value The provider value.
-   */
-  function providerChange(value) {
-    if (value) {
-      switchProvider(value);
-    }
-  }
-
-  /**
-   * Render the block header.
-   *
-   * @return {JSX.Element} The WPBlockHeader component.
-   */
-  function WPBlockHeader() {
-    return /*#__PURE__*/React.createElement("div", {
-      className: "instant-images-block--header"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "instant-images-block--header-logo"
-    }, /*#__PURE__*/React.createElement(_Icon__WEBPACK_IMPORTED_MODULE_4__.IconLogo, null), /*#__PURE__*/React.createElement("span", null, "Instant Images")), /*#__PURE__*/React.createElement("div", {
-      className: "instant-images-block--header-nav"
-    }, /*#__PURE__*/React.createElement("label", {
-      className: "offscreen"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)("Select Provider", "instant-images")), /*#__PURE__*/React.createElement("select", {
-      defaultValue: provider,
-      onChange: function onChange(e) {
-        return providerChange(e.target.value);
-      }
-    }, /*#__PURE__*/React.createElement("option", {
-      value: ""
-    }, "-- ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)("Select a Provider", "instant-images"), " --"), providers.map(function (item, index) {
-      return /*#__PURE__*/React.createElement("option", {
-        key: index,
-        value: item.toLowerCase()
-      }, item);
-    }))));
-  }
-  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(providers !== null && providers !== void 0 && providers.length) && /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!wpBlock ? /*#__PURE__*/React.createElement(WPBlockHeader, null) : /*#__PURE__*/React.createElement("nav", {
+    provider = _usePluginContext.provider;
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(providers !== null && providers !== void 0 && providers.length) && /*#__PURE__*/React.createElement("nav", {
     className: "provider-nav"
   }, providers.map(function (item, index) {
     return /*#__PURE__*/React.createElement("div", {
@@ -2477,7 +2458,7 @@ function ProviderNav(props) {
     }, (0,_ProviderIcons__WEBPACK_IMPORTED_MODULE_3__.getProviderIcon)(item), /*#__PURE__*/React.createElement("span", null, item), _constants_API__WEBPACK_IMPORTED_MODULE_2__.API[item.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {
       className: "provider-nav--new"
     }, instant_img_localize["new"])));
-  }))));
+  })));
 }
 
 /***/ }),
@@ -2568,9 +2549,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Photo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
-/* harmony import */ var _Sponsor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sponsor */ "./src/js/components/Sponsor.js");
-/* harmony import */ var _NoResults__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+/* harmony import */ var _NoResults__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NoResults */ "./src/js/components/NoResults.js");
+/* harmony import */ var _Photo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Photo */ "./src/js/components/Photo.js");
+/* harmony import */ var _Sponsor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Sponsor */ "./src/js/components/Sponsor.js");
+/* harmony import */ var _block_Instructions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./block/Instructions */ "./src/js/components/block/Instructions.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
@@ -2584,18 +2575,27 @@ __webpack_require__.r(__webpack_exports__);
 var Results = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(function (props, ref) {
   var data = props.data,
     search = props.search;
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    inactive = _useState2[0],
+    setInactive = _useState2[1];
+  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_1__.usePluginContext)(),
+    _usePluginContext$wpB = _usePluginContext.wpBlock,
+    wpBlock = _usePluginContext$wpB === void 0 ? false : _usePluginContext$wpB;
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement("div", {
     id: "photos",
+    className: inactive ? "inactive" : null,
     ref: ref
   }, !!(data !== null && data !== void 0 && data.length) && data.map(function (result, index) {
     return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       key: "".concat(result.id, "-").concat(index)
-    }, (result === null || result === void 0 ? void 0 : result.type) === "instant-images-ad" ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    }, (result === null || result === void 0 ? void 0 : result.type) === "instant-images-ad" ? /*#__PURE__*/React.createElement(_Sponsor__WEBPACK_IMPORTED_MODULE_4__["default"], {
       result: result
-    }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      result: result
+    }) : /*#__PURE__*/React.createElement(_Photo__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      result: result,
+      setInactive: setInactive
     }));
-  })), /*#__PURE__*/React.createElement(_NoResults__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  })), !!wpBlock && data !== null && data !== void 0 && data.length ? /*#__PURE__*/React.createElement(_block_Instructions__WEBPACK_IMPORTED_MODULE_5__["default"], null) : null, /*#__PURE__*/React.createElement(_NoResults__WEBPACK_IMPORTED_MODULE_2__["default"], {
     total: search === null || search === void 0 ? void 0 : search.results,
     is_search: search === null || search === void 0 ? void 0 : search.active
   }));
@@ -2810,6 +2810,102 @@ function Tooltip() {
   return /*#__PURE__*/React.createElement("div", {
     id: "tooltip"
   });
+}
+
+/***/ }),
+
+/***/ "./src/js/components/block/Header.js":
+/*!*******************************************!*\
+  !*** ./src/js/components/block/Header.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BlockHeader)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../constants/API */ "./src/js/constants/API.js");
+/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Icon */ "./src/js/components/Icon.js");
+
+
+
+
+var providers = _constants_API__WEBPACK_IMPORTED_MODULE_2__.API.providers;
+
+/**
+ * Render the block header.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The BlockHeader component.
+ */
+function BlockHeader(props) {
+  var switchProvider = props.switchProvider;
+  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_1__.usePluginContext)(),
+    provider = _usePluginContext.provider;
+
+  /**
+   * Switch the provider via select.
+   *
+   * @param {string} value The provider value.
+   */
+  function providerChange(value) {
+    if (value) {
+      switchProvider(value);
+    }
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    className: "instant-images-block--header"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "instant-images-block--header-logo"
+  }, /*#__PURE__*/React.createElement(_Icon__WEBPACK_IMPORTED_MODULE_3__.IconLogo, null), /*#__PURE__*/React.createElement("span", null, "Instant Images")), /*#__PURE__*/React.createElement("div", {
+    className: "instant-images-block--header-nav"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "offscreen"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Select Provider", "instant-images")), /*#__PURE__*/React.createElement("select", {
+    defaultValue: provider,
+    onChange: function onChange(e) {
+      return providerChange(e.target.value);
+    }
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "-- ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Select a Provider", "instant-images"), " --"), providers.map(function (item, index) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: index,
+      value: item.toLowerCase()
+    }, item);
+  }))));
+}
+
+/***/ }),
+
+/***/ "./src/js/components/block/Instructions.js":
+/*!*************************************************!*\
+  !*** ./src/js/components/block/Instructions.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BlockInstructions)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/**
+ * Render instructions for the WP Block.
+ *
+ * @return {JSX.Element} The BlockInstructions component.
+ */
+function BlockInstructions() {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "instant-images-block--instructions"
+  }, /*#__PURE__*/React.createElement("span", null, "\u2190"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Scroll to Load Images", "instant-images"), /*#__PURE__*/React.createElement("span", null, "\u2192"));
 }
 
 /***/ }),

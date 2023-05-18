@@ -34,6 +34,10 @@
 	position: relative;
 	z-index: 1;
 
+	&.inactive {
+		pointer-events: none;
+	}
+
 	.photo {
 		width: 20%;
 		margin: 0;
