@@ -15,7 +15,6 @@ import APILightbox from "./APILightbox";
 import ErrorLightbox from "./ErrorLightbox";
 import Filter from "./Filter";
 import LoadMore from "./LoadMore";
-import NoResults from "./NoResults";
 import ProviderNav from "./ProviderNav";
 import RestAPIError from "./RestAPIError";
 import Results from "./Results";
@@ -78,10 +77,9 @@ export default function InstantImages(props) {
 	const [loadMoreRef, inView] = useInView({
 		rootMargin: "0px 0px",
 	});
-	const photoListing = useRef();
-	const controlNav = useRef();
-	const searchInput = useRef();
-	const msnry = useRef();
+	const photoListingRef = useRef();
+	const searchInputRef = useRef();
+	const msnryRef = useRef();
 
 	// WP Editor props.
 	const wpBlock = editor === "block" ? true : false;
@@ -259,7 +257,7 @@ export default function InstantImages(props) {
 			}
 		}
 
-		searchInput.current.classList.remove(searchClass);
+		searchInputRef.current.classList.remove(searchClass);
 	}
 
 	/**
@@ -287,12 +285,12 @@ export default function InstantImages(props) {
 	 */
 	function searchHandler(event) {
 		event.preventDefault();
-		const term = searchInput.current.value;
+		const term = searchInputRef.current.value;
 		if (term.length > 2) {
-			searchInput.current.classList.add(searchClass);
+			searchInputRef.current.classList.add(searchClass);
 			doSearch(term);
 		} else {
-			searchInput.current.focus();
+			searchInputRef.current.focus();
 		}
 	}
 
@@ -302,7 +300,7 @@ export default function InstantImages(props) {
 	 * @since 3.0
 	 */
 	function clearSearch() {
-		searchInput.current.value = "";
+		searchInputRef.current.value = "";
 		setSearch(searchDefaults);
 	}
 
@@ -415,12 +413,12 @@ export default function InstantImages(props) {
 	 * @since 3.0
 	 */
 	function renderLayout() {
-		imagesLoaded(photoListing.current, function () {
+		imagesLoaded(photoListingRef.current, function () {
 			if (!isBlockEditor) {
-				msnry.current = new Masonry(photoListing.current, {
+				msnryRef.current = new Masonry(photoListingRef.current, {
 					itemSelector: ".photo",
 				});
-				photoListing.current.querySelectorAll(".photo").forEach((el) => {
+				photoListingRef.current.querySelectorAll(".photo").forEach((el) => {
 					el.classList.add("in-view");
 				});
 			}
@@ -453,7 +451,7 @@ export default function InstantImages(props) {
 	function escFunction(e) {
 		const { key } = e;
 		if (key === "Escape") {
-			const editing = photoListing.current.querySelectorAll(
+			const editing = photoListingRef.current.querySelectorAll(
 				".edit-screen.editing"
 			);
 			if (editing) {
@@ -538,7 +536,7 @@ export default function InstantImages(props) {
 					desc={instant_img_localize.error_restapi_desc}
 					type="warning"
 				/>
-				<div className="control-nav" ref={controlNav}>
+				<div className="control-nav">
 					<div
 						className={classNames(
 							"control-nav--filters-wrap",
@@ -575,7 +573,7 @@ export default function InstantImages(props) {
 								type="search"
 								id="search-input"
 								placeholder={instant_img_localize.search}
-								ref={searchInput}
+								ref={searchInputRef}
 								disabled={apiError}
 							/>
 							<button type="submit" disabled={apiError}>
@@ -593,18 +591,14 @@ export default function InstantImages(props) {
 					</div>
 				</div>
 				<div id="photo-listing" className={loading ? "loading" : null}>
-					{!!search?.active && (
-						<SearchHeader
-							term={search?.term}
-							total={search?.results}
-							filterSearch={filterSearch}
-							getPhotos={getPhotos}
-						/>
-					)}
-					<div id="photos" ref={photoListing}>
-						<Results results={results} />
-					</div>
-					<NoResults total={search?.results} is_search={search?.active} />
+					<SearchHeader
+						active={search?.active}
+						term={search?.term}
+						total={search?.results}
+						filterSearch={filterSearch}
+						getPhotos={getPhotos}
+					/>
+					<Results data={results} search={search} ref={photoListingRef} />
 					<LoadMore
 						className="load-more-wrap infinitescroll"
 						loadMorePhotos={loadMorePhotos}

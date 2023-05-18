@@ -8,6 +8,7 @@ import LoadingBlock from "./LoadingBlock";
  */
 const LoadMore = forwardRef((props, ref) => {
 	const { className, loadMorePhotos, loading, total } = props;
+
 	return (
 		<Fragment>
 			<div className={className} ref={ref}>

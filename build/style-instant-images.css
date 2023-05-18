@@ -403,15 +403,9 @@ body.settings_page_instant-images-settings.overflow-hidden {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  -moz-column-gap: 15px;
-       column-gap: 15px;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
   width: 100%;
-}
-@media screen and (min-width: 1024px) {
-  .instant-img-container .control-nav--filters {
-    -moz-column-gap: 20px;
-         column-gap: 20px;
-  }
 }
 .instant-img-container .control-nav--filters::before {
   display: block;
@@ -698,6 +692,9 @@ body.settings_page_instant-images-settings.overflow-hidden {
   border-radius: 3px;
   overflow: hidden;
 }
+#photos .photo-wrap.photo-uploading button.photo-upload, #photos .photo-wrap.photo-uploaded button.photo-upload, #photos .photo-wrap.photo-success button.photo-upload, #photos .photo-wrap.photo-error button.photo-upload {
+  background-color: #111;
+}
 #photos .photo-wrap.photo-uploading button.photo-upload img, #photos .photo-wrap.photo-uploaded button.photo-upload img, #photos .photo-wrap.photo-success button.photo-upload img, #photos .photo-wrap.photo-error button.photo-upload img {
   transform: scale(1) !important;
   opacity: 0.5 !important;
@@ -792,6 +789,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 #photos .photo button.photo-upload {
   display: block;
   position: relative;
+  background-color: transparent;
   background-color: #111;
   overflow: hidden;
   cursor: pointer;
@@ -808,6 +806,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   height: auto !important;
   padding: 0;
   vertical-align: top;
+  background-color: #fff;
 }
 #photos .photo:focus button.photo-upload img, #photos .photo:hover button.photo-upload img {
   opacity: 0.5;
@@ -1691,64 +1690,95 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   stroke: #aabbff !important;
   fill: #aabbff !important;
 }
-.wp-block #photos::after,
+.instant-images-block #photos::after,
 .components-panel #photos::after {
   width: 100%;
   left: 0;
 }
-.wp-block .no-results,
+.instant-images-block .no-results,
 .components-panel .no-results {
   padding: 40px;
 }
-.wp-block .no-results h3,
+.instant-images-block .no-results h3,
 .components-panel .no-results h3 {
   font-size: 18px;
 }
-.wp-block .no-results p,
+.instant-images-block .no-results p,
 .components-panel .no-results p {
   font-size: 13px;
 }
-.wp-block .search-results-text,
+.instant-images-block .search-results-text,
 .components-panel .search-results-text {
   font-size: 12px;
   border-top: 1px solid #ddd;
   border-color: #ddd;
 }
-.wp-block .search-results-text .search-results-clear,
+.instant-images-block .search-results-text .search-results-clear,
 .components-panel .search-results-text .search-results-clear {
   display: none;
 }
-.wp-block .search-header,
+.instant-images-block .search-header,
 .components-panel .search-header {
   display: none;
 }
-.wp-block .provider-nav,
+.instant-images-block .provider-nav,
 .components-panel .provider-nav {
   width: 100%;
   padding: 10px 5px;
   margin: 0;
   border-bottom-color: #ddd;
 }
-.wp-block .provider-nav button,
+.instant-images-block .provider-nav button,
 .components-panel .provider-nav button {
   font-size: 13px;
 }
-.wp-block .instant-img-container {
+.instant-images-block .instant-img-container {
   border: 1px solid #e1e1e1;
-  padding: 10px;
-  border-radius: 3px;
+  padding: 0;
 }
-.wp-block .provider-nav {
-  padding: 10px;
-  border-radius: 3px;
+.instant-images-block--header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #e1e1e1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
 }
-.wp-block #photo-listing {
+.instant-images-block--header-logo {
+  display: flex;
+  align-items: center;
+}
+.instant-images-block--header-logo svg {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+.instant-images-block--header-logo span {
+  font-weight: 600;
+  font-size: 15px;
+  color: #434246;
+}
+.instant-images-block--header-nav {
+  margin-left: auto;
+}
+.instant-images-block .load-more-wrap,
+.instant-images-block .loading-block {
+  display: none !important;
+}
+.instant-images-block .control-nav {
+  padding: 15px;
+  margin: 0;
+}
+.instant-images-block #photo-listing {
   display: block;
   width: 100%;
   min-height: 0;
   min-height: initial;
+  padding: 15px;
+  overflow: hidden;
 }
-.wp-block #photo-listing #photos {
+.instant-images-block #photo-listing #photos {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
@@ -1756,20 +1786,20 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   white-space: nowrap;
   padding: 0 0 10px;
 }
-.wp-block #photo-listing #photos .photo {
+.instant-images-block #photo-listing #photos .photo {
   opacity: 1 !important;
   margin-right: 10px;
-  width: 280px;
-  min-width: 280px;
-  height: 240px;
+  width: 260px;
+  min-width: 260px;
+  height: 220px;
 }
-.wp-block #photo-listing #photos .photo-wrap,
-.wp-block #photo-listing #photos .img-wrap,
-.wp-block #photo-listing #photos button.photo-upload {
-  width: 280px;
-  height: 240px;
+.instant-images-block #photo-listing #photos .photo-wrap,
+.instant-images-block #photo-listing #photos .img-wrap,
+.instant-images-block #photo-listing #photos button.photo-upload {
+  width: 260px;
+  height: 220px;
 }
-.wp-block #photo-listing #photos button.photo-upload img {
+.instant-images-block #photo-listing #photos button.photo-upload img {
   -o-object-fit: cover;
      object-fit: cover;
   width: 100% !important;

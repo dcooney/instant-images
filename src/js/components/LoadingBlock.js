@@ -10,7 +10,7 @@ import { API } from "../constants/API";
  * @return {JSX.Element}          The LoadingBlock component.
  */
 export default function LoadingBlock({ loading, total = 0 }) {
-	if (total < API.defaults.per_page) {
+	if (!loading || total < API.defaults.per_page) {
 		// Bail early if not loading or total is less than the default per page.
 		return null;
 	}

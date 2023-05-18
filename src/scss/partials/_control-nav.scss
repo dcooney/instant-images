@@ -42,10 +42,7 @@
 			display: flex;
 			flex-wrap: wrap;
 			align-items: center;
-			column-gap: 15px;
-			@media screen and (min-width: $medium) {
-				column-gap: 20px;
-			}
+			column-gap: 20px;
 			width: 100%;
 			&::before {
 				display: block;

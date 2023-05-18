@@ -19,7 +19,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 	fill: $purple_bright !important;
 }
 
-.wp-block,
+.instant-images-block,
 .components-panel {
 	#photos {
 		&::after {
@@ -60,24 +60,60 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 	}
 }
 
-$wpblock_maxw: 280px;
-$wpblock_maxh: 240px;
-
 // WP Block.
-.wp-block {
+$wpblock_maxw: 260px;
+$wpblock_maxh: 220px;
+
+.instant-images-block {
 	.instant-img-container {
 		border: 1px solid $border;
-		padding: 10px;
-		border-radius: $radius;
+		padding: 0;
 	}
-	.provider-nav {
-		padding: 10px;
-		border-radius: $radius;
+
+	// Block header.
+	&--header {
+		padding: 15px;
+		display: flex;
+		align-items: center;
+		width: 100%;
+		background-color: $lighter_grey;
+		border-bottom: 1px solid $border;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
+		&-logo {
+			display: flex;
+			align-items: center;
+			svg {
+				width: 32px;
+				height: 32px;
+				margin-right: 8px;
+			}
+			span {
+				font-weight: 600;
+				font-size: 15px;
+				color: $text;
+			}
+		}
+		&-nav {
+			margin-left: auto;
+		}
 	}
+
+	.load-more-wrap,
+	.loading-block {
+		display: none !important;
+	}
+
+	.control-nav {
+		padding: 15px;
+		margin: 0;
+	}
+
 	#photo-listing {
 		display: block;
 		width: 100%;
 		min-height: unset;
+		padding: 15px;
+		overflow: hidden;
 		#photos {
 			display: flex;
 			flex-wrap: nowrap;

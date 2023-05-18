@@ -36,7 +36,9 @@ function InstantImagesBlock({ clientId }) {
 	const provider = getProvider();
 	const [mounted, setMounted] = useState(false);
 	const containerRef = useRef();
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		className: `instant-images-block`,
+	});
 
 	useEffect(() => {
 		if (!mounted) {
@@ -62,12 +64,26 @@ function InstantImagesBlock({ clientId }) {
 												{__("Instant Images Help", "instant-images")}
 											</strong>
 										</p>
-										<p>
-											{__(
-												"Clicking an image will download and insert the image directly into the post using the core Image block.",
-												"instant-images"
-											)}
-										</p>
+										<ol>
+											<li>
+												{__(
+													"Browse photos from the various stock image providers.",
+													"instant-images"
+												)}
+											</li>
+											<li>
+												{__(
+													"Select/click an image to immediately start the upload process.",
+													"instant-images"
+												)}
+											</li>
+											<li>
+												{__(
+													"Uploaded image will be inserted directly into the post using the WordPress core Image block.",
+													"instant-images"
+												)}
+											</li>
+										</ol>
 									</div>
 								);
 							}}

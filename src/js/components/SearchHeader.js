@@ -9,9 +9,20 @@ import { usePluginContext } from "../common/pluginProvider";
  * @return {JSX.Element} The SearchHeader component.
  */
 export default function SearchHeader(props) {
-	const { term = "", total = 0, filterSearch, getPhotos } = props;
+	const {
+		active = false,
+		term = "",
+		total = 0,
+		filterSearch,
+		getPhotos,
+	} = props;
 	const { provider } = usePluginContext();
 	const filters = FILTERS[provider].search;
+
+	if (!active) {
+		// Exit if search is not active.
+		return null;
+	}
 
 	return (
 		<header className="search-header">
