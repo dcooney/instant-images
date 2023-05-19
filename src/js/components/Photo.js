@@ -3,7 +3,6 @@ import axios from "axios";
 import classNames from "classnames";
 import { usePluginContext } from "../common/pluginProvider";
 import insertImage from "../editor/utils/insertImage";
-import replaceAndInsert from "../editor/utils/replaceAndInsert";
 import setFeaturedImage from "../editor/utils/setFeaturedImage";
 import {
 	capitalizeFirstLetter,
@@ -152,35 +151,29 @@ export default function Photo(props) {
 
 						// Set Featured Image via Sidebar.
 						if (blockSidebar && setAsFeaturedImage) {
-							setFeaturedImage(attachment.id);
+							setFeaturedImage(attachment);
 							setAsFeaturedImage = false;
 							closeMediaModal();
 						}
 
 						// Insert Image via Sidebar.
 						if (blockSidebar && insertIntoPost) {
-							if (attachment.url) {
-								insertImage(attachment.url, attachment.caption, attachment.alt);
-								closeMediaModal();
-							}
+							setTimeout(() => {
+								// Delay for effect.
+								insertImage(attachment);
+							}, 250);
+							closeMediaModal();
 							insertIntoPost = false;
 						}
 
 						// Insert Image via WP Block.
 						if (wpBlock && clientId) {
-							if (attachment.url) {
-								setStatus("uploaded");
-								setTimeout(() => {
-									// Delay for effect.
-									replaceAndInsert(
-										attachment.url,
-										attachment.caption,
-										attachment.alt,
-										clientId
-									);
-								}, 250);
-								closeMediaModal();
-							}
+							setStatus("uploaded");
+							setTimeout(() => {
+								// Delay for effect.
+								insertImage(attachment, clientId);
+							}, 350);
+							closeMediaModal();
 							insertIntoPost = false;
 						}
 

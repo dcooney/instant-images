@@ -1551,15 +1551,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/pluginProvider */ "./src/js/common/pluginProvider.js");
 /* harmony import */ var _editor_utils_insertImage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../editor/utils/insertImage */ "./src/js/editor/utils/insertImage.js");
-/* harmony import */ var _editor_utils_replaceAndInsert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../editor/utils/replaceAndInsert */ "./src/js/editor/utils/replaceAndInsert.js");
-/* harmony import */ var _editor_utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../editor/utils/setFeaturedImage */ "./src/js/editor/utils/setFeaturedImage.js");
-/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
-/* harmony import */ var _functions_providers_unsplash__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../functions/providers/unsplash */ "./src/js/functions/providers/unsplash.js");
+/* harmony import */ var _editor_utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../editor/utils/setFeaturedImage */ "./src/js/editor/utils/setFeaturedImage.js");
+/* harmony import */ var _functions_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../functions/helpers */ "./src/js/functions/helpers.js");
+/* harmony import */ var _functions_providers_unsplash__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/providers/unsplash */ "./src/js/functions/providers/unsplash.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -1572,7 +1571,6 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -1700,7 +1698,7 @@ function Photo(props) {
         "Content-Type": "application/json"
       }
     };
-    axios__WEBPACK_IMPORTED_MODULE_8__["default"].post(api, JSON.stringify(data), config).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_7__["default"].post(api, JSON.stringify(data), config).then(function (res) {
       var response = res.data;
       if (response) {
         // Successful response from server
@@ -1715,7 +1713,7 @@ function Photo(props) {
 
           // Trigger a download at Unsplash.
           if (provider === "unsplash" && download_url) {
-            (0,_functions_providers_unsplash__WEBPACK_IMPORTED_MODULE_7__.unsplashDownload)(download_url);
+            (0,_functions_providers_unsplash__WEBPACK_IMPORTED_MODULE_6__.unsplashDownload)(download_url);
           }
 
           /**
@@ -1724,30 +1722,29 @@ function Photo(props) {
 
           // Set Featured Image via Sidebar.
           if (blockSidebar && setAsFeaturedImage) {
-            (0,_editor_utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_5__["default"])(attachment.id);
+            (0,_editor_utils_setFeaturedImage__WEBPACK_IMPORTED_MODULE_4__["default"])(attachment);
             setAsFeaturedImage = false;
             closeMediaModal();
           }
 
           // Insert Image via Sidebar.
           if (blockSidebar && insertIntoPost) {
-            if (attachment.url) {
-              (0,_editor_utils_insertImage__WEBPACK_IMPORTED_MODULE_3__["default"])(attachment.url, attachment.caption, attachment.alt);
-              closeMediaModal();
-            }
+            setTimeout(function () {
+              // Delay for effect.
+              (0,_editor_utils_insertImage__WEBPACK_IMPORTED_MODULE_3__["default"])(attachment);
+            }, 250);
+            closeMediaModal();
             insertIntoPost = false;
           }
 
           // Insert Image via WP Block.
           if (wpBlock && clientId) {
-            if (attachment.url) {
-              setStatus("uploaded");
-              setTimeout(function () {
-                // Delay for effect.
-                (0,_editor_utils_replaceAndInsert__WEBPACK_IMPORTED_MODULE_4__["default"])(attachment.url, attachment.caption, attachment.alt, clientId);
-              }, 250);
-              closeMediaModal();
-            }
+            setStatus("uploaded");
+            setTimeout(function () {
+              // Delay for effect.
+              (0,_editor_utils_insertImage__WEBPACK_IMPORTED_MODULE_3__["default"])(attachment, clientId);
+            }, 350);
+            closeMediaModal();
             insertIntoPost = false;
           }
 
@@ -1814,7 +1811,7 @@ function Photo(props) {
    * @since 4.0
    */
   function setFeaturedImageClick(e) {
-    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.hideTooltip)(e);
     if (upload.current) {
       setAsFeaturedImage = true;
       upload.current.click();
@@ -1828,7 +1825,7 @@ function Photo(props) {
    * @since 4.0
    */
   function insertImageIntoPost(e) {
-    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.hideTooltip)(e);
     if (upload.current) {
       insertIntoPost = true;
       upload.current.click();
@@ -1899,7 +1896,7 @@ function Photo(props) {
    */
   function showEditScreen(e) {
     e.preventDefault();
-    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
+    (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.hideTooltip)(e);
 
     // Get all open edit screens and close them.
     var openEdits = document.querySelectorAll(".edit-screen.editing");
@@ -2060,10 +2057,10 @@ function Photo(props) {
     className: "set-featured fade",
     "data-title": instant_img_localize.set_as_featured,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return setFeaturedImageClick(e);
@@ -2078,10 +2075,10 @@ function Photo(props) {
     className: "insert fade",
     "data-title": instant_img_localize.insert_into_post,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return insertImageIntoPost(e);
@@ -2096,10 +2093,10 @@ function Photo(props) {
     className: "insert fade",
     "data-title": instant_img_localize.insert_into_post,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.hideTooltip)(e);
     },
     onClick: function onClick(e) {
       return insertImageIntoPost(e);
@@ -2116,10 +2113,10 @@ function Photo(props) {
     className: "edit-photo-admin fade",
     "data-title": instant_img_localize.edit_upload,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-pencil",
@@ -2133,10 +2130,10 @@ function Photo(props) {
     className: "edit-photo fade",
     "data-title": instant_img_localize.edit_details,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-cog",
@@ -2149,10 +2146,10 @@ function Photo(props) {
     className: "likes tooltip--above",
     "data-title": likes + " " + likeDisplay,
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.hideTooltip)(e);
     }
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-heart heart-like",
@@ -2160,12 +2157,12 @@ function Photo(props) {
   }), " ", likes) : null, /*#__PURE__*/React.createElement("a", {
     className: "tooltip--above",
     href: permalink,
-    "data-title": "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.capitalizeFirstLetter)(provider)),
+    "data-title": "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.capitalizeFirstLetter)(provider)),
     onMouseEnter: function onMouseEnter(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.showTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.showTooltip)(e);
     },
     onMouseLeave: function onMouseLeave(e) {
-      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.hideTooltip)(e);
+      return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.hideTooltip)(e);
     },
     rel: "noopener noreferrer",
     target: "_blank"
@@ -2174,7 +2171,7 @@ function Photo(props) {
     "aria-hidden": "true"
   }), /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
-  }, "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_6__.capitalizeFirstLetter)(provider)))))), /*#__PURE__*/React.createElement("div", {
+  }, "".concat(instant_img_localize.open_external, " ").concat((0,_functions_helpers__WEBPACK_IMPORTED_MODULE_5__.capitalizeFirstLetter)(provider)))))), /*#__PURE__*/React.createElement("div", {
     className: "edit-screen",
     tabIndex: "0",
     ref: editScreen
@@ -2872,7 +2869,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ProviderIcons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ProviderIcons */ "./src/js/components/ProviderIcons.js");
 
 var API = {
-  proxy: "http://localhost:3000/api/" || 0,
+  proxy: "https://proxy.getinstantimages.com/api/" || 0,
   // eslint-disable-line
   testmode: false,
   defaults: {
@@ -3398,60 +3395,36 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Insert an image block into the block editor.
  *
- * @param {string} url     Image URL.
- * @param {string} caption Image caption.
- * @param {string} alt     Image alt.
+ * @param {Object} attachment The attachment object.
+ * @param {string} clientId   The block ID.
  */
-function insertImage() {
-  var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-  var caption = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
-  var alt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
-  if (url === "") {
-    return false;
+function insertImage(attachment, clientId) {
+  var _attachment$id = attachment.id,
+    id = _attachment$id === void 0 ? null : _attachment$id,
+    _attachment$url = attachment.url,
+    url = _attachment$url === void 0 ? null : _attachment$url,
+    _attachment$caption = attachment.caption,
+    caption = _attachment$caption === void 0 ? "" : _attachment$caption,
+    _attachment$alt = attachment.alt,
+    alt = _attachment$alt === void 0 ? "" : _attachment$alt;
+  if (!url || !id) {
+    return;
   }
+
+  // Create block.
   var block = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)("core/image", {
+    id: id,
     url: url,
     caption: caption,
     alt: alt
   });
-  (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.dispatch)("core/block-editor").insertBlocks(block);
-}
-
-/***/ }),
-
-/***/ "./src/js/editor/utils/replaceAndInsert.js":
-/*!*************************************************!*\
-  !*** ./src/js/editor/utils/replaceAndInsert.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ replaceAndInsert)
-/* harmony export */ });
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
-/**
- * Replace the InstantImages block with an Image block.
- *
- * @param {string} url      Image URL.
- * @param {string} caption  Image caption.
- * @param {string} alt      Image alt.
- * @param {string} clientId The block ID.
- */
-function replaceAndInsert(url, caption, alt, clientId) {
-  var block = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)("core/image", {
-    url: url,
-    caption: caption,
-    alt: alt
-  });
-  (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.dispatch)("core/block-editor").replaceBlock(clientId, block);
+  if (clientId) {
+    // Replace the Instant Images block.
+    (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.dispatch)("core/block-editor").replaceBlock(clientId, block);
+  } else {
+    // Insert Image block.
+    (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.dispatch)("core/block-editor").insertBlocks(block);
+  }
 }
 
 /***/ }),
@@ -3474,15 +3447,18 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Set image as featured image in Gutenberg.
  *
- * @param {string} imageId The attachment ID.
+ * @param {Object} attachment The attachment object.
  */
-function setFeaturedImage(imageId) {
-  if (imageId === null) {
-    return false;
+function setFeaturedImage(attachment) {
+  var _attachment$id = attachment.id,
+    id = _attachment$id === void 0 ? null : _attachment$id;
+  if (!id) {
+    return;
   }
+
   // Set the featured image.
   (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.dispatch)("core/editor").editPost({
-    featured_media: imageId
+    featured_media: id
   });
 
   // Open the document sidebar.
