@@ -25,7 +25,7 @@
 		"watch": "npm run dev",
 		"dev": "wp-scripts start --config webpack/prod.config.js",
 		"dev:proxy": "wp-scripts start --config webpack/proxy.config.js",
-		"build": "wp-scripts build --config webpack/prod.config.js",
+		"build": "npm run build:pot && wp-scripts build --config webpack/prod.config.js",
 		"build:pot": "composer run pot",
 		"format": "wp-scripts format && composer run format",
 		"lint": "run-p lint:*",

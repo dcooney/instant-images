@@ -12,6 +12,7 @@ import { IconLogo } from "../../components/Icon";
 import InstantImages from "../../components/InstantImages";
 import getProvider from "../../functions/getProvider";
 import blockConfig from "./block.json";
+import WPBlockHelp from "./components/Help";
 
 // Register the block
 registerBlockType("connekthq/instant-images", {
@@ -55,37 +56,12 @@ function InstantImagesBlock({ clientId }) {
 			>
 				<BlockControls>
 					<ToolbarGroup>
-						<ToolbarDropdownMenu label="Help" icon={help}>
+						<ToolbarDropdownMenu
+							label={__("Help", "instant-images")}
+							icon={help}
+						>
 							{() => {
-								return (
-									<div style={{ width: "300px", padding: "0 10px" }}>
-										<p>
-											<strong>
-												{__("Instant Images Help", "instant-images")}
-											</strong>
-										</p>
-										<ol>
-											<li>
-												{__(
-													"Browse photos from the various stock image providers.",
-													"instant-images"
-												)}
-											</li>
-											<li>
-												{__(
-													"Select/click an image to immediately start the upload process.",
-													"instant-images"
-												)}
-											</li>
-											<li>
-												{__(
-													"Uploaded image will be inserted directly into the post using the WordPress core Image block.",
-													"instant-images"
-												)}
-											</li>
-										</ol>
-									</div>
-								);
+								return <WPBlockHelp />;
 							}}
 						</ToolbarDropdownMenu>
 					</ToolbarGroup>

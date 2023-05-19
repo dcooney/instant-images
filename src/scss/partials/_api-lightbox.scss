@@ -9,15 +9,25 @@
 	}
 }
 
-// Gutenberg Sidebar.
+// WP Block + Sidebar Plugin.
+.instant-images-block,
 .components-panel {
 	.instant-img-container {
 		.api-lightbox,
 		.api-lightbox.error-lightbox {
 			align-items: flex-start;
 
+			.more-info {
+				display: none;
+			}
 			& > div {
 				top: 0;
+			}
+		}
+
+		.api-lightbox:not(.error-lightbox) {
+			.action-controls {
+				display: none;
 			}
 		}
 	}

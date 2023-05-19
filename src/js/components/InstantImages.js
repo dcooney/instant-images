@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { PluginProvider } from "../common/pluginProvider";
 import { API } from "../constants/API";
 import { FILTERS } from "../constants/filters";
+import WPBlockHeader from "../editor/block/components/Header";
 import buildURL, { buildTestURL } from "../functions/buildURL";
 import consoleStatus from "../functions/consoleStatus";
 import getQueryParams from "../functions/getQueryParams";
@@ -21,7 +22,8 @@ import Results from "./Results";
 import SearchHeader from "./SearchHeader";
 import SearchToolTip from "./SearchToolTip";
 import Tooltip from "./Tooltip";
-import BlockHeader from "./block/Header";
+import NoResults from "./NoResults";
+import ResultsWPBlock from "./ResultsWPBlock";
 const imagesLoaded = require("imagesloaded");
 
 let page = 1;
@@ -148,7 +150,7 @@ export default function InstantImages(props) {
 	 * @since 3.0
 	 */
 	async function loadMorePhotos() {
-		if (!mounted || loading || loadingMore) {
+		if (!mounted || loading || loadingMore || done) {
 			return;
 		}
 
@@ -509,9 +511,7 @@ export default function InstantImages(props) {
 	// Scroll in-view callback.
 	useEffect(() => {
 		// Infinite scrolling.
-		if (mounted && !loading && !done) {
-			loadMorePhotos();
-		}
+		loadMorePhotos();
 	}, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	// Results callback.
@@ -547,7 +547,7 @@ export default function InstantImages(props) {
 				}}
 			>
 				{wpBlock ? (
-					<BlockHeader switchProvider={switchProvider} />
+					<WPBlockHeader switchProvider={switchProvider} />
 				) : (
 					<ProviderNav switchProvider={switchProvider} />
 				)}
@@ -618,12 +618,22 @@ export default function InstantImages(props) {
 						filterSearch={filterSearch}
 						getPhotos={getPhotos}
 					/>
-					<Results data={results} search={search} ref={photosRef} />
+					{wpBlock ? (
+						<ResultsWPBlock
+							data={results}
+							done={done}
+							loadMorePhotos={loadMorePhotos}
+							ref={photosRef}
+						/>
+					) : (
+						<Results data={results} ref={photosRef} />
+					)}
+					<NoResults total={search?.results} is_search={search?.active} />
 					<LoadMore
 						className="load-more-wrap"
 						loadMorePhotos={loadMorePhotos}
 						loading={loadingMore}
-						total={results?.length}
+						done={done}
 						ref={loadMoreRef}
 					/>
 					<APILightbox

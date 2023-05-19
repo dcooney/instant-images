@@ -1,7 +1,7 @@
 import { __ } from "@wordpress/i18n";
-import { usePluginContext } from "../../common/pluginProvider";
-import { API } from "../../constants/API";
-import { IconLogo } from "../Icon";
+import { usePluginContext } from "../../../common/pluginProvider";
+import { API } from "../../../constants/API";
+import { IconLogo } from "../../../components/Icon";
 const providers = API.providers;
 
 /**
@@ -40,7 +40,7 @@ export default function BlockHeader(props) {
 					onChange={(e) => providerChange(e.target.value)}
 				>
 					<option value="">
-						-- {__("Select a Provider", "instant-images")} --
+						-- {__("Select Provider", "instant-images")} --
 					</option>
 					{providers.map((item, index) => (
 						<option key={index} value={item.toLowerCase()}>

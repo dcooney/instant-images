@@ -344,7 +344,7 @@ class InstantImages {
 				'api_invalid_500_msg'     => __( 'An internal server error has occured - please try again.', 'instant-images' ),
 				'api_invalid_501_msg'     => __( 'No image provider or destination URL set.', 'instant-images' ),
 				'api_ratelimit_msg'       => __( 'The API rate limit has been exceeded for this image provider. Please add a new API key or try again later.', 'instant-images' ),
-				'api_default_provider'    => __( 'You\'re seeing this message because the default image provider has thrown an error. Switch the default provider in the Instant Images settings or check that you\'re using a valid API key.', 'instant-images' ),
+				'api_default_provider'    => __( 'Switch the default provider in the Instant Images settings or check that you\'re using a valid API key.', 'instant-images' ),
 				'get_api_key'             => __( 'Get API Key', 'instant-images' ),
 				'use_instant_images_key'  => __( 'Reset Default Key', 'instant-images' ),
 				'error_on_load_title'     => __( 'An unknown error has occured while accessing {provider}', 'instant-images' ),

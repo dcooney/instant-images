@@ -19,6 +19,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 	fill: $purple_bright !important;
 }
 
+// WP Block + Sidebar Plugin.
 .instant-images-block,
 .components-panel {
 	#photos {
@@ -47,7 +48,6 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 	.search-header {
 		display: none;
 	}
-
 	// Provider Nav.
 	.provider-nav {
 		width: 100%;
@@ -58,12 +58,110 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 			font-size: 13px;
 		}
 	}
+
+	// Filters + Search.
+	.control-nav {
+		&--filters {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-rows: 1fr;
+			grid-column-gap: 10px;
+		}
+		.filter-dropdown {
+			width: 100%;
+			display: none;
+			&:nth-child(1),
+			&:nth-child(2) {
+				display: block;
+			}
+			button {
+				padding: 5px;
+				font-size: 13px;
+				&.filter-dropdown--button {
+					display: block;
+					i {
+						margin-left: auto;
+						padding-right: 5px;
+					}
+				}
+			}
+			&--menu {
+				width: 100%;
+				left: 0;
+				padding: 6px;
+				button {
+					gap: 8px;
+				}
+			}
+			.filter-dropdown--button-label {
+				display: block;
+				font-size: 10px;
+				text-transform: uppercase;
+				margin: 0 0 2px;
+			}
+			.filter-dropdown--button-selected {
+				display: flex;
+				align-items: center;
+				width: 100%;
+				font-size: 14px;
+			}
+		}
+
+		// Search.
+		&--search {
+			float: none;
+			width: 100%;
+			padding: 0;
+			clear: both;
+			form {
+				height: auto;
+			}
+			&::before {
+				display: none;
+			}
+			button[type="submit"] {
+				display: none;
+			}
+			input {
+				line-height: 40px;
+				height: 40px;
+				padding-right: 10px;
+				padding-left: 10px;
+				border-color: #e2e4e7;
+				font-size: 13px;
+				border-radius: 3px !important;
+				background-position: 8px center;
+				&.searching {
+					padding-left: 30px;
+				}
+			}
+			input[type="search"]::-webkit-input-placeholder {
+				font-size: 13px;
+			}
+			input[type="search"]:-moz-placeholder {
+				font-size: 13px;
+			}
+			input[type="search"]:-ms-input-placeholder {
+				font-size: 13px;
+			}
+			.searchResults {
+				right: 2px;
+				left: auto;
+				top: 2px;
+				border-radius: 2px;
+				font-size: 12px;
+				height: 36px;
+				line-height: 35px;
+				&::before,
+				&::after {
+					display: none;
+				}
+			}
+		}
+	}
 }
 
 // WP Block.
-$wpblock_maxw: 260px;
-$wpblock_maxh: 220px;
-
 .instant-images-block {
 	.instant-img-container {
 		border: 1px solid $border;
@@ -101,6 +199,20 @@ $wpblock_maxh: 220px;
 		}
 	}
 
+	// Loader.
+	&--loader {
+		height: $wpblock_maxh;
+		width: $wpblock_maxw;
+		min-width: $wpblock_maxw;
+		background: $lighter_grey url("../img/ajax-loader-lg.gif") no-repeat center
+			center;
+		border: 1px dashed $grey;
+		&.done {
+			display: none !important;
+		}
+	}
+
+	// Instructions.
 	&--instructions {
 		width: 100%;
 		background-color: $lighter_grey;
@@ -124,15 +236,20 @@ $wpblock_maxh: 220px;
 		display: none !important;
 	}
 
+	// Filters + Search.
 	.control-nav {
 		padding: 15px;
 		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: 1fr;
+		grid-column-gap: 10px;
 	}
 
 	#photo-listing {
 		display: block;
 		width: 100%;
-		min-height: $wpblock_maxh;
+		min-height: $wpblock_maxh + 75px;
 		padding: 15px;
 		overflow: hidden;
 		&::after {
@@ -143,12 +260,10 @@ $wpblock_maxh: 220px;
 			display: flex;
 		}
 		#photos {
-			flex: 1;
 			display: flex;
 			flex-wrap: nowrap;
 			overflow-x: auto;
 			width: 100%;
-			white-space: nowrap;
 			padding: 0 0 10px;
 			margin: 0;
 			.photo {
@@ -193,120 +308,18 @@ $wpblock_maxh: 220px;
 		}
 	}
 
-	// Control Nav.
+	// Filters + Search.
 	.control-nav {
-		padding: 0 5px 5px;
+		padding: 10px 5px;
 		border-bottom: 1px solid $gb_border;
 		margin: 0 0 10px;
 		display: block;
-		.control-nav--spacer {
-			display: none;
-		}
+
 		&--filters-wrap {
 			flex: none;
 			width: 100%;
 			display: block;
-		}
-		&--filters {
-			column-gap: 6px;
-			padding: 10px 0;
-			.filter-dropdown {
-				width: calc(50% - 3px);
-				display: none;
-				button {
-					padding: 5px;
-					font-size: 13px;
-					&.filter-dropdown--button {
-						display: block;
-					}
-					i {
-						margin-left: auto;
-						padding-right: 5px;
-					}
-				}
-				&--menu {
-					width: 106%;
-					left: -3%;
-					padding: 8px;
-					button {
-						gap: 8px;
-					}
-				}
-				&:nth-child(1),
-				&:nth-child(2) {
-					display: block;
-				}
-				.filter-dropdown--button-label {
-					display: block;
-					font-size: 10px;
-					text-transform: uppercase;
-					margin: 0 0 2px;
-				}
-				.filter-dropdown--button-selected {
-					display: flex;
-					align-items: center;
-					width: 100%;
-					font-size: 14px;
-				}
-			}
-		}
-
-		// Search.
-		&--search {
-			float: none;
-			width: 100%;
-			padding: 0 0 10px;
-			clear: both;
-			form {
-				height: auto;
-			}
-			&::before {
-				display: none;
-			}
-			button[type="submit"] {
-				display: none;
-			}
-			input {
-				line-height: 40px;
-				height: 40px;
-				padding-right: 10px;
-				padding-left: 10px;
-				border-color: #e2e4e7;
-				font-size: 13px;
-				border-radius: 3px !important;
-				background-position: 8px center;
-				&.searching {
-					padding-left: 30px;
-				}
-				&:focus {
-					box-shadow: none;
-				}
-			}
-			input[type="search"]::-webkit-input-placeholder {
-				font-size: 13px;
-			}
-			input[type="search"]:-moz-placeholder {
-				font-size: 13px;
-			}
-			input[type="search"]::-moz-placeholder {
-				font-size: 13px;
-			}
-			input[type="search"]:-ms-input-placeholder {
-				font-size: 13px;
-			}
-			.searchResults {
-				right: 2px;
-				left: auto;
-				top: 2px;
-				border-radius: 2px;
-				font-size: 12px;
-				height: 36px;
-				line-height: 35px;
-				&::before,
-				&::after {
-					display: none;
-				}
-			}
+			margin-bottom: 10px;
 		}
 	}
 }
