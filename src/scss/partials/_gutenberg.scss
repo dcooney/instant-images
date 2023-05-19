@@ -207,6 +207,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 		background: $lighter_grey url("../img/ajax-loader-lg.gif") no-repeat center
 			center;
 		border: 1px dashed $grey;
+		border-radius: $radius;
 		&.done {
 			display: none !important;
 		}

@@ -1892,6 +1892,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   min-width: 275px;
   background: #f7f7f7 url(images/ajax-loader-lg.808ea7f8.gif) no-repeat center center;
   border: 1px dashed #efefef;
+  border-radius: 3px;
 }
 .instant-images-block--loader.done {
   display: none !important;
