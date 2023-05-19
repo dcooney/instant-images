@@ -792,6 +792,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 #photos .photo button.photo-upload {
   display: block;
+  width: 100%;
   position: relative;
   background-color: transparent;
   background-color: #111;
