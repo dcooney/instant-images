@@ -16,14 +16,14 @@ import APILightbox from "./APILightbox";
 import ErrorLightbox from "./ErrorLightbox";
 import Filter from "./Filter";
 import LoadMore from "./LoadMore";
+import NoResults from "./NoResults";
 import ProviderNav from "./ProviderNav";
 import RestAPIError from "./RestAPIError";
 import Results from "./Results";
-import SearchHeader from "./SearchHeader";
-import SearchToolTip from "./SearchToolTip";
-import Tooltip from "./Tooltip";
-import NoResults from "./NoResults";
 import ResultsWPBlock from "./ResultsWPBlock";
+import Tooltip from "./Tooltip";
+import SearchForm from "./search/SearchForm";
+import SearchHeader from "./search/SearchHeader";
 const imagesLoaded = require("imagesloaded");
 
 let page = 1;
@@ -361,6 +361,7 @@ export default function InstantImages(props) {
 		}
 		setShowAPILightbox(false);
 		setLoading(false);
+		setAPIError(false);
 		body.classList.remove("overflow-hidden");
 	}
 
@@ -390,6 +391,7 @@ export default function InstantImages(props) {
 				if (status !== 200) {
 					// Catch API errors and 401s.
 					setShowAPILightbox(newProvider); // Show API Lightbox.
+					setAPIError(true);
 					body.classList.add("overflow-hidden");
 					return;
 				}
@@ -401,6 +403,7 @@ export default function InstantImages(props) {
 				// Catch all other errors.
 				setShowAPILightbox(newProvider); // Show API Lightbox.
 				body.classList.add("overflow-hidden");
+				setAPIError(true);
 				return;
 			}
 		}
@@ -544,6 +547,7 @@ export default function InstantImages(props) {
 					mediaModal,
 					blockSidebar,
 					clientId,
+					getPhotos,
 				}}
 			>
 				{wpBlock ? (
@@ -577,38 +581,13 @@ export default function InstantImages(props) {
 							</div>
 						) : null}
 					</div>
-					<div
-						className={classNames(
-							"control-nav--search",
-							"search-field",
-							apiError ? "inactive" : null
-						)}
-						id="search-bar"
-					>
-						<form onSubmit={(e) => searchHandler(e)} autoComplete="off">
-							<label htmlFor="search-input" className="offscreen">
-								{instant_img_localize.search_label}
-							</label>
-							<input
-								type="search"
-								id="search-input"
-								placeholder={instant_img_localize.search}
-								ref={searchInputRef}
-								disabled={apiError}
-							/>
-							<button type="submit" disabled={apiError}>
-								<i className="fa fa-search"></i>
-								<span className="offscreen">{instant_img_localize.search}</span>
-							</button>
-							<SearchToolTip
-								container={plugin}
-								getPhotos={getPhotos}
-								is_search={search?.active}
-								total={search?.results}
-								title={`${search?.results} ${instant_img_localize.search_results} ${search?.term}`}
-							/>
-						</form>
-					</div>
+					<SearchForm
+						ref={searchInputRef}
+						container={plugin}
+						search={search}
+						apiError={apiError}
+						searchHandler={searchHandler}
+					/>
 				</div>
 				<div id="photo-listing" className={loading ? "loading" : null}>
 					<SearchHeader
@@ -620,21 +599,21 @@ export default function InstantImages(props) {
 					/>
 					{wpBlock ? (
 						<ResultsWPBlock
+							ref={photosRef}
 							data={results}
 							done={done}
 							loadMorePhotos={loadMorePhotos}
-							ref={photosRef}
 						/>
 					) : (
-						<Results data={results} ref={photosRef} />
+						<Results ref={photosRef} data={results} />
 					)}
 					<NoResults total={search?.results} is_search={search?.active} />
 					<LoadMore
+						ref={loadMoreRef}
 						className="load-more-wrap"
 						loadMorePhotos={loadMorePhotos}
 						loading={loadingMore}
 						done={done}
-						ref={loadMoreRef}
 					/>
 					<APILightbox
 						provider={showAPILightbox}

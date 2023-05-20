@@ -1,6 +1,6 @@
-import { FILTERS } from "../constants/filters";
-import Filter from "./Filter";
-import { usePluginContext } from "../common/pluginProvider";
+import { FILTERS } from "../../constants/filters";
+import Filter from "../Filter";
+import { usePluginContext } from "../../common/pluginProvider";
 
 /**
  * Render the SearchHeader component.

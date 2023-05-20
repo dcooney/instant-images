@@ -338,7 +338,7 @@
 			border-radius: 2px;
 			height: 34px;
 			line-height: 34px;
-			font-size: 17px;
+			font-size: 18px;
 			z-index: 6;
 			float: left;
 			margin: 1px 1px 1px 0;
@@ -352,15 +352,13 @@
 			&.set-featured,
 			&.insert {
 				width: 34px;
-				display: inline-block;
-				text-align: center;
-				position: relative;
+				height: 34px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				i {
-					line-height: 27px;
-					position: absolute;
-					left: 50%;
-					top: 50%;
-					transform: translate(-50%, -50%);
+					position: relative;
+					top: 1px;
 				}
 				&:hover,
 				&:focus {

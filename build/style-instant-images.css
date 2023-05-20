@@ -937,7 +937,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   border-radius: 2px;
   height: 34px;
   line-height: 34px;
-  font-size: 17px;
+  font-size: 18px;
   z-index: 6;
   float: left;
   margin: 1px 1px 1px 0;
@@ -949,16 +949,14 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 #photos .photo .fade.edit-photo, #photos .photo .fade.edit-photo-admin, #photos .photo .fade.set-featured, #photos .photo .fade.insert {
   width: 34px;
-  display: inline-block;
-  text-align: center;
-  position: relative;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #photos .photo .fade.edit-photo i, #photos .photo .fade.edit-photo-admin i, #photos .photo .fade.set-featured i, #photos .photo .fade.insert i {
-  line-height: 27px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  top: 1px;
 }
 #photos .photo .fade.edit-photo:hover, #photos .photo .fade.edit-photo:focus, #photos .photo .fade.edit-photo-admin:hover, #photos .photo .fade.edit-photo-admin:focus, #photos .photo .fade.set-featured:hover, #photos .photo .fade.set-featured:focus, #photos .photo .fade.insert:hover, #photos .photo .fade.insert:focus {
   color: #222;

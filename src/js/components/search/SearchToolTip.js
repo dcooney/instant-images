@@ -1,3 +1,5 @@
+import { usePluginContext } from "../../common/pluginProvider";
+
 /**
  * Render the SearchToolTip component.
  *
@@ -5,10 +7,16 @@
  * @return {JSX.Element} The SearchToolTip component.
  */
 export default function ResultsToolTip(props) {
-	const { is_search, title, total, getPhotos } = props;
+	const { search } = props;
+	const { getPhotos } = usePluginContext();
+
 	return (
-		<div className={is_search ? "searchResults" : "searchResults hide"}>
-			<span title={title}>{total}</span>
+		<div className={search?.active ? "searchResults" : "searchResults hide"}>
+			<span
+				title={`${search?.results} ${instant_img_localize.search_results} ${search?.term}`}
+			>
+				{search?.results}
+			</span>
 			<button
 				type="button"
 				title={instant_img_localize.clear_search}
