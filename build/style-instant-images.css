@@ -685,8 +685,11 @@ body.settings_page_instant-images-settings.overflow-hidden {
   margin-top: 0;
 }
 .instant-img-container .control-nav--search-history-title div {
-  font-weight: 500;
+  font-size: 12px;
   color: #434246;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: default;
 }
 .instant-img-container .control-nav--search-history-title button {
   margin-left: auto;
@@ -700,10 +703,10 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-img-container .control-nav--search-history ul.search-history {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 .instant-img-container .control-nav--search-history ul.search-history button {
-  padding: 5px 8px;
+  padding: 6px 10px;
   border-radius: 3px;
   border: 1px solid #e1e1e1;
 }

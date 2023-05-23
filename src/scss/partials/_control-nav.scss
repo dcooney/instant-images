@@ -325,8 +325,11 @@
 					}
 
 					& div {
-						font-weight: 500;
+						font-size: 12px;
 						color: $text;
+						text-transform: uppercase;
+						font-weight: 500;
+						cursor: default;
 					}
 
 					& button {
@@ -343,9 +346,9 @@
 					&.search-history {
 						display: flex;
 						flex-wrap: wrap;
-						gap: 8px;
+						gap: 6px;
 						button {
-							padding: 5px 8px;
+							padding: 6px 10px;
 							border-radius: $radius;
 							border: 1px solid $border;
 							&:hover,
