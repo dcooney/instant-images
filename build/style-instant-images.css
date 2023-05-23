@@ -646,8 +646,8 @@ body.settings_page_instant-images-settings.overflow-hidden {
   position: absolute;
   z-index: 99999;
   top: 100%;
-  left: 0;
-  width: 100%;
+  left: -1.5%;
+  width: 103%;
   padding: 15px;
   margin-top: 3px;
   background: #fff;
