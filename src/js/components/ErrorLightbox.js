@@ -9,18 +9,16 @@ import { getProviderIcon } from "./ProviderIcons";
  * Render the ErrorLightbox component.
  * Note: Component is display on initial plugin load if the default provider has an invalid API key.
  *
- * @param {Object} props The component props.
  * @return {JSX.Element} The ErrorLightbox component.
  */
-export default function ErrorLightbox(props) {
-	const { error } = props;
-	const { provider } = usePluginContext();
+export default function ErrorLightbox() {
+	const { provider, apiError } = usePluginContext();
 	const lightbox = useRef();
-	const status = error?.status ? error.status : null;
+	const status = apiError?.status ? apiError.status : null;
 
 	return (
 		<Fragment>
-			{error && status && (
+			{apiError && status && (
 				<div
 					className={classNames("api-lightbox", "error-lightbox", "active")}
 					ref={lightbox}

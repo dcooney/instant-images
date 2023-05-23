@@ -7,11 +7,11 @@ const providers = API.providers;
 /**
  * Render the block header.
  *
- * @param {Object} props The component props.
+ * @param {Object} props                The component props.
+ * @param {Object} props.switchProvider The function to switch the provider.
  * @return {JSX.Element} The BlockHeader component.
  */
-export default function BlockHeader(props) {
-	const { switchProvider } = props;
+export default function BlockHeader({ switchProvider }) {
 	const { provider } = usePluginContext();
 
 	/**

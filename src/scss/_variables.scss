@@ -49,3 +49,14 @@ $yellow_bkg: #fffadc;
 	border-color: $purple;
 	box-shadow: 0 0 0 1px $purple, 0 0 0 4px rgba($purple, 0.1);
 }
+
+@mixin buttonDefaults() {
+	border-color: $purple;
+	color: $purple;
+	&:hover,
+	&:focus {
+		color: #fff !important;
+		border-color: $purple;
+		background-color: $purple;
+	}
+}

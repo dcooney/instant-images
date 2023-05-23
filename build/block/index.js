@@ -125,7 +125,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  */
 function APILightbox(props) {
   var provider = props.provider,
-    closeAPILightbox = props.closeAPILightbox;
+    callback = props.callback;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)("invalid"),
     _useState2 = _slicedToArray(_useState, 2),
     apiStatus = _useState2[0],
@@ -184,7 +184,7 @@ function APILightbox(props) {
               setTimeout(function () {
                 setResponse("");
                 setAPIStatus("invalid");
-                closeAPILightbox(provider);
+                callback(provider);
               }, 1000);
             } else {
               setAPIStatus("invalid"); // Error/Invalid.
@@ -218,7 +218,7 @@ function APILightbox(props) {
     if (lightbox !== null && lightbox !== void 0 && lightbox.current) {
       lightbox.current.classList.remove("active");
       setTimeout(function () {
-        closeAPILightbox();
+        callback();
       }, 150);
     }
   }
@@ -362,16 +362,15 @@ __webpack_require__.r(__webpack_exports__);
  * Render the ErrorLightbox component.
  * Note: Component is display on initial plugin load if the default provider has an invalid API key.
  *
- * @param {Object} props The component props.
  * @return {JSX.Element} The ErrorLightbox component.
  */
-function ErrorLightbox(props) {
-  var error = props.error;
+function ErrorLightbox() {
   var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__.usePluginContext)(),
-    provider = _usePluginContext.provider;
+    provider = _usePluginContext.provider,
+    apiError = _usePluginContext.apiError;
   var lightbox = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var status = error !== null && error !== void 0 && error.status ? error.status : null;
-  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, error && status && /*#__PURE__*/React.createElement("div", {
+  var status = apiError !== null && apiError !== void 0 && apiError.status ? apiError.status : null;
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, apiError && status && /*#__PURE__*/React.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("api-lightbox", "error-lightbox", "active"),
     ref: lightbox,
     tabIndex: "-1"
@@ -424,14 +423,17 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 /**
  * Render the Filter component.
  *
- * @param {Object} props The component props.
+ * @param {Object}   props           The component props.
+ * @param {Object}   props.data      The filter data.
+ * @param {string}   props.filterKey The filter key.
+ * @param {Function} props.handler   The change/click handler function.
  * @return {JSX.Element} The Filter component.
  */
 function Filter(props) {
   var _data$filters;
   var data = props.data,
     filterKey = props.filterKey,
-    handler = props["function"];
+    handler = props.handler;
   var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_3__.usePluginContext)(),
     provider = _usePluginContext.provider;
   var defaultValue = data === null || data === void 0 ? void 0 : data["default"];
@@ -687,6 +689,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var masonry_layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! masonry-layout */ "./node_modules/masonry-layout/masonry.js");
@@ -733,6 +736,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -835,18 +839,22 @@ function InstantImages(props) {
     _useState20 = _slicedToArray(_useState19, 2),
     search = _useState20[0],
     setSearch = _useState20[1];
-  var _useState21 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(_constants_filters__WEBPACK_IMPORTED_MODULE_5__.FILTERS[activeProvider].filters),
+  var _useState21 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState22 = _slicedToArray(_useState21, 2),
-    filterOptions = _useState22[0],
-    setFilterOptions = _useState22[1];
-  var _useState23 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    suggestions = _useState22[0],
+    setSuggestions = _useState22[1];
+  var _useState23 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(_constants_filters__WEBPACK_IMPORTED_MODULE_5__.FILTERS[activeProvider].filters),
     _useState24 = _slicedToArray(_useState23, 2),
-    filters = _useState24[0],
-    setFilters = _useState24[1];
+    filterOptions = _useState24[0],
+    setFilterOptions = _useState24[1];
   var _useState25 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState26 = _slicedToArray(_useState25, 2),
-    searchFilters = _useState26[0],
-    setSearchFilters = _useState26[1];
+    filters = _useState26[0],
+    setFilters = _useState26[1];
+  var _useState27 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState28 = _slicedToArray(_useState27, 2),
+    searchFilters = _useState28[0],
+    setSearchFilters = _useState28[1];
 
   // Refs.
   var _useInView = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_25__.useInView)({
@@ -1148,6 +1156,7 @@ function InstantImages(props) {
   function clearSearch() {
     searchInputRef.current.value = "";
     setSearch(searchDefaults);
+    setSuggestions([]);
   }
 
   /**
@@ -1209,9 +1218,10 @@ function InstantImages(props) {
     return _switchProvider.apply(this, arguments);
   }
   /**
-   * Renders the Masonry layout.
+   * Get autocomplete search suggestions.
    *
-   * @since 3.0
+   * @param {string} term The search term.
+   * @return {Array} The autocomplete suggestions.
    */
   function _switchProvider() {
     _switchProvider = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(newProvider) {
@@ -1281,6 +1291,42 @@ function InstantImages(props) {
       }, _callee4, null, [[7, 21]]);
     }));
     return _switchProvider.apply(this, arguments);
+  }
+  function getSuggestions(_x4) {
+    return _getSuggestions.apply(this, arguments);
+  }
+  /**
+   * Renders the Masonry layout.
+   *
+   * @since 3.0
+   */
+  function _getSuggestions() {
+    _getSuggestions = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(term) {
+      var api_url;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) switch (_context5.prev = _context5.next) {
+          case 0:
+            if (!(!term || (term === null || term === void 0 ? void 0 : term.length) < 3)) {
+              _context5.next = 2;
+              break;
+            }
+            return _context5.abrupt("return");
+          case 2:
+            // API endpoint URL.
+            api_url = instant_img_localize.root + "instant-images-pro/suggestions/?term=".concat(term); // Get suggestions.
+            _context5.next = 5;
+            return axios__WEBPACK_IMPORTED_MODULE_26__["default"].get(api_url).then(function (res) {
+              setSuggestions(res.data);
+            })["catch"](function (error) {
+              console.warn(error);
+            });
+          case 5:
+          case "end":
+            return _context5.stop();
+        }
+      }, _callee5);
+    }));
+    return _getSuggestions.apply(this, arguments);
   }
   function renderLayout() {
     imagesLoaded(photosRef.current, function () {
@@ -1405,17 +1451,19 @@ function InstantImages(props) {
       mediaModal: mediaModal,
       blockSidebar: blockSidebar,
       clientId: clientId,
-      getPhotos: getPhotos
+      search: search,
+      apiError: apiError,
+      getPhotos: getPhotos,
+      searchHandler: searchHandler,
+      filterSearch: filterSearch,
+      suggestions: suggestions,
+      getSuggestions: getSuggestions
     }
   }, wpBlock ? /*#__PURE__*/React.createElement(_editor_block_components_Header__WEBPACK_IMPORTED_MODULE_6__["default"], {
     switchProvider: switchProvider
   }) : /*#__PURE__*/React.createElement(_ProviderNav__WEBPACK_IMPORTED_MODULE_18__["default"], {
     switchProvider: switchProvider
-  }), /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_19__["default"], {
-    title: instant_img_localize.error_restapi,
-    desc: instant_img_localize.error_restapi_desc,
-    type: "warning"
-  }), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement(_RestAPIError__WEBPACK_IMPORTED_MODULE_19__["default"], null), /*#__PURE__*/React.createElement("div", {
     className: "control-nav"
   }, /*#__PURE__*/React.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("control-nav--filters-wrap", apiError || search !== null && search !== void 0 && search.active ? "inactive" : null)
@@ -1427,27 +1475,16 @@ function InstantImages(props) {
       filter = _ref2[1];
     return /*#__PURE__*/React.createElement(_Filter__WEBPACK_IMPORTED_MODULE_15__["default"], {
       key: "".concat(activeProvider, "-").concat(index, "-").concat(key),
-      provider: activeProvider,
       data: filter,
       filterKey: key,
-      "function": filterPhotos
+      handler: filterPhotos
     });
   })) : null), /*#__PURE__*/React.createElement(_search_SearchForm__WEBPACK_IMPORTED_MODULE_23__["default"], {
-    ref: searchInputRef,
-    container: plugin,
-    search: search,
-    apiError: apiError,
-    searchHandler: searchHandler
+    ref: searchInputRef
   })), /*#__PURE__*/React.createElement("div", {
     id: "photo-listing",
     className: loading ? "loading" : null
-  }, /*#__PURE__*/React.createElement(_search_SearchHeader__WEBPACK_IMPORTED_MODULE_24__["default"], {
-    active: search === null || search === void 0 ? void 0 : search.active,
-    term: search === null || search === void 0 ? void 0 : search.term,
-    total: search === null || search === void 0 ? void 0 : search.results,
-    filterSearch: filterSearch,
-    getPhotos: getPhotos
-  }), wpBlock ? /*#__PURE__*/React.createElement(_ResultsWPBlock__WEBPACK_IMPORTED_MODULE_21__["default"], {
+  }, /*#__PURE__*/React.createElement(_search_SearchHeader__WEBPACK_IMPORTED_MODULE_24__["default"], null), wpBlock ? /*#__PURE__*/React.createElement(_ResultsWPBlock__WEBPACK_IMPORTED_MODULE_21__["default"], {
     ref: photosRef,
     data: results,
     done: done,
@@ -1460,16 +1497,13 @@ function InstantImages(props) {
     is_search: search === null || search === void 0 ? void 0 : search.active
   }), /*#__PURE__*/React.createElement(_LoadMore__WEBPACK_IMPORTED_MODULE_16__["default"], {
     ref: loadMoreRef,
-    className: "load-more-wrap",
     loadMorePhotos: loadMorePhotos,
     loading: loadingMore,
     done: done
   }), /*#__PURE__*/React.createElement(_APILightbox__WEBPACK_IMPORTED_MODULE_13__["default"], {
     provider: showAPILightbox,
-    closeAPILightbox: closeAPILightbox
-  }), /*#__PURE__*/React.createElement(_ErrorLightbox__WEBPACK_IMPORTED_MODULE_14__["default"], {
-    error: apiError
-  }), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_22__["default"], null))));
+    callback: closeAPILightbox
+  }), /*#__PURE__*/React.createElement(_ErrorLightbox__WEBPACK_IMPORTED_MODULE_14__["default"], null), /*#__PURE__*/React.createElement(_Tooltip__WEBPACK_IMPORTED_MODULE_22__["default"], null))));
 }
 
 /***/ }),
@@ -1498,12 +1532,11 @@ __webpack_require__.r(__webpack_exports__);
  * @return {JSX.Element} The LoadMore component.
  */
 var LoadMore = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(function (props, ref) {
-  var className = props.className,
-    loadMorePhotos = props.loadMorePhotos,
+  var loadMorePhotos = props.loadMorePhotos,
     loading = props.loading,
     done = props.done;
   return /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, loading ? "loading" : null, done ? "done" : null),
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("load-more-wrap", loading ? "loading" : null, done ? "done" : null),
     ref: ref
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -2414,11 +2447,12 @@ var providers = _constants_API__WEBPACK_IMPORTED_MODULE_2__.API.providers;
 /**
  * Render the ProviderNav component.
  *
- * @param {Object} props The component props.
- * @return {JSX.Element} The ProviderNav component.
+ * @param {Object} props                The component props.
+ * @param {Object} props.switchProvider The function to switch the provider.
+ * @return {JSX.Element}                The ProviderNav component.
  */
-function ProviderNav(props) {
-  var switchProvider = props.switchProvider;
+function ProviderNav(_ref) {
+  var switchProvider = _ref.switchProvider;
   var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_1__.usePluginContext)(),
     provider = _usePluginContext.provider;
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !!(providers !== null && providers !== void 0 && providers.length) && /*#__PURE__*/React.createElement("nav", {
@@ -2503,11 +2537,8 @@ function RestAPIError() {
     test();
   }, []);
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !access ? /*#__PURE__*/React.createElement("div", {
-    className: "error-messaging",
-    dangerouslySetInnerHTML: {
-      __html: "<strong>".concat(instant_img_localize.error_restapi, "</strong>").concat(instant_img_localize.error_restapi_desc)
-    }
-  }) : null);
+    className: "error-messaging"
+  }, /*#__PURE__*/React.createElement("strong", null, instant_img_localize.error_restapi), instant_img_localize.error_restapi_desc) : null);
 }
 
 /***/ }),
@@ -2769,46 +2800,136 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _SearchToolTip__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SearchToolTip */ "./src/js/components/search/SearchToolTip.js");
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+/* harmony import */ var _functions_useClickOutside__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../functions/useClickOutside */ "./src/js/functions/useClickOutside.js");
+/* harmony import */ var _functions_localStorage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../functions/localStorage */ "./src/js/functions/localStorage.js");
+/* harmony import */ var _SearchHistory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SearchHistory */ "./src/js/components/search/SearchHistory.js");
+/* harmony import */ var _SearchToolTip__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchToolTip */ "./src/js/components/search/SearchToolTip.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure " + obj); }
+
+
+
+
 
 
 
 
 /**
- * Render the SearchForm component.
+ * Render the search form as a component.
  *
  * @return {JSX.Element} The SearchForm component.
  */
-var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(function (props, ref) {
-  var searchHandler = props.searchHandler,
-    apiError = props.apiError,
-    search = props.search;
+var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(function (_ref, ref) {
+  _objectDestructuringEmpty(_ref);
+  var _instant_img_localize = instant_img_localize,
+    _instant_img_localize2 = _instant_img_localize.is_pro,
+    is_pro = _instant_img_localize2 === void 0 ? false : _instant_img_localize2;
+  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__.usePluginContext)(),
+    searchHandler = _usePluginContext.searchHandler,
+    apiError = _usePluginContext.apiError,
+    suggestions = _usePluginContext.suggestions,
+    getSuggestions = _usePluginContext.getSuggestions;
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState2 = _slicedToArray(_useState, 2),
+    history = _useState2[0],
+    setHistory = _useState2[1];
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    show = _useState4[0],
+    setShow = _useState4[1];
+  var historyRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var submitBtnRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+
+  // Handle clickoutside hook.
+  (0,_functions_useClickOutside__WEBPACK_IMPORTED_MODULE_3__.useClickOutside)(historyRef, function () {
+    setShow(false);
+  });
+
+  /**
+   * Set the search value in the form.
+   *
+   * @param {string} value The value to set.
+   */
+  function setSearchValue(value) {
+    var input = ref === null || ref === void 0 ? void 0 : ref.current;
+    input.value = value;
+    submitBtnRef === null || submitBtnRef === void 0 ? void 0 : submitBtnRef.current.click();
+
+    // Set focus on input.
+    input.focus();
+  }
+
+  /**
+   * Search submit handler.
+   *
+   * @param {Event} e The event object.
+   */
+  function formSubmit(e) {
+    var _ref$current;
+    e.preventDefault();
+    var term = ref === null || ref === void 0 ? void 0 : (_ref$current = ref.current) === null || _ref$current === void 0 ? void 0 : _ref$current.value;
+    if (term) {
+      (0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_4__.saveSearchHistory)(term);
+      setHistory((0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_4__.getSearchHistory)());
+      searchHandler(e);
+    }
+  }
+
+  /**
+   * Should the history div be shown?
+   *
+   * @return {boolean} Show history.
+   */
+  function showHistory() {
+    return (history === null || history === void 0 ? void 0 : history.length) || (suggestions === null || suggestions === void 0 ? void 0 : suggestions.length);
+  }
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    setHistory((0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_4__.getSearchHistory)());
+  }, []);
   return /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("control-nav--search", "search-field", apiError ? "inactive" : null)
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("control-nav--search", apiError ? "inactive" : null)
   }, /*#__PURE__*/React.createElement("form", {
     onSubmit: function onSubmit(e) {
-      return searchHandler(e);
+      return formSubmit(e);
     },
     autoComplete: "off"
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "search-input",
     className: "offscreen"
-  }, instant_img_localize.search_label), /*#__PURE__*/React.createElement("input", {
-    type: "search",
+  }, instant_img_localize.search_label), /*#__PURE__*/React.createElement("div", {
+    ref: historyRef
+  }, /*#__PURE__*/React.createElement("input", {
+    ref: ref,
+    type: "text",
     id: "search-input",
     placeholder: instant_img_localize.search,
-    ref: ref,
-    disabled: apiError
-  }), /*#__PURE__*/React.createElement("button", {
+    disabled: apiError,
+    onChange: function onChange(e) {
+      return is_pro && getSuggestions(e.target.value);
+    },
+    onFocus: function onFocus() {
+      return is_pro && setShow(true);
+    }
+  }), !!is_pro && showHistory() ? /*#__PURE__*/React.createElement(_SearchHistory__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    show: show,
+    history: history,
+    setHistory: setHistory,
+    setSearchValue: setSearchValue
+  }) : null), /*#__PURE__*/React.createElement("button", {
     type: "submit",
-    disabled: apiError
+    disabled: apiError,
+    ref: submitBtnRef
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-search"
   }), /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
-  }, instant_img_localize.search)), /*#__PURE__*/React.createElement(_SearchToolTip__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    search: search
-  })));
+  }, instant_img_localize.search)), /*#__PURE__*/React.createElement(_SearchToolTip__WEBPACK_IMPORTED_MODULE_6__["default"], null)));
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SearchForm);
 
@@ -2841,20 +2962,20 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 /**
  * Render the SearchHeader component.
  *
- * @param {Object} props The component props.
  * @return {JSX.Element} The SearchHeader component.
  */
-function SearchHeader(props) {
-  var _props$active = props.active,
-    active = _props$active === void 0 ? false : _props$active,
-    _props$term = props.term,
-    term = _props$term === void 0 ? "" : _props$term,
-    _props$total = props.total,
-    total = _props$total === void 0 ? 0 : _props$total,
-    filterSearch = props.filterSearch,
-    getPhotos = props.getPhotos;
+function SearchHeader() {
   var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__.usePluginContext)(),
-    provider = _usePluginContext.provider;
+    provider = _usePluginContext.provider,
+    search = _usePluginContext.search,
+    getPhotos = _usePluginContext.getPhotos,
+    filterSearch = _usePluginContext.filterSearch;
+  var _search$active = search.active,
+    active = _search$active === void 0 ? false : _search$active,
+    _search$term = search.term,
+    term = _search$term === void 0 ? "" : _search$term,
+    _search$total = search.total,
+    total = _search$total === void 0 ? 0 : _search$total;
   var filters = _constants_filters__WEBPACK_IMPORTED_MODULE_0__.FILTERS[provider].search;
   if (!active) {
     // Exit if search is not active.
@@ -2881,8 +3002,91 @@ function SearchHeader(props) {
       filterKey: key,
       provider: provider,
       data: filter,
-      "function": filterSearch
+      handler: filterSearch
     });
+  }))));
+}
+
+/***/ }),
+
+/***/ "./src/js/components/search/SearchHistory.js":
+/*!***************************************************!*\
+  !*** ./src/js/components/search/SearchHistory.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ SearchHistory)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _functions_localStorage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../functions/localStorage */ "./src/js/functions/localStorage.js");
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+
+
+
+
+
+
+/**
+ * The History list component.
+ *
+ * @param {Object} props The component props.
+ * @return {JSX.Element} The SearchHistory component.
+ */
+function SearchHistory(props) {
+  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_4__.usePluginContext)(),
+    suggestions = _usePluginContext.suggestions;
+  var show = props.show,
+    history = props.history,
+    setHistory = props.setHistory,
+    setSearchValue = props.setSearchValue;
+  return /*#__PURE__*/React.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()("control-nav--search-history", show ? "active" : null),
+    role: "listbox"
+  }, !!suggestions.length && /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "control-nav--search-history-title"
+  }, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Suggestions", "instant-images"))), /*#__PURE__*/React.createElement("ul", {
+    role: "listbox",
+    className: "search-suggestions"
+  }, suggestions.map(function (item, key) {
+    return /*#__PURE__*/React.createElement("li", {
+      key: key,
+      role: "option"
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      onClick: function onClick() {
+        return setSearchValue(item);
+      }
+    }, item));
+  }))), !!history.length && /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "control-nav--search-history-title"
+  }, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Recent Searches", "instant-images")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: function onClick() {
+      (0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_3__.clearSearchHistory)();
+      setHistory([]);
+    }
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Clear", "instant-images"))), /*#__PURE__*/React.createElement("ul", {
+    role: "listbox",
+    className: "search-history"
+  }, history.map(function (item, key) {
+    return /*#__PURE__*/React.createElement("li", {
+      key: key,
+      role: "option"
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "history",
+      onClick: function onClick() {
+        return setSearchValue(item);
+      }
+    }, item));
   }))));
 }
 
@@ -2897,23 +3101,25 @@ function SearchHeader(props) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ResultsToolTip)
+/* harmony export */   "default": () => (/* binding */ SearchToolTip)
 /* harmony export */ });
-/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+
 
 
 /**
- * Render the SearchToolTip component.
+ * Render the search results tooltip component.
  *
- * @param {Object} props The component props.
  * @return {JSX.Element} The SearchToolTip component.
  */
-function ResultsToolTip(props) {
-  var search = props.search;
-  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_0__.usePluginContext)(),
-    getPhotos = _usePluginContext.getPhotos;
+function SearchToolTip() {
+  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_1__.usePluginContext)(),
+    getPhotos = _usePluginContext.getPhotos,
+    search = _usePluginContext.search;
   return /*#__PURE__*/React.createElement("div", {
-    className: search !== null && search !== void 0 && search.active ? "searchResults" : "searchResults hide"
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()("control-nav--search-tooltip", search !== null && search !== void 0 && search.active ? null : "hide")
   }, /*#__PURE__*/React.createElement("span", {
     title: "".concat(search === null || search === void 0 ? void 0 : search.results, " ").concat(instant_img_localize.search_results, " ").concat(search === null || search === void 0 ? void 0 : search.term)
   }, search === null || search === void 0 ? void 0 : search.results), /*#__PURE__*/React.createElement("button", {
@@ -3193,11 +3399,12 @@ var providers = _constants_API__WEBPACK_IMPORTED_MODULE_2__.API.providers;
 /**
  * Render the block header.
  *
- * @param {Object} props The component props.
+ * @param {Object} props                The component props.
+ * @param {Object} props.switchProvider The function to switch the provider.
  * @return {JSX.Element} The BlockHeader component.
  */
-function BlockHeader(props) {
-  var switchProvider = props.switchProvider;
+function BlockHeader(_ref) {
+  var switchProvider = _ref.switchProvider;
   var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_1__.usePluginContext)(),
     provider = _usePluginContext.provider;
 
@@ -3847,8 +4054,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "gotoURL": () => (/* binding */ gotoURL),
 /* harmony export */   "hideTooltip": () => (/* binding */ hideTooltip),
 /* harmony export */   "isObjectEmpty": () => (/* binding */ isObjectEmpty),
+/* harmony export */   "md5Hash": () => (/* binding */ md5Hash),
 /* harmony export */   "showTooltip": () => (/* binding */ showTooltip)
 /* harmony export */ });
+/* harmony import */ var crypto_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! crypto-js */ "./node_modules/crypto-js/index.js");
+/* harmony import */ var crypto_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(crypto_js__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/**
+ * Get the MD5 hash value of a URL.
+ *
+ * @param {string} url The API URL to hash.
+ * @return {string} The MD5 hash.
+ */
+function md5Hash(url) {
+  return crypto_js__WEBPACK_IMPORTED_MODULE_0___default().MD5(url).toString();
+}
+
 /**
  * Check if an object is empty.
  *
@@ -3950,6 +4172,71 @@ function gotoURL(url) {
 
 /***/ }),
 
+/***/ "./src/js/functions/localStorage.js":
+/*!******************************************!*\
+  !*** ./src/js/functions/localStorage.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "clearSearchHistory": () => (/* binding */ clearSearchHistory),
+/* harmony export */   "getSearchHistory": () => (/* binding */ getSearchHistory),
+/* harmony export */   "saveSearchHistory": () => (/* binding */ saveSearchHistory)
+/* harmony export */ });
+var name = "recent-searches";
+
+/**
+ * Save search value to localstorage.
+ *
+ * @param {string} term The search term.
+ */
+function saveSearchHistory(term) {
+  var recent = getSearchHistory();
+  if (!recent) {
+    localStorage.setItem(name, JSON.stringify([term]));
+    return;
+  }
+
+  // Find duplicates.
+  var duplicate = recent.indexOf(term);
+  if (duplicate > -1) {
+    recent.splice(duplicate, 1);
+  }
+
+  // Limit to 6 items.
+  if (recent.length >= 5) {
+    recent.length = 5;
+  }
+
+  // Add new term to the beginning of the array.
+  recent.unshift(term);
+  localStorage.setItem(name, JSON.stringify(recent));
+}
+
+/**
+ * Get the search history from localstorage.
+ *
+ * @return {Array} The search history.
+ */
+function getSearchHistory() {
+  var history = localStorage.getItem(name);
+  if (!history) {
+    return [];
+  }
+  return JSON.parse(localStorage.getItem(name));
+}
+
+/**
+ * Clear search history.
+ */
+function clearSearchHistory() {
+  localStorage.removeItem("recent-searches");
+}
+
+/***/ }),
+
 /***/ "./src/js/functions/providers/openverse.js":
 /*!*************************************************!*\
   !*** ./src/js/functions/providers/openverse.js ***!
@@ -4038,12 +4325,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "deleteSession": () => (/* binding */ deleteSession),
 /* harmony export */   "getSession": () => (/* binding */ getSession),
-/* harmony export */   "md5Hash": () => (/* binding */ md5Hash),
 /* harmony export */   "saveSession": () => (/* binding */ saveSession)
 /* harmony export */ });
-/* harmony import */ var crypto_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! crypto-js */ "./node_modules/crypto-js/index.js");
-/* harmony import */ var crypto_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(crypto_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+/* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./src/js/functions/helpers.js");
 
 
 
@@ -4054,11 +4339,11 @@ __webpack_require__.r(__webpack_exports__);
  * @return {Array|boolean} Session results.
  */
 function getSession(url) {
-  if (!url || _constants_API__WEBPACK_IMPORTED_MODULE_1__.API.testmode) {
+  if (!url || _constants_API__WEBPACK_IMPORTED_MODULE_0__.API.testmode) {
     return false; // Exit if no URL or test mode is enabled.
   }
 
-  var session = sessionStorage.getItem(md5Hash(url));
+  var session = sessionStorage.getItem((0,_helpers__WEBPACK_IMPORTED_MODULE_1__.md5Hash)(url));
   if (!session) {
     return false; // Exit if no session data.
   }
@@ -4096,7 +4381,7 @@ function saveSession(url, results) {
   results.expires = Date.now() + 3600000;
 
   // Save session data.
-  sessionStorage.setItem(md5Hash(url), JSON.stringify(results));
+  sessionStorage.setItem((0,_helpers__WEBPACK_IMPORTED_MODULE_1__.md5Hash)(url), JSON.stringify(results));
 }
 
 /**
@@ -4108,17 +4393,7 @@ function deleteSession(url) {
   if (!url) {
     return false;
   }
-  sessionStorage.removeItem(md5Hash(url));
-}
-
-/**
- * Get the MD5 hash value of a URL.
- *
- * @param {string} url The API URL to hash.
- * @return {string} The MD5 hash.
- */
-function md5Hash(url) {
-  return crypto_js__WEBPACK_IMPORTED_MODULE_0___default().MD5(url).toString();
+  sessionStorage.removeItem((0,_helpers__WEBPACK_IMPORTED_MODULE_1__.md5Hash)(url));
 }
 
 /***/ }),
@@ -4161,6 +4436,66 @@ function updatePluginSetting(setting, value) {
   axios__WEBPACK_IMPORTED_MODULE_0__["default"].post(api, JSON.stringify(params), config).then(function () {})["catch"](function (error) {
     console.warn(error);
   });
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/useClickOutside.js":
+/*!*********************************************!*\
+  !*** ./src/js/functions/useClickOutside.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useClickOutside": () => (/* binding */ useClickOutside)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/**
+ * Detect clicks outside of ref.
+ *
+ * @param {Object}   ref            React ref.
+ * @param {Function} onClickOutside Function to invoke when clicked outside.
+ */
+function useClickOutside(ref, onClickOutside) {
+  /**
+   * Escape handler.
+   *
+   * @param {Event} e The key press event.
+   */
+  function escapeClick(e) {
+    var key = e.key;
+    if (key === "Escape") {
+      onClickOutside();
+    }
+  }
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    /**
+     * Invoke Function onClick outside of element
+     *
+     * @param {Event} event The event object.
+     */
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        onClickOutside();
+      }
+    }
+
+    // Bind events.
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keyup", handleClickOutside);
+    document.addEventListener("keydown", escapeClick, false);
+    return function () {
+      // Dispose of events.
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keyup", handleClickOutside);
+      document.removeEventListener("keydown", escapeClick, false);
+    };
+  }, [ref, onClickOutside]); //eslint-disable-line react-hooks/exhaustive-deps
 }
 
 /***/ }),

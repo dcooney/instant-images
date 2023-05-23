@@ -7,11 +7,11 @@ const providers = API.providers;
 /**
  * Render the ProviderNav component.
  *
- * @param {Object} props The component props.
- * @return {JSX.Element} The ProviderNav component.
+ * @param {Object} props                The component props.
+ * @param {Object} props.switchProvider The function to switch the provider.
+ * @return {JSX.Element}                The ProviderNav component.
  */
-export default function ProviderNav(props) {
-	const { switchProvider } = props;
+export default function ProviderNav({ switchProvider }) {
 	const { provider } = usePluginContext();
 
 	return (

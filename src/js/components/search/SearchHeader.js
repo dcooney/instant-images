@@ -5,18 +5,12 @@ import { usePluginContext } from "../../common/pluginProvider";
 /**
  * Render the SearchHeader component.
  *
- * @param {Object} props The component props.
  * @return {JSX.Element} The SearchHeader component.
  */
-export default function SearchHeader(props) {
-	const {
-		active = false,
-		term = "",
-		total = 0,
-		filterSearch,
-		getPhotos,
-	} = props;
-	const { provider } = usePluginContext();
+export default function SearchHeader() {
+	const { provider, search, getPhotos, filterSearch } = usePluginContext();
+	const { active = false, term = "", total = 0 } = search;
+
 	const filters = FILTERS[provider].search;
 
 	if (!active) {
@@ -44,7 +38,7 @@ export default function SearchHeader(props) {
 								filterKey={key}
 								provider={provider}
 								data={filter}
-								function={filterSearch}
+								handler={filterSearch}
 							/>
 						))}
 					</div>

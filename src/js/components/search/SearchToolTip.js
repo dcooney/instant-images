@@ -1,17 +1,21 @@
+import classNames from "classnames";
 import { usePluginContext } from "../../common/pluginProvider";
 
 /**
- * Render the SearchToolTip component.
+ * Render the search results tooltip component.
  *
- * @param {Object} props The component props.
  * @return {JSX.Element} The SearchToolTip component.
  */
-export default function ResultsToolTip(props) {
-	const { search } = props;
-	const { getPhotos } = usePluginContext();
+export default function SearchToolTip() {
+	const { getPhotos, search } = usePluginContext();
 
 	return (
-		<div className={search?.active ? "searchResults" : "searchResults hide"}>
+		<div
+			className={classNames(
+				"control-nav--search-tooltip",
+				search?.active ? null : "hide"
+			)}
+		>
 			<span
 				title={`${search?.results} ${instant_img_localize.search_results} ${search?.term}`}
 			>

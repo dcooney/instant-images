@@ -7,12 +7,12 @@ import classNames from "classnames";
  * @return {JSX.Element} The LoadMore component.
  */
 const LoadMore = forwardRef((props, ref) => {
-	const { className, loadMorePhotos, loading, done } = props;
+	const { loadMorePhotos, loading, done } = props;
 
 	return (
 		<div
 			className={classNames(
-				className,
+				"load-more-wrap",
 				loading ? "loading" : null,
 				done ? "done" : null
 			)}

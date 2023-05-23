@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "@wordpress/element";
+import axios from "axios";
 import classNames from "classnames";
 import Masonry from "masonry-layout";
 import { useInView } from "react-intersection-observer";
@@ -70,6 +71,7 @@ export default function InstantImages(props) {
 	const [apiError, setAPIError] = useState(api_error); // API Error.
 	const [showAPILightbox, setShowAPILightbox] = useState(false); // Render API key lightbox.
 	const [search, setSearch] = useState(searchDefaults);
+	const [suggestions, setSuggestions] = useState([]);
 	const [filterOptions, setFilterOptions] = useState(
 		FILTERS[activeProvider].filters
 	);
@@ -205,6 +207,7 @@ export default function InstantImages(props) {
 	async function doSearch(term) {
 		setLoading(true);
 		resetScrollPosition();
+
 		page = 1; // Reset current page num.
 
 		const searchType = term.substring(0, 3) === "id:" ? "id" : "term";
@@ -307,6 +310,7 @@ export default function InstantImages(props) {
 	function clearSearch() {
 		searchInputRef.current.value = "";
 		setSearch(searchDefaults);
+		setSuggestions([]);
 	}
 
 	/**
@@ -413,6 +417,33 @@ export default function InstantImages(props) {
 			setFilterOptions(FILTERS[newProvider].filters); // Update filter options.
 			setActiveProvider(newProvider); // Switch the provider.
 		}, delay);
+	}
+	/**
+	 * Get autocomplete search suggestions.
+	 *
+	 * @param {string} term The search term.
+	 * @return {Array} The autocomplete suggestions.
+	 */
+	async function getSuggestions(term) {
+		if (!term || term?.length < 3) {
+			// Exit if term length is less than 3.
+			return;
+		}
+
+		// API endpoint URL.
+		const api_url =
+			instant_img_localize.root +
+			`instant-images-pro/suggestions/?term=${term}`;
+
+		// Get suggestions.
+		await axios
+			.get(api_url)
+			.then(function (res) {
+				setSuggestions(res.data);
+			})
+			.catch(function (error) {
+				console.warn(error);
+			});
 	}
 
 	/**
@@ -547,7 +578,13 @@ export default function InstantImages(props) {
 					mediaModal,
 					blockSidebar,
 					clientId,
+					search,
+					apiError,
 					getPhotos,
+					searchHandler,
+					filterSearch,
+					suggestions,
+					getSuggestions,
 				}}
 			>
 				{wpBlock ? (
@@ -555,11 +592,7 @@ export default function InstantImages(props) {
 				) : (
 					<ProviderNav switchProvider={switchProvider} />
 				)}
-				<RestAPIError
-					title={instant_img_localize.error_restapi}
-					desc={instant_img_localize.error_restapi_desc}
-					type="warning"
-				/>
+				<RestAPIError />
 				<div className="control-nav">
 					<div
 						className={classNames(
@@ -572,31 +605,18 @@ export default function InstantImages(props) {
 								{Object.entries(filterOptions).map(([key, filter], index) => (
 									<Filter
 										key={`${activeProvider}-${index}-${key}`}
-										provider={activeProvider}
 										data={filter}
 										filterKey={key}
-										function={filterPhotos}
+										handler={filterPhotos}
 									/>
 								))}
 							</div>
 						) : null}
 					</div>
-					<SearchForm
-						ref={searchInputRef}
-						container={plugin}
-						search={search}
-						apiError={apiError}
-						searchHandler={searchHandler}
-					/>
+					<SearchForm ref={searchInputRef} />
 				</div>
 				<div id="photo-listing" className={loading ? "loading" : null}>
-					<SearchHeader
-						active={search?.active}
-						term={search?.term}
-						total={search?.results}
-						filterSearch={filterSearch}
-						getPhotos={getPhotos}
-					/>
+					<SearchHeader />
 					{wpBlock ? (
 						<ResultsWPBlock
 							ref={photosRef}
@@ -610,16 +630,12 @@ export default function InstantImages(props) {
 					<NoResults total={search?.results} is_search={search?.active} />
 					<LoadMore
 						ref={loadMoreRef}
-						className="load-more-wrap"
 						loadMorePhotos={loadMorePhotos}
 						loading={loadingMore}
 						done={done}
 					/>
-					<APILightbox
-						provider={showAPILightbox}
-						closeAPILightbox={closeAPILightbox}
-					/>
-					<ErrorLightbox error={apiError} />
+					<APILightbox provider={showAPILightbox} callback={closeAPILightbox} />
+					<ErrorLightbox />
 					<Tooltip />
 				</div>
 			</PluginProvider>

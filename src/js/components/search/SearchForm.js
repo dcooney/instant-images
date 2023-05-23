@@ -1,39 +1,111 @@
-import { forwardRef } from "@wordpress/element";
+import { forwardRef, useEffect, useRef, useState } from "@wordpress/element";
 import classNames from "classnames";
+import { usePluginContext } from "../../common/pluginProvider";
+import { useClickOutside } from "../../functions/useClickOutside";
+import {
+	getSearchHistory,
+	saveSearchHistory,
+} from "../../functions/localStorage";
+import SearchHistory from "./SearchHistory";
 import SearchToolTip from "./SearchToolTip";
 
 /**
- * Render the SearchForm component.
+ * Render the search form as a component.
  *
  * @return {JSX.Element} The SearchForm component.
  */
-const SearchForm = forwardRef((props, ref) => {
-	const { searchHandler, apiError, search } = props;
+const SearchForm = forwardRef(({}, ref) => {
+	const { is_pro = false } = instant_img_localize;
+	const { searchHandler, apiError, suggestions, getSuggestions } =
+		usePluginContext();
+	const [history, setHistory] = useState([]);
+	const [show, setShow] = useState(false);
+
+	const historyRef = useRef(null);
+	const submitBtnRef = useRef(null);
+
+	// Handle clickoutside hook.
+	useClickOutside(historyRef, () => {
+		setShow(false);
+	});
+
+	/**
+	 * Set the search value in the form.
+	 *
+	 * @param {string} value The value to set.
+	 */
+	function setSearchValue(value) {
+		const input = ref?.current;
+		input.value = value;
+		submitBtnRef?.current.click();
+
+		// Set focus on input.
+		input.focus();
+	}
+
+	/**
+	 * Search submit handler.
+	 *
+	 * @param {Event} e The event object.
+	 */
+	function formSubmit(e) {
+		e.preventDefault();
+		const term = ref?.current?.value;
+		if (term) {
+			saveSearchHistory(term);
+			setHistory(getSearchHistory());
+			searchHandler(e);
+		}
+	}
+
+	/**
+	 * Should the history div be shown?
+	 *
+	 * @return {boolean} Show history.
+	 */
+	function showHistory() {
+		return history?.length || suggestions?.length;
+	}
+
+	useEffect(() => {
+		setHistory(getSearchHistory());
+	}, []);
 
 	return (
 		<div
 			className={classNames(
 				"control-nav--search",
-				"search-field",
 				apiError ? "inactive" : null
 			)}
 		>
-			<form onSubmit={(e) => searchHandler(e)} autoComplete="off">
+			<form onSubmit={(e) => formSubmit(e)} autoComplete="off">
 				<label htmlFor="search-input" className="offscreen">
 					{instant_img_localize.search_label}
 				</label>
-				<input
-					type="search"
-					id="search-input"
-					placeholder={instant_img_localize.search}
-					ref={ref}
-					disabled={apiError}
-				/>
-				<button type="submit" disabled={apiError}>
+				<div ref={historyRef}>
+					<input
+						ref={ref}
+						type="text"
+						id="search-input"
+						placeholder={instant_img_localize.search}
+						disabled={apiError}
+						onChange={(e) => is_pro && getSuggestions(e.target.value)}
+						onFocus={() => is_pro && setShow(true)}
+					/>
+					{!!is_pro && showHistory() ? (
+						<SearchHistory
+							show={show}
+							history={history}
+							setHistory={setHistory}
+							setSearchValue={setSearchValue}
+						/>
+					) : null}
+				</div>
+				<button type="submit" disabled={apiError} ref={submitBtnRef}>
 					<i className="fa fa-search"></i>
 					<span className="offscreen">{instant_img_localize.search}</span>
 				</button>
-				<SearchToolTip search={search} />
+				<SearchToolTip />
 			</form>
 		</div>
 	);

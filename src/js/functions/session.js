@@ -1,5 +1,5 @@
-import CryptoJS from "crypto-js";
 import { API } from "../constants/API";
+import { md5Hash } from "./helpers";
 
 /**
  * Get results from session storage by URL.
@@ -62,14 +62,4 @@ export function deleteSession(url) {
 		return false;
 	}
 	sessionStorage.removeItem(md5Hash(url));
-}
-
-/**
- * Get the MD5 hash value of a URL.
- *
- * @param {string} url The API URL to hash.
- * @return {string} The MD5 hash.
- */
-export function md5Hash(url) {
-	return CryptoJS.MD5(url).toString();
 }

@@ -264,6 +264,7 @@ class InstantImages {
 				'admin_nonce'             => wp_create_nonce( 'instant_img_nonce' ),
 				'lang'                    => function_exists( 'pll_current_language' ) ? pll_current_language() : '',
 				'parent_id'               => $post ? $post->ID : 0,
+				'is_pro'                  => self::instant_images_pro_activated() ? true : false,
 				'auto_attribution'        => esc_html( $settings->auto_attribution ),
 				'default_provider'        => esc_html( $settings->default_provider ),
 				'download_width'          => esc_html( $settings->max_width ),

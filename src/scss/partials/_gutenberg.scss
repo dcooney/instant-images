@@ -113,6 +113,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 			width: 100%;
 			padding: 0;
 			clear: both;
+			margin: 0;
 			form {
 				height: auto;
 			}
@@ -144,8 +145,9 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 			input[type="search"]:-ms-input-placeholder {
 				font-size: 13px;
 			}
-			.searchResults {
-				right: 2px;
+
+			&-tooltip {
+				right: 3px;
 				left: auto;
 				top: 2px;
 				border-radius: 2px;

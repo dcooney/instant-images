@@ -6,11 +6,14 @@ import { usePluginContext } from "../common/pluginProvider";
 /**
  * Render the Filter component.
  *
- * @param {Object} props The component props.
+ * @param {Object}   props           The component props.
+ * @param {Object}   props.data      The filter data.
+ * @param {string}   props.filterKey The filter key.
+ * @param {Function} props.handler   The change/click handler function.
  * @return {JSX.Element} The Filter component.
  */
 export default function Filter(props) {
-	const { data, filterKey, function: handler } = props;
+	const { data, filterKey, handler } = props;
 	const { provider } = usePluginContext();
 
 	const defaultValue = data?.default;

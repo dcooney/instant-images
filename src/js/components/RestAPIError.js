@@ -44,12 +44,10 @@ export default function RestAPIError() {
 	return (
 		<Fragment>
 			{!access ? (
-				<div
-					className="error-messaging"
-					dangerouslySetInnerHTML={{
-						__html: `<strong>${instant_img_localize.error_restapi}</strong>${instant_img_localize.error_restapi_desc}`,
-					}}
-				></div>
+				<div className="error-messaging">
+					<strong>{instant_img_localize.error_restapi}</strong>
+					{instant_img_localize.error_restapi_desc}
+				</div>
 			) : null}
 		</Fragment>
 	);

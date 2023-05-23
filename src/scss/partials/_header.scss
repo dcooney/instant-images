@@ -84,13 +84,14 @@ span.instant-images-tagline {
 		position: absolute;
 		right: 25px;
 		bottom: 26px;
+		@include buttonDefaults();
+		i {
+			margin-left: -3px;
+		}
 		@media screen and (max-width: $small) {
 			position: static;
 			margin-top: 20px;
 			display: inline-block;
-		}
-		i {
-			margin-right: 2px;
 		}
 	}
 }

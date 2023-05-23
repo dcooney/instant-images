@@ -90,13 +90,7 @@ $sticky_top: 62px;
 		}
 
 		.button-secondary {
-			border-color: $purple;
-			color: $purple;
-			&:hover,
-			&:focus {
-				color: $purple_dark;
-				border-color: $purple_dark;
-			}
+			@include buttonDefaults();
 		}
 	}
 
