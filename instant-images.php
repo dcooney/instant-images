@@ -163,10 +163,12 @@ class InstantImages {
 	public function enqueue_block_editor() {
 		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets', 'site-editor' ] ) ) {
 			// Plugin sidebar.
+			$sidebar_asset_file = require INSTANT_IMAGES_PATH . 'build/plugin-sidebar/index.asset.php'; // Get webpack asset file.
+
 			wp_enqueue_script(
 				'instant-images-plugin-sidebar',
 				INSTANT_IMAGES_URL . 'build/plugin-sidebar/index.js',
-				[],
+				$sidebar_asset_file['dependencies'],
 				INSTANT_IMAGES_VERSION,
 				true
 			);
@@ -180,10 +182,11 @@ class InstantImages {
 
 			// Image block.
 			if ( $this::instant_images_pro_activated() ) {
+				$block_asset_file = require INSTANT_IMAGES_PATH . 'build/block/index.asset.php'; // Get webpack asset file.
 				wp_enqueue_script(
 					'instant-images-block',
 					INSTANT_IMAGES_URL . 'build/block/index.js',
-					[],
+					$block_asset_file['dependencies'],
 					INSTANT_IMAGES_VERSION,
 					true
 				);
@@ -203,14 +206,14 @@ class InstantImages {
 		$show_tab       = $this::instant_img_show_tab( 'media_modal_display' ); // Show Tab Setting.
 		$current_screen = is_admin() && function_exists( 'get_current_screen' ) ? get_current_screen()->base : ''; // Current admin screen.
 		if ( $this::instant_img_has_access() && $show_tab && $current_screen !== 'upload' ) {
+			$media_modal_asset_file = require INSTANT_IMAGES_PATH . 'build/media-modal/index.asset.php'; // Get webpack asset file.
 			wp_enqueue_script(
 				'instant-images-media-modal',
 				INSTANT_IMAGES_URL . 'build/media-modal/index.js',
-				[ 'wp-element' ],
+				$media_modal_asset_file['dependencies'],
 				INSTANT_IMAGES_VERSION,
 				true
 			);
-
 			wp_enqueue_style(
 				'admin-instant-images',
 				INSTANT_IMAGES_URL . 'build/style-instant-images.css',

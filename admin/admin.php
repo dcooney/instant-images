@@ -100,8 +100,20 @@ function instant_images_enqueue_scripts() {
  * @since 3.0
  */
 function instant_images_scripts() {
-	wp_enqueue_style( 'admin-instant-images', INSTANT_IMAGES_URL . 'build/style-instant-images".css', '', INSTANT_IMAGES_VERSION );
-	wp_enqueue_script( 'instant-images-react', INSTANT_IMAGES_URL . 'build/instant-images".js', [ 'wp-element' ], INSTANT_IMAGES_VERSION, true );
+	$instant_images_asset_file = require INSTANT_IMAGES_PATH . 'build/instant-images.asset.php'; // Get webpack asset file.
+	wp_enqueue_script(
+		'instant-images-react',
+		INSTANT_IMAGES_URL . 'build/instant-images.js',
+		$instant_images_asset_file['dependencies'],
+		INSTANT_IMAGES_VERSION,
+		true
+	);
+	wp_enqueue_style(
+		'admin-instant-images',
+		INSTANT_IMAGES_URL . 'build/style-instant-images".css',
+		'',
+		INSTANT_IMAGES_VERSION
+	);
 	InstantImages::instant_img_localize();
 }
 
