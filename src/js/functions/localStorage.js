@@ -1,4 +1,5 @@
 const name = "recent-searches";
+const most = 10;
 
 /**
  * Save search value to localstorage.
@@ -19,8 +20,8 @@ export function saveSearchHistory(term) {
 	}
 
 	// Limit to 6 items.
-	if (recent.length >= 5) {
-		recent.length = 5;
+	if (recent.length >= most) {
+		recent.length = most;
 	}
 
 	// Add new term to the beginning of the array.

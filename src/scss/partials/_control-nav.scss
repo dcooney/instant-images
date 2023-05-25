@@ -351,6 +351,7 @@
 							padding: 6px 10px;
 							border-radius: $radius;
 							border: 1px solid $border;
+							box-shadow: $shadow_btn;
 							&:hover,
 							&:focus {
 								background-color: $lighter_grey;

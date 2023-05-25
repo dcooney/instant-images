@@ -12,6 +12,7 @@ $radius_xl: 10px;
 $el_height: 38px;
 $shadow_md: 0 1px 4px 0 #0000001a, 0 1px 3px -1px #0000001a !important;
 $shadow: 0 8px 16px rgba(#303f7a, 0.175);
+$shadow_btn: 0 1px 1px rgba(0, 0, 0, 0.05);
 $gb_border: #ddd;
 $transition: all 0.25s ease;
 
@@ -53,6 +54,7 @@ $yellow_bkg: #fffadc;
 @mixin buttonDefaults() {
 	border-color: $purple;
 	color: $purple;
+	box-shadow: $shadow_btn;
 	&:hover,
 	&:focus {
 		color: #fff !important;

@@ -2769,7 +2769,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common/pluginProvider */ "./src/js/common/pluginProvider.js");
-/* harmony import */ var _functions_useClickOutside__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../functions/useClickOutside */ "./src/js/functions/useClickOutside.js");
+/* harmony import */ var _hooks_useClickOutside__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../hooks/useClickOutside */ "./src/js/hooks/useClickOutside.js");
 /* harmony import */ var _functions_localStorage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../functions/localStorage */ "./src/js/functions/localStorage.js");
 /* harmony import */ var _SearchHistory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SearchHistory */ "./src/js/components/search/SearchHistory.js");
 /* harmony import */ var _SearchToolTip__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchToolTip */ "./src/js/components/search/SearchToolTip.js");
@@ -2815,7 +2815,7 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
   var submitBtnRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
 
   // Handle clickoutside hook.
-  (0,_functions_useClickOutside__WEBPACK_IMPORTED_MODULE_3__.useClickOutside)(historyRef, function () {
+  (0,_hooks_useClickOutside__WEBPACK_IMPORTED_MODULE_3__.useClickOutside)(historyRef, function () {
     setShow(false);
   });
 
@@ -4267,6 +4267,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "saveSearchHistory": () => (/* binding */ saveSearchHistory)
 /* harmony export */ });
 var name = "recent-searches";
+var most = 10;
 
 /**
  * Save search value to localstorage.
@@ -4287,8 +4288,8 @@ function saveSearchHistory(term) {
   }
 
   // Limit to 6 items.
-  if (recent.length >= 5) {
-    recent.length = 5;
+  if (recent.length >= most) {
+    recent.length = most;
   }
 
   // Add new term to the beginning of the array.
@@ -4521,10 +4522,10 @@ function updatePluginSetting(setting, value) {
 
 /***/ }),
 
-/***/ "./src/js/functions/useClickOutside.js":
-/*!*********************************************!*\
-  !*** ./src/js/functions/useClickOutside.js ***!
-  \*********************************************/
+/***/ "./src/js/hooks/useClickOutside.js":
+/*!*****************************************!*\
+  !*** ./src/js/hooks/useClickOutside.js ***!
+  \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";

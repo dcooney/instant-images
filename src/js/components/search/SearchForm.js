@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useRef, useState } from "@wordpress/element";
 import classNames from "classnames";
 import { usePluginContext } from "../../common/pluginProvider";
-import { useClickOutside } from "../../functions/useClickOutside";
+import { useClickOutside } from "../../hooks/useClickOutside";
 import {
 	getSearchHistory,
 	saveSearchHistory,

@@ -709,6 +709,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   padding: 6px 10px;
   border-radius: 3px;
   border: 1px solid #e1e1e1;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .instant-img-container .control-nav--search-history ul.search-history button:hover, .instant-img-container .control-nav--search-history ul.search-history button:focus {
   background-color: #f7f7f7;
@@ -1389,6 +1390,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-images-settings--header .button-secondary {
   border-color: #586ec6;
   color: #586ec6;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .instant-images-settings--header .button-secondary:hover, .instant-images-settings--header .button-secondary:focus {
   color: #fff !important;
@@ -1729,6 +1731,7 @@ span.instant-images-tagline {
   bottom: 26px;
   border-color: #586ec6;
   color: #586ec6;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .header-wrap a.button:hover, .header-wrap a.button:focus {
   color: #fff !important;
@@ -2630,6 +2633,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   background-color: #586ec6;
   border-color: #586ec6;
   border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .instant-images-settings .button-primary:hover, .instant-images-settings .button-primary:focus {
   background-color: #455cb6;

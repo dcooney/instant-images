@@ -233,7 +233,7 @@ function instant_images_auto_attribution_callback() {
 function instant_images_media_modal_display_callback() {
 	$name  = 'media_modal_display';
 	$title = esc_attr__( 'Media Modal', 'instant-images' );
-	$label = __( 'Hide Instant Images tab in Media Modal windows.', 'instant-images' );
+	$label = __( 'Remove the Instant Images tab in the Media Modal.', 'instant-images' );
 
 	echo instant_images_settings_toggle_switch( $name, $title, $label ); // phpcs:ignore
 }
