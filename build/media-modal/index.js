@@ -1281,7 +1281,7 @@ function InstantImages(props) {
             return _context5.abrupt("return");
           case 2:
             // API endpoint URL.
-            api_url = instant_img_localize.root + "instant-images-pro/suggestions/?term=".concat(term); // Get suggestions.
+            api_url = instant_img_localize.root + "instant-images-extended/suggestions/?term=".concat(term); // Get suggestions.
             _context5.next = 5;
             return axios__WEBPACK_IMPORTED_MODULE_26__["default"].get(api_url).then(function (res) {
               setSuggestions(res.data);

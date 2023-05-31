@@ -77,8 +77,8 @@ function instant_images_admin_init() {
 		'instant_images_general_settings'
 	);
 
-	if ( InstantImages::instant_images_pro_activated() ) {
-		instant_images_pro_add_settings(); // Add Pro Settings.
+	if ( InstantImages::instant_images_extended_activated() ) {
+		instant_images_extended_add_settings(); // Add Extended Settings.
 	}
 
 	// API Keys.

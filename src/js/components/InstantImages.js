@@ -433,7 +433,7 @@ export default function InstantImages(props) {
 		// API endpoint URL.
 		const api_url =
 			instant_img_localize.root +
-			`instant-images-pro/suggestions/?term=${term}`;
+			`instant-images-extended/suggestions/?term=${term}`;
 
 		// Get suggestions.
 		await axios

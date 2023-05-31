@@ -31,10 +31,10 @@
 	<!-- /End Header -->
 
 	<div class="instant-images-settings--sections">
-		<!-- Pro: Image Import-->
+		<!-- Extended: Image Import-->
 		<?php
-		if ( InstantImages::instant_images_pro_activated() ) {
-			require_once INSTANT_IMAGES_PRO_PATH . 'views/import.php';
+		if ( InstantImages::instant_images_extended_activated() ) {
+			require_once INSTANT_IMAGES_EXTENDED_PATH . 'views/import.php';
 		}
 		?>
 

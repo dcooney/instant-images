@@ -2839,7 +2839,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .search-header .control-nav--filters-wrap {
   margin: 0 0 15px;
 }
-.instant-images-pro-import--elements {
+.instant-images-extended-import--elements {
   padding: 20px;
   border-radius: 2px 2px 0 0;
   border: 1px solid #e1e1e1;
@@ -2848,11 +2848,11 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   grid-template-rows: repeat(1, 1fr);
 }
 @media screen and (min-width: 1024px) {
-  .instant-images-pro-import--elements {
+  .instant-images-extended-import--elements {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-.instant-images-pro-import--controls {
+.instant-images-extended-import--controls {
   display: flex;
   gap: 20px;
   align-items: center;
@@ -2862,42 +2862,42 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   border-top: 0;
   padding: 20px;
 }
-.instant-images-pro-import .import-response {
+.instant-images-extended-import .import-response {
   display: none;
   flex: 1;
   width: 50%;
 }
-.instant-images-pro-import .import-response.active {
+.instant-images-extended-import .import-response.active {
   display: block;
 }
-.instant-images-pro-import .import-response--progress, .instant-images-pro-import .import-response--progress-bar {
+.instant-images-extended-import .import-response--progress, .instant-images-extended-import .import-response--progress-bar {
   width: 100%;
   height: 5px;
   background-color: rgba(88, 110, 198, 0.25);
   border-radius: 9999px;
   overflow: hidden;
 }
-.instant-images-pro-import .import-response--progress-bar {
+.instant-images-extended-import .import-response--progress-bar {
   width: 0%;
   transition: all 0.5s linear;
   background-color: #586ec6;
   border-radius: 0 9999px 9999px 0;
   box-shadow: 0 8px 16px rgba(48, 63, 122, 0.175);
 }
-.instant-images-pro-import .import-response--message {
+.instant-images-extended-import .import-response--message {
   margin-top: 4px;
   display: block;
   font-size: 12px;
   color: #6b6877;
 }
-.instant-images-pro-import .import-response--message i {
+.instant-images-extended-import .import-response--message i {
   margin-right: 3px;
   color: #65c774;
 }
-.instant-images-pro-import .import-response--message span {
+.instant-images-extended-import .import-response--message span {
   color: #434246;
 }
-.instant-images-pro-import .import-response--downloaded {
+.instant-images-extended-import .import-response--downloaded {
   padding: 20px 20px 0;
   font-size: 12px;
 }

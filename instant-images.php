@@ -22,7 +22,7 @@ TO DO:
 
 
 CHANGES:
-
+* NEW: Added support for Instant Images Pro functions.
 * UPDATE: Improved infinite scroll loading and animations.
 * UPDATE: Improved error handling for API keys with session data.
 * UPDATE: UX and UI updates throughout the app.
@@ -181,7 +181,7 @@ class InstantImages {
 			);
 
 			// Image block.
-			if ( $this::instant_images_pro_activated() ) {
+			if ( $this::instant_images_extended_activated() ) {
 				$block_asset_file = require INSTANT_IMAGES_PATH . 'build/block/index.asset.php'; // Get webpack asset file.
 				wp_enqueue_script(
 					'instant-images-block',
@@ -267,7 +267,7 @@ class InstantImages {
 				'admin_nonce'             => wp_create_nonce( 'instant_img_nonce' ),
 				'lang'                    => function_exists( 'pll_current_language' ) ? pll_current_language() : '',
 				'parent_id'               => $post ? $post->ID : 0,
-				'is_pro'                  => self::instant_images_pro_activated() ? true : false,
+				'is_pro'                  => self::instant_images_extended_activated() ? true : false,
 				'auto_attribution'        => esc_html( $settings->auto_attribution ),
 				'default_provider'        => esc_html( $settings->default_provider ),
 				'download_width'          => esc_html( $settings->max_width ),
@@ -497,8 +497,8 @@ class InstantImages {
 	 *
 	 * @return boolean
 	 */
-	public static function instant_images_pro_activated() {
-		return class_exists( 'InstantImagesPro' ) && defined( 'INSTANT_IMAGES_PRO_PATH' );
+	public static function instant_images_extended_activated() {
+		return class_exists( 'InstantImagesExtended' ) && defined( 'INSTANT_IMAGES_EXTENDED_PATH' );
 	}
 
 }
