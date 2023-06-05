@@ -106,8 +106,7 @@ jQuery(document).ready(function ($) {
 
 			// Scroll to section.
 			button.addEventListener("click", function () {
-				const hash = "#" + anchor;
-				scrollToSection(hash);
+				scrollToSection("#" + anchor);
 			});
 		});
 	}
@@ -115,6 +114,7 @@ jQuery(document).ready(function ($) {
 
 /**
  * Scroll to section hash.
+ *
  * @param {string} hash The section ID.
  */
 function scrollToSection(hash) {
