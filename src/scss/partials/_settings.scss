@@ -388,7 +388,7 @@ $sticky_top: 62px;
 				position: relative;
 			}
 			&.invalid {
-				background-color: #fff5f5;
+				background-color: rgba($red, 0.05);
 				border-left: 4px solid $red;
 				padding: 20px;
 				border-radius: $radius;

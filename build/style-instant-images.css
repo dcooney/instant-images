@@ -1650,7 +1650,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   position: relative;
 }
 .instant-images-settings .license-settings--status.invalid {
-  background-color: #fff5f5;
+  background-color: rgba(223, 51, 51, 0.05);
   border-left: 4px solid #df3333;
   padding: 20px;
   border-radius: 3px;
