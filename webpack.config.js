@@ -18,6 +18,7 @@ module.exports = {
 		"media-modal/index": "./src/js/media-modal.js",
 		"plugin-sidebar/index": "./src/js/plugin-sidebar.js",
 		"block/index": "./src/js/editor/block/index.js",
+		"admin/index": "./admin/src/js/admin.js",
 	},
 	plugins: [
 		...defaults.plugins,

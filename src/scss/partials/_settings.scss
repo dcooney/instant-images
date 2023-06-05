@@ -219,15 +219,20 @@ $sticky_top: 62px;
 		}
 	}
 
+	.scroll-section {
+		overflow: hidden;
+		overflow-y: auto;
+		max-height: 550px;
+		padding-right: 5px;
+	}
+
 	// What's New
 	& .whats-new {
 		ul {
 			margin: 0;
 			padding: 0;
-			// max-height: 450px;
-			// overflow-y: auto;
 			display: grid;
-			grid-gap: 10px;
+			grid-gap: 5px;
 			grid-template-columns: repeat(1, 1fr);
 			@media screen and (min-width: $small) {
 				grid-template-columns: repeat(2, 1fr);

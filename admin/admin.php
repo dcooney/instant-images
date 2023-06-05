@@ -127,7 +127,7 @@ function instant_images_settings_scripts() {
 	wp_enqueue_style( 'admin-instant-images', INSTANT_IMAGES_URL . 'build/style-instant-images".css', '', INSTANT_IMAGES_VERSION );
 	wp_enqueue_script( 'jquery', true, '', INSTANT_IMAGES_VERSION, false );
 	wp_enqueue_script( 'jquery-form', true, '', INSTANT_IMAGES_VERSION, false );
-	wp_enqueue_script( 'instant-images', INSTANT_IMAGES_ADMIN_URL . 'assets/js/admin.js', 'jquery', INSTANT_IMAGES_VERSION, true );
+	wp_enqueue_script( 'instant-images', INSTANT_IMAGES_URL . 'build/admin/index.js', 'jquery', INSTANT_IMAGES_VERSION, true );
 }
 
 /**

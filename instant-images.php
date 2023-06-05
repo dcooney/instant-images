@@ -36,6 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'INSTANT_IMAGES_VERSION', '5.3.1' );
 define( 'INSTANT_IMAGES_RELEASE', 'May 12, 2023' );
+define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
  * InstantImages class
@@ -58,6 +59,56 @@ class InstantImages {
 		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain.
 		$this->includes();
 		$this->constants();
+	}
+
+	/**
+	 * Include these files in the admin
+	 *
+	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 2.0
+	 */
+	private function includes() {
+		if ( is_admin() ) {
+			require_once __DIR__ . '/admin/admin.php';
+			require_once __DIR__ . '/admin/includes/settings.php';
+			require_once __DIR__ . '/admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php';
+
+			if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
+				// Only include this EDD helper if other plugins have not.
+				require_once dirname( __FILE__ ) . '/admin/vendor/EDD_SL_Plugin_Updater.php';
+			}
+		}
+
+		// REST API Routes.
+		require_once 'api/test.php';
+		require_once 'api/download.php';
+		require_once 'api/settings.php';
+	}
+
+	/**
+	 * Set up plugin constants.
+	 *
+	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 2.0
+	 */
+	private function constants() {
+		$upload_dir = wp_upload_dir();
+		define( 'INSTANT_IMAGES_TITLE', 'Instant Images' );
+		define( 'INSTANT_IMAGES_UPLOAD_PATH', $upload_dir['basedir'] . '/instant-images' );
+		define( 'INSTANT_IMAGES_UPLOAD_URL', $upload_dir['baseurl'] . '/instant-images/' );
+		define( 'INSTANT_IMAGES_PATH', plugin_dir_path( __FILE__ ) );
+		define( 'INSTANT_IMAGES_URL', plugins_url( '/', __FILE__ ) );
+		define( 'INSTANT_IMAGES_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
+		define( 'INSTANT_IMAGES_WPADMIN_URL', admin_url( 'upload.php?page=instant-images' ) );
+		define( 'INSTANT_IMAGES_WPADMIN_SETTINGS_URL', admin_url( 'options-general.php?page=instant-images-settings' ) );
+		define( 'INSTANT_IMAGES_SETTINGS', 'instant_img_settings' );
+		define( 'INSTANT_IMAGES_API_SETTINGS', 'instant_img_api_settings' );
+		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
+
+		// Instant Images: Extended.
+		if ( ! defined( 'INSTANT_IMAGES_EXTENDED_ID' ) ) {
+			define( 'INSTANT_IMAGES_EXTENDED_ID', '96' );
+		}
 	}
 
 	/**
@@ -374,24 +425,6 @@ class InstantImages {
 	}
 
 	/**
-	 * Include these files in the admin
-	 *
-	 * @author ConnektMedia <support@connekthq.com>
-	 * @since 2.0
-	 */
-	private function includes() {
-		if ( is_admin() ) {
-			require_once __DIR__ . '/admin/admin.php';
-			require_once __DIR__ . '/admin/includes/settings.php';
-			require_once __DIR__ . '/admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php';
-		}
-		// REST API Routes.
-		require_once 'api/test.php';
-		require_once 'api/download.php';
-		require_once 'api/settings.php';
-	}
-
-	/**
 	 * Show tab to upload image on post edit screens
 	 *
 	 * @param string $option WP Option.
@@ -444,28 +477,6 @@ class InstantImages {
 			$access = false;
 		}
 		return $access;
-	}
-
-	/**
-	 * Set up plugin constants.
-	 *
-	 * @author ConnektMedia <support@connekthq.com>
-	 * @since 2.0
-	 */
-	private function constants() {
-		define( 'INSTANT_IMAGES_TITLE', 'Instant Images' );
-
-		$upload_dir = wp_upload_dir();
-		define( 'INSTANT_IMAGES_UPLOAD_PATH', $upload_dir['basedir'] . '/instant-images' );
-		define( 'INSTANT_IMAGES_UPLOAD_URL', $upload_dir['baseurl'] . '/instant-images/' );
-		define( 'INSTANT_IMAGES_PATH', plugin_dir_path( __FILE__ ) );
-		define( 'INSTANT_IMAGES_URL', plugins_url( '/', __FILE__ ) );
-		define( 'INSTANT_IMAGES_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
-		define( 'INSTANT_IMAGES_WPADMIN_URL', admin_url( 'upload.php?page=instant-images' ) );
-		define( 'INSTANT_IMAGES_WPADMIN_SETTINGS_URL', admin_url( 'options-general.php?page=instant-images-settings' ) );
-		define( 'INSTANT_IMAGES_SETTINGS', 'instant_img_settings' );
-		define( 'INSTANT_IMAGES_API_SETTINGS', 'instant_img_api_settings' );
-		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
 	}
 
 	/**
