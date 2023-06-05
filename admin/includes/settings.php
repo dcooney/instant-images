@@ -77,7 +77,7 @@ function instant_images_admin_init() {
 		'instant_images_general_settings'
 	);
 
-	if ( InstantImages::instant_images_extended_activated() ) {
+	if ( InstantImages::instant_images_add_on_active( 'extended' ) ) {
 		instant_images_extended_add_settings(); // Add Extended Settings.
 	}
 

@@ -79,10 +79,11 @@ class InstantImages {
 			}
 		}
 
-		// REST API Routes.
+		// API Routes.
 		require_once 'api/test.php';
 		require_once 'api/download.php';
 		require_once 'api/settings.php';
+		require_once 'api/license.php';
 	}
 
 	/**
@@ -232,7 +233,7 @@ class InstantImages {
 			);
 
 			// Image block.
-			if ( $this::instant_images_extended_activated() ) {
+			if ( $this::instant_images_add_on_active( 'extended' ) ) {
 				$block_asset_file = require INSTANT_IMAGES_PATH . 'build/block/index.asset.php'; // Get webpack asset file.
 				wp_enqueue_script(
 					'instant-images-block',
@@ -318,7 +319,6 @@ class InstantImages {
 				'admin_nonce'             => wp_create_nonce( 'instant_img_nonce' ),
 				'lang'                    => function_exists( 'pll_current_language' ) ? pll_current_language() : '',
 				'parent_id'               => $post ? $post->ID : 0,
-				'is_pro'                  => self::instant_images_extended_activated() ? true : false,
 				'auto_attribution'        => esc_html( $settings->auto_attribution ),
 				'default_provider'        => esc_html( $settings->default_provider ),
 				'download_width'          => esc_html( $settings->max_width ),
@@ -407,6 +407,9 @@ class InstantImages {
 				'error'                   => __( 'Error', 'instant-images' ),
 				'ad'                      => __( 'Ad', 'instant-images' ),
 				'advertisement'           => __( 'Advertisement', 'instant-images' ),
+				'addons'                  => [
+					'extended' => self::instant_images_add_on_active( 'extended' ) ? true : false,
+				],
 				'filters'                 => [
 					'select'       => __( '-- Select --', 'instant-images' ),
 					'orderby'      => __( 'Order:', 'instant-images' ),
@@ -504,12 +507,17 @@ class InstantImages {
 	}
 
 	/**
-	 * Is Instant Images Pro activated.
+	 * Is Instant Images add-on activated.
 	 *
+	 * @param string $addon Add-on name.
 	 * @return boolean
 	 */
-	public static function instant_images_extended_activated() {
-		return class_exists( 'InstantImagesExtended' ) && defined( 'INSTANT_IMAGES_EXTENDED_PATH' );
+	public static function instant_images_add_on_active( $addon ) {
+		switch ( $addon ) {
+			case 'extended':
+				return defined( 'INSTANT_IMAGES_EXTENDED_PATH' ) && class_exists( 'InstantImagesExtended' ) && InstantImagesExtended::valid_license();
+		}
+
 	}
 
 }

@@ -13,7 +13,7 @@
 		<p><?php esc_attr_e( 'Replace the default Instant Images API keys with your own.', 'instant-images' ); ?></p>
 		<p class="small"><?php esc_attr_e( 'Leave these fields empty to restore the default plugin keys.', 'instant-images' ); ?></p>
 	</div>
-	<div class="settings-entry--action general-settings">
+	<div class="settings-entry--action api-settings">
 		<form action="options.php" method="post" class="settings">
 			<?php
 				settings_fields( 'instant_images_api_settings_group' );

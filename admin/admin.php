@@ -128,6 +128,15 @@ function instant_images_settings_scripts() {
 	wp_enqueue_script( 'jquery', true, '', INSTANT_IMAGES_VERSION, false );
 	wp_enqueue_script( 'jquery-form', true, '', INSTANT_IMAGES_VERSION, false );
 	wp_enqueue_script( 'instant-images', INSTANT_IMAGES_URL . 'build/admin/index.js', 'jquery', INSTANT_IMAGES_VERSION, true );
+
+	wp_localize_script(
+		'instant-images',
+		'instant_img_admin_localize',
+		[
+			'root'  => esc_url_raw( rest_url() ),
+			'nonce' => wp_create_nonce( 'wp_rest' ),
+		]
+	);
 }
 
 /**
@@ -214,3 +223,96 @@ function instant_images_filter_admin_footer_text( $text ) {
 	}
 }
 add_filter( 'admin_footer_text', 'instant_images_filter_admin_footer_text' ); // Admin menu text.
+
+/**
+ * Get list of add-ons.
+ *
+ * @return array List of add-ons.
+ */
+function instant_images_addons() {
+	return [
+		[
+			'id'       => INSTANT_IMAGES_EXTENDED_ID,
+			'name'     => 'Instant Images: Extended',
+			'desc'     => 'Enhance the Instant Images experience with added features and functionality.',
+			'url'      => 'https://getinstantimages.com/add-ons/extended/',
+			'class'    => 'InstantImagesExtended',
+			'key'      => 'instant_images_extended_license_key',
+			'status'   => 'instant_images_extended_license_status',
+			'constant' => 'INSTANT_IMAGES_EXTENDED_LICENSE',
+		],
+	];
+}
+
+/**
+ * License activation display.
+ *
+ * @return void
+ */
+function instant_images_display_licenses() {
+	$installed  = 0;
+	$input_type = apply_filters( 'instant_images_mask_license_keys', false ) ? 'password' : 'text';
+	foreach ( instant_images_addons() as $addon ) {
+		if ( class_exists( $addon['class'] ) ) {
+			$installed++;
+			$key        = $addon['key'];
+			$name       = $addon['name'];
+			$constant   = $addon['constant'];
+			$license    = defined( $constant ) ? constant( $constant ) : get_option( $key );
+			$status     = get_option( $addon['status'] );
+			$form_class = $status !== 'valid' ? 'invalid' : 'valid';
+			?>
+			<form class="license-settings--item <?php echo esc_attr( $form_class ); ?>">
+				<label for="<?php echo esc_html( $key ); ?>_license"><?php echo esc_attr( $name ); ?></label>
+				<div class="license-settings--status <?php echo esc_attr( $form_class ); ?>">
+					<div>
+				<?php if ( $status === 'valid' ) { ?>
+							<span class="dashicons dashicons-yes-alt"></span>
+						<?php } else { ?>
+							<span class="dashicons dashicons-warning"></span>
+						<?php } ?>
+						<input
+							id="<?php echo esc_html( $key ); ?>_license"
+							name="<?php echo esc_html( $key ); ?>_license"
+							type="<?php echo esc_html( $input_type ); ?>"
+							data-key="<?php echo esc_attr( $addon['key'] ); ?>"
+							data-status="<?php echo esc_attr( $addon['status'] ); ?>"
+							data-id="<?php echo esc_attr( $addon['id'] ); ?>"
+							value="<?php echo esc_attr( $license ); ?>"
+							placeholder="<?php esc_attr_e( 'Enter License Key', 'instant-images' ); ?>"
+							data-constant="<?php echo esc_attr( $constant ); ?>"
+					<?php
+					if ( defined( $constant ) || $status === 'valid' ) {
+						echo 'disabled'; }
+					?>
+						/>
+					</div>
+					<?php if ( $status !== 'valid' ) { ?>
+						<p><strong><?php esc_attr_e( 'Valid License Key Required', 'instant-images' ); ?></strong> &rarr; <a href="<?php esc_html( $addon['url'] ); ?>" target="_blank"><?php esc_attr_e( 'Purchase License', 'instant-images' ); ?></a></p>
+					<?php } ?>
+				</div>
+				<div class="save-settings">
+				<?php
+				if ( $status === 'valid' ) {
+					submit_button( __( 'Deactivate License', 'instant-images' ), 'button-primary deactivate-license' );
+				} else {
+					submit_button( __( 'Activate License', 'instant-images' ), 'button-primary activate-license' );
+				}
+				?>
+				<div class="loading"></div>
+				</div>
+			</form>
+			<?php
+		}
+	}
+	?>
+	<?php
+	if ( ! $installed ) {
+		?>
+		<div class="license-settings--empty">
+			<p><?php esc_attr_e( 'You do not have any Instant Images add-ons installed.', 'instant-images' ); ?></p>
+			<p><a class="button button-primary"><?php esc_attr_e( 'Browse Add-ons', 'instant-images' ); ?></a></p>
+		</div>
+		<?php
+	}
+}

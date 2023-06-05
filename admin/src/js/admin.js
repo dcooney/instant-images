@@ -1,5 +1,6 @@
-const instant_images = instant_images || {};
+import "./licenses";
 
+const instant_images = instant_images || {};
 jQuery(document).ready(function ($) {
 	"use strict";
 
@@ -86,6 +87,10 @@ jQuery(document).ready(function ($) {
 		".settings_page_instant-images-settings .settings-entry"
 	);
 	if (settings) {
+		const hash = window.location.hash;
+		if (hash) {
+			scrollToSection(hash);
+		}
 		const nav = document.querySelector(
 			".settings_page_instant-images-settings nav.jump-nav"
 		);
@@ -102,13 +107,23 @@ jQuery(document).ready(function ($) {
 			// Scroll to section.
 			button.addEventListener("click", function () {
 				const hash = "#" + anchor;
-				const target = document.querySelector(hash);
-				history.replaceState({}, "", hash);
-				window.scrollTo({
-					top: target.offsetTop - 20,
-					behavior: "smooth",
-				});
+				scrollToSection(hash);
 			});
 		});
 	}
 });
+
+/**
+ * Scroll to section hash.
+ * @param {string} hash The section ID.
+ */
+function scrollToSection(hash) {
+	const target = document.querySelector(hash);
+	if (target) {
+		history.replaceState({}, "", hash);
+		window.scrollTo({
+			top: target.offsetTop - 20,
+			behavior: "smooth",
+		});
+	}
+}

@@ -34,7 +34,6 @@ add_action(
  * @package InstantImages
  */
 function instant_images_settings( WP_REST_Request $request ) {
-
 	if ( InstantImages::instant_img_has_access() ) {
 
 		// Get JSON Data.

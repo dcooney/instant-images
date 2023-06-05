@@ -15,7 +15,7 @@ import SearchToolTip from "./SearchToolTip";
  * @return {JSX.Element} The SearchForm component.
  */
 const SearchForm = forwardRef(({}, ref) => {
-	const { is_pro = false } = instant_img_localize;
+	const { extended = false } = instant_img_localize?.addons;
 	const { searchHandler, apiError, suggestions, getSuggestions } =
 		usePluginContext();
 	const [history, setHistory] = useState([]);
@@ -89,10 +89,10 @@ const SearchForm = forwardRef(({}, ref) => {
 						id="search-input"
 						placeholder={instant_img_localize.search}
 						disabled={apiError}
-						onChange={(e) => is_pro && getSuggestions(e.target.value)}
-						onFocus={() => is_pro && setShow(true)}
+						onChange={(e) => extended && getSuggestions(e.target.value)}
+						onFocus={() => extended && setShow(true)}
 					/>
-					{!!is_pro && showHistory() ? (
+					{!!extended && showHistory() ? (
 						<SearchHistory
 							show={show}
 							history={history}

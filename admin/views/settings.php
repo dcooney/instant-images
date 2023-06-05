@@ -17,7 +17,7 @@
 		require_once INSTANT_IMAGES_PATH . 'admin/includes/settings/api-settings.php';
 
 		// Extended: Image Import.
-		if ( InstantImages::instant_images_extended_activated() ) {
+		if ( InstantImages::instant_images_add_on_active( 'extended' ) ) {
 			require_once INSTANT_IMAGES_EXTENDED_PATH . 'views/import.php';
 		}
 
