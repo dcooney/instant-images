@@ -264,40 +264,40 @@ function instant_images_display_licenses() {
 				<label for="<?php echo esc_html( $key ); ?>_license"><?php echo esc_attr( $name ); ?></label>
 				<div class="license-settings--status <?php echo esc_attr( $form_class ); ?>">
 					<div>
-				<?php if ( $status === 'valid' ) { ?>
-							<span class="dashicons dashicons-yes-alt"></span>
-						<?php } else { ?>
-							<span class="dashicons dashicons-warning"></span>
+					<?php if ( $status === 'valid' ) { ?>
+								<span class="dashicons dashicons-yes-alt"></span>
+							<?php } else { ?>
+								<span class="dashicons dashicons-warning"></span>
+							<?php } ?>
+							<input
+								id="<?php echo esc_html( $key ); ?>_license"
+								name="<?php echo esc_html( $key ); ?>_license"
+								type="<?php echo esc_html( $input_type ); ?>"
+								data-key="<?php echo esc_attr( $addon['key'] ); ?>"
+								data-status="<?php echo esc_attr( $addon['status'] ); ?>"
+								data-id="<?php echo esc_attr( $addon['id'] ); ?>"
+								value="<?php echo esc_attr( $license ); ?>"
+								placeholder="<?php esc_attr_e( 'Enter License Key', 'instant-images' ); ?>"
+								data-constant="<?php echo esc_attr( $constant ); ?>"
+						<?php
+						if ( defined( $constant ) || $status === 'valid' ) {
+							echo 'disabled'; }
+						?>
+							/>
+						</div>
+						<?php if ( $status !== 'valid' ) { ?>
+							<p><strong><?php esc_attr_e( 'Valid License Key Required', 'instant-images' ); ?></strong> &rarr; <a href="<?php echo esc_html( $addon['url'] ); ?>" target="_blank"><?php esc_attr_e( 'Purchase License', 'instant-images' ); ?></a></p>
 						<?php } ?>
-						<input
-							id="<?php echo esc_html( $key ); ?>_license"
-							name="<?php echo esc_html( $key ); ?>_license"
-							type="<?php echo esc_html( $input_type ); ?>"
-							data-key="<?php echo esc_attr( $addon['key'] ); ?>"
-							data-status="<?php echo esc_attr( $addon['status'] ); ?>"
-							data-id="<?php echo esc_attr( $addon['id'] ); ?>"
-							value="<?php echo esc_attr( $license ); ?>"
-							placeholder="<?php esc_attr_e( 'Enter License Key', 'instant-images' ); ?>"
-							data-constant="<?php echo esc_attr( $constant ); ?>"
-					<?php
-					if ( defined( $constant ) || $status === 'valid' ) {
-						echo 'disabled'; }
-					?>
-						/>
 					</div>
-					<?php if ( $status !== 'valid' ) { ?>
-						<p><strong><?php esc_attr_e( 'Valid License Key Required', 'instant-images' ); ?></strong> &rarr; <a href="<?php esc_html( $addon['url'] ); ?>" target="_blank"><?php esc_attr_e( 'Purchase License', 'instant-images' ); ?></a></p>
-					<?php } ?>
-				</div>
-				<div class="save-settings">
-				<?php
-				if ( $status === 'valid' ) {
-					submit_button( __( 'Deactivate License', 'instant-images' ), 'button-primary deactivate-license' );
-				} else {
-					submit_button( __( 'Activate License', 'instant-images' ), 'button-primary activate-license' );
-				}
-				?>
-				<div class="loading"></div>
+					<div class="save-settings">
+					<?php
+					if ( $status === 'valid' ) {
+						submit_button( __( 'Deactivate License', 'instant-images' ), 'button-primary deactivate-license' );
+					} else {
+						submit_button( __( 'Activate License', 'instant-images' ), 'button-primary activate-license' );
+					}
+					?>
+					<div class="loading"></div>
 				</div>
 			</form>
 			<?php

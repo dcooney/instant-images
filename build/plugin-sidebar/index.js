@@ -2753,6 +2753,82 @@ function Tooltip() {
 
 /***/ }),
 
+/***/ "./src/js/components/search/ExtendedCTA.js":
+/*!*************************************************!*\
+  !*** ./src/js/components/search/ExtendedCTA.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ExtendedCTA)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _functions_localStorage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../functions/localStorage */ "./src/js/functions/localStorage.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+/**
+ * A CTA for the Extended add-on.
+ *
+ * @param {Object}  props      The component props.
+ * @param {boolean} props.show Display the component.
+ * @return {JSX.Element}       The ExtendedCTA component.
+ */
+function ExtendedCTA(_ref) {
+  var _ref$show = _ref.show,
+    show = _ref$show === void 0 ? false : _ref$show;
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_3__.getSetting)("extended-cta-search") !== "hide"),
+    _useState2 = _slicedToArray(_useState, 2),
+    active = _useState2[0],
+    setActive = _useState2[1]; // Get setting from localstorage.
+
+  // Hide the CTA.
+  function hideCTA() {
+    (0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveSettings)("extended-cta-search", "hide");
+    setActive(false);
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()("control-nav--search-history extended-cta", show && active ? "active" : null)
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "closeBtn",
+    onClick: function onClick() {
+      return hideCTA();
+    }
+  }, "\xD7", /*#__PURE__*/React.createElement("span", {
+    className: "offscreen"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Hide", "instant-images"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-magic",
+    "aria-hidden": "true"
+  }), "Enable search suggestions and history with the Instant Images", " ", /*#__PURE__*/React.createElement("a", {
+    href: "https://getinstantimages.com/add-ons/extended/",
+    target: "_blank",
+    rel: "noreferrer"
+  }, /*#__PURE__*/React.createElement("strong", null, "Extended add-on")), "."), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
+    href: "https://getinstantimages.com/add-ons/extended/",
+    target: "_blank",
+    rel: "noreferrer",
+    className: "button button-primary"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Learn More", "instant-images"))))));
+}
+
+/***/ }),
+
 /***/ "./src/js/components/search/SearchForm.js":
 /*!************************************************!*\
   !*** ./src/js/components/search/SearchForm.js ***!
@@ -2773,6 +2849,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hooks_useClickOutside__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../hooks/useClickOutside */ "./src/js/hooks/useClickOutside.js");
 /* harmony import */ var _SearchHistory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SearchHistory */ "./src/js/components/search/SearchHistory.js");
 /* harmony import */ var _SearchToolTip__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchToolTip */ "./src/js/components/search/SearchToolTip.js");
+/* harmony import */ var _ExtendedCTA__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ExtendedCTA */ "./src/js/components/search/ExtendedCTA.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -2780,6 +2857,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure " + obj); }
+
 
 
 
@@ -2892,7 +2970,7 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
     history: history,
     setHistory: setHistory,
     setSearchValue: setSearchValue
-  }) : null, !extended && /*#__PURE__*/React.createElement(_SearchHistory__WEBPACK_IMPORTED_MODULE_5__.ExtendedCTA, {
+  }) : null, !extended && /*#__PURE__*/React.createElement(_ExtendedCTA__WEBPACK_IMPORTED_MODULE_7__["default"], {
     show: show
   })), /*#__PURE__*/React.createElement("button", {
     type: "submit",
@@ -2993,7 +3071,6 @@ function SearchHeader() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ExtendedCTA": () => (/* binding */ ExtendedCTA),
 /* harmony export */   "default": () => (/* binding */ SearchHistory)
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
@@ -3004,12 +3081,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../common/pluginProvider */ "./src/js/common/pluginProvider.js");
 /* harmony import */ var _functions_localStorage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../functions/localStorage */ "./src/js/functions/localStorage.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -3070,51 +3141,6 @@ function SearchHistory(props) {
       }
     }, item));
   }))));
-}
-
-/**
- * A CTA for the Extended add-on.
- *
- * @param {Object}  props      The component props.
- * @param {boolean} props.show Display the component.
- * @return {JSX.Element}       The ExtendedCTA component.
- */
-function ExtendedCTA(_ref) {
-  var _ref$show = _ref.show,
-    show = _ref$show === void 0 ? false : _ref$show;
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_4__.getSetting)("extended-cta-search") !== "hide"),
-    _useState2 = _slicedToArray(_useState, 2),
-    active = _useState2[0],
-    setActive = _useState2[1]; // Get setting from localstorage.
-
-  // Hide the CTA.
-  function hideCTA() {
-    (0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_4__.saveSettings)("extended-cta-search", "hide");
-    setActive(false);
-  }
-  return /*#__PURE__*/React.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()("control-nav--search-history extended-cta", show && active ? "active" : null)
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "closeBtn",
-    onClick: function onClick() {
-      return hideCTA();
-    }
-  }, "\xD7", /*#__PURE__*/React.createElement("span", {
-    className: "offscreen"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Hide", "instant-images"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("i", {
-    className: "fa fa-magic",
-    "aria-hidden": "true"
-  }), "Enable search suggestions and history with the Instant Images", " ", /*#__PURE__*/React.createElement("a", {
-    href: "https://getinstantimages.com/add-ons/extended/",
-    target: "_blank",
-    rel: "noreferrer"
-  }, /*#__PURE__*/React.createElement("strong", null, "Extended add-on")), "."), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
-    href: "https://getinstantimages.com/add-ons/extended/",
-    target: "_blank",
-    rel: "noreferrer",
-    className: "button button-primary"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Learn More", "instant-images"))))));
 }
 
 /***/ }),

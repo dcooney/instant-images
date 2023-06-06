@@ -6,8 +6,9 @@ import {
 	saveSearchHistory,
 } from "../../functions/localStorage";
 import { useClickOutside } from "../../hooks/useClickOutside";
-import SearchHistory, { ExtendedCTA } from "./SearchHistory";
+import SearchHistory from "./SearchHistory";
 import SearchToolTip from "./SearchToolTip";
+import ExtendedCTA from "./ExtendedCTA";
 
 /**
  * Render the search form as a component.
