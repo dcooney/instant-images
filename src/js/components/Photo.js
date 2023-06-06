@@ -648,7 +648,7 @@ export default function Photo(props) {
 					<div className="edit-screen--controls">
 						<button
 							type="button"
-							className="button"
+							className="button button-secondary"
 							onClick={(e) => cancelEdit(e)}
 						>
 							{instant_img_localize.cancel}

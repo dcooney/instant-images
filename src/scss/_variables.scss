@@ -55,10 +55,14 @@ $yellow_bkg: #fffadc;
 	border-color: $purple;
 	color: $purple;
 	box-shadow: $shadow_btn;
+	transition: $transition;
 	&:hover,
 	&:focus {
 		color: #fff !important;
-		border-color: $purple;
-		background-color: $purple;
+		border-color: $purple_dark;
+		background-color: $purple_dark;
+	}
+	&:focus {
+		box-shadow: 0 0 0 1px #fff, 0 0 0 3px $purple_dark;
 	}
 }

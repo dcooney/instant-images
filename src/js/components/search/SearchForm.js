@@ -1,12 +1,12 @@
 import { forwardRef, useEffect, useRef, useState } from "@wordpress/element";
 import classNames from "classnames";
 import { usePluginContext } from "../../common/pluginProvider";
-import { useClickOutside } from "../../hooks/useClickOutside";
 import {
 	getSearchHistory,
 	saveSearchHistory,
 } from "../../functions/localStorage";
-import SearchHistory from "./SearchHistory";
+import { useClickOutside } from "../../hooks/useClickOutside";
+import SearchHistory, { ExtendedCTA } from "./SearchHistory";
 import SearchToolTip from "./SearchToolTip";
 
 /**
@@ -52,9 +52,11 @@ const SearchForm = forwardRef(({}, ref) => {
 		e.preventDefault();
 		const term = ref?.current?.value;
 		if (term) {
-			saveSearchHistory(term);
-			setHistory(getSearchHistory());
 			searchHandler(e);
+			if (extended) {
+				saveSearchHistory(term);
+				setHistory(getSearchHistory());
+			}
 		}
 	}
 
@@ -90,7 +92,7 @@ const SearchForm = forwardRef(({}, ref) => {
 						placeholder={instant_img_localize.search}
 						disabled={apiError}
 						onChange={(e) => extended && getSuggestions(e.target.value)}
-						onFocus={() => extended && setShow(true)}
+						onFocus={() => setShow(true)}
 					/>
 					{!!extended && showHistory() ? (
 						<SearchHistory
@@ -100,12 +102,13 @@ const SearchForm = forwardRef(({}, ref) => {
 							setSearchValue={setSearchValue}
 						/>
 					) : null}
+					{!extended && <ExtendedCTA show={show} />}
 				</div>
 				<button type="submit" disabled={apiError} ref={submitBtnRef}>
 					<i className="fa fa-search"></i>
 					<span className="offscreen">{instant_img_localize.search}</span>
 				</button>
-				<SearchToolTip />
+				<SearchToolTip show={show} />
 			</form>
 		</div>
 	);

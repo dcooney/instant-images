@@ -266,12 +266,14 @@ class InstantImages {
 				INSTANT_IMAGES_VERSION,
 				true
 			);
+
 			wp_enqueue_style(
 				'admin-instant-images',
 				INSTANT_IMAGES_URL . 'build/style-instant-images.css',
 				'',
 				INSTANT_IMAGES_VERSION
 			);
+
 			$this::instant_img_localize( 'instant-images-media-modal' );
 		}
 	}

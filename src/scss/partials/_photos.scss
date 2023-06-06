@@ -495,27 +495,23 @@
 		}
 		&--controls,
 		&--title {
-			display: block;
-			background: $lighter_grey;
-			border: 1px solid $border;
-			padding: 15px 10px;
-			border-radius: 2px 2px 0 0;
-			.button-primary {
-				float: right;
-			}
-		}
-		&--controls {
-			border-radius: 0 0 3px 3px;
-		}
-		&--title {
-			border-bottom: none;
 			display: flex;
 			flex-wrap: nowrap;
 			width: 100%;
-			padding: 10px;
+			background: $lighter_grey;
+			border: 1px solid $border;
+			padding: 15px;
+			border-radius: 2px 2px 0 0;
+		}
+		&--controls {
+			border-radius: 0 0 3px 3px;
+			justify-content: space-between;
+		}
+		&--title {
+			border-bottom: none;
 			border-radius: 3px 3px 0 0;
 			> div {
-				padding: 10px 15px 10px 5px;
+				padding: 10px 15px 10px 0;
 				flex: 1;
 
 				&.preview {

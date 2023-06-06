@@ -2245,7 +2245,7 @@ function Photo(props) {
     className: "edit-screen--controls"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
-    className: "button",
+    className: "button button-secondary",
     onClick: function onClick(e) {
       return cancelEdit(e);
     }
@@ -2769,8 +2769,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common/pluginProvider */ "./src/js/common/pluginProvider.js");
-/* harmony import */ var _hooks_useClickOutside__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../hooks/useClickOutside */ "./src/js/hooks/useClickOutside.js");
-/* harmony import */ var _functions_localStorage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../functions/localStorage */ "./src/js/functions/localStorage.js");
+/* harmony import */ var _functions_localStorage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../functions/localStorage */ "./src/js/functions/localStorage.js");
+/* harmony import */ var _hooks_useClickOutside__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../hooks/useClickOutside */ "./src/js/hooks/useClickOutside.js");
 /* harmony import */ var _SearchHistory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SearchHistory */ "./src/js/components/search/SearchHistory.js");
 /* harmony import */ var _SearchToolTip__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchToolTip */ "./src/js/components/search/SearchToolTip.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -2816,7 +2816,7 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
   var submitBtnRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
 
   // Handle clickoutside hook.
-  (0,_hooks_useClickOutside__WEBPACK_IMPORTED_MODULE_3__.useClickOutside)(historyRef, function () {
+  (0,_hooks_useClickOutside__WEBPACK_IMPORTED_MODULE_4__.useClickOutside)(historyRef, function () {
     setShow(false);
   });
 
@@ -2844,9 +2844,11 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
     e.preventDefault();
     var term = ref === null || ref === void 0 ? void 0 : (_ref$current = ref.current) === null || _ref$current === void 0 ? void 0 : _ref$current.value;
     if (term) {
-      (0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_4__.saveSearchHistory)(term);
-      setHistory((0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_4__.getSearchHistory)());
       searchHandler(e);
+      if (extended) {
+        (0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveSearchHistory)(term);
+        setHistory((0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_3__.getSearchHistory)());
+      }
     }
   }
 
@@ -2859,7 +2861,7 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
     return (history === null || history === void 0 ? void 0 : history.length) || (suggestions === null || suggestions === void 0 ? void 0 : suggestions.length);
   }
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    setHistory((0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_4__.getSearchHistory)());
+    setHistory((0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_3__.getSearchHistory)());
   }, []);
   return /*#__PURE__*/React.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("control-nav--search", apiError ? "inactive" : null)
@@ -2883,14 +2885,16 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
       return extended && getSuggestions(e.target.value);
     },
     onFocus: function onFocus() {
-      return extended && setShow(true);
+      return setShow(true);
     }
   }), !!extended && showHistory() ? /*#__PURE__*/React.createElement(_SearchHistory__WEBPACK_IMPORTED_MODULE_5__["default"], {
     show: show,
     history: history,
     setHistory: setHistory,
     setSearchValue: setSearchValue
-  }) : null), /*#__PURE__*/React.createElement("button", {
+  }) : null, !extended && /*#__PURE__*/React.createElement(_SearchHistory__WEBPACK_IMPORTED_MODULE_5__.ExtendedCTA, {
+    show: show
+  })), /*#__PURE__*/React.createElement("button", {
     type: "submit",
     disabled: apiError,
     ref: submitBtnRef
@@ -2898,7 +2902,9 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
     className: "fa fa-search"
   }), /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
-  }, instant_img_localize.search)), /*#__PURE__*/React.createElement(_SearchToolTip__WEBPACK_IMPORTED_MODULE_6__["default"], null)));
+  }, instant_img_localize.search)), /*#__PURE__*/React.createElement(_SearchToolTip__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    show: show
+  })));
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SearchForm);
 
@@ -2987,6 +2993,7 @@ function SearchHeader() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ExtendedCTA": () => (/* binding */ ExtendedCTA),
 /* harmony export */   "default": () => (/* binding */ SearchHistory)
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
@@ -2995,8 +3002,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _functions_localStorage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../functions/localStorage */ "./src/js/functions/localStorage.js");
-/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+/* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../common/pluginProvider */ "./src/js/common/pluginProvider.js");
+/* harmony import */ var _functions_localStorage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../functions/localStorage */ "./src/js/functions/localStorage.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -3010,7 +3023,7 @@ __webpack_require__.r(__webpack_exports__);
  * @return {JSX.Element} The SearchHistory component.
  */
 function SearchHistory(props) {
-  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_4__.usePluginContext)(),
+  var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_3__.usePluginContext)(),
     suggestions = _usePluginContext.suggestions;
   var show = props.show,
     history = props.history,
@@ -3039,7 +3052,7 @@ function SearchHistory(props) {
   }, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Recent Searches", "instant-images")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: function onClick() {
-      (0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_3__.clearSearchHistory)();
+      (0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_4__.clearSearchHistory)();
       setHistory([]);
     }
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Clear", "instant-images"))), /*#__PURE__*/React.createElement("ul", {
@@ -3057,6 +3070,51 @@ function SearchHistory(props) {
       }
     }, item));
   }))));
+}
+
+/**
+ * A CTA for the Extended add-on.
+ *
+ * @param {Object}  props      The component props.
+ * @param {boolean} props.show Display the component.
+ * @return {JSX.Element}       The ExtendedCTA component.
+ */
+function ExtendedCTA(_ref) {
+  var _ref$show = _ref.show,
+    show = _ref$show === void 0 ? false : _ref$show;
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_4__.getSetting)("extended-cta-search") !== "hide"),
+    _useState2 = _slicedToArray(_useState, 2),
+    active = _useState2[0],
+    setActive = _useState2[1]; // Get setting from localstorage.
+
+  // Hide the CTA.
+  function hideCTA() {
+    (0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_4__.saveSettings)("extended-cta-search", "hide");
+    setActive(false);
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()("control-nav--search-history extended-cta", show && active ? "active" : null)
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "closeBtn",
+    onClick: function onClick() {
+      return hideCTA();
+    }
+  }, "\xD7", /*#__PURE__*/React.createElement("span", {
+    className: "offscreen"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Hide", "instant-images"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("i", {
+    className: "fa fa-magic",
+    "aria-hidden": "true"
+  }), "Enable search suggestions and history with the Instant Images", " ", /*#__PURE__*/React.createElement("a", {
+    href: "https://getinstantimages.com/add-ons/extended/",
+    target: "_blank",
+    rel: "noreferrer"
+  }, /*#__PURE__*/React.createElement("strong", null, "Extended add-on")), "."), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
+    href: "https://getinstantimages.com/add-ons/extended/",
+    target: "_blank",
+    rel: "noreferrer",
+    className: "button button-primary"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Learn More", "instant-images"))))));
 }
 
 /***/ }),
@@ -4265,10 +4323,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "clearSearchHistory": () => (/* binding */ clearSearchHistory),
 /* harmony export */   "getSearchHistory": () => (/* binding */ getSearchHistory),
-/* harmony export */   "saveSearchHistory": () => (/* binding */ saveSearchHistory)
+/* harmony export */   "getSetting": () => (/* binding */ getSetting),
+/* harmony export */   "saveSearchHistory": () => (/* binding */ saveSearchHistory),
+/* harmony export */   "saveSettings": () => (/* binding */ saveSettings)
 /* harmony export */ });
-var name = "recent-searches";
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var searchItemName = "recent-searches";
 var most = 10;
+var settingsName = "instant-images";
 
 /**
  * Save search value to localstorage.
@@ -4278,7 +4343,7 @@ var most = 10;
 function saveSearchHistory(term) {
   var recent = getSearchHistory();
   if (!recent) {
-    localStorage.setItem(name, JSON.stringify([term]));
+    localStorage.setItem(searchItemName, JSON.stringify([term]));
     return;
   }
 
@@ -4295,7 +4360,7 @@ function saveSearchHistory(term) {
 
   // Add new term to the beginning of the array.
   recent.unshift(term);
-  localStorage.setItem(name, JSON.stringify(recent));
+  localStorage.setItem(searchItemName, JSON.stringify(recent));
 }
 
 /**
@@ -4304,18 +4369,51 @@ function saveSearchHistory(term) {
  * @return {Array} The search history.
  */
 function getSearchHistory() {
-  var history = localStorage.getItem(name);
+  var history = localStorage.getItem(searchItemName);
   if (!history) {
     return [];
   }
-  return JSON.parse(localStorage.getItem(name));
+  return JSON.parse(localStorage.getItem(searchItemName));
 }
 
 /**
  * Clear search history.
  */
 function clearSearchHistory() {
-  localStorage.removeItem("recent-searches");
+  localStorage.removeItem(searchItemName);
+}
+
+/**
+ * Save generic setting to localstorage as an key/value object pair.
+ *
+ * @param {string} key   The object key.
+ * @param {value}  value The object value.
+ */
+function saveSettings(key, value) {
+  var settings = localStorage.getItem(settingsName);
+  var setting = _defineProperty({}, key, value);
+  if (!settings) {
+    localStorage.setItem(settingsName, JSON.stringify(setting));
+  } else {
+    var parsed = JSON.parse(settings);
+    parsed[key] = value;
+    localStorage.setItem(settingsName, JSON.stringify(parsed));
+  }
+}
+
+/**
+ * Get an individual setting from local storage.
+ *
+ * @param {string} key The stoarge key.
+ * @return {string|boolean} The storage value.
+ */
+function getSetting(key) {
+  var settings = localStorage.getItem(settingsName);
+  if (!settings) {
+    return false;
+  }
+  var parsed = JSON.parse(settings);
+  return parsed[key] ? parsed[key] : false;
 }
 
 /***/ }),

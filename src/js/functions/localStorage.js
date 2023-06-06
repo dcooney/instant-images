@@ -1,5 +1,6 @@
-const name = "recent-searches";
+const searchItemName = "recent-searches";
 const most = 10;
+const settingsName = "instant-images";
 
 /**
  * Save search value to localstorage.
@@ -9,7 +10,7 @@ const most = 10;
 export function saveSearchHistory(term) {
 	const recent = getSearchHistory();
 	if (!recent) {
-		localStorage.setItem(name, JSON.stringify([term]));
+		localStorage.setItem(searchItemName, JSON.stringify([term]));
 		return;
 	}
 
@@ -26,7 +27,7 @@ export function saveSearchHistory(term) {
 
 	// Add new term to the beginning of the array.
 	recent.unshift(term);
-	localStorage.setItem(name, JSON.stringify(recent));
+	localStorage.setItem(searchItemName, JSON.stringify(recent));
 }
 
 /**
@@ -35,17 +36,52 @@ export function saveSearchHistory(term) {
  * @return {Array} The search history.
  */
 export function getSearchHistory() {
-	const history = localStorage.getItem(name);
+	const history = localStorage.getItem(searchItemName);
 	if (!history) {
 		return [];
 	}
-
-	return JSON.parse(localStorage.getItem(name));
+	return JSON.parse(localStorage.getItem(searchItemName));
 }
 
 /**
  * Clear search history.
  */
 export function clearSearchHistory() {
-	localStorage.removeItem("recent-searches");
+	localStorage.removeItem(searchItemName);
+}
+
+/**
+ * Save generic setting to localstorage as an key/value object pair.
+ *
+ * @param {string} key   The object key.
+ * @param {value}  value The object value.
+ */
+export function saveSettings(key, value) {
+	const settings = localStorage.getItem(settingsName);
+	const setting = {
+		[key]: value,
+	};
+
+	if (!settings) {
+		localStorage.setItem(settingsName, JSON.stringify(setting));
+	} else {
+		const parsed = JSON.parse(settings);
+		parsed[key] = value;
+		localStorage.setItem(settingsName, JSON.stringify(parsed));
+	}
+}
+
+/**
+ * Get an individual setting from local storage.
+ *
+ * @param {string} key The stoarge key.
+ * @return {string|boolean} The storage value.
+ */
+export function getSetting(key) {
+	const settings = localStorage.getItem(settingsName);
+	if (!settings) {
+		return false;
+	}
+	const parsed = JSON.parse(settings);
+	return parsed[key] ? parsed[key] : false;
 }
