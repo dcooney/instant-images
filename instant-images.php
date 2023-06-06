@@ -504,7 +504,7 @@ class InstantImages {
 	 * @since 2.0
 	 */
 	public function add_action_links( $links ) {
-		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Images', 'instant-images' ) . '</a>' ];
+		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Images', 'instant-images' ) . '</a>', '<a href="' . INSTANT_IMAGES_WPADMIN_SETTINGS_URL . '">' . __( ' Settings', 'instant-images' ) . '</a>' ];
 		return array_merge( $mylinks, $links );
 	}
 
