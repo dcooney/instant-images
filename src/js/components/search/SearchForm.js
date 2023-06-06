@@ -6,9 +6,9 @@ import {
 	saveSearchHistory,
 } from "../../functions/localStorage";
 import { useClickOutside } from "../../hooks/useClickOutside";
+import { ExtendedSearchCTA } from "../cta/Extended";
 import SearchHistory from "./SearchHistory";
 import SearchToolTip from "./SearchToolTip";
-import { ExtendedSearchCTA } from "../cta/Extended";
 
 /**
  * Render the search form as a component.
@@ -16,7 +16,10 @@ import { ExtendedSearchCTA } from "../cta/Extended";
  * @return {JSX.Element} The SearchForm component.
  */
 const SearchForm = forwardRef(({}, ref) => {
-	const { extended = false } = instant_img_localize?.addons;
+	const {
+		activated: extended_activated = false,
+		license: extended_license = false,
+	} = instant_img_localize?.addons?.extended;
 	const { searchHandler, apiError, suggestions, getSuggestions } =
 		usePluginContext();
 	const [history, setHistory] = useState([]);
@@ -54,7 +57,7 @@ const SearchForm = forwardRef(({}, ref) => {
 		const term = ref?.current?.value;
 		if (term) {
 			searchHandler(e);
-			if (extended) {
+			if (extended_license) {
 				saveSearchHistory(term);
 				setHistory(getSearchHistory());
 			}
@@ -92,10 +95,10 @@ const SearchForm = forwardRef(({}, ref) => {
 						id="search-input"
 						placeholder={instant_img_localize.search}
 						disabled={apiError}
-						onChange={(e) => extended && getSuggestions(e.target.value)}
+						onChange={(e) => extended_license && getSuggestions(e.target.value)}
 						onFocus={() => setShow(true)}
 					/>
-					{extended && showHistory() ? (
+					{extended_license && showHistory() ? (
 						/* Extended: Show only with valid license */
 						<SearchHistory
 							show={show}
@@ -104,7 +107,7 @@ const SearchForm = forwardRef(({}, ref) => {
 							setSearchValue={setSearchValue}
 						/>
 					) : null}
-					{!extended && (
+					{!extended_activated && (
 						/* Extended: Show only when not installed or invalid license */
 						<ExtendedSearchCTA show={show} />
 					)}

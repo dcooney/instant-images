@@ -2791,10 +2791,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  * @return {JSX.Element} The ExtendedCTA component.
  */
 function ExtendedCTA() {
-  var _instant_img_localize3;
-  var _instant_img_localize = (_instant_img_localize3 = instant_img_localize) === null || _instant_img_localize3 === void 0 ? void 0 : _instant_img_localize3.addons,
-    _instant_img_localize2 = _instant_img_localize.extended,
-    extended = _instant_img_localize2 === void 0 ? false : _instant_img_localize2;
+  var _instant_img_localize3, _instant_img_localize4;
+  var _instant_img_localize = (_instant_img_localize3 = instant_img_localize) === null || _instant_img_localize3 === void 0 ? void 0 : (_instant_img_localize4 = _instant_img_localize3.addons) === null || _instant_img_localize4 === void 0 ? void 0 : _instant_img_localize4.extended,
+    _instant_img_localize2 = _instant_img_localize.activated,
+    activated = _instant_img_localize2 === void 0 ? false : _instant_img_localize2;
   var name = "extended-cta";
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_3__.getSetting)(name) === "hide"),
     _useState2 = _slicedToArray(_useState, 2),
@@ -2806,7 +2806,7 @@ function ExtendedCTA() {
     (0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveSettings)(name, "hide");
     setDismissed(true);
   }
-  return /*#__PURE__*/React.createElement(React.Fragment, null, !extended && !dissmissed ? /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, !activated && !dissmissed ? /*#__PURE__*/React.createElement("div", {
     className: "cta-extended cta-extended--standard"
   }, /*#__PURE__*/React.createElement("i", {
     className: "fa fa-bullhorn",
@@ -2899,9 +2899,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common/pluginProvider */ "./src/js/common/pluginProvider.js");
 /* harmony import */ var _functions_localStorage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../functions/localStorage */ "./src/js/functions/localStorage.js");
 /* harmony import */ var _hooks_useClickOutside__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../hooks/useClickOutside */ "./src/js/hooks/useClickOutside.js");
-/* harmony import */ var _SearchHistory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SearchHistory */ "./src/js/components/search/SearchHistory.js");
-/* harmony import */ var _SearchToolTip__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchToolTip */ "./src/js/components/search/SearchToolTip.js");
-/* harmony import */ var _cta_Extended__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../cta/Extended */ "./src/js/components/cta/Extended.js");
+/* harmony import */ var _cta_Extended__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../cta/Extended */ "./src/js/components/cta/Extended.js");
+/* harmony import */ var _SearchHistory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchHistory */ "./src/js/components/search/SearchHistory.js");
+/* harmony import */ var _SearchToolTip__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SearchToolTip */ "./src/js/components/search/SearchToolTip.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -2924,11 +2924,13 @@ function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("
  * @return {JSX.Element} The SearchForm component.
  */
 var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(function (_ref, ref) {
-  var _instant_img_localize3;
+  var _instant_img_localize4, _instant_img_localize5;
   _objectDestructuringEmpty(_ref);
-  var _instant_img_localize = (_instant_img_localize3 = instant_img_localize) === null || _instant_img_localize3 === void 0 ? void 0 : _instant_img_localize3.addons,
-    _instant_img_localize2 = _instant_img_localize.extended,
-    extended = _instant_img_localize2 === void 0 ? false : _instant_img_localize2;
+  var _instant_img_localize = (_instant_img_localize4 = instant_img_localize) === null || _instant_img_localize4 === void 0 ? void 0 : (_instant_img_localize5 = _instant_img_localize4.addons) === null || _instant_img_localize5 === void 0 ? void 0 : _instant_img_localize5.extended,
+    _instant_img_localize2 = _instant_img_localize.activated,
+    extended_activated = _instant_img_localize2 === void 0 ? false : _instant_img_localize2,
+    _instant_img_localize3 = _instant_img_localize.license,
+    extended_license = _instant_img_localize3 === void 0 ? false : _instant_img_localize3;
   var _usePluginContext = (0,_common_pluginProvider__WEBPACK_IMPORTED_MODULE_2__.usePluginContext)(),
     searchHandler = _usePluginContext.searchHandler,
     apiError = _usePluginContext.apiError,
@@ -2975,7 +2977,7 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
     var term = ref === null || ref === void 0 ? void 0 : (_ref$current = ref.current) === null || _ref$current === void 0 ? void 0 : _ref$current.value;
     if (term) {
       searchHandler(e);
-      if (extended) {
+      if (extended_license) {
         (0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveSearchHistory)(term);
         setHistory((0,_functions_localStorage__WEBPACK_IMPORTED_MODULE_3__.getSearchHistory)());
       }
@@ -3012,23 +3014,23 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
     placeholder: instant_img_localize.search,
     disabled: apiError,
     onChange: function onChange(e) {
-      return extended && getSuggestions(e.target.value);
+      return extended_license && getSuggestions(e.target.value);
     },
     onFocus: function onFocus() {
       return setShow(true);
     }
-  }), extended && showHistory() ?
+  }), extended_license && showHistory() ?
   /*#__PURE__*/
   /* Extended: Show only with valid license */
-  React.createElement(_SearchHistory__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  React.createElement(_SearchHistory__WEBPACK_IMPORTED_MODULE_6__["default"], {
     show: show,
     history: history,
     setHistory: setHistory,
     setSearchValue: setSearchValue
-  }) : null, !extended &&
+  }) : null, !extended_activated &&
   /*#__PURE__*/
   /* Extended: Show only when not installed or invalid license */
-  React.createElement(_cta_Extended__WEBPACK_IMPORTED_MODULE_7__.ExtendedSearchCTA, {
+  React.createElement(_cta_Extended__WEBPACK_IMPORTED_MODULE_5__.ExtendedSearchCTA, {
     show: show
   })), /*#__PURE__*/React.createElement("button", {
     type: "submit",
@@ -3038,7 +3040,7 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
     className: "fa fa-search"
   }), /*#__PURE__*/React.createElement("span", {
     className: "offscreen"
-  }, instant_img_localize.search)), /*#__PURE__*/React.createElement(_SearchToolTip__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }, instant_img_localize.search)), /*#__PURE__*/React.createElement(_SearchToolTip__WEBPACK_IMPORTED_MODULE_7__["default"], {
     show: show
   })));
 });
@@ -4415,9 +4417,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-var searchItemName = "recent-searches";
+var searchName = "instant-images-recent-searches";
+var settingsName = "instant-images-settings";
 var most = 10;
-var settingsName = "instant-images";
 
 /**
  * Save search value to localstorage.
@@ -4427,7 +4429,7 @@ var settingsName = "instant-images";
 function saveSearchHistory(term) {
   var recent = getSearchHistory();
   if (!recent) {
-    localStorage.setItem(searchItemName, JSON.stringify([term]));
+    localStorage.setItem(searchName, JSON.stringify([term]));
     return;
   }
 
@@ -4444,7 +4446,7 @@ function saveSearchHistory(term) {
 
   // Add new term to the beginning of the array.
   recent.unshift(term);
-  localStorage.setItem(searchItemName, JSON.stringify(recent));
+  localStorage.setItem(searchName, JSON.stringify(recent));
 }
 
 /**
@@ -4453,18 +4455,18 @@ function saveSearchHistory(term) {
  * @return {Array} The search history.
  */
 function getSearchHistory() {
-  var history = localStorage.getItem(searchItemName);
+  var history = localStorage.getItem(searchName);
   if (!history) {
     return [];
   }
-  return JSON.parse(localStorage.getItem(searchItemName));
+  return JSON.parse(localStorage.getItem(searchName));
 }
 
 /**
  * Clear search history.
  */
 function clearSearchHistory() {
-  localStorage.removeItem(searchItemName);
+  localStorage.removeItem(searchName);
 }
 
 /**

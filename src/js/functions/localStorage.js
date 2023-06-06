@@ -1,6 +1,6 @@
-const searchItemName = "recent-searches";
+const searchName = "instant-images-recent-searches";
+const settingsName = "instant-images-settings";
 const most = 10;
-const settingsName = "instant-images";
 
 /**
  * Save search value to localstorage.
@@ -10,7 +10,7 @@ const settingsName = "instant-images";
 export function saveSearchHistory(term) {
 	const recent = getSearchHistory();
 	if (!recent) {
-		localStorage.setItem(searchItemName, JSON.stringify([term]));
+		localStorage.setItem(searchName, JSON.stringify([term]));
 		return;
 	}
 
@@ -27,7 +27,7 @@ export function saveSearchHistory(term) {
 
 	// Add new term to the beginning of the array.
 	recent.unshift(term);
-	localStorage.setItem(searchItemName, JSON.stringify(recent));
+	localStorage.setItem(searchName, JSON.stringify(recent));
 }
 
 /**
@@ -36,18 +36,18 @@ export function saveSearchHistory(term) {
  * @return {Array} The search history.
  */
 export function getSearchHistory() {
-	const history = localStorage.getItem(searchItemName);
+	const history = localStorage.getItem(searchName);
 	if (!history) {
 		return [];
 	}
-	return JSON.parse(localStorage.getItem(searchItemName));
+	return JSON.parse(localStorage.getItem(searchName));
 }
 
 /**
  * Clear search history.
  */
 export function clearSearchHistory() {
-	localStorage.removeItem(searchItemName);
+	localStorage.removeItem(searchName);
 }
 
 /**

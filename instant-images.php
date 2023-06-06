@@ -410,7 +410,10 @@ class InstantImages {
 				'ad'                      => __( 'Ad', 'instant-images' ),
 				'advertisement'           => __( 'Advertisement', 'instant-images' ),
 				'addons'                  => [
-					'extended' => self::instant_images_addon_valid_license( 'extended' ),
+					'extended' => [
+						'activated' => self::instant_images_addon_activated( 'extended' ),
+						'license'   => self::instant_images_addon_valid_license( 'extended' ),
+					],
 				],
 				'filters'                 => [
 					'select'       => __( '-- Select --', 'instant-images' ),
@@ -509,7 +512,20 @@ class InstantImages {
 	}
 
 	/**
-	 * Is Instant Images add-on is installed and activated with a valid license.
+	 * Is Instant Images add-on installed and activated.
+	 *
+	 * @param string $addon Add-on name.
+	 * @return boolean
+	 */
+	public static function instant_images_addon_activated( $addon ) {
+		switch ( $addon ) {
+			case 'extended':
+				return class_exists( 'InstantImagesExtended' );
+		}
+	}
+
+	/**
+	 * Is Instant Images add-on installed and activated with a valid license key.
 	 *
 	 * @param string $addon Add-on name.
 	 * @return boolean
@@ -519,7 +535,6 @@ class InstantImages {
 			case 'extended':
 				return class_exists( 'InstantImagesExtended' ) && InstantImagesExtended::valid_license();
 		}
-
 	}
 
 }

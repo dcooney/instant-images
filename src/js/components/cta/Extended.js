@@ -9,7 +9,7 @@ import { getSetting, saveSettings } from "../../functions/localStorage";
  * @return {JSX.Element} The ExtendedCTA component.
  */
 export function ExtendedCTA() {
-	const { extended = false } = instant_img_localize?.addons;
+	const { activated = false } = instant_img_localize?.addons?.extended;
 	const name = "extended-cta";
 	const [dissmissed, setDismissed] = useState(getSetting(name) === "hide"); // Get setting from localstorage.
 
@@ -21,7 +21,7 @@ export function ExtendedCTA() {
 
 	return (
 		<>
-			{!extended && !dissmissed ? (
+			{!activated && !dissmissed ? (
 				<div className="cta-extended cta-extended--standard">
 					<i className="fa fa-bullhorn" aria-hidden="true"></i>
 					<p>
