@@ -25,6 +25,7 @@ import ResultsWPBlock from "./ResultsWPBlock";
 import Tooltip from "./Tooltip";
 import SearchForm from "./search/SearchForm";
 import SearchHeader from "./search/SearchHeader";
+import { ExtendedCTA } from "./cta/Extended";
 const imagesLoaded = require("imagesloaded");
 
 let page = 1;
@@ -590,7 +591,10 @@ export default function InstantImages(props) {
 				{wpBlock ? (
 					<WPBlockHeader switchProvider={switchProvider} />
 				) : (
-					<ProviderNav switchProvider={switchProvider} />
+					<>
+						<ProviderNav switchProvider={switchProvider} />
+						<ExtendedCTA />
+					</>
 				)}
 				<RestAPIError />
 				<div className="control-nav">

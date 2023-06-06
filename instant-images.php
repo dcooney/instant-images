@@ -233,7 +233,7 @@ class InstantImages {
 			);
 
 			// Image block.
-			if ( $this::instant_images_add_on_active( 'extended' ) ) {
+			if ( $this::instant_images_addon_valid_license( 'extended' ) ) {
 				$block_asset_file = require INSTANT_IMAGES_PATH . 'build/block/index.asset.php'; // Get webpack asset file.
 				wp_enqueue_script(
 					'instant-images-block',
@@ -410,7 +410,7 @@ class InstantImages {
 				'ad'                      => __( 'Ad', 'instant-images' ),
 				'advertisement'           => __( 'Advertisement', 'instant-images' ),
 				'addons'                  => [
-					'extended' => self::instant_images_add_on_active( 'extended' ) ? true : false,
+					'extended' => self::instant_images_addon_valid_license( 'extended' ),
 				],
 				'filters'                 => [
 					'select'       => __( '-- Select --', 'instant-images' ),
@@ -504,20 +504,20 @@ class InstantImages {
 	 * @since 2.0
 	 */
 	public function add_action_links( $links ) {
-		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Images', 'instant-images' ) . '</a>', '<a href="' . INSTANT_IMAGES_WPADMIN_SETTINGS_URL . '">' . __( ' Settings', 'instant-images' ) . '</a>' ];
+		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( 'Get Images', 'instant-images' ) . '</a>', '<a href="' . INSTANT_IMAGES_WPADMIN_SETTINGS_URL . '">' . __( 'Settings', 'instant-images' ) . '</a>' ];
 		return array_merge( $mylinks, $links );
 	}
 
 	/**
-	 * Is Instant Images add-on activated.
+	 * Is Instant Images add-on is installed and activated with a valid license.
 	 *
 	 * @param string $addon Add-on name.
 	 * @return boolean
 	 */
-	public static function instant_images_add_on_active( $addon ) {
+	public static function instant_images_addon_valid_license( $addon ) {
 		switch ( $addon ) {
 			case 'extended':
-				return defined( 'INSTANT_IMAGES_EXTENDED_PATH' ) && class_exists( 'InstantImagesExtended' ) && InstantImagesExtended::valid_license();
+				return class_exists( 'InstantImagesExtended' ) && InstantImagesExtended::valid_license();
 		}
 
 	}

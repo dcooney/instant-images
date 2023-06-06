@@ -8,7 +8,7 @@ import {
 import { useClickOutside } from "../../hooks/useClickOutside";
 import SearchHistory from "./SearchHistory";
 import SearchToolTip from "./SearchToolTip";
-import ExtendedCTA from "./ExtendedCTA";
+import { ExtendedSearchCTA } from "../cta/Extended";
 
 /**
  * Render the search form as a component.
@@ -95,7 +95,8 @@ const SearchForm = forwardRef(({}, ref) => {
 						onChange={(e) => extended && getSuggestions(e.target.value)}
 						onFocus={() => setShow(true)}
 					/>
-					{!!extended && showHistory() ? (
+					{extended && showHistory() ? (
+						/* Extended: Show only with valid license */
 						<SearchHistory
 							show={show}
 							history={history}
@@ -103,7 +104,10 @@ const SearchForm = forwardRef(({}, ref) => {
 							setSearchValue={setSearchValue}
 						/>
 					) : null}
-					{!extended && <ExtendedCTA show={show} />}
+					{!extended && (
+						/* Extended: Show only when not installed or invalid license */
+						<ExtendedSearchCTA show={show} />
+					)}
 				</div>
 				<button type="submit" disabled={apiError} ref={submitBtnRef}>
 					<i className="fa fa-search"></i>
