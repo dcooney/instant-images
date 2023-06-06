@@ -99,7 +99,7 @@ const SearchForm = forwardRef(({}, ref) => {
 						onFocus={() => setShow(true)}
 					/>
 					{extended_license && showHistory() ? (
-						/* Extended: Show only with valid license */
+						/* Extended: Show only with valid add-on license */
 						<SearchHistory
 							show={show}
 							history={history}
@@ -108,7 +108,7 @@ const SearchForm = forwardRef(({}, ref) => {
 						/>
 					) : null}
 					{!extended_activated && (
-						/* Extended: Show only when not installed or invalid license */
+						/* Extended: Show only when add-on not installed. */
 						<ExtendedSearchCTA show={show} />
 					)}
 				</div>

@@ -3021,7 +3021,7 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
     }
   }), extended_license && showHistory() ?
   /*#__PURE__*/
-  /* Extended: Show only with valid license */
+  /* Extended: Show only with valid add-on license */
   React.createElement(_SearchHistory__WEBPACK_IMPORTED_MODULE_6__["default"], {
     show: show,
     history: history,
@@ -3029,7 +3029,7 @@ var SearchForm = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
     setSearchValue: setSearchValue
   }) : null, !extended_activated &&
   /*#__PURE__*/
-  /* Extended: Show only when not installed or invalid license */
+  /* Extended: Show only when add-on not installed. */
   React.createElement(_cta_Extended__WEBPACK_IMPORTED_MODULE_5__.ExtendedSearchCTA, {
     show: show
   })), /*#__PURE__*/React.createElement("button", {
