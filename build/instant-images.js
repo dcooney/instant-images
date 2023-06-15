@@ -4599,7 +4599,7 @@ function useArrowControls(active, ref) {
    *
    * @param {KeyboardEvent} e The event.
    */
-  function arrowFunction(e) {
+  function arrowHandler(e) {
     var key = e.key;
     if (focusedRef !== null && focusedRef !== void 0 && focusedRef.current && ref !== null && ref !== void 0 && ref.current) {
       var focusable = ref === null || ref === void 0 ? void 0 : ref.current.querySelectorAll("a[href]:not([disabled]), button:not([disabled]), input");
@@ -4644,10 +4644,10 @@ function useArrowControls(active, ref) {
     focusedRef.current = active;
   }, [active]);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    document.addEventListener("keydown", arrowFunction, false);
+    document.addEventListener("keydown", arrowHandler, false);
     return function () {
       // Dispose of events.
-      document.removeEventListener("keydown", arrowFunction, false);
+      document.removeEventListener("keydown", arrowHandler, false);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 }

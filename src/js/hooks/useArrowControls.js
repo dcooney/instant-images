@@ -14,7 +14,7 @@ export function useArrowControls(active, ref) {
 	 *
 	 * @param {KeyboardEvent} e The event.
 	 */
-	function arrowFunction(e) {
+	function arrowHandler(e) {
 		const { key } = e;
 
 		if (focusedRef?.current && ref?.current) {
@@ -67,10 +67,10 @@ export function useArrowControls(active, ref) {
 	}, [active]);
 
 	useEffect(() => {
-		document.addEventListener("keydown", arrowFunction, false);
+		document.addEventListener("keydown", arrowHandler, false);
 		return () => {
 			// Dispose of events.
-			document.removeEventListener("keydown", arrowFunction, false);
+			document.removeEventListener("keydown", arrowHandler, false);
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 }
