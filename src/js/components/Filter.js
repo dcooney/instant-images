@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "@wordpress/element";
-import * as a11yarrows from "a11yarrows";
 import cn from "classnames";
 import { usePluginContext } from "../common/pluginProvider";
+import { useArrowControls } from "../hooks/useArrowControls";
 
 /**
  * Render the Filter component.
@@ -25,6 +25,9 @@ export default function Filter(props) {
 	const menu = useRef();
 	const id = `${provider}-${filterKey}`;
 	const isColor = filterKey === "colors" || filterKey === "color";
+
+	// Use up/down arrow keys to navigate dropdown.
+	useArrowControls(expanded, dropdown);
 
 	/**
 	 * Toggle menu open/closed.
@@ -122,9 +125,9 @@ export default function Filter(props) {
 
 	useEffect(() => {
 		// Initiate arrow menus.
-		a11yarrows.init(dropdown?.current, {
-			selector: "button",
-		});
+		// a11yarrows.init(dropdown?.current, {
+		// 	selector: "button",
+		// });
 
 		// Check for focus outside.
 		document.addEventListener("keyup", focusOutside);

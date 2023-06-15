@@ -1,8 +1,9 @@
-import { Fragment } from "@wordpress/element";
+import { Fragment, useRef } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 import classNames from "classnames";
 import { usePluginContext } from "../../common/pluginProvider";
 import { clearSearchHistory } from "../../functions/localStorage";
+import { useArrowControls } from "../../hooks/useArrowControls";
 
 /**
  * The History list component.
@@ -12,7 +13,11 @@ import { clearSearchHistory } from "../../functions/localStorage";
  */
 export default function SearchHistory(props) {
 	const { suggestions } = usePluginContext();
-	const { show, history, setHistory, setSearchValue } = props;
+	const { show, history, setHistory, setSearchValue, container } = props;
+	const dropRef = useRef(null);
+
+	// Use up/down arrow keys to navigate dropdown.
+	useArrowControls(show, container);
 
 	return (
 		<div
@@ -21,6 +26,7 @@ export default function SearchHistory(props) {
 				show ? "active" : null
 			)}
 			role="listbox"
+			ref={dropRef}
 		>
 			{!!suggestions.length && (
 				<Fragment>

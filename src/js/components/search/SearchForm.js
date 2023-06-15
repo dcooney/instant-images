@@ -105,6 +105,7 @@ const SearchForm = forwardRef(({}, ref) => {
 							history={history}
 							setHistory={setHistory}
 							setSearchValue={setSearchValue}
+							container={historyRef}
 						/>
 					) : null}
 					{!extended_activated && (

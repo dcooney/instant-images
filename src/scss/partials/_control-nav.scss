@@ -302,9 +302,11 @@
 				}
 
 				& button {
-					all: unset;
 					color: $text_alt;
 					cursor: pointer;
+					background-color: transparent;
+					border: none;
+					text-align: left;
 					&:hover,
 					&:focus {
 						color: $text;

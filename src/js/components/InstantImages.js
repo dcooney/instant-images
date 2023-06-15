@@ -23,9 +23,9 @@ import RestAPIError from "./RestAPIError";
 import Results from "./Results";
 import ResultsWPBlock from "./ResultsWPBlock";
 import Tooltip from "./Tooltip";
+import { ExtendedCTA } from "./cta/Extended";
 import SearchForm from "./search/SearchForm";
 import SearchHeader from "./search/SearchHeader";
-import { ExtendedCTA } from "./cta/Extended";
 const imagesLoaded = require("imagesloaded");
 
 let page = 1;
