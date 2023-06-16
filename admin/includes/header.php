@@ -6,7 +6,7 @@
  */
 
 ?>
-<header class="header-wrap">
+<header class="instant-images-header-wrap">
 	<h1>
 		<?php echo esc_attr( INSTANT_IMAGES_TITLE ); ?> <em><?php echo esc_attr( INSTANT_IMAGES_VERSION ); ?></em>
 		<?php echo wp_kses_post( InstantImages::instant_images_get_tagline() ); ?>

@@ -8,7 +8,7 @@
 ?>
 <div class="instant-images-settings--header">
 	<div class="instant-images-settings--sticky">
-		<div class="header-wrap-alt">
+		<div class="instant-images-header-wrap-alt">
 			<h1>
 				<?php echo esc_attr( INSTANT_IMAGES_TITLE ); ?>
 				<?php echo wp_kses_post( InstantImages::instant_images_get_tagline() ); ?>

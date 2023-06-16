@@ -1,6 +1,6 @@
 // Title.
-.header-wrap,
-.header-wrap-alt {
+.instant-images-header-wrap,
+.instant-images-header-wrap-alt {
 	h1 {
 		padding: 0;
 		margin: 4px 0 0;
@@ -40,7 +40,7 @@ span.instant-images-tagline {
 }
 
 // Settings Header.
-.header-wrap-alt {
+.instant-images-header-wrap-alt {
 	display: block;
 	text-align: center;
 	padding: 0 0 20px;
@@ -64,7 +64,7 @@ span.instant-images-tagline {
 }
 
 // Upload header - Import/Upload page wp-admin/upload.php?page=instant-images
-.header-wrap {
+.instant-images-header-wrap {
 	background: $lighter_grey url("../img/instant-images-icon.svg") no-repeat 25px
 		20px;
 	background-size: 48px 48px;
