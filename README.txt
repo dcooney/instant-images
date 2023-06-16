@@ -166,6 +166,7 @@ How to install Instant Images.
 * UPDATE: UX and UI updates throughout the app.
 * UPDATE: Code cleanup and various refactoring.
 * UPDATE: Various accessibility updates throughout the app.
+* FIX: Fixed issue with Instant Images header CSS conflicting with GeneratePress.
 
 = 5.3.1 - May 12, 2023 =
 * UPDATE: Updated default user role to manage_options on the Instant Images settings page.
