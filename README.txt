@@ -159,7 +159,7 @@ How to install Instant Images.
 
 == Changelog ==
 
-= 6.0.0 - June 18, 2023 =
+= 6.0.0 - June 19, 2023 =
 * NEW: Added support and functionality requirements for [Instant Images: Extended add-on](https://getinstantimages.com/add-ons/extended/).
 * UPDATE: Improved infinite scroll loading and animations.
 * UPDATE: Improved error handling for API keys with session data.
