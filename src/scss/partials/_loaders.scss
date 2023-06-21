@@ -1,0 +1,54 @@
+.instant-img-container {
+	// Load More button.
+	.load-more-wrap {
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		position: relative;
+		width: 100%;
+		height: 100px;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+
+		&::after {
+			position: absolute;
+			content: "";
+			display: block;
+			inset: 0;
+			background: url("../img/ajax-loader-lg.gif") no-repeat center center;
+			opacity: 0;
+			transition: opacity 0.15s ease;
+		}
+		&.loading {
+			&::after {
+				opacity: 1;
+			}
+		}
+		&.done {
+			height: 10px;
+			&::after {
+				display: none !important;
+			}
+		}
+
+		button {
+			display: none;
+			margin: 20px 0;
+			padding: 15px;
+			font-size: 15px;
+			font-weight: 600;
+			transition: $transition;
+			height: auto;
+			line-height: 1;
+			cursor: pointer;
+			background-image: none;
+			background-repeat: no-repeat !important;
+			background-position: 15px center !important;
+			&.disabled {
+				opacity: 0.3;
+				cursor: default;
+			}
+		}
+	}
+}

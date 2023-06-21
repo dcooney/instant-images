@@ -72,11 +72,6 @@ body.settings_page_instant-images-settings {
 		margin: 0 0 15px;
 		font-size: 14px;
 	}
-	&.loading {
-		.loading-block {
-			display: block;
-		}
-	}
 
 	.error-messaging {
 		padding: 22px 22px 22px 60px;
@@ -112,7 +107,7 @@ body.settings_page_instant-images-settings {
       Admin Screens - Setting page
       wp-admin/upload.php?page=instant-images
    */
-	.header-wrap {
+	.instant-images-header-wrap {
 		background: $lighter_grey url("../img/logo-48x48.png") no-repeat 25px 20px;
 		padding: 20px 25px 20px 83px;
 		min-height: 88px;
@@ -152,7 +147,7 @@ body.settings_page_instant-images-settings {
 			}
 			span {
 				display: block;
-				padding: 3px 0 0;
+				padding: 2px 0 0;
 				color: $text_light;
 				font-size: 15px;
 				font-weight: 400;
@@ -180,59 +175,6 @@ body.settings_page_instant-images-settings {
 		background: url("../img/ajax-loader-lg.gif") no-repeat center center;
 		&.loaded {
 			background: none;
-		}
-	}
-
-	.permissions-warning {
-		padding: 0 25px;
-		.inner {
-			border-bottom: 1px solid $grey;
-			padding: 32px 0;
-		}
-		input {
-			max-width: 500px;
-		}
-		h3 {
-			font-size: 22px;
-			margin: 0 0 15px;
-			i {
-				margin: 0 2px 0 0;
-				position: relative;
-			}
-		}
-		p:first-of-type {
-			font-size: 18px;
-			margin: 0 0 2px;
-		}
-	}
-	.loading-block {
-		padding: 50px 0;
-		background: url("../img/ajax-loader-lg.gif") no-repeat center center;
-	}
-
-	// Load More btn
-	.load-more-wrap {
-		margin: 0;
-		padding: 0;
-		text-align: center;
-
-		button {
-			display: none;
-			margin: 20px 0;
-			padding: 15px;
-			font-size: 15px;
-			font-weight: 600;
-			transition: $transition;
-			height: auto;
-			line-height: 1;
-			cursor: pointer;
-			background-image: none;
-			background-repeat: no-repeat !important;
-			background-position: 15px center !important;
-			&.disabled {
-				opacity: 0.3;
-				cursor: default;
-			}
 		}
 	}
 }

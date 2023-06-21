@@ -1,9 +1,12 @@
 import { Fragment, useEffect, useRef, useState } from "@wordpress/element";
+import axios from "axios";
 import classNames from "classnames";
 import Masonry from "masonry-layout";
 import { useInView } from "react-intersection-observer";
+import { PluginProvider } from "../common/pluginProvider";
 import { API } from "../constants/API";
 import { FILTERS } from "../constants/filters";
+import WPBlockHeader from "../editor/block/components/Header";
 import buildURL, { buildTestURL } from "../functions/buildURL";
 import consoleStatus from "../functions/consoleStatus";
 import getQueryParams from "../functions/getQueryParams";
@@ -13,25 +16,42 @@ import { deleteSession, getSession, saveSession } from "../functions/session";
 import APILightbox from "./APILightbox";
 import ErrorLightbox from "./ErrorLightbox";
 import Filter from "./Filter";
-import LoadingBlock from "./LoadingBlock";
+import LoadMore from "./LoadMore";
 import NoResults from "./NoResults";
 import ProviderNav from "./ProviderNav";
 import RestAPIError from "./RestAPIError";
 import Results from "./Results";
-import SearchHeader from "./SearchHeader";
-import SearchToolTip from "./SearchToolTip";
+import ResultsWPBlock from "./ResultsWPBlock";
 import Tooltip from "./Tooltip";
+import { ExtendedCTA } from "./cta/Extended";
+import SearchForm from "./search/SearchForm";
+import SearchHeader from "./search/SearchHeader";
 const imagesLoaded = require("imagesloaded");
+
 let page = 1;
 
 /**
  * Render the main InstantImages application component.
  *
- * @param {Object} props The component props.
- * @return {JSX.Element} The InstantImages component.
+ * @param {Object}  props           The component props.
+ * @param {string}  props.editor    Editor type.
+ * @param {string}  props.provider  Image provider.
+ * @param {Array}   props.data      API results.
+ * @param {Element} props.container Instant Images container element.
+ * @param {Object}  props.api_error API error object.
+ * @param {string}  props.clientId  WP block client ID.
+ * @return {JSX.Element}            InstantImages component.
  */
 export default function InstantImages(props) {
-	let { editor = "classic", data, api_error, provider, container } = props; // eslint-disable-line prefer-const
+	const {
+		editor = "classic",
+		provider,
+		data,
+		container,
+		api_error = null,
+		clientId = null,
+	} = props;
+
 	const delay = 250;
 	const searchClass = "searching";
 	const searchDefaults = {
@@ -43,7 +63,7 @@ export default function InstantImages(props) {
 
 	// App state.
 	const [results, setResults] = useState(getResults(data)); // Image results.
-	const [activeProvider, setActiveProvider] = useState(provider); // Current provider
+	const [activeProvider, setActiveProvider] = useState(provider); // Current provider.
 	const [apiTested, setAPITested] = useState([]); // API key test results.
 	const [mounted, setMounted] = useState(false); // App mounted state.
 	const [loading, setLoading] = useState(true); // Loading state
@@ -52,6 +72,7 @@ export default function InstantImages(props) {
 	const [apiError, setAPIError] = useState(api_error); // API Error.
 	const [showAPILightbox, setShowAPILightbox] = useState(false); // Render API key lightbox.
 	const [search, setSearch] = useState(searchDefaults);
+	const [suggestions, setSuggestions] = useState([]);
 	const [filterOptions, setFilterOptions] = useState(
 		FILTERS[activeProvider].filters
 	);
@@ -62,18 +83,20 @@ export default function InstantImages(props) {
 	const [loadMoreRef, inView] = useInView({
 		rootMargin: "0px 0px",
 	});
-	const photoListing = useRef();
-	const controlNav = useRef();
-	const searchInput = useRef();
-	const msnry = useRef();
+	const photosRef = useRef();
+	const searchInputRef = useRef();
+	const msnryRef = useRef();
 
-	// WP editor props.
-	const blockEditor = editor === "gutenberg" ? true : false;
-	const mediaRouter = editor === "media-router" ? true : false;
+	// WP Editor props.
+	const wpBlock = editor === "block" ? true : false;
+	const blockSidebar = editor === "sidebar" ? true : false;
+	const isBlockEditor = wpBlock || blockSidebar ? true : false;
+	const mediaModal = editor === "media-modal" ? true : false;
+
 	const body = document.body;
-	const plugin = blockEditor ? body : container.parentNode.parentNode;
-	const wrapper = blockEditor
-		? body
+	const plugin = isBlockEditor ? container : container.parentNode.parentNode;
+	const wrapper = isBlockEditor
+		? container
 		: plugin.querySelector(".instant-images-wrapper");
 
 	/**
@@ -88,6 +111,7 @@ export default function InstantImages(props) {
 
 		setLoading(true); // Set loading state.
 		clearSearch(); // Clear search results.
+		resetScrollPosition();
 		page = 1;
 
 		// Build URL.
@@ -129,7 +153,7 @@ export default function InstantImages(props) {
 	 * @since 3.0
 	 */
 	async function loadMorePhotos() {
-		if (!mounted || loading || loadingMore) {
+		if (!mounted || loading || loadingMore || done) {
 			return;
 		}
 
@@ -183,6 +207,8 @@ export default function InstantImages(props) {
 	 */
 	async function doSearch(term) {
 		setLoading(true);
+		resetScrollPosition();
+
 		page = 1; // Reset current page num.
 
 		const searchType = term.substring(0, 3) === "id:" ? "id" : "term";
@@ -240,7 +266,7 @@ export default function InstantImages(props) {
 			}
 		}
 
-		searchInput.current.classList.remove(searchClass);
+		searchInputRef.current.classList.remove(searchClass);
 	}
 
 	/**
@@ -268,12 +294,12 @@ export default function InstantImages(props) {
 	 */
 	function searchHandler(event) {
 		event.preventDefault();
-		const term = searchInput.current.value;
+		const term = searchInputRef.current.value;
 		if (term.length > 2) {
-			searchInput.current.classList.add(searchClass);
+			searchInputRef.current.classList.add(searchClass);
 			doSearch(term);
 		} else {
-			searchInput.current.focus();
+			searchInputRef.current.focus();
 		}
 	}
 
@@ -283,8 +309,9 @@ export default function InstantImages(props) {
 	 * @since 3.0
 	 */
 	function clearSearch() {
-		searchInput.current.value = "";
+		searchInputRef.current.value = "";
 		setSearch(searchDefaults);
+		setSuggestions([]);
 	}
 
 	/**
@@ -339,23 +366,21 @@ export default function InstantImages(props) {
 		}
 		setShowAPILightbox(false);
 		setLoading(false);
+		setAPIError(false);
 		body.classList.remove("overflow-hidden");
 	}
 
 	/**
 	 * Switch API providers.
 	 *
-	 * @param {Event} e The clicked element event.
+	 * @param {string} newProvider The provider to switch to.
 	 * @since 4.5
 	 */
-	async function switchProvider(e) {
-		const target = e.currentTarget;
-		const newProvider = target.dataset.provider;
-
-		if (target.classList.contains("active")) {
-			// Exit if already active.
-			return;
+	async function switchProvider(newProvider) {
+		if (activeProvider === newProvider) {
+			return; // Exit if already active.
 		}
+
 		setLoading(true);
 		setAPIError(false);
 		setShowAPILightbox(false);
@@ -371,6 +396,7 @@ export default function InstantImages(props) {
 				if (status !== 200) {
 					// Catch API errors and 401s.
 					setShowAPILightbox(newProvider); // Show API Lightbox.
+					setAPIError(true);
 					body.classList.add("overflow-hidden");
 					return;
 				}
@@ -382,6 +408,7 @@ export default function InstantImages(props) {
 				// Catch all other errors.
 				setShowAPILightbox(newProvider); // Show API Lightbox.
 				body.classList.add("overflow-hidden");
+				setAPIError(true);
 				return;
 			}
 		}
@@ -392,6 +419,33 @@ export default function InstantImages(props) {
 			setActiveProvider(newProvider); // Switch the provider.
 		}, delay);
 	}
+	/**
+	 * Get autocomplete search suggestions.
+	 *
+	 * @param {string} term The search term.
+	 * @return {Array} The autocomplete suggestions.
+	 */
+	async function getSuggestions(term) {
+		if (!term || term?.length < 3) {
+			// Exit if term length is less than 3.
+			return;
+		}
+
+		// API endpoint URL.
+		const api_url =
+			instant_img_localize.root +
+			`instant-images-extended/suggestions/?term=${term}`;
+
+		// Get suggestions.
+		await axios
+			.get(api_url)
+			.then(function (res) {
+				setSuggestions(res.data);
+			})
+			.catch(function (error) {
+				console.warn(error);
+			});
+	}
 
 	/**
 	 * Renders the Masonry layout.
@@ -399,12 +453,12 @@ export default function InstantImages(props) {
 	 * @since 3.0
 	 */
 	function renderLayout() {
-		imagesLoaded(photoListing.current, function () {
-			if (!blockEditor) {
-				msnry.current = new Masonry(photoListing.current, {
+		imagesLoaded(photosRef.current, function () {
+			if (!isBlockEditor) {
+				msnryRef.current = new Masonry(photosRef.current, {
 					itemSelector: ".photo",
 				});
-				photoListing.current.querySelectorAll(".photo").forEach((el) => {
+				photosRef.current.querySelectorAll(".photo").forEach((el) => {
 					el.classList.add("in-view");
 				});
 			}
@@ -417,6 +471,19 @@ export default function InstantImages(props) {
 				}
 			}, delay);
 		});
+	}
+
+	/**
+	 * Reset the scroll position for the WP block only.
+	 */
+	function resetScrollPosition() {
+		if (wpBlock && photosRef?.current) {
+			photosRef?.current.scroll({
+				top: 0,
+				left: 0,
+				behavior: "smooth",
+			});
+		}
 	}
 
 	/**
@@ -437,7 +504,7 @@ export default function InstantImages(props) {
 	function escFunction(e) {
 		const { key } = e;
 		if (key === "Escape") {
-			const editing = photoListing.current.querySelectorAll(
+			const editing = photosRef.current.querySelectorAll(
 				".edit-screen.editing"
 			);
 			if (editing) {
@@ -478,12 +545,8 @@ export default function InstantImages(props) {
 
 	// Scroll in-view callback.
 	useEffect(() => {
-		if (!blockEditor && !mediaRouter) {
-			// Exclude infinite scroll in media modal and block editor.
-			if (mounted && !loading && !done) {
-				loadMorePhotos();
-			}
-		}
+		// Infinite scrolling.
+		loadMorePhotos();
 	}, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	// Results callback.
@@ -495,6 +558,11 @@ export default function InstantImages(props) {
 	useEffect(() => {
 		setLoading(false);
 		wrapper.classList.add("loaded");
+
+		// Block editor, get initial set of photos.
+		if (isBlockEditor) {
+			getPhotos();
+		}
 		// Add global escape listener.
 		document.addEventListener("keydown", escFunction, false);
 		return () => {
@@ -504,104 +572,77 @@ export default function InstantImages(props) {
 
 	return (
 		<Fragment>
-			<ProviderNav switchProvider={switchProvider} provider={activeProvider} />
-			<RestAPIError
-				title={instant_img_localize.error_restapi}
-				desc={instant_img_localize.error_restapi_desc}
-				type="warning"
-			/>
-
-			<div className="control-nav" ref={controlNav}>
-				<div
-					className={classNames(
-						"control-nav--filters-wrap",
-						apiError || search?.active ? "inactive" : null
-					)}
-				>
-					{filterOptions && Object.entries(filterOptions)?.length ? (
-						<div className="control-nav--filters">
-							{Object.entries(filterOptions).map(([key, filter], index) => (
-								<Filter
-									key={`${activeProvider}-${index}-${key}`}
-									provider={activeProvider}
-									data={filter}
-									filterKey={key}
-									function={filterPhotos}
-								/>
-							))}
-						</div>
-					) : null}
-				</div>
-				<div
-					className={classNames(
-						"control-nav--search",
-						"search-field",
-						apiError ? "inactive" : null
-					)}
-					id="search-bar"
-				>
-					<form onSubmit={(e) => searchHandler(e)} autoComplete="off">
-						<label htmlFor="search-input" className="offscreen">
-							{instant_img_localize.search_label}
-						</label>
-						<input
-							type="search"
-							id="search-input"
-							placeholder={instant_img_localize.search}
-							ref={searchInput}
-							disabled={apiError}
-						/>
-						<button type="submit" disabled={apiError}>
-							<i className="fa fa-search"></i>
-							<span className="offscreen">{instant_img_localize.search}</span>
-						</button>
-						<SearchToolTip
-							container={plugin}
-							getPhotos={getPhotos}
-							is_search={search?.active}
-							total={search?.results}
-							title={`${search?.results} ${instant_img_localize.search_results} ${search?.term}`}
-						/>
-					</form>
-				</div>
-			</div>
-
-			<div id="photo-listing" className={loading ? "loading" : null}>
-				{!!search?.active && (
-					<SearchHeader
-						provider={activeProvider}
-						term={search?.term}
-						total={search?.results}
-						filterSearch={filterSearch}
-						getPhotos={getPhotos}
-					/>
+			<PluginProvider
+				value={{
+					provider: activeProvider,
+					wpBlock,
+					mediaModal,
+					blockSidebar,
+					clientId,
+					search,
+					apiError,
+					getPhotos,
+					searchHandler,
+					filterSearch,
+					suggestions,
+					getSuggestions,
+				}}
+			>
+				{wpBlock ? (
+					<WPBlockHeader switchProvider={switchProvider} />
+				) : (
+					<>
+						<ProviderNav switchProvider={switchProvider} />
+						<ExtendedCTA />
+					</>
 				)}
-				<div id="photos" ref={photoListing}>
-					<Results
-						provider={activeProvider}
-						results={results}
-						mediaRouter={mediaRouter}
-						blockEditor={blockEditor}
-					/>
-				</div>
-				<LoadingBlock loading={loadingMore} total={results?.length} />
-				<NoResults total={search?.results} is_search={search?.active} />
-				<div className="load-more-wrap" ref={loadMoreRef}>
-					<button
-						type="button"
-						className="button"
-						onClick={() => loadMorePhotos()}
+				<RestAPIError />
+				<div className="control-nav">
+					<div
+						className={classNames(
+							"control-nav--filters-wrap",
+							apiError || search?.active ? "inactive" : null
+						)}
 					>
-						{instant_img_localize.load_more}
-					</button>
+						{filterOptions && Object.entries(filterOptions)?.length ? (
+							<div className="control-nav--filters">
+								{Object.entries(filterOptions).map(([key, filter], index) => (
+									<Filter
+										key={`${activeProvider}-${index}-${key}`}
+										data={filter}
+										filterKey={key}
+										handler={filterPhotos}
+									/>
+								))}
+							</div>
+						) : null}
+					</div>
+					<SearchForm ref={searchInputRef} />
 				</div>
-				<APILightbox
-					provider={showAPILightbox}
-					closeAPILightbox={closeAPILightbox}
-				/>
-				<ErrorLightbox error={apiError} provider={activeProvider} />
-				<Tooltip />
-			</div>
+				<div id="photo-listing" className={loading ? "loading" : null}>
+					<SearchHeader />
+					{wpBlock ? (
+						<ResultsWPBlock
+							ref={photosRef}
+							data={results}
+							done={done}
+							loadMorePhotos={loadMorePhotos}
+						/>
+					) : (
+						<Results ref={photosRef} data={results} />
+					)}
+					<NoResults total={search?.results} is_search={search?.active} />
+					<LoadMore
+						ref={loadMoreRef}
+						loadMorePhotos={loadMorePhotos}
+						loading={loadingMore}
+						done={done}
+					/>
+					<APILightbox provider={showAPILightbox} callback={closeAPILightbox} />
+					<ErrorLightbox />
+					<Tooltip />
+				</div>
+			</PluginProvider>
 		</Fragment>
 	);
 }

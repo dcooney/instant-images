@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "connekthq/instant-images",
+  "version": "1.0.0",
+  "title": "Instant Images",
+  "category": "media",
+  "description": "One click photo uploads from Unsplash, Openverse, Pixabay and Pexels.",
+  "keywords": [
+    "image",
+    "instant images",
+    "photo",
+    "stock photos",
+    "Unsplash",
+    "Openverse",
+    "Pixabay",
+    "Pexels"
+  ],
+  "attributes": {},
+  "supports": {
+    "customClassName": false,
+    "anchor": false,
+    "html": false
+  },
+  "textdomain": "instant-images",
+  "editorScript": "file:./index.js"
+}

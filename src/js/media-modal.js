@@ -167,7 +167,7 @@ const renderApp = (element, provider, results, error) => {
 		const root = createRoot(element);
 		root.render(
 			<InstantImages
-				editor="media-router"
+				editor="media-modal"
 				data={results}
 				container={element}
 				api_error={error}
@@ -177,7 +177,7 @@ const renderApp = (element, provider, results, error) => {
 	} else {
 		render(
 			<InstantImages
-				editor="media-router"
+				editor="media-modal"
 				data={results}
 				container={element}
 				api_error={error}

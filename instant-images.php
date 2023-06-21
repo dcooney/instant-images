@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 5.3.1
+ * Version: 6.0.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '5.3.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'May 12, 2023' );
+define( 'INSTANT_IMAGES_VERSION', '6.0.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'June 19, 2023' );
+define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
  * InstantImages class
@@ -42,6 +43,57 @@ class InstantImages {
 		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain.
 		$this->includes();
 		$this->constants();
+	}
+
+	/**
+	 * Include these files in the admin
+	 *
+	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 2.0
+	 */
+	private function includes() {
+		if ( is_admin() ) {
+			require_once __DIR__ . '/admin/admin.php';
+			require_once __DIR__ . '/admin/includes/settings.php';
+			require_once __DIR__ . '/admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php';
+
+			if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
+				// Only include this EDD helper if other plugins have not.
+				require_once dirname( __FILE__ ) . '/admin/vendor/EDD_SL_Plugin_Updater.php';
+			}
+		}
+
+		// API Routes.
+		require_once 'api/test.php';
+		require_once 'api/download.php';
+		require_once 'api/settings.php';
+		require_once 'api/license.php';
+	}
+
+	/**
+	 * Set up plugin constants.
+	 *
+	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 2.0
+	 */
+	private function constants() {
+		$upload_dir = wp_upload_dir();
+		define( 'INSTANT_IMAGES_TITLE', 'Instant Images' );
+		define( 'INSTANT_IMAGES_UPLOAD_PATH', $upload_dir['basedir'] . '/instant-images' );
+		define( 'INSTANT_IMAGES_UPLOAD_URL', $upload_dir['baseurl'] . '/instant-images/' );
+		define( 'INSTANT_IMAGES_PATH', plugin_dir_path( __FILE__ ) );
+		define( 'INSTANT_IMAGES_URL', plugins_url( '/', __FILE__ ) );
+		define( 'INSTANT_IMAGES_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
+		define( 'INSTANT_IMAGES_WPADMIN_URL', admin_url( 'upload.php?page=instant-images' ) );
+		define( 'INSTANT_IMAGES_WPADMIN_SETTINGS_URL', admin_url( 'options-general.php?page=instant-images-settings' ) );
+		define( 'INSTANT_IMAGES_SETTINGS', 'instant_img_settings' );
+		define( 'INSTANT_IMAGES_API_SETTINGS', 'instant_img_api_settings' );
+		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
+
+		// Instant Images: Extended.
+		if ( ! defined( 'INSTANT_IMAGES_EXTENDED_ID' ) ) {
+			define( 'INSTANT_IMAGES_EXTENDED_ID', '96' );
+		}
 	}
 
 	/**
@@ -111,16 +163,15 @@ class InstantImages {
 	 * @return object Settings as an STD object with defaults.
 	 */
 	public static function instant_img_get_settings() {
-
 		// General plugin settings.
-		$options          = get_option( 'instant_img_settings' );
+		$options          = get_option( INSTANT_IMAGES_SETTINGS );
 		$max_width        = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
 		$max_height       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
 		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
 		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Default provider.
 
 		// API Keys.
-		$api_options  = get_option( 'instant_img_api_settings' );
+		$api_options  = get_option( INSTANT_IMAGES_API_SETTINGS );
 		$unsplash_api = isset( $api_options['unsplash_api'] ) ? $api_options['unsplash_api'] : '';
 		$unsplash_api = empty( $unsplash_api ) ? '' : $unsplash_api; // If empty, set to default key.
 		$pixabay_api  = isset( $api_options['pixabay_api'] ) ? $api_options['pixabay_api'] : '';
@@ -147,10 +198,13 @@ class InstantImages {
 	 */
 	public function enqueue_block_editor() {
 		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets', 'site-editor' ] ) ) {
+			// Plugin sidebar.
+			$sidebar_asset_file = require INSTANT_IMAGES_PATH . 'build/plugin-sidebar/index.asset.php'; // Get webpack asset file.
+
 			wp_enqueue_script(
 				'instant-images-plugin-sidebar',
 				INSTANT_IMAGES_URL . 'build/plugin-sidebar/index.js',
-				[],
+				$sidebar_asset_file['dependencies'],
 				INSTANT_IMAGES_VERSION,
 				true
 			);
@@ -161,6 +215,18 @@ class InstantImages {
 				[ 'wp-edit-post' ],
 				INSTANT_IMAGES_VERSION
 			);
+
+			// Image block.
+			if ( $this::instant_images_addon_valid_license( 'extended' ) ) {
+				$block_asset_file = require INSTANT_IMAGES_PATH . 'build/block/index.asset.php'; // Get webpack asset file.
+				wp_enqueue_script(
+					'instant-images-block',
+					INSTANT_IMAGES_URL . 'build/block/index.js',
+					$block_asset_file['dependencies'],
+					INSTANT_IMAGES_VERSION,
+					true
+				);
+			}
 
 			$this::instant_img_localize( 'instant-images-plugin-sidebar' );
 		}
@@ -176,10 +242,11 @@ class InstantImages {
 		$show_tab       = $this::instant_img_show_tab( 'media_modal_display' ); // Show Tab Setting.
 		$current_screen = is_admin() && function_exists( 'get_current_screen' ) ? get_current_screen()->base : ''; // Current admin screen.
 		if ( $this::instant_img_has_access() && $show_tab && $current_screen !== 'upload' ) {
+			$media_modal_asset_file = require INSTANT_IMAGES_PATH . 'build/media-modal/index.asset.php'; // Get webpack asset file.
 			wp_enqueue_script(
 				'instant-images-media-modal',
 				INSTANT_IMAGES_URL . 'build/media-modal/index.js',
-				[ 'wp-element' ],
+				$media_modal_asset_file['dependencies'],
 				INSTANT_IMAGES_VERSION,
 				true
 			);
@@ -190,6 +257,7 @@ class InstantImages {
 				'',
 				INSTANT_IMAGES_VERSION
 			);
+
 			$this::instant_img_localize( 'instant-images-media-modal' );
 		}
 	}
@@ -317,7 +385,7 @@ class InstantImages {
 				'api_invalid_500_msg'     => __( 'An internal server error has occured - please try again.', 'instant-images' ),
 				'api_invalid_501_msg'     => __( 'No image provider or destination URL set.', 'instant-images' ),
 				'api_ratelimit_msg'       => __( 'The API rate limit has been exceeded for this image provider. Please add a new API key or try again later.', 'instant-images' ),
-				'api_default_provider'    => __( 'You\'re seeing this message because the default image provider has thrown an error. Switch the default provider in the Instant Images settings or check that you\'re using a valid API key.', 'instant-images' ),
+				'api_default_provider'    => __( 'Switch the default provider in the Instant Images settings or check that you\'re using a valid API key.', 'instant-images' ),
 				'get_api_key'             => __( 'Get API Key', 'instant-images' ),
 				'use_instant_images_key'  => __( 'Reset Default Key', 'instant-images' ),
 				'error_on_load_title'     => __( 'An unknown error has occured while accessing {provider}', 'instant-images' ),
@@ -325,14 +393,11 @@ class InstantImages {
 				'error'                   => __( 'Error', 'instant-images' ),
 				'ad'                      => __( 'Ad', 'instant-images' ),
 				'advertisement'           => __( 'Advertisement', 'instant-images' ),
-				'v5_upgrade_notice'       => [
-					'transient'  => get_transient( 'instant_images_v5_upgrade_notice' ),
-					'disclaimer' => __( 'Disclaimer', 'instant-images' ),
-					// translators: Instant Images upgrade notice.
-					'text'       => sprintf( __( 'As of Instant Images 5.0, all API requests to service providers (Unsplash, Pexels and Pixabay) are now routed through our custom %1$sInstant Images Proxy%2$s server.', 'instant-images' ), '<a href="https://connekthq.com/plugins/instant-images/faqs/#what-is-the-instant-images-proxy-server" target="_blank">', '</a>' ),
-					'privacy'    => __( 'Privacy Policy', 'instant-images' ),
-					'terms'      => __( 'Terms of Use', 'instant-images' ),
-					'dismiss'    => __( 'Dismiss Notice', 'instant-images' ),
+				'addons'                  => [
+					'extended' => [
+						'activated' => self::instant_images_addon_activated( 'extended' ),
+						'license'   => self::instant_images_addon_valid_license( 'extended' ),
+					],
 				],
 				'filters'                 => [
 					'select'       => __( '-- Select --', 'instant-images' ),
@@ -352,24 +417,6 @@ class InstantImages {
 	}
 
 	/**
-	 * Include these files in the admin
-	 *
-	 * @author ConnektMedia <support@connekthq.com>
-	 * @since 2.0
-	 */
-	private function includes() {
-		if ( is_admin() ) {
-			require_once __DIR__ . '/admin/admin.php';
-			require_once __DIR__ . '/admin/includes/settings.php';
-			require_once __DIR__ . '/admin/vendor/connekt-plugin-installer/class-connekt-plugin-installer.php';
-		}
-		// REST API Routes.
-		require_once 'api/test.php';
-		require_once 'api/download.php';
-		require_once 'api/settings.php';
-	}
-
-	/**
 	 * Show tab to upload image on post edit screens
 	 *
 	 * @param string $option WP Option.
@@ -382,7 +429,7 @@ class InstantImages {
 			return true;
 		}
 
-		$options = get_option( 'instant_img_settings' );
+		$options = get_option( INSTANT_IMAGES_SETTINGS );
 		$show    = true;
 		if ( isset( $options[ $option ] ) ) {
 			if ( '1' === $options[ $option ] ) {
@@ -425,26 +472,6 @@ class InstantImages {
 	}
 
 	/**
-	 * Set up plugin constants.
-	 *
-	 * @author ConnektMedia <support@connekthq.com>
-	 * @since 2.0
-	 */
-	private function constants() {
-		define( 'INSTANT_IMAGES_TITLE', 'Instant Images' );
-
-		$upload_dir = wp_upload_dir();
-		define( 'INSTANT_IMAGES_UPLOAD_PATH', $upload_dir['basedir'] . '/instant-images' );
-		define( 'INSTANT_IMAGES_UPLOAD_URL', $upload_dir['baseurl'] . '/instant-images/' );
-		define( 'INSTANT_IMAGES_PATH', plugin_dir_path( __FILE__ ) );
-		define( 'INSTANT_IMAGES_URL', plugins_url( '/', __FILE__ ) );
-		define( 'INSTANT_IMAGES_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
-		define( 'INSTANT_IMAGES_WPADMIN_URL', admin_url( 'upload.php?page=instant-images' ) );
-		define( 'INSTANT_IMAGES_WPADMIN_SETTINGS_URL', admin_url( 'options-general.php?page=instant-images-settings' ) );
-		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
-	}
-
-	/**
 	 * Get the instant images tagline.
 	 *
 	 * @return string
@@ -464,8 +491,34 @@ class InstantImages {
 	 * @since 2.0
 	 */
 	public function add_action_links( $links ) {
-		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( ' Get Images', 'instant-images' ) . '</a>' ];
+		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( 'Get Images', 'instant-images' ) . '</a>', '<a href="' . INSTANT_IMAGES_WPADMIN_SETTINGS_URL . '">' . __( 'Settings', 'instant-images' ) . '</a>' ];
 		return array_merge( $mylinks, $links );
+	}
+
+	/**
+	 * Is Instant Images add-on installed and activated.
+	 *
+	 * @param string $addon Add-on name.
+	 * @return boolean
+	 */
+	public static function instant_images_addon_activated( $addon ) {
+		switch ( $addon ) {
+			case 'extended':
+				return class_exists( 'InstantImagesExtended' );
+		}
+	}
+
+	/**
+	 * Is Instant Images add-on installed and activated with a valid license key.
+	 *
+	 * @param string $addon Add-on name.
+	 * @return boolean
+	 */
+	public static function instant_images_addon_valid_license( $addon ) {
+		switch ( $addon ) {
+			case 'extended':
+				return class_exists( 'InstantImagesExtended' ) && InstantImagesExtended::valid_license();
+		}
 	}
 
 }

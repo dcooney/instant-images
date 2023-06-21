@@ -12,8 +12,12 @@ $radius_xl: 10px;
 $el_height: 38px;
 $shadow_md: 0 1px 4px 0 #0000001a, 0 1px 3px -1px #0000001a !important;
 $shadow: 0 8px 16px rgba(#303f7a, 0.175);
+$shadow_btn: 0 1px 1px rgba(0, 0, 0, 0.05);
 $gb_border: #ddd;
 $transition: all 0.25s ease;
+
+$wpblock_maxw: 275px;
+$wpblock_maxh: 250px;
 
 $text: #434246;
 $text_alt: #6b6877;
@@ -45,4 +49,20 @@ $yellow_bkg: #fffadc;
 	outline: none;
 	border-color: $purple;
 	box-shadow: 0 0 0 1px $purple, 0 0 0 4px rgba($purple, 0.1);
+}
+
+@mixin buttonDefaults() {
+	border-color: $purple;
+	color: $purple;
+	box-shadow: $shadow_btn;
+	transition: $transition;
+	&:hover,
+	&:focus {
+		color: #fff !important;
+		border-color: $purple_dark;
+		background-color: $purple_dark;
+	}
+	&:focus {
+		box-shadow: 0 0 0 1px #fff, 0 0 0 3px $purple_dark;
+	}
 }

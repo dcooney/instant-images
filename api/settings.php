@@ -34,14 +34,13 @@ add_action(
  * @package InstantImages
  */
 function instant_images_settings( WP_REST_Request $request ) {
-
 	if ( InstantImages::instant_img_has_access() ) {
 
 		// Get JSON Data.
 		$data = json_decode( $request->get_body(), true ); // Get contents of request body.
 
 		if ( $data ) {
-			$option = 'instant_img_api_settings';
+			$option = INSTANT_IMAGES_API_SETTINGS;
 
 			// Global settings.
 			$options = get_option( $option );

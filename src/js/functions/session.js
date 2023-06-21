@@ -1,5 +1,5 @@
-import CryptoJS from "crypto-js";
 import { API } from "../constants/API";
+import { md5Hash } from "./helpers";
 
 /**
  * Get results from session storage by URL.
@@ -18,7 +18,11 @@ export function getSession(url) {
 	}
 
 	const data = JSON.parse(session);
-	const { expires = 0 } = data;
+	const { expires = 0, error = null } = data;
+
+	if (error) {
+		return false; // Exit if session data has error entry.
+	}
 
 	// Check if expiration time has passed.
 	const expired = Date.now() > expires;
@@ -38,7 +42,7 @@ export function getSession(url) {
  * @param {Array}  results The API results.
  */
 export function saveSession(url, results) {
-	if (!url || !results) {
+	if (!url || !results || results?.error) {
 		return false;
 	}
 	// Set expiration to 1 hour.
@@ -58,14 +62,4 @@ export function deleteSession(url) {
 		return false;
 	}
 	sessionStorage.removeItem(md5Hash(url));
-}
-
-/**
- * Get the MD5 hash value of a URL.
- *
- * @param {string} url The API URL to hash.
- * @return {string} The MD5 hash.
- */
-export function md5Hash(url) {
-	return CryptoJS.MD5(url).toString();
 }

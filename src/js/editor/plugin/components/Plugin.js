@@ -1,6 +1,6 @@
 import { PluginSidebar } from "@wordpress/edit-post";
-import Icon from "./Icon";
-import Panel from "./Panel";
+import Icon from "../../../components/Icon";
+import Sidebar from "./Sidebar";
 
 /**
  * The plugin sidebar as a component.
@@ -10,11 +10,11 @@ import Panel from "./Panel";
 export default function Plugin() {
 	return (
 		<PluginSidebar
-			icon={<Icon borderless color="unsplash" />}
+			icon={<Icon borderless />}
 			name="instant-images-sidebar"
 			title="Instant Images"
 		>
-			<Panel />
+			<Sidebar />
 		</PluginSidebar>
 	);
 }

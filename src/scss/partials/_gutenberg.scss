@@ -1,11 +1,3 @@
-body.loading {
-	.instant-img-container {
-		.loading-block {
-			display: block;
-		}
-	}
-}
-
 .instant-images-sidebar-icon,
 .instant-images-sidebar-icon svg {
 	display: inline-flex;
@@ -27,26 +19,13 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 	fill: $purple_bright !important;
 }
 
+// WP Block + Sidebar Plugin.
+.instant-images-block,
 .components-panel {
 	#photos {
 		&::after {
 			width: 100%;
 			left: 0;
-		}
-	}
-	.instant-img-container {
-		.load-more-wrap {
-			padding-bottom: 5px;
-
-			button {
-				display: inline-block;
-			}
-		}
-		.loading-block {
-			padding: 25px 0;
-		}
-		.notice.upgrade-notice {
-			margin: 10px;
 		}
 	}
 	.no-results {
@@ -69,19 +48,7 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 	.search-header {
 		display: none;
 	}
-	#photo-listing {
-		width: 100%;
-		margin: 0;
-		padding: 5px 10px;
-		overflow: hidden;
-		.photo {
-			width: 100%;
-			display: block;
-			opacity: 1 !important;
-			margin: 0 0 10px;
-			padding: 0;
-		}
-	}
+	// Provider Nav.
 	.provider-nav {
 		width: 100%;
 		padding: 10px 5px;
@@ -89,70 +56,64 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 		border-bottom-color: $gb_border;
 		button {
 			font-size: 13px;
-			padding-left: 36px;
 		}
 	}
+
+	// Filters + Search.
 	.control-nav {
-		padding: 0 5px 5px;
-		border-bottom: 1px solid $gb_border;
-		margin: 0 0 10px;
-		display: block;
-		.control-nav--spacer {
-			display: none;
-		}
-		&--filters-wrap {
-			flex: none;
-			width: 100%;
-			display: block;
-		}
 		&--filters {
-			column-gap: 6px;
-			padding: 10px 0;
-			.filter-dropdown {
-				width: calc(50% - 3px);
-				display: none;
-				button {
-					padding: 5px;
-					font-size: 13px;
-					&.filter-dropdown--button {
-						display: block;
-					}
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-rows: 1fr;
+			grid-column-gap: 10px;
+		}
+		.filter-dropdown {
+			width: 100%;
+			display: none;
+			&:nth-child(1),
+			&:nth-child(2) {
+				display: block;
+			}
+			button {
+				padding: 5px;
+				font-size: 13px;
+				&.filter-dropdown--button {
+					display: block;
 					i {
 						margin-left: auto;
 						padding-right: 5px;
 					}
 				}
-				&--menu {
-					width: 106%;
-					left: -3%;
-					padding: 8px;
-					button {
-						gap: 8px;
-					}
-				}
-				&:nth-child(1),
-				&:nth-child(2) {
-					display: block;
-				}
-				.filter-dropdown--button-label {
-					display: block;
-					font-size: 10px;
-					text-transform: uppercase;
-					margin: 0 0 2px;
-				}
-				.filter-dropdown--button-selected {
-					display: flex;
-					align-items: center;
-					width: 100%;
-					font-size: 14px;
+			}
+			&--menu {
+				width: 100%;
+				left: 0;
+				padding: 6px;
+				button {
+					gap: 8px;
 				}
 			}
+			.filter-dropdown--button-label {
+				display: block;
+				font-size: 10px;
+				text-transform: uppercase;
+				margin: 0 0 2px;
+			}
+			.filter-dropdown--button-selected {
+				display: flex;
+				align-items: center;
+				width: 100%;
+				font-size: 14px;
+			}
 		}
+
+		// Search.
 		&--search {
 			float: none;
 			width: 100%;
-			padding: 0 0 10px;
+			padding: 0;
 			clear: both;
+			margin: 0;
 			form {
 				height: auto;
 			}
@@ -174,9 +135,6 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 				&.searching {
 					padding-left: 30px;
 				}
-				&:focus {
-					box-shadow: none;
-				}
 			}
 			input[type="search"]::-webkit-input-placeholder {
 				font-size: 13px;
@@ -184,14 +142,12 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 			input[type="search"]:-moz-placeholder {
 				font-size: 13px;
 			}
-			input[type="search"]::-moz-placeholder {
-				font-size: 13px;
-			}
 			input[type="search"]:-ms-input-placeholder {
 				font-size: 13px;
 			}
-			.searchResults {
-				right: 2px;
+
+			&-tooltip {
+				right: 3px;
 				left: auto;
 				top: 2px;
 				border-radius: 2px;
@@ -205,20 +161,168 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 			}
 		}
 	}
+}
 
-	.orientation-list {
-		position: static;
-		border-top: none;
-		background: $lighter_grey;
-		padding: 5px 5px 5px 0;
-		margin-bottom: 5px;
-		border-bottom-color: $gb_border;
-		span {
-			display: none;
+// WP Block.
+.instant-images-block {
+	.instant-img-container {
+		border: 1px solid $border;
+		border-radius: $radius;
+		box-shadow: 0 0 0 5px $lighter_grey;
+		padding: 0;
+	}
+
+	// Block header.
+	&--header {
+		padding: 15px;
+		display: flex;
+		align-items: center;
+		width: 100%;
+		background-color: $lighter_grey;
+		border-bottom: 1px solid $border;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
+		border-radius: $radius $radius 0 0;
+		&-logo {
+			display: flex;
+			align-items: center;
+			svg {
+				width: 32px;
+				height: 32px;
+				margin-right: 8px;
+			}
+			span {
+				font-weight: 600;
+				font-size: 15px;
+				color: $text;
+			}
 		}
-		ul {
-			padding: 0;
+		&-nav {
+			margin-left: auto;
+		}
+	}
+
+	// Loader.
+	&--loader {
+		height: $wpblock_maxh;
+		width: $wpblock_maxw;
+		min-width: $wpblock_maxw;
+		background: $lighter_grey url("../img/ajax-loader-lg.gif") no-repeat center
+			center;
+		border: 1px dashed $grey;
+		border-radius: $radius;
+		&.done {
+			display: none !important;
+		}
+	}
+
+	// Instructions.
+	&--instructions {
+		width: 100%;
+		background-color: $lighter_grey;
+		border-radius: 0 0 $radius $radius;
+		padding: 10px;
+		font-size: 12px;
+		display: flex;
+		justify-content: center;
+		color: $text;
+		font-weight: 500;
+		cursor: default;
+		span {
+			opacity: 0.5;
+			margin: 0 5px;
+			font-weight: 400;
+		}
+	}
+
+	.load-more-wrap,
+	.loading-block {
+		display: none !important;
+	}
+
+	// Filters + Search.
+	.control-nav {
+		padding: 15px;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: 1fr;
+		grid-column-gap: 10px;
+	}
+
+	#photo-listing {
+		display: block;
+		width: 100%;
+		min-height: $wpblock_maxh + 75px;
+		padding: 15px;
+		overflow: hidden;
+		&::after {
+			background-position: center 43%;
+		}
+
+		#photos--wrap {
+			display: flex;
+		}
+		#photos {
+			display: flex;
+			flex-wrap: nowrap;
+			overflow-x: auto;
 			width: 100%;
+			padding: 0 0 10px;
+			margin: 0;
+			.photo {
+				opacity: 1 !important;
+				margin-right: 10px;
+				width: $wpblock_maxw;
+				min-width: $wpblock_maxw;
+				height: $wpblock_maxh;
+			}
+			.photo-wrap,
+			.img-wrap,
+			button.photo-upload {
+				width: $wpblock_maxw;
+				height: $wpblock_maxh;
+			}
+
+			button.photo-upload {
+				img {
+					object-fit: cover;
+					width: 100% !important;
+					height: 100% !important;
+				}
+			}
+		}
+	}
+}
+
+// Sidebar Plugin.
+.components-panel {
+	// Photo Listing.
+	#photo-listing {
+		width: 100%;
+		margin: 0;
+		padding: 5px 10px;
+		overflow: hidden;
+		.photo {
+			width: 100%;
+			display: block;
+			opacity: 1 !important;
+			margin: 0 0 10px;
+			padding: 0;
+		}
+	}
+
+	// Filters + Search.
+	.control-nav {
+		padding: 10px 5px;
+		border-bottom: 1px solid $gb_border;
+		margin: 0 0 10px;
+		display: block;
+
+		&--filters-wrap {
+			flex: none;
+			width: 100%;
+			display: block;
+			margin-bottom: 10px;
 		}
 	}
 }

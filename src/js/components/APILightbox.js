@@ -4,6 +4,7 @@ import { buildTestURL } from "../functions/buildURL";
 import consoleStatus from "../functions/consoleStatus";
 import { checkRateLimit, gotoURL } from "../functions/helpers";
 import updatePluginSetting from "../functions/updatePluginSetting";
+import { getProviderIcon } from "./ProviderIcons";
 
 /**
  * Render the APILightbox component.
@@ -13,7 +14,7 @@ import updatePluginSetting from "../functions/updatePluginSetting";
  * @return {JSX.Element} The APILightbox component.
  */
 export default function APILightbox(props) {
-	const { provider, closeAPILightbox } = props;
+	const { provider, callback } = props;
 
 	const [apiStatus, setAPIStatus] = useState("invalid");
 	const [response, setResponse] = useState("");
@@ -59,7 +60,7 @@ export default function APILightbox(props) {
 				setTimeout(function () {
 					setResponse("");
 					setAPIStatus("invalid");
-					closeAPILightbox(provider);
+					callback(provider);
 				}, 1000);
 			} else {
 				setAPIStatus("invalid"); // Error/Invalid.
@@ -86,7 +87,7 @@ export default function APILightbox(props) {
 		if (lightbox?.current) {
 			lightbox.current.classList.remove("active");
 			setTimeout(function () {
-				closeAPILightbox();
+				callback();
 			}, 150);
 		}
 	}
@@ -156,7 +157,10 @@ export default function APILightbox(props) {
 								</span>
 							</button>
 							<div className="api-lightbox--details">
-								<h3 data-provider={provider}>{provider}</h3>
+								<h3>
+									{getProviderIcon(provider)}
+									{provider}
+								</h3>
 								<p>{instant_img_localize[`${provider}_api_desc`]}</p>
 								<p className="action-controls">
 									<button

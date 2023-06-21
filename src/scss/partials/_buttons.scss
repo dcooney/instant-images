@@ -1,0 +1,24 @@
+.instant-images-settings,
+.instant-img-container {
+	// Button Styles.
+	.button {
+		&.button-primary {
+			background-color: $purple;
+			border-color: $purple;
+			border-radius: $radius;
+			box-shadow: $shadow_btn;
+			transition: $transition;
+			&:hover,
+			&:focus {
+				background-color: $purple_dark;
+				border-color: $purple_dark;
+			}
+			&:focus {
+				box-shadow: 0 0 0 1px #fff, 0 0 0 3px $purple_dark;
+			}
+		}
+		&.button-secondary {
+			@include buttonDefaults();
+		}
+	}
+}

@@ -1,31 +1,34 @@
 import { Fragment } from "@wordpress/element";
+import { usePluginContext } from "../common/pluginProvider";
 import { API } from "../constants/API";
-const providers = API.providers; // Get current provider settings.
+import { getProviderIcon } from "./ProviderIcons";
+const providers = API.providers;
 
 /**
  * Render the ProviderNav component.
- * Note: Component is display on initial plugin load if the default provider has an invalid API key.
  *
- * @param {Object} props The component props.
- * @return {JSX.Element} The ProviderNav component.
+ * @param {Object} props                The component props.
+ * @param {Object} props.switchProvider The function to switch the provider.
+ * @return {JSX.Element}                The ProviderNav component.
  */
-export default function ProviderNav(props) {
-	const { provider, switchProvider } = props;
+export default function ProviderNav({ switchProvider }) {
+	const { provider } = usePluginContext();
+
 	return (
 		<Fragment>
 			{!!providers?.length && (
 				<nav className="provider-nav">
-					{providers.map((item, iterator) => (
-						<div key={`provider-${iterator}`}>
+					{providers.map((item, index) => (
+						<div key={`provider-${index}`}>
 							<button
-								data-provider={item.toLowerCase()}
-								onClick={(e) => switchProvider(e)}
+								onClick={() => switchProvider(item.toLowerCase())}
 								className={
 									provider === item.toLowerCase()
 										? "provider-nav--btn active"
 										: "provider-nav--btn"
 								}
 							>
+								{getProviderIcon(item)}
 								<span>{item}</span>
 								{API[item.toLowerCase()].new && (
 									<span className="provider-nav--new">

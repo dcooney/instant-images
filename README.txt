@@ -4,7 +4,7 @@ Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
 Tested up to: 6.2
-Stable tag: 5.3.1
+Stable tag: 6.0.0
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -43,7 +43,21 @@ The perfect tool for users who want to save time and frustration by uploading im
 - **Easy to Use** - It couldn't get much more simple, just click an image and it's automatically uploaded to your media library for use on your site.
 - **No Accounts Needed** - An account on any service provider is not required for use of this plugin. Just activate and you're ready to go.
 
----
+= Add-ons =
+
+== Instant Images: Extended ==
+
+Enhance the Instant Images experience with a suite of premium features and added functionality.
+
+**What's Included:**
+- Instant Images Gutenberg Block
+- WordPress CLI Imports
+- Batch Image Imports
+- Images Filters (Instagram)
+- Search History & Suggestions
+- And more...
+
+[Learn More](https://getinstantimages.com/add-ons/extended/)
 
 = Proxy Server =
 Instant Images routes all API requests to service providers (Unsplash, Pexels, Pixabay, Openverse etc.) through our custom proxy server at [proxy.getinstantimages.com](https://proxy.getinstantimages.com).
@@ -144,6 +158,15 @@ How to install Instant Images.
 5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 6.0.0 - June 19, 2023 =
+* NEW: Added support and functionality requirements for [Instant Images: Extended add-on](https://getinstantimages.com/add-ons/extended/).
+* UPDATE: Improved infinite scroll loading and animations.
+* UPDATE: Improved error handling for API keys with session data.
+* UPDATE: UX and UI updates throughout the app.
+* UPDATE: Code cleanup and various refactoring.
+* UPDATE: Various accessibility updates throughout the app.
+* FIX: Fixed issue with Instant Images header CSS conflicting with GeneratePress.
 
 = 5.3.1 - May 12, 2023 =
 * UPDATE: Updated default user role to manage_options on the Instant Images settings page.

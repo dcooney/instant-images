@@ -1,16 +1,27 @@
+import { forwardRef } from "@wordpress/element";
+import classNames from "classnames";
+
 /**
  * Render the LoadMore component.
  *
- * @param {Object} props The component props.
  * @return {JSX.Element} The LoadMore component.
  */
-export default function LoadMore(props) {
-	const { loadMorePhotos } = props;
+const LoadMore = forwardRef((props, ref) => {
+	const { loadMorePhotos, loading, done } = props;
+
 	return (
-		<div className="load-more-wrap">
+		<div
+			className={classNames(
+				"load-more-wrap",
+				loading ? "loading" : null,
+				done ? "done" : null
+			)}
+			ref={ref}
+		>
 			<button type="button" className="button" onClick={() => loadMorePhotos()}>
 				{instant_img_localize.load_more}
 			</button>
 		</div>
 	);
-}
+});
+export default LoadMore;

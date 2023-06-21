@@ -9,15 +9,25 @@
 	}
 }
 
-// Gutenberg Sidebar.
+// WP Block + Sidebar Plugin.
+.instant-images-block,
 .components-panel {
 	.instant-img-container {
 		.api-lightbox,
 		.api-lightbox.error-lightbox {
 			align-items: flex-start;
 
+			.more-info {
+				display: none;
+			}
 			& > div {
 				top: 0;
+			}
+		}
+
+		.api-lightbox:not(.error-lightbox) {
+			.action-controls {
+				display: none;
 			}
 		}
 	}
@@ -113,10 +123,17 @@
 			h3 {
 				font-size: 16px;
 				line-height: 18px;
-				padding: 0 0 0 28px;
+				padding: 0;
 				text-transform: uppercase;
 				margin: 0 0 15px;
-				background-position: left center;
+				display: flex;
+				width: 100%;
+				align-items: center;
+				svg {
+					width: 20px;
+					height: 20px;
+					margin-right: 8px;
+				}
 			}
 			p {
 				margin: 10px 0 0;

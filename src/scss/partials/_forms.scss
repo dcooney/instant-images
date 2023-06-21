@@ -1,20 +1,5 @@
 // Form Styles.
 .instant-images-settings {
-	// Button Styles.
-	.button-primary {
-		background-color: $purple;
-		border-color: $purple;
-		border-radius: $radius;
-		&:hover,
-		&:focus {
-			background-color: $purple_dark;
-			border-color: $purple_dark;
-		}
-		&:focus {
-			box-shadow: 0 0 0 1px #fff, 0 0 0 3px $purple_dark;
-		}
-	}
-
 	// Generic Form Styles.
 	form {
 		display: block;
@@ -62,6 +47,7 @@
 			clear: both;
 			float: none;
 			margin: 0 0 10px;
+			padding: 0;
 
 			&.provider-label {
 				display: flex;
