@@ -22,10 +22,10 @@
 		"composer/installers": "^1.10"
 	},
 	"require-dev": {
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
-		"phpcompatibility/phpcompatibility-wp": "^2.1.1",
+		"dealerdirect/phpcodesniffer-composer-installer": "*",
+		"phpcompatibility/phpcompatibility-wp": "*",
 		"wp-cli/wp-cli-bundle": "*",
-		"wp-coding-standards/wpcs": "~2.3.0"
+		"wp-coding-standards/wpcs": "*"
 	},
 	"scripts": {
 		"format": "./vendor/bin/phpcbf --standard=.phpcs.xml --report=summary,source",

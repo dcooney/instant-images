@@ -59,7 +59,7 @@ class InstantImages {
 
 			if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
 				// Only include this EDD helper if other plugins have not.
-				require_once dirname( __FILE__ ) . '/admin/vendor/EDD_SL_Plugin_Updater.php';
+				require_once __DIR__ . '/admin/vendor/EDD_SL_Plugin_Updater.php';
 			}
 		}
 
@@ -520,7 +520,6 @@ class InstantImages {
 				return class_exists( 'InstantImagesExtended' ) && InstantImagesExtended::valid_license();
 		}
 	}
-
 }
 
 /**

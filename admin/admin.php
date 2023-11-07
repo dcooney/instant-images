@@ -149,7 +149,7 @@ function instant_images_settings_scripts() {
 function instant_images_media_upload_tabs_handler( $tabs ) {
 	$show_media_tab = InstantImages::instant_img_show_tab( 'media_modal_display' );
 	if ( $show_media_tab ) {
-		$newtab = array( 'instant_img_tab' => __( 'Instant Images', 'instant-images' ) );
+		$newtab = [ 'instant_img_tab' => __( 'Instant Images', 'instant-images' ) ];
 		$tabs   = array_merge( $tabs, $newtab );
 		return $tabs;
 	}
@@ -218,8 +218,9 @@ function instant_images_filter_admin_footer_text( $text ) {
 	if ( in_array( $screen->base, $base_array, true ) ) {
 		$divider = '<em>|</em>';
 		$love    = '<span style="color: #e25555;">♥</span>';
-		echo wp_kses_post( INSTANT_IMAGES_TITLE . ' is made with ' . $love . ' by <a href="https://connekthq.com/?utm_source=WPAdmin&utm_medium=InstantImages&utm_campaign=Footer" target="_blank" style="font-weight: 500;">Connekt</a> &rarr; <a href="https://getinstantimages.com/add-ons/extended/" target="_blank" style="font-weight: 500;">Get Extended</a> ' . $divider . ' <a href="https://wordpress.org/support/plugin/instant-images/reviews/#new-post" target="_blank" style="font-weight: 500;">Leave a Review</a> ' . $divider . ' <a href="https://getinstantimages.com/terms-of-use/" target="_blank" style="font-weight: 500;">Terms</a> ' . $divider . ' <a href="https://getinstantimages.com/privacy-policy/" target="_blank" style="font-weight: 500;">Privacy Policy</a>' );
+		$text    = wp_kses_post( INSTANT_IMAGES_TITLE . ' is made with ' . $love . ' by <a href="https://connekthq.com/?utm_source=WPAdmin&utm_medium=InstantImages&utm_campaign=Footer" target="_blank" style="font-weight: 500;">Connekt</a> &rarr; <a href="https://getinstantimages.com/add-ons/extended/" target="_blank" style="font-weight: 500;">Get Extended</a> ' . $divider . ' <a href="https://wordpress.org/support/plugin/instant-images/reviews/#new-post" target="_blank" style="font-weight: 500;">Leave a Review</a> ' . $divider . ' <a href="https://getinstantimages.com/terms-of-use/" target="_blank" style="font-weight: 500;">Terms</a> ' . $divider . ' <a href="https://getinstantimages.com/privacy-policy/" target="_blank" style="font-weight: 500;">Privacy Policy</a>' );
 	}
+	return $text;
 }
 add_filter( 'admin_footer_text', 'instant_images_filter_admin_footer_text' ); // Admin menu text.
 
@@ -253,7 +254,7 @@ function instant_images_display_licenses() {
 	$input_type = apply_filters( 'instant_images_mask_license_keys', false ) ? 'password' : 'text';
 	foreach ( instant_images_addons() as $addon ) {
 		if ( class_exists( $addon['class'] ) ) {
-			$installed++;
+			++$installed;
 			$key        = $addon['key'];
 			$name       = $addon['name'];
 			$constant   = $addon['constant'];

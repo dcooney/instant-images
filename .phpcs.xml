@@ -20,31 +20,16 @@
 	<!-- Show sniff codes in all reports. -->
 	<arg value="ps"/>
 
-	<!-- Use WordPress "Extra" Coding Standards. -->
-	<rule ref="WordPress-Extra">
+	<rule ref="WordPress">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
 		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.ShortPrefixPassed"/>
-		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound"/>
-		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 		<exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
-		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment"/>
-	</rule>
-
-	<!-- Use WordPress "Docs" Coding Standards. -->
-	<rule ref="WordPress-Docs" />
-
-	<!-- The minimum supported WordPress version. This should match what's listed in style.css. -->
-	<rule ref="WordPress.WP.DeprecatedFunctions">
-		<properties>
-			<property name="minimum_supported_version" value="5.6"/>
-		</properties>
-	</rule>
-
-	<!-- Allow for theme specific exceptions to the file name rules based on the theme hierarchy. -->
-	<rule ref="WordPress.Files.FileName">
-		<properties>
-			<property name="is_theme" value="true"/>
-		</properties>
+		<exclude name="WordPress.WP.PostsPerPage.posts_per_page_posts_per_page"/>
+		<exclude name="WordPress.Security.NonceVerification.Recommended" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
+		<exclude name="Universal.Files.SeparateFunctionsFromOO.Mixed" />
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
 	</rule>
 
 	<!-- Verify that everything in the global namespace is prefixed with a theme specific prefix.
@@ -63,8 +48,9 @@
 		</properties>
 	</rule>
 
-	<!-- Use WordPress PHP Compatibility. -->
-	<rule ref="PHPCompatibilityWP"/>
+	<rule ref="WordPress-Docs" />
+	<rule ref="PHPCompatibilityWP" />
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax" />
 
 	<!-- WordPress Core currently supports PHP 5.6+. -->
 	<config name="testVersion" value="5.6-"/>
