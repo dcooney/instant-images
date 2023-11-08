@@ -159,7 +159,7 @@ How to install Instant Images.
 
 == Changelog ==
 
-= 6.0.1 - November 9, 2023 =
+= 6.0.1 - November 8, 2023 =
 * FIX: Fixed issue with `admin_footer_text` hook incorrectly echoing data in the WP admin.
 * UPDATE: Various code, UX and UI updates throughout the app.
 * NEW: Added hook for modifying the image attribution text.

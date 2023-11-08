@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 6.0.0
+ * Version: 6.0.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '6.0.0' );
-define( 'INSTANT_IMAGES_RELEASE', 'June 19, 2023' );
+define( 'INSTANT_IMAGES_VERSION', '6.0.1' );
+define( 'INSTANT_IMAGES_RELEASE', 'November 8, 2023' );
 define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
@@ -324,6 +324,7 @@ class InstantImages {
 				'pexels_url'              => 'https://pexels.com',
 				'pexels_api_url'          => 'https://www.pexels.com/join-consumer/',
 				'pexels_api_desc'         => __( 'Access to images from Pexels requires a valid API key. API keys are available for free, just sign up for an account at Pexels, enter your API key below and you\'re good to go!', 'instant-images' ),
+				'openverse_url'           => 'https://openverse.org',
 				'openverse_mature'        => apply_filters( 'instant_images_openverse_mature', false ),
 				'error_upload'            => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
 				'error_restapi'           => __( 'There was an error accessing the WP REST API.', 'instant-images' ),

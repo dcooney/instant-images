@@ -2,16 +2,16 @@
 # This file is distributed under the GPL.
 msgid ""
 msgstr ""
-"Project-Id-Version: Instant Images 6.0.0\n"
+"Project-Id-Version: Instant Images 6.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/instant-images\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-06-16T16:19:01+00:00\n"
+"POT-Creation-Date: 2023-11-08T20:45:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: instant-images\n"
 
 #. Plugin Name of the plugin
@@ -37,31 +37,31 @@ msgstr ""
 msgid "https://connekthq.com"
 msgstr ""
 
-#: admin/admin.php:281
+#: admin/admin.php:282
 msgid "Enter License Key"
 msgstr ""
 
-#: admin/admin.php:290
+#: admin/admin.php:291
 msgid "Valid License Key Required"
 msgstr ""
 
-#: admin/admin.php:290
+#: admin/admin.php:291
 msgid "Purchase License"
 msgstr ""
 
-#: admin/admin.php:296
+#: admin/admin.php:297
 msgid "Deactivate License"
 msgstr ""
 
-#: admin/admin.php:298
+#: admin/admin.php:299
 msgid "Activate License"
 msgstr ""
 
-#: admin/admin.php:312
+#: admin/admin.php:313
 msgid "You do not have any Instant Images add-ons installed."
 msgstr ""
 
-#: admin/admin.php:313
+#: admin/admin.php:314
 msgid "Browse Add-ons"
 msgstr ""
 
@@ -262,85 +262,77 @@ msgstr ""
 msgid "Access to images from Pexels requires a valid API key. API keys are available for free, just sign up for an account at Pexels, enter your API key below and you're good to go!"
 msgstr ""
 
-#: instant-images.php:328
+#: instant-images.php:329
 msgid "There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again"
 msgstr ""
 
-#: instant-images.php:329
+#: instant-images.php:330
 msgid "There was an error accessing the WP REST API."
 msgstr ""
 
-#: instant-images.php:330
+#: instant-images.php:331
 msgid "Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library."
 msgstr ""
 
-#: instant-images.php:331
-msgid "Photo by"
-msgstr ""
-
-#: instant-images.php:332
+#: instant-images.php:333
 msgid "View All Photos by"
 msgstr ""
 
-#: instant-images.php:333
+#: instant-images.php:334
 msgid "on"
 msgstr ""
 
-#: instant-images.php:334
+#: instant-images.php:335
 msgid "Click Image to Upload"
 msgstr ""
 
-#: instant-images.php:335
+#: instant-images.php:336
 msgid "Click to Upload"
 msgstr ""
 
-#: instant-images.php:336
+#: instant-images.php:337
 msgid "View Full Size"
 msgstr ""
 
-#: instant-images.php:337
+#: instant-images.php:338
 msgid "Like"
 msgstr ""
 
-#: instant-images.php:338
+#: instant-images.php:339
 msgid "Likes"
 msgstr ""
 
-#: instant-images.php:339
+#: instant-images.php:340
 msgid "Downloading image..."
 msgstr ""
 
-#: instant-images.php:340
+#: instant-images.php:341
 msgid "Creating image sizes..."
 msgstr ""
 
-#: instant-images.php:341
+#: instant-images.php:342
 msgid "Still resizing..."
 msgstr ""
 
-#: instant-images.php:342
+#: instant-images.php:343
 msgid "Nothing matched your search query."
 msgstr ""
 
-#: instant-images.php:343
+#: instant-images.php:344
 msgid "Try adjusting your filter criteria or searching again."
 msgstr ""
 
-#: instant-images.php:344
 #: instant-images.php:345
+#: instant-images.php:346
 msgid "New"
 msgstr ""
 
-#: instant-images.php:346
+#: instant-images.php:347
 msgid "Oldest"
 msgstr ""
 
-#: instant-images.php:347
-msgid "Popular"
-msgstr ""
-
 #: instant-images.php:348
-msgid "Filters"
+msgid "Popular"
 msgstr ""
 
 #: instant-images.php:349
