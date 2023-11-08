@@ -2,7 +2,7 @@
 Contributors: dcooney, connekthq
 Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
-Requires at least: 4.0
+Requires at least: 5.0
 Tested up to: 6.4
 Stable tag: 6.0.1
 License: GPLv2 or later
