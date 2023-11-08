@@ -30,6 +30,7 @@
 		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
 		<exclude name="Universal.Files.SeparateFunctionsFromOO.Mixed" />
 		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound" />
 	</rule>
 
 	<!-- Verify that everything in the global namespace is prefixed with a theme specific prefix.

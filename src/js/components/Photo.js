@@ -10,6 +10,7 @@ import {
 	showTooltip,
 } from "../functions/helpers";
 import { unsplashDownload } from "../functions/providers/unsplash";
+import generateAttribution from "../functions/generateAttribution";
 
 /**
  * Render the Photo component.
@@ -29,23 +30,24 @@ export default function Photo(props) {
 
 	const {
 		id,
+		id: filename,
 		permalink,
 		title,
 		alt,
 		caption,
+		attribution,
 		extension = "jpg",
 		likes,
-		attribution,
 		dimensions,
 		urls,
 		user,
 	} = result;
+
+	// Deconstruct image URLs.
 	const { thumb, full, download_url } = urls;
 
-	const filename = id;
-	const user_name = user?.name;
-	const user_photo = user?.photo;
-	const user_url = user?.url;
+	// Deconstruct user data.
+	const { name: user_name, photo: user_photo, url: user_url } = user;
 
 	const container = document.querySelector(".instant-img-container");
 	const likeDisplay =
@@ -53,9 +55,15 @@ export default function Photo(props) {
 			? instant_img_localize.likes
 			: instant_img_localize.likes_plural;
 
-	const auto_attribution =
-		instant_img_localize.auto_attribution === "1" ? true : false;
-	const imageCaption = auto_attribution ? attribution : caption; // Set auto attribution.
+	const { attribution_hook = false, auto_attribution = false } =
+		instant_img_localize;
+
+	// Get the attribution text.
+	const imageAttribution = attribution_hook
+		? generateAttribution(attribution_hook, provider, permalink, user)
+		: attribution;
+
+	const imageCaption = auto_attribution === "1" ? imageAttribution : caption;
 
 	// Photo state.
 	const [imageDetails, setImageDetails] = useState({
@@ -430,8 +438,8 @@ export default function Photo(props) {
 	 */
 	function addAttribution(e) {
 		e.preventDefault();
-		captionRef.current.value = attribution; // Set form value.
-		setImageDetails({ ...imageDetails, caption: attribution }); // Set caption state.
+		captionRef.current.value = imageAttribution; // Set form value.
+		setImageDetails({ ...imageDetails, caption: imageAttribution }); // Set caption state.
 	}
 
 	return (
@@ -638,7 +646,7 @@ export default function Photo(props) {
 							ref={captionRef}
 						></textarea>
 					</label>
-					{attribution ? (
+					{imageAttribution ? (
 						<div className="add-attribution-row">
 							<button onClick={(e) => addAttribution(e)} type="button">
 								{instant_img_localize.attribution}

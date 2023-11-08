@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
 Requires at least: 4.0
-Tested up to: 6.2
-Stable tag: 6.0.0
+Tested up to: 6.4
+Stable tag: 6.0.1
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -158,6 +158,16 @@ How to install Instant Images.
 5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 6.0.1 - November 9, 2023 =
+* FIX: Fixed issue with `admin_footer_text` hook incorrectly echoing data in the WP admin.
+* UPDATE: Various code, UX and UI updates throughout the app.
+* NEW: Added hook for modifying the image attribution text.
+```
+add_filter( 'instant_images_attribution', function() {
+	return __( 'This <a href="{image_url}">photo</a> is by <a href="{user_url}">{username}</a> and available for free on <a href="{provider_url}">{provider}</a>', 'framework' );
+} );
+```
 
 = 6.0.0 - June 19, 2023 =
 * NEW: Added support and functionality requirements for [Instant Images: Extended add-on](https://getinstantimages.com/add-ons/extended/).

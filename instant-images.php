@@ -328,7 +328,7 @@ class InstantImages {
 				'error_upload'            => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
 				'error_restapi'           => __( 'There was an error accessing the WP REST API.', 'instant-images' ),
 				'error_restapi_desc'      => __( 'Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images' ),
-				'photo_by'                => __( 'Photo by', 'instant-images' ),
+				'attribution_hook'        => apply_filters( 'instant_images_attribution', false ),
 				'view_all'                => __( 'View All Photos by', 'instant-images' ),
 				'on'                      => __( 'on', 'instant-images' ),
 				'upload'                  => __( 'Click Image to Upload', 'instant-images' ),
@@ -345,7 +345,6 @@ class InstantImages {
 				'latest'                  => __( 'New', 'instant-images' ),
 				'oldest'                  => __( 'Oldest', 'instant-images' ),
 				'popular'                 => __( 'Popular', 'instant-images' ),
-				'filters'                 => __( 'Filters', 'instant-images' ),
 				'views'                   => __( 'Views', 'instant-images' ),
 				'downloads'               => __( 'Downloads', 'instant-images' ),
 				'load_more'               => __( 'Load More Images', 'instant-images' ),
@@ -457,15 +456,15 @@ class InstantImages {
 	/**
 	 * Block Instant Images from loading on some screens.
 	 *
-	 * @param array $array An array of screen IDs.
+	 * @param array $screens An array of screen IDs.
 	 * @return boolean
 	 * @author ConnektMedia <support@connekthq.com>
 	 * @since 4.4.0.3
 	 */
-	public static function instant_img_not_current_screen( $array = [] ) {
+	public static function instant_img_not_current_screen( $screens = [] ) {
 		$access       = true;
 		$admin_screen = get_current_screen();
-		if ( $admin_screen && in_array( $admin_screen->id, $array, true ) ) {
+		if ( $admin_screen && in_array( $admin_screen->id, $screens, true ) ) {
 			$access = false;
 		}
 		return $access;
