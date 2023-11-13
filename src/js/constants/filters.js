@@ -22,7 +22,7 @@ export const FILTERS = {
 			source: {
 				label: __("Source", "instant-images"),
 				default: "wordpress",
-				filters: [OPENVERSE_SOURCES],
+				filters: [...OPENVERSE_SOURCES],
 			},
 			aspect_ratio: {
 				label: __("Orientation", "instant-images"),
