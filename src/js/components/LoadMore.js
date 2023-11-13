@@ -1,4 +1,5 @@
 import { forwardRef } from "@wordpress/element";
+import { __ } from "@wordpress/i18n";
 import classNames from "classnames";
 
 /**
@@ -19,7 +20,7 @@ const LoadMore = forwardRef((props, ref) => {
 			ref={ref}
 		>
 			<button type="button" className="button" onClick={() => loadMorePhotos()}>
-				{instant_img_localize.load_more}
+				{__("Load More Images", "instant-images")}
 			</button>
 		</div>
 	);

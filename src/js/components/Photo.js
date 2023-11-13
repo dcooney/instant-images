@@ -11,6 +11,7 @@ import {
 } from "../functions/helpers";
 import { unsplashDownload } from "../functions/providers/unsplash";
 import generateAttribution from "../functions/generateAttribution";
+import { __ } from "@wordpress/i18n";
 
 /**
  * Render the Photo component.
@@ -52,8 +53,8 @@ export default function Photo(props) {
 	const container = document.querySelector(".instant-img-container");
 	const likeDisplay =
 		parseInt(likes) === 1
-			? instant_img_localize.likes
-			: instant_img_localize.likes_plural;
+			? __("Like", "instant-images")
+			: __("Likes", "instant-images");
 
 	const { attribution_hook = false, auto_attribution = false } =
 		instant_img_localize;

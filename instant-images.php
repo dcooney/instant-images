@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 6.0.1
+ * Version: 6.1.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '6.0.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'November 8, 2023' );
+define( 'INSTANT_IMAGES_VERSION', '6.1.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'November 13, 2023' );
 define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
@@ -334,9 +334,6 @@ class InstantImages {
 				'on'                      => __( 'on', 'instant-images' ),
 				'upload'                  => __( 'Click Image to Upload', 'instant-images' ),
 				'upload_btn'              => __( 'Click to Upload', 'instant-images' ),
-				'full_size'               => __( 'View Full Size', 'instant-images' ),
-				'likes'                   => __( 'Like', 'instant-images' ),
-				'likes_plural'            => __( 'Likes', 'instant-images' ),
 				'saving'                  => __( 'Downloading image...', 'instant-images' ),
 				'resizing'                => __( 'Creating image sizes...', 'instant-images' ),
 				'resizing_still'          => __( 'Still resizing...', 'instant-images' ),
@@ -348,7 +345,6 @@ class InstantImages {
 				'popular'                 => __( 'Popular', 'instant-images' ),
 				'views'                   => __( 'Views', 'instant-images' ),
 				'downloads'               => __( 'Downloads', 'instant-images' ),
-				'load_more'               => __( 'Load More Images', 'instant-images' ),
 				'search'                  => __( 'Search for Toronto + Coffee etc...', 'instant-images' ),
 				'search_label'            => __( 'Search', 'instant-images' ),
 				'search_results'          => __( 'image(s) found for', 'instant-images' ),
@@ -366,12 +362,6 @@ class InstantImages {
 				'cancel'                  => __( 'Cancel', 'instant-images' ),
 				'save'                    => __( 'Save', 'instant-images' ),
 				'upload_now'              => __( 'Upload', 'instant-images' ),
-				'orientation'             => __( 'Orientation', 'instant-images' ),
-				'landscape'               => __( 'Landscape', 'instant-images' ),
-				'portrait'                => __( 'Portrait', 'instant-images' ),
-				'squarish'                => __( 'Squarish', 'instant-images' ),
-				'horizontal'              => __( 'Horizontal', 'instant-images' ),
-				'vertical'                => __( 'Vertical', 'instant-images' ),
 				'attribution'             => __( 'Add Photo Attribution', 'instant-images' ),
 				'btnCloseWindow'          => __( 'Close Window', 'instant-images' ),
 				'btnClose'                => __( 'Close', 'instant-images' ),
@@ -398,19 +388,6 @@ class InstantImages {
 						'activated' => self::instant_images_addon_activated( 'extended' ),
 						'license'   => self::instant_images_addon_valid_license( 'extended' ),
 					],
-				],
-				'filters'                 => [
-					'select'       => __( '-- Select --', 'instant-images' ),
-					'orderby'      => __( 'Order:', 'instant-images' ),
-					'type'         => __( 'Type:', 'instant-images' ),
-					'category'     => __( 'Category:', 'instant-images' ),
-					'colors'       => __( 'Colors:', 'instant-images' ),
-					'orientation'  => __( 'Orientation:', 'instant-images' ),
-					'size'         => __( 'Size:', 'instant-images' ),
-					'extension'    => __( 'Extension:', 'instant-images' ),
-					'license_type' => __( 'License Type:', 'instant-images' ),
-					'license'      => __( 'License:', 'instant-images' ),
-					'source'       => __( 'Source:', 'instant-images' ),
 				],
 			]
 		);

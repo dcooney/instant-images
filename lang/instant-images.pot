@@ -2,14 +2,14 @@
 # This file is distributed under the GPL.
 msgid ""
 msgstr ""
-"Project-Id-Version: Instant Images 6.0.1\n"
+"Project-Id-Version: Instant Images 6.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/instant-images\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-11-08T20:45:09+00:00\n"
+"POT-Creation-Date: 2023-11-13T19:16:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: instant-images\n"
@@ -66,7 +66,7 @@ msgid "Browse Add-ons"
 msgstr ""
 
 #: admin/includes/header.php:18
-#: instant-images.php:494
+#: instant-images.php:471
 msgid "Settings"
 msgstr ""
 
@@ -165,7 +165,7 @@ msgid "Manage your Instant Images plugin settings."
 msgstr ""
 
 #: admin/includes/settings/header.php:18
-#: instant-images.php:494
+#: instant-images.php:471
 msgid "Get Images"
 msgstr ""
 
@@ -291,297 +291,228 @@ msgid "Click to Upload"
 msgstr ""
 
 #: instant-images.php:337
-msgid "View Full Size"
-msgstr ""
-
-#: instant-images.php:338
-msgid "Like"
-msgstr ""
-
-#: instant-images.php:339
-msgid "Likes"
-msgstr ""
-
-#: instant-images.php:340
 msgid "Downloading image..."
 msgstr ""
 
-#: instant-images.php:341
+#: instant-images.php:338
 msgid "Creating image sizes..."
 msgstr ""
 
-#: instant-images.php:342
+#: instant-images.php:339
 msgid "Still resizing..."
 msgstr ""
 
-#: instant-images.php:343
+#: instant-images.php:340
 msgid "Nothing matched your search query."
 msgstr ""
 
-#: instant-images.php:344
+#: instant-images.php:341
 msgid "Try adjusting your filter criteria or searching again."
 msgstr ""
 
-#: instant-images.php:345
-#: instant-images.php:346
+#: instant-images.php:342
+#: instant-images.php:343
 msgid "New"
 msgstr ""
 
-#: instant-images.php:347
+#: instant-images.php:344
+#: src/js/constants/filters.js:124
 msgid "Oldest"
 msgstr ""
 
-#: instant-images.php:348
+#: instant-images.php:345
+#: src/js/constants/filters.js:123
+#: src/js/constants/filters.js:155
 msgid "Popular"
 msgstr ""
 
-#: instant-images.php:349
+#: instant-images.php:346
 msgid "Views"
 msgstr ""
 
-#: instant-images.php:350
+#: instant-images.php:347
 msgid "Downloads"
 msgstr ""
 
-#: instant-images.php:351
-msgid "Load More Images"
-msgstr ""
-
-#: instant-images.php:352
+#: instant-images.php:348
 msgid "Search for Toronto + Coffee etc..."
 msgstr ""
 
-#: instant-images.php:353
+#: instant-images.php:349
 msgid "Search"
 msgstr ""
 
-#: instant-images.php:354
+#: instant-images.php:350
 msgid "image(s) found for"
 msgstr ""
 
-#: instant-images.php:355
+#: instant-images.php:351
 msgid "Clear Search"
 msgstr ""
 
-#: instant-images.php:356
+#: instant-images.php:352
 msgid "View on"
 msgstr ""
 
-#: instant-images.php:357
+#: instant-images.php:353
 msgid "Set as Featured Image"
 msgstr ""
 
-#: instant-images.php:358
+#: instant-images.php:354
 msgid "Insert Into Post"
 msgstr ""
 
-#: instant-images.php:359
+#: instant-images.php:355
 msgid "Filename"
 msgstr ""
 
-#: instant-images.php:360
+#: instant-images.php:356
 msgid "Title"
 msgstr ""
 
-#: instant-images.php:361
+#: instant-images.php:357
 msgid "Alt Text"
 msgstr ""
 
-#: instant-images.php:362
+#: instant-images.php:358
 msgid "Caption"
 msgstr ""
 
-#: instant-images.php:363
+#: instant-images.php:359
 msgid "Description"
 msgstr ""
 
-#: instant-images.php:364
+#: instant-images.php:360
 msgid "Edit Attachment Details"
 msgstr ""
 
-#: instant-images.php:365
+#: instant-images.php:361
 msgid "Edit Image Details"
 msgstr ""
 
-#: instant-images.php:366
+#: instant-images.php:362
 msgid "Cancel"
 msgstr ""
 
-#: instant-images.php:367
+#: instant-images.php:363
 msgid "Save"
 msgstr ""
 
-#: instant-images.php:368
+#: instant-images.php:364
 msgid "Upload"
 msgstr ""
 
-#: instant-images.php:369
-msgid "Orientation"
-msgstr ""
-
-#: instant-images.php:370
-msgid "Landscape"
-msgstr ""
-
-#: instant-images.php:371
-msgid "Portrait"
-msgstr ""
-
-#: instant-images.php:372
-msgid "Squarish"
-msgstr ""
-
-#: instant-images.php:373
-msgid "Horizontal"
-msgstr ""
-
-#: instant-images.php:374
-msgid "Vertical"
-msgstr ""
-
-#: instant-images.php:375
+#: instant-images.php:365
 msgid "Add Photo Attribution"
 msgstr ""
 
-#: instant-images.php:376
+#: instant-images.php:366
 msgid "Close Window"
 msgstr ""
 
-#: instant-images.php:377
+#: instant-images.php:367
 msgid "Close"
 msgstr ""
 
-#: instant-images.php:378
+#: instant-images.php:368
 msgid "Verify"
 msgstr ""
 
-#: instant-images.php:379
+#: instant-images.php:369
 msgid "Enter API Key"
 msgstr ""
 
-#: instant-images.php:380
+#: instant-images.php:370
 msgid "The API Key is Invalid"
 msgstr ""
 
-#: instant-images.php:381
+#: instant-images.php:371
 msgid "API key has been successfully validated!"
 msgstr ""
 
-#: instant-images.php:382
+#: instant-images.php:372
 msgid "The API key is not valid for this provider - enter a new API Key and try again."
 msgstr ""
 
-#: instant-images.php:383
+#: instant-images.php:373
 msgid "Missing API parameter - we are unable to complete the request at this time."
 msgstr ""
 
-#: instant-images.php:384
+#: instant-images.php:374
 msgid "The Instant Images Proxy is not configured for the requested provider."
 msgstr ""
 
-#: instant-images.php:385
+#: instant-images.php:375
 msgid "An internal server error has occured - please try again."
 msgstr ""
 
-#: instant-images.php:386
+#: instant-images.php:376
 msgid "No image provider or destination URL set."
 msgstr ""
 
-#: instant-images.php:387
+#: instant-images.php:377
 msgid "The API rate limit has been exceeded for this image provider. Please add a new API key or try again later."
 msgstr ""
 
-#: instant-images.php:388
+#: instant-images.php:378
 msgid "Switch the default provider in the Instant Images settings or check that you're using a valid API key."
 msgstr ""
 
-#: instant-images.php:389
+#: instant-images.php:379
 msgid "Get API Key"
 msgstr ""
 
-#: instant-images.php:390
+#: instant-images.php:380
 msgid "Reset Default Key"
 msgstr ""
 
-#: instant-images.php:391
+#: instant-images.php:381
 msgid "An unknown error has occured while accessing {provider}"
 msgstr ""
 
-#: instant-images.php:392
+#: instant-images.php:382
 msgid "Check your API keys are valid and the Default Provider set under the Instant Images settings panel."
 msgstr ""
 
-#: instant-images.php:393
+#: instant-images.php:383
 msgid "Error"
 msgstr ""
 
-#: instant-images.php:394
+#: instant-images.php:384
 msgid "Ad"
 msgstr ""
 
-#: instant-images.php:395
+#: instant-images.php:385
 msgid "Advertisement"
 msgstr ""
 
-#: instant-images.php:403
-msgid "-- Select --"
-msgstr ""
-
-#: instant-images.php:404
-msgid "Order:"
-msgstr ""
-
-#: instant-images.php:405
-msgid "Type:"
-msgstr ""
-
-#: instant-images.php:406
-msgid "Category:"
-msgstr ""
-
-#: instant-images.php:407
-msgid "Colors:"
-msgstr ""
-
-#: instant-images.php:408
-msgid "Orientation:"
-msgstr ""
-
-#: instant-images.php:409
-msgid "Size:"
-msgstr ""
-
-#: instant-images.php:410
-msgid "Extension:"
-msgstr ""
-
-#: instant-images.php:411
-msgid "License Type:"
-msgstr ""
-
-#: instant-images.php:412
-msgid "License:"
-msgstr ""
-
-#: instant-images.php:413
-msgid "Source:"
-msgstr ""
-
 #. translators: Instant Images tagline.
-#: instant-images.php:481
+#: instant-images.php:458
 msgid "One click photo uploads from %1$s, %2$s, %3$s and %4$s."
 msgstr ""
 
-#: src/js/components/cta/Extended.js:46
-#: src/js/components/cta/Extended.js:117
+#: src/js/components/cta/Extended.js:48
+#: src/js/components/cta/Extended.js:119
 msgid "Learn More"
 msgstr ""
 
-#: src/js/components/cta/Extended.js:52
 #: src/js/components/cta/Extended.js:54
-#: src/js/components/cta/Extended.js:92
-#: src/js/components/cta/Extended.js:95
+#: src/js/components/cta/Extended.js:56
+#: src/js/components/cta/Extended.js:94
+#: src/js/components/cta/Extended.js:97
 msgid "Dismiss"
+msgstr ""
+
+#: src/js/components/LoadMore.js:23
+msgid "Load More Images"
+msgstr ""
+
+#: src/js/components/Photo.js:56
+msgid "Like"
+msgstr ""
+
+#: src/js/components/Photo.js:57
+msgid "Likes"
 msgstr ""
 
 #: src/js/components/search/SearchHistory.js:34
@@ -594,6 +525,341 @@ msgstr ""
 
 #: src/js/components/search/SearchHistory.js:58
 msgid "Clear"
+msgstr ""
+
+#: src/js/constants/filters.js:17
+msgid "All"
+msgstr ""
+
+#: src/js/constants/filters.js:23
+msgid "Source"
+msgstr ""
+
+#: src/js/constants/filters.js:28
+#: src/js/constants/filters.js:52
+#: src/js/constants/filters.js:95
+#: src/js/constants/filters.js:138
+#: src/js/constants/filters.js:175
+#: src/js/constants/filters.js:192
+msgid "Orientation"
+msgstr ""
+
+#: src/js/constants/filters.js:35
+#: src/js/constants/filters.js:160
+#: src/js/constants/filters.js:182
+msgid "Type"
+msgstr ""
+
+#: src/js/constants/filters.js:40
+#: src/js/constants/filters/pixabay.js:55
+msgid "Illustration"
+msgstr ""
+
+#: src/js/constants/filters.js:43
+msgid "Photograph"
+msgstr ""
+
+#: src/js/constants/filters.js:47
+msgid "Extension"
+msgstr ""
+
+#: src/js/constants/filters.js:57
+#: src/js/constants/filters.js:105
+msgid "Size"
+msgstr ""
+
+#: src/js/constants/filters.js:61
+#: src/js/constants/filters.js:109
+msgid "Large"
+msgstr ""
+
+#: src/js/constants/filters.js:62
+#: src/js/constants/filters.js:110
+msgid "Medium"
+msgstr ""
+
+#: src/js/constants/filters.js:63
+#: src/js/constants/filters.js:111
+msgid "Small"
+msgstr ""
+
+#: src/js/constants/filters.js:67
+msgid "License"
+msgstr ""
+
+#: src/js/constants/filters.js:76
+msgid "Commercial"
+msgstr ""
+
+#: src/js/constants/filters.js:78
+msgid "Modification"
+msgstr ""
+
+#: src/js/constants/filters.js:88
+#: src/js/constants/filters.js:119
+#: src/js/constants/filters.js:130
+#: src/js/constants/filters.js:152
+msgid "Order"
+msgstr ""
+
+#: src/js/constants/filters.js:90
+msgid "Curated"
+msgstr ""
+
+#: src/js/constants/filters.js:100
+#: src/js/constants/filters.js:143
+#: src/js/constants/filters.js:170
+#: src/js/constants/filters.js:187
+msgid "Colors"
+msgstr ""
+
+#: src/js/constants/filters.js:122
+#: src/js/constants/filters.js:134
+#: src/js/constants/filters.js:156
+msgid "Latest"
+msgstr ""
+
+#: src/js/constants/filters.js:133
+msgid "Relevance"
+msgstr ""
+
+#: src/js/constants/filters.js:165
+msgid "Category"
+msgstr ""
+
+#: src/js/constants/filters/openverse.js:4
+msgid "WordPress"
+msgstr ""
+
+#: src/js/constants/filters/openverse.js:5
+msgid "Flickr"
+msgstr ""
+
+#: src/js/constants/filters/openverse.js:6
+msgid "Nasa"
+msgstr ""
+
+#: src/js/constants/filters/openverse.js:7
+msgid "SpaceX"
+msgstr ""
+
+#: src/js/constants/filters/openverse.js:8
+msgid "Wikimedia"
+msgstr ""
+
+#: src/js/constants/filters/openverse.js:12
+#: src/js/constants/filters/pexels.js:21
+#: src/js/constants/filters/unsplash.js:20
+msgid "Square"
+msgstr ""
+
+#: src/js/constants/filters/openverse.js:13
+msgid "Tall"
+msgstr ""
+
+#: src/js/constants/filters/openverse.js:14
+msgid "Wide"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:4
+#: src/js/constants/filters/pixabay.js:5
+#: src/js/constants/filters/unsplash.js:10
+msgid "Red"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:5
+#: src/js/constants/filters/pixabay.js:6
+#: src/js/constants/filters/unsplash.js:9
+msgid "Orange"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:6
+#: src/js/constants/filters/pixabay.js:7
+#: src/js/constants/filters/unsplash.js:7
+msgid "Yellow"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:7
+#: src/js/constants/filters/pixabay.js:8
+#: src/js/constants/filters/unsplash.js:8
+msgid "Green"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:8
+#: src/js/constants/filters/pixabay.js:9
+msgid "Turquoise"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:9
+#: src/js/constants/filters/pixabay.js:10
+#: src/js/constants/filters/unsplash.js:14
+msgid "Blue"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:10
+msgid "Violet"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:11
+#: src/js/constants/filters/pixabay.js:12
+msgid "Pink"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:12
+#: src/js/constants/filters/pixabay.js:16
+msgid "Brown"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:13
+#: src/js/constants/filters/pixabay.js:15
+#: src/js/constants/filters/unsplash.js:5
+msgid "Black"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:14
+#: src/js/constants/filters/pixabay.js:14
+msgid "Gray"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:15
+#: src/js/constants/filters/pixabay.js:13
+#: src/js/constants/filters/unsplash.js:6
+msgid "White"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:19
+#: src/js/constants/filters/unsplash.js:18
+msgid "Landscape"
+msgstr ""
+
+#: src/js/constants/filters/pexels.js:20
+#: src/js/constants/filters/unsplash.js:19
+msgid "Portrait"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:4
+msgid "Grayscale"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:11
+msgid "Lilac"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:17
+msgid "Transparent"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:21
+msgid "Backgrounds"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:22
+msgid "Fashion"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:23
+msgid "Nature"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:24
+msgid "Science"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:25
+msgid "Education"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:26
+msgid "Feelings"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:27
+msgid "Health"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:28
+msgid "People"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:29
+msgid "Religion"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:30
+msgid "Places"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:31
+msgid "Animals"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:32
+msgid "Industry"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:33
+msgid "Computer"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:34
+#: src/js/constants/filters/pixabay.js:36
+msgid "Food"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:35
+msgid "Sports"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:38
+msgid "Transportation"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:41
+msgid "Travel"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:42
+msgid "Buildings"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:43
+msgid "Business"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:44
+msgid "Music"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:48
+msgid "Horizontal"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:49
+msgid "Vertical"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:53
+msgid "Photo"
+msgstr ""
+
+#: src/js/constants/filters/pixabay.js:58
+msgid "Vector"
+msgstr ""
+
+#: src/js/constants/filters/unsplash.js:4
+msgid "Black & White"
+msgstr ""
+
+#: src/js/constants/filters/unsplash.js:11
+msgid "Purple"
+msgstr ""
+
+#: src/js/constants/filters/unsplash.js:12
+msgid "Magenta"
+msgstr ""
+
+#: src/js/constants/filters/unsplash.js:13
+msgid "Teal"
 msgstr ""
 
 #: src/js/editor/block/components/Header.js:36

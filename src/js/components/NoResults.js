@@ -13,7 +13,7 @@ export default function NoResults(props) {
 	}
 
 	return (
-		<div className="no-results">
+		<div className="instant-images-no-results">
 			<div>
 				<h3>{instant_img_localize.no_results} </h3>
 				<p>{instant_img_localize.no_results_desc} </p>

@@ -1,4 +1,4 @@
-import { OPENVERSE_SOURCES } from "../../constants/openverse";
+import { OPENVERSE_SOURCES } from "../../constants/filters/openverse";
 
 /**
  * Format the params for Openverse.

@@ -80,3 +80,22 @@
 		}
 	}
 }
+
+.components-panel {
+	.cta-extended {
+		margin: 0;
+		flex-direction: column;
+		text-align: center;
+		border-radius: 0;
+		border-width: 0 0 1px 0;
+		padding: 25px 20px;
+		& span {
+			display: block;
+		}
+		div {
+			width: 100%;
+			margin: 0;
+			justify-content: center;
+		}
+	}
+}

@@ -9,7 +9,7 @@ import { usePluginContext } from "../../common/pluginProvider";
  */
 export default function SearchHeader() {
 	const { provider, search, getPhotos, filterSearch } = usePluginContext();
-	const { active = false, term = "", total = 0 } = search;
+	const { active = false, term = "", results: total = 0 } = search;
 
 	const filters = FILTERS[provider].search;
 

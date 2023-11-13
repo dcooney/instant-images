@@ -18,15 +18,6 @@ body.media_page_instant-images.overflow-hidden,body.settings_page_instant-images
 .instant-img-container .error-messaging.warning{background-color:#cfa345}
 .instant-img-container .error-messaging strong{font-size:15px;display:block}
 .instant-img-container .error-messaging::before{font-family:"FontAwesome";content:"";display:block;left:18px;top:18px;position:absolute;font-size:32px;opacity:.75}
-.instant-img-container .instant-images-header-wrap{background:#f7f7f7 url(images/logo-48x48.f34cb1d9.png) no-repeat 25px 20px;padding:20px 25px 20px 83px;min-height:88px;overflow:hidden;border-bottom:1px solid #efefef;position:relative}
-@media screen and (max-width: 800px){.instant-img-container .instant-images-header-wrap{background-position:center 20px;padding:80px 25px 20px;text-align:center}}
-.instant-img-container .instant-images-header-wrap h1{padding:0;margin:4px 0 0;font-weight:700;font-size:26px;max-width:70%}
-@media screen and (max-width: 800px){.instant-img-container .instant-images-header-wrap h1{max-width:100%;width:100%;text-align:center}}
-.instant-img-container .instant-images-header-wrap h1 em{font-weight:400;font-size:14px;background-color:rgba(0,0,0,.055);color:rgba(0,0,0,.5);display:inline-block;border-radius:2px;padding:3px 3px;position:relative;top:-2px;left:2px;text-shadow:1px 1px 1px rgba(255,255,255,.4);font-style:normal;line-height:1}
-.instant-img-container .instant-images-header-wrap h1 span{display:block;padding:2px 0 0;color:#98979d;font-size:15px;font-weight:400}
-.instant-img-container .instant-images-header-wrap button{position:absolute;right:25px;bottom:26px}
-@media screen and (max-width: 800px){.instant-img-container .instant-images-header-wrap button{position:static;margin-top:20px;display:inline-block}}
-.instant-img-container .instant-images-header-wrap button i{margin-right:2px}
 .instant-img-container .instant-images-wrapper{padding:0 25px 20px;display:block;overflow:hidden;min-height:400px;background:url(images/ajax-loader-lg.808ea7f8.gif) no-repeat center center}
 .instant-img-container .instant-images-wrapper.loaded{background:none}
 .instant-img-container h2,.instant-img-container h3,.instant-img-container h4{margin-top:0}
@@ -299,9 +290,9 @@ span.instant-images-tagline{display:block;padding:0;color:#98979d;font-size:14px
 .instant-images-sidebar-icon svg,.instant-images-sidebar-icon svg *{stroke:#586ec6 !important;fill:#586ec6 !important}
 button[aria-expanded=true] .instant-images-sidebar-icon svg,button[aria-expanded=true] .instant-images-sidebar-icon svg *{stroke:#abf !important;fill:#abf !important}
 .instant-images-block #photos::after,.components-panel #photos::after{width:100%;left:0}
-.instant-images-block .no-results,.components-panel .no-results{padding:40px}
-.instant-images-block .no-results h3,.components-panel .no-results h3{font-size:18px}
-.instant-images-block .no-results p,.components-panel .no-results p{font-size:13px}
+.instant-images-block .instant-images-no-results,.components-panel .instant-images-no-results{padding:40px}
+.instant-images-block .instant-images-no-results h3,.components-panel .instant-images-no-results h3{font-size:18px}
+.instant-images-block .instant-images-no-results p,.components-panel .instant-images-no-results p{font-size:13px}
 .instant-images-block .search-results-text,.components-panel .search-results-text{font-size:12px;border-top:1px solid #ddd;border-color:#ddd}
 .instant-images-block .search-results-text .search-results-clear,.components-panel .search-results-text .search-results-clear{display:none}
 .instant-images-block .search-header,.components-panel .search-header{display:none}
@@ -357,12 +348,12 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg,button[aria-expanded
 .instant-img-container #tooltip.above{margin-top:37px}
 .instant-img-container #tooltip.above::after{top:-5px;border-top:none;border-bottom-color:#fff}
 .instant-img-container #tooltip.over{transform:scale(1);opacity:.9;visibility:visible}
-.no-results{display:block;padding:100px;text-align:center;position:relative}
-.no-results::before{content:"";font-family:"FontAwesome";display:block;position:absolute;z-index:0;top:50%;left:50%;font-size:125px;opacity:.1;transform:translateY(-50%) translateX(-50%)}
-.no-results>div{position:relative;z-index:10}
-.no-results h3{font-size:24px;line-height:1.2;margin:0 0 10px !important;font-weight:700}
-.no-results p{font-size:16px;margin:0}
-@media screen and (max-width: 800px){.no-results{padding:50px}}
+.instant-images-no-results{display:block;padding:100px;text-align:center;position:relative}
+.instant-images-no-results::before{content:"";font-family:"FontAwesome";display:block;position:absolute;z-index:0;top:50%;left:50%;font-size:125px;opacity:.1;transform:translateY(-50%) translateX(-50%)}
+.instant-images-no-results>div{position:relative;z-index:10}
+.instant-images-no-results h3{font-size:24px;line-height:1.2;margin:0 0 10px !important;font-weight:700}
+.instant-images-no-results p{font-size:16px;margin:0}
+@media screen and (max-width: 800px){.instant-images-no-results{padding:50px}}
 .provider-nav{display:flex;flex-wrap:nowrap;width:calc(100% + 50px);margin-left:-25px;padding:10px 25px;border-bottom:1px solid #efefef;box-shadow:0 2px 5px rgba(0,0,0,.045);background-color:#f7f7f7;position:relative;overflow-x:auto}
 .provider-nav>div{position:relative;margin:0 5px}
 .provider-nav>div:first-of-type{margin-left:0}
@@ -470,6 +461,9 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg,button[aria-expanded
 .cta-extended--search p a{font-weight:600}
 .cta-extended--search p i{display:block;font-size:25px;opacity:.5;color:#586ec6;margin-bottom:5px}
 .cta-extended--search p:last-of-type{margin-bottom:0}
+.components-panel .cta-extended{margin:0;flex-direction:column;text-align:center;border-radius:0;border-width:0 0 1px 0;padding:25px 20px}
+.components-panel .cta-extended span{display:block}
+.components-panel .cta-extended div{width:100%;margin:0;justify-content:center}
 .search-header h2{font-size:34px;line-height:1;padding:0;margin:0 0 10px;font-weight:800}
 @media screen and (max-width: 800px){.search-header h2{font-size:25px}}
 .search-header--text{font-size:14px;line-height:1;margin:0 0 15px;color:#98979d;display:flex;align-items:center;width:100%}

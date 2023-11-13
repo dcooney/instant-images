@@ -25,14 +25,16 @@ export function ExtendedCTA() {
 				<div className="cta-extended cta-extended--standard">
 					<i className="fa fa-bullhorn" aria-hidden="true"></i>
 					<p>
-						Introducing the{" "}
-						<a
-							href="https://getinstantimages.com/add-ons/extended/"
-							target="_blank"
-							rel="noreferrer"
-						>
-							Extended add-on
-						</a>{" "}
+						<span>
+							Introducing the{" "}
+							<a
+								href="https://getinstantimages.com/add-ons/extended/"
+								target="_blank"
+								rel="noreferrer"
+							>
+								Extended add-on
+							</a>
+						</span>{" "}
 						&rarr; A suite of premium features and functionality for Instant
 						Images.
 					</p>

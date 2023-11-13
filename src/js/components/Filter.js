@@ -146,9 +146,7 @@ export default function Filter(props) {
 				aria-expanded={expanded ? "true" : "false"}
 				ref={button}
 			>
-				<span className="filter-dropdown--button-label">
-					{instant_img_localize.filters[data?.label]}
-				</span>
+				<span className="filter-dropdown--button-label">{data?.label}</span>
 				<span className="filter-dropdown--button-selected">
 					{selected.replace(/_/g, " ")}
 					<i className="fa fa-caret-down" aria-hidden="true"></i>
@@ -161,25 +159,28 @@ export default function Filter(props) {
 				ref={menu}
 			>
 				{data?.filters?.length &&
-					data.filters.map((value, key) => (
-						<button
-							disabled={selected === value}
-							key={key}
-							className={cn(
-								"filter-dropdown--item",
-								selected === value ? "selected" : null
-							)}
-							onClick={() => click(filterKey, value)}
-						>
-							{value.replace(/_/g, " ")}
-							{value !== "all" && value !== "transparent" && isColor ? (
-								<span
-									className="_color"
-									style={{ color: convertColor(value) }}
-								></span>
-							) : null}
-						</button>
-					))}
+					data.filters.map((filter, key) => {
+						const { label, value } = filter;
+						return (
+							<button
+								key={key}
+								disabled={selected === value}
+								className={cn(
+									"filter-dropdown--item",
+									selected === value ? "selected" : null
+								)}
+								onClick={() => click(filterKey, value)}
+							>
+								{label}
+								{value !== "all" && value !== "transparent" && isColor ? (
+									<span
+										className="_color"
+										style={{ color: convertColor(value) }}
+									></span>
+								) : null}
+							</button>
+						);
+					})}
 			</div>
 		</div>
 	);

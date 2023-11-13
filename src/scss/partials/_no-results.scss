@@ -1,11 +1,11 @@
-.no-results {
+.instant-images-no-results {
 	display: block;
 	padding: 100px;
 	text-align: center;
 	position: relative;
 	&::before {
-		content: '\f002';
-		font-family: 'FontAwesome';
+		content: "\f002";
+		font-family: "FontAwesome";
 		display: block;
 		position: absolute;
 		z-index: 0;
