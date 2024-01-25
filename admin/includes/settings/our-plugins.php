@@ -15,20 +15,20 @@ if ( class_exists( 'Connekt_Plugin_Installer' ) ) {
 	</div>
 	<div class="settings-entry--action other-plugins">
 		<?php
-		$instant_images_plugin_array = array(
-			array(
+		$instant_images_plugin_array = [
+			[
 				'slug' => 'ajax-load-more',
-			),
-			array(
+			],
+			[
 				'slug' => 'block-manager',
-			),
-			array(
+			],
+			[
 				'slug' => 'easy-query',
-			),
-			array(
+			],
+			[
 				'slug' => 'velocity',
-			),
-		);
+			],
+		];
 		?>
 		<?php Connekt_Plugin_Installer::init( $instant_images_plugin_array ); ?>
 	</div>

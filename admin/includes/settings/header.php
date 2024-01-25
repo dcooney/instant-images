@@ -22,6 +22,8 @@
 		<nav class="jump-nav">
 			<h3><?php esc_attr_e( 'Jump to Section', 'instant-images' ); ?></h3>
 		</nav>
-		<div class="plugin-version"><?php esc_attr_e( 'Plugin Version:', 'instant-images' ); ?> <strong><?php echo esc_attr( INSTANT_IMAGES_VERSION ); ?></strong></div>
+		<div class="plugin-version">
+			<?php esc_attr_e( 'Plugin Version:', 'instant-images' ); ?> <strong><?php echo esc_attr( INSTANT_IMAGES_VERSION ); ?></strong>
+		</div>
 	</div>
 </div>

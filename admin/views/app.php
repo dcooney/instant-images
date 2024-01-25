@@ -1,6 +1,6 @@
 <?php
 /**
- * Instant Images Unsplash page layout.
+ * Instant Images page layout.
  *
  * @package InstantImages
  */
