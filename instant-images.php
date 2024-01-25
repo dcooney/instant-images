@@ -331,7 +331,6 @@ class InstantImages {
 				'error_restapi_desc'      => __( 'Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library.', 'instant-images' ),
 				'attribution_hook'        => apply_filters( 'instant_images_attribution', false ),
 				'view_all'                => __( 'View All Photos by', 'instant-images' ),
-				'on'                      => __( 'on', 'instant-images' ),
 				'upload'                  => __( 'Click Image to Upload', 'instant-images' ),
 				'upload_btn'              => __( 'Click to Upload', 'instant-images' ),
 				'saving'                  => __( 'Downloading image...', 'instant-images' ),
@@ -426,6 +425,21 @@ class InstantImages {
 	public static function instant_img_has_access() {
 		$access = false;
 		if ( is_user_logged_in() && current_user_can( apply_filters( 'instant_images_user_role', 'upload_files' ) ) ) {
+			$access = true;
+		}
+		return $access;
+	}
+
+	/**
+	 * Confirm user has access to instant images settings.
+	 *
+	 * @return boolean
+	 * @author ConnektMedia <support@connekthq.com>
+	 * @since 6.1.1
+	 */
+	public static function instant_img_has_settings_access() {
+		$access = false;
+		if ( is_user_logged_in() && current_user_can( apply_filters( 'instant_images_settings_user_role', 'manage_options' ) ) ) {
 			$access = true;
 		}
 		return $access;

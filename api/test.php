@@ -15,13 +15,13 @@ add_action(
 		register_rest_route(
 			$my_namespace,
 			$my_endpoint,
-			array(
+			[
 				'methods'             => 'POST',
 				'callback'            => 'instant_images_test',
 				'permission_callback' => function () {
 					return InstantImages::instant_img_has_access();
 				},
-			)
+			]
 		);
 	}
 );
@@ -29,18 +29,12 @@ add_action(
 /**
  * Test REST API access
  *
- * @param WP_REST_Request $request API request.
  * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */
-function instant_images_test( WP_REST_Request $request ) {
-
+function instant_images_test() {
 	if ( InstantImages::instant_img_has_access() ) {
-
 		// Access is enable, send the response.
-		$response = array( 'success' => true );
-
-		// Send response as JSON.
-		wp_send_json( $response );
+		wp_send_json( [ 'success' => true ] );
 	}
 }

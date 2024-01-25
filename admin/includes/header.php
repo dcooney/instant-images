@@ -12,7 +12,7 @@
 		<?php echo wp_kses_post( InstantImages::instant_images_get_tagline() ); ?>
 	</h1>
 	<?php
-	if ( $show_settings ) {
+	if ( $show_settings && InstantImages::instant_img_has_settings_access() ) {
 		?>
 	<a href="<?php echo esc_url( INSTANT_IMAGES_WPADMIN_SETTINGS_URL ); ?>" class="button button-secondary button-large">
 		<i class="fa fa-cog" aria-hidden="true"></i> <?php esc_attr_e( 'Settings', 'instant-images' ); ?>

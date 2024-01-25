@@ -15,13 +15,13 @@ add_action(
 		register_rest_route(
 			$my_namespace,
 			$my_endpoint,
-			array(
+			[
 				'methods'             => 'POST',
 				'callback'            => 'instant_images_settings',
 				'permission_callback' => function () {
-					return InstantImages::instant_img_has_access();
+					return InstantImages::instant_img_has_settings_access();
 				},
-			)
+			]
 		);
 	}
 );
@@ -34,7 +34,7 @@ add_action(
  * @package InstantImages
  */
 function instant_images_settings( WP_REST_Request $request ) {
-	if ( InstantImages::instant_img_has_access() ) {
+	if ( InstantImages::instant_img_has_settings_access() ) {
 
 		// Get JSON Data.
 		$data = json_decode( $request->get_body(), true ); // Get contents of request body.
@@ -52,16 +52,16 @@ function instant_images_settings( WP_REST_Request $request ) {
 				update_option( $option, $options );
 
 				// Success.
-				$response = array(
+				$response = [
 					'success' => true,
 					'msg'     => __( 'Settings saved.', 'instant-images' ),
-				);
+				];
 			} else {
 				// Error.
-				$response = array(
+				$response = [
 					'success' => false,
 					'msg'     => __( 'Unable to save settings.', 'instant-images' ),
-				);
+				];
 			}
 
 			// Send response as JSON.
@@ -69,5 +69,4 @@ function instant_images_settings( WP_REST_Request $request ) {
 
 		}
 	}
-
 }

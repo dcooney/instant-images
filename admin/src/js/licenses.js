@@ -1,4 +1,5 @@
 import axios from "axios";
+import { __ } from "@wordpress/i18n";
 
 // Get all license forms.
 const licenseForms = document.querySelectorAll(
@@ -55,13 +56,28 @@ function updateLicense(params) {
 	};
 	axios
 		.post(api, JSON.stringify(params), config)
-		.then(function () {
-			location.reload(); // reload window.
+		.then(function (data) {
+			if (data?.data) {
+				location.reload(); // Success: reload window.
+			} else {
+				console.warn(
+					// Error handling.
+					__("Are you sure you should be doing this?", "instant-images")
+				);
+				doReload();
+			}
 		})
 		.catch(function (error) {
 			console.warn(error);
-			setTimeout(function () {
-				location.reload(); // reload window.
-			}, 2000);
+			doReload();
 		});
+}
+
+/**
+ * Reload window after 2 seconds.
+ */
+function doReload() {
+	setTimeout(function () {
+		location.reload(); // reload window.
+	}, 2000);
 }

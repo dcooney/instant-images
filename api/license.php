@@ -15,13 +15,13 @@ add_action(
 		register_rest_route(
 			$my_namespace,
 			$my_endpoint,
-			array(
+			[
 				'methods'             => 'POST',
 				'callback'            => 'instant_images_license',
 				'permission_callback' => function () {
-					return InstantImages::instant_img_has_access();
+					return InstantImages::instant_img_has_settings_access();
 				},
-			)
+			]
 		);
 	}
 );
@@ -34,7 +34,7 @@ add_action(
  * @package InstantImages
  */
 function instant_images_license( WP_REST_Request $request ) {
-	if ( InstantImages::instant_img_has_access() ) {
+	if ( InstantImages::instant_img_has_settings_access() ) {
 
 		// Get JSON Data.
 		$data = json_decode( $request->get_body(), true ); // Get contents of request body.
@@ -47,7 +47,16 @@ function instant_images_license( WP_REST_Request $request ) {
 			$item_id       = $data['id'] ? $data['id'] : ''; // The item ID in EDD.
 			$type          = ! $license ? 'deactivate' : $type; // Set to deactivate if no license.
 
+			// Exit if missing params.
 			if ( ! $option_key || ! $option_status || ! $item_id ) {
+				return false;
+			}
+
+			// Available options.
+			$option_key_array = [ 'instant_images_extended_license_key' ];
+
+			// Exit if option being updated isn't part of the available options.
+			if ( ! in_array( $option_key, $option_key_array, true ) ) {
 				return false;
 			}
 
@@ -59,23 +68,23 @@ function instant_images_license( WP_REST_Request $request ) {
 			}
 
 			// Create the params for the request.
-			$api_params = array(
+			$api_params = [
 				'edd_action'  => $action,
 				'license'     => $license,
 				'item_id'     => $item_id, // the ID of our product in EDD.
 				'url'         => home_url(),
 				'environment' => function_exists( 'wp_get_environment_type' ) ? wp_get_environment_type() : 'production',
-			);
+			];
 
 			// Call Store API.
 			$response = wp_safe_remote_post(
 				INSTANT_IMAGES_STORE_URL,
-				array(
+				[
 					'method'    => 'POST',
 					'body'      => $api_params,
 					'timeout'   => 30,
 					'sslverify' => false,
-				)
+				]
 			);
 
 			// Make sure the response came back okay.
@@ -95,5 +104,4 @@ function instant_images_license( WP_REST_Request $request ) {
 			wp_send_json( true );
 		}
 	}
-
 }
