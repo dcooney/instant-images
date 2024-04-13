@@ -9,13 +9,14 @@ import { OPENVERSE_SOURCES } from "../../constants/filters/openverse";
  */
 export function openverseParams(type, params) {
 	if (type === "photos" && !params.source) {
-		// Add `wordpress` as the default `source` for openverse.
-		params.source = "wordpress";
+		params.source = "wordpress"; // Add `wordpress` as the default openverse `source`.
 	}
 
 	if (type === "search") {
 		// Include these sources only.
-		const sources = OPENVERSE_SOURCES.toString();
+		const sources = OPENVERSE_SOURCES.map((source) => {
+			return source.value;
+		}).toString(); // e.g. `wordpress,flickr,nasa,spacex,wikimedia`
 		params.source = sources;
 	}
 
