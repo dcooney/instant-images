@@ -160,7 +160,7 @@ How to install Instant Images.
 == Changelog ==
 
 = 6.1.2 - April 15, 2024 =
-* FIX: Fixed issue with Openverse search not working dur to plugin error.
+* FIX: Fixed issue with Openverse search not working due to plugin error.
 * UPDATE: WordPress 6.5 compatibility updates.
 
 
