@@ -24,7 +24,7 @@ export default function SearchToolTip() {
 			<button
 				type="button"
 				title={instant_img_localize.clear_search}
-				onClick={() => getPhotos()}
+				onClick={() => getPhotos(true)}
 			>
 				x<span className="offscreen">{instant_img_localize.clear_search}</span>
 			</button>

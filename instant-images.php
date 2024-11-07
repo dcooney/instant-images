@@ -2,12 +2,12 @@
 /**
  * Plugin Name: Instant Images
  * Plugin URI: https://connekthq.com/plugins/instant-images/
- * Description: One click image uploads directly to your media library from Unsplash, Openverse, Pixabay and Pexels.
+ * Description: One-click image uploads directly to your media library from Unsplash, Openverse, Pixabay and Pexels.
  * Author: Darren Cooney
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 6.1.2
+ * Version: 6.2.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '6.1.2' );
-define( 'INSTANT_IMAGES_RELEASE', 'April 15, 2024' );
+define( 'INSTANT_IMAGES_VERSION', '6.2.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'November 8, 2024' );
 define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
@@ -89,6 +89,7 @@ class InstantImages {
 		define( 'INSTANT_IMAGES_SETTINGS', 'instant_img_settings' );
 		define( 'INSTANT_IMAGES_API_SETTINGS', 'instant_img_api_settings' );
 		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
+		define( 'INSTANT_IMAGES_ADDONS_URL', 'https://getinstantimages.com/add-ons/' );
 
 		// Instant Images: Extended.
 		if ( ! defined( 'INSTANT_IMAGES_EXTENDED_ID' ) ) {
@@ -469,7 +470,7 @@ class InstantImages {
 	 */
 	public static function instant_images_get_tagline() {
 		// translators: Instant Images tagline.
-		$instant_images_tagline = __( 'One click photo uploads from %1$s, %2$s, %3$s and %4$s.', 'instant-images' ); // phpcs:ignore
+		$instant_images_tagline = __( 'One-click photo uploads from %1$s, %2$s, %3$s and %4$s.', 'instant-images' ); // phpcs:ignore
 		return '<span class="instant-images-tagline">' . sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">Unsplash</a>', '<a href="https://wordpress.org/openverse" target="_blank">Openverse</a>', '<a href="https://pixabay.com/" target="_blank">Pixabay</a>', '<a href="https://pexels.com/" target="_blank">Pexels</a>' ) .'</span>';  // phpcs:ignore
 	}
 
@@ -482,7 +483,11 @@ class InstantImages {
 	 * @since 2.0
 	 */
 	public function add_action_links( $links ) {
-		$mylinks = [ '<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( 'Get Images', 'instant-images' ) . '</a>', '<a href="' . INSTANT_IMAGES_WPADMIN_SETTINGS_URL . '">' . __( 'Settings', 'instant-images' ) . '</a>' ];
+		$mylinks = [
+			'<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( 'Get Images', 'instant-images' ) . '</a>',
+			'<a href="' . INSTANT_IMAGES_ADDONS_URL . '" target="_blank">' . __( 'Browse Add-ons', 'instant-images' ) . '</a>',
+			'<a href="' . INSTANT_IMAGES_WPADMIN_SETTINGS_URL . '">' . __( 'Settings', 'instant-images' ) . '</a>'
+		];
 		return array_merge( $mylinks, $links );
 	}
 

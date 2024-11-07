@@ -14,6 +14,9 @@
 				<?php echo wp_kses_post( InstantImages::instant_images_get_tagline() ); ?>
 			</h1>
 			<p>
+				<a href="<?php echo esc_url( INSTANT_IMAGES_ADDONS_URL ); ?>" class="button button-primary button-large" target="_blank">
+					<?php esc_attr_e( 'Browse Add-ons', 'instant-images' ); ?>
+				</a>
 				<a href="<?php echo esc_url( INSTANT_IMAGES_WPADMIN_URL ); ?>" class="button button-secondary button-large">
 					<?php esc_attr_e( 'Get Images', 'instant-images' ); ?>
 				</a>

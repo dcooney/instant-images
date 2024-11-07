@@ -74,22 +74,30 @@ span.instant-images-tagline {
 	border-bottom: 1px solid $grey;
 	position: relative;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
-
+	display: flex;
+	align-items: center;
+	width: 100%;
 	@media screen and (max-width: $small) {
+		display: block;
 		background-position: center 20px;
 		padding: 80px 25px 20px;
 		text-align: center;
 	}
-	a.button {
-		position: absolute;
-		right: 25px;
-		bottom: 26px;
-		i {
-			margin-left: -3px;
+	> div {
+		margin-left: auto;
+		display: flex;
+		gap: 10px;
+		padding-left: 10px;
+		@media screen and (max-width: $small) {
+			width: 100%;
+			justify-content: center;
+			padding-top: 20px;
+			padding-left: 0;
 		}
+	}
+	a.button {
 		@media screen and (max-width: $small) {
 			position: static;
-			margin-top: 20px;
 			display: inline-block;
 		}
 	}

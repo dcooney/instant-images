@@ -1,10 +1,10 @@
 === Instant Images - One Click Image Uploads from Unsplash, Openverse, Pixabay and Pexels ===
 Contributors: dcooney, connekthq
 Donate link: <https://connekthq.com/donate/>
-Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, media library, prototyping, photos, stock photo, image upload, upload, free photos
+Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, photos, stock photo, image upload, upload, free photos
 Requires at least: 5.0
-Tested up to: 6.5
-Stable tag: 6.1.2
+Tested up to: 6.7
+Stable tag: 6.2.1
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -50,11 +50,12 @@ The perfect tool for users who want to save time and frustration by uploading im
 Enhance the Instant Images experience with a suite of premium features and added functionality.
 
 **What's Included:**
-- Instant Images Gutenberg Block
-- WordPress CLI Imports
-- Batch Image Imports
-- Images Filters (Instagram)
-- Search History & Suggestions
+- Search History & Autocomplete.
+- Instant Images Gutenberg Block.
+- WordPress CLI Imports.
+- Batch Image Imports.
+- Images Filters (Instagram).
+- Maintain current search term while switching image providers.
 - And more...
 
 [Learn More](https://getinstantimages.com/add-ons/extended/)
@@ -159,10 +160,15 @@ How to install Instant Images.
 
 == Changelog ==
 
+= 6.2.0 - November 8, 2024 =
+* NEW: Added support for new Extended add-on feature to maintain search term when switching providers.
+* UPDATE: WordPress 6.7 compatibility updates.
+* UPDATE: Various UI/UX updates throughout the app.
+* UPDATE: Dependancy updates.
+
 = 6.1.2 - April 15, 2024 =
 * FIX: Fixed issue with Openverse search not working due to plugin error.
 * UPDATE: WordPress 6.5 compatibility updates.
-
 
 = 6.1.1 - January 25, 2024 =
 * FIX: Various security patches.

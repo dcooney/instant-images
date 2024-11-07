@@ -311,7 +311,7 @@ function instant_images_display_licenses() {
 		?>
 		<div class="license-settings--empty">
 			<p><?php esc_attr_e( 'You do not have any Instant Images add-ons installed.', 'instant-images' ); ?></p>
-			<p><a class="button button-primary" href="https://getinstantimages.com/add-ons/" target="_blank"><?php esc_attr_e( 'Browse Add-ons', 'instant-images' ); ?></a></p>
+			<p><a class="button button-primary" href="<?php echo esc_url( INSTANT_IMAGES_ADDONS_URL ); ?>" target="_blank"><?php esc_attr_e( 'Browse Add-ons', 'instant-images' ); ?></a></p>
 		</div>
 		<?php
 	}

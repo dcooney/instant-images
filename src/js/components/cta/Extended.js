@@ -3,6 +3,8 @@ import { __ } from "@wordpress/i18n";
 import classNames from "classnames";
 import { getSetting, saveSettings } from "../../functions/localStorage";
 
+/* eslint-disable */
+
 /**
  * Generic CTA for the Extended add-on.
  *
@@ -10,7 +12,7 @@ import { getSetting, saveSettings } from "../../functions/localStorage";
  */
 export function ExtendedCTA() {
 	const { activated = false } = instant_img_localize?.addons?.extended;
-	const name = "extended-cta";
+	const name = "extended-cta-2024";
 	const [dissmissed, setDismissed] = useState(getSetting(name) === "hide"); // Get setting from localstorage.
 
 	// Hide the CTA.
@@ -35,8 +37,7 @@ export function ExtendedCTA() {
 								Extended add-on
 							</a>
 						</span>{" "}
-						&rarr; A suite of premium features and functionality for Instant
-						Images.
+						&rarr; An extension pack of premium features and functionality to enhance the Instant Images plugin.
 					</p>
 					<div>
 						<a
@@ -70,7 +71,7 @@ export function ExtendedCTA() {
  * @return {JSX.Element}       The ExtendedSearchCTA component.
  */
 export function ExtendedSearchCTA({ show = false }) {
-	const name = "extended-cta-search";
+	const name = "extended-cta-search-2024";
 	const [active, setActive] = useState(getSetting(name) !== "hide"); // Get setting from localstorage.
 
 	// Hide the CTA.
@@ -99,15 +100,14 @@ export function ExtendedSearchCTA({ show = false }) {
 				<div>
 					<p>
 						<i className="fa fa-magic" aria-hidden="true"></i>
-						Enable search suggestions and history with the{" "}
+						Enable search suggestions, history, and maintain current search term while switching providers with the{" "}
 						<a
 							href="https://getinstantimages.com/add-ons/extended/"
 							target="_blank"
 							rel="noreferrer"
 						>
 							Extended add-on
-						</a>{" "}
-						for Instant Images
+						</a>
 					</p>
 					<p>
 						<a

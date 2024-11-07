@@ -17,13 +17,7 @@ if ( class_exists( 'Connekt_Plugin_Installer' ) ) {
 		<?php
 		$instant_images_plugin_array = [
 			[
-				'slug' => 'ajax-load-more',
-			],
-			[
 				'slug' => 'block-manager',
-			],
-			[
-				'slug' => 'easy-query',
 			],
 			[
 				'slug' => 'velocity',

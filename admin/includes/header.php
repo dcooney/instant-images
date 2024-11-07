@@ -13,9 +13,14 @@
 	</h1>
 	<?php
 	if ( $show_settings && InstantImages::instant_img_has_settings_access() ) {
-		?>
-	<a href="<?php echo esc_url( INSTANT_IMAGES_WPADMIN_SETTINGS_URL ); ?>" class="button button-secondary button-large">
-		<i class="fa fa-cog" aria-hidden="true"></i> <?php esc_attr_e( 'Settings', 'instant-images' ); ?>
-	</a>
-		<?php } ?>
+	?>
+	<div>
+		<a href="<?php echo esc_url( INSTANT_IMAGES_ADDONS_URL ); ?>" class="button button-primary button-large" target="_blank">
+			<?php esc_attr_e( 'Browse Add-ons', 'instant-images' ); ?>
+		</a>
+		<a href="<?php echo esc_url( INSTANT_IMAGES_WPADMIN_SETTINGS_URL ); ?>" class="button button-secondary button-large">
+			<i class="fa fa-cog" aria-hidden="true"></i> <?php esc_attr_e( 'Settings', 'instant-images' ); ?>
+		</a>
+	</div>
+	<?php } ?>
 </header>

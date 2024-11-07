@@ -201,6 +201,10 @@ button[aria-expanded="true"] .instant-images-sidebar-icon svg * {
 		}
 	}
 
+	input#search-input{
+		border: 1px solid $gb_border;
+	}
+
 	// Loader.
 	&--loader {
 		height: $wpblock_maxh;

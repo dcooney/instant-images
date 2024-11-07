@@ -52,6 +52,11 @@ export default function InstantImages(props) {
 		clientId = null,
 	} = props;
 
+	const {
+		activated: extended_activated = false,
+		license: extended_license = false,
+	} = instant_img_localize?.addons?.extended;
+
 	const delay = 250;
 	const searchClass = "searching";
 	const searchDefaults = {
@@ -102,15 +107,25 @@ export default function InstantImages(props) {
 	/**
 	 * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
 	 *
+	 * @param {boolean} reset Reset the current view.
 	 * @since 3.0
 	 */
-	async function getPhotos() {
+	async function getPhotos(reset = false) {
 		if (loadingMore) {
 			return false;
 		}
 
+		if (!reset && searchInputRef?.current?.value !== "") {
+			// Maintain search results for extended add-on users.
+			if (extended_activated && extended_license) {
+				doSearch(searchInputRef.current.value);
+				return;
+			}
+		}
+
 		setLoading(true); // Set loading state.
-		clearSearch(); // Clear search results.
+		clearSearch(); // Reset search results.
+
 		resetScrollPosition();
 		page = 1;
 
@@ -309,7 +324,10 @@ export default function InstantImages(props) {
 	 * @since 3.0
 	 */
 	function clearSearch() {
-		searchInputRef.current.value = "";
+		const term = searchInputRef?.current?.value || "";
+		if (term) {
+			searchInputRef.current.value = "";
+		}
 		setSearch(searchDefaults);
 		setSuggestions([]);
 	}
