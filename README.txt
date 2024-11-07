@@ -4,7 +4,7 @@ Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, photos, stock photo, image upload, upload, free photos
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 6.2.0
+Stable tag: 6.2.1
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -160,7 +160,7 @@ How to install Instant Images.
 
 == Changelog ==
 
-= 6.2.0 - November 8, 2024 =
+= 6.2.1 - November 7, 2024 =
 * NEW: Added support for new Extended add-on feature to maintain search term when switching providers.
 * UPDATE: WordPress 6.7 compatibility updates.
 * UPDATE: Various UI/UX updates throughout the app.
