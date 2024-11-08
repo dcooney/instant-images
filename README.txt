@@ -4,7 +4,7 @@ Donate link: <https://connekthq.com/donate/>
 Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, photos, stock photo, image upload, upload, free photos
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 6.2.1
+Stable tag: 6.2.2
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -159,6 +159,9 @@ How to install Instant Images.
 5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 6.2.2 - November 8, 2024 =
+* HOTFIX: Removed .wp-block styles in Instant Images CSS.
 
 = 6.2.1 - November 7, 2024 =
 * NEW: Added support for new Extended add-on feature to maintain search term when switching providers.

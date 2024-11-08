@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '6.2.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'November 7, 2024' );
+define( 'INSTANT_IMAGES_VERSION', '6.2.2' );
+define( 'INSTANT_IMAGES_RELEASE', 'November 8, 2024' );
 define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
