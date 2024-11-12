@@ -1,4 +1,4 @@
-import { API } from "../constants/API";
+import { API } from '../constants/API';
 
 /**
  * Pluck `results` from the API response.
@@ -42,12 +42,12 @@ export function getResultById(provider, key, data) {
 
 	let result = [];
 	switch (provider) {
-		case "unsplash":
-		case "pexels":
+		case 'unsplash':
+		case 'pexels':
 			result = data || [];
 			break;
 
-		case "pixabay":
+		case 'pixabay':
 			result = data[key] && data[key][0] ? data[key][0] : [];
 			break;
 	}

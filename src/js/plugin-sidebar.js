@@ -1,7 +1,7 @@
-import { Fragment } from "@wordpress/element";
-import { registerPlugin } from "@wordpress/plugins";
-import Plugin from "./editor/plugin";
-import Menu from "./editor/plugin/components/Menu";
+import { Fragment } from '@wordpress/element';
+import { registerPlugin } from '@wordpress/plugins';
+import Plugin from './editor/plugin';
+import Menu from './editor/plugin/components/Menu';
 
 /**
  * Instant Images as a Gutenberg Plugin Sidebar.
@@ -16,6 +16,6 @@ const InstantImagesPlugin = () => (
 );
 
 // Register the sidebar plugin.
-registerPlugin("instant-images", {
+registerPlugin('instant-images', {
 	render: InstantImagesPlugin,
 });

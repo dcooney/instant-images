@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "@wordpress/element";
-import InstantImages from "../../../components/InstantImages";
-import getProvider from "../../../functions/getProvider";
+import { useEffect, useRef, useState } from '@wordpress/element';
+import InstantImages from '../../../components/InstantImages';
+import getProvider from '../../../functions/getProvider';
 
 /**
  * The image listing sidebar for the plugin sidebar.
@@ -19,20 +19,8 @@ export default function Sidebar() {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<div
-			className="instant-img-container"
-			data-editor="gutenberg-sidebar"
-			ref={containerRef}
-		>
-			{!!mounted && (
-				<InstantImages
-					editor="sidebar"
-					data={[]}
-					api_error={null}
-					provider={provider}
-					container={containerRef?.current}
-				/>
-			)}
+		<div className="instant-img-container" data-editor="gutenberg-sidebar" ref={containerRef}>
+			{!!mounted && <InstantImages editor="sidebar" data={[]} api_error={null} provider={provider} container={containerRef?.current} />}
 		</div>
 	);
 }

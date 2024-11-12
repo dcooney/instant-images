@@ -1,33 +1,31 @@
-import axios from "axios";
-import { __ } from "@wordpress/i18n";
+import axios from 'axios';
+import { __ } from '@wordpress/i18n';
 
 // Get all license forms.
-const licenseForms = document.querySelectorAll(
-	".license-settings form.license-settings--item"
-);
+const licenseForms = document.querySelectorAll('.license-settings form.license-settings--item');
 
 if (licenseForms) {
 	// Loop each formt o add event listener.
 	licenseForms.forEach((form) => {
-		form.addEventListener("submit", function (e) {
+		form.addEventListener('submit', function (e) {
 			e.preventDefault();
-			const input = this.querySelector("input");
+			const input = this.querySelector('input');
 			const license = input.value;
 			const key = input.dataset.key;
 			const status = input.dataset.status;
 			const id = input.dataset.id;
-			const type = form.classList.contains("valid") ? "deactivate" : "activate";
+			const type = form.classList.contains('valid') ? 'deactivate' : 'activate';
 
 			if (!license) {
 				input.focus();
 				return;
 			}
 
-			const button = form.querySelector("input[type=submit]");
-			button.setAttribute("disabled", "disabled");
+			const button = form.querySelector('input[type=submit]');
+			button.setAttribute('disabled', 'disabled');
 
-			const loading = form.querySelector(".loading");
-			loading.classList.add("active");
+			const loading = form.querySelector('.loading');
+			loading.classList.add('active');
 
 			updateLicense({
 				key,
@@ -47,11 +45,11 @@ if (licenseForms) {
  */
 function updateLicense(params) {
 	const { root, nonce } = instant_img_admin_localize; // eslint-disable-line no-undef
-	const api = root + "instant-images/license/";
+	const api = root + 'instant-images/license/';
 	const config = {
 		headers: {
-			"X-WP-Nonce": nonce,
-			"Content-Type": "application/json",
+			'X-WP-Nonce': nonce,
+			'Content-Type': 'application/json',
 		},
 	};
 	axios
@@ -62,7 +60,7 @@ function updateLicense(params) {
 			} else {
 				console.warn(
 					// Error handling.
-					__("Are you sure you should be doing this?", "instant-images")
+					__('Are you sure you should be doing this?', 'instant-images'),
 				);
 				doReload();
 			}

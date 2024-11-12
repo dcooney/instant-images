@@ -1,4 +1,4 @@
-import { dispatch } from "@wordpress/data";
+import { dispatch } from '@wordpress/data';
 
 /**
  * Set image as featured image in Gutenberg.
@@ -12,8 +12,8 @@ export default function setFeaturedImage(attachment) {
 	}
 
 	// Set the featured image.
-	dispatch("core/editor").editPost({ featured_media: id });
+	dispatch('core/editor').editPost({ featured_media: id });
 
 	// Open the document sidebar.
-	dispatch("core/edit-post").openGeneralSidebar("edit-post/document");
+	dispatch('core/edit-post').openGeneralSidebar('edit-post/document');
 }

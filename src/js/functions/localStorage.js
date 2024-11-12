@@ -1,5 +1,5 @@
-const searchName = "instant-images-recent-searches";
-const settingsName = "instant-images-settings";
+const searchName = 'instant-images-recent-searches';
+const settingsName = 'instant-images-settings';
 const most = 10;
 
 /**

@@ -107,6 +107,7 @@
 				background-color: rgba($text_alt, 0.5);
 				border-radius: 9999px;
 				transition: $transition;
+				cursor: pointer;
 
 				&::before {
 					position: absolute;

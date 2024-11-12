@@ -1,6 +1,6 @@
-const { merge } = require("webpack-merge");
-const common = require("../webpack.config.js");
-const { DefinePlugin } = require("webpack");
+const { merge } = require('webpack-merge');
+const common = require('../webpack.config.js');
+const { DefinePlugin } = require('webpack');
 
 /**
  * Webpack config (Prod mode).
@@ -11,7 +11,7 @@ const { DefinePlugin } = require("webpack");
 module.exports = merge(common, {
 	plugins: [
 		new DefinePlugin({
-			PROXY_URL: JSON.stringify("https://proxy.getinstantimages.com/api/"),
+			PROXY_URL: JSON.stringify('https://proxy.getinstantimages.com/api/'),
 		}),
 	],
 });

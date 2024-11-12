@@ -1,1 +1,1 @@
-export { default } from "./components/Plugin";
+export { default } from './components/Plugin';

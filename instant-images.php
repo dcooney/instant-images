@@ -14,6 +14,10 @@
  * @package InstantImages
  */
 
+/*
+* UPDATE: Updated Unsplash image filters as their API was updated recently.
+*/
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

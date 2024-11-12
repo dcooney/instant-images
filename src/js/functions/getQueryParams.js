@@ -1,4 +1,4 @@
-import { API } from "../constants/API";
+import { API } from '../constants/API';
 
 // eslint-disable
 
@@ -72,21 +72,21 @@ export function getAuth(params, provider) {
  */
 export function getContentSafety(params, provider) {
 	switch (provider) {
-		case "unsplash":
+		case 'unsplash':
 			if (instant_img_localize.unsplash_content_filter) {
 				params.content_filter = instant_img_localize.unsplash_content_filter;
 			}
 			break;
 
-		case "pixabay":
+		case 'pixabay':
 			if (instant_img_localize.pixabay_safesearch) {
-				params.safesearch = "true";
+				params.safesearch = 'true';
 			}
 			break;
 
-		case "openverse":
+		case 'openverse':
 			if (instant_img_localize.openverse_mature) {
-				params.mature = "true";
+				params.mature = 'true';
 			}
 			break;
 	}

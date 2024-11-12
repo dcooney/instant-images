@@ -51,9 +51,11 @@ Enhance the Instant Images experience with a suite of premium features and added
 
 **What's Included:**
 - Search History & Autocomplete.
-- Instant Images Gutenberg Block.
+- Instant Images as a WordPress Block.
 - WordPress CLI Imports.
 - Batch Image Imports.
+- I'm Feeling Lucky WordPress Block.
+- Instant Featured Images
 - Images Filters (Instagram).
 - Maintain current search term while switching image providers.
 - And more...

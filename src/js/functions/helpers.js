@@ -1,4 +1,4 @@
-import CryptoJS from "crypto-js";
+import CryptoJS from 'crypto-js';
 
 /**
  * Get the MD5 hash value of a URL.
@@ -32,8 +32,8 @@ export function checkRateLimit(headers) {
 	if (!headers) {
 		return;
 	}
-	const limit = headers.get("X-RateLimit-Limit") || -1;
-	const remaining = headers.get("X-RateLimit-Remaining") || -1;
+	const limit = headers.get('X-RateLimit-Limit') || -1;
+	const remaining = headers.get('X-RateLimit-Remaining') || -1;
 	if (limit > -1 && parseInt(remaining) < 2) {
 		alert(instant_img_localize.api_ratelimit_msg); // eslint-disable-line
 	}
@@ -49,7 +49,7 @@ export function capitalizeFirstLetter(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-let tooltipInterval = "";
+let tooltipInterval = '';
 
 /**
  * Show the tooltip.
@@ -63,14 +63,14 @@ export function showTooltip(e) {
 	let left = Math.round(rect.left);
 	const top = Math.round(rect.top);
 
-	const container = target.closest("#photo-listing");
-	const tooltip = container.querySelector("#tooltip");
-	tooltip.classList.remove("over");
+	const container = target.closest('#photo-listing');
+	const tooltip = container.querySelector('#tooltip');
+	tooltip.classList.remove('over');
 
-	if (target.classList.contains("tooltip--above")) {
-		tooltip.classList.add("above");
+	if (target.classList.contains('tooltip--above')) {
+		tooltip.classList.add('above');
 	} else {
-		tooltip.classList.remove("above");
+		tooltip.classList.remove('above');
 	}
 
 	// Delay Tooltip Reveal.
@@ -84,7 +84,7 @@ export function showTooltip(e) {
 		tooltip.style.top = `${top}px`;
 
 		setTimeout(function () {
-			tooltip.classList.add("over");
+			tooltip.classList.add('over');
 		}, 25);
 	}, 750);
 }
@@ -97,9 +97,9 @@ export function showTooltip(e) {
  */
 export function hideTooltip(e) {
 	clearInterval(tooltipInterval);
-	const container = e.currentTarget.closest("#photo-listing");
-	const tooltip = container.querySelector("#tooltip");
-	tooltip.classList.remove("over");
+	const container = e.currentTarget.closest('#photo-listing');
+	const tooltip = container.querySelector('#tooltip');
+	tooltip.classList.remove('over');
 }
 
 /**
@@ -109,6 +109,6 @@ export function hideTooltip(e) {
  */
 export function gotoURL(url) {
 	if (url && window) {
-		window.open(url, "_blank");
+		window.open(url, '_blank');
 	}
 }
