@@ -1,0 +1,119 @@
+.instant-images-extended-image-sizes {
+	&--add {
+		margin: 0 0 40px;
+
+		// Not installed.
+		&.not-installed form {
+			position: relative;
+			.instant-images-extended-image-sizes--elements,
+			.instant-images-extended-image-sizes--controls {
+				filter: blur(0.75px);
+				pointer-events: none;
+			}
+
+			.instant-images-callout-cta {
+				position: absolute;
+				z-index: 1;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(255, 255, 255, 0.6);
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: center;
+				> div {
+					max-width: 90%;
+					background-color: rgba(255, 255, 255, 0.75);
+					padding: 25px;
+					border-radius: $radius_lg;
+					border: 1px solid $border;
+					box-shadow: $shadow;
+					display: grid;
+					gap: 10px;
+				}
+				p {
+					width: 100%;
+					text-align: center;
+					margin: 0;
+				}
+			}
+		}
+	}
+
+	&--current-sizes {
+		> div {
+			border-radius: $radius_md;
+			border: 1px solid $border;
+			padding: 5px;
+		}
+	}
+
+	&--elements {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 10px;
+		@media screen and (min-width: $small) {
+			display: flex;
+			flex-wrap: wrap;
+			> div {
+				width: calc(20% - 10px);
+				&:nth-child(1) {
+					width: 40%;
+				}
+			}
+		}
+	}
+	h3,
+	.instant-images-callout {
+		margin: 0 0 15px;
+	}
+
+	h3 {
+		font-size: 16px;
+		+ p {
+			margin-top: -8px;
+		}
+	}
+}
+
+.instant-images-image-size-table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	display: table;
+	white-space: nowrap;
+	th,
+	td {
+		padding: 10px 5px 10px 10px;
+	}
+	th {
+		text-align: left;
+		text-transform: uppercase;
+		font-size: 12px;
+		position: sticky;
+		top: 0;
+		background-color: $lighter_grey;
+		vertical-align: middle;
+	}
+
+	td {
+		border-top: 1px solid rgba($border, 0.5);
+		font-size: 13px;
+	}
+	tr:hover td {
+		background-color: rgba($lighter_grey, 0.5);
+	}
+
+	pre {
+		margin: 0;
+		color: $purple;
+		font-size: 12px;
+		display: inline-block;
+		background-color: $lighter_grey;
+		padding: 3px 5px;
+		line-height: 1;
+		border-radius: $radius_md;
+	}
+}

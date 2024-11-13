@@ -11,7 +11,7 @@ body.settings_page_instant-images-settings {
 }
 body.media_page_instant-images #wpcontent,
 body.settings_page_instant-images-settings #wpcontent {
-  padding-right: 0;
+  padding-left: 0;
   padding-bottom: 40px;
 }
 @media screen and (max-width: 800px) {
@@ -89,7 +89,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-size: 14px;
 }
 .instant-img-container .error-messaging {
-  padding: 22px 60px 22px 22px;
+  padding: 22px 22px 22px 60px;
   border-radius: 3px;
   background: #da4444;
   color: #fff;
@@ -111,7 +111,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-family: "FontAwesome";
   content: "\f06a";
   display: block;
-  right: 18px;
+  left: 18px;
   top: 18px;
   position: absolute;
   font-size: 32px;
@@ -133,22 +133,22 @@ body.settings_page_instant-images-settings.overflow-hidden {
   margin-top: 0;
 }
 .instant-img-container .save-settings p.submit {
-  float: right;
-  margin: 0 0 0 2px;
+  float: left;
+  margin: 0 2px 0 0;
   width: auto;
 }
 .instant-img-container .save-settings .loading {
   width: 46px;
   height: 28px;
   display: none;
-  float: right;
+  float: left;
   background: #fff url(images/ajax-loader.7c5ec6b9.gif) no-repeat center center;
 }
 #TB_ajaxContent {
   clear: both;
   line-height: 1.4;
   overflow: auto;
-  text-align: right;
+  text-align: left;
   width: 100% !important;
   box-sizing: border-box;
   padding: 15px !important;
@@ -357,10 +357,10 @@ body.settings_page_instant-images-settings.overflow-hidden {
   font-family: "FontAwesome";
   color: #efefef;
   font-size: 24px;
-  margin-left: 10px;
+  margin-right: 10px;
 }
 .instant-img-container .control-nav--filters label {
-  border-right: none;
+  border-left: none;
   display: block;
   min-width: 125px;
   padding: 0;
@@ -371,7 +371,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   text-transform: uppercase;
   font-size: 10px;
   padding-bottom: 1px;
-  padding-right: 1px;
+  padding-left: 1px;
 }
 .instant-img-container .control-nav--filters label:focus-within select:not[disabled] {
   border-color: #98979d;
@@ -386,7 +386,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   min-height: 36px;
   line-height: 36px;
   font-size: 14px;
-  padding: 0 8px 0 24px;
+  padding: 0 24px 0 8px;
 }
 .instant-img-container .control-nav--filters select[disabled] {
   cursor: not-allowed;
@@ -400,7 +400,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   width: 30%;
   max-width: 350px;
   padding: 0;
-  margin-right: 20px;
+  margin-left: 20px;
   position: relative;
 }
 @media screen and (min-width: 1270px) {
@@ -418,7 +418,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
     width: 100%;
     display: block;
     position: static;
-    text-align: right;
+    text-align: left;
     max-width: 100%;
     padding: 10px 0;
     margin: 0;
@@ -426,12 +426,12 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-img-container .control-nav--search-tooltip {
   position: absolute;
-  left: 100.5%;
+  right: 100.5%;
   top: -1px;
   width: auto;
   height: 40px;
   line-height: 40px;
-  padding: 0 10px 0 0;
+  padding: 0 0 0 10px;
   background: #586ec6;
   border: 1px solid #455cb6;
   border-radius: 4px;
@@ -468,7 +468,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   opacity: 1;
 }
 .instant-img-container .control-nav--search-tooltip::after, .instant-img-container .control-nav--search-tooltip::before {
-  right: 100%;
+  left: 100%;
   top: 50%;
   border: solid transparent;
   content: "";
@@ -480,13 +480,13 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-img-container .control-nav--search-tooltip::after {
   border-color: rgba(223, 225, 173, 0);
-  border-right-color: #586ec6;
+  border-left-color: #586ec6;
   border-width: 6px;
   margin-top: -6px;
 }
 .instant-img-container .control-nav--search-tooltip::before {
   border-color: rgba(0, 0, 0, 0);
-  border-right-color: #455cb6;
+  border-left-color: #455cb6;
   border-width: 7px;
   margin-top: -7px;
 }
@@ -496,16 +496,16 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 @media screen and (max-width: 800px) {
   .instant-img-container .control-nav--search-tooltip {
-    left: 0;
+    right: 0;
     top: 0;
-    border-radius: 3px 0 0 3px;
+    border-radius: 0 3px 3px 0;
   }
   .instant-img-container .control-nav--search-tooltip::after, .instant-img-container .control-nav--search-tooltip::before {
     display: none;
   }
 }
 .instant-img-container .control-nav--search form {
-  padding: 0 0 0 1px;
+  padding: 0 1px 0 0;
   margin: 0;
   position: relative;
   height: 38px;
@@ -519,13 +519,13 @@ body.settings_page_instant-images-settings.overflow-hidden {
   background-color: #fff;
   color: #434246;
   width: 100%;
-  padding: 0 38px 0 15px;
+  padding: 0 15px 0 38px;
   border-color: #e1e1e1;
   height: 38px;
   line-height: 38px;
   border-radius: 3px;
   font-size: 14px;
-  background-position: left 10px center;
+  background-position: right 10px center;
   background-repeat: no-repeat;
   margin: 0;
 }
@@ -548,7 +548,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-img-container .control-nav--search button[type=submit] {
   position: absolute;
-  right: 1px;
+  left: 1px;
   top: 0;
   width: 38px;
   height: 38px;
@@ -587,7 +587,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   position: absolute;
   z-index: 99999;
   top: 100%;
-  right: -1.5%;
+  left: -1.5%;
   width: 103%;
   padding: 15px;
   margin-top: 5px;
@@ -609,7 +609,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   cursor: pointer;
   background-color: transparent;
   border: none;
-  text-align: right;
+  text-align: left;
 }
 .instant-img-container .control-nav--search-history button:hover, .instant-img-container .control-nav--search-history button:focus {
   color: #434246;
@@ -635,7 +635,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   cursor: default;
 }
 .instant-img-container .control-nav--search-history-title button {
-  margin-right: auto;
+  margin-left: auto;
   font-size: 13px;
   padding: 0 1px;
 }
@@ -682,7 +682,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   position: absolute;
   width: calc(100% + 50px);
   height: 100%;
-  right: -25px;
+  left: -25px;
   top: 0;
   background: rgba(255, 255, 255, 0.9) url(images/ajax-loader-lg.808ea7f8.gif) no-repeat center 90px;
   z-index: 9999;
@@ -695,7 +695,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 #photos {
   width: 100%;
   width: calc(100% + 10px);
-  margin: 0 -5px 0 0;
+  margin: 0 0 0 -5px;
   padding: 0;
   position: relative;
   z-index: 1;
@@ -725,7 +725,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 #photos .photo-wrap.photo-uploading .photo-status, #photos .photo-wrap.photo-uploaded .photo-status, #photos .photo-wrap.photo-success .photo-status, #photos .photo-wrap.photo-error .photo-status {
   visibility: visible;
   opacity: 1;
-  transform: translate(50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(1);
 }
 #photos .photo-wrap.photo-uploading {
   pointer-events: none;
@@ -857,10 +857,10 @@ body.settings_page_instant-images-settings.overflow-hidden {
   border-radius: 6px;
   position: absolute;
   text-align: center;
-  right: 50%;
+  left: 50%;
   top: 50%;
   z-index: 5;
-  transform: translate(50%, -50%) scale(1.2);
+  transform: translate(-50%, -50%) scale(1.2);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.075);
   background-color: rgba(255, 255, 255, 0.95);
   background-position: center center;
@@ -880,7 +880,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 #photos .photo .photo-meta {
   position: absolute;
   top: 5px;
-  left: 5px;
+  right: 5px;
   z-index: 6;
   width: auto;
   display: inline-block;
@@ -897,7 +897,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   color: #df3333;
   transition: all 0.25s ease;
   transform: scale(0.55);
-  margin-left: 2px;
+  margin-right: 2px;
   position: relative;
   top: 0;
   font-size: 14px;
@@ -923,7 +923,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   background-color: #fff;
 }
 #photos .photo .photo-meta a {
-  margin-right: 5px;
+  margin-left: 5px;
 }
 #photos .photo .photo-meta a:hover, #photos .photo .photo-meta a:focus {
   background-color: #fff;
@@ -931,22 +931,22 @@ body.settings_page_instant-images-settings.overflow-hidden {
 #photos .photo .photo-meta a i {
   position: relative;
   top: 1px;
-  right: 1px;
+  left: 1px;
 }
 #photos .photo .photo-controls {
   position: absolute;
   z-index: 6;
   width: 100%;
   bottom: 0;
-  right: 0;
+  left: 0;
   padding: 0;
   opacity: 0;
   transition: all 0.25s ease;
-  background: linear-gradient(-180deg, rgba(17, 17, 17, 0) 0%, rgba(17, 17, 17, 0.3) 100%);
+  background: linear-gradient(180deg, rgba(17, 17, 17, 0) 0%, rgba(17, 17, 17, 0.3) 100%);
 }
 #photos .photo .photo-options {
-  float: left;
-  text-align: left;
+  float: right;
+  text-align: right;
   max-width: 50%;
 }
 #photos .photo .fade {
@@ -958,8 +958,8 @@ body.settings_page_instant-images-settings.overflow-hidden {
   line-height: 34px;
   font-size: 18px;
   z-index: 6;
-  float: right;
-  margin: 1px 0 1px 1px;
+  float: left;
+  margin: 1px 1px 1px 0;
   padding: 0;
   color: rgba(255, 255, 255, 0.75);
   border: none !important;
@@ -997,7 +997,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 #photos .photo .fade.user .user-wrap {
   position: relative;
-  padding-right: 35px;
+  padding-left: 35px;
   display: block;
   width: 100%;
   overflow: hidden;
@@ -1018,7 +1018,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   max-width: 20px;
   border-radius: 100%;
   position: absolute;
-  right: 8px;
+  left: 8px;
   top: 8px;
 }
 #photos .photo .fade.user img.user-wrap--photo {
@@ -1041,7 +1041,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 #photos .photo.feature .photo--wrap .flag {
   position: absolute;
-  left: 3px;
+  right: 3px;
   top: 3px;
   font-size: 11px;
   background-color: #ffe732;
@@ -1066,7 +1066,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   height: 25px;
   -o-object-fit: cover;
      object-fit: cover;
-  margin-left: 6px;
+  margin-right: 6px;
 }
 #photos .photo.feature .photo--wrap .feature-title span {
   flex: 1;
@@ -1081,7 +1081,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 #photos .edit-screen {
   position: absolute;
-  right: 0;
+  left: 0;
   top: 0;
   width: 100%;
   height: 100%;
@@ -1119,7 +1119,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   border-radius: 3px 3px 0 0;
 }
 #photos .edit-screen--title > div {
-  padding: 10px 0 10px 15px;
+  padding: 10px 15px 10px 0;
   flex: 1;
 }
 #photos .edit-screen--title > div.preview {
@@ -1210,22 +1210,22 @@ body.settings_page_instant-images-settings.overflow-hidden {
   padding-bottom: 0;
 }
 #photos .edit-screen input[name=filename] {
-  padding-left: 45px;
+  padding-right: 45px;
 }
 #photos .edit-screen em {
   position: absolute;
   bottom: 16px;
-  left: 15px;
+  right: 15px;
   height: 36px;
   line-height: 36px;
   background: #efefef;
-  border-radius: 2px 0 0 2px;
+  border-radius: 0 2px 2px 0;
   color: #98979d;
   font-style: normal;
   font-weight: 500;
   font-size: 11px;
   padding: 0 10px;
-  border-right: 1px solid #e1e1e1;
+  border-left: 1px solid #e1e1e1;
 }
 .instant-img-container .onload-warning {
   text-align: center;
@@ -1268,7 +1268,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   .instant-images-settings--sticky {
     position: sticky;
     top: 62px;
-    right: 0;
+    left: 0;
   }
 }
 .instant-images-settings--header {
@@ -1318,7 +1318,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   padding: 10px 12px;
   cursor: pointer;
   white-space: nowrap;
-  text-align: right;
+  text-align: left;
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
@@ -1358,7 +1358,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 @media screen and (min-width: 1270px) {
   .instant-images-settings--sections .settings-entry--title {
     width: 30%;
-    padding: 27px 50px 30px 30px;
+    padding: 27px 30px 30px 50px;
     border: none;
     position: sticky;
     top: 62px;
@@ -1377,7 +1377,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-images-settings--sections .settings-entry--title i.fa {
   display: none;
   position: absolute;
-  right: 10px;
+  left: 10px;
   font-size: 30px;
   color: #e1e1e1;
   margin-top: -4px;
@@ -1440,7 +1440,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   background: #fff url(images/ajax-loader.7c5ec6b9.gif) no-repeat center center;
 }
 .instant-images-settings .save-settings .saved {
-  margin-right: auto;
+  margin-left: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1455,7 +1455,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-images-settings .scroll-section {
   overflow: auto;
   max-height: 550px;
-  padding-left: 5px;
+  padding-right: 5px;
 }
 .instant-images-settings .scroll-section--small {
   max-height: 275px;
@@ -1536,7 +1536,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-images-settings .form-table td {
   border-top: 0;
   padding: 0 0 25px;
-  float: right;
+  float: left;
   width: 100%;
   margin: 0;
 }
@@ -1546,11 +1546,11 @@ body.settings_page_instant-images-settings.overflow-hidden {
 .instant-images-settings .form-table .form-msg {
   display: block;
   line-height: 18px;
-  padding: 12px 15px 12px 12px;
+  padding: 12px 12px 12px 15px;
   margin: 15px 0 0;
   color: #6b6877;
   background-color: #fff9ea;
-  border-right: 5px solid #dfd8c2;
+  border-left: 5px solid #dfd8c2;
   border-radius: 2px;
 }
 .instant-images-settings .form-table .form-msg span {
@@ -1609,12 +1609,12 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-images-settings .license-settings--status.invalid {
   background-color: rgba(223, 51, 51, 0.05);
-  border-right: 4px solid #df3333;
+  border-left: 4px solid #df3333;
   padding: 20px;
   border-radius: 3px;
 }
 .instant-images-settings .license-settings--status input {
-  padding-right: 35px !important;
+  padding-left: 35px !important;
 }
 .instant-images-settings .license-settings--status input[disabled] {
   color: #98979d;
@@ -1624,10 +1624,10 @@ body.settings_page_instant-images-settings.overflow-hidden {
   width: 30px;
   text-align: center;
   color: #65c774;
-  margin-left: 5px;
+  margin-right: 5px;
   position: absolute;
   top: 50%;
-  right: 5px;
+  left: 5px;
   transform: translateY(-50%);
 }
 .instant-images-settings .license-settings--status span.dashicons-warning {
@@ -1640,7 +1640,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-images-callout {
   background-color: rgba(88, 110, 198, 0.05);
-  border-right: 4px solid rgba(88, 110, 198, 0.7);
+  border-left: 4px solid rgba(88, 110, 198, 0.7);
   padding: 20px;
   border-radius: 3px;
   display: grid;
@@ -1660,7 +1660,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 @media screen and (min-width: 800px) {
   .instant-images-callout p:last-of-type {
-    margin-right: auto;
+    margin-left: auto;
   }
 }
 .instant-images-header-wrap h1,
@@ -1690,7 +1690,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   padding: 5px;
   position: relative;
   top: -2px;
-  right: 2px;
+  left: 2px;
   font-style: normal;
   line-height: 1;
 }
@@ -1731,7 +1731,7 @@ span.instant-images-tagline {
 .instant-images-header-wrap {
   background: #f7f7f7 url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTx0aXRsZT5JbnN0YW50IEltYWdlcyBJY29uPC90aXRsZT4KCTxwYXRoIGQ9Ik0wIDhDMCAzLjU4MTcyIDMuNTgxNzIgMCA4IDBINzJDNzYuNDE4MyAwIDgwIDMuNTgxNzIgODAgOFY3MkM4MCA3Ni40MTgzIDc2LjQxODMgODAgNzIgODBIOEMzLjU4MTcyIDgwIDAgNzYuNDE4MyAwIDcyVjhaIiBmaWxsPSIjNjQ3RkU4Ii8+Cgk8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTM2LjUgNjVMNTIuNSAzNi41ODE2SDQ0LjQzODVWMTYuMTIxNUwyNyA0NC4wNjkzSDM2LjVWNjVaIiBmaWxsPSJ3aGl0ZSIvPgoJPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zNi41IDY1TDUyLjUgMzYuNTgxNkg0NC40Mzg1VjE2LjEyMTVMMjcgNDQuMDY5M0gzNi41VjY1WiIgZmlsbD0id2hpdGUiLz4KCTxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMzYuNSA2NUw1Mi41IDM2LjU4MTdINDQuNDM4NUwzNi41IDQ0LjA2OTNWNjVaIiBmaWxsPSIjQzdEMkZGIi8+Cgk8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTM2LjUgNjVMNTIuNSAzNi41ODE3SDQ0LjQzODVMMzYuNSA0NC4wNjkzVjY1WiIgZmlsbD0iI0M3RDJGRiIvPgo8L3N2Zz4K) no-repeat 25px 20px;
   background-size: 48px 48px;
-  padding: 20px 83px 20px 25px;
+  padding: 20px 25px 20px 83px;
   min-height: 88px;
   overflow: hidden;
   border-bottom: 1px solid #efefef;
@@ -1750,17 +1750,17 @@ span.instant-images-tagline {
   }
 }
 .instant-images-header-wrap > div {
-  margin-right: auto;
+  margin-left: auto;
   display: flex;
   gap: 10px;
-  padding-right: 10px;
+  padding-left: 10px;
 }
 @media screen and (max-width: 800px) {
   .instant-images-header-wrap > div {
     width: 100%;
     justify-content: center;
     padding-top: 20px;
-    padding-right: 0;
+    padding-left: 0;
   }
 }
 @media screen and (max-width: 800px) {
@@ -1800,7 +1800,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .instant-images-block #photos::after,
 .components-panel #photos::after {
   width: 100%;
-  right: 0;
+  left: 0;
 }
 .instant-images-block .instant-images-no-results,
 .components-panel .instant-images-no-results {
@@ -1867,13 +1867,13 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-images-block .control-nav .filter-dropdown button.filter-dropdown--button i,
 .components-panel .control-nav .filter-dropdown button.filter-dropdown--button i {
-  margin-right: auto;
-  padding-left: 5px;
+  margin-left: auto;
+  padding-right: 5px;
 }
 .instant-images-block .control-nav .filter-dropdown--menu,
 .components-panel .control-nav .filter-dropdown--menu {
   width: 100%;
-  right: 0;
+  left: 0;
   padding: 6px;
 }
 .instant-images-block .control-nav .filter-dropdown--menu button,
@@ -1918,8 +1918,8 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .components-panel .control-nav--search input {
   line-height: 40px;
   height: 40px;
-  padding-left: 10px;
   padding-right: 10px;
+  padding-left: 10px;
   border-color: #e2e4e7;
   font-size: 13px;
   border-radius: 3px !important;
@@ -1927,7 +1927,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-images-block .control-nav--search input.searching,
 .components-panel .control-nav--search input.searching {
-  padding-right: 30px;
+  padding-left: 30px;
 }
 .instant-images-block .control-nav--search input[type=search]::-webkit-input-placeholder,
 .components-panel .control-nav--search input[type=search]::-webkit-input-placeholder {
@@ -1943,8 +1943,8 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-images-block .control-nav--search-tooltip,
 .components-panel .control-nav--search-tooltip {
-  left: 3px;
-  right: auto;
+  right: 3px;
+  left: auto;
   top: 2px;
   border-radius: 2px;
   font-size: 12px;
@@ -1979,7 +1979,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .instant-images-block--header-logo svg {
   width: 32px;
   height: 32px;
-  margin-left: 8px;
+  margin-right: 8px;
 }
 .instant-images-block--header-logo span {
   font-weight: 600;
@@ -1987,7 +1987,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   color: #434246;
 }
 .instant-images-block--header-nav {
-  margin-right: auto;
+  margin-left: auto;
 }
 .instant-images-block input#search-input {
   border: 1px solid #ddd;
@@ -2055,7 +2055,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-images-block #photo-listing #photos .photo {
   opacity: 1 !important;
-  margin-left: 10px;
+  margin-right: 10px;
   width: 275px;
   min-width: 275px;
   height: 250px;
@@ -2104,7 +2104,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   padding: 8px 10px;
   background: #fff;
   position: fixed;
-  right: auto;
+  left: auto;
   top: auto;
   z-index: 999;
   display: block;
@@ -2122,7 +2122,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-img-container #tooltip::after {
   top: 100%;
-  left: 17px;
+  right: 17px;
   border: solid transparent;
   content: "";
   height: 0;
@@ -2132,7 +2132,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   border-color: rgba(255, 255, 255, 0);
   border-top-color: #fff;
   border-width: 5px;
-  margin-right: -5px;
+  margin-left: -5px;
 }
 .instant-img-container #tooltip.above {
   margin-top: 37px;
@@ -2160,10 +2160,10 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   position: absolute;
   z-index: 0;
   top: 50%;
-  right: 50%;
+  left: 50%;
   font-size: 125px;
   opacity: 0.1;
-  transform: translateY(-50%) translateX(50%);
+  transform: translateY(-50%) translateX(-50%);
 }
 .instant-images-no-results > div {
   position: relative;
@@ -2188,7 +2188,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   display: flex;
   flex-wrap: nowrap;
   width: calc(100% + 50px);
-  margin-right: -25px;
+  margin-left: -25px;
   padding: 10px 25px;
   border-bottom: 1px solid #efefef;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
@@ -2201,10 +2201,10 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   margin: 0 5px;
 }
 .provider-nav > div:first-of-type {
-  margin-right: 0;
+  margin-left: 0;
 }
 .provider-nav > div:last-of-type {
-  margin-right: 0;
+  margin-left: 0;
 }
 .provider-nav--btn {
   padding: 0 10px;
@@ -2226,7 +2226,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .provider-nav--btn svg {
   width: 20px;
   height: 20px;
-  margin-left: 8px;
+  margin-right: 8px;
 }
 .provider-nav--btn:hover, .provider-nav--btn:focus {
   color: #434246;
@@ -2251,7 +2251,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   display: inline;
   padding: 3px 4px;
   border-radius: 3px;
-  margin-right: 5px;
+  margin-left: 5px;
   position: relative;
   top: -1px;
   letter-spacing: -0.05rem;
@@ -2287,9 +2287,9 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   justify-content: center;
   position: absolute;
   z-index: 99999;
-  right: -5px;
+  left: -5px;
   top: 0;
-  left: 0;
+  right: 0;
   bottom: 0;
   height: auto;
   border-radius: 6px;
@@ -2337,7 +2337,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-img-container .api-lightbox--details::after, .instant-img-container .api-lightbox--details::before {
   top: 100%;
-  right: 50px;
+  left: 50px;
   border: solid transparent;
   content: "";
   height: 0;
@@ -2349,13 +2349,13 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   border-color: rgba(255, 255, 255, 0);
   border-top-color: #ffffff;
   border-width: 10px;
-  margin-right: -10px;
+  margin-left: -10px;
 }
 .instant-img-container .api-lightbox--details::before {
   border-color: rgba(194, 225, 245, 0);
   border-top-color: #e1e1e1;
   border-width: 11px;
-  margin-right: -11px;
+  margin-left: -11px;
 }
 .instant-img-container .api-lightbox--details h3 {
   font-size: 16px;
@@ -2370,7 +2370,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .instant-img-container .api-lightbox--details h3 svg {
   width: 20px;
   height: 20px;
-  margin-left: 8px;
+  margin-right: 8px;
 }
 .instant-img-container .api-lightbox--details p {
   margin: 10px 0 0;
@@ -2389,7 +2389,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   border: 1px solid #efefef;
   width: 105%;
   position: relative;
-  right: -2.5%;
+  left: -2.5%;
 }
 .instant-img-container .api-lightbox--details p.action-controls {
   display: flex;
@@ -2419,7 +2419,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .instant-img-container .api-lightbox--close {
   position: absolute;
   z-index: 1;
-  left: 0;
+  right: 0;
   top: 0;
   border: none;
   background-color: transparent;
@@ -2470,8 +2470,8 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 0 2px 2px 0;
-  border-left: 1px solid #e1e1e1;
+  border-radius: 2px 0 0 2px;
+  border-right: 1px solid #e1e1e1;
   background-color: #f7f7f7;
 }
 .instant-img-container .api-lightbox--input-wrap span i {
@@ -2554,7 +2554,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .filter-dropdown button {
   background-color: transparent;
   border: none;
-  text-align: right;
+  text-align: left;
   color: #98979d;
   cursor: pointer;
 }
@@ -2566,14 +2566,14 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 10px 0 10px 2px;
+  padding: 10px 2px 10px 0;
   text-transform: capitalize;
   color: #98979d;
   width: 100%;
   font-size: 14px;
 }
 .filter-dropdown--button span.filter-dropdown--button-label {
-  padding-left: 3px;
+  padding-right: 3px;
 }
 .filter-dropdown--button span.filter-dropdown--button-selected {
   color: #434246;
@@ -2581,7 +2581,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .filter-dropdown--button i {
   opacity: 0.4;
-  margin-right: 10px;
+  margin-left: 10px;
   font-size: 14px;
 }
 .filter-dropdown--button:hover i, .filter-dropdown--button:focus i {
@@ -2601,7 +2601,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   z-index: 9999;
   position: absolute;
   top: 110%;
-  right: -12px;
+  left: -12px;
   width: 200px;
   max-height: 350px;
   overflow-y: auto;
@@ -2646,7 +2646,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   opacity: 1;
 }
 .filter-dropdown--menu[data-key=colors] button ._color, .filter-dropdown--menu[data-key=color] button ._color {
-  margin-right: auto;
+  margin-left: auto;
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -2740,7 +2740,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-images-settings form .api-constant {
   display: block;
-  padding: 10px 1px 0 0;
+  padding: 10px 0 0 1px;
   opacity: 0.75;
   font-size: 12px;
 }
@@ -2772,7 +2772,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   content: "";
   height: 17px;
   width: 17px;
-  right: 3px;
+  left: 3px;
   bottom: 3px;
   border-radius: 100%;
   background-color: #fff;
@@ -2785,13 +2785,13 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .instant-images-settings .instant-images-checkbox input[type=checkbox] {
   opacity: 0;
   position: absolute;
-  right: -1px;
+  left: -1px;
 }
 .instant-images-settings .instant-images-checkbox input[type=checkbox]:checked + div .toggle-switch {
   background-color: #586ec6;
 }
 .instant-images-settings .instant-images-checkbox input[type=checkbox]:checked + div .toggle-switch::before {
-  right: 21px;
+  left: 21px;
 }
 .instant-images-settings .instant-images-checkbox input[type=checkbox]:checked + div .toggle-switch::after {
   opacity: 1;
@@ -2818,7 +2818,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   .cta-extended--standard i {
     font-size: 24px;
     opacity: 0.7;
-    transform: rotate(5deg);
+    transform: rotate(-5deg);
     color: #586ec6;
     margin-top: -2px;
   }
@@ -2832,7 +2832,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   }
   .cta-extended--standard div {
     width: auto;
-    margin-right: auto;
+    margin-left: auto;
     display: flex;
     gap: 10px;
   }
@@ -2844,7 +2844,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .cta-extended--search button.closeBtn {
   position: absolute;
-  left: 0;
+  right: 0;
   top: 0;
   width: 30px;
   height: 30px;
@@ -2997,7 +2997,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   width: 0%;
   transition: all 0.5s linear;
   background-color: #586ec6;
-  border-radius: 9999px 0 0 9999px;
+  border-radius: 0 9999px 9999px 0;
   box-shadow: 0 8px 16px rgba(48, 63, 122, 0.125);
 }
 .instant-images-extended-import .import-response--message,
@@ -3009,7 +3009,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-images-extended-import .import-response--message i,
 .instant-images-extended-image-sizes .import-response--message i {
-  margin-left: 3px;
+  margin-right: 3px;
   color: #65c774;
 }
 .instant-images-extended-import .import-response--message span,
@@ -3036,7 +3036,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   position: absolute;
   z-index: 1;
   top: 0;
-  right: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.6);
@@ -3103,10 +3103,10 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-images-image-size-table th,
 .instant-images-image-size-table td {
-  padding: 10px 10px 10px 5px;
+  padding: 10px 5px 10px 10px;
 }
 .instant-images-image-size-table th {
-  text-align: right;
+  text-align: left;
   text-transform: uppercase;
   font-size: 12px;
   position: sticky;
@@ -3134,3 +3134,5 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .wp-block.instant-images-block {
   margin-bottom: 0;
 }
+
+/*# sourceMappingURL=style-instant-images.css.map*/

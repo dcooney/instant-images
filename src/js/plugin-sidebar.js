@@ -12,6 +12,7 @@ const InstantImagesPlugin = () => (
 	<Fragment>
 		<Menu />
 		<Plugin />
+		dw
 	</Fragment>
 );
 

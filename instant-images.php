@@ -16,6 +16,14 @@
 
 /*
 * UPDATE: Updated Unsplash image filters as their API was updated recently.
+* UPDATE: Updated all plugin NPM dependencies and packages.
+*/
+
+/*
+TODO:
+- Create CTA to upsell the Image Size feature.
+- Create image size feature in the Extended add-on.
+
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -519,6 +527,77 @@ class InstantImages {
 			case 'extended':
 				return class_exists( 'InstantImagesExtended' ) && InstantImagesExtended::valid_license();
 		}
+	}
+
+	/**
+	 * Get all image sizes.
+	 *
+	 * @return array An array of image sizes.
+	 */
+	public static function instant_images_get_image_sizes() {
+		global $_wp_additional_image_sizes;
+		$default_image_sizes = get_intermediate_image_sizes();
+		foreach ( $default_image_sizes as $size ) {
+			$image_sizes[ $size ][ 'width' ] = intval( get_option( "{$size}_size_w" ) );
+			$image_sizes[ $size ][ 'height' ] = intval( get_option( "{$size}_size_h" ) );
+			$image_sizes[ $size ][ 'crop' ] = get_option( "{$size}_crop" ) ? get_option( "{$size}_crop" ) : false;
+		}
+
+		if ( isset( $_wp_additional_image_sizes ) && count( $_wp_additional_image_sizes ) ) {
+			$image_sizes = array_merge( $image_sizes, $_wp_additional_image_sizes );
+		}
+		if ( ! $image_sizes ) {
+			return [];
+		}
+
+		$sizes = [];
+		foreach( $image_sizes as $key => $image_size ) {
+			$label = str_replace( '_' , ' ' , $key );
+			$label = str_replace( '-' , ' ' , $label );
+
+			// If height is empty or 0.
+			$height = $image_size[ 'height' ] === 0 ? '--' :  $image_size[ 'height' ];
+
+			$sizes[ $key ] = [
+				'label'  => ucwords( $label ),
+				'width'  => $image_size[ 'width' ],
+				'height' => $height,
+				'crop'   => $image_size[ 'crop' ]
+			];
+		}
+		return $sizes;
+	}
+
+	public static function instant_images_display_image_sizes( $sizes ) {
+		if ( ! $sizes ) {
+			return;
+		}
+		ob_start();
+		?>
+		<table class="instant-images-image-size-table">
+			<tr>
+				<th><?php esc_attr_e( 'Label', 'instant-images' ); ?></th>
+				<th><?php esc_attr_e( 'Name', 'instant-images' ); ?></th>
+				<th><?php esc_attr_e( 'Width', 'instant-images' ); ?></th>
+				<th><?php esc_attr_e( 'Height', 'instant-images' ); ?></th>
+				<th><?php esc_attr_e( 'Crop', 'instant-images' ); ?></th>
+			</tr>
+		<?php
+		foreach( $sizes as $key => $size ) {
+			$crop = $size[ 'crop' ];
+			$crop = $crop ? 'Yes' : 'No';
+			echo '<tr>';
+			echo '<td>' . $size[ 'label' ] . '</td>';
+			echo '<td><pre>' . $key . '</pre></td>';
+			echo '<td>' . $size[ 'width' ] . '</td>';
+			echo '<td>' . $size[ 'height' ] . '</td>';
+			echo '<td>' . $crop . '</td>';
+			echo '</tr>';
+		}
+		?>
+		</table>
+		<?php
+		return ob_get_clean();
 	}
 }
 

@@ -2,15 +2,15 @@ $sticky_top: 62px;
 
 .instant-images-settings {
 	background-color: $lighter_grey;
-	padding: 30px;
-
+	padding: 20px;
 	display: grid;
-	grid-gap: 30px;
-	grid-template-columns: repeat(1, 1fr);
-	grid-template-rows: repeat(1, 1fr);
+	gap: 20px;
+	grid-template-columns: repeat(1, minmax(0, 1fr));
 
 	@media screen and (min-width: $small) {
 		grid-template-columns: 4fr 8fr;
+		padding: 30px;
+		grid-gap: 30px;
 	}
 
 	@media screen and (min-width: $large) {
@@ -125,7 +125,7 @@ $sticky_top: 62px;
 
 					&::after {
 						display: block;
-						content: "";
+						content: '';
 						height: 1px;
 						width: 50px;
 						background-color: $border;
@@ -198,7 +198,7 @@ $sticky_top: 62px;
 			width: 30px;
 			height: 30px;
 			display: block;
-			background: #fff url("../img/ajax-loader.gif") no-repeat center center;
+			background: #fff url('../img/ajax-loader.gif') no-repeat center center;
 		}
 		.saved {
 			margin-left: auto;
@@ -216,10 +216,12 @@ $sticky_top: 62px;
 	}
 
 	.scroll-section {
-		overflow: hidden;
-		overflow-y: auto;
+		overflow: auto;
 		max-height: 550px;
 		padding-right: 5px;
+		&--small {
+			max-height: 275px;
+		}
 	}
 
 	// What's New
@@ -247,7 +249,7 @@ $sticky_top: 62px;
 					position: relative;
 					z-index: 1;
 					margin: 0;
-					padding: 20px;
+					padding: 25px;
 					background-color: #fff;
 					border: 1px solid $border;
 					border-radius: $radius;
@@ -415,16 +417,28 @@ $sticky_top: 62px;
 				margin: 0;
 			}
 		}
-		&--empty {
-			background-color: rgba($purple, 0.05);
-			border-left: 4px solid $purple_bright;
-			padding: 20px;
-			border-radius: $radius;
+	}
+}
 
-			p {
-				&:last-of-type {
-					margin: 0;
-				}
+.instant-images-callout {
+	background-color: rgba($purple, 0.05);
+	border-left: 4px solid rgba($purple, 0.7);
+	padding: 20px;
+	border-radius: $radius;
+	display: grid;
+	@media screen and (min-width: $small) {
+		display: flex;
+		align-items: center;
+	}
+	gap: 15px;
+	width: 100%;
+
+	p {
+		width: auto;
+		margin: 0;
+		&:last-of-type {
+			@media screen and (min-width: $small) {
+				margin-left: auto;
 			}
 		}
 	}

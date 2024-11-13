@@ -16,10 +16,8 @@
 		// API Settings.
 		require_once INSTANT_IMAGES_PATH . 'admin/includes/settings/api-settings.php';
 
-		// Extended: Image Sizes.
-		if ( InstantImages::instant_images_addon_valid_license( 'extended' ) ) {
-			require_once INSTANT_IMAGES_EXTENDED_PATH . 'views/image-sizes.php';
-		}
+		// Image Sizes.
+		require_once INSTANT_IMAGES_PATH . 'admin/includes/settings/image-sizes.php';
 
 		// Extended: Image Import.
 		if ( InstantImages::instant_images_addon_valid_license( 'extended' ) ) {
