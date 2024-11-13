@@ -7,7 +7,7 @@
 			position: relative;
 			.instant-images-extended-image-sizes--elements,
 			.instant-images-extended-image-sizes--controls {
-				filter: blur(0.75px);
+				filter: blur(1px);
 				pointer-events: none;
 			}
 
@@ -18,7 +18,7 @@
 				left: 0;
 				width: 100%;
 				height: 100%;
-				background-color: rgba(255, 255, 255, 0.6);
+				background-color: rgba(255, 255, 255, 0.4);
 				display: flex;
 				flex-wrap: wrap;
 				align-items: center;
@@ -26,9 +26,9 @@
 				> div {
 					max-width: 90%;
 					background-color: rgba(255, 255, 255, 0.75);
-					padding: 25px;
+					padding: 25px 30px;
 					border-radius: $radius_lg;
-					border: 1px solid $border;
+					border: 1px solid rgba($purple, 0.5);
 					box-shadow: $shadow;
 					display: grid;
 					gap: 10px;

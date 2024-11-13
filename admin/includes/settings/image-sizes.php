@@ -16,7 +16,7 @@ $extended_url    = INSTANT_IMAGES_ADDONS_URL . 'extended/?utm_source=WPAdmin&utm
 	</div>
 	<div class="settings-entry--action instant-images-extended-image-sizes">
 		<!-- Add Sizes -->
-		<div class="instant-images-extended-image-sizes--add<?php echo ! $extended_active ? ' not-installed' : 'ddd'; ?>">
+		<div class="instant-images-extended-image-sizes--add<?php echo ! $extended_active ? ' not-installed' : ''; ?>">
 			<h3><?php esc_attr_e( 'Add Image Size', 'instant-images' ); ?></h3>
 			<p><?php esc_attr_e( 'Enter a name (slug), width, and height for your custom image size.', 'instant-images' ); ?></p>
 			<?php  if ( ! $extended_active ) { ?>

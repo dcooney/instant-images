@@ -3029,7 +3029,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .instant-images-extended-image-sizes--add.not-installed form .instant-images-extended-image-sizes--elements,
 .instant-images-extended-image-sizes--add.not-installed form .instant-images-extended-image-sizes--controls {
-  filter: blur(0.75px);
+  filter: blur(1px);
   pointer-events: none;
 }
 .instant-images-extended-image-sizes--add.not-installed form .instant-images-callout-cta {
@@ -3039,7 +3039,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.4);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -3048,9 +3048,9 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .instant-images-extended-image-sizes--add.not-installed form .instant-images-callout-cta > div {
   max-width: 90%;
   background-color: rgba(255, 255, 255, 0.75);
-  padding: 25px;
+  padding: 25px 30px;
   border-radius: 6px;
-  border: 1px solid #e1e1e1;
+  border: 1px solid rgba(88, 110, 198, 0.5);
   box-shadow: 0 8px 16px rgba(48, 63, 122, 0.125);
   display: grid;
   grid-gap: 10px;
