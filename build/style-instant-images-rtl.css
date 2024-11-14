@@ -1353,7 +1353,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   width: 100%;
   padding: 25px;
   position: relative;
-  border-bottom: 1px solid #f7f7f7;
+  border-bottom: 1px solid rgba(225, 225, 225, 0.75);
 }
 @media screen and (min-width: 1270px) {
   .instant-images-settings--sections .settings-entry--title {
@@ -1458,7 +1458,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   padding-left: 5px;
 }
 .instant-images-settings .scroll-section--small {
-  max-height: 275px;
+  max-height: 300px;
 }
 .instant-images-settings .whats-new ul {
   margin: 0;
@@ -1602,7 +1602,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   margin: 0;
 }
 .instant-images-settings .license-settings--status {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .instant-images-settings .license-settings--status > div {
   position: relative;
@@ -3021,7 +3021,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   padding: 20px 20px 0;
   font-size: 12px;
 }
-.instant-images-extended-image-sizes--add {
+.instant-images-extended-image-sizes--add, .instant-images-extended-image-sizes--app {
   margin: 0 0 40px;
 }
 .instant-images-extended-image-sizes--add.not-installed form {
@@ -3066,11 +3066,17 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   border: 1px solid #e1e1e1;
   padding: 5px;
 }
+.instant-images-extended-image-sizes--controls span {
+  font-size: 13px;
+}
 .instant-images-extended-image-sizes--elements {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
   gap: 10px;
+}
+.instant-images-extended-image-sizes--elements label {
+  white-space: nowrap;
 }
 @media screen and (min-width: 800px) {
   .instant-images-extended-image-sizes--elements {
@@ -3118,8 +3124,28 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   border-top: 1px solid rgba(225, 225, 225, 0.5);
   font-size: 13px;
 }
-.instant-images-image-size-table tr:hover td {
+.instant-images-image-size-table td span {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.instant-images-image-size-table td span button {
+  margin-right: auto !important;
+}
+.instant-images-image-size-table td span svg {
+  width: 20px;
+  height: 20px;
+  margin-right: -5px;
+}
+.instant-images-image-size-table tr:hover {
   background-color: rgba(247, 247, 247, 0.5);
+}
+.instant-images-image-size-table tr.custom-size {
+  background-color: rgba(88, 110, 198, 0.075);
+}
+.instant-images-image-size-table tr.custom-size pre {
+  background-color: #fff;
 }
 .instant-images-image-size-table pre {
   margin: 0;

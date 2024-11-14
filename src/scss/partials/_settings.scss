@@ -113,7 +113,7 @@ $sticky_top: 62px;
 				width: 100%;
 				padding: 25px;
 				position: relative;
-				border-bottom: 1px solid $lighter_grey;
+				border-bottom: 1px solid rgba($border, 0.75);
 
 				@media screen and (min-width: $large) {
 					width: 30%;
@@ -220,7 +220,7 @@ $sticky_top: 62px;
 		max-height: 550px;
 		padding-right: 5px;
 		&--small {
-			max-height: 275px;
+			max-height: 300px;
 		}
 	}
 
@@ -381,7 +381,7 @@ $sticky_top: 62px;
 			}
 		}
 		&--status {
-			margin-bottom: 10px;
+			margin-bottom: 15px;
 			& > div {
 				position: relative;
 			}

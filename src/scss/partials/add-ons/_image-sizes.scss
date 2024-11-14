@@ -1,7 +1,9 @@
 .instant-images-extended-image-sizes {
-	&--add {
+	&--add,
+	&--app {
 		margin: 0 0 40px;
-
+	}
+	&--add {
 		// Not installed.
 		&.not-installed form {
 			position: relative;
@@ -50,10 +52,20 @@
 		}
 	}
 
+	&--controls {
+		span {
+			font-size: 13px;
+		}
+	}
+
 	&--elements {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 10px;
+
+		label {
+			white-space: nowrap;
+		}
 		@media screen and (min-width: $small) {
 			display: flex;
 			flex-wrap: wrap;
@@ -101,9 +113,31 @@
 	td {
 		border-top: 1px solid rgba($border, 0.5);
 		font-size: 13px;
+		span {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			button {
+				margin-left: auto !important;
+			}
+			svg {
+				width: 20px;
+				height: 20px;
+				margin-left: -5px;
+			}
+		}
 	}
-	tr:hover td {
-		background-color: rgba($lighter_grey, 0.5);
+	tr {
+		&:hover {
+			background-color: rgba($lighter_grey, 0.5);
+		}
+		&.custom-size {
+			background-color: rgba($purple, 0.075);
+			pre {
+				background-color: #fff;
+			}
+		}
 	}
 
 	pre {

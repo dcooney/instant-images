@@ -552,11 +552,9 @@ class InstantImages {
 
 		$sizes = [];
 		foreach( $image_sizes as $key => $image_size ) {
-			$label = str_replace( '_' , ' ' , $key );
-			$label = str_replace( '-' , ' ' , $label );
-
-			// If height is empty or 0.
-			$height = $image_size[ 'height' ] === 0 ? '--' :  $image_size[ 'height' ];
+			$label  = str_replace( '_' , ' ' , $key );
+			$label  = str_replace( '-' , ' ' , $label );
+			$height = $image_size[ 'height' ] === 0 ? '--' :  $image_size[ 'height' ]; // If height is empty or 0.
 
 			$sizes[ $key ] = [
 				'label'  => ucwords( $label ),
@@ -568,7 +566,13 @@ class InstantImages {
 		return $sizes;
 	}
 
-	public static function instant_images_display_image_sizes( $sizes ) {
+	/**
+	 * Display image sizes in a table.
+	 *
+	 * @return void
+	 */
+	public static function instant_images_display_image_sizes() {
+		$sizes = self::instant_images_get_image_sizes();
 		if ( ! $sizes ) {
 			return;
 		}
@@ -586,8 +590,16 @@ class InstantImages {
 		foreach( $sizes as $key => $size ) {
 			$crop = $size[ 'crop' ];
 			$crop = $crop ? 'Yes' : 'No';
-			echo '<tr>';
-			echo '<td>' . $size[ 'label' ] . '</td>';
+			echo '<tr';
+			do_action( 'instant_images_image_size_tr_class', $key );
+			echo '>';
+			echo '<td>';
+			echo '<span>';
+			do_action( 'instant_images_image_size_before', $key );
+			echo $size[ 'label' ];
+			do_action( 'instant_images_image_size_after', $key );
+			echo '</span>';
+			echo '</td>';
 			echo '<td><pre>' . $key . '</pre></td>';
 			echo '<td>' . $size[ 'width' ] . '</td>';
 			echo '<td>' . $size[ 'height' ] . '</td>';
