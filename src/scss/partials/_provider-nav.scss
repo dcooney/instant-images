@@ -66,11 +66,13 @@
 		font-size: 9px;
 		text-transform: uppercase;
 		display: inline;
-		padding: 3px 4px;
+		padding: 0 4px;
 		border-radius: $radius;
 		margin-left: 5px;
 		position: relative;
-		top: -1px;
+		top: 1px;
 		letter-spacing: -0.05rem;
+		height: 20px;
+		line-height: 20px;
 	}
 }

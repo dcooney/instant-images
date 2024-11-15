@@ -1,4 +1,4 @@
-import { UnsplashIcon, PexelsIcon, PixabayIcon, OpenverseIcon } from '../components/ProviderIcons';
+import { UnsplashIcon, PexelsIcon, PixabayIcon, OpenverseIcon, GiphyIcon } from '../components/ProviderIcons';
 
 export const API = {
 	proxy: PROXY_URL || 'https://proxy.getinstantimages.com/api/', // eslint-disable-line
@@ -6,10 +6,9 @@ export const API = {
 	defaults: {
 		provider: 'unsplash',
 		order: 'latest',
-		per_page: '20',
 		arr_key: 'results',
 	},
-	providers: ['Unsplash', 'Openverse', 'Pixabay', 'Pexels'],
+	providers: ['Unsplash', 'Openverse', 'Pixabay', 'Pexels', 'Giphy'],
 	unsplash: {
 		name: 'Unsplash',
 		requires_key: true,
@@ -39,5 +38,12 @@ export const API = {
 		api_var: 'key',
 		key: '',
 		icon: OpenverseIcon,
+	},
+	giphy: {
+		name: 'Giphy',
+		requires_key: true,
+		new: true,
+		api_var: 'key',
+		icon: GiphyIcon,
 	},
 };

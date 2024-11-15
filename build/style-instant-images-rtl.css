@@ -2249,12 +2249,14 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   font-size: 9px;
   text-transform: uppercase;
   display: inline;
-  padding: 3px 4px;
+  padding: 0 4px;
   border-radius: 3px;
   margin-right: 5px;
   position: relative;
-  top: -1px;
+  top: 1px;
   letter-spacing: -0.05rem;
+  height: 20px;
+  line-height: 20px;
 }
 .media-frame-content .instant-img-container .api-lightbox > div {
   top: 0;
@@ -3128,15 +3130,18 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 2px;
 }
 .instant-images-image-size-table td span button {
   margin-right: auto !important;
 }
 .instant-images-image-size-table td span svg {
-  width: 20px;
-  height: 20px;
-  margin-right: -5px;
+  width: 15px;
+  height: 15px;
+  margin-right: -3px;
+}
+.instant-images-image-size-table td span strong {
+  font-weight: 500;
 }
 .instant-images-image-size-table tr:hover {
   background-color: rgba(247, 247, 247, 0.5);

@@ -59,7 +59,6 @@ export function getProxyURL(provider) {
  */
 export function buildTestURL(provider) {
 	const options = {
-		per_page: 5,
 		page: 1,
 	};
 

@@ -15,6 +15,8 @@
  */
 
 /*
+* NEW: Added Image Size functionality to Instant Images settings.
+* NEW: Added required functionality to add image size with the Extended add-on.
 * UPDATE: Updated Unsplash image filters as their API was updated recently.
 * UPDATE: Updated all plugin NPM dependencies and packages.
 */
@@ -146,6 +148,13 @@ class InstantImages {
 				'url'          => 'https://www.pexels.com/join-consumer/',
 				'constant'     => 'INSTANT_IMAGES_PEXELS_KEY',
 			],
+			[
+				'name'         => 'Giphy',
+				'slug'         => 'giphy',
+				'requires_key' => true,
+				'url'          => 'https://developers.giphy.com/',
+				'constant'     => 'INSTANT_IMAGES_GIPHY_KEY',
+			],
 		];
 		return $providers;
 	}
@@ -162,6 +171,7 @@ class InstantImages {
 			'https://images.unsplash.com',
 			'https://pixabay.com',
 			'https://images.pexels.com',
+			'giphy.com',
 			'https://pd.w.org',
 			'https://live.staticflickr.com',
 			'https://upload.wikimedia.org',
@@ -191,6 +201,8 @@ class InstantImages {
 		$pixabay_api  = empty( $pixabay_api ) ? '' : $pixabay_api; // If empty, set to default key.
 		$pexels_api   = isset( $api_options['pexels_api'] ) ? $api_options['pexels_api'] : '';
 		$pexels_api   = empty( $pexels_api ) ? '' : $pexels_api; // If empty, set to default key.
+		$giphy_api    = isset( $api_options['giphy_api'] ) ? $api_options['giphy_api'] : '';
+		$giphy_api    = empty( $giphy_api ) ? '' : $giphy_api; // If empty, set to default key.
 
 		return (object) [
 			'max_width'        => $max_width,
@@ -200,6 +212,7 @@ class InstantImages {
 			'unsplash_api'     => $unsplash_api,
 			'pixabay_api'      => $pixabay_api,
 			'pexels_api'       => $pexels_api,
+			'giphy_api'        => $giphy_api,
 		];
 	}
 
@@ -306,6 +319,13 @@ class InstantImages {
 			$pexels_api = $settings->pexels_api;
 		}
 
+		// Giphy API.
+		if ( defined( 'INSTANT_IMAGES_GIPHY_KEY' ) ) {
+			$giphy_api = INSTANT_IMAGES_GIPHY_KEY;
+		} else {
+			$giphy_api = $settings->giphy_api;
+		}
+
 		wp_localize_script(
 			$script,
 			'instant_img_localize',
@@ -337,6 +357,10 @@ class InstantImages {
 				'pexels_url'              => 'https://pexels.com',
 				'pexels_api_url'          => 'https://www.pexels.com/join-consumer/',
 				'pexels_api_desc'         => __( 'Access to images from Pexels requires a valid API key. API keys are available for free, just sign up for an account at Pexels, enter your API key below and you\'re good to go!', 'instant-images' ),
+				'giphy_app_id'            => $giphy_api,
+				'giphy_url'               => 'https://giphy.com',
+				'giphy_api_url'           => 'https://developers.giphy.com/',
+				'giphy_api_desc'          => __( 'Access to gifs from Giphy requires a valid API key. API keys are available for free, just sign up for an account at Giphy, enter your API key below and you\'re good to go!', 'instant-images' ),
 				'openverse_url'           => 'https://openverse.org',
 				'openverse_mature'        => apply_filters( 'instant_images_openverse_mature', false ),
 				'error_upload'            => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
@@ -596,7 +620,7 @@ class InstantImages {
 			echo '<td>';
 			echo '<span>';
 			do_action( 'instant_images_image_size_before', $key );
-			echo $size[ 'label' ];
+			echo '<strong>' . $size[ 'label' ] . '</strong>';
 			do_action( 'instant_images_image_size_after', $key );
 			echo '</span>';
 			echo '</td>';

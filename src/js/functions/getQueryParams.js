@@ -14,13 +14,9 @@ export default function getQueryParams(provider, queryParams) {
 		return {};
 	}
 
-	// Construct per page amount.
-	const per_page = queryParams && queryParams.id ? 1 : API.defaults.per_page;
-
 	// Set default params.
 	let params = {
 		provider,
-		per_page,
 	};
 
 	// Append additional params.

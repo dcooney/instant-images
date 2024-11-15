@@ -2347,6 +2347,7 @@ function Photo(props) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   GiphyIcon: () => (/* binding */ GiphyIcon),
 /* harmony export */   OpenverseIcon: () => (/* binding */ OpenverseIcon),
 /* harmony export */   PexelsIcon: () => (/* binding */ PexelsIcon),
 /* harmony export */   PixabayIcon: () => (/* binding */ PixabayIcon),
@@ -2367,6 +2368,45 @@ function getProviderIcon(provider) {
     return null;
   }
   return _constants_API__WEBPACK_IMPORTED_MODULE_0__.API[provider.toLowerCase()].icon ? _constants_API__WEBPACK_IMPORTED_MODULE_0__.API[provider.toLowerCase()].icon() : null;
+}
+
+/**
+ * Giphy Icon.
+ */
+function GiphyIcon() {
+  return /*#__PURE__*/React.createElement("svg", {
+    height: "35",
+    width: "32",
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 32 35"
+  }, /*#__PURE__*/React.createElement("g", {
+    fill: "none",
+    fillRule: "evenodd"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M4 4h20v27H4z",
+    fill: "#000"
+  }), /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
+    d: "M0 3h4v29H0z",
+    fill: "#04ff8e"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M24 11h4v21h-4z",
+    fill: "#8e2eff"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M0 31h28v4H0z",
+    fill: "#00c5ff"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M0 0h16v4H0z",
+    fill: "#fff152"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M24 8V4h-4V0h-4v12h12V8",
+    fill: "#ff5b5b"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M24 16v-4h4",
+    fill: "#551c99"
+  })), /*#__PURE__*/React.createElement("path", {
+    d: "M16 0v4h-4",
+    fill: "#999131"
+  })));
 }
 
 /**
@@ -3347,16 +3387,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ProviderIcons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ProviderIcons */ "./src/js/components/ProviderIcons.js");
 
 var API = {
-  proxy: "https://proxy.getinstantimages.com/api/" || 0,
+  proxy: "http://localhost:3001/api/" || 0,
   // eslint-disable-line
   testmode: false,
   defaults: {
     provider: 'unsplash',
     order: 'latest',
-    per_page: '20',
     arr_key: 'results'
   },
-  providers: ['Unsplash', 'Openverse', 'Pixabay', 'Pexels'],
+  providers: ['Unsplash', 'Openverse', 'Pixabay', 'Pexels', 'Giphy'],
   unsplash: {
     name: 'Unsplash',
     requires_key: true,
@@ -3386,6 +3425,13 @@ var API = {
     api_var: 'key',
     key: '',
     icon: _components_ProviderIcons__WEBPACK_IMPORTED_MODULE_0__.OpenverseIcon
+  },
+  giphy: {
+    name: 'Giphy',
+    requires_key: true,
+    "new": true,
+    api_var: 'key',
+    icon: _components_ProviderIcons__WEBPACK_IMPORTED_MODULE_0__.GiphyIcon
   }
 };
 
@@ -3565,6 +3611,58 @@ var FILTERS = {
     }
   },
   pixabay: {
+    filters: {
+      order: {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Order', 'instant-images'),
+        "default": 'popular',
+        filters: [{
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Popular', 'instant-images'),
+          value: 'popular'
+        }, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Latest', 'instant-images'),
+          value: 'latest'
+        }]
+      },
+      image_type: {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Type', 'instant-images'),
+        "default": 'all',
+        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_IMAGE_TYPE))
+      },
+      category: {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Category', 'instant-images'),
+        "default": 'all',
+        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_CATS))
+      },
+      colors: {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Colors', 'instant-images'),
+        "default": 'all',
+        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_COLORS))
+      },
+      orientation: {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Orientation', 'instant-images'),
+        "default": 'all',
+        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_ORIENTATIONS))
+      }
+    },
+    search: {
+      image_type: {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Type', 'instant-images'),
+        "default": 'all',
+        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_IMAGE_TYPE))
+      },
+      colors: {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Colors', 'instant-images'),
+        "default": 'all',
+        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_COLORS))
+      },
+      orientation: {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Orientation', 'instant-images'),
+        "default": 'all',
+        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_ORIENTATIONS))
+      }
+    }
+  },
+  giphy: {
     filters: {
       order: {
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Order', 'instant-images'),
@@ -4318,7 +4416,6 @@ function getProxyURL(provider) {
  */
 function buildTestURL(provider) {
   var options = {
-    per_page: 5,
     page: 1
   };
 
@@ -4539,13 +4636,9 @@ function getQueryParams(provider, queryParams) {
     return {};
   }
 
-  // Construct per page amount.
-  var per_page = queryParams && queryParams.id ? 1 : _constants_API__WEBPACK_IMPORTED_MODULE_0__.API.defaults.per_page;
-
   // Set default params.
   var params = {
-    provider: provider,
-    per_page: per_page
+    provider: provider
   };
 
   // Append additional params.
@@ -4637,14 +4730,13 @@ __webpack_require__.r(__webpack_exports__);
  * Pluck `results` from the API response.
  *
  * @param {Object} data The API results object.
- * @return {Array} 	 The results as an array.
+ * @return {Array} 	   The results as an array.
  */
 function getResults(data) {
   if (!data) {
     return [];
   }
-  var results = data[_constants_API__WEBPACK_IMPORTED_MODULE_0__.API.defaults.arr_key] || [];
-  return results;
+  return data[_constants_API__WEBPACK_IMPORTED_MODULE_0__.API.defaults.arr_key] || [];
 }
 
 /**

@@ -117,14 +117,18 @@
 			width: 100%;
 			display: flex;
 			align-items: center;
-			gap: 5px;
+			gap: 2px;
 			button {
 				margin-left: auto !important;
 			}
 			svg {
-				width: 20px;
-				height: 20px;
-				margin-left: -5px;
+				width: 15px;
+				height: 15px;
+				margin-left: -3px;
+			}
+
+			strong {
+				font-weight: 500;
 			}
 		}
 	}

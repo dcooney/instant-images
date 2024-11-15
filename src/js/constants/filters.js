@@ -181,4 +181,53 @@ export const FILTERS = {
 			},
 		},
 	},
+	giphy: {
+		filters: {
+			order: {
+				label: __('Order', 'instant-images'),
+				default: 'popular',
+				filters: [
+					{ label: __('Popular', 'instant-images'), value: 'popular' },
+					{ label: __('Latest', 'instant-images'), value: 'latest' },
+				],
+			},
+			image_type: {
+				label: __('Type', 'instant-images'),
+				default: 'all',
+				filters: [ALL, ...PIXABAY_IMAGE_TYPE],
+			},
+			category: {
+				label: __('Category', 'instant-images'),
+				default: 'all',
+				filters: [ALL, ...PIXABAY_CATS],
+			},
+			colors: {
+				label: __('Colors', 'instant-images'),
+				default: 'all',
+				filters: [ALL, ...PIXABAY_COLORS],
+			},
+			orientation: {
+				label: __('Orientation', 'instant-images'),
+				default: 'all',
+				filters: [ALL, ...PIXABAY_ORIENTATIONS],
+			},
+		},
+		search: {
+			image_type: {
+				label: __('Type', 'instant-images'),
+				default: 'all',
+				filters: [ALL, ...PIXABAY_IMAGE_TYPE],
+			},
+			colors: {
+				label: __('Colors', 'instant-images'),
+				default: 'all',
+				filters: [ALL, ...PIXABAY_COLORS],
+			},
+			orientation: {
+				label: __('Orientation', 'instant-images'),
+				default: 'all',
+				filters: [ALL, ...PIXABAY_ORIENTATIONS],
+			},
+		},
+	},
 };
