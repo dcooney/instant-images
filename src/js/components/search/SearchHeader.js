@@ -24,9 +24,9 @@ export default function SearchHeader() {
 			<div className="search-header--text">
 				{`${total} ${instant_img_localize.search_results}`} <strong>{`${term}`}</strong>
 				<span>-</span>
-				<button onClick={() => getPhotos()}>{instant_img_localize.clear_search}</button>
+				<button onClick={() => getPhotos(true)}>{instant_img_localize.clear_search}</button>
 			</div>
-			{filters && Object.entries(filters).length && (
+			{filters && Object.entries(filters).length ? (
 				<div className="control-nav--filters-wrap">
 					<div className="control-nav--filters">
 						{Object.entries(filters).map(([key, filter], index) => (
@@ -34,7 +34,7 @@ export default function SearchHeader() {
 						))}
 					</div>
 				</div>
-			)}
+			) : null}
 		</header>
 	);
 }

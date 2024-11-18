@@ -45,8 +45,9 @@ export function saveSession(url, results) {
 	if (!url || !results || results?.error) {
 		return false;
 	}
-	// Set expiration to 1 hour.
-	results.expires = Date.now() + 3600000;
+
+	// Set expiration to 2 hours.
+	results.expires = Date.now() + 7200000;
 
 	// Save session data.
 	sessionStorage.setItem(md5Hash(url), JSON.stringify(results));

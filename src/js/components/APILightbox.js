@@ -153,8 +153,12 @@ export default function APILightbox(props) {
 								<p>{instant_img_localize[`${provider}_api_desc`]}</p>
 								<p className="action-controls">
 									<button onClick={() => gotoURL(instant_img_localize[`${provider}_api_url`])}>{instant_img_localize.get_api_key}</button>
-									<span>|</span>
-									<button onClick={() => getDefaultKey()}>{instant_img_localize.use_instant_images_key}</button>
+									{provider !== 'giphy' ? (
+										<>
+											<span>|</span>
+											<button onClick={() => getDefaultKey()}>{instant_img_localize.use_instant_images_key}</button>
+										</>
+									) : null}
 								</p>
 							</div>
 							<form onSubmit={(e) => handleSubmit(e)}>

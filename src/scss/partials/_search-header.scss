@@ -1,4 +1,5 @@
 .search-header {
+	margin-bottom: 20px;
 	h2 {
 		font-size: 34px;
 		@media screen and (max-width: $small) {
@@ -48,8 +49,5 @@
 				color: $purple_dark;
 			}
 		}
-	}
-	.control-nav--filters-wrap {
-		margin: 0 0 15px;
 	}
 }

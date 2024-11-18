@@ -1,18 +1,17 @@
-=== Instant Images - One Click Image Uploads from Unsplash, Openverse, Pixabay and Pexels ===
+=== Instant Images - One-click Image Uploads from Unsplash, Openverse, Pixabay, Pexels, and Giphy ===
 Contributors: dcooney, connekthq
-Donate link: <https://connekthq.com/donate/>
-Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, photos, stock photo, image upload, upload, free photos
+Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, giphy, photos, stock photo, free photos
 Requires at least: 5.0
 Tested up to: 6.7
 Stable tag: 6.2.3
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
-One click image uploads from Unsplash, Openverse, Pixabay, & Pexels directly to your WordPress media library.
+One-click uploads from Unsplash, Openverse, Pixabay, Pexels, and Giphy directly to your WordPress media library.
 
 == Description ==
 
-Instantly upload photos from Unsplash, Openverse, Pixabay or Pexels to your website all without ever leaving WordPress!
+Instantly upload photos from Unsplash, Openverse, Pixabay, Pexels, and Giphy to your website all without ever leaving WordPress!
 
 **Instant Images** is the fastest and easiest way to upload high quality **FREE** photos from your favorite stock photo communities directly to your WordPress media library.
 
@@ -22,6 +21,7 @@ Instantly upload photos from Unsplash, Openverse, Pixabay or Pexels to your webs
 - [Openverse](https://wordpress.org/openverse/)
 - [Pixabay](http://pixabay.com)
 - [Pexels](http://pexels.com)
+- [Giphy](http://giphy.com)
 
 [youtube <https://www.youtube.com/watch?v=s6Q7Kfi2f1c>]
 
@@ -55,6 +55,7 @@ Enhance the Instant Images experience with a suite of premium features and added
 - WordPress CLI Imports.
 - Batch Image Imports.
 - I'm Feeling Lucky WordPress Block.
+- Image Size Generator.
 - Instant Featured Images
 - Images Filters (Instagram).
 - Maintain current search term while switching image providers.

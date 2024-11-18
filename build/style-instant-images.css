@@ -304,10 +304,9 @@ body.settings_page_instant-images-settings.overflow-hidden {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin: 0 0 20px;
+  margin: 0;
   padding: 20px 0;
   list-style: none;
-  border-bottom: 1px solid #e1e1e1;
 }
 @media screen and (max-width: 800px) {
   .instant-img-container .control-nav {
@@ -825,7 +824,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
   border: none;
 }
 #photos .photo button.photo-upload img {
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
   width: 100%;
   height: auto !important;
   padding: 0;
@@ -834,7 +833,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 #photos .photo:focus button.photo-upload img, #photos .photo:hover button.photo-upload img {
   opacity: 0.5;
-  transform: scale(1.05);
+  transform: scale(1.035);
 }
 #photos .photo:focus .photo-meta, #photos .photo:hover .photo-meta {
   opacity: 1;
@@ -2226,7 +2225,7 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .provider-nav--btn svg {
   width: 20px;
   height: 20px;
-  margin-right: 8px;
+  margin-right: 6px;
 }
 .provider-nav--btn:hover, .provider-nav--btn:focus {
   color: #434246;
@@ -2896,6 +2895,9 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
   margin: 0;
   justify-content: center;
 }
+.search-header {
+  margin-bottom: 20px;
+}
 .search-header h2 {
   font-size: 34px;
   line-height: 1;
@@ -2945,9 +2947,6 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 .search-header--text button:hover, .search-header--text button:focus {
   text-decoration: underline;
   color: #455cb6;
-}
-.search-header .control-nav--filters-wrap {
-  margin: 0 0 15px;
 }
 .instant-images-extended-import--elements,
 .instant-images-extended-image-sizes--elements {

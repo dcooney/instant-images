@@ -248,11 +248,11 @@ function APILightbox(props) {
     onClick: function onClick() {
       return (0,_functions_helpers__WEBPACK_IMPORTED_MODULE_4__.gotoURL)(instant_img_localize["".concat(provider, "_api_url")]);
     }
-  }, instant_img_localize.get_api_key), /*#__PURE__*/React.createElement("span", null, "|"), /*#__PURE__*/React.createElement("button", {
+  }, instant_img_localize.get_api_key), provider !== 'giphy' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", null, "|"), /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
       return getDefaultKey();
     }
-  }, instant_img_localize.use_instant_images_key))), /*#__PURE__*/React.createElement("form", {
+  }, instant_img_localize.use_instant_images_key)) : null)), /*#__PURE__*/React.createElement("form", {
     onSubmit: function onSubmit(e) {
       return handleSubmit(e);
     }
@@ -1707,6 +1707,7 @@ function Photo(props) {
 
   // Refs.
   var photo = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var image = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var upload = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var editScreen = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var captionRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -2070,6 +2071,23 @@ function Photo(props) {
       caption: imageAttribution
     })); // Set caption state.
   }
+
+  /**
+   * Show a GIF preview image.
+   * Giphy only.
+   *
+   * @param {boolean} show Show a preview.
+   */
+  function showPreview(show) {
+    if (!provider === 'giphy') {
+      return;
+    }
+    if (show) {
+      image.current.src = full;
+    } else {
+      image.current.src = thumb;
+    }
+  }
   return /*#__PURE__*/React.createElement("article", {
     className: "photo",
     ref: photo
@@ -2089,11 +2107,18 @@ function Photo(props) {
     title: wpBlock ? instant_img_localize.insert_into_post : instant_img_localize.upload,
     onClick: function onClick() {
       return download();
+    },
+    onMouseEnter: function onMouseEnter() {
+      return showPreview(true);
+    },
+    onMouseLeave: function onMouseLeave() {
+      return showPreview(false);
     }
   }, /*#__PURE__*/React.createElement("img", {
     src: thumb,
     alt: alt,
-    className: status
+    className: status,
+    ref: image
   })), /*#__PURE__*/React.createElement("div", {
     className: "photo-controls"
   }, /*#__PURE__*/React.createElement("a", {
@@ -3186,9 +3211,9 @@ function SearchHeader() {
     className: "search-header--text"
   }, "".concat(total, " ").concat(instant_img_localize.search_results), " ", /*#__PURE__*/React.createElement("strong", null, "".concat(term)), /*#__PURE__*/React.createElement("span", null, "-"), /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
-      return getPhotos();
+      return getPhotos(true);
     }
-  }, instant_img_localize.clear_search)), filters && Object.entries(filters).length && /*#__PURE__*/React.createElement("div", {
+  }, instant_img_localize.clear_search)), filters && Object.entries(filters).length ? /*#__PURE__*/React.createElement("div", {
     className: "control-nav--filters-wrap"
   }, /*#__PURE__*/React.createElement("div", {
     className: "control-nav--filters"
@@ -3203,7 +3228,7 @@ function SearchHeader() {
       data: filter,
       handler: filterSearch
     });
-  }))));
+  }))) : null);
 }
 
 /***/ }),
@@ -3356,9 +3381,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ProviderIcons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ProviderIcons */ "./src/js/components/ProviderIcons.js");
 
 var API = {
-  proxy: "http://localhost:3001/api/" || 0,
+  proxy: "http://localhost:3000/api/" || 0,
   // eslint-disable-line
-  testmode: false,
+  testmode: true,
   defaults: {
     provider: 'unsplash',
     order: 'latest',
@@ -3439,6 +3464,19 @@ var ALL = {
   value: 'all'
 };
 var FILTERS = {
+  giphy: {
+    filters: {
+      order: {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Order', 'instant-images'),
+        "default": 'trending',
+        filters: [{
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Trending', 'instant-images'),
+          value: 'trending'
+        }]
+      }
+    },
+    search: {}
+  },
   openverse: {
     filters: {
       source: {
@@ -3580,58 +3618,6 @@ var FILTERS = {
     }
   },
   pixabay: {
-    filters: {
-      order: {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Order', 'instant-images'),
-        "default": 'popular',
-        filters: [{
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Popular', 'instant-images'),
-          value: 'popular'
-        }, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Latest', 'instant-images'),
-          value: 'latest'
-        }]
-      },
-      image_type: {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Type', 'instant-images'),
-        "default": 'all',
-        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_IMAGE_TYPE))
-      },
-      category: {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Category', 'instant-images'),
-        "default": 'all',
-        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_CATS))
-      },
-      colors: {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Colors', 'instant-images'),
-        "default": 'all',
-        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_COLORS))
-      },
-      orientation: {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Orientation', 'instant-images'),
-        "default": 'all',
-        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_ORIENTATIONS))
-      }
-    },
-    search: {
-      image_type: {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Type', 'instant-images'),
-        "default": 'all',
-        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_IMAGE_TYPE))
-      },
-      colors: {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Colors', 'instant-images'),
-        "default": 'all',
-        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_COLORS))
-      },
-      orientation: {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Orientation', 'instant-images'),
-        "default": 'all',
-        filters: [ALL].concat(_toConsumableArray(_filters_pixabay__WEBPACK_IMPORTED_MODULE_3__.PIXABAY_ORIENTATIONS))
-      }
-    }
-  },
-  giphy: {
     filters: {
       order: {
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Order', 'instant-images'),
@@ -4877,6 +4863,9 @@ var most = 10;
  * @param {string} term The search term.
  */
 function saveSearchHistory(term) {
+  if (term && term.toLowerCase().includes('id:')) {
+    return; // Don't index string with `id:`
+  }
   var recent = getSearchHistory();
   if (!recent) {
     localStorage.setItem(searchName, JSON.stringify([term]));
@@ -5093,8 +5082,9 @@ function saveSession(url, results) {
   if (!url || !results || results !== null && results !== void 0 && results.error) {
     return false;
   }
-  // Set expiration to 1 hour.
-  results.expires = Date.now() + 3600000;
+
+  // Set expiration to 2 hours.
+  results.expires = Date.now() + 7200000;
 
   // Save session data.
   sessionStorage.setItem((0,_helpers__WEBPACK_IMPORTED_MODULE_1__.md5Hash)(url), JSON.stringify(results));

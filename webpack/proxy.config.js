@@ -11,7 +11,7 @@ const { DefinePlugin } = require('webpack');
 module.exports = merge(common, {
 	plugins: [
 		new DefinePlugin({
-			PROXY_URL: JSON.stringify('http://localhost:3001/api/'),
+			PROXY_URL: JSON.stringify('http://localhost:3000/api/'),
 		}),
 	],
 });

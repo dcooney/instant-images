@@ -15,16 +15,21 @@
  */
 
 /*
+* NEW: Added Giphy integration. Giphy requires a valid API key.
 * NEW: Added Image Size functionality to Instant Images settings.
 * NEW: Added required functionality to add image size with the Extended add-on.
+* FIX: Fixed issue with file extensions being incorrect for png and jpeg files.
+* FIX: Fixed issue with Extended add-on search history and indexing `ID` searches.
 * UPDATE: Updated Unsplash image filters as their API was updated recently.
 * UPDATE: Updated all plugin NPM dependencies and packages.
+* UPDATE: Various UI and UX improvements.
 */
 
 /*
 TODO:
-- Create CTA to upsell the Image Size feature.
-- Create image size feature in the Extended add-on.
+- Giphy filters Rating not working.
+- Create CTA to upsell the Image Size feature. [DONE]
+- Create image size feature in the Extended add-on. [DONE]
 
 */
 
@@ -171,10 +176,15 @@ class InstantImages {
 			'https://images.unsplash.com',
 			'https://pixabay.com',
 			'https://images.pexels.com',
-			'giphy.com',
 			'https://pd.w.org',
 			'https://live.staticflickr.com',
 			'https://upload.wikimedia.org',
+			'https://media0.giphy.com',
+			'https://media1.giphy.com',
+			'https://media2.giphy.com',
+			'https://media3.giphy.com',
+			'https://media4.giphy.com',
+			'https://media5.giphy.com',
 		];
 		return $urls;
 	}
@@ -360,7 +370,7 @@ class InstantImages {
 				'giphy_app_id'            => $giphy_api,
 				'giphy_url'               => 'https://giphy.com',
 				'giphy_api_url'           => 'https://developers.giphy.com/',
-				'giphy_api_desc'          => __( 'Access to gifs from Giphy requires a valid API key. API keys are available for free, just sign up for an account at Giphy, enter your API key below and you\'re good to go!', 'instant-images' ),
+				'giphy_api_desc'          => __( 'Access to gifs from Giphy requires a valid API key. API keys are available for free, just sign up for an account at Giphy and choose the "Select API" option when creating the key', 'instant-images' ),
 				'openverse_url'           => 'https://openverse.org',
 				'openverse_mature'        => apply_filters( 'instant_images_openverse_mature', false ),
 				'error_upload'            => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
@@ -405,7 +415,7 @@ class InstantImages {
 				'enter_api_key'           => __( 'Enter API Key', 'instant-images' ),
 				'api_key_invalid'         => __( 'The API Key is Invalid', 'instant-images' ),
 				'api_success_msg'         => __( 'API key has been successfully validated!', 'instant-images' ),
-				'api_invalid_msg'         => __( 'The API key is not valid for this provider - enter a new API Key and try again.', 'instant-images' ),
+				'api_invalid_msg'         => __( 'Invalid API key - enter a new API Key and try again.', 'instant-images' ),
 				'api_invalid_403_msg'     => __( 'Missing API parameter - we are unable to complete the request at this time.', 'instant-images' ),
 				'api_invalid_404_msg'     => __( 'The Instant Images Proxy is not configured for the requested provider.', 'instant-images' ),
 				'api_invalid_500_msg'     => __( 'An internal server error has occured - please try again.', 'instant-images' ),
@@ -506,8 +516,8 @@ class InstantImages {
 	 */
 	public static function instant_images_get_tagline() {
 		// translators: Instant Images tagline.
-		$instant_images_tagline = __( 'One-click photo uploads from %1$s, %2$s, %3$s and %4$s.', 'instant-images' ); // phpcs:ignore
-		return '<span class="instant-images-tagline">' . sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">Unsplash</a>', '<a href="https://wordpress.org/openverse" target="_blank">Openverse</a>', '<a href="https://pixabay.com/" target="_blank">Pixabay</a>', '<a href="https://pexels.com/" target="_blank">Pexels</a>' ) .'</span>';  // phpcs:ignore
+		$instant_images_tagline = __( 'One-click photo uploads from %1$s, %2$s, %3$s, %4$s, and %5$s.', 'instant-images' ); // phpcs:ignore
+		return '<span class="instant-images-tagline">' . sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">Unsplash</a>', '<a href="https://wordpress.org/openverse" target="_blank">Openverse</a>', '<a href="https://pixabay.com/" target="_blank">Pixabay</a>', '<a href="https://pexels.com/" target="_blank">Pexels</a>', '<a href="https://giphy.com/" target="_blank">Giphy</a>' ) .'</span>';  // phpcs:ignore
 	}
 
 	/**

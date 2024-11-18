@@ -50,6 +50,7 @@ export default function Photo(props) {
 
 	// Refs.
 	const photo = useRef();
+	const image = useRef();
 	const upload = useRef();
 	const editScreen = useRef();
 	const captionRef = useRef();
@@ -412,6 +413,23 @@ export default function Photo(props) {
 		setImageDetails({ ...imageDetails, caption: imageAttribution }); // Set caption state.
 	}
 
+	/**
+	 * Show a GIF preview image.
+	 * Giphy only.
+	 *
+	 * @param {boolean} show Show a preview.
+	 */
+	function showPreview(show) {
+		if (!provider === 'giphy') {
+			return;
+		}
+		if (show) {
+			image.current.src = full;
+		} else {
+			image.current.src = thumb;
+		}
+	}
+
 	return (
 		<article className="photo" ref={photo}>
 			<div className={classNames('photo-wrap', `photo-${status}`)}>
@@ -427,8 +445,10 @@ export default function Photo(props) {
 						data-caption={imageDetails.caption}
 						title={wpBlock ? instant_img_localize.insert_into_post : instant_img_localize.upload}
 						onClick={() => download()}
+						onMouseEnter={() => showPreview(true)}
+						onMouseLeave={() => showPreview(false)}
 					>
-						<img src={thumb} alt={alt} className={status} />
+						<img src={thumb} alt={alt} className={status} ref={image} />
 					</button>
 
 					<div className="photo-controls">

@@ -7,14 +7,13 @@
 		visibility: hidden;
 		opacity: 0;
 		display: block;
-		content: "";
+		content: '';
 		position: absolute;
 		width: calc(100% + 50px);
 		height: 100%;
 		left: -25px;
 		top: 0;
-		background: rgba(255, 255, 255, 0.9) url("../img/ajax-loader-lg.gif")
-			no-repeat center 90px;
+		background: rgba(255, 255, 255, 0.9) url('../img/ajax-loader-lg.gif') no-repeat center 90px;
 		z-index: 9999;
 		transition: $transition;
 	}
@@ -74,8 +73,7 @@
 				pointer-events: none;
 
 				.photo-status {
-					background: rgba(255, 255, 255, 0.95) url("../img/ajax-loader-lg.gif")
-						no-repeat center center;
+					background: rgba(255, 255, 255, 0.95) url('../img/ajax-loader-lg.gif') no-repeat center center;
 					background-size: 24px 24px;
 					&::before {
 						display: none;
@@ -103,7 +101,7 @@
 				.photo-status {
 					background-color: $green;
 					&::before {
-						content: "\f00c";
+						content: '\f00c';
 						color: #fff;
 					}
 				}
@@ -116,7 +114,7 @@
 				.photo-status {
 					background-color: $red;
 					&::before {
-						content: "\f12a";
+						content: '\f12a';
 						color: #fff;
 						opacity: 0.8;
 					}
@@ -183,7 +181,7 @@
 				border: none;
 			}
 			img {
-				transition: all 0.4s ease;
+				transition: all 0.5s ease;
 				width: 100%;
 				height: auto !important;
 				padding: 0;
@@ -198,7 +196,7 @@
 			button.photo-upload {
 				img {
 					opacity: 0.5;
-					transform: scale(1.05);
+					transform: scale(1.035);
 				}
 			}
 			.photo-meta {
@@ -235,7 +233,7 @@
 			background-position: center center;
 			background-repeat: no-repeat;
 			&::before {
-				font-family: "FontAwesome";
+				font-family: 'FontAwesome';
 				display: block;
 				color: #fff;
 				font-size: 24px;
@@ -317,11 +315,7 @@
 			padding: 0;
 			opacity: 0;
 			transition: $transition;
-			background: linear-gradient(
-				180deg,
-				rgba(17, 17, 17, 0) 0%,
-				rgba(17, 17, 17, 0.3) 100%
-			);
+			background: linear-gradient(180deg, rgba(17, 17, 17, 0) 0%, rgba(17, 17, 17, 0.3) 100%);
 		}
 
 		.photo-options {
@@ -389,7 +383,7 @@
 					text-overflow: ellipsis;
 					white-space: nowrap;
 					&::before {
-						content: "";
+						content: '';
 						display: block;
 						z-index: 0;
 						background-color: #fff;
@@ -596,7 +590,7 @@
 			line-height: $el_height;
 			padding-top: 0;
 			padding-bottom: 0;
-			&[name="filename"] {
+			&[name='filename'] {
 				padding-right: 45px;
 			}
 		}
