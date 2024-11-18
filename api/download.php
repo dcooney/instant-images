@@ -131,7 +131,6 @@ function instant_images_download( WP_REST_Request $request ) {
 			return new WP_Error( 100, __( 'Image type could not be determined.', 'instant-images' ) );
 		}
 
-		error_log( print_r( wp_remote_retrieve_body( $response ), true ) );
 		// Upload remote file.
 		$mirror = wp_upload_bits( $name, null, wp_remote_retrieve_body( $response ) );
 

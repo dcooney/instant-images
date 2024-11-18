@@ -18,8 +18,9 @@
 * NEW: Added Giphy integration. Giphy requires a valid API key.
 * NEW: Added Image Size functionality to Instant Images settings.
 * NEW: Added required functionality to add image size with the Extended add-on.
-* FIX: Fixed issue with file extensions being incorrect for png and jpeg files.
+* FIX: Fixed potential issue with image file extensions being incorrect for png and jpeg files.
 * FIX: Fixed issue with Extended add-on search history and indexing `ID` searches.
+* FIX: Fixed issue with new WooCommerce product screens throwing JS errors and causing the page to load as a white screen.
 * UPDATE: Updated Unsplash image filters as their API was updated recently.
 * UPDATE: Updated all plugin NPM dependencies and packages.
 * UPDATE: Various UI and UX improvements.
