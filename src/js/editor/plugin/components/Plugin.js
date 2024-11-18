@@ -1,4 +1,4 @@
-import { PluginSidebar } from '@wordpress/edit-post';
+import { PluginSidebar } from '@wordpress/editor';
 import Icon from '../../../components/Icon';
 import Sidebar from './Sidebar';
 

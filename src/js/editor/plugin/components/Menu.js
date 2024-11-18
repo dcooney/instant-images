@@ -1,4 +1,4 @@
-import { PluginSidebarMoreMenuItem } from '@wordpress/edit-post';
+import { PluginSidebarMoreMenuItem } from '@wordpress/editor';
 import Icon from '../../../components/Icon';
 
 /**

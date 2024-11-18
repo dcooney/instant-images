@@ -227,13 +227,14 @@ class InstantImages {
 	}
 
 	/**
-	 * Enqueue Gutenberg Block sidebar plugin
+	 * Enqueue Block Editor sidebar plugin.
 	 *
 	 * @author ConnektMedia <support@connekthq.com>
 	 * @since 3.0
 	 */
 	public function enqueue_block_editor() {
-		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets', 'site-editor' ] ) ) {
+		$excluded_screens = apply_filters( 'instant_images_excluded_sidebar_screens', [ 'widgets', 'site-editor', 'woocommerce_page_wc-admin' ] );
+		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( $excluded_screens ) ) {
 			// Plugin sidebar.
 			$sidebar_asset_file = require INSTANT_IMAGES_PATH . 'build/plugin-sidebar/index.asset.php'; // Get webpack asset file.
 

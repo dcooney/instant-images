@@ -2897,6 +2897,8 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .search-header {
   margin-bottom: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e1e1e1;
 }
 .search-header h2 {
   font-size: 34px;

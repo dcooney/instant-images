@@ -4173,8 +4173,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Menu)
 /* harmony export */ });
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
+/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_Icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/Icon */ "./src/js/components/Icon.js");
 
 
@@ -4185,7 +4185,7 @@ __webpack_require__.r(__webpack_exports__);
  * @return {JSX.Element} The Menu component.
  */
 function Menu() {
-  return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__.PluginSidebarMoreMenuItem, {
+  return /*#__PURE__*/React.createElement(_wordpress_editor__WEBPACK_IMPORTED_MODULE_0__.PluginSidebarMoreMenuItem, {
     icon: /*#__PURE__*/React.createElement(_components_Icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
       borderless: true
     }),
@@ -4207,8 +4207,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Plugin)
 /* harmony export */ });
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
+/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_Icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/Icon */ "./src/js/components/Icon.js");
 /* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sidebar */ "./src/js/editor/plugin/components/Sidebar.js");
 
@@ -4221,7 +4221,7 @@ __webpack_require__.r(__webpack_exports__);
  * @return {JSX.Element} The Plugin component.
  */
 function Plugin() {
-  return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_0__.PluginSidebar, {
+  return /*#__PURE__*/React.createElement(_wordpress_editor__WEBPACK_IMPORTED_MODULE_0__.PluginSidebar, {
     icon: /*#__PURE__*/React.createElement(_components_Icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
       borderless: true
     }),
@@ -15640,14 +15640,14 @@ module.exports = window["wp"]["data"];
 
 /***/ }),
 
-/***/ "@wordpress/edit-post":
-/*!**********************************!*\
-  !*** external ["wp","editPost"] ***!
-  \**********************************/
+/***/ "@wordpress/editor":
+/*!********************************!*\
+  !*** external ["wp","editor"] ***!
+  \********************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = window["wp"]["editPost"];
+module.exports = window["wp"]["editor"];
 
 /***/ }),
 
@@ -20980,7 +20980,7 @@ __webpack_require__.r(__webpack_exports__);
  * @return {JSX.Element} The InstantImagesPlugin component.
  */
 var InstantImagesPlugin = function InstantImagesPlugin() {
-  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(_editor_plugin_components_Menu__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/React.createElement(_editor_plugin__WEBPACK_IMPORTED_MODULE_2__["default"], null), "dw");
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(_editor_plugin_components_Menu__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/React.createElement(_editor_plugin__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 };
 
 // Register the sidebar plugin.
