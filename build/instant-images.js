@@ -3383,7 +3383,7 @@ __webpack_require__.r(__webpack_exports__);
 var API = {
   proxy: "http://localhost:3000/api/" || 0,
   // eslint-disable-line
-  testmode: true,
+  testmode: false,
   defaults: {
     provider: 'unsplash',
     order: 'latest',
