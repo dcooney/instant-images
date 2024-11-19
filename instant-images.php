@@ -7,39 +7,19 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 6.2.3
+ * Version: 7.0.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
  * @package InstantImages
  */
 
-/*
-* NEW: Added Giphy integration. Giphy requires a valid API key.
-* NEW: Added Image Size functionality to Instant Images settings.
-* NEW: Added required functionality to add image size with the Extended add-on.
-* FIX: Fixed potential issue with image file extensions being incorrect for png and jpeg files.
-* FIX: Fixed issue with Extended add-on search history and indexing `ID` searches.
-* FIX: Fixed issue with new WooCommerce product screens throwing JS errors and causing the page to load as a white screen.
-* UPDATE: Updated Unsplash image filters as their API was updated recently.
-* UPDATE: Updated all plugin NPM dependencies and packages.
-* UPDATE: Various UI and UX improvements.
-*/
-
-/*
-TODO:
-- Giphy filters Rating not working.
-- Create CTA to upsell the Image Size feature. [DONE]
-- Create image size feature in the Extended add-on. [DONE]
-
-*/
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '6.2.3' );
-define( 'INSTANT_IMAGES_RELEASE', 'November 8, 2024' );
+define( 'INSTANT_IMAGES_VERSION', '7.0.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'November 20, 2024' );
 define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**

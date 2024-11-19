@@ -1,9 +1,9 @@
 === Instant Images - One-click Image Uploads from Unsplash, Openverse, Pixabay, Pexels, and Giphy ===
 Contributors: dcooney, connekthq
-Tags: Unsplash, Openverse, Pixabay, Pexels, Stock Photos, giphy, photos, stock photo, free photos
+Tags: Unsplash, Openverse, Pixabay, Pexels, giphy, Stock Photos, photos, free photos
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 6.2.3
+Stable tag: 7.0.0
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -127,6 +127,9 @@ No, we provide an API for you to use, however you can get your own by signing up
 = Do I need an account at Openverse? =
 No, an Openverse account is not required.
 
+= Do I need an account at Giphy? =
+Yes, Giphy requires a valid API key. You can get your own by signing up for a free account at [Giphy](https://developers.giphy.com/). When you sign up be sure to choose the "Select API" option and choose the "Giphy API" option.
+
 == Installation ==
 
 How to install Instant Images.
@@ -162,6 +165,17 @@ How to install Instant Images.
 5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 7.0.0 - November 20, 2024 =
+* NEW: Added Giphy integration. Giphy requires a valid API key.
+* NEW: Added Image Size functionality to Instant Images settings.
+* NEW: Added required functionality to add image size with the Extended add-on.
+* FIX: Fixed potential issue with image file extensions being incorrect for png and jpeg files.
+* FIX: Fixed issue with Extended add-on search history and indexing `ID` searches.
+* FIX: Fixed issue with new WooCommerce product screens throwing JS errors and causing the page to load as a white screen.
+* UPDATE: Updated Unsplash image filters as their API was updated recently.
+* UPDATE: Updated all plugin NPM dependencies and packages.
+* UPDATE: Various UI and UX improvements.
 
 = 6.2.3 - November 8, 2024 =
 * HOTFIX: Removed .wp-block styles in Instant Images CSS.

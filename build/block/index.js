@@ -3412,7 +3412,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ProviderIcons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ProviderIcons */ "./src/js/components/ProviderIcons.js");
 
 var API = {
-  proxy: "http://localhost:3000/api/" || 0,
+  proxy: "https://proxy.getinstantimages.com/api/" || 0,
   // eslint-disable-line
   testmode: false,
   defaults: {
