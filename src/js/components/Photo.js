@@ -443,7 +443,7 @@ export default function Photo(props) {
 						data-title={imageDetails.title}
 						data-alt={imageDetails.alt}
 						data-caption={imageDetails.caption}
-						title={wpBlock ? instant_img_localize.insert_into_post : instant_img_localize.upload}
+						aria-label={wpBlock ? instant_img_localize.insert_into_post : instant_img_localize.upload}
 						onClick={() => download()}
 						onMouseEnter={() => showPreview(true)}
 						onMouseLeave={() => showPreview(false)}
