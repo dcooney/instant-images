@@ -2,6 +2,7 @@ import { Fragment } from '@wordpress/element';
 import { usePluginContext } from '../common/pluginProvider';
 import { API } from '../constants/API';
 import { getProviderIcon } from './ProviderIcons';
+import giphyPowered from '../../img/logos/giphy-powered.png';
 const providers = API.providers;
 
 /**
@@ -30,6 +31,13 @@ export default function ProviderNav({ switchProvider }) {
 							</button>
 						</div>
 					))}
+					{provider === 'giphy' ? (
+						<div className="giphy-powered">
+							<a href="https://giphy.com" target="_blank" rel="noreferrer">
+								<img src={giphyPowered} alt="Powered by Giphy" />
+							</a>
+						</div>
+					) : null}
 				</nav>
 			)}
 		</Fragment>

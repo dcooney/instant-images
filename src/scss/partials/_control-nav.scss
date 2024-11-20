@@ -96,6 +96,7 @@
 		// Search
 		&--search {
 			display: flex;
+			align-items: center;
 			width: 30%;
 			max-width: 350px;
 			@media screen and (min-width: $large) {

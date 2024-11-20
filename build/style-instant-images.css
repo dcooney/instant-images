@@ -396,6 +396,7 @@ body.settings_page_instant-images-settings.overflow-hidden {
 }
 .instant-img-container .control-nav--search {
   display: flex;
+  align-items: center;
   width: 30%;
   max-width: 350px;
   padding: 0;
@@ -2204,6 +2205,21 @@ button[aria-expanded=true] .instant-images-sidebar-icon svg * {
 }
 .provider-nav > div:last-of-type {
   margin-left: 0;
+}
+.provider-nav > div.giphy-powered {
+  margin-left: 3px;
+  display: flex;
+  align-items: center;
+  width: 130px;
+}
+.provider-nav > div.giphy-powered a {
+  width: 130px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.provider-nav > div.giphy-powered a img {
+  display: block;
 }
 .provider-nav--btn {
   padding: 0 10px;

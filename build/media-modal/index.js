@@ -2516,6 +2516,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_pluginProvider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/pluginProvider */ "./src/js/common/pluginProvider.js");
 /* harmony import */ var _constants_API__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants/API */ "./src/js/constants/API.js");
 /* harmony import */ var _ProviderIcons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ProviderIcons */ "./src/js/components/ProviderIcons.js");
+/* harmony import */ var _img_logos_giphy_powered_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../img/logos/giphy-powered.png */ "./src/img/logos/giphy-powered.png");
+
 
 
 
@@ -2546,7 +2548,16 @@ function ProviderNav(_ref) {
     }, (0,_ProviderIcons__WEBPACK_IMPORTED_MODULE_3__.getProviderIcon)(item), /*#__PURE__*/React.createElement("span", null, item), _constants_API__WEBPACK_IMPORTED_MODULE_2__.API[item.toLowerCase()]["new"] && /*#__PURE__*/React.createElement("span", {
       className: "provider-nav--new"
     }, instant_img_localize["new"])));
-  })));
+  }), provider === 'giphy' ? /*#__PURE__*/React.createElement("div", {
+    className: "giphy-powered"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "https://giphy.com",
+    target: "_blank",
+    rel: "noreferrer"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: _img_logos_giphy_powered_png__WEBPACK_IMPORTED_MODULE_4__,
+    alt: "Powered by Giphy"
+  }))) : null));
 }
 
 /***/ }),
@@ -15463,6 +15474,17 @@ return Outlayer;
 
 /***/ }),
 
+/***/ "./src/img/logos/giphy-powered.png":
+/*!*****************************************!*\
+  !*** ./src/img/logos/giphy-powered.png ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "images/giphy-powered.9748c37d.png";
+
+/***/ }),
+
 /***/ "react":
 /*!************************!*\
   !*** external "React" ***!
@@ -20786,6 +20808,29 @@ function useInView({
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript && document.currentScript.tagName.toUpperCase() === 'SCRIPT')
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i > -1 && (!scriptUrl || !/^http(s?):/.test(scriptUrl))) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl + "../";
 /******/ 	})();
 /******/ 	
 /************************************************************************/
