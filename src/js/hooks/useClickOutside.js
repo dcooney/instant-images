@@ -1,4 +1,4 @@
-import { useEffect } from "@wordpress/element";
+import { useEffect } from '@wordpress/element';
 
 /**
  * Detect clicks outside of ref.
@@ -14,7 +14,7 @@ export function useClickOutside(ref, onClickOutside) {
 	 */
 	function escapeClick(e) {
 		const { key } = e;
-		if (key === "Escape") {
+		if (key === 'Escape') {
 			onClickOutside();
 		}
 	}
@@ -32,14 +32,14 @@ export function useClickOutside(ref, onClickOutside) {
 		}
 
 		// Bind events.
-		document.addEventListener("mousedown", handleClickOutside);
-		document.addEventListener("keyup", handleClickOutside);
-		document.addEventListener("keydown", escapeClick, false);
+		document.addEventListener('mousedown', handleClickOutside);
+		document.addEventListener('keyup', handleClickOutside);
+		document.addEventListener('keydown', escapeClick, false);
 		return () => {
 			// Dispose of events.
-			document.removeEventListener("mousedown", handleClickOutside);
-			document.removeEventListener("keyup", handleClickOutside);
-			document.removeEventListener("keydown", escapeClick, false);
+			document.removeEventListener('mousedown', handleClickOutside);
+			document.removeEventListener('keyup', handleClickOutside);
+			document.removeEventListener('keydown', escapeClick, false);
 		};
 	}, [ref, onClickOutside]); //eslint-disable-line react-hooks/exhaustive-deps
 }

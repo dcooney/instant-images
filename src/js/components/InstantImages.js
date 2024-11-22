@@ -1,32 +1,32 @@
-import { Fragment, useEffect, useRef, useState } from "@wordpress/element";
-import axios from "axios";
-import classNames from "classnames";
-import Masonry from "masonry-layout";
-import { useInView } from "react-intersection-observer";
-import { PluginProvider } from "../common/pluginProvider";
-import { API } from "../constants/API";
-import { FILTERS } from "../constants/filters";
-import WPBlockHeader from "../editor/block/components/Header";
-import buildURL, { buildTestURL } from "../functions/buildURL";
-import consoleStatus from "../functions/consoleStatus";
-import getQueryParams from "../functions/getQueryParams";
-import getResults, { getSearchTotal } from "../functions/getResults";
-import { checkRateLimit } from "../functions/helpers";
-import { deleteSession, getSession, saveSession } from "../functions/session";
-import APILightbox from "./APILightbox";
-import ErrorLightbox from "./ErrorLightbox";
-import Filter from "./Filter";
-import LoadMore from "./LoadMore";
-import NoResults from "./NoResults";
-import ProviderNav from "./ProviderNav";
-import RestAPIError from "./RestAPIError";
-import Results from "./Results";
-import ResultsWPBlock from "./ResultsWPBlock";
-import Tooltip from "./Tooltip";
-import { ExtendedCTA } from "./cta/Extended";
-import SearchForm from "./search/SearchForm";
-import SearchHeader from "./search/SearchHeader";
-const imagesLoaded = require("imagesloaded");
+import { Fragment, useEffect, useRef, useState } from '@wordpress/element';
+import axios from 'axios';
+import classNames from 'classnames';
+import Masonry from 'masonry-layout';
+import { useInView } from 'react-intersection-observer';
+import { PluginProvider } from '../common/pluginProvider';
+import { API } from '../constants/API';
+import { FILTERS } from '../constants/filters';
+import WPBlockHeader from '../editor/block/components/Header';
+import buildURL, { buildTestURL } from '../functions/buildURL';
+import consoleStatus from '../functions/consoleStatus';
+import getQueryParams from '../functions/getQueryParams';
+import getResults, { getSearchTotal } from '../functions/getResults';
+import { checkRateLimit } from '../functions/helpers';
+import { deleteSession, getSession, saveSession } from '../functions/session';
+import APILightbox from './APILightbox';
+import ErrorLightbox from './ErrorLightbox';
+import Filter from './Filter';
+import LoadMore from './LoadMore';
+import NoResults from './NoResults';
+import ProviderNav from './ProviderNav';
+import RestAPIError from './RestAPIError';
+import Results from './Results';
+import ResultsWPBlock from './ResultsWPBlock';
+import Tooltip from './Tooltip';
+import { ExtendedCTA } from './cta/Extended';
+import SearchForm from './search/SearchForm';
+import SearchHeader from './search/SearchHeader';
+const imagesLoaded = require('imagesloaded');
 
 let page = 1;
 
@@ -43,26 +43,16 @@ let page = 1;
  * @return {JSX.Element}            InstantImages component.
  */
 export default function InstantImages(props) {
-	const {
-		editor = "classic",
-		provider,
-		data,
-		container,
-		api_error = null,
-		clientId = null,
-	} = props;
+	const { editor = 'classic', provider, data, container, api_error = null, clientId = null } = props;
 
-	const {
-		activated: extended_activated = false,
-		license: extended_license = false,
-	} = instant_img_localize?.addons?.extended;
+	const { activated: extended_activated = false, license: extended_license = false } = instant_img_localize?.addons?.extended;
 
 	const delay = 250;
-	const searchClass = "searching";
+	const searchClass = 'searching';
 	const searchDefaults = {
 		active: false,
-		term: "",
-		type: "",
+		term: '',
+		type: '',
 		results: 0,
 	};
 
@@ -78,31 +68,27 @@ export default function InstantImages(props) {
 	const [showAPILightbox, setShowAPILightbox] = useState(false); // Render API key lightbox.
 	const [search, setSearch] = useState(searchDefaults);
 	const [suggestions, setSuggestions] = useState([]);
-	const [filterOptions, setFilterOptions] = useState(
-		FILTERS[activeProvider].filters
-	);
+	const [filterOptions, setFilterOptions] = useState(FILTERS[activeProvider].filters);
 	const [filters, setFilters] = useState({});
 	const [searchFilters, setSearchFilters] = useState({});
 
 	// Refs.
 	const [loadMoreRef, inView] = useInView({
-		rootMargin: "0px 0px",
+		rootMargin: '0px 0px',
 	});
 	const photosRef = useRef();
 	const searchInputRef = useRef();
 	const msnryRef = useRef();
 
 	// WP Editor props.
-	const wpBlock = editor === "block" ? true : false;
-	const blockSidebar = editor === "sidebar" ? true : false;
+	const wpBlock = editor === 'block' ? true : false;
+	const blockSidebar = editor === 'sidebar' ? true : false;
 	const isBlockEditor = wpBlock || blockSidebar ? true : false;
-	const mediaModal = editor === "media-modal" ? true : false;
+	const mediaModal = editor === 'media-modal' ? true : false;
 
 	const body = document.body;
 	const plugin = isBlockEditor ? container : container.parentNode.parentNode;
-	const wrapper = isBlockEditor
-		? container
-		: plugin.querySelector(".instant-images-wrapper");
+	const wrapper = isBlockEditor ? container : plugin.querySelector('.instant-images-wrapper');
 
 	/**
 	 * Get the initial set of photos for the current view (New/Popular/Filters/etc...).
@@ -115,7 +101,7 @@ export default function InstantImages(props) {
 			return false;
 		}
 
-		if (!reset && searchInputRef?.current?.value !== "") {
+		if (!reset && searchInputRef?.current?.value !== '') {
 			// Maintain search results for extended add-on users.
 			if (extended_activated && extended_license) {
 				doSearch(searchInputRef.current.value);
@@ -131,7 +117,7 @@ export default function InstantImages(props) {
 
 		// Build URL.
 		const params = getQueryParams(activeProvider, filters);
-		const url = buildURL("photos", params);
+		const url = buildURL('photos', params);
 
 		// Get session storage.
 		const sessionData = getSession(url);
@@ -176,11 +162,10 @@ export default function InstantImages(props) {
 		page = parseInt(page) + 1;
 
 		// Get search query.
-		const searchQuery =
-			search?.active && search?.term ? { term: search.term } : {};
+		const searchQuery = search?.active && search?.term ? { term: search.term } : {};
 
 		// Build URL.
-		const type = search?.active ? "search" : "photos";
+		const type = search?.active ? 'search' : 'photos';
 		const activeFilters = search?.active ? searchFilters : filters;
 		const loadmoreParams = {
 			...{ page },
@@ -226,13 +211,10 @@ export default function InstantImages(props) {
 
 		page = 1; // Reset current page num.
 
-		const searchType = term.substring(0, 3) === "id:" ? "id" : "term";
+		const searchType = term.substring(0, 3) === 'id:' ? 'id' : 'term';
 
 		// Get search query.
-		const searchQuery =
-			searchType === "id"
-				? { id: term.replace("id:", "").replace(/\s+/, "") }
-				: { term };
+		const searchQuery = searchType === 'id' ? { id: term.replace('id:', '').replace(/\s+/, '') } : { term };
 
 		// Build URL.
 		const searchParams = {
@@ -241,7 +223,7 @@ export default function InstantImages(props) {
 			...searchFilters,
 		};
 		const params = getQueryParams(activeProvider, searchParams);
-		const url = buildURL("search", params);
+		const url = buildURL('search', params);
 
 		// Get session storage.
 		const sessionData = getSession(url);
@@ -324,9 +306,9 @@ export default function InstantImages(props) {
 	 * @since 3.0
 	 */
 	function clearSearch() {
-		const term = searchInputRef?.current?.value || "";
+		const term = searchInputRef?.current?.value || '';
 		if (term) {
-			searchInputRef.current.value = "";
+			searchInputRef.current.value = '';
 		}
 		setSearch(searchDefaults);
 		setSuggestions([]);
@@ -340,11 +322,7 @@ export default function InstantImages(props) {
 	 */
 	function filterPhotos(filter, value) {
 		const newFilters = { ...filters };
-		if (
-			(newFilters[filter] && value === "#") ||
-			value === "" ||
-			value === "all"
-		) {
+		if ((newFilters[filter] && value === '#') || value === '' || value === 'all') {
 			delete newFilters[filter];
 		} else {
 			newFilters[filter] = value;
@@ -360,11 +338,7 @@ export default function InstantImages(props) {
 	 */
 	function filterSearch(filter, value) {
 		const newSearchFilters = { ...searchFilters };
-		if (
-			(newSearchFilters[filter] && value === "#") ||
-			value === "" ||
-			value === "all"
-		) {
+		if ((newSearchFilters[filter] && value === '#') || value === '' || value === 'all') {
 			delete newSearchFilters[filter];
 		} else {
 			newSearchFilters[filter] = value;
@@ -385,7 +359,7 @@ export default function InstantImages(props) {
 		setShowAPILightbox(false);
 		setLoading(false);
 		setAPIError(false);
-		body.classList.remove("overflow-hidden");
+		body.classList.remove('overflow-hidden');
 	}
 
 	/**
@@ -402,7 +376,7 @@ export default function InstantImages(props) {
 		setLoading(true);
 		setAPIError(false);
 		setShowAPILightbox(false);
-		body.classList.remove("overflow-hidden");
+		body.classList.remove('overflow-hidden');
 
 		// API verification - check API key for provider.
 		if (API[newProvider].requires_key && !apiTested.includes(newProvider)) {
@@ -415,7 +389,7 @@ export default function InstantImages(props) {
 					// Catch API errors and 401s.
 					setShowAPILightbox(newProvider); // Show API Lightbox.
 					setAPIError(true);
-					body.classList.add("overflow-hidden");
+					body.classList.add('overflow-hidden');
 					return;
 				}
 				if (status === 200) {
@@ -425,7 +399,7 @@ export default function InstantImages(props) {
 			} catch (error) {
 				// Catch all other errors.
 				setShowAPILightbox(newProvider); // Show API Lightbox.
-				body.classList.add("overflow-hidden");
+				body.classList.add('overflow-hidden');
 				setAPIError(true);
 				return;
 			}
@@ -450,9 +424,7 @@ export default function InstantImages(props) {
 		}
 
 		// API endpoint URL.
-		const api_url =
-			instant_img_localize.root +
-			`instant-images-extended/suggestions/?term=${term}`;
+		const api_url = instant_img_localize.root + `instant-images-extended/suggestions/?term=${term}`;
 
 		// Get suggestions.
 		await axios
@@ -474,10 +446,10 @@ export default function InstantImages(props) {
 		imagesLoaded(photosRef.current, function () {
 			if (!isBlockEditor) {
 				msnryRef.current = new Masonry(photosRef.current, {
-					itemSelector: ".photo",
+					itemSelector: '.photo',
 				});
-				photosRef.current.querySelectorAll(".photo").forEach((el) => {
-					el.classList.add("in-view");
+				photosRef.current.querySelectorAll('.photo').forEach((el) => {
+					el.classList.add('in-view');
 				});
 			}
 			setTimeout(() => {
@@ -499,7 +471,7 @@ export default function InstantImages(props) {
 			photosRef?.current.scroll({
 				top: 0,
 				left: 0,
-				behavior: "smooth",
+				behavior: 'smooth',
 			});
 		}
 	}
@@ -521,13 +493,11 @@ export default function InstantImages(props) {
 	 */
 	function escFunction(e) {
 		const { key } = e;
-		if (key === "Escape") {
-			const editing = photosRef.current.querySelectorAll(
-				".edit-screen.editing"
-			);
+		if (key === 'Escape') {
+			const editing = photosRef.current.querySelectorAll('.edit-screen.editing');
 			if (editing) {
 				[...editing].forEach((element) => {
-					element?.classList.remove("editing");
+					element?.classList.remove('editing');
 				});
 			}
 		}
@@ -575,16 +545,16 @@ export default function InstantImages(props) {
 	// Initial page load.
 	useEffect(() => {
 		setLoading(false);
-		wrapper.classList.add("loaded");
+		wrapper.classList.add('loaded');
 
 		// Block editor, get initial set of photos.
 		if (isBlockEditor) {
 			getPhotos();
 		}
 		// Add global escape listener.
-		document.addEventListener("keydown", escFunction, false);
+		document.addEventListener('keydown', escFunction, false);
 		return () => {
-			document.removeEventListener("keydown", escFunction, false);
+			document.removeEventListener('keydown', escFunction, false);
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -616,46 +586,22 @@ export default function InstantImages(props) {
 				)}
 				<RestAPIError />
 				<div className="control-nav">
-					<div
-						className={classNames(
-							"control-nav--filters-wrap",
-							apiError || search?.active ? "inactive" : null
-						)}
-					>
+					<div className={classNames('control-nav--filters-wrap', apiError || search?.active ? 'inactive' : null)}>
 						{filterOptions && Object.entries(filterOptions)?.length ? (
 							<div className="control-nav--filters">
 								{Object.entries(filterOptions).map(([key, filter], index) => (
-									<Filter
-										key={`${activeProvider}-${index}-${key}`}
-										data={filter}
-										filterKey={key}
-										handler={filterPhotos}
-									/>
+									<Filter key={`${activeProvider}-${index}-${key}`} data={filter} filterKey={key} handler={filterPhotos} />
 								))}
 							</div>
 						) : null}
 					</div>
 					<SearchForm ref={searchInputRef} />
 				</div>
-				<div id="photo-listing" className={loading ? "loading" : null}>
+				<div id="photo-listing" className={loading ? 'loading' : null}>
 					<SearchHeader />
-					{wpBlock ? (
-						<ResultsWPBlock
-							ref={photosRef}
-							data={results}
-							done={done}
-							loadMorePhotos={loadMorePhotos}
-						/>
-					) : (
-						<Results ref={photosRef} data={results} />
-					)}
+					{wpBlock ? <ResultsWPBlock ref={photosRef} data={results} done={done} loadMorePhotos={loadMorePhotos} /> : <Results ref={photosRef} data={results} />}
 					<NoResults total={search?.results} is_search={search?.active} />
-					<LoadMore
-						ref={loadMoreRef}
-						loadMorePhotos={loadMorePhotos}
-						loading={loadingMore}
-						done={done}
-					/>
+					<LoadMore ref={loadMoreRef} loadMorePhotos={loadMorePhotos} loading={loadingMore} done={done} />
 					<APILightbox provider={showAPILightbox} callback={closeAPILightbox} />
 					<ErrorLightbox />
 					<Tooltip />

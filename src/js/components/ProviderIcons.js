@@ -1,4 +1,4 @@
-import { API } from "../constants/API";
+import { API } from '../constants/API';
 
 /**
  * Return the provider icon.
@@ -10,9 +10,29 @@ export function getProviderIcon(provider) {
 	if (!provider) {
 		return null;
 	}
-	return API[provider.toLowerCase()].icon
-		? API[provider.toLowerCase()].icon()
-		: null;
+	return API[provider.toLowerCase()].icon ? API[provider.toLowerCase()].icon() : null;
+}
+
+/**
+ * Giphy Icon.
+ */
+export function GiphyIcon() {
+	return (
+		<svg height="35" width="32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 35">
+			<g fill="none" fillRule="evenodd">
+				<path d="M4 4h20v27H4z" fill="#000" />
+				<g>
+					<path d="M0 3h4v29H0z" fill="#04ff8e" />
+					<path d="M24 11h4v21h-4z" fill="#8e2eff" />
+					<path d="M0 31h28v4H0z" fill="#00c5ff" />
+					<path d="M0 0h16v4H0z" fill="#fff152" />
+					<path d="M24 8V4h-4V0h-4v12h12V8" fill="#ff5b5b" />
+					<path d="M24 16v-4h4" fill="#551c99" />
+				</g>
+				<path d="M16 0v4h-4" fill="#999131" />
+			</g>
+		</svg>
+	);
 }
 
 /**
@@ -20,12 +40,7 @@ export function getProviderIcon(provider) {
  */
 export function UnsplashIcon() {
 	return (
-		<svg
-			width="32"
-			height="32"
-			viewBox="0 0 32 32"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 			<path d="M10 9V0H22V9H10ZM22 14H32V32H0V14H10V23H22V14Z" fill="black" />
 		</svg>
 	);
@@ -36,12 +51,7 @@ export function UnsplashIcon() {
  */
 export function PixabayIcon() {
 	return (
-		<svg
-			width="32"
-			height="32"
-			viewBox="0 0 32 32"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 			<g clipPath="url(#clip0_307_143)">
 				<path d="M0 0V32H32V0H0Z" fill="#48A947" />
 				<path
@@ -71,36 +81,19 @@ export function PixabayIcon() {
  */
 export function OpenverseIcon() {
 	return (
-		<svg
-			width="32"
-			height="32"
-			viewBox="0 0 32 32"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M25.8578 14.32C29.6708 14.32 32.7618 11.1144 32.7618 7.16C32.7618 3.20564 29.6708 0 25.8578 0C22.0448 0 18.9539 3.20564 18.9539 7.16C18.9539 11.1144 22.0448 14.32 25.8578 14.32Z"
 				fill="#000000"
 			/>
-			<path
-				d="M0.761841 7.16C0.761841 11.1 3.84742 14.32 7.66584 14.32V0C3.84742 0 0.761841 3.2 0.761841 7.16Z"
-				fill="#000000"
-			/>
-			<path
-				d="M9.85791 7.16C9.85791 11.1 12.9435 14.32 16.7619 14.32V0C12.9628 0 9.85791 3.2 9.85791 7.16Z"
-				fill="#000000"
-			/>
+			<path d="M0.761841 7.16C0.761841 11.1 3.84742 14.32 7.66584 14.32V0C3.84742 0 0.761841 3.2 0.761841 7.16Z" fill="#000000" />
+			<path d="M9.85791 7.16C9.85791 11.1 12.9435 14.32 16.7619 14.32V0C12.9628 0 9.85791 3.2 9.85791 7.16Z" fill="#000000" />
 			<path
 				d="M25.8578 31.9399C29.6708 31.9399 32.7618 28.7343 32.7618 24.78C32.7618 20.8256 29.6708 17.62 25.8578 17.62C22.0448 17.62 18.9539 20.8256 18.9539 24.78C18.9539 28.7343 22.0448 31.9399 25.8578 31.9399Z"
 				fill="#000000"
 			/>
-			<path
-				d="M9.85791 24.7801C9.85791 28.72 12.9435 31.9401 16.7619 31.9401V17.64C12.9628 17.64 9.85791 20.84 9.85791 24.7801Z"
-				fill="#000000"
-			/>
-			<path
-				d="M0.761841 24.84C0.761841 28.8 3.84742 32 7.66584 32V17.7C3.84742 17.7 0.761841 20.9 0.761841 24.84Z"
-				fill="#000000"
-			/>
+			<path d="M9.85791 24.7801C9.85791 28.72 12.9435 31.9401 16.7619 31.9401V17.64C12.9628 17.64 9.85791 20.84 9.85791 24.7801Z" fill="#000000" />
+			<path d="M0.761841 24.84C0.761841 28.8 3.84742 32 7.66584 32V17.7C3.84742 17.7 0.761841 20.9 0.761841 24.84Z" fill="#000000" />
 		</svg>
 	);
 }
@@ -110,20 +103,9 @@ export function OpenverseIcon() {
  */
 export function PexelsIcon() {
 	return (
-		<svg
-			width="32px"
-			height="32px"
-			viewBox="0 0 32 32"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path
-				d="M2 0h28a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"
-				fill="#05A081"
-			></path>
-			<path
-				d="M13 21h3.863v-3.752h1.167a3.124 3.124 0 1 0 0-6.248H13v10zm5.863 2H11V9h7.03a5.124 5.124 0 0 1 .833 10.18V23z"
-				fill="#fff"
-			></path>
+		<svg width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+			<path d="M2 0h28a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z" fill="#05A081"></path>
+			<path d="M13 21h3.863v-3.752h1.167a3.124 3.124 0 1 0 0-6.248H13v10zm5.863 2H11V9h7.03a5.124 5.124 0 0 1 .833 10.18V23z" fill="#fff"></path>
 		</svg>
 	);
 }

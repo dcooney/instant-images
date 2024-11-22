@@ -92,8 +92,8 @@ body.settings_page_instant-images-settings {
 			display: block;
 		}
 		&::before {
-			font-family: "FontAwesome";
-			content: "\f06a";
+			font-family: 'FontAwesome';
+			content: '\f06a';
 			display: block;
 			left: 18px;
 			top: 18px;
@@ -108,7 +108,7 @@ body.settings_page_instant-images-settings {
 		display: block;
 		overflow: hidden;
 		min-height: 400px;
-		background: url("../img/ajax-loader-lg.gif") no-repeat center center;
+		background: url('../img/ajax-loader-lg.gif') no-repeat center center;
 		&.loaded {
 			background: none;
 		}
@@ -134,7 +134,7 @@ body.settings_page_instant-images-settings {
 		height: 28px;
 		display: none;
 		float: left;
-		background: #fff url("../img/ajax-loader.gif") no-repeat center center;
+		background: #fff url('../img/ajax-loader.gif') no-repeat center center;
 	}
 }
 
@@ -176,9 +176,6 @@ body.settings_page_instant-images-settings {
 .instant-img-container textarea {
 	box-shadow: none;
 }
-.instant-img-container .save-settings {
-	padding-top: 5px;
-}
 .instant-img-container label {
 	padding: 5px 0 7px;
 }
@@ -186,8 +183,8 @@ body.settings_page_instant-images-settings {
 #unsplash-form-options p.desc {
 	display: none;
 }
-.instant-img-container input[type="text"],
-.instant-img-container input[type="number"],
+.instant-img-container input[type='text'],
+.instant-img-container input[type='number'],
 .instant-img-container textarea {
 	padding: 10px;
 	line-height: 1;
@@ -196,8 +193,8 @@ body.settings_page_instant-images-settings {
 	border-radius: $radius_md;
 	height: auto;
 }
-.instant-img-container input[type="text"]:focus,
-.instant-img-container input[type="number"]:focus,
+.instant-img-container input[type='text']:focus,
+.instant-img-container input[type='number']:focus,
 .instant-img-container textarea:focus {
 	border-color: $text_light;
 	box-shadow: 0 0 3px #ccc;

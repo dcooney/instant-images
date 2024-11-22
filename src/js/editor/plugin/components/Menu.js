@@ -1,5 +1,5 @@
-import { PluginSidebarMoreMenuItem } from "@wordpress/edit-post";
-import Icon from "../../../components/Icon";
+import { PluginSidebarMoreMenuItem } from '@wordpress/editor';
+import Icon from '../../../components/Icon';
 
 /**
  * The plugin menu as a component.
@@ -8,11 +8,7 @@ import Icon from "../../../components/Icon";
  */
 export default function Menu() {
 	return (
-		<PluginSidebarMoreMenuItem
-			icon={<Icon borderless />}
-			target="instant-images-sidebar"
-			className="instant-images-menu-item"
-		>
+		<PluginSidebarMoreMenuItem icon={<Icon borderless />} target="instant-images-sidebar" className="instant-images-menu-item">
 			Instant Images
 		</PluginSidebarMoreMenuItem>
 	);

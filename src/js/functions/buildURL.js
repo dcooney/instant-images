@@ -1,6 +1,6 @@
-import { API } from "../constants/API";
-import getQueryParams from "./getQueryParams";
-import { openverseParams } from "./providers/openverse";
+import { API } from '../constants/API';
+import getQueryParams from './getQueryParams';
+import { openverseParams } from './providers/openverse';
 
 /**
  * Build the API query parameters.
@@ -12,22 +12,22 @@ import { openverseParams } from "./providers/openverse";
 export default function buildURL(type, params) {
 	if (!type) {
 		// Bail early if API query type is missing.
-		return "";
+		return '';
 	}
 	// Get the current provider.
-	const { provider = "unsplash" } = params;
+	const { provider = 'unsplash' } = params;
 
 	// Provider doesn't need to be sent.
 	delete params.provider;
 
 	// Set Openverse params.
-	params = provider === "openverse" ? openverseParams(type, params) : params;
+	params = provider === 'openverse' ? openverseParams(type, params) : params;
 
 	// Build the API URL.
 	const url = new URL(getProxyURL(provider));
 
 	// Add `type` to params.
-	url.searchParams.append("type", type);
+	url.searchParams.append('type', type);
 
 	// Append query params.
 	Object.keys(params).forEach((key) => {
@@ -35,7 +35,7 @@ export default function buildURL(type, params) {
 	});
 
 	// Add `version` to params.
-	url.searchParams.append("version", instant_img_localize.version);
+	url.searchParams.append('version', instant_img_localize.version);
 
 	return url?.href;
 }
@@ -47,7 +47,7 @@ export default function buildURL(type, params) {
  * @return {string}         The proxy URL.
  */
 export function getProxyURL(provider) {
-	const { proxy = "https://proxy.getinstantimages.com/api/" } = API;
+	const { proxy = 'https://proxy.getinstantimages.com/api/' } = API;
 	return `${proxy}${provider}`;
 }
 
@@ -59,7 +59,6 @@ export function getProxyURL(provider) {
  */
 export function buildTestURL(provider) {
 	const options = {
-		per_page: 5,
 		page: 1,
 	};
 
@@ -70,5 +69,5 @@ export function buildTestURL(provider) {
 		...options,
 	};
 
-	return buildURL("photos", params);
+	return buildURL('photos', params);
 }

@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "@wordpress/element";
-import cn from "classnames";
-import { usePluginContext } from "../common/pluginProvider";
-import { useArrowControls } from "../hooks/useArrowControls";
+import { useEffect, useRef, useState } from '@wordpress/element';
+import cn from 'classnames';
+import { usePluginContext } from '../common/pluginProvider';
+import { useArrowControls } from '../hooks/useArrowControls';
 
 /**
  * Render the Filter component.
@@ -24,7 +24,7 @@ export default function Filter(props) {
 	const button = useRef();
 	const menu = useRef();
 	const id = `${provider}-${filterKey}`;
-	const isColor = filterKey === "colors" || filterKey === "color";
+	const isColor = filterKey === 'colors' || filterKey === 'color';
 
 	// Use up/down arrow keys to navigate dropdown.
 	useArrowControls(expanded, dropdown);
@@ -45,10 +45,10 @@ export default function Filter(props) {
 
 		if (expanded) {
 			setExpanded(false);
-			document.removeEventListener("click", closeMenuOutside);
+			document.removeEventListener('click', closeMenuOutside);
 		} else {
 			setExpanded(true);
-			document.addEventListener("click", closeMenuOutside);
+			document.addEventListener('click', closeMenuOutside);
 		}
 	}
 
@@ -58,12 +58,9 @@ export default function Filter(props) {
 	 * @param {Event} event The click event.
 	 */
 	function closeMenuOutside(event) {
-		if (
-			!menu?.current?.contains(event.target) &&
-			!button?.current?.contains(event.target)
-		) {
+		if (!menu?.current?.contains(event.target) && !button?.current?.contains(event.target)) {
 			setExpanded(false);
-			document.removeEventListener("click", closeMenuOutside);
+			document.removeEventListener('click', closeMenuOutside);
 		}
 	}
 
@@ -84,7 +81,7 @@ export default function Filter(props) {
 	 * @param {Event} event The click event.
 	 */
 	function escClick(event) {
-		if (event.key === "Escape") {
+		if (event.key === 'Escape') {
 			setExpanded(false);
 		}
 	}
@@ -114,11 +111,11 @@ export default function Filter(props) {
 	 * @return {string}      The color.
 	 */
 	function convertColor(color) {
-		if (color === "lilac") {
-			color = "DarkViolet";
+		if (color === 'lilac') {
+			color = 'DarkViolet';
 		}
-		if (color === "grayscale" || color === "black_and_white") {
-			color = "LightGray";
+		if (color === 'grayscale' || color === 'black_and_white') {
+			color = 'LightGray';
 		}
 		return color;
 	}
@@ -130,34 +127,24 @@ export default function Filter(props) {
 		// });
 
 		// Check for focus outside.
-		document.addEventListener("keyup", focusOutside);
-		document.addEventListener("keydown", escClick);
+		document.addEventListener('keyup', focusOutside);
+		document.addEventListener('keydown', escClick);
 		return () => {
-			document.removeEventListener("keyup", focusOutside);
-			document.removeEventListener("keydown", escClick);
+			document.removeEventListener('keyup', focusOutside);
+			document.removeEventListener('keydown', escClick);
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<div className="filter-dropdown" id={id} ref={dropdown}>
-			<button
-				onClick={toggleMenu}
-				className="filter-dropdown--button"
-				aria-expanded={expanded ? "true" : "false"}
-				ref={button}
-			>
+			<button onClick={toggleMenu} className="filter-dropdown--button" aria-expanded={expanded ? 'true' : 'false'} ref={button}>
 				<span className="filter-dropdown--button-label">{data?.label}</span>
 				<span className="filter-dropdown--button-selected">
-					{selected.replace(/_/g, " ")}
+					{selected.replace(/_/g, ' ')}
 					<i className="fa fa-caret-down" aria-hidden="true"></i>
 				</span>
 			</button>
-			<div
-				className={cn("filter-dropdown--menu", expanded ? "expanded" : null)}
-				data-key={filterKey}
-				aria-hidden={expanded ? "false" : "true"}
-				ref={menu}
-			>
+			<div className={cn('filter-dropdown--menu', expanded ? 'expanded' : null)} data-key={filterKey} aria-hidden={expanded ? 'false' : 'true'} ref={menu}>
 				{data?.filters?.length &&
 					data.filters.map((filter, key) => {
 						const { label, value } = filter;
@@ -165,19 +152,11 @@ export default function Filter(props) {
 							<button
 								key={key}
 								disabled={selected === value}
-								className={cn(
-									"filter-dropdown--item",
-									selected === value ? "selected" : null
-								)}
+								className={cn('filter-dropdown--item', selected === value ? 'selected' : null)}
 								onClick={() => click(filterKey, value)}
 							>
 								{label}
-								{value !== "all" && value !== "transparent" && isColor ? (
-									<span
-										className="_color"
-										style={{ color: convertColor(value) }}
-									></span>
-								) : null}
+								{value !== 'all' && value !== 'transparent' && isColor ? <span className="_color" style={{ color: convertColor(value) }}></span> : null}
 							</button>
 						);
 					})}

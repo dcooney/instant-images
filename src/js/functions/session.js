@@ -1,5 +1,5 @@
-import { API } from "../constants/API";
-import { md5Hash } from "./helpers";
+import { API } from '../constants/API';
+import { md5Hash } from './helpers';
 
 /**
  * Get results from session storage by URL.
@@ -9,7 +9,7 @@ import { md5Hash } from "./helpers";
  */
 export function getSession(url) {
 	if (!url || API.testmode) {
-		return false; // Exit if no URL or test mode is enabled.
+		return false; // Exit if no URL or test m ode is enabled.
 	}
 
 	const session = sessionStorage.getItem(md5Hash(url));
@@ -45,8 +45,9 @@ export function saveSession(url, results) {
 	if (!url || !results || results?.error) {
 		return false;
 	}
-	// Set expiration to 1 hour.
-	results.expires = Date.now() + 3600000;
+
+	// Set expiration to 2 hours.
+	results.expires = Date.now() + 7200000;
 
 	// Save session data.
 	sessionStorage.setItem(md5Hash(url), JSON.stringify(results));

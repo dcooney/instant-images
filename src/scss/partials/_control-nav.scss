@@ -8,12 +8,11 @@
 			justify-content: center;
 		}
 		width: 100%;
-		margin: 0 0 20px;
+		margin: 0;
 		padding: 20px 0;
 		list-style: none;
-		border-bottom: 1px solid $border;
 		&::after {
-			content: "";
+			content: '';
 			display: table;
 			clear: both;
 		}
@@ -48,8 +47,8 @@
 			&::before {
 				display: block;
 				display: none;
-				content: "\f0b0";
-				font-family: "FontAwesome";
+				content: '\f0b0';
+				font-family: 'FontAwesome';
 				color: $grey;
 				font-size: 24px;
 				margin-right: 10px;
@@ -97,6 +96,7 @@
 		// Search
 		&--search {
 			display: flex;
+			align-items: center;
 			width: 30%;
 			max-width: 350px;
 			@media screen and (min-width: $large) {
@@ -168,7 +168,7 @@
 					left: 100%;
 					top: 50%;
 					border: solid transparent;
-					content: "";
+					content: '';
 					height: 0;
 					width: 0;
 					position: absolute;
@@ -210,7 +210,7 @@
 				display: block;
 				width: 100%;
 				&:hover {
-					button[type="submit"] {
+					button[type='submit'] {
 						opacity: 1;
 					}
 				}
@@ -235,17 +235,17 @@
 					@include inputFocus;
 				}
 				&.searching {
-					background-image: url("../img/ajax-loader.gif");
+					background-image: url('../img/ajax-loader.gif');
 				}
 			}
 			// Remove X button in search.
-			input[type="text"]::-webkit-search-decoration,
-			input[type="text"]::-webkit-search-cancel-button,
-			input[type="text"]::-webkit-search-results-button,
-			input[type="text"]::-webkit-search-results-decoration {
+			input[type='text']::-webkit-search-decoration,
+			input[type='text']::-webkit-search-cancel-button,
+			input[type='text']::-webkit-search-results-button,
+			input[type='text']::-webkit-search-results-decoration {
 				-webkit-appearance: none;
 			}
-			button[type="submit"] {
+			button[type='submit'] {
 				position: absolute;
 				left: 1px;
 				top: 0;
@@ -271,7 +271,7 @@
 					cursor: not-allowed;
 				}
 			}
-			input[type="text"]::placeholder {
+			input[type='text']::placeholder {
 				color: $text_light;
 				font-weight: 400;
 				font-style: normal;

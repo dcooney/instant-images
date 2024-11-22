@@ -50,7 +50,7 @@ span.instant-images-tagline {
 		height: auto;
 		max-width: none;
 		display: block;
-		background: url("../img/instant-images-icon.svg") no-repeat center 15px;
+		background: url('../img/instant-images-icon.svg') no-repeat center 15px;
 		background-size: 50px 50px;
 		padding: 80px 5px 0;
 		margin: 0 0 15px;
@@ -59,14 +59,17 @@ span.instant-images-tagline {
 		}
 		+ p {
 			margin: 0;
+			display: flex;
+			width: 100%;
+			gap: 10px;
+			justify-content: center;
 		}
 	}
 }
 
 // Upload header - Import/Upload page wp-admin/upload.php?page=instant-images
 .instant-images-header-wrap {
-	background: $lighter_grey url("../img/instant-images-icon.svg") no-repeat 25px
-		20px;
+	background: $lighter_grey url('../img/instant-images-icon.svg') no-repeat 25px 20px;
 	background-size: 48px 48px;
 	padding: 20px 25px 20px 83px;
 	min-height: 88px;

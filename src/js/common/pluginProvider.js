@@ -1,4 +1,4 @@
-import { createContext, useContext } from "@wordpress/element";
+import { createContext, useContext } from '@wordpress/element';
 
 // Create Context object.
 const PluginContext = createContext();
@@ -7,9 +7,7 @@ const PluginContext = createContext();
 export function PluginProvider(props) {
 	const { value, children } = props;
 
-	return (
-		<PluginContext.Provider value={value}>{children}</PluginContext.Provider>
-	);
+	return <PluginContext.Provider value={value}>{children}</PluginContext.Provider>;
 }
 
 // Export useContext Hook.

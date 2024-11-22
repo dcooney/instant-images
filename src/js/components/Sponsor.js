@@ -1,4 +1,4 @@
-import { useRef, Fragment } from "@wordpress/element";
+import { useRef, Fragment } from '@wordpress/element';
 
 /**
  * Render the Sponsor component.
@@ -9,10 +9,10 @@ import { useRef, Fragment } from "@wordpress/element";
 export default function Sponsor(props) {
 	const { result } = props;
 	const { data = null } = result;
-	const url = data?.url || "";
-	const title = data?.title || "";
-	const desc = data?.description || "";
-	const avatar = data?.avatar || "";
+	const url = data?.url || '';
+	const title = data?.title || '';
+	const desc = data?.description || '';
+	const avatar = data?.avatar || '';
 
 	const { image = null } = data;
 	const { src = null, alt = null } = image;
@@ -24,24 +24,13 @@ export default function Sponsor(props) {
 		<Fragment>
 			{image && url ? (
 				// eslint-disable-next-line
-				<article
-					className="photo feature"
-					title={desc}
-					ref={photo}
-					onClick={() => link.current.click()}
-				>
+				<article className="photo feature" title={desc} ref={photo} onClick={() => link.current.click()}>
 					<div className="photo--wrap">
 						<span className="flag" title={instant_img_localize.advertisement}>
 							{instant_img_localize.ad}
 						</span>
 						<div className="img-wrap">
-							<a
-								className="loaded"
-								href={url}
-								target="_blank"
-								ref={link}
-								rel="noreferrer"
-							>
+							<a className="loaded" href={url} target="_blank" ref={link} rel="noreferrer">
 								<img src={src} alt={alt} />
 							</a>
 						</div>

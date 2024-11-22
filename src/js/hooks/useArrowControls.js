@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "@wordpress/element";
+import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * Detect up and down arrow presses.
@@ -18,9 +18,7 @@ export function useArrowControls(active, ref) {
 		const { key } = e;
 
 		if (focusedRef?.current && ref?.current) {
-			const focusable = ref?.current.querySelectorAll(
-				"a[href]:not([disabled]), button:not([disabled]), input"
-			);
+			const focusable = ref?.current.querySelectorAll('a[href]:not([disabled]), button:not([disabled]), input');
 
 			if (!focusable?.length) {
 				// Exit if no focusable elements.
@@ -34,7 +32,7 @@ export function useArrowControls(active, ref) {
 			const activeIndex = [...focusable].indexOf(active);
 
 			// Up arrow.
-			if (key === "ArrowUp") {
+			if (key === 'ArrowUp') {
 				e.preventDefault();
 				if (activeIndex === 0) {
 					last.focus({
@@ -47,7 +45,7 @@ export function useArrowControls(active, ref) {
 				}
 			}
 			// Down Arrow
-			if (key === "ArrowDown") {
+			if (key === 'ArrowDown') {
 				e.preventDefault();
 				if (activeIndex === focusable.length - 1 || activeIndex === -1) {
 					first.focus({
@@ -67,10 +65,10 @@ export function useArrowControls(active, ref) {
 	}, [active]);
 
 	useEffect(() => {
-		document.addEventListener("keydown", arrowHandler, false);
+		document.addEventListener('keydown', arrowHandler, false);
 		return () => {
 			// Dispose of events.
-			document.removeEventListener("keydown", arrowHandler, false);
+			document.removeEventListener('keydown', arrowHandler, false);
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 }

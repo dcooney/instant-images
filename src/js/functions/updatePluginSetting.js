@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 /**
  * Update plugin settings by specific key/value pair.
@@ -7,7 +7,7 @@ import axios from "axios";
  * @param {string} value   The value to save.
  */
 export default function updatePluginSetting(setting, value) {
-	const api = instant_img_localize?.root + "instant-images/settings/"; // eslint-disable-line no-undef
+	const api = instant_img_localize?.root + 'instant-images/settings/'; // eslint-disable-line no-undef
 
 	const params = {
 		setting,
@@ -16,8 +16,8 @@ export default function updatePluginSetting(setting, value) {
 
 	const config = {
 		headers: {
-			"X-WP-Nonce": instant_img_localize.nonce, // eslint-disable-line no-undef
-			"Content-Type": "application/json",
+			'X-WP-Nonce': instant_img_localize.nonce, // eslint-disable-line no-undef
+			'Content-Type': 'application/json',
 		},
 	};
 

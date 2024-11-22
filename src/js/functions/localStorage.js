@@ -1,5 +1,5 @@
-const searchName = "instant-images-recent-searches";
-const settingsName = "instant-images-settings";
+const searchName = 'instant-images-recent-searches';
+const settingsName = 'instant-images-settings';
 const most = 10;
 
 /**
@@ -8,6 +8,10 @@ const most = 10;
  * @param {string} term The search term.
  */
 export function saveSearchHistory(term) {
+	if (term && term.toLowerCase().includes('id:')) {
+		return; // Don't index string with `id:`
+	}
+
 	const recent = getSearchHistory();
 	if (!recent) {
 		localStorage.setItem(searchName, JSON.stringify([term]));

@@ -1,48 +1,49 @@
-import {
-	UnsplashIcon,
-	PexelsIcon,
-	PixabayIcon,
-	OpenverseIcon,
-} from "../components/ProviderIcons";
+import { UnsplashIcon, PexelsIcon, PixabayIcon, OpenverseIcon, GiphyIcon } from '../components/ProviderIcons';
 
 export const API = {
-	proxy: PROXY_URL || "https://proxy.getinstantimages.com/api/", // eslint-disable-line
+	proxy: PROXY_URL || 'https://proxy.getinstantimages.com/api/', // eslint-disable-line
 	testmode: false,
 	defaults: {
-		provider: "unsplash",
-		order: "latest",
-		per_page: "20",
-		arr_key: "results",
+		provider: 'unsplash',
+		order: 'latest',
+		arr_key: 'results',
 	},
-	providers: ["Unsplash", "Openverse", "Pixabay", "Pexels"],
+	providers: ['Unsplash', 'Openverse', 'Pixabay', 'Pexels', 'Giphy'],
 	unsplash: {
-		name: "Unsplash",
+		name: 'Unsplash',
 		requires_key: true,
 		new: false,
-		api_var: "client_id",
-		collections_api: "https://api.unsplash.com/collections/",
+		api_var: 'client_id',
+		collections_api: 'https://api.unsplash.com/collections/',
 		icon: UnsplashIcon,
 	},
 	pixabay: {
-		name: "Pixabay",
+		name: 'Pixabay',
 		requires_key: true,
 		new: false,
-		api_var: "key",
+		api_var: 'key',
 		icon: PixabayIcon,
 	},
 	pexels: {
-		name: "Pexels",
+		name: 'Pexels',
 		requires_key: true,
 		new: false,
-		api_var: "key",
+		api_var: 'key',
 		icon: PexelsIcon,
 	},
 	openverse: {
-		name: "Openverse",
+		name: 'Openverse',
 		requires_key: false,
 		new: false,
-		api_var: "key",
-		key: "",
+		api_var: 'key',
+		key: '',
 		icon: OpenverseIcon,
+	},
+	giphy: {
+		name: 'Giphy',
+		requires_key: true,
+		new: true,
+		api_var: 'key',
+		icon: GiphyIcon,
 	},
 };

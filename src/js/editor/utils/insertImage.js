@@ -1,5 +1,5 @@
-import { createBlock } from "@wordpress/blocks";
-import { dispatch } from "@wordpress/data";
+import { createBlock } from '@wordpress/blocks';
+import { dispatch } from '@wordpress/data';
 
 /**
  * Insert an image block into the block editor.
@@ -8,14 +8,13 @@ import { dispatch } from "@wordpress/data";
  * @param {string} clientId   The block ID.
  */
 export default function insertImage(attachment, clientId) {
-	const { id = null, url = null, caption = "", alt = "" } = attachment;
-
+	const { id = null, url = null, caption = '', alt = '' } = attachment;
 	if (!url || !id) {
 		return;
 	}
 
 	// Create block.
-	const block = createBlock("core/image", {
+	const block = createBlock('core/image', {
 		id,
 		url,
 		caption,
@@ -24,9 +23,9 @@ export default function insertImage(attachment, clientId) {
 
 	if (clientId) {
 		// Replace the Instant Images block.
-		dispatch("core/block-editor").replaceBlock(clientId, block);
+		dispatch('core/block-editor').replaceBlock(clientId, block);
 	} else {
 		// Insert Image block.
-		dispatch("core/block-editor").insertBlocks(block);
+		dispatch('core/block-editor').insertBlocks(block);
 	}
 }

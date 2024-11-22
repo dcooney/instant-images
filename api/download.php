@@ -30,7 +30,7 @@ add_action(
  * Resize Image and run through media uploader process.
  *
  * @param WP_REST_Request $request Rest request object.
- * @return $response
+ * @return object                  JSON response.
  * @author ConnektMedia <support@connekthq.com>
  * @package InstantImages
  */

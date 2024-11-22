@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 6.2.3
+ * Version: 7.0.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '6.2.3' );
-define( 'INSTANT_IMAGES_RELEASE', 'November 8, 2024' );
+define( 'INSTANT_IMAGES_VERSION', '7.0.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'November 22, 2024' );
 define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
@@ -134,6 +134,13 @@ class InstantImages {
 				'url'          => 'https://www.pexels.com/join-consumer/',
 				'constant'     => 'INSTANT_IMAGES_PEXELS_KEY',
 			],
+			[
+				'name'         => 'Giphy',
+				'slug'         => 'giphy',
+				'requires_key' => true,
+				'url'          => 'https://developers.giphy.com/',
+				'constant'     => 'INSTANT_IMAGES_GIPHY_KEY',
+			],
 		];
 		return $providers;
 	}
@@ -153,6 +160,12 @@ class InstantImages {
 			'https://pd.w.org',
 			'https://live.staticflickr.com',
 			'https://upload.wikimedia.org',
+			'https://media0.giphy.com',
+			'https://media1.giphy.com',
+			'https://media2.giphy.com',
+			'https://media3.giphy.com',
+			'https://media4.giphy.com',
+			'https://media5.giphy.com',
 		];
 		return $urls;
 	}
@@ -179,6 +192,8 @@ class InstantImages {
 		$pixabay_api  = empty( $pixabay_api ) ? '' : $pixabay_api; // If empty, set to default key.
 		$pexels_api   = isset( $api_options['pexels_api'] ) ? $api_options['pexels_api'] : '';
 		$pexels_api   = empty( $pexels_api ) ? '' : $pexels_api; // If empty, set to default key.
+		$giphy_api    = isset( $api_options['giphy_api'] ) ? $api_options['giphy_api'] : '';
+		$giphy_api    = empty( $giphy_api ) ? '' : $giphy_api; // If empty, set to default key.
 
 		return (object) [
 			'max_width'        => $max_width,
@@ -188,17 +203,19 @@ class InstantImages {
 			'unsplash_api'     => $unsplash_api,
 			'pixabay_api'      => $pixabay_api,
 			'pexels_api'       => $pexels_api,
+			'giphy_api'        => $giphy_api,
 		];
 	}
 
 	/**
-	 * Enqueue Gutenberg Block sidebar plugin
+	 * Enqueue Block Editor sidebar plugin.
 	 *
 	 * @author ConnektMedia <support@connekthq.com>
 	 * @since 3.0
 	 */
 	public function enqueue_block_editor() {
-		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( [ 'widgets', 'site-editor' ] ) ) {
+		$excluded_screens = apply_filters( 'instant_images_excluded_sidebar_screens', [ 'widgets', 'site-editor', 'woocommerce_page_wc-admin' ] );
+		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( $excluded_screens ) ) {
 			// Plugin sidebar.
 			$sidebar_asset_file = require INSTANT_IMAGES_PATH . 'build/plugin-sidebar/index.asset.php'; // Get webpack asset file.
 
@@ -294,6 +311,13 @@ class InstantImages {
 			$pexels_api = $settings->pexels_api;
 		}
 
+		// Giphy API.
+		if ( defined( 'INSTANT_IMAGES_GIPHY_KEY' ) ) {
+			$giphy_api = INSTANT_IMAGES_GIPHY_KEY;
+		} else {
+			$giphy_api = $settings->giphy_api;
+		}
+
 		wp_localize_script(
 			$script,
 			'instant_img_localize',
@@ -325,6 +349,10 @@ class InstantImages {
 				'pexels_url'              => 'https://pexels.com',
 				'pexels_api_url'          => 'https://www.pexels.com/join-consumer/',
 				'pexels_api_desc'         => __( 'Access to images from Pexels requires a valid API key. API keys are available for free, just sign up for an account at Pexels, enter your API key below and you\'re good to go!', 'instant-images' ),
+				'giphy_app_id'            => $giphy_api,
+				'giphy_url'               => 'https://giphy.com',
+				'giphy_api_url'           => 'https://developers.giphy.com/',
+				'giphy_api_desc'          => __( 'Access to gifs from Giphy requires a valid API key. API keys are available for free, just sign up for an account at Giphy and choose the "Select API" option when creating the key', 'instant-images' ),
 				'openverse_url'           => 'https://openverse.org',
 				'openverse_mature'        => apply_filters( 'instant_images_openverse_mature', false ),
 				'error_upload'            => __( 'There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again', 'instant-images' ),
@@ -369,7 +397,7 @@ class InstantImages {
 				'enter_api_key'           => __( 'Enter API Key', 'instant-images' ),
 				'api_key_invalid'         => __( 'The API Key is Invalid', 'instant-images' ),
 				'api_success_msg'         => __( 'API key has been successfully validated!', 'instant-images' ),
-				'api_invalid_msg'         => __( 'The API key is not valid for this provider - enter a new API Key and try again.', 'instant-images' ),
+				'api_invalid_msg'         => __( 'Invalid API key - enter a new API Key and try again.', 'instant-images' ),
 				'api_invalid_403_msg'     => __( 'Missing API parameter - we are unable to complete the request at this time.', 'instant-images' ),
 				'api_invalid_404_msg'     => __( 'The Instant Images Proxy is not configured for the requested provider.', 'instant-images' ),
 				'api_invalid_500_msg'     => __( 'An internal server error has occured - please try again.', 'instant-images' ),
@@ -470,8 +498,8 @@ class InstantImages {
 	 */
 	public static function instant_images_get_tagline() {
 		// translators: Instant Images tagline.
-		$instant_images_tagline = __( 'One-click photo uploads from %1$s, %2$s, %3$s and %4$s.', 'instant-images' ); // phpcs:ignore
-		return '<span class="instant-images-tagline">' . sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">Unsplash</a>', '<a href="https://wordpress.org/openverse" target="_blank">Openverse</a>', '<a href="https://pixabay.com/" target="_blank">Pixabay</a>', '<a href="https://pexels.com/" target="_blank">Pexels</a>' ) .'</span>';  // phpcs:ignore
+		$instant_images_tagline = __( 'One-click photo uploads from %1$s, %2$s, %3$s, %4$s, and %5$s.', 'instant-images' ); // phpcs:ignore
+		return '<span class="instant-images-tagline">' . sprintf( $instant_images_tagline, '<a href="https://unsplash.com/" target="_blank">Unsplash</a>', '<a href="https://wordpress.org/openverse" target="_blank">Openverse</a>', '<a href="https://pixabay.com/" target="_blank">Pixabay</a>', '<a href="https://pexels.com/" target="_blank">Pexels</a>', '<a href="https://giphy.com/" target="_blank">Giphy</a>' ) .'</span>';  // phpcs:ignore
 	}
 
 	/**
@@ -515,6 +543,89 @@ class InstantImages {
 			case 'extended':
 				return class_exists( 'InstantImagesExtended' ) && InstantImagesExtended::valid_license();
 		}
+	}
+
+	/**
+	 * Get all image sizes.
+	 *
+	 * @return array An array of image sizes.
+	 */
+	public static function instant_images_get_image_sizes() {
+		global $_wp_additional_image_sizes;
+		$default_image_sizes = get_intermediate_image_sizes();
+		foreach ( $default_image_sizes as $size ) {
+			$image_sizes[ $size ][ 'width' ] = intval( get_option( "{$size}_size_w" ) );
+			$image_sizes[ $size ][ 'height' ] = intval( get_option( "{$size}_size_h" ) );
+			$image_sizes[ $size ][ 'crop' ] = get_option( "{$size}_crop" ) ? get_option( "{$size}_crop" ) : false;
+		}
+
+		if ( isset( $_wp_additional_image_sizes ) && count( $_wp_additional_image_sizes ) ) {
+			$image_sizes = array_merge( $image_sizes, $_wp_additional_image_sizes );
+		}
+		if ( ! $image_sizes ) {
+			return [];
+		}
+
+		$sizes = [];
+		foreach( $image_sizes as $key => $image_size ) {
+			$label  = str_replace( '_' , ' ' , $key );
+			$label  = str_replace( '-' , ' ' , $label );
+			$height = $image_size[ 'height' ] === 0 ? '--' :  $image_size[ 'height' ]; // If height is empty or 0.
+
+			$sizes[ $key ] = [
+				'label'  => ucwords( $label ),
+				'width'  => $image_size[ 'width' ],
+				'height' => $height,
+				'crop'   => $image_size[ 'crop' ]
+			];
+		}
+		return $sizes;
+	}
+
+	/**
+	 * Display image sizes in a table.
+	 *
+	 * @return void
+	 */
+	public static function instant_images_display_image_sizes() {
+		$sizes = self::instant_images_get_image_sizes();
+		if ( ! $sizes ) {
+			return;
+		}
+		ob_start();
+		?>
+		<table class="instant-images-image-size-table">
+			<tr>
+				<th><?php esc_attr_e( 'Label', 'instant-images' ); ?></th>
+				<th><?php esc_attr_e( 'Name', 'instant-images' ); ?></th>
+				<th><?php esc_attr_e( 'Width', 'instant-images' ); ?></th>
+				<th><?php esc_attr_e( 'Height', 'instant-images' ); ?></th>
+				<th><?php esc_attr_e( 'Crop', 'instant-images' ); ?></th>
+			</tr>
+		<?php
+		foreach( $sizes as $key => $size ) {
+			$crop = $size[ 'crop' ];
+			$crop = $crop ? 'Yes' : 'No';
+			echo '<tr';
+			do_action( 'instant_images_image_size_tr_class', $key );
+			echo '>';
+			echo '<td>';
+			echo '<span>';
+			do_action( 'instant_images_image_size_before', $key );
+			echo '<strong>' . $size[ 'label' ] . '</strong>';
+			do_action( 'instant_images_image_size_after', $key );
+			echo '</span>';
+			echo '</td>';
+			echo '<td><pre>' . $key . '</pre></td>';
+			echo '<td>' . $size[ 'width' ] . '</td>';
+			echo '<td>' . $size[ 'height' ] . '</td>';
+			echo '<td>' . $crop . '</td>';
+			echo '</tr>';
+		}
+		?>
+		</table>
+		<?php
+		return ob_get_clean();
 	}
 }
 

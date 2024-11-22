@@ -1,4 +1,4 @@
-import { OPENVERSE_SOURCES } from "../../constants/filters/openverse";
+import { OPENVERSE_SOURCES } from '../../constants/filters/openverse';
 
 /**
  * Format the params for Openverse.
@@ -8,11 +8,11 @@ import { OPENVERSE_SOURCES } from "../../constants/filters/openverse";
  * @return {Object} 		  Updated params.
  */
 export function openverseParams(type, params) {
-	if (type === "photos" && !params.source) {
-		params.source = "wordpress"; // Add `wordpress` as the default openverse `source`.
+	if (type === 'photos' && !params.source) {
+		params.source = 'wordpress'; // Add `wordpress` as the default openverse `source`.
 	}
 
-	if (type === "search") {
+	if (type === 'search') {
 		// Include these sources only.
 		const sources = OPENVERSE_SOURCES.map((source) => {
 			return source.value;

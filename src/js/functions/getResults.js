@@ -1,18 +1,17 @@
-import { API } from "../constants/API";
+import { API } from '../constants/API';
 
 /**
  * Pluck `results` from the API response.
  *
  * @param {Object} data The API results object.
- * @return {Array} 	 The results as an array.
+ * @return {Array} 	   The results as an array.
  */
 export default function getResults(data) {
 	if (!data) {
 		return [];
 	}
 
-	const results = data[API.defaults.arr_key] || [];
-	return results;
+	return data[API.defaults.arr_key] || [];
 }
 
 /**
@@ -42,12 +41,12 @@ export function getResultById(provider, key, data) {
 
 	let result = [];
 	switch (provider) {
-		case "unsplash":
-		case "pexels":
+		case 'unsplash':
+		case 'pexels':
 			result = data || [];
 			break;
 
-		case "pixabay":
+		case 'pixabay':
 			result = data[key] && data[key][0] ? data[key][0] : [];
 			break;
 	}

@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter } from "./helpers";
+import { capitalizeFirstLetter } from './helpers';
 
 /**
  * Get the API URL for searches by ID.
@@ -23,11 +23,11 @@ export default function generateAttribution(text, provider, permalink, user) {
 
 	// Generate attribution template.
 	let attribution = text;
-	attribution = attribution.replace("{username}", username);
-	attribution = attribution.replace("{user_url}", user_url);
-	attribution = attribution.replace("{image_url}", permalink);
-	attribution = attribution.replace("{provider_url}", provider_url);
-	attribution = attribution.replace("{provider}", provider_name);
+	attribution = attribution.replace('{username}', username);
+	attribution = attribution.replace('{user_url}', user_url);
+	attribution = attribution.replace('{image_url}', permalink);
+	attribution = attribution.replace('{provider_url}', provider_url);
+	attribution = attribution.replace('{provider}', provider_name);
 
 	return attribution;
 }

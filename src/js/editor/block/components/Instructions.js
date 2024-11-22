@@ -1,4 +1,4 @@
-import { __ } from "@wordpress/i18n";
+import { __ } from '@wordpress/i18n';
 
 /**
  * Render instructional text for the WP Block.
@@ -15,7 +15,7 @@ export default function BlockInstructions(props) {
 	return (
 		<div className="instant-images-block--instructions">
 			<span>&larr;</span>
-			{__("Scroll to Load Images", "instant-images")}
+			{__('Scroll to Load Images', 'instant-images')}
 			<span>&rarr;</span>
 		</div>
 	);
