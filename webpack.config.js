@@ -28,12 +28,5 @@ module.exports = {
 		 * @see https://www.npmjs.com/package/eslint-webpack-plugin
 		 */
 		new ESLintPlugin(),
-
-		/**
-		 * Report css warnings and errors to the command line.
-		 *
-		 * @see https://www.npmjs.com/package/stylelint-webpack-plugin
-		 */
-		new StylelintPlugin(),
 	],
 };
