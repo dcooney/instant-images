@@ -128,7 +128,7 @@ No, we provide an API for you to use, however you can get your own by signing up
 No, an Openverse account is not required.
 
 = Do I need an account at Giphy? =
-Yes, Giphy requires a valid API key. You can get your own by signing up for a free account at [Giphy](https://developers.giphy.com/). When you sign up be sure to choose the "Select API" option and choose the "Giphy API" option.
+No, we provide an API for you to use, however you can get your own by signing up for a free account at [Giphy](https://developers.giphy.com/). When you sign up be sure to choose the "Select API" option and choose the "Giphy API" option.
 
 == Installation ==
 
@@ -166,8 +166,8 @@ How to install Instant Images.
 
 == Changelog ==
 
-= 7.0.0 - November 20, 2024 =
-* NEW: Added Giphy integration. Giphy requires a valid API key.
+= 7.0.0 - November 22, 2024 =
+* NEW: Added Giphy integration!
 * NEW: Added Image Size functionality to Instant Images settings.
 * NEW: Added required functionality to add image size with the Extended add-on.
 * FIX: Fixed potential issue with image file extensions being incorrect for png and jpeg files.

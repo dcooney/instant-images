@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'INSTANT_IMAGES_VERSION', '7.0.0' );
-define( 'INSTANT_IMAGES_RELEASE', 'November 20, 2024' );
+define( 'INSTANT_IMAGES_RELEASE', 'November 22, 2024' );
 define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
