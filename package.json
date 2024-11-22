@@ -61,6 +61,7 @@
 		"postcss-preset-env": "^10.1.0",
 		"postcss-scss": "^4.0.9",
 		"prettier": "^3.3.3",
+		"stylelint": "^16.10.0",
 		"stylelint-config-prettier": "^9.0.5",
 		"stylelint-webpack-plugin": "^5.0.1",
 		"webpack-cli": "^5.1.4",
