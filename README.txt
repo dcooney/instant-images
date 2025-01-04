@@ -3,7 +3,7 @@ Contributors: dcooney, connekthq
 Tags: Unsplash, Openverse, Pixabay, Pexels, giphy, Stock Photos, photos, free photos
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 7.0.0
+Stable tag: 7.0.1
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -165,6 +165,9 @@ How to install Instant Images.
 5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 7.0.1 - January 4, 2025 =
+* FIX: Fixed issue with Instant Instant causing issues on Search and Filter (Plugin) pages in the WordPress admin.
 
 = 7.0.0 - November 22, 2024 =
 * NEW: Added Giphy integration!

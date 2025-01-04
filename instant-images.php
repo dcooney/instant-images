@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 7.0.0
+ * Version: 7.0.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '7.0.0' );
-define( 'INSTANT_IMAGES_RELEASE', 'November 22, 2024' );
+define( 'INSTANT_IMAGES_VERSION', '7.0.1' );
+define( 'INSTANT_IMAGES_RELEASE', 'January 4, 2025' );
 define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
@@ -214,7 +214,8 @@ class InstantImages {
 	 * @since 3.0
 	 */
 	public function enqueue_block_editor() {
-		$excluded_screens = apply_filters( 'instant_images_excluded_sidebar_screens', [ 'widgets', 'site-editor', 'woocommerce_page_wc-admin' ] );
+		$excluded_screens = apply_filters( 'instant_images_excluded_sidebar_screens', [ 'widgets', 'site-editor', 'woocommerce_page_wc-admin', 'toplevel_page_search-filter' ] );
+
 		if ( $this::instant_img_has_access() && $this::instant_img_not_current_screen( $excluded_screens ) ) {
 			// Plugin sidebar.
 			$sidebar_asset_file = require INSTANT_IMAGES_PATH . 'build/plugin-sidebar/index.asset.php'; // Get webpack asset file.
