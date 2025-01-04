@@ -167,7 +167,7 @@ How to install Instant Images.
 == Changelog ==
 
 = 7.0.1 - January 4, 2025 =
-* FIX: Fixed issue with Instant Instant causing issues on Search and Filter (Plugin) pages in the WordPress admin.
+* FIX: Fixed issue with Instant Images causing issues on Search and Filter (Plugin) pages within the WordPress admin.
 
 = 7.0.0 - November 22, 2024 =
 * NEW: Added Giphy integration!
