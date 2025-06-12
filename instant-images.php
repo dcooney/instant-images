@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 7.0.1
+ * Version: 7.0.2
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '7.0.1' );
-define( 'INSTANT_IMAGES_RELEASE', 'January 4, 2025' );
+define( 'INSTANT_IMAGES_VERSION', '7.0.2' );
+define( 'INSTANT_IMAGES_RELEASE', 'June 12, 2025' );
 define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
@@ -37,12 +37,23 @@ class InstantImages {
 	 * @since 2.0
 	 */
 	public function __construct() {
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ &$this, 'add_action_links' ] );
-		add_action( 'enqueue_block_editor_assets', [ &$this, 'enqueue_block_editor' ] );
-		add_action( 'wp_enqueue_media', [ &$this, 'enqueue_media' ] );
-		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain.
+		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_editor' ] );
+		add_action( 'wp_enqueue_media', [ $this, 'enqueue_media' ] );
+		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
+
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'add_action_links' ] );
+
 		$this->includes();
 		$this->constants();
+	}
+
+	/**
+	 * Load the plugin text domain for translations.
+	 *
+	 * @return void
+	 */
+	public function load_plugin_textdomain() {
+		load_plugin_textdomain( 'instant-images', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); // load text domain.
 	}
 
 	/**

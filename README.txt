@@ -1,9 +1,9 @@
 === Instant Images - One-click Image Uploads from Unsplash, Openverse, Pixabay, Pexels, and Giphy ===
 Contributors: dcooney, connekthq
 Tags: Unsplash, Openverse, Pixabay, Pexels, giphy, Stock Photos, photos, free photos
-Requires at least: 5.0
-Tested up to: 6.7
-Stable tag: 7.0.1
+Requires at least: 6.0
+Tested up to: 6.8
+Stable tag: 7.0.2
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -165,6 +165,11 @@ How to install Instant Images.
 5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 7.0.2 - June 12, 2025 =
+* FIX: Fixed issue with `load_plugin_textdomain` PHP warning.
+* UPDATE: Added support up to WP 6.8.
+* UPDATE: Bumped required WP version to 6.0.
 
 = 7.0.1 - January 4, 2025 =
 * FIX: Fixed issue with Instant Images causing issues on Search and Filter (Plugin) pages within the WordPress admin.
