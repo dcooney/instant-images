@@ -162,6 +162,12 @@ function instant_images_download( WP_REST_Request $request ) {
 		$attach_data = wp_generate_attachment_metadata( $image_id, $mirror['file'] );
 		wp_update_attachment_metadata( $image_id, $attach_data );
 
+		// Add custom postmeta for tracking Instant Images data.
+		if ( apply_filters( 'instant_images_save_post_meta', true ) ) {
+			update_post_meta( $image_id, '_instant_images_provider', $provider );
+			update_post_meta( $image_id, '_instant_images_original_url', $image_url );
+		}
+
 		/**
 		 * Instant Images Core Hook.
 		 * Fired after a successful image upload to media library.

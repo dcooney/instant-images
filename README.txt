@@ -2,8 +2,8 @@
 Contributors: dcooney, connekthq
 Tags: Unsplash, Openverse, Pixabay, Pexels, giphy, Stock Photos, photos, free photos
 Requires at least: 6.0
-Tested up to: 6.8
-Stable tag: 7.0.2
+Tested up to: 6.9
+Stable tag: 7.0.3
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -13,7 +13,15 @@ One-click uploads from Unsplash, Openverse, Pixabay, Pexels, and Giphy directly 
 
 Instantly upload photos from Unsplash, Openverse, Pixabay, Pexels, and Giphy to your website all without ever leaving WordPress!
 
-**Instant Images** is the fastest and easiest way to upload high quality **FREE** photos from your favorite stock photo communities directly to your WordPress media library.
+Instant Images is the fastest way to find and upload high-quality, free stock images directly from inside WordPress.
+
+No downloads.
+No switching tabs.
+No copy-paste workflow.
+
+Just search, click, and your image is instantly added to your Media Library — properly processed and ready to use.
+
+Whether you’re building content, designing layouts, or prototyping a client site, Instant Images keeps you in your workflow and saves you time.
 
 = Supported Image Providers =
 
@@ -22,6 +30,8 @@ Instantly upload photos from Unsplash, Openverse, Pixabay, Pexels, and Giphy to 
 - [Pixabay](http://pixabay.com)
 - [Pexels](http://pexels.com)
 - [Giphy](http://giphy.com)
+
+Works seamlessly with the Block Editor, Media Modal, and popular page builders.
 
 [youtube <https://www.youtube.com/watch?v=s6Q7Kfi2f1c>]
 
@@ -47,9 +57,9 @@ The perfect tool for users who want to save time and frustration by uploading im
 
 == Instant Images: Extended ==
 
-Enhance the Instant Images experience with a suite of premium features and added functionality.
+Enhance Instant Images with powerful professional features.
 
-**What's Included:**
+**Includes:**
 - Search History & Autocomplete.
 - Instant Images as a WordPress Block.
 - WordPress CLI Imports.
@@ -57,8 +67,8 @@ Enhance the Instant Images experience with a suite of premium features and added
 - I'm Feeling Lucky WordPress Block.
 - Image Size Generator.
 - Instant Featured Images
-- Images Filters (Instagram).
-- Maintain current search term while switching image providers.
+- Instagram-style image filters
+- Persistent search terms across providers.
 - And more...
 
 [Learn More](https://getinstantimages.com/add-ons/extended/)
@@ -66,7 +76,11 @@ Enhance the Instant Images experience with a suite of premium features and added
 = Proxy Server =
 Instant Images routes all API requests to service providers (Unsplash, Pexels, Pixabay, Openverse etc.) through our custom proxy server at [proxy.getinstantimages.com](https://proxy.getinstantimages.com).
 
-Maintaining a proxy server for Instant Images allows us to keep API keys hidden from public view and ensures image data returned from the providers is returned in a normalized format for display in WordPress.
+Maintaining a proxy server for Instant Images allows us to:
+
+- Protect API keys from public exposure.
+- Normalize data from multiple providers.
+- Improve compatibility and reliability across plugin versions.
 
 Please take a moment and read our Terms of Use and Privacy Policy for when using our proxy service:
 
@@ -165,6 +179,11 @@ How to install Instant Images.
 5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 7.0.3 - February 11, 2026 =
+* NEW: Added new `instant_images_save_post_meta` filter that allows users to disable saving Instant Images data as post meta on the attachment. By default this is enabled and saves the image provider and original image URL as post meta for each uploaded image.
+* UPDATE: Updated plugin version and WP compatibility.
+* UPDATE: Updated all plugin dependencies and packages.
 
 = 7.0.2 - June 12, 2025 =
 * FIX: Fixed issue with `load_plugin_textdomain` PHP warning.
