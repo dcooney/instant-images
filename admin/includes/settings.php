@@ -50,15 +50,6 @@ function instant_images_admin_init() {
 		'instant_images_general_settings'
 	);
 
-	// Default Provider.
-	add_settings_field(
-		'default_provider',
-		__( 'Default Image Provider', 'instant-images' ),
-		'instant_images_default_provider',
-		'instant-images',
-		'instant_images_general_settings'
-	);
-
 	// Auto captions.
 	add_settings_field(
 		'auto_attribution',
@@ -80,6 +71,13 @@ function instant_images_admin_init() {
 	if ( InstantImages::instant_images_addon_valid_license( 'extended' ) ) {
 		instant_images_extended_add_settings(); // Add Extended Settings.
 	}
+
+	// Provider Config (order and active state).
+	register_setting(
+		'instant_images_provider_settings_group',
+		INSTANT_IMAGES_PROVIDER_SETTINGS,
+		'instant_images_sanitize_providers'
+	);
 
 	// API Keys.
 	register_setting(
@@ -267,30 +265,6 @@ function instant_images_settings_toggle_switch( $name, $title, $label, $default 
 }
 
 /**
- * Set the default image provider.
- *
- * @author ConnektMedia <support@connekthq.com>
- * @since 4.5
- */
-function instant_images_default_provider() {
-	$providers = InstantImages::instant_img_get_providers();
-	$options   = get_option( INSTANT_IMAGES_SETTINGS );
-	if ( ! isset( $options['default_provider'] ) ) {
-		$options['default_provider'] = 'unsplash';
-	}
-	?>
-	<label for="default_provider"><?php esc_attr_e( 'Default Provider', 'instant-images' ); ?></label>
-	<select id="default_provider" name="instant_img_settings[default_provider]">
-		<?php foreach ( $providers as $provider ) { ?>
-			<option value="<?php echo esc_html( $provider['slug'] ); ?>" <?php selected( esc_html( $provider['slug'] ), $options['default_provider'] ); ?>>
-				<?php echo esc_html( $provider['name'] ); ?>
-			</option>
-		<?php } ?>
-	</select>
-	<?php
-}
-
-/**
  * Set the API keys for each required provider.
  *
  * @param array $args Provider arguments.
@@ -331,6 +305,27 @@ function instant_images_api_keys_callback( $args = [] ) {
 	if ( defined( $constant ) ) {
 		echo '<div class="api-constant">' . esc_attr__( 'API key has been set via site constant.', 'instant-images' ) . '</div>';
 	}
+}
+
+/**
+ * Sanitize the provider config option.
+ *
+ * @param mixed $input The submitted value (JSON string of active provider slugs).
+ * @return array Sanitized array of provider slugs.
+ */
+function instant_images_sanitize_providers( $input ) {
+	if ( is_string( $input ) ) {
+		$input = json_decode( stripslashes( $input ), true );
+	}
+	if ( ! is_array( $input ) || empty( $input ) ) {
+		// Return all providers if invalid.
+		$providers = InstantImages::instant_img_get_providers();
+		return array_map( function( $p ) { return $p['slug']; }, $providers );
+	}
+	$valid_slugs = array_map( function( $p ) { return $p['slug']; }, InstantImages::instant_img_get_providers() );
+	return array_values( array_filter( array_map( 'sanitize_text_field', $input ), function( $slug ) use ( $valid_slugs ) {
+		return in_array( $slug, $valid_slugs, true );
+	} ) );
 }
 
 /**
