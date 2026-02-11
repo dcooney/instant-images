@@ -1,6 +1,6 @@
 === Instant Images - One-click Image Uploads from Unsplash, Openverse, Pixabay, Pexels, and Giphy ===
 Contributors: dcooney, connekthq
-Tags: Unsplash, Openverse, Pixabay, Pexels, giphy, Stock Photos, photos, free photos
+Tags: stock photos, unsplash, free images, media library, pixabay
 Requires at least: 6.0
 Tested up to: 6.9
 Stable tag: 7.0.3
