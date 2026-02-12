@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 7.0.3
+ * Version: 7.1.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '7.0.3' );
-define( 'INSTANT_IMAGES_RELEASE', 'February 11, 2026' );
+define( 'INSTANT_IMAGES_VERSION', '7.1.0' );
+define( 'INSTANT_IMAGES_RELEASE', 'February 12, 2026' );
 define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
@@ -99,6 +99,7 @@ class InstantImages {
 		define( 'INSTANT_IMAGES_WPADMIN_SETTINGS_URL', admin_url( 'options-general.php?page=instant-images-settings' ) );
 		define( 'INSTANT_IMAGES_SETTINGS', 'instant_img_settings' );
 		define( 'INSTANT_IMAGES_API_SETTINGS', 'instant_img_api_settings' );
+		define( 'INSTANT_IMAGES_PROVIDER_SETTINGS', 'instant_img_provider_config' );
 		define( 'INSTANT_IMAGES_NAME', 'instant-images' );
 		define( 'INSTANT_IMAGES_ADDONS_URL', 'https://getinstantimages.com/add-ons/' );
 
@@ -157,6 +158,28 @@ class InstantImages {
 	}
 
 	/**
+	 * Get the ordered list of active provider slugs.
+	 *
+	 * @return array Ordered array of active provider slugs.
+	 */
+	public static function instant_img_get_active_providers() {
+		$all_providers = self::instant_img_get_providers();
+		$all_slugs     = array_map( function( $p ) { return $p['slug']; }, $all_providers );
+		$config        = get_option( INSTANT_IMAGES_PROVIDER_SETTINGS );
+
+		if ( ! is_array( $config ) || empty( $config ) ) {
+			return $all_slugs;
+		}
+
+		// Filter to only valid slugs.
+		$active = array_values( array_filter( $config, function( $slug ) use ( $all_slugs ) {
+			return in_array( $slug, $all_slugs, true );
+		} ) );
+
+		return ! empty( $active ) ? $active : $all_slugs;
+	}
+
+	/**
 	 * Get a list of potential download URLs to increase security of download functionality.
 	 *
 	 * @return array The array of urls.
@@ -192,8 +215,7 @@ class InstantImages {
 		$options          = get_option( INSTANT_IMAGES_SETTINGS );
 		$max_width        = isset( $options['unsplash_download_w'] ) ? $options['unsplash_download_w'] : 1600; // width of download file.
 		$max_height       = isset( $options['unsplash_download_h'] ) ? $options['unsplash_download_h'] : 1200; // height of downloads.
-		$default_provider = isset( $options['default_provider'] ) ? $options['default_provider'] : 'unsplash'; // Default provider.
-		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Default provider.
+		$auto_attribution = isset( $options['auto_attribution'] ) ? $options['auto_attribution'] : '0'; // Auto attribution.
 
 		// API Keys.
 		$api_options  = get_option( INSTANT_IMAGES_API_SETTINGS );
@@ -209,12 +231,12 @@ class InstantImages {
 		return (object) [
 			'max_width'        => $max_width,
 			'max_height'       => $max_height,
-			'default_provider' => $default_provider,
 			'auto_attribution' => $auto_attribution,
 			'unsplash_api'     => $unsplash_api,
 			'pixabay_api'      => $pixabay_api,
 			'pexels_api'       => $pexels_api,
 			'giphy_api'        => $giphy_api,
+			'default_provider' => 'unsplash',
 		];
 	}
 
@@ -270,7 +292,7 @@ class InstantImages {
 	 */
 	public function enqueue_media() {
 		$show_tab       = $this::instant_img_show_tab( 'media_modal_display' ); // Show Tab Setting.
-		$current_screen = is_admin() && function_exists( 'get_current_screen' ) ? get_current_screen()->base : ''; // Current admin screen.
+		$current_screen = is_admin() && function_exists('get_current_screen') ? get_current_screen()?->base : ''; // Current admin screen.
 		if ( $this::instant_img_has_access() && $show_tab && $current_screen !== 'upload' ) {
 			$media_modal_asset_file = require INSTANT_IMAGES_PATH . 'build/media-modal/index.asset.php'; // Get webpack asset file.
 			wp_enqueue_script(
@@ -334,6 +356,7 @@ class InstantImages {
 			$script,
 			'instant_img_localize',
 			[
+				'provider_order'          => self::instant_img_get_active_providers(),
 				'instant_images'          => __( 'Instant Images', 'instant-images' ),
 				'version'                 => INSTANT_IMAGES_VERSION,
 				'root'                    => esc_url_raw( rest_url() ),
@@ -343,7 +366,6 @@ class InstantImages {
 				'lang'                    => function_exists( 'pll_current_language' ) ? pll_current_language() : '',
 				'parent_id'               => $post ? $post->ID : 0,
 				'auto_attribution'        => esc_html( $settings->auto_attribution ),
-				'default_provider'        => esc_html( $settings->default_provider ),
 				'download_width'          => esc_html( $settings->max_width ),
 				'download_height'         => esc_html( $settings->max_height ),
 				'query_debug'             => apply_filters( 'instant_images_query_debug', false ),
@@ -415,11 +437,11 @@ class InstantImages {
 				'api_invalid_500_msg'     => __( 'An internal server error has occured - please try again.', 'instant-images' ),
 				'api_invalid_501_msg'     => __( 'No image provider or destination URL set.', 'instant-images' ),
 				'api_ratelimit_msg'       => __( 'The API rate limit has been exceeded for this image provider. Please add a new API key or try again later.', 'instant-images' ),
-				'api_default_provider'    => __( 'Switch the default provider in the Instant Images settings or check that you\'re using a valid API key.', 'instant-images' ),
+				'api_default_provider'    => __( 'Check your provider settings or verify that you\'re using a valid API key.', 'instant-images' ),
 				'get_api_key'             => __( 'Get API Key', 'instant-images' ),
 				'use_instant_images_key'  => __( 'Reset Default Key', 'instant-images' ),
 				'error_on_load_title'     => __( 'An unknown error has occured while accessing {provider}', 'instant-images' ),
-				'error_on_load'           => __( 'Check your API keys are valid and the Default Provider set under the Instant Images settings panel.', 'instant-images' ),
+				'error_on_load'           => __( 'Check that your API keys are valid in the Instant Images settings panel.', 'instant-images' ),
 				'error'                   => __( 'Error', 'instant-images' ),
 				'ad'                      => __( 'Ad', 'instant-images' ),
 				'advertisement'           => __( 'Advertisement', 'instant-images' ),

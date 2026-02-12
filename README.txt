@@ -3,7 +3,7 @@ Contributors: dcooney, connekthq
 Tags: stock photos, unsplash, free images, media library, pixabay
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 7.0.3
+Stable tag: 7.1.0
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -179,6 +179,11 @@ How to install Instant Images.
 5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 7.1.0 - February 12, 2026 =
+* NEW: Added new feature to allow for disabling and reordering of the image providers.
+* FIX: Fixed issue with image resize not working with Pixabay and Giphy. This is resolved by using the core WordPress image editor to resize images before upload to media library.
+* UPDATE: Admin UI/UX throughout plugin.
 
 = 7.0.3 - February 11, 2026 =
 * NEW: Added new `instant_images_save_post_meta` filter that allows users to disable saving Instant Images data as post meta on the attachment. By default this is enabled and saves the image provider and original image URL as post meta for each uploaded image.

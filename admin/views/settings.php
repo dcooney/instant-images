@@ -13,6 +13,9 @@
 		// General Settings.
 		require_once INSTANT_IMAGES_PATH . 'admin/includes/settings/general-settings.php';
 
+		// Provider Settings.
+		require_once INSTANT_IMAGES_PATH . 'admin/includes/settings/provider-settings.php';
+
 		// API Settings.
 		require_once INSTANT_IMAGES_PATH . 'admin/includes/settings/api-settings.php';
 

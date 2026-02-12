@@ -47,7 +47,7 @@ $sticky_top: 62px;
 		nav {
 			display: none;
 			@media screen and (min-width: $small) {
-				display: block;
+				display: grid;
 			}
 			margin-top: 20px;
 			padding: 0 0 5px;
@@ -70,21 +70,28 @@ $sticky_top: 62px;
 				border: none;
 				color: $text_alt;
 				line-height: 1;
-				padding: 10px 12px;
+				padding: 10px 13px;
 				cursor: pointer;
 				white-space: nowrap;
 				text-align: left;
 				display: flex;
 				align-items: center;
 				flex-wrap: nowrap;
-				i {
-					width: 25px;
-					color: $border;
-					font-size: 18px;
+				gap: 10px;
+				svg {
+					width: 18px;
+					fill: $border;
 				}
 				&:hover,
 				&:focus {
 					color: $text;
+					text-decoration: underline;
+				}
+				// Legacy - Remove in future versions.
+				i {
+					width: 25px;
+					color: $border;
+					font-size: 18px;
 				}
 			}
 		}
@@ -117,7 +124,7 @@ $sticky_top: 62px;
 
 				@media screen and (min-width: $large) {
 					width: 30%;
-					padding: 27px 30px 30px 50px;
+					padding: 27px 30px 30px 45px;
 					border: none;
 					position: sticky;
 					top: $sticky_top;
@@ -134,16 +141,17 @@ $sticky_top: 62px;
 					}
 				}
 
-				i.fa {
+				svg {
 					display: none;
 					@media screen and (min-width: $large) {
 						display: block;
 					}
 					position: absolute;
 					left: 10px;
-					font-size: 30px;
-					color: $border;
-					margin-top: -4px;
+					width: 25px;
+					height: auto;
+					fill: $border;
+					margin-top: -2px;
 				}
 				h2 {
 					font-size: 18px;
@@ -272,6 +280,120 @@ $sticky_top: 62px;
 			}
 		}
 	}
+	// Provider Settings
+	& .provider-settings {
+		.provider-sortable-list {
+			margin: 0 0 20px;
+			max-width: 425px;
+		}
+
+		.provider-sortable-item {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			padding: 15px 10px;
+			background-color: #fff;
+			border: 1px solid $border;
+			border-radius: $radius;
+			margin: 0 0 5px;
+			cursor: grab;
+			transition: $transition;
+			user-select: none;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			&.inactive {
+				background-color: $lighter_grey;
+				border-color: rgba($border, 0.5);
+				opacity: 0.75;
+			}
+
+			&.dragging {
+				opacity: 0.4;
+				border-color: $purple;
+				box-shadow: 0 0 0 1px $purple;
+			}
+
+			&--handle {
+				color: $text_light;
+				display: flex;
+				align-items: center;
+				cursor: grab;
+				flex-shrink: 0;
+			}
+
+			&:hover {
+				border-color: darken($border, 10%);
+				box-shadow: $shadow_md;
+
+				.provider-sortable-item--handle {
+					color: $purple;
+				}
+			}
+
+			.instant-images-checkbox {
+				padding: 0;
+
+				.toggle-switch {
+					position: static;
+				}
+			}
+
+			&--name {
+				font-size: 14px;
+				font-weight: 500;
+				color: $text;
+				flex: 1;
+			}
+
+			&--toggle {
+				position: relative;
+				display: inline-flex;
+				align-items: center;
+				cursor: pointer;
+				flex-shrink: 0;
+
+				input[type='checkbox'] {
+					position: absolute;
+					opacity: 0;
+					width: 0;
+					height: 0;
+				}
+
+				.provider-toggle-switch {
+					width: 40px;
+					height: 22px;
+					background-color: $border;
+					border-radius: 11px;
+					position: relative;
+					transition: $transition;
+				}
+
+				.provider-toggle-knob {
+					width: 16px;
+					height: 16px;
+					background-color: #fff;
+					border-radius: 50%;
+					position: absolute;
+					top: 3px;
+					left: 3px;
+					transition: $transition;
+					box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+				}
+
+				input[type='checkbox']:checked + .provider-toggle-switch {
+					background-color: $purple;
+
+					.provider-toggle-knob {
+						left: 21px;
+					}
+				}
+			}
+		}
+	}
+
 	// Settings
 	& .general-settings {
 		span.desc {
@@ -308,7 +430,7 @@ $sticky_top: 62px;
 		}
 		td {
 			border-top: 0;
-			padding: 0 0 25px;
+			padding: 0 0 20px;
 			float: left;
 			width: 100%;
 			margin: 0;

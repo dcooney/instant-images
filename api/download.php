@@ -147,6 +147,13 @@ function instant_images_download( WP_REST_Request $request ) {
 			return new WP_Error( 500, __( 'Attachment file not found prior to upload.', 'instant-images' ) );
 		}
 
+		// Resize image to max width/height.
+		$editor = wp_get_image_editor( $mirror['file'] );
+		if ( ! is_wp_error( $editor ) ) {
+			$editor->resize( $settings->max_width, $settings->max_height, false ); // Set the max width/height.
+			$editor->save( $mirror['file'] );
+		}
+
 		// Insert as attachment.
 		$image_id = wp_insert_attachment( $attachment, $mirror['file'], $parent_id );
 
@@ -257,22 +264,16 @@ function instant_images_generate_image_url( $provider, $url, $max_width, $max_he
 		return false;
 	}
 
-	$image_url = '';
-
 	switch ( $provider ) {
 		case 'unsplash':
-			$image_url = $url . '&fit=clip&w=' . $max_width . '&h=' . $max_height;
-			break;
+			return $url . '&fit=clip&w=' . $max_width . '&h=' . $max_height;
 
 		case 'pexels':
-			$image_url = $url . '?dpr=1&w=' . $max_width . '&h=' . $max_height;
-			break;
+			return $url . '?dpr=1&w=' . $max_width . '&h=' . $max_height;
 
 		default:
-			$image_url = $url;
-			break;
+			return $url;
 	}
-	return $image_url;
 }
 
 /**
