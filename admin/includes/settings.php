@@ -79,8 +79,6 @@ function instant_images_admin_init() {
 		'instant_images_sanitize_providers'
 	);
 
-	delete_option(INSTANT_IMAGES_API_SETTINGS);
-
 	// API Keys.
 	register_setting(
 		'instant_images_api_settings_group',
