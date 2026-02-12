@@ -79,6 +79,8 @@ function instant_images_admin_init() {
 		'instant_images_sanitize_providers'
 	);
 
+	delete_option(INSTANT_IMAGES_API_SETTINGS);
+
 	// API Keys.
 	register_setting(
 		'instant_images_api_settings_group',
@@ -281,6 +283,7 @@ function instant_images_api_keys_callback( $args = [] ) {
 	}
 
 	$options  = get_option( INSTANT_IMAGES_API_SETTINGS ); // API options.
+	$options = is_array( $options ) ? $options : []; // API options.
 	$key      = $provider['slug'] . '_api';
 	$title    = $provider['name'];
 	$constant = $provider['constant'];
