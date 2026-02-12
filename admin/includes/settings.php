@@ -95,7 +95,6 @@ function instant_images_admin_init() {
 
 	// Upgrade routine.
 	$general_options  = get_option( INSTANT_IMAGES_SETTINGS ); // General options.
-	$api_options      = get_option( INSTANT_IMAGES_API_SETTINGS ); // API options.
 	$settings_updated = get_option( 'instant_img_settings_updated' );
 
 	// Providers API Keys.
@@ -183,6 +182,7 @@ function instant_images_sanitize( $input ) {
  */
 function instant_images_width_callback() {
 	$options = get_option( INSTANT_IMAGES_SETTINGS );
+	$options = is_array( $options ) ? $options : [];
 
 	if ( ! isset( $options['unsplash_download_w'] ) ) {
 		$options['unsplash_download_w'] = '1600';
@@ -200,6 +200,7 @@ function instant_images_width_callback() {
  */
 function instant_images_height_callback() {
 	$options = get_option( INSTANT_IMAGES_SETTINGS );
+	$options = is_array( $options ) ? $options : [];
 	if ( ! isset( $options['unsplash_download_h'] ) ) {
 		$options['unsplash_download_h'] = '1200';
 	}
@@ -247,6 +248,7 @@ function instant_images_media_modal_display_callback() {
  */
 function instant_images_settings_toggle_switch( $name, $title, $label, $default = '0' ) {
 	$options = get_option( INSTANT_IMAGES_SETTINGS );
+	$options = is_array( $options ) ? $options : [];
 
 	if ( ! isset( $options[ $name ] ) ) {
 		$options[ $name ] = $default;

@@ -182,6 +182,7 @@ How to install Instant Images.
 
 = 7.1.0 - February 12, 2026 =
 * NEW: Added new feature to allow for disabling and reordering of the image providers.
+* FIX: Fixed issue with image resize not working with Pixabay and Giphy. This is resolved by using the core WordPress image editor to resize images before upload to media library.
 * UPDATE: Admin UI/UX throughout plugin.
 
 = 7.0.3 - February 11, 2026 =
