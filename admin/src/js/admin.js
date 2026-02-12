@@ -88,7 +88,7 @@ jQuery(document).ready(function ($) {
 		const nav = document.querySelector('.settings_page_instant-images-settings nav.jump-nav');
 		settings.forEach(function (setting) {
 			const anchor = setting.getAttribute('id');
-			const icon = setting.querySelector('.settings-entry--title .fa');
+			const icon = setting.querySelector('.settings-entry--title svg');
 			const text = setting.querySelector('.settings-entry--title h2').innerText;
 
 			const button = document.createElement('button');
