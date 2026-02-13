@@ -3,7 +3,7 @@ Contributors: dcooney, connekthq
 Tags: stock photos, unsplash, free images, media library, pixabay
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 7.1.0
+Stable tag: 7.1.0.1
 License: GPLv2 or later
 License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -179,6 +179,9 @@ How to install Instant Images.
 5. Instant Images is available in the WordPress media modal as a custom tab. It is available in front end page builder like Elementor, Beaver Builder and Divi.
 
 == Changelog ==
+
+= 7.1.0.1 - February 13, 2026 =
+* HOTFIX: Added fix for potential fatal error in PHP < 8.0 due to use of null safe operator.
 
 = 7.1.0 - February 12, 2026 =
 * NEW: Added new feature to allow for disabling and reordering of the image providers.

@@ -7,7 +7,7 @@
  * Twitter: @connekthq
  * Author URI: https://connekthq.com
  * Text Domain: instant-images
- * Version: 7.1.0
+ * Version: 7.1.0.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'INSTANT_IMAGES_VERSION', '7.1.0' );
-define( 'INSTANT_IMAGES_RELEASE', 'February 12, 2026' );
+define( 'INSTANT_IMAGES_VERSION', '7.1.0.1' );
+define( 'INSTANT_IMAGES_RELEASE', 'February 13, 2026' );
 define( 'INSTANT_IMAGES_STORE_URL', 'https://getinstantimages.com' );
 
 /**
@@ -292,7 +292,7 @@ class InstantImages {
 	 */
 	public function enqueue_media() {
 		$show_tab       = $this::instant_img_show_tab( 'media_modal_display' ); // Show Tab Setting.
-		$current_screen = is_admin() && function_exists('get_current_screen') ? get_current_screen()?->base : ''; // Current admin screen.
+		$current_screen = is_admin() && function_exists('get_current_screen') ? get_current_screen()->base : ''; // Current admin screen.
 		if ( $this::instant_img_has_access() && $show_tab && $current_screen !== 'upload' ) {
 			$media_modal_asset_file = require INSTANT_IMAGES_PATH . 'build/media-modal/index.asset.php'; // Get webpack asset file.
 			wp_enqueue_script(
