@@ -7,7 +7,7 @@ import axios from 'axios';
  * @param {string} value   The value to save.
  */
 export default function updatePluginSetting(setting, value) {
-	const api = instant_img_localize?.root + 'instant-images/settings/'; // eslint-disable-line no-undef
+	const api = instant_img_localize?.root + 'instant-images/settings/';
 
 	const params = {
 		setting,
@@ -16,7 +16,7 @@ export default function updatePluginSetting(setting, value) {
 
 	const config = {
 		headers: {
-			'X-WP-Nonce': instant_img_localize.nonce, // eslint-disable-line no-undef
+			'X-WP-Nonce': instant_img_localize.nonce,
 			'Content-Type': 'application/json',
 		},
 	};

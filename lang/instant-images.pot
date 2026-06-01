@@ -2,19 +2,20 @@
 # This file is distributed under the GPL.
 msgid ""
 msgstr ""
-"Project-Id-Version: Instant Images 7.1.0\n"
+"Project-Id-Version: Instant Images 7.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/instant-images\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-12T15:29:17+00:00\n"
+"POT-Creation-Date: 2026-06-01T16:50:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: instant-images\n"
 
 #. Plugin Name of the plugin
+#: instant-images.php:3
 #: admin/admin.php:152
 #: admin/admin.php:169
 #: instant-images.php:360
@@ -22,18 +23,22 @@ msgid "Instant Images"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: instant-images.php:4
 msgid "https://connekthq.com/plugins/instant-images/"
 msgstr ""
 
 #. Description of the plugin
+#: instant-images.php:5
 msgid "One-click image uploads directly to your media library from Unsplash, Openverse, Pixabay and Pexels."
 msgstr ""
 
 #. Author of the plugin
+#: instant-images.php:6
 msgid "Darren Cooney"
 msgstr ""
 
 #. Author URI of the plugin
+#: instant-images.php:8
 msgid "https://connekthq.com"
 msgstr ""
 
@@ -99,7 +104,7 @@ msgid "API Keys"
 msgstr ""
 
 #: admin/includes/settings.php:107
-#: admin/includes/settings.php:302
+#: admin/includes/settings.php:303
 msgid "API Key"
 msgstr ""
 
@@ -135,11 +140,11 @@ msgstr ""
 msgid "Remove the Instant Images tab in the Media Modal."
 msgstr ""
 
-#: admin/includes/settings.php:303
+#: admin/includes/settings.php:304
 msgid "Get Key"
 msgstr ""
 
-#: admin/includes/settings.php:308
+#: admin/includes/settings.php:309
 msgid "API key has been set via site constant."
 msgstr ""
 
@@ -191,6 +196,7 @@ msgstr ""
 
 #. translators: Add-on URL.
 #: admin/includes/settings/image-sizes.php:31
+#, php-format
 msgid "Adding custom image sizes is available with the %1$s<strong>Extended add-on</strong>%2$s."
 msgstr ""
 
@@ -292,6 +298,7 @@ msgstr ""
 
 #. translators: File extension.
 #: api/download.php:100
+#, php-format
 msgid "File mime type (.%1$s) is not allowed. Use the `upload_mimes` WP hook to add support for this mime type."
 msgstr ""
 
@@ -311,11 +318,11 @@ msgstr ""
 msgid "Attachment file not found prior to upload."
 msgstr ""
 
-#: api/download.php:202
+#: api/download.php:204
 msgid "Image successfully uploaded to the media library!"
 msgstr ""
 
-#: api/download.php:219
+#: api/download.php:221
 msgid "There was an error getting image details from the request, please try again."
 msgstr ""
 
@@ -563,6 +570,7 @@ msgstr ""
 
 #. translators: Instant Images tagline.
 #: instant-images.php:535
+#, php-format
 msgid "One-click photo uploads from %1$s, %2$s, %3$s, %4$s, and %5$s."
 msgstr ""
 
@@ -582,15 +590,15 @@ msgstr ""
 msgid "Are you sure you should be doing this?"
 msgstr ""
 
-#: src/js/components/cta/Extended.js:40
-#: src/js/components/cta/Extended.js:86
+#: src/js/components/cta/Extended.js:38
+#: src/js/components/cta/Extended.js:84
 msgid "Learn More"
 msgstr ""
 
-#: src/js/components/cta/Extended.js:42
-#: src/js/components/cta/Extended.js:43
+#: src/js/components/cta/Extended.js:40
+#: src/js/components/cta/Extended.js:41
+#: src/js/components/cta/Extended.js:70
 #: src/js/components/cta/Extended.js:72
-#: src/js/components/cta/Extended.js:74
 msgid "Dismiss"
 msgstr ""
 

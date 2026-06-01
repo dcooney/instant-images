@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 #photo-listing {
 	position: relative;
 	min-height: 500px;
@@ -588,26 +590,38 @@
 		input {
 			height: $el_height;
 			line-height: $el_height;
+			min-height: $el_height;
 			padding-top: 0;
 			padding-bottom: 0;
 			&[name='filename'] {
 				padding-right: 45px;
 			}
 		}
+		div.inputWrap {
+			position: relative;
+		}
 		em {
 			position: absolute;
-			bottom: 16px;
-			right: 15px;
+			right: 0;
+			top: 1px;
 			height: calc($el_height - 2px);
 			line-height: calc($el_height - 2px);
-			background: $grey;
+			background: $border;
 			border-radius: 0 2px 2px 0;
-			color: $text_light;
+			color: $text_alt;
 			font-style: normal;
 			font-weight: 500;
 			font-size: 11px;
 			padding: 0 10px;
 			border-left: 1px solid $border;
+			font-family:
+				ui-monospace,
+				SFMono-Regular,
+				SF Mono,
+				Menlo,
+				Consolas,
+				'Liberation Mono',
+				monospace;
 		}
 	}
 }

@@ -1,3 +1,6 @@
+@use 'sass:color';
+@use '../variables' as *;
+
 $sticky_top: 62px;
 
 .instant-images-settings {
@@ -325,7 +328,7 @@ $sticky_top: 62px;
 			}
 
 			&:hover {
-				border-color: darken($border, 10%);
+				border-color: color.adjust($border, $lightness: -10%);
 				box-shadow: $shadow_md;
 
 				.provider-sortable-item--handle {
