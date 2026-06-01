@@ -76,7 +76,7 @@ export function showTooltip(e) {
 	// Delay Tooltip Reveal.
 	tooltipInterval = setInterval(function () {
 		clearInterval(tooltipInterval);
-		tooltip.innerHTML = target.dataset.title; // Tooltip content.
+		tooltip.textContent = target.dataset.title; // Tooltip content.
 
 		// Position Tooltip.
 		left = left - tooltip.offsetWidth + target.offsetWidth + 5;
