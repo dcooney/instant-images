@@ -44,7 +44,7 @@ if (licenseForms) {
  * @param {Object} params The data params for license activation/deactivation.
  */
 function updateLicense(params) {
-	const { root, nonce } = instant_img_admin_localize; // eslint-disable-line no-undef
+	const { root, nonce } = instant_img_admin_localize;
 	const api = root + 'instant-images/license/';
 	const config = {
 		headers: {

@@ -562,15 +562,17 @@ export default function Photo(props) {
 					</div>
 					<label>
 						<span>{instant_img_localize.edit_filename}:</span>
-						<input
-							type="text"
-							name="filename"
-							data-original={filename}
-							placeholder={imageDetails.filename}
-							value={imageDetails.filename}
-							onChange={(e) => handleEditChange(e)}
-						/>
-						<em>.{extension}</em>
+						<div className="inputWrap">
+							<input
+								type="text"
+								name="filename"
+								data-original={filename}
+								placeholder={imageDetails.filename}
+								value={imageDetails.filename}
+								onChange={(e) => handleEditChange(e)}
+							/>
+							<em>.{extension}</em>
+						</div>
 					</label>
 					<label>
 						<span>{instant_img_localize.edit_title}:</span>

@@ -1,7 +1,7 @@
 import { UnsplashIcon, PexelsIcon, PixabayIcon, OpenverseIcon, GiphyIcon } from '../components/ProviderIcons';
 
 export const API = {
-	proxy: PROXY_URL || 'https://proxy.getinstantimages.com/api/', // eslint-disable-line
+	proxy: PROXY_URL || 'https://proxy.getinstantimages.com/api/',
 	testmode: false,
 	defaults: {
 		provider: 'unsplash',

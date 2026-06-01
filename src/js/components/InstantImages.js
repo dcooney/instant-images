@@ -509,7 +509,7 @@ export default function InstantImages(props) {
 			// Reset search filters when search is false.
 			setSearchFilters({});
 		}
-	}, [search]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [search]);
 
 	/* Search filters change callback. */
 	useEffect(() => {
@@ -529,7 +529,7 @@ export default function InstantImages(props) {
 	useEffect(() => {
 		setFilterOptions(FILTERS[activeProvider].filters);
 		setFilters({}); // Trigger filter change.
-	}, [activeProvider]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [activeProvider]);
 
 	// Scroll in-view callback.
 	useEffect(() => {

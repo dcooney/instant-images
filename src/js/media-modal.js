@@ -22,7 +22,7 @@ wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend({
 		oldMediaFrameSelect.prototype.browseRouter.apply(this, arguments);
 		routerView.set({
 			instantimages: {
-				text: instant_img_localize?.instant_images, // eslint-disable-line no-undef
+				text: instant_img_localize?.instant_images,
 				priority: 120,
 			},
 		});
@@ -62,7 +62,7 @@ wp.media.view.MediaFrame.Post = oldMediaFrame.extend({
 		oldMediaFrameSelect.prototype.browseRouter.apply(this, arguments);
 		routerView.set({
 			instantimages: {
-				text: instant_img_localize?.instant_images, // eslint-disable-line no-undef
+				text: instant_img_localize?.instant_images,
 				priority: 120,
 			},
 		});

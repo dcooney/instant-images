@@ -3,8 +3,6 @@ import { __ } from '@wordpress/i18n';
 import classNames from 'classnames';
 import { getSetting, saveSettings } from '../../functions/localStorage';
 
-/* eslint-disable */
-
 /**
  * Generic CTA for the Extended add-on.
  *
