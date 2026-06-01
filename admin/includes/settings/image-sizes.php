@@ -28,7 +28,8 @@ $extended_url    = INSTANT_IMAGES_ADDONS_URL . 'extended/?utm_source=WPAdmin&utm
 						<p>
 						<?php
 						// translators: Add-on URL.
-						echo sprintf ( __( 'Adding custom image sizes is available with the %1$s<strong>Extended add-on</strong>%2$s.', 'instant-images' ), '<a href="' . $extended_url . '" target="_blank">', '</a>' ); ?>
+						printf( __( 'Adding custom image sizes is available with the %1$s<strong>Extended add-on</strong>%2$s.', 'instant-images' ), '<a href="' . $extended_url . '" target="_blank">', '</a>' );
+						?>
 						</p>
 						<p>
 							<a class="button button-primary" href="<?php echo esc_url( $extended_url ); ?>" target="_blank">
@@ -59,7 +60,7 @@ $extended_url    = INSTANT_IMAGES_ADDONS_URL . 'extended/?utm_source=WPAdmin&utm
 					</div>
 				</div>
 				<div class="instant-images-extended-image-sizes--controls">
-					<button class="button button-primary" id="instant-images-add-image-size"<?php echo !$extended_active ? ' disabled' : ''; ?>>
+					<button class="button button-primary" id="instant-images-add-image-size"<?php echo ! $extended_active ? ' disabled' : ''; ?>>
 						<?php esc_attr_e( 'Add Image Size', 'instant-images' ); ?>
 					</button>
 				</div>

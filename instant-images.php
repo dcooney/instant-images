@@ -164,7 +164,12 @@ class InstantImages {
 	 */
 	public static function instant_img_get_active_providers() {
 		$all_providers = self::instant_img_get_providers();
-		$all_slugs     = array_map( function( $p ) { return $p['slug']; }, $all_providers );
+		$all_slugs     = array_map(
+			function ( $p ) {
+				return $p['slug'];
+			},
+			$all_providers
+		);
 		$config        = get_option( INSTANT_IMAGES_PROVIDER_SETTINGS );
 
 		if ( ! is_array( $config ) || empty( $config ) ) {
@@ -172,9 +177,14 @@ class InstantImages {
 		}
 
 		// Filter to only valid slugs.
-		$active = array_values( array_filter( $config, function( $slug ) use ( $all_slugs ) {
-			return in_array( $slug, $all_slugs, true );
-		} ) );
+		$active = array_values(
+			array_filter(
+				$config,
+				function ( $slug ) use ( $all_slugs ) {
+					return in_array( $slug, $all_slugs, true );
+				}
+			)
+		);
 
 		return ! empty( $active ) ? $active : $all_slugs;
 	}
@@ -292,7 +302,9 @@ class InstantImages {
 	 */
 	public function enqueue_media() {
 		$show_tab       = $this::instant_img_show_tab( 'media_modal_display' ); // Show Tab Setting.
-		$current_screen = is_admin() && function_exists('get_current_screen') ? get_current_screen()->base : ''; // Current admin screen.
+		$screen         = is_admin() && function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$current_screen = $screen ? $screen->base : ''; // Current admin screen.
+
 		if ( $this::instant_img_has_access() && $show_tab && $current_screen !== 'upload' ) {
 			$media_modal_asset_file = require INSTANT_IMAGES_PATH . 'build/media-modal/index.asset.php'; // Get webpack asset file.
 			wp_enqueue_script(
@@ -548,7 +560,7 @@ class InstantImages {
 		$mylinks = [
 			'<a href="' . INSTANT_IMAGES_WPADMIN_URL . '">' . __( 'Get Images', 'instant-images' ) . '</a>',
 			'<a href="' . INSTANT_IMAGES_ADDONS_URL . '" target="_blank">' . __( 'Browse Add-ons', 'instant-images' ) . '</a>',
-			'<a href="' . INSTANT_IMAGES_WPADMIN_SETTINGS_URL . '">' . __( 'Settings', 'instant-images' ) . '</a>'
+			'<a href="' . INSTANT_IMAGES_WPADMIN_SETTINGS_URL . '">' . __( 'Settings', 'instant-images' ) . '</a>',
 		];
 		return array_merge( $mylinks, $links );
 	}
@@ -588,9 +600,9 @@ class InstantImages {
 		global $_wp_additional_image_sizes;
 		$default_image_sizes = get_intermediate_image_sizes();
 		foreach ( $default_image_sizes as $size ) {
-			$image_sizes[ $size ][ 'width' ] = intval( get_option( "{$size}_size_w" ) );
-			$image_sizes[ $size ][ 'height' ] = intval( get_option( "{$size}_size_h" ) );
-			$image_sizes[ $size ][ 'crop' ] = get_option( "{$size}_crop" ) ? get_option( "{$size}_crop" ) : false;
+			$image_sizes[ $size ]['width']  = intval( get_option( "{$size}_size_w" ) );
+			$image_sizes[ $size ]['height'] = intval( get_option( "{$size}_size_h" ) );
+			$image_sizes[ $size ]['crop']   = get_option( "{$size}_crop" ) ? get_option( "{$size}_crop" ) : false;
 		}
 
 		if ( isset( $_wp_additional_image_sizes ) && count( $_wp_additional_image_sizes ) ) {
@@ -601,16 +613,16 @@ class InstantImages {
 		}
 
 		$sizes = [];
-		foreach( $image_sizes as $key => $image_size ) {
-			$label  = str_replace( '_' , ' ' , $key );
-			$label  = str_replace( '-' , ' ' , $label );
-			$height = $image_size[ 'height' ] === 0 ? '--' :  $image_size[ 'height' ]; // If height is empty or 0.
+		foreach ( $image_sizes as $key => $image_size ) {
+			$label  = str_replace( '_', ' ', $key );
+			$label  = str_replace( '-', ' ', $label );
+			$height = $image_size['height'] === 0 ? '--' : $image_size['height']; // If height is empty or 0.
 
 			$sizes[ $key ] = [
 				'label'  => ucwords( $label ),
-				'width'  => $image_size[ 'width' ],
+				'width'  => $image_size['width'],
 				'height' => $height,
-				'crop'   => $image_size[ 'crop' ]
+				'crop'   => $image_size['crop'],
 			];
 		}
 		return $sizes;
@@ -637,8 +649,8 @@ class InstantImages {
 				<th><?php esc_attr_e( 'Crop', 'instant-images' ); ?></th>
 			</tr>
 		<?php
-		foreach( $sizes as $key => $size ) {
-			$crop = $size[ 'crop' ];
+		foreach ( $sizes as $key => $size ) {
+			$crop = $size['crop'];
 			$crop = $crop ? 'Yes' : 'No';
 			echo '<tr';
 			do_action( 'instant_images_image_size_tr_class', $key );
@@ -646,13 +658,13 @@ class InstantImages {
 			echo '<td>';
 			echo '<span>';
 			do_action( 'instant_images_image_size_before', $key );
-			echo '<strong>' . $size[ 'label' ] . '</strong>';
+			echo '<strong>' . $size['label'] . '</strong>';
 			do_action( 'instant_images_image_size_after', $key );
 			echo '</span>';
 			echo '</td>';
 			echo '<td><pre>' . $key . '</pre></td>';
-			echo '<td>' . $size[ 'width' ] . '</td>';
-			echo '<td>' . $size[ 'height' ] . '</td>';
+			echo '<td>' . $size['width'] . '</td>';
+			echo '<td>' . $size['height'] . '</td>';
 			echo '<td>' . $crop . '</td>';
 			echo '</tr>';
 		}

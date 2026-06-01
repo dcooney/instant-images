@@ -7,14 +7,19 @@
 
 $all_providers    = InstantImages::instant_img_get_providers();
 $active_providers = InstantImages::instant_img_get_active_providers();
-$all_slugs        = array_map( function( $p ) { return $p['slug']; }, $all_providers );
+$all_slugs        = array_map(
+	function ( $p ) {
+		return $p['slug'];
+	},
+	$all_providers
+);
 
 // Build ordered list: active providers first (in order), then inactive ones.
 $ordered_providers = [];
 foreach ( $active_providers as $slug ) {
 	foreach ( $all_providers as $provider ) {
 		if ( $provider['slug'] === $slug ) {
-			$provider['active'] = true;
+			$provider['active']  = true;
 			$ordered_providers[] = $provider;
 			break;
 		}

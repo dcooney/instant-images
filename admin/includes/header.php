@@ -13,7 +13,7 @@
 	</h1>
 	<?php
 	if ( $show_settings && InstantImages::instant_img_has_settings_access() ) {
-	?>
+		?>
 	<div>
 		<a href="<?php echo esc_url( INSTANT_IMAGES_ADDONS_URL ); ?>" class="button button-primary button-large" target="_blank">
 			<?php esc_attr_e( 'Browse Add-ons', 'instant-images' ); ?>

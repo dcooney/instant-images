@@ -102,7 +102,7 @@ function instant_images_admin_init() {
 	$count           = 0;
 	foreach ( $providers as $provider ) {
 		if ( $provider['requires_key'] ) {
-			$count++;
+			++$count;
 			$key   = $provider['slug'] . '_api';
 			$title = $provider['name'] . __( 'API Key', 'instant-images' );
 
@@ -125,7 +125,6 @@ function instant_images_admin_init() {
 			);
 		}
 	}
-
 }
 add_action( 'admin_init', 'instant_images_admin_init' );
 
@@ -160,7 +159,7 @@ function instant_images_api_settings_callback() {
 function instant_images_sanitize( $input ) {
 
 	// Create our array for storing the validated options.
-	$output = array();
+	$output = [];
 	// Loop through each of the incoming options.
 	foreach ( $input as $key => $value ) {
 		// Check to see if the current option has a value. If so, process it.
@@ -281,7 +280,7 @@ function instant_images_api_keys_callback( $args = [] ) {
 	}
 
 	$options  = get_option( INSTANT_IMAGES_API_SETTINGS ); // API options.
-	$options = is_array( $options ) ? $options : []; // API options.
+	$options  = is_array( $options ) ? $options : []; // API options.
 	$key      = $provider['slug'] . '_api';
 	$title    = $provider['name'];
 	$constant = $provider['constant'];
@@ -293,10 +292,8 @@ function instant_images_api_keys_callback( $args = [] ) {
 		$readonly        = ' readonly';
 		$disabled        = ' disabled';
 		$options[ $key ] = constant( $constant );
-	} else {
-		if ( ! isset( $options[ $key ] ) ) {
+	} elseif ( ! isset( $options[ $key ] ) ) {
 			$options[ $key ] = '';
-		}
 	}
 
 	echo '<label class="provider-label" for="instant_img_api_settings[' . esc_attr( $key ) . ']">';
@@ -323,12 +320,27 @@ function instant_images_sanitize_providers( $input ) {
 	if ( ! is_array( $input ) || empty( $input ) ) {
 		// Return all providers if invalid.
 		$providers = InstantImages::instant_img_get_providers();
-		return array_map( function( $p ) { return $p['slug']; }, $providers );
+		return array_map(
+			function ( $p ) {
+				return $p['slug'];
+			},
+			$providers
+		);
 	}
-	$valid_slugs = array_map( function( $p ) { return $p['slug']; }, InstantImages::instant_img_get_providers() );
-	return array_values( array_filter( array_map( 'sanitize_text_field', $input ), function( $slug ) use ( $valid_slugs ) {
-		return in_array( $slug, $valid_slugs, true );
-	} ) );
+	$valid_slugs = array_map(
+		function ( $p ) {
+			return $p['slug'];
+		},
+		InstantImages::instant_img_get_providers()
+	);
+	return array_values(
+		array_filter(
+			array_map( 'sanitize_text_field', $input ),
+			function ( $slug ) use ( $valid_slugs ) {
+				return in_array( $slug, $valid_slugs, true );
+			}
+		)
+	);
 }
 
 /**

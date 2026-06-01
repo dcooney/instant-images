@@ -148,7 +148,7 @@ function instant_images_download( WP_REST_Request $request ) {
 		}
 
 		// Resize image to max width/height. Skip GIFs.
-		if( $file_type['ext'] !== 'gif' ) {
+		if ( $file_type['ext'] !== 'gif' ) {
 			$editor = wp_get_image_editor( $mirror['file'] );
 			if ( ! is_wp_error( $editor ) ) {
 				$editor->resize( $settings->max_width, $settings->max_height, false ); // Set the max width/height.

@@ -37,7 +37,9 @@
 		 Multiple valid prefixes can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="instant_images" />
+			<property name="prefixes" type="array">
+				<element value="instant_images"/>
+			</property>
 		</properties>
 	</rule>
 
@@ -45,7 +47,9 @@
 		 Multiple valid text domains can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="instant-images"/>
+			<property name="text_domain" type="array">
+				<element value="instant-images"/>
+			</property>
 		</properties>
 	</rule>
 

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-01T16:50:03+00:00\n"
+"POT-Creation-Date: 2026-06-01T18:08:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: instant-images\n"
@@ -18,7 +18,7 @@ msgstr ""
 #: instant-images.php:3
 #: admin/admin.php:152
 #: admin/admin.php:169
-#: instant-images.php:360
+#: instant-images.php:372
 msgid "Instant Images"
 msgstr ""
 
@@ -69,12 +69,12 @@ msgstr ""
 #: admin/admin.php:318
 #: admin/includes/header.php:19
 #: admin/includes/settings/header.php:18
-#: instant-images.php:550
+#: instant-images.php:562
 msgid "Browse Add-ons"
 msgstr ""
 
 #: admin/includes/header.php:22
-#: instant-images.php:551
+#: instant-images.php:563
 msgid "Settings"
 msgstr ""
 
@@ -104,47 +104,47 @@ msgid "API Keys"
 msgstr ""
 
 #: admin/includes/settings.php:107
-#: admin/includes/settings.php:303
+#: admin/includes/settings.php:300
 msgid "API Key"
 msgstr ""
 
-#: admin/includes/settings.php:139
+#: admin/includes/settings.php:138
 msgid "Manage your media upload settings."
 msgstr ""
 
-#: admin/includes/settings.php:149
+#: admin/includes/settings.php:148
 msgid "Manage your provider API keys."
 msgstr ""
 
-#: admin/includes/settings.php:191
+#: admin/includes/settings.php:190
 msgid "Max Image Upload Width"
 msgstr ""
 
-#: admin/includes/settings.php:208
+#: admin/includes/settings.php:207
 msgid "Max Image Upload Height"
 msgstr ""
 
-#: admin/includes/settings.php:220
+#: admin/includes/settings.php:219
 msgid "Image Attribution"
 msgstr ""
 
-#: admin/includes/settings.php:221
+#: admin/includes/settings.php:220
 msgid "Automatically add image attribution (as captions) when uploading images."
 msgstr ""
 
-#: admin/includes/settings.php:234
+#: admin/includes/settings.php:233
 msgid "Media Modal"
 msgstr ""
 
-#: admin/includes/settings.php:235
+#: admin/includes/settings.php:234
 msgid "Remove the Instant Images tab in the Media Modal."
 msgstr ""
 
-#: admin/includes/settings.php:304
+#: admin/includes/settings.php:301
 msgid "Get Key"
 msgstr ""
 
-#: admin/includes/settings.php:309
+#: admin/includes/settings.php:306
 msgid "API key has been set via site constant."
 msgstr ""
 
@@ -165,7 +165,7 @@ msgid "Manage your Instant Images plugin settings."
 msgstr ""
 
 #: admin/includes/settings/header.php:21
-#: instant-images.php:549
+#: instant-images.php:561
 msgid "Get Images"
 msgstr ""
 
@@ -186,7 +186,7 @@ msgid "Create, manage, and view your active WordPress image sizes."
 msgstr ""
 
 #: admin/includes/settings/image-sizes.php:22
-#: admin/includes/settings/image-sizes.php:63
+#: admin/includes/settings/image-sizes.php:64
 msgid "Add Image Size"
 msgstr ""
 
@@ -200,41 +200,41 @@ msgstr ""
 msgid "Adding custom image sizes is available with the %1$s<strong>Extended add-on</strong>%2$s."
 msgstr ""
 
-#: admin/includes/settings/image-sizes.php:35
+#: admin/includes/settings/image-sizes.php:36
 msgid "Upgrade Now"
 msgstr ""
 
-#: admin/includes/settings/image-sizes.php:42
-#: instant-images.php:634
+#: admin/includes/settings/image-sizes.php:43
+#: instant-images.php:646
 msgid "Name"
 msgstr ""
 
-#: admin/includes/settings/image-sizes.php:46
+#: admin/includes/settings/image-sizes.php:47
 msgid "Width (px)"
 msgstr ""
 
-#: admin/includes/settings/image-sizes.php:50
+#: admin/includes/settings/image-sizes.php:51
 msgid "Height (px)"
 msgstr ""
 
-#: admin/includes/settings/image-sizes.php:54
-#: instant-images.php:637
+#: admin/includes/settings/image-sizes.php:55
+#: instant-images.php:649
 msgid "Crop"
 msgstr ""
 
-#: admin/includes/settings/image-sizes.php:56
+#: admin/includes/settings/image-sizes.php:57
 msgid "No"
 msgstr ""
 
-#: admin/includes/settings/image-sizes.php:57
+#: admin/includes/settings/image-sizes.php:58
 msgid "Yes"
 msgstr ""
 
-#: admin/includes/settings/image-sizes.php:74
+#: admin/includes/settings/image-sizes.php:75
 msgid "Current Image Sizes"
 msgstr ""
 
-#: admin/includes/settings/image-sizes.php:75
+#: admin/includes/settings/image-sizes.php:76
 msgid "Image sizes listed below are currently enabled on your site."
 msgstr ""
 
@@ -254,32 +254,32 @@ msgstr ""
 msgid "Check out some of our other WordPress plugins."
 msgstr ""
 
-#: admin/includes/settings/provider-settings.php:35
+#: admin/includes/settings/provider-settings.php:40
 msgid "Providers"
 msgstr ""
 
-#: admin/includes/settings/provider-settings.php:36
+#: admin/includes/settings/provider-settings.php:41
 msgid "Enable, disable, and reorder your image providers."
 msgstr ""
 
-#: admin/includes/settings/provider-settings.php:49
+#: admin/includes/settings/provider-settings.php:54
 msgid "Drag to reorder"
 msgstr ""
 
-#: admin/includes/settings/provider-settings.php:62
+#: admin/includes/settings/provider-settings.php:67
 msgid "Enable/Disable Provider"
 msgstr ""
 
-#: admin/includes/settings/provider-settings.php:76
+#: admin/includes/settings/provider-settings.php:81
 #: admin/includes/settings/save.php:10
 msgid "Save Settings"
 msgstr ""
 
-#: admin/includes/settings/provider-settings.php:78
+#: admin/includes/settings/provider-settings.php:83
 msgid "Reset"
 msgstr ""
 
-#: admin/includes/settings/provider-settings.php:83
+#: admin/includes/settings/provider-settings.php:88
 #: admin/includes/settings/save.php:14
 msgid "Settings Saved"
 msgstr ""
@@ -334,255 +334,255 @@ msgstr ""
 msgid "Unable to save settings."
 msgstr ""
 
-#: instant-images.php:375
+#: instant-images.php:387
 msgid "Access to images from Unsplash requires a valid API key. API keys are available for free, just sign up for a Developer account at Unsplash, enter your API key below and you're good to go!"
 msgstr ""
 
-#: instant-images.php:380
+#: instant-images.php:392
 msgid "Access to images from Pixabay requires a valid API key. API keys are available for free, just sign up for an account at Pixabay, enter your API key below and you're good to go!"
 msgstr ""
 
-#: instant-images.php:385
+#: instant-images.php:397
 msgid "Access to images from Pexels requires a valid API key. API keys are available for free, just sign up for an account at Pexels, enter your API key below and you're good to go!"
 msgstr ""
 
-#: instant-images.php:389
+#: instant-images.php:401
 msgid "Access to gifs from Giphy requires a valid API key. API keys are available for free, just sign up for an account at Giphy and choose the \"Select API\" option when creating the key"
 msgstr ""
 
-#: instant-images.php:392
+#: instant-images.php:404
 msgid "There was no response while attempting to the download image to your server. Check your server permission and max file upload size or try again"
 msgstr ""
 
-#: instant-images.php:393
+#: instant-images.php:405
 msgid "There was an error accessing the WP REST API."
 msgstr ""
 
-#: instant-images.php:394
+#: instant-images.php:406
 msgid "Instant Images requires access to the WP REST API via <u>POST</u> request to fetch and upload images to your media library."
 msgstr ""
 
-#: instant-images.php:396
+#: instant-images.php:408
 msgid "View All Photos by"
 msgstr ""
 
-#: instant-images.php:397
+#: instant-images.php:409
 msgid "Click Image to Upload"
 msgstr ""
 
-#: instant-images.php:398
+#: instant-images.php:410
 msgid "Click to Upload"
 msgstr ""
 
-#: instant-images.php:399
+#: instant-images.php:411
 msgid "Downloading image..."
 msgstr ""
 
-#: instant-images.php:400
+#: instant-images.php:412
 msgid "Creating image sizes..."
 msgstr ""
 
-#: instant-images.php:401
+#: instant-images.php:413
 msgid "Still resizing..."
 msgstr ""
 
-#: instant-images.php:402
+#: instant-images.php:414
 msgid "Nothing matched your search query."
 msgstr ""
 
-#: instant-images.php:403
+#: instant-images.php:415
 msgid "Try adjusting your filter criteria or searching again."
 msgstr ""
 
-#: instant-images.php:404
-#: instant-images.php:405
+#: instant-images.php:416
+#: instant-images.php:417
 msgid "New"
 msgstr ""
 
-#: instant-images.php:406
+#: instant-images.php:418
 msgid "Oldest"
 msgstr ""
 
-#: instant-images.php:407
+#: instant-images.php:419
 #: src/js/constants/filters.js:151
 msgid "Popular"
 msgstr ""
 
-#: instant-images.php:408
+#: instant-images.php:420
 msgid "Views"
 msgstr ""
 
-#: instant-images.php:409
+#: instant-images.php:421
 msgid "Downloads"
 msgstr ""
 
-#: instant-images.php:410
+#: instant-images.php:422
 msgid "Search for Toronto + Coffee etc..."
 msgstr ""
 
-#: instant-images.php:411
+#: instant-images.php:423
 msgid "Search"
 msgstr ""
 
-#: instant-images.php:412
+#: instant-images.php:424
 msgid "image(s) found for"
 msgstr ""
 
-#: instant-images.php:413
+#: instant-images.php:425
 msgid "Clear Search"
 msgstr ""
 
-#: instant-images.php:414
+#: instant-images.php:426
 msgid "View on"
 msgstr ""
 
-#: instant-images.php:415
+#: instant-images.php:427
 msgid "Set as Featured Image"
 msgstr ""
 
-#: instant-images.php:416
+#: instant-images.php:428
 msgid "Insert Into Post"
 msgstr ""
 
-#: instant-images.php:417
+#: instant-images.php:429
 msgid "Filename"
 msgstr ""
 
-#: instant-images.php:418
+#: instant-images.php:430
 msgid "Title"
 msgstr ""
 
-#: instant-images.php:419
+#: instant-images.php:431
 msgid "Alt Text"
 msgstr ""
 
-#: instant-images.php:420
+#: instant-images.php:432
 msgid "Caption"
 msgstr ""
 
-#: instant-images.php:421
+#: instant-images.php:433
 msgid "Description"
 msgstr ""
 
-#: instant-images.php:422
+#: instant-images.php:434
 msgid "Edit Attachment Details"
 msgstr ""
 
-#: instant-images.php:423
+#: instant-images.php:435
 msgid "Edit Image Details"
 msgstr ""
 
-#: instant-images.php:424
+#: instant-images.php:436
 msgid "Cancel"
 msgstr ""
 
-#: instant-images.php:425
+#: instant-images.php:437
 msgid "Save"
 msgstr ""
 
-#: instant-images.php:426
+#: instant-images.php:438
 msgid "Upload"
 msgstr ""
 
-#: instant-images.php:427
+#: instant-images.php:439
 msgid "Add Photo Attribution"
 msgstr ""
 
-#: instant-images.php:428
+#: instant-images.php:440
 msgid "Close Window"
 msgstr ""
 
-#: instant-images.php:429
+#: instant-images.php:441
 msgid "Close"
 msgstr ""
 
-#: instant-images.php:430
+#: instant-images.php:442
 msgid "Verify"
 msgstr ""
 
-#: instant-images.php:431
+#: instant-images.php:443
 msgid "Enter API Key"
 msgstr ""
 
-#: instant-images.php:432
+#: instant-images.php:444
 msgid "The API Key is Invalid"
 msgstr ""
 
-#: instant-images.php:433
+#: instant-images.php:445
 msgid "API key has been successfully validated!"
 msgstr ""
 
-#: instant-images.php:434
+#: instant-images.php:446
 msgid "Invalid API key - enter a new API Key and try again."
 msgstr ""
 
-#: instant-images.php:435
+#: instant-images.php:447
 msgid "Missing API parameter - we are unable to complete the request at this time."
 msgstr ""
 
-#: instant-images.php:436
+#: instant-images.php:448
 msgid "The Instant Images Proxy is not configured for the requested provider."
 msgstr ""
 
-#: instant-images.php:437
+#: instant-images.php:449
 msgid "An internal server error has occured - please try again."
 msgstr ""
 
-#: instant-images.php:438
+#: instant-images.php:450
 msgid "No image provider or destination URL set."
 msgstr ""
 
-#: instant-images.php:439
+#: instant-images.php:451
 msgid "The API rate limit has been exceeded for this image provider. Please add a new API key or try again later."
 msgstr ""
 
-#: instant-images.php:440
+#: instant-images.php:452
 msgid "Check your provider settings or verify that you're using a valid API key."
 msgstr ""
 
-#: instant-images.php:441
+#: instant-images.php:453
 msgid "Get API Key"
 msgstr ""
 
-#: instant-images.php:442
+#: instant-images.php:454
 msgid "Reset Default Key"
 msgstr ""
 
-#: instant-images.php:443
+#: instant-images.php:455
 msgid "An unknown error has occured while accessing {provider}"
 msgstr ""
 
-#: instant-images.php:444
+#: instant-images.php:456
 msgid "Check that your API keys are valid in the Instant Images settings panel."
 msgstr ""
 
-#: instant-images.php:445
+#: instant-images.php:457
 msgid "Error"
 msgstr ""
 
-#: instant-images.php:446
+#: instant-images.php:458
 msgid "Ad"
 msgstr ""
 
-#: instant-images.php:447
+#: instant-images.php:459
 msgid "Advertisement"
 msgstr ""
 
 #. translators: Instant Images tagline.
-#: instant-images.php:535
+#: instant-images.php:547
 #, php-format
 msgid "One-click photo uploads from %1$s, %2$s, %3$s, %4$s, and %5$s."
 msgstr ""
 
-#: instant-images.php:633
+#: instant-images.php:645
 msgid "Label"
 msgstr ""
 
-#: instant-images.php:635
+#: instant-images.php:647
 msgid "Width"
 msgstr ""
 
-#: instant-images.php:636
+#: instant-images.php:648
 msgid "Height"
 msgstr ""
 
