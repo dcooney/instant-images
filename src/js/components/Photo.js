@@ -39,7 +39,7 @@ export default function Photo(props) {
 
 	// Photo state.
 	const [imageDetails, setImageDetails] = useState({
-		filename,
+		filename: alt || filename,
 		title,
 		alt,
 		caption: imageCaption,
@@ -372,7 +372,7 @@ export default function Photo(props) {
 	function cancelEdit() {
 		// Reset image state.
 		setImageDetails({
-			filename,
+			filename: alt || filename,
 			title,
 			alt,
 			caption: imageCaption,
